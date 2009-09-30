@@ -1,0 +1,23 @@
+<!--- Paging-->
+<div class="paging">
+	<ul class="pages">
+		<? foreach( $this->Pages as $Page ): ?>
+			<? if ( is_string($Page['title']) ) $Page['title'] = $this->locale->translate($Page['title']); ?>
+			<? if ( $Page['disabled'] ): ?>
+				<li class="page disabled">
+					<span><?=$Page['title']?></span>
+				</li>
+			<? elseif ( $Page['selected'] ): ?>
+				<li class="page selected">
+					<span><?=$Page['title']?></span>
+				</li>
+			<? else: ?>
+				<li class="page normal">
+					<a href="<?=$this->url(array('page'=>$Page['number']))?>" class="ajaxy ajaxy__page">
+						<?=$Page['title']?>
+					</a>
+				</li>
+			<? endif; ?>
+		<? endforeach; ?>
+	</ul>
+</div>

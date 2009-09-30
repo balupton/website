@@ -1,0 +1,26 @@
+<?
+	$key = $this->key;
+	$Item = $this->Item;
+	$value = $Item->get($key);
+	$wrap = !empty($this->wrap);
+	$wrap_value_before = isset($this->wrap_value_before) ? $this->wrap_value_before : '<span class="value">';
+	$wrap_value_after = isset($this->wrap_value_after) ? $this->wrap_value_after : '</span>';
+?>
+<? if ( $wrap ): ?><span class="inline-panel"><? endif; ?>
+	<div class="view-panel">
+		<?=$wrap_value_before?><?=$this->partial('helpers/field-value.phtml',compact('key','Item'))?><?=$wrap_value_after?>
+		<span class="small">(
+			<a class="edit-button"><?=$this->locale->translate('edit')?></a>
+			|
+			<a class="remove-button"><?=$this->locale->translate('remove')?></a>
+		)</span>
+	</div>
+	<div class="edit-panel" style="display:none;">
+		<?=$this->partial('helpers/field-input.phtml', compact('key','Item'))?>
+		<span class="small">(
+			<a class="save-button"><?=$this->locale->translate('save')?></a>
+			|
+			<a class="cancel-button"><?=$this->locale->translate('cancel')?></a>
+		)</span>
+	</div>
+<? if ( $wrap ): ?></span><? endif; ?>

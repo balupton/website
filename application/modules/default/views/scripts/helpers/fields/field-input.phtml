@@ -1,0 +1,190 @@
+<?
+// Fetch
+$Item = $this->Item;
+$other = isset($this->other) ? $this->other : null;
+$key = !empty($this->key) ? $this->key : null;
+$name = !empty($this->name) ? $this->name : null;
+$value = !empty($this->value) ? $this->value : null;
+$type = !empty($this->type) ? $this->type : null;
+$css = !empty($this->css) ? $this->css : '';
+$properties = array();
+
+// Handle
+if ( $key ) {
+	// We want to display a proper field
+	$value = $Item->get($key);
+	$Table = $Item->getTable();
+	$table = strtolower($Table->getComponentName());
+	$type = $Table->getTypeOf($key);
+	if ( !$name ) $name = $table.'['.$key.']';
+	$properties = $Table->getDefinitionOf($key);
+}
+else {
+	// We want to display something a bit more complicated
+	if ( $Item instanceof Doctrine_Table ) {
+		// We have a listing
+		$type = 'table';
+		$Table = $Item;
+		$table = strtolower($Table->getComponentName());
+		if ( !$name ) $name = $table;
+	} elseif ( $Item instanceof Doctrine_Collection ) {
+		// Cycle through this list
+		$type = 'list';
+		$Items = $Item;
+		$Table = $Item->getTable();
+		$table = strtolower($Table->getComponentName());
+	} else {
+		//
+		if ( !$name ) $name = $key;
+	}
+}
+
+if ( is_object($value) ) {
+	if ( !empty($value->id) ) {
+		$value = $value->id;
+	} else {
+		$value = null;
+	}
+}
+
+if ( !empty($properties['extra']) && !empty($properties['extra']['currency']) ) {
+	$type = 'currency';
+}
+
+$length = !empty($properties['length']) ? $properties['length'] : null;
+		
+switch ( $type ):
+		case 'list':
+			// Load the relation
+			$RelationTable = $Table;
+			$Relations = $Items;
+			?><select name="<?=$name?>" class="select <?=$css?>"><?
+			if ( $other !== null ):
+				?><option value="<?=$other?>" <?=($value==$other?'selected="selected"':'')?> ><?=$this->locale->translate($other)?>&nbsp;</option><?
+			endif;
+			foreach ( $Relations as $Relation ):
+				?><option value="<?=$Relation->id?>" <?=($Relation->id==$value?'selected="selected"':'')?> >
+					<?=
+						$RelationTable->hasField('title')
+						?	$Relation->title
+						:	(
+							$RelationTable->hasField('name')
+							?	$Relation->name
+							:	(
+								$RelationTable->hasField('code')
+								?	$Relation->code
+								:	(
+									$RelationTable->hasField('fullname')
+									?	$Relation->fullname
+									:	$Relation->id
+									)
+								)
+							)
+					?>
+				</option><?
+			endforeach;
+			?></select><?
+			break;
+		case 'table':
+			// Load the relation
+			$RelationTable = $Table;
+			$Relations = $RelationTable->findAll();
+			?><select name="<?=$name?>" class="select <?=$css?>"><?
+			foreach ( $Relations as $Relation ):
+				?><option value="<?=$Relation->id?>" <?=($Relation->id==$value?'selected="selected"':'')?> >
+					<?=
+						$RelationTable->hasField('title')
+						?	$Relation->title
+						:	(
+							$RelationTable->hasField('name')
+							?	$Relation->name
+							:	(
+								$RelationTable->hasField('code')
+								?	$Relation->code
+								:	(
+									$RelationTable->hasField('fullname')
+									?	$Relation->fullname
+									:	$Relation->id
+									)
+								)
+							)
+					?>
+				</option><?
+			endforeach;
+			?></select><?
+			break;
+		case 'enum':
+			$evalues = $Table->getEnumValues($key);
+			?><select name="<?=$name?>" class="select <?=$css?>"><?
+			foreach ( $evalues as $evalue ):
+				?><option value="<?=$evalue?>" <?=($evalue==$value?'selected="selected"':'')?> ><?=$evalue;?></option><?
+			endforeach;
+			?></select><?
+			break;
+		case 'bool':
+		case 'boolean':
+			?><label><input class="radio <?=$css?>" type="radio" name="<?=$name?>" value="true" <?=($value?'checked="checked"':'')?>>Yes</label>
+			<label><input class="radio <?=$css?>" type="radio" name="<?=$name?>" value="false" <?=(!$value?'checked="checked"':'')?>>No</label><?
+			break;
+		case 'datetime':
+		case 'date':
+			?><input type="text" name="<?=$name?>" value="<?=$value?>" class="text jquery-date <?=$css?>"/><?
+			if ( $type === 'date' ) break;
+		case 'time':
+			?><input type="text" name="<?=$name?>" value="<?=$value?>" class="text jquery-time <?=$css?>"/><?
+			break;
+		case 'currency':
+			echo $this->locale->Zend_Currency->getSymbol();
+		case 'integer':
+		case 'decimal':
+			?><input type="text" name="<?=$name?>" value="<?=$value?>" class="text jquery-number <?=$css?>" /><?
+			break;
+		case 'text':
+		case 'string':
+			if ( $length <= 255 ):
+				?><input type="text" name="<?=$name?>" value="<?=$value?>" class="text <?=$css?>" maxlength="<?=$length?>" /><?
+				break;
+			endif;
+		case 'textarea':
+			?><textarea name="<?=$name?>" class="textarea <?=$css?>"><?=$value?></textarea><?
+			break;
+		default:
+			// We could be a relation
+			if ( $Table->hasRelation($key) ) {
+				// We are a relation
+				// Load the relation
+				$Relation = $Table->getRelation($key);
+				$RelationTable = $Relation->getTable();
+				$Relations = $RelationTable->findAll();
+				// Display
+				?><select name="<?=$name?>" class="select <?=$css?>"><?
+				foreach ( $Relations as $Relation ):
+					?><option value="<?=$Relation->id?>" <?=($Relation->id==$value?'selected="selected"':'')?> >
+						<?=
+							$RelationTable->hasField('title')
+							?	$Relation->title
+							:	(
+								$RelationTable->hasField('name')
+								?	$Relation->name
+								:	(
+									$RelationTable->hasField('code')
+									?	$Relation->code
+										:	(
+											$RelationTable->hasField('fullname')
+											?	$Relation->fullname
+											:	$Relation->id
+											)
+										)
+								)
+						?>
+					</option><?
+				endforeach;
+				?></select><?
+			}
+			else {
+				// No clue
+				?>Unknown<?
+			}
+			break;
+endswitch;
+?>

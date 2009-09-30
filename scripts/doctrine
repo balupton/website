@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+$dir = dirname(__FILE__);
+chdir($dir);
+
+$boostrap = $run = false;
+require_once($dir.'/../public/index.php');
+$Application->getBootstrap()->bootstrap('doctrine');
+		
+// Load Options
+$doctrineOptions = $Application->getOption('doctrine');
+
+// Load Cli
+$Cli = new Doctrine_Cli($doctrineOptions);
+$Cli->run($_SERVER['argv']);

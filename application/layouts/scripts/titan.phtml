@@ -1,0 +1,269 @@
+<?php
+	echo $this->doctype();
+	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+	$Page = $this->Item;
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<?=$this->headMeta()?>
+	<?=$this->headTitle()?>
+	<?	// CSS
+		$this->headLink()
+			->setStylesheet($baseUrl.'/styles/style.css')
+			//->appendStylesheet($baseUrl.'/scripts/extjs/resources/css/ext-all.css');
+			->appendStylesheet($baseUrl.'/scripts/modal/jquery.modal.css')
+			;
+		// Output
+		echo $this->headLink(); ?>
+	<?=$this->headStyle()?>
+	<!--[if lt IE 8]>
+		<link rel="stylesheet" type="text/css" media="screen" href="http://wp-themes.com/wp-content/themes/titan/ie/ie.css" />
+	<![endif]-->
+	<!--[if lte IE 6]>
+		<script type="text/javascript" src="http://wp-themes.com/wp-content/themes/titan/ie/nav.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+<?= $this->headScript()
+	// jQuery
+	->prependFile(APPLICATION_ENV==='production'?'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js':$baseUrl.'/scripts/jquery-1.3.2.min.js')
+	// JSON
+	->appendFile('http://www.json.org/json2.js')
+	// UI
+	// ->appendFile(APPLICATION_ENV==='production'?'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js':$baseUrl.'/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js')
+	// Ajaxy
+	->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.history.js')
+	->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.ajaxy.js')
+	// Resources
+	->appendFile($baseUrl.'/scripts/jquery.sparkle.js')
+	->appendFile($baseUrl.'/scripts/modal/jquery.modal.js')
+	// Application
+	//->appendFile($baseUrl.'/scripts/jquery.gates.js')
+	// ExtJS
+	//->appendFile($baseUrl.'/scripts/extjs/adapter/ext/ext-base.js')
+	//->appendFile($baseUrl.'/scripts/extjs/ext-all.js')
+	?>
+
+	<div id="header" class="clear">
+		<div id="follow">
+			<div class="wrapper clear">
+				<dl>
+					<dt>
+						Follow:
+					</dt>
+					<dd>
+						<a class="rss" href="http://wp-themes.com/?feed=rss2">RSS</a>
+					</dd>
+					<dd>
+						<a class="email" href="">Email</a>
+					</dd>
+					<dd>
+						<a class="twitter" href="">Twitter</a>
+					</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="wrapper">
+			<h1 id="title"><a href="<?=$this->url(array('item'=>$Page->code),'item')?>"><?=$Page->title?></a></h1>
+			<div id="description">
+				<?=$Page->tagline?>
+			</div>
+			<div id="navigation">
+				<?
+					function displayNavigation(&$View, &$Map, &$List, $current, $class = 'children', $id = '') { ?>
+						<ul class="<?=$class?>" id="<?=$id?>"><?
+						foreach ( $List as $Item ): ?>
+							<li class="page_item page-item-<?=$Item->code?> <?=$Item->id===$current?'current_page_item':''?>">
+								<a href="<?=$View->url(array('item'=>$Item->code),'item')?>"><?=$Item->title?></a><?
+								if ( !empty($Map[$Item->id]) ) {
+									displayNavigation($View, $Map, $Map[$Item->id], $current);
+								} ?>
+							</li><?
+						endforeach; ?>
+						</ul><?
+					}
+					displayNavigation(
+						$this,
+						$this->NavigationMap,
+						$this->NavigationMap[0],
+						$Page->id,
+						'',
+						'nav'
+					);
+				?>
+			</div>
+		</div>
+	</div>
+	<div class="content-background">
+		<div class="wrapper">
+			<div class="notice">
+			</div>
+			<div id="content">
+   				<?=$this->layout()->content?>
+			</div>
+			<!--end content-->
+			<div id="sidebar">
+				<div id="sidebox">
+					<a href="http://wp-themes.com/"><img src="<?=$baseUrl?>/images/sidebox.jpg" alt="Titan WordPress Theme" height="236" width="236"></a>
+				</div><!--end sidebox-->
+				<ul>
+					<li class="widget widget_recent_entries">
+						<h2 class="widgettitle">Recent Articles</h2>
+						<ul>
+							<li>
+								<a href="http://wp-themes.com/?p=19">Worth A Thousand Words</a>
+							</li>
+							<li>
+								<a href="http://wp-themes.com/?p=36">Elements</a>
+							</li>
+							<li>
+								<a href="http://wp-themes.com/?p=14">More Tags</a>
+							</li>
+							<li>
+								<a href="http://wp-themes.com/?p=8">HTML</a>
+							</li>
+							<li>
+								<a href="http://wp-themes.com/?p=6">Links</a>
+							</li>
+							<li>
+								<a href="http://wp-themes.com/?p=4">Category Hierarchy</a>
+							</li>
+							<li>
+								<a href="http://wp-themes.com/?p=1">Hello world!</a>
+							</li>
+						</ul>
+					</li>
+					<li class="widget widget_categories">
+						<h2 class="widgettitle">Categories</h2>
+						<ul>
+							<li class="cat-item cat-item-6">
+								<a href="http://wp-themes.com/?cat=6" title="View all posts filed under First Child Category">First Child
+									Category</a>
+							</li>
+							<li class="cat-item cat-item-8">
+								<a href="http://wp-themes.com/?cat=8" title="View all posts filed under One Grandchild Category">One
+									Grandchild Category</a>
+							</li>
+							<li class="cat-item cat-item-5">
+								<a href="http://wp-themes.com/?cat=5" title="View all posts filed under Parent">Parent</a>
+							</li>
+							<li class="cat-item cat-item-7">
+								<a href="http://wp-themes.com/?cat=7" title="View all posts filed under Second Child Category">Second
+									Child Category</a>
+							</li>
+							<li class="cat-item cat-item-1">
+								<a href="http://wp-themes.com/?cat=1" title="View all posts filed under Uncategorized">Uncategorized</a>
+							</li>
+						</ul>
+					</li>
+					<li class="widget widget_archive">
+						<h2 class="widgettitle">Archives</h2>
+						<ul>
+							<li>
+								<a href="http://wp-themes.com/?m=200810" title="October 2008">October
+									2008</a>
+							</li>
+							<li>
+								<a href="http://wp-themes.com/?m=200809" title="September 2008">September
+									2008</a>
+							</li>
+							<li>
+								<a href="http://wp-themes.com/?m=200806" title="June 2008">June
+									2008</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<!--end sidebar-->
+		</div>
+		<!--end wrapper-->
+	</div>
+	<!--end content-background-->
+	<div id="footer">
+		<div class="wrapper clear">
+			<div id="footer-about" class="footer-column">
+				<h2>About</h2>
+				<p>
+					Did you know you can write your own about section just like this one? 
+					It's really easy. Head into the the <em>Titan Options</em>
+					menu and
+					check out the footer section. Type some stuff in the box, click save,
+					and your new about section shows up in the footer.
+				</p>
+				<p>
+					Wondering about those Flickr photos on the right?
+				</p>
+				<p>
+					We didn't take them, they are a random sampling of the most popular
+					photos on Flickr with the tag "nature". All rights are reserved to the
+					original copyright holders where applicable.
+				</p>
+			</div>
+			<div id="footer-flickr" class="footer-column">
+				<h2>Flickr</h2>
+			</div>
+			<div id="footer-search" class="footer-column">
+				<h2>Search</h2>
+				<form method="get" id="search_form" action="http://wp-themes.com/">
+					<div>
+						<input name="s" id="s" class="search" type="text"><input id="searchsubmit" value="Search" type="submit">
+					</div>
+				</form>
+			</div>
+			<div id="copyright">
+				<p class="copyright-notice">
+					Copyright (c) 2009 . <a href="http://themes.jestro.com/titan/">Titan Theme</a>
+					by <a href="http://www.jestro.com/">Jestro</a>.
+				</p>
+			</div>
+			<!--end copyright-->
+		</div>
+		<!--end wrapper-->
+	</div>
+	<!--end footer-->
+	
+	<div id="jquery-modal" class="jquery-modal">
+		<div class="wrapper">
+			<div class="layout">
+				<table cellpadding="0" cellspacing="0">
+					<tr class="top">
+						<td colspan="3" class="top-padding"></td>
+					</tr>
+					<tr class="middle">
+						<td class="left-padding"></td>
+						<td class="content">
+							<div class="sidebar">
+								<ul class="menu">
+									<li class="header selected">
+										New Type
+									</li>
+									<li>Information</li>
+									<li>Fields</li>
+									<li>Features</li>
+								</ul>
+								<div class="back">Items</div>
+							</div>
+							<div class="main">
+								<div class="stuff">
+									<p>You are about to create a new listing type. With this you can then list a new type of items.</p>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</td>
+						<td class="right-padding"></td>
+					</tr>
+					<tr class="bottom">
+						<td colspan="3" class="bottom-padding"></td>
+					</tr>
+				</table>
+				<div class="close-button"></div>
+				<div class="header-title">Items: New Type</div>
+			</div>
+		</div>
+	</div>
+	<div class="jquery-modal-overlay"></div>
+	
+</body>
+</html>

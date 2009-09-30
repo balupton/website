@@ -1,0 +1,78 @@
+---
+detect_relations: false 
+
+Router:
+    actAs:
+        NestedSet:
+        Searchable:
+            fields: [url_path]
+    columns:
+        id:
+            primary: true
+            type: integer(4)
+            unsigned: true
+        url_path:
+            type: string(150)
+            notblank: true
+        show:
+            type: boolean
+            default: true
+        type:
+            type: string(15)
+            notblank: true
+        item_id:
+            type: string(15)
+            notblank: true
+
+Item:
+    actAs:
+        Searchable:
+            fields: [code]
+        Versionable:
+            versionColumn: version
+            className: %CLASS%Version
+            auditLog: true
+            deleteVersions: true
+        Timestampable:
+    columns:
+        id:
+            primary: true
+            type: integer(4)
+            unsigned: true
+        router_id:
+            unique: true
+            type: integer(4)
+            unsigned: true
+            notblank: true
+        code:
+            type: string(30)
+            notblank: true
+        title:
+            type: string(50)
+            default: true
+        content:
+            type: string
+            extra:
+                html: rich
+    relations:
+        Router:
+            class: Router
+            local: router_id
+            foreign: id
+            foreignAlias: Items
+            
+Page:
+    inheritance:
+        extends: Item
+        type: concrete
+                
+Event:
+    inheritance:
+        extends: Item
+        type: concrete
+
+Comment:
+    inheritance:
+        extends: Item
+        type: concrete
+        

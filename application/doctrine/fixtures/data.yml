@@ -1,0 +1,35 @@
+---
+
+Router:
+    Router_Events:
+        id: 1
+        url_path: "events"
+        show: true
+        controller: content
+        type: page
+        item_id: 1
+    Router_BlocParty:
+        id: 2
+        url_path: "events/bloc-party"
+        show: true
+        controller: events
+        type: event
+        item_id: 1
+        Parent: Router_Events
+        
+Page:
+    Page_Events:
+        id: 1
+        code: "events"
+        title: "Events"
+        content: "<b>Browisng Events</b>"
+        
+         
+Event:
+    Event_BlocParty:
+        id: 1
+        code: "bloc-party"
+        title: "Bloc Party"
+        content: "<b>Hello from Bloc PArty</b>"
+        
+        

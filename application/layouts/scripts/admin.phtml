@@ -1,0 +1,39 @@
+<?php
+	echo $this->doctype();
+	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<?=$this->headMeta()?>
+	<?=$this->headTitle()?>
+	<?	// CSS
+		$this->headLink()
+			->appendStylesheet($baseUrl.'/scripts/extjs/resources/css/ext-all.css');
+		// Output
+		echo $this->headLink(); ?>
+	<?=$this->headStyle()?>
+</head>
+<body>
+
+<?= $this->headScript()
+	// jQuery
+	->appendFile(APPLICATION_ENV==='production'?'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js':$baseUrl.'/scripts/jquery-1.3.2.min.js')
+	// JSON
+	->appendFile('http://www.json.org/json2.js')
+	// UI
+	// ->appendFile(APPLICATION_ENV==='production'?'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js':$baseUrl.'/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js')
+	// Ajaxy
+	->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.history.js')
+	->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.ajaxy.js')
+	// ExtJS
+	->appendFile($baseUrl.'/scripts/extjs/adapter/ext/ext-base.js')
+	->appendFile($baseUrl.'/scripts/extjs/adapter/jquery/ext-jquery-adapter.js')
+	->appendFile($baseUrl.'/scripts/extjs/ext-all.js')
+	->appendFile($baseUrl.'/scripts/extjs/ux/RowEditor.js')
+	// Application
+	->appendFile($baseUrl.'/scripts/jquery.sparkle.js')
+	->appendFile($baseUrl.'/scripts/balcms/balcms.js')
+	?>
+	
+</body>
+</html>

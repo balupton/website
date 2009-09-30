@@ -1,0 +1,13 @@
+<?
+	$key = $this->key;
+	$Item = $this->Item;
+	$wrap = !empty($this->wrap);
+?>
+<? if ( $wrap ): ?><span class="inline-panel"><? endif; ?>
+	<span class="view-panel">
+		<?=$this->partial('helpers/field-value.phtml',compact('key','Item'))?>
+	</span>
+	<span class="edit-panel" style="display:none;">
+		<?=$this->partial('helpers/field-input.phtml',compact('key','Item'))?>
+	</span>
+<? if ( $wrap ): ?></span><? endif; ?>
