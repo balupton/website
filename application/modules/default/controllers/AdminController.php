@@ -13,10 +13,11 @@ class AdminController extends Zend_Controller_Action {
 
 	public function init () {
 		// Layout
-		$this->getHelper('Layout')->setLayout('admin');
+		// $this->getHelper('Layout')->setLayout('admin');
 	}
 	
 	public function indexAction () {
+		die('asdasd');
 	}
 
 }

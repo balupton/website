@@ -14,7 +14,7 @@ if ( $_SERVER['DOCUMENT_ROOT'] === '/home/content/h/e/n/henfa/html' ) {
 	define('APPLICATION_ENV', 'development');
 	define('ROOT_PATH', realpath('C:/Server/www'));
 	define('DOCTRINE_PATH', realpath(ROOT_PATH.'/common/doctrine/lib'));
-	define('ZEND_PATH', realpath(ROOT_PATH.'/common/zend/library'));
+	define('ZEND_PATH', realpath(ROOT_PATH.'/common/ZendFramework-1.9.4/library'));
 	define('BALPHP_PATH', realpath(ROOT_PATH.'/common/balphp/lib'));
 }
 
@@ -27,6 +27,8 @@ if ( !defined('LIBRARY_PATH') )
 	define('LIBRARY_PATH', realpath(APPLICATION_PATH.'/../library'));
 if ( !defined('PUBLIC_PATH') )
 	define('PUBLIC_PATH', realpath(APPLICATION_PATH.'/../public'));
+if ( !defined('HANDLER_PATH') )
+	define('HANDLER_PATH', realpath(APPLICATION_PATH.'/handlers'));
 
 // Ensure library/ is on include_path
 $include_paths = array();
@@ -34,8 +36,9 @@ if ( defined('ZEND_PATH') )
 	$include_paths[] = ZEND_PATH;
 if ( defined('DOCTRINE_PATH') )
 	$include_paths[] = DOCTRINE_PATH;
-$include_paths[] = get_include_path();
+//$include_paths[] = get_include_path();
 $include_paths[] = LIBRARY_PATH;
+$include_paths[] = HANDLER_PATH;
 //if ( defined('BALPHP_PATH') )
 //	$include_paths[] = BALPHP_PATH;
 set_include_path(implode(PATH_SEPARATOR, $include_paths));

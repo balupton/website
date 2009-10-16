@@ -7,73 +7,19 @@ class IndexController extends Zend_Controller_Action {
 		$this->getHelper('Layout')->setLayout('simple');
 	}
 	
-	public function routeAction ( ) {
-		// Request
-		$Request = $this->getRequest();
-		$Response = $this->getResponse();
-		$options = $GLOBALS['Application']->getOption('balcms');
-		$params = $Request->getParams();
-		
-		// Fetch
-		$url_path = trim($Request->getParam('url_path', '/'), '/');
-		$url_params = trim($Request->getParam('url_params', ''),'/');
-		
-		// Generate Params
-		$params = explode('/',$url_params);
-		$key = $value = null; $i = 0; foreach ( $params as $param ) {
-			if ( $i % 2 === 0 ) {
-				$key = $param;
-				$value = true;
-			} else {
-				$value = $param;
-				$Request->setParam($key, $value);
-				$key = $value = null;
-			}
-			++$i;
-		} if ( $key ) $Request->setParam($key, $value); // In case we are uneven
-		
-		// Reset
-		$Request->setParam('url_path',$url_path); $Request->setParam('url_params',$url_params);
-		
-		// Check if the URL Path exists
-		$Item = null; $paths = explode('/', $url_path); $path = '';
-		while ( (!$Item || !$Item->exists()) && $paths ) {
-			$path = implode('/', $paths);
-			$Item = Doctrine::getTable('Router')->findOneByUrlPath($path);
-			array_pop($paths);
-		};
-		if ( (!$Item || !$Item->exists()) ) {
-			// Could not find anything!
-			throw new Zend_Exception('error-404');
-		}
-		
-		// Actions
-		while ( $Item->exists() ) {
-			$type = $Item->type;
-			$controller = $options['types'][$type]['controller'];
-			$action = $type;
-			$module = 'default';
-			$params = array('Item_id'=>$Item->item_id);
-			call_user_func_array(array(ucfirst($controller).'Controller', $action.'Action'), $params);
-			//$this->_helper->actionStack($action, $controller, $module, $params);
-			$Item = $Item->Parent;
-		}
-		//$this->view->action($action.'Page', $controller);
-		
-		// Dev
-		$Response->insert('content', $this->render('content'));
-	}
-	
 	public function debugAction ( ) {
-		
 		echo '<pre>';
 		var_dump($Request->getParams());
 		echo '</pre>';
 	}
 	
+	public function contentPageAction ( ) {
+		die('contentPage reached');
+		
+	}
 	public function indexAction () {
 		// Navigation
-		die('asdasd');
+		die('indexACtion reached');
 		$NavigationList = $this->applyNavigation();
 		
 		// Get Page

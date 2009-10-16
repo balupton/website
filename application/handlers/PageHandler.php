@@ -18,6 +18,10 @@ class PageHandler extends BaseHandler {
 		return $Comment;
 	}
 	
+	?>
+	<?=$this->renderWidget('Event', )
+	<?
+	
 	public function ContentPage ( $options ) {
 		// Prepare
 		$Item_id = $options['Item_id'];

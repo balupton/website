@@ -1,30 +1,25 @@
 ---
 detect_relations: false 
 
-Router:
+Route:
     actAs:
-        NestedSet:
         Searchable:
-            fields: [url_path]
+            fields: [path]
     columns:
         id:
             primary: true
             type: integer(4)
             unsigned: true
-        url_path:
+        path:
             type: string(150)
             notblank: true
-        show:
-            type: boolean
-            default: true
         type:
             type: string(15)
             notblank: true
-        item_id:
-            type: string(15)
-            notblank: true
+        data:
+            type: array
 
-Item:
+Page:
     actAs:
         Searchable:
             fields: [code]
@@ -39,11 +34,6 @@ Item:
             primary: true
             type: integer(4)
             unsigned: true
-        router_id:
-            unique: true
-            type: integer(4)
-            unsigned: true
-            notblank: true
         code:
             type: string(30)
             notblank: true
@@ -54,6 +44,11 @@ Item:
             type: string
             extra:
                 html: rich
+        router:
+            type: integer(4)
+            unsigned: true
+            unique: true
+            notnull: true
     relations:
         Router:
             class: Router
@@ -70,6 +65,11 @@ Event:
     inheritance:
         extends: Item
         type: concrete
+    columns:
+        start:
+            type: timestamp
+        finish:
+            type: timestamp
 
 Comment:
     inheritance:

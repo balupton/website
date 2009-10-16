@@ -40,10 +40,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 * @return 
 	 */
 	protected function _initRoutes () {
+		// Prepare
+		$this->bootstrap('doctrine');
+		// Route
 		$config = new Zend_Config_Ini(APPLICATION_PATH.'/configs/routes.ini', 'production');
 		$frontController = Zend_Controller_Front::getInstance();
 		if ( defined('BASE_URL') ) $frontController->setBaseUrl(BASE_URL);
     	$router = $frontController->getRouter();
+		$router->removeDefaultRoutes();
     	$router->addConfig($config, 'routes');
     	// Location
     	// $resources = $this->getOption('resources');

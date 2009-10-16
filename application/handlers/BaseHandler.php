@@ -5,17 +5,20 @@ class BaseHandler {
 	protected $Controller;
 	protected $View;
 	
+	public function __construct ( ) {
+		// Registry
+		$this->registryInit();
+	}
+	
 	/**
-	 * Initialise our Handler
+	 * Setup our Handler
 	 * @param object $Controller
 	 * @param object $View
 	 * @return 
 	 */
-	public function init ( $Controller, $View ) {
+	public function setup ( $Controller, $View ) {
 		$this->Controller = $Controller;
 		$this->View = $View;
-		// Registry
-		$this->registryInit();
 		// Done
 		return true;
 	}

@@ -5,7 +5,20 @@ class EventsController extends Zend_Controller_Action {
 	public function init () {
 	}
 	
-	public function eventAction ( ) {
+	public function eventsPageAction ( ) {
+		// Prepare
+		$Request = $this->getRequest();
+		$Response = $this->getResponse();
+		
+		// Handle
+		var_dump($Request->getParams());
+		die('events found');
+		
+		// View
+		die;
+	}
+	
+	public function eventPageAction ( ) {
 		// Request
 		$Request = $this->getRequest();
 		$Response = $this->getResponse();
@@ -18,6 +31,10 @@ class EventsController extends Zend_Controller_Action {
 		// Dev
 		$this->view->Event = $Event->toArray();
 		$Response->insert('event', $this->render('event'));
+	}
+	
+	public function eventsWidgetAction ( ) {
+		
 	}
 	
 }

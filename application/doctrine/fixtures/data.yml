@@ -1,30 +1,37 @@
 ---
 
-Router:
-    Router_Events:
+Route:
+    Route_Welcome:
         id: 1
-        url_path: "events"
-        show: true
-        controller: content
-        type: page
-        item_id: 1
-    Router_BlocParty:
+        path: "welcome"
+        type: content
+        data:
+            id: 1
+    Route_Events:
         id: 2
-        url_path: "events/bloc-party"
-        show: true
-        controller: events
+        path: "events"
+        type: events
+        data:
+            id: 1
+    Route_Events_BlocParty:
+        id: 3
+        path: "events/bloc-party"
         type: event
-        item_id: 1
-        Parent: Router_Events
-        
+        data:
+            id: 1
+
 Page:
-    Page_Events:
+    Page_Welcome:
         id: 1
+        code: "welcome"
+        title: "Welcome"
+        content: "<b>Browisng Welcome</b>"
+    Page_Events:
+        id: 2
         code: "events"
         title: "Events"
         content: "<b>Browisng Events</b>"
-        
-         
+
 Event:
     Event_BlocParty:
         id: 1
