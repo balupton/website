@@ -17,6 +17,12 @@
 		"controller": "media",
 		"action": "media-new",
 		"route": "admin"
+	},{
+		"id": "user-new",
+		"label": "New User",
+		"controller": "user",
+		"action": "user-new",
+		"route": "admin"
 	}],
 	"menu": [{
 		"id": "dashboard",
@@ -129,7 +135,6 @@
 		"label": "Media",
 		"controller": "media",
 		"route": "admin",
-		"class": "menu-top-last",
 		"pages": [{
 			"label": "Media",
 			"controller": "media",
@@ -140,6 +145,25 @@
 			"label": "&mdash; New Media",
 			"controller": "media",
 			"action": "media-new",
+			"route": "admin",
+			"class": "child"
+		}]
+	},{
+		"id": "user",
+		"label": "Users",
+		"controller": "user",
+		"route": "admin",
+		"class": "menu-top-last",
+		"pages": [{
+			"label": "Users",
+			"controller": "user",
+			"action": "user-list",
+			"route": "admin",
+			"class": "parent"
+		},{
+			"label": "&mdash; New User",
+			"controller": "user",
+			"action": "user-new",
 			"route": "admin",
 			"class": "child"
 		}]
