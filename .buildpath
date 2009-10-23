@@ -3,6 +3,7 @@
 	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/doctrine"/>
 	<buildpathentry kind="src" path=""/>
 	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/balphp"/>
+	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/doctrine-1.2"/>
 	<buildpathentry kind="con" path="org.zend.php.framework.CONTAINER"/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
 </buildpath>

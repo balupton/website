@@ -1,0 +1,172 @@
+{
+	"favorites": [{
+		"id": "content-new",
+		"label": "New Content",
+		"controller": "content",
+		"action": "content-new",
+		"route": "admin"
+	},{
+		"id": "event-new",
+		"label": "New Event",
+		"controller": "event",
+		"action": "event-new",
+		"route": "admin"
+	},{
+		"id": "media-new",
+		"label": "New Media",
+		"controller": "media",
+		"action": "media-new",
+		"route": "admin"
+	}],
+	"menu": [{
+		"id": "dashboard",
+		"label": "Dashboard",
+		"route": "admin",
+		"class": "menu-top-last"
+	},{
+		"label": "---",
+		"uri": "#"
+	},{
+		"id": "content",
+		"label": "Content",
+		"controller": "content",
+		"route": "admin",
+		"pages": [{
+			"id": "content-list",
+			"label": "Content",
+			"controller": "content",
+			"action": "content-list",
+			"route": "admin",
+			"class": "parent"
+		},{
+			"id": "content-new",
+			"label": "&mdash; New Content",
+			"controller": "content",
+			"action": "content-new",
+			"route": "admin",
+			"class": "child"
+		},{
+			"label": "Templates",
+			"controller": "content",
+			"action": "template-list",
+			"route": "admin",
+			"class": "parent"
+		},{
+			"label": "&mdash; New Templates",
+			"controller": "content",
+			"action": "template-new",
+			"route": "admin",
+			"class": "child"
+		},{
+			"label": "Tags",
+			"controller": "content",
+			"action": "tags",
+			"route": "admin"
+		}]
+	},{
+		"id": "event",
+		"label": "Events",
+		"controller": "event",
+		"route": "admin",
+		"pages": [{
+			"id": "event-list",
+			"label": "Events",
+			"controller": "event",
+			"action": "event-list",
+			"route": "admin",
+			"class": "parent"
+		},{
+			"label": "&mdash; New Event",
+			"controller": "event",
+			"action": "event-new",
+			"route": "admin",
+			"class": "child"
+		},{
+			"label": "Venues",
+			"controller": "event",
+			"action": "venue-list",
+			"route": "admin",
+			"class": "parent"
+		},{
+			"label": "&mdash;New Venue",
+			"controller": "event",
+			"action": "venue-new",
+			"route": "admin",
+			"class": "child"
+		},{
+			"label": "Performers",
+			"controller": "event",
+			"action": "performer-list",
+			"route": "admin",
+			"class": "parent"
+		},{
+			"label": "&mdash; New Performer",
+			"controller": "event",
+			"action": "performer-list",
+			"route": "admin",
+			"class": "child"
+		}]
+	},{
+		"id": "subscription",
+		"label": "Subscriptions",
+		"controller": "subscription",
+		"route": "admin",
+		"pages": [{
+			"label": "Subscribers",
+			"controller": "subscription",
+			"action": "subscription-list",
+			"route": "admin",
+			"class": "parent"
+		},{
+			"label": "&mdash; New Subscriber",
+			"controller": "subscription",
+			"action": "subscription-new",
+			"route": "admin",
+			"class": "child"
+		}]
+	},{
+		"id": "media",
+		"label": "Media",
+		"controller": "media",
+		"route": "admin",
+		"class": "menu-top-last",
+		"pages": [{
+			"label": "Media",
+			"controller": "media",
+			"action": "media-list",
+			"route": "admin",
+			"class": "parent"
+		},{
+			"label": "&mdash; New Media",
+			"controller": "media",
+			"action": "media-new",
+			"route": "admin",
+			"class": "child"
+		}]
+	},{
+		"label": "---",
+		"uri": "#"
+	},{
+		"id": "system",
+		"label": "System",
+		"controller": "system",
+		"route": "admin",
+		"class": "menu-top-last",
+		"pages": [{
+			"label": "Configuration",
+			"controller": "system",
+			"action": "system-config",
+			"route": "admin"
+		},{
+			"label": "Localisation",
+			"controller": "system",
+			"action": "system-local",
+			"route": "admin"
+		},{
+			"label": "CRUD",
+			"controller": "system",
+			"action": "system-crud",
+			"route": "admin"
+		}]
+	}]
+}

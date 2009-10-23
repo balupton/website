@@ -1,8 +1,8 @@
 <?php
 require_once 'Zend/Controller/Router/Route/Interface.php';
- 
+
 class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex {
-	
+
     /**#@+
      * Array keys to use for module, controller, and action. Should be taken out of request.
      * @var string
@@ -11,7 +11,7 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
     protected $_controllerKey = 'controller';
     protected $_actionKey     = 'action';
     /**#@-*/
-	
+
     /**
      * @var Zend_Controller_Dispatcher_Interface
      */
@@ -21,7 +21,7 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
      * @var Zend_Controller_Request_Abstract
      */
     protected $_request;
-	
+
     /**
      * Set request keys based on values in request object
      * @return void
@@ -44,9 +44,9 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 
         $this->_keysSet = true;
     }
- 	
-	
-	
+
+
+
     /**
      * Instantiates route based on passed Zend_Config structure
      * @param Zend_Config $config Configuration object
@@ -58,7 +58,7 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
         $reverse = (isset($config->reverse)) ? $config->reverse : null;
         return new self($config->route, $defs, $map, $reverse);
     }
-	
+
 	protected function _getOptions(){
 		$options = $GLOBALS['Application']->getOption('balcms'); $options = $options['routing'];
 		return $options;
@@ -84,7 +84,7 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
         }
 		return $url;
 	}
- 	
+
     /**
      * Matches a user submitted path with a previously defined route.
      * Assigns and returns an array of defaults on a successful match.
@@ -96,7 +96,7 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
     	// Prepare
         $this->_setRequestKeys();
     	$values = parent::match($path,$partial);
-		
+
 		// Get defaults and options
 		$options = $this->_getOptions();
 		$defaults = $this->_getDefaults($options['defaults']);
@@ -104,15 +104,15 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 		$pathColumn = $defaults['pathColumn'];
 		$dataColumn = $defaults['dataColumn'];
 		$typeColumn = $defaults['typeColumn'];
-		
+
 		// Get Path
 		$path = $values['map_path'];
 		$params = $values['map_params'];
-		
+
 		// Fetch
 		$path = trim($path, '/');
 		$params = trim($params,'/');
-		
+
 		// Include Params into $values
 		$params = explode('/',$params);
 		$key = $value = null; $i = 0; foreach ( $params as $param ) {
@@ -126,16 +126,16 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 			}
 			++$i;
 		} if ( $key ) $values[$key] = $value; // In case we have an left overs: /key/value/key. Value will be {true}
-		
+
 		// Fetch the Page
-		$Page = Doctrine::getTable($routeTable)->findOneBy($pathColumn,$path);
-		if ( !$Page || !$Page->exists() ) {
+		$Map = Doctrine::getTable($routeTable)->findOneBy($pathColumn,$path);
+		if ( !$Map || !$Map->exists() ) {
 			// Could not find anything!
 			return false; // Will cause 404
 		}
-		
+
 		// Retrieve Page routing information
-		$type = $Page->get($typeColumn);
+		$type = $Map->get($typeColumn);
 		if ( empty($options['routeTypes'][$type]) ) {
             require_once 'Zend/Controller/Router/Exception.php';
             throw new Zend_Controller_Router_Exception('Route type ['.$type.'] has no configuration.');
@@ -144,17 +144,17 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 		$module = !empty($routeType['module']) ? $routeType['module'] : null;
 		$controller = $routeType['controller'];
 		$action = $routeType['action'];
-		$data = $Page->get($dataColumn); if ( empty($data) ) $data = array();
-		
+		$data = $Map->get($dataColumn); if ( empty($data) ) $data = array();
+
 		// Apply routing information
 		$values[$this->_moduleKey] = $module;
 		$values[$this->_controllerKey] = $controller;
 		$values[$this->_actionKey] = $action;
-		
+
 		// Done
 		return $values;
     }
-	
+
     /**
      * Assembles user submitted parameters forming a URL path defined by this route
      *
@@ -167,29 +167,30 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
         if (!$this->_keysSet) {
             $this->_setRequestKeys();
         }
-		
+
 		// Get defaults and options
 		$options = $this->_getOptions();
 		$defaults = $this->_getDefaults($options['defaults']);
 		$pathColumn = $defaults['pathColumn'];
-		
+
     	// Fetch Page
-		if ( empty($data['Page']) ) {
+		if ( empty($data['Map']) ) {
             require_once 'Zend/Controller/Router/Exception.php';
-            throw new Zend_Controller_Router_Exception('Cannot assemble. Page has not been specified.');
-		}	$Page = $data['Page'];
-		
+            throw new Zend_Controller_Router_Exception('Cannot assemble. Map has not been specified.');
+		}	$Map = $data['Map'];
+
 		// Get Params
 		$params = $data;
-		unset($params['Page']);
-		
+		unset($params['Map']);
+
 		// Generate URL
-		$url_path = $Page->get($pathColumn);
+		$url_path = is_array($Map) ? $Map[$pathColumn] : $Map->get($pathColumn);
 		$url_params = $this->_getParamsString($params);
         $url = @vsprintf($this->_reverse, compact('url_path', 'url_params'));
-		
+		$url = trim($url, '/');
+
 		// Return URL
         return $url;
     }
-	
+
 }

@@ -9,11 +9,12 @@
  * @property string $path
  * @property string $type
  * @property array $data
+ * @property Doctrine_Collection $Content
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 5845 2009-06-09 07:36:57Z jwage $
+ * @version    SVN: $Id: Builder.php 6508 2009-10-14 06:28:49Z jwage $
  */
 abstract class BaseRoute extends Doctrine_Record
 {
@@ -43,12 +44,19 @@ abstract class BaseRoute extends Doctrine_Record
 
     public function setUp()
     {
+        parent::setUp();
+        $this->hasMany('Content', array(
+             'local' => 'id',
+             'foreign' => 'route_id'));
+
+        $balauditable0 = new BALAuditable();
         $searchable0 = new Doctrine_Template_Searchable(array(
              'fields' => 
              array(
               0 => 'path',
              ),
              ));
+        $this->actAs($balauditable0);
         $this->actAs($searchable0);
     }
 }

@@ -1,42 +1,133 @@
 ---
 
-Route:
-    Route_Welcome:
+User:
+    User_Admin:
         id: 1
-        path: "welcome"
-        type: content
-        data:
-            id: 1
-    Route_Events:
-        id: 2
-        path: "events"
-        type: events
-        data:
-            id: 1
-    Route_Events_BlocParty:
-        id: 3
-        path: "events/bloc-party"
-        type: event
-        data:
-            id: 1
-
-Page:
-    Page_Welcome:
+        username: admin
+        password: my.dance
+        title: MyDance
+        email: mydance@balupton.com
+        
+Content:
+    Content_Welcome:
         id: 1
         code: "welcome"
         title: "Welcome"
-        content: "<b>Browisng Welcome</b>"
-    Page_Events:
+        description: "Home Page"
+        content: "[carousel]1,2,3[/carousel]<br/>[taglist/]<br/>[recentlist/]"
+        Route:
+            id: 1
+            path: "welcome"
+            type: content
+            data:
+                id: 1
+        children: []
+    Content_Events:
         id: 2
         code: "events"
         title: "Events"
-        content: "<b>Browisng Events</b>"
+        description: "Event Listing"
+        content: "[eventlist/]"
+        Route:
+            id: 2
+            path: "events"
+            type: content
+            data:
+                id: 2
+        children:
+            Content_Events_BlocParty:
+                id: 4
+                code: "bloc-party"
+                title: "Bloc Party"
+                description: "Event for Bloc Party"
+                content: "[event]1[/event]"
+                system: true
+                Route:
+                    id: 4
+                    path: "events/bloc-party"
+                    type: content
+                    data:
+                        id: 4
+    Content_Articles:
+        id: 3
+        code: "articles"
+        title: "Articles"
+        description: "Article Listing"
+        content: "[articlelist/]"
+        Route:
+            id: 3
+            path: "articles"
+            type: content
+            data:
+                id: 3
+        children:
+            Content_Articles_NewSite:
+                id: 5
+                code: "newsite"
+                title: "New Site"
+                description: "New Site!"
+                content: "[article]1[/article]"
+                Route:
+                    id: 5
+                    path: "articles/newsite"
+                    type: content
+                    data:
+                        id: 5
+    Content_Resources:
+        id: 6
+        code: "resources"
+        title: "Resources"
+        description: "Knowledge Base Area"
+        content: "[contentlist/]"
+        Route:
+            id: 6
+            path: "resources"
+            type: content
+            data:
+                id: 6
+        children:
+            Content_Resources_Equipment:
+                id: 7
+                code: "equipment"
+                title: "Equipment"
+                description: "Equipment Listing"
+                content: "[contentlist/]"
+                Route:
+                    id: 7
+                    path: "resources/equipment"
+                    type: content
+                    data:
+                        id: 7
+                children:
+                    Content_Resources_Equipment_Shoes:
+                        id: 8
+                        code: "shoes"
+                        title: "New Shoes"
+                        description: "New Shoes!"
+                        content: "some new shoes!"
+                        Route:
+                            id: 8
+                            path: "resources/equipment/shoes"
+                            type: content
+                            data:
+                                id: 8
 
 Event:
     Event_BlocParty:
         id: 1
-        code: "bloc-party"
-        title: "Bloc Party"
-        content: "<b>Hello from Bloc PArty</b>"
-        
-        
+        start_at: "2009-03-14 21:14"
+        finish_at: "2009-03-14 23:14"
+        content: "Bloc Party are famous and kick ass"
+        Content: Content_Events_BlocParty
+
+Article:
+    Article_NewSite:
+        id: 1
+        content: "Our new website is live!"
+        Content: Content_Articles_NewSite
+                    
+Subscriber:
+    Subscriber_Balupton:
+        id: 1
+        email: "balupton@gmail.com"
+        enabled: true

@@ -1,0 +1,33 @@
+<div id="favorite-actions">
+<?
+$id_prefix = 'favorites-';
+$first = true;
+foreach ($this->container as $Page ) :
+	$label = $Page->label;
+	// Checks
+	$active = false;
+	$class = array($Page->class);
+	// Position
+	if ( $first ) {
+		// First
+		$class[] = 'favorite-first';
+		// Position
+		$first = false;
+		// Display
+		?><div id="favorite-first">
+			<?=html_entity_decode($this->navigation()->menu()->htmlify($Page)).PHP_EOL?>
+		</div>
+		<div id="favorite-toggle">
+			<br/>
+		</div>
+		<div style="width: 126px;" id="favorite-inside"><?
+	} else {
+		// Not First
+		?>
+			<div class="favorite-action">
+				<?=html_entity_decode($this->navigation()->menu()->htmlify($Page)).PHP_EOL?>
+			</div><?
+	}
+endforeach; ?>
+		</div>
+</div>

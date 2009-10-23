@@ -1,8 +1,9 @@
 ---
-detect_relations: false 
+detect_relations: false
 
 Route:
     actAs:
+        BALAuditable:
         Searchable:
             fields: [path]
     columns:
@@ -19,16 +20,22 @@ Route:
         data:
             type: array
 
-Page:
+Template:
     actAs:
-        Searchable:
-            fields: [code]
-        Versionable:
-            versionColumn: version
-            className: %CLASS%Version
-            auditLog: true
-            deleteVersions: true
-        Timestampable:
+        BALAuditable:
+            status:
+                disabled: true
+            enabled:
+                disabled: true
+            author:
+                disabled: false
+            created_at:
+                disabled: false
+            updated_at:
+                disabled: false
+            published_at:
+                disabled: true
+        Taggable:
     columns:
         id:
             primary: true
@@ -40,39 +47,226 @@ Page:
         title:
             type: string(50)
             default: true
+        description:
+            type: string
+            extra:
+                html: rich
         content:
             type: string
             extra:
                 html: rich
-        router:
+        system:
+            type: boolean
+            default: false
+            notnull: true
+        avatar_id:
+            type: integer(4)
+            unsigned: true
+    relations:
+        Avatar:
+            class: Image
+            local: avatar_id
+            foreign: id
+    
+Content:
+    inheritance:
+        extends: Template
+        type: concrete
+    actAs:
+        BALAuditable:
+            status:
+                disabled: false
+            enabled:
+                disabled: false
+            author:
+                disabled: false
+            created_at:
+                disabled: false
+            updated_at:
+                disabled: false
+            published_at:
+                disabled: false
+        NestedSet:
+            hasManyRoots: true
+            rootColumnName: root_id
+        Searchable:
+            fields: [code,status,enabled,system]
+    columns:
+        route_id:
             type: integer(4)
             unsigned: true
             unique: true
             notnull: true
     relations:
-        Router:
-            class: Router
-            local: router_id
+        Route:
+            local: route_id
             foreign: id
-            foreignAlias: Items
-            
-Page:
-    inheritance:
-        extends: Item
-        type: concrete
-                
+
 Event:
-    inheritance:
-        extends: Item
-        type: concrete
+    actAs:
+        BALContentExtension:
     columns:
-        start:
+        start_at:
             type: timestamp
-        finish:
+        finish_at:
             type: timestamp
 
-Comment:
+Venue:
+    actAs:
+        BALContentExtension:
+    columns:
+        google_map_uri:
+            type: string(255)
+
+Performer:
+    actAs:
+        BALContentExtension:
+
+Article:
+    actAs:
+        BALContentExtension:
+    columns:
+        sent_at:
+            type: timestamp
+        sent_all:
+            type: integer(4)
+        sent_remaining:
+            type: integer(4)
+        satus:
+            type: enum
+            values: [unsent,sending,sent]
+            default: unsent
+            notblank: true
+    relations:
+        Subscribers:
+            class: Subscriber
+            local: article_id
+            foreign: subscriber_id
+            foreignAlias: Articles
+            refClass: ArticleSubscriber
+
+ArticleSubscriber:
+    columns:
+        id:
+            primary: true
+            type: integer(4)
+            unsigned: true
+        article_id:
+            type: integer(4)
+            unsigned: true
+        subscriber_id:
+            type: integer(4)
+            unsigned: true
+        status:
+            type: enum
+            values: [pending,sending,delivered,failed]
+            default: pending
+            notnull: true
+    relations:
+        Article:
+            local: article_id
+            foreign: id
+        Subscriber:
+            local: subscriber_id
+            foreign: id
+
+Subscriber:
+    actAs:
+         Taggable:
+    columns:
+        id:
+            primary: true
+            type: integer(4)
+            unsigned: true
+        email:
+            type: string(255)
+            notnull: true
+            unique: true
+        enabled:
+            type: boolean
+            notnull: true
+            default: true
+
+File:
+    actAs:
+        Taggable:
+        BALAuditable:
+            status:
+                disabled: true
+            enabled:
+                disabled: true
+            author:
+                disabled: false
+            created_at:
+                disabled: false
+            updated_at:
+                disabled: false
+            published_at:
+                disabled: true
+    columns:
+        id:
+            primary: true
+            type: integer(4)
+            unsigned: true
+        code:
+            type: string(255)
+            unique: true
+            notblank: true
+        location:
+            type: string(255)
+            notblank: true
+        size:
+            type: integer(4)
+        type:
+            type: enum
+            values: [document,image,video,application]
+            default: unknown
+            notnull: true
+        mimetype:
+            type: string(20)
+            notnull: true
+
+Image:
     inheritance:
-        extends: Item
+        extends: File
         type: concrete
-        
+    columns:
+        width:
+            type: integer(2)
+            unsigned: true
+        height:
+            type: integer(2)
+            unsigned: true
+        type:
+            type: enum
+            values: [avatar,image]
+            default: image
+            notnull: true
+    
+User:
+    actAs:
+        Searchable:
+            fields: [username]
+    columns:
+        id:
+            type: integer(4)
+            primary: true
+            autoincrement: true
+            unsigned: true
+        username:
+            type: string(15)
+            notblank: true
+            unique: true
+        password:
+            type: string(10)
+            notblank: true
+        enabled:
+            type: boolean
+            notnull: true
+            default: true
+        title:
+            type: string(255)
+            notblank: true
+        email:
+            type: string(255)
+            notblank: true

@@ -1,0 +1,168 @@
+<div class="wrap">
+	<!-- Edit Button -->
+    <div id="icon-edit-pages" class="icon32">
+        <br/>
+    </div>
+	<!-- Header -->
+    <h2>
+    	 <a href="<?=$this->url(array('controller'=>'content','action'=>'content-list'),'admin',true)?>">Content List</a>
+		<? foreach ( $this->ContentCrumbArray as $Content ): ?>
+			&raquo; <a href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
+		<? endforeach; ?>
+	</h2>
+    <!-- Filters -->
+    <form id="posts-filter" action="" method="get">
+        <ul class="subsubsub">
+            <li>
+                <a href="http://localhost/wordpress/wp-admin/edit-pages.php" class="current">All <span class="count">(1)</span></a> |
+            </li>
+            <li>
+                <a href="http://localhost/wordpress/wp-admin/edit-pages.php?post_status=publish">Published <span class="count">(1)</span></a> |
+            </li>
+            <li>
+                <a href="http://localhost/wordpress/wp-admin/edit-pages.php?post_status=future">Scheduled <span class="count">(0)</span></a> |
+            </li>
+            <li>
+                <a href="http://localhost/wordpress/wp-admin/edit-pages.php?post_status=pending">Pending Review <span class="count">(0)</span></a> |
+            </li>
+            <li>
+                <a href="http://localhost/wordpress/wp-admin/edit-pages.php?post_status=draft">Drafts <span class="count">(0)</span></a> |
+            </li>
+            <li>
+                <a href="http://localhost/wordpress/wp-admin/edit-pages.php?post_status=private">Private <span class="count">(0)</span></a>
+            </li>
+        </ul>
+		<!-- Search -->
+        <p class="search-box">
+            <label class="screen-reader-text" for="page-search-input">
+                Search Content:
+            </label>
+            <input id="page-search-input" name="s" type="text"><input value="Search Content" class="button" type="submit">
+        </p>
+		<!-- Bulk Actions --><!--
+        <div class="tablenav">
+            <div class="alignleft actions">
+                <select name="action">
+                    <option value="-1" selected="selected">Bulk Actions</option>
+                    <option value="edit">Edit</option>
+                    <option value="delete">Delete</option>
+                </select>
+                <input value="Apply" name="doaction" id="doaction" class="button-secondary action" type="submit"><input id="_wpnonce" name="_wpnonce" value="44c4e08b11" type="hidden"><input name="_wp_http_referer" value="/wordpress/wp-admin/edit-pages.php" type="hidden">
+            </div>
+            <br class="clear">
+        </div>-->
+        <div class="clear">
+        </div>
+		<!-- Content Table -->
+        <table class="widefat page fixed" cellspacing="0">
+        	<!-- Content Table: Heading -->
+            <thead>
+                <tr>
+                    <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <input type="checkbox">
+                    </th>-->
+                    <th scope="col" id="title" class="manage-column column-title" style="">
+                        Title
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        Description
+                    </th>
+                    <th scope="col" id="author" class="manage-column column-author" style="">
+                        Author
+                    </th>
+                    <th scope="col" id="author" class="manage-column column-tags" style="">
+                        Tags
+                    </th>
+					<!--<th scope="col" id="comments" class="manage-column column-comments num" style="">
+                        <div class="vers">
+                            <img alt="" src="edit-pages.php_files/comment-grey-bubble.png">
+                        </div>
+                    </th>-->
+                    <th scope="col" id="date" class="manage-column column-date" style="">
+                        Date
+                    </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <input type="checkbox">
+                    </th>-->
+                    <th scope="col" id="title" class="manage-column column-title" style="">
+                        Title
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        Description
+                    </th>
+                    <th scope="col" id="author" class="manage-column column-author" style="">
+                        Author
+                    </th>
+                    <th scope="col" id="author" class="manage-column column-tags" style="">
+                        Tags
+                    </th>
+					<!--<th scope="col" id="comments" class="manage-column column-comments num" style="">
+                        <div class="vers">
+                            <img alt="" src="edit-pages.php_files/comment-grey-bubble.png">
+                        </div>
+                    </th>-->
+                    <th scope="col" id="date" class="manage-column column-date" style="">
+                        Date
+                    </th>
+                </tr>
+            </tfoot>
+			<!-- Content Table: Content -->
+            <tbody>
+            	<? foreach ( $this->ContentListArray as $Content ): ?>
+                <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?> iedit">
+                    <!--<th scope="row" class="check-column">
+                        <input name="content[]" value="<?=$Content['id']?>" type="checkbox">
+                    </th>-->
+                    <td class="post-title page-title column-title">
+                        <strong><a class="row-title" href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>" title="<?=$this->locale->translate('edit-%s',$Content['title'])?>">
+                        	<?=/*str_repeat('&nbsp;',$Content['level']).' '.*/$Content['title']?>
+						</a></strong>
+						<div class="row-actions">
+							<span class="edit"><a title="Edit this page" href="<?=$this->url(array('controller'=>'content','action'=>'content-edit','content'=>$Content['code']),'admin')?>">Edit</a> | </span>
+							<span class="delete"><a class="delete-action" title="Delete this page" href="<?=$this->url(array('controller'=>'content','action'=>'content-delete','content'=>$Content['code']),'admin')?>">Delete</a> | </span>
+							<span class="view"><a rel="permalink" title="View" href="<?=$this->url(array('Map'=>$Content['Route']),'map')?>">View</a></span>
+						</div>
+                    </td>
+                    <td class="author column-author">
+                        <?=$Content['description']?>
+                    </td>
+                    <td class="author column-author">
+                        <?=empty($Content['Author'])?'Unkown':$Content['Author']['title']?>
+                    </td>
+                    <td class="author column-tags">
+                        <?=empty($Content['Tags'])?'':implode(',', $Content['Tags'])?>
+                    </td>
+                    <!--<td class="comments column-comments">
+                        <div class="post-com-count-wrapper">
+                            <a href="http://localhost/wordpress/wp-admin/edit-comments.php?p=2" title="0 pending" class="post-com-count"><span class="comment-count">0</span></a>
+                        </div>
+                    </td>-->
+                    <td class="date column-date">
+                        <abbr title="<?=$this->locale->datetime($Content['updated_at'])?>">
+                            <?=$this->locale->timeago($Content['updated_at'])?>
+                        </abbr>
+                        <br/>
+                        <?=$Content['status']?>
+                    </td>
+                </tr>
+				<? endforeach; ?>
+            </tbody>
+        </table>
+		<!-- Bulk Actions -->
+        <!--<div class="tablenav">
+            <div class="alignleft actions">
+                <select name="action2">
+                    <option value="-1" selected="selected">Bulk Actions</option>
+                    <option value="edit">Edit</option>
+                    <option value="delete">Delete</option>
+                </select>
+                <input value="Apply" name="doaction2" id="doaction2" class="button-secondary action" type="submit">
+            </div>
+            <br class="clear">
+        </div>-->
+    </form>
+</div>

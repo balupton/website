@@ -6,13 +6,29 @@ require_once(dirname(__FILE__).'/../public/index.php');
 // Run
 $Application->bootstrap('doctrine');
 
-$doctrineOptions = $Application->getOption('doctrine');
+$doctrineConfig = $Application->getOption('doctrine');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+$fixtures_path = $doctrineConfig['data_fixtures_path'];
 
-Doctrine::dropDatabases();
-Doctrine::createDatabases();
-Doctrine::createTablesFromModels();
-Doctrine::loadData($doctrineOptions['data_fixtures_path']);
 
-die($doctrineOptions['data_fixtures_path']);
+if ( !empty($_GET['usedump']) ) {
+	$fixtures_path = $doctrineConfig['data_dump_path'];
+	echo 'Using Dump.'."<br/>\n";
+}
+
+if ( !empty($_GET['dump']) ) {
+	$fixtures_path = $doctrineConfig['data_dump_path'];
+	echo 'Dumping.'."<br/>\n";
+	Doctrine::dumpData($fixtures_path.'/data.yml', false);
+}
+
+if ( !empty($_GET['drop']) ) {
+	echo 'Dropping.'."<br/>\n";
+	Doctrine::dropDatabases();
+	Doctrine::createDatabases();
+	Doctrine::createTablesFromModels();
+	Doctrine::loadData($fixtures_path);
+}
+
+die($fixtures_path);

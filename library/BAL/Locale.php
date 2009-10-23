@@ -216,6 +216,30 @@ class BAL_Locale {
 		if ( $format_time === null ) $format_time = $this->format_time;
 		return $Date->get($format_time, $locale);
 	}
+	public function timeago ( $timestamp ) {
+		// http://www.php.net/manual/en/function.time.php#89415
+	    $periods	= array('second', 'minute', 'hour', 'day', 'week', 'month', 'year', 'decade');
+	    $lengths	= array(60,60,24,7,4.35,12,10);
+	    $now		= time();
+	    $timestamp	= strtotime($timestamp);
+	    // is it future date or past date
+	    if($now > $timestamp) {   
+	        $difference	= $now - $timestamp;
+	        $tense		= 'ago';
+	       
+	    } else {
+	        $difference	= $timestamp - $now;
+	        $tense		= 'from now';
+	    }
+	    for($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
+	        $difference /= $lengths[$j];
+	    }
+	    $difference = round($difference);
+	    if($difference != 1) {
+	    	$periods[$j].= 's';
+	    }
+	    return $this->translate('time-ago', $difference, $periods[$j], $tense);
+	}
 	
 	/**
 	 * Converts a filesize from bytes to human and translate into the locale

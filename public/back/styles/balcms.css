@@ -1,0 +1,6 @@
+#adminmenu li.parent a {
+	/*font-weight: bold;*/
+}
+#adminmenu li.child a {
+	/*font-weight: normal;*/
+}
