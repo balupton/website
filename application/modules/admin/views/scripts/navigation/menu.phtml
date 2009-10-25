@@ -26,10 +26,14 @@ foreach ($this->container as $Page ) :
 		// Active
 		$active = $Page->isActive(false);
 		if ( $active ) {
-			$class[] = 'wp-menu-open';
-			if ( $children ) $class[] = 'wp-has-current-submenu';
+			if ( $children ) {
+				$class[] = 'wp-menu-open';
+				$class[] = 'wp-has-current-submenu';
+			}
 		}
-		if ( $children ) $class[] = 'wp-has-submenu';
+		if ( $children ) {
+			$class[] = 'wp-has-submenu';
+		}
 		// Normal
 		$class[] = 'menu-top';
 		// Display
@@ -93,3 +97,15 @@ foreach ($this->container as $Page ) :
 
 endforeach; ?>
 </ul>
+<script type="text/javascript">
+	$(function(){
+		var $menu = $('#adminmenu');
+		$menu.find('.wp-has-submenu .wp-menu-toggle').click(function(){
+			var $toggle = $(this);
+			var $menu = $toggle.parent('.menu-top').toggleClass('wp-menu-open');
+		});
+		$menu.find('.wp-menu-separator .separator').click(function(){
+			$(document.body).toggleClass('folded');
+		});
+	});
+</script>

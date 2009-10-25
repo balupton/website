@@ -28,7 +28,14 @@
 		"id": "dashboard",
 		"label": "Dashboard",
 		"route": "admin",
-		"class": "menu-top-last"
+		"class": "menu-top-last",
+		"pages": [{
+			"id": "dashboard-dashboard",
+			"label": "Dashboard",
+			"controller": "content",
+			"action": "dashboard",
+			"route": "admin"
+		}]
 	},{
 		"label": "---",
 		"uri": "#"

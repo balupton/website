@@ -32,6 +32,10 @@ class Admin_ContentController extends Zend_Controller_Action {
 		return $this->_forward('content-list');
 	}
 
+	public function contentEditAction ( ) {
+		$this->registerMenu('content-list');
+	}
+
 	public function contentNewAction ( ) {
 		$this->registerMenu('content-new');
 	}

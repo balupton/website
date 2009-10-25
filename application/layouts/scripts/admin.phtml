@@ -1,6 +1,7 @@
 <?php
 echo $this->doctype();
-$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+$baseUrl = $this->bal()->getBaseUrl();
+$baseUrlBack = $this->bal()->getBaseUrl('back');
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
@@ -29,7 +30,8 @@ $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
     // Ajaxy
     ->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.history.js')->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.ajaxy.js')
     // Application
-    ->appendFile($baseUrl.'/scripts/jquery.sparkle.js')->appendFile($baseUrl.'/scripts/balcms/balcms.js')
+    ->appendFile($baseUrl.'/scripts/jquery.sparkle.js')
+    ->appendFile($baseUrlBack.'/scripts/balcms.js')
     ?>
         <script type="text/javascript">
             //<![CDATA[
