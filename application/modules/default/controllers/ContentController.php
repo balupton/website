@@ -6,18 +6,20 @@ class ContentController extends Zend_Controller_Action {
 	}
 	
 	public function contentPageAction ( ) {
-		// Request
+		// Prepare
 		$Request = $this->getRequest();
 		$Response = $this->getResponse();
-		$Item_id = $this->_getParam('Item_id');
-		$Page = Doctrine::getTable('Content')->find($Item_id);
 		
-		// Get the Event
-		echo($Item_id.':'.$Page->title.'<br />');
+		// Fetch
+		$content_id = $this->_getParam('id');
+		$Content = Doctrine::getTable('Content')->find($content_id);
+		
+		// Display
+		echo($content_id.':'.$Content->title.'<br />');
+		die;
 		
 		// Dev
-		$this->view->Page = $Page->toArray();
-		$Response->insert('page', $this->render('page'));
+		$this->view->Content = $Item->toArray();
 	}
 	
 }

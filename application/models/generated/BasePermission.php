@@ -7,6 +7,7 @@
  * 
  * @property integer $id
  * @property string $code
+ * @property Doctrine_Collection $Users
  * @property Doctrine_Collection $PermissionGroups
  * @property Doctrine_Collection $PermissionAndPermissionGroup
  * @property Doctrine_Collection $PermissionAndUser
@@ -39,6 +40,11 @@ abstract class BasePermission extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
+        $this->hasMany('User as Users', array(
+             'refClass' => 'PermissionAndUser',
+             'local' => 'permission_id',
+             'foreign' => 'user_id'));
+
         $this->hasMany('PermissionGroup as PermissionGroups', array(
              'refClass' => 'PermissionAndPermissionGroup',
              'local' => 'permission_id',

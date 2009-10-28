@@ -51,7 +51,7 @@ abstract class BaseContent extends Template
               1 => 'pending',
               2 => 'completed',
              ),
-             'default' => 'unsent',
+             'default' => 'none',
              'notblank' => true,
              ));
     }

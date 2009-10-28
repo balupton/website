@@ -12,7 +12,31 @@
  */
 class User extends BaseUser
 {
-	/** Checks if we have this permission */
+	
+	/** Set the PermissionGroup for a User (clear others) */
+	public function setPermissionGroup($permissiongroup){
+		// Clear Relation
+		$this->unlink('PermissionGroup');
+		$this->link('PermissionGroup', $permissiongroup);
+		// Done
+		return true;
+	}
+	
+	/*
+	public function linkPermissionGroup($permissiongroup){
+		// Fetch
+		die($permissiongroup);
+		$PermissionGroup = null;
+		if ( is_numeric($permissiongroup) ) {
+			$PermissionGroup = Doctrine::getTable('PermissionGroup')->find($permissiongroup);
+		} else {
+			$PermissionGroup = Doctrine::getTable('PermissionGroup')->findOneByCode($permissiongroup);
+		}
+		
+	}
+	*/
+	
+	/** Checks if the User has a certain Permission */
 	public function hasPermission ( $code ) {
 		// Prepare
 		$this->loadReferenceInit('PermissionList');

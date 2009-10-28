@@ -136,7 +136,8 @@ User:
         enabled: true
         title: "Administrator"
         email: "balcms@balupton.com"
-        PermissionGroup: SuperAdmin
+        PermissionGroups:
+            - PermissionGroup_SuperAdmin
     User_Mydance:
         id: 2
         username: "mydance"
@@ -144,7 +145,8 @@ User:
         enabled: true
         title: "myDance"
         email: "balcms@balupton.com"
-        PermissionGroup: Admin
+        PermissionGroups:
+            - PermissionGroup_MyDanceAdmin
 
 Permission:
     Permission_Admin:
@@ -170,7 +172,7 @@ Permission:
         code: admin-system-edit
     Permission_AdminPermissionView:
         id: 8
-        code: admin-permission-edit
+        code: admin-permission-view
     Permission_AdminPermissionEdit:
         id: 9
         code: admin-permission-edit
@@ -207,7 +209,7 @@ PermissionGroup:
             - Permission_AdminEventEdit
     PermissionGroup_MyDanceAdmin:
         id: 2
-        code: admin
+        code: mydanceadmin
         PermissionList:
             - Permission_Admin
             - Permission_AdminContentView

@@ -105,6 +105,7 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 		$dataColumn = $defaults['dataColumn'];
 		$typeColumn = $defaults['typeColumn'];
 		$firstAsHome = $defaults['firstAsHome'];
+		$routeKey = $defaults['routeKey'];
 
 		// Get Path
 		$path = $values['map_path'];
@@ -153,13 +154,18 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 		$module = !empty($routeType['module']) ? $routeType['module'] : null;
 		$controller = $routeType['controller'];
 		$action = $routeType['action'];
-		$data = $Map->get($dataColumn); if ( empty($data) ) $data = array();
 
 		// Apply routing information
 		$values[$this->_moduleKey] = $module;
 		$values[$this->_controllerKey] = $controller;
 		$values[$this->_actionKey] = $action;
-
+		$values[$this->_actionKey] = $action;
+		
+		// Apply route data
+		$values[$routeKey] = $Map;
+		$data = $Map->get($dataColumn); if ( empty($data) ) $data = array();
+		$values = array_merge($data, $values);
+		
 		// Done
 		return $values;
     }

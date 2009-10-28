@@ -11,6 +11,8 @@
  * @property boolean $enabled
  * @property string $title
  * @property string $email
+ * @property Doctrine_Collection $Permissions
+ * @property Doctrine_Collection $PermissionGroups
  * @property Doctrine_Collection $PermissionGroupAndUser
  * @property Doctrine_Collection $PermissionAndUser
  * 
@@ -62,6 +64,16 @@ abstract class BaseUser extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
+        $this->hasMany('Permission as Permissions', array(
+             'refClass' => 'PermissionAndUser',
+             'local' => 'user_id',
+             'foreign' => 'permission_id'));
+
+        $this->hasMany('PermissionGroup as PermissionGroups', array(
+             'refClass' => 'PermissionGroupAndUser',
+             'local' => 'user_id',
+             'foreign' => 'permissiongroup_id'));
+
         $this->hasMany('PermissionGroupAndUser', array(
              'local' => 'id',
              'foreign' => 'assignee_user_id'));

@@ -106,7 +106,7 @@ Content:
         sent_status:
             type: enum
             values: [none,pending,completed]
-            default: unsent
+            default: none
             notblank: true
     relations:
         Route:
@@ -264,6 +264,19 @@ User:
         email:
             type: string(255)
             notblank: true
+    relations:
+        Permissions:
+            class: Permission
+            local: user_id
+            foreign: permission_id
+            foreignAlias: Users
+            refClass: PermissionAndUser
+        PermissionGroups:
+            class: PermissionGroup
+            local: user_id
+            foreign: permissiongroup_id
+            foreignAlias: Users
+            refClass: PermissionGroupAndUser
 
 PermissionGroup:
     columns:
@@ -318,6 +331,40 @@ Permission:
             type: string(50)
             notblank: true
             unique: true
+
+PermissionGroupAndUser:
+    columns:
+        id:
+            type: integer(4)
+            primary: true
+            autoincrement: true
+            unsigned: true
+        assigned_date:
+            type: timestamp
+            notnull: false
+        assignee_user_id:
+            type: integer(4)
+            notnull: false
+            unsigned: true
+        user_id:
+            type: integer(4)
+            notnull: true
+            unsigned: true
+        permissiongroup_id:
+            type: integer(2)
+            notnull: true
+            unsigned: true
+    relations:
+        Assignee:
+            class: User
+            local: assignee_user_id
+            foreign: id
+        User:
+            local: user_id
+            foreign: id
+        PermissionGroup:
+            local: permissiongroup_id
+            foreign: id
 
 PermissionAndUser:
     columns:
