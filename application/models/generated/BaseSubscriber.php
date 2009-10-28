@@ -9,7 +9,7 @@
  * @property string $email
  * @property boolean $enabled
  * @property Doctrine_Collection $Articles
- * @property Doctrine_Collection $ArticleSubscriber
+ * @property Doctrine_Collection $ContentAndSubscriber
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -43,12 +43,12 @@ abstract class BaseSubscriber extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Article as Articles', array(
-             'refClass' => 'ArticleSubscriber',
+        $this->hasMany('Content as Articles', array(
+             'refClass' => 'ContentAndSubscriber',
              'local' => 'subscriber_id',
-             'foreign' => 'article_id'));
+             'foreign' => 'content_id'));
 
-        $this->hasMany('ArticleSubscriber', array(
+        $this->hasMany('ContentAndSubscriber', array(
              'local' => 'id',
              'foreign' => 'subscriber_id'));
 

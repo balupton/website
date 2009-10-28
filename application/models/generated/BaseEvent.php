@@ -29,7 +29,7 @@ abstract class BaseEvent extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $balcontentextension0 = new BALContentExtension();
+        $balcontentextension0 = new BalContentExtension();
         $this->actAs($balcontentextension0);
     }
 }

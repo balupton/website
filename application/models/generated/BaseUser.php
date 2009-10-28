@@ -11,6 +11,8 @@
  * @property boolean $enabled
  * @property string $title
  * @property string $email
+ * @property Doctrine_Collection $PermissionGroupAndUser
+ * @property Doctrine_Collection $PermissionAndUser
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -60,6 +62,14 @@ abstract class BaseUser extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
+        $this->hasMany('PermissionGroupAndUser', array(
+             'local' => 'id',
+             'foreign' => 'assignee_user_id'));
+
+        $this->hasMany('PermissionAndUser', array(
+             'local' => 'id',
+             'foreign' => 'assignee_user_id'));
+
         $searchable0 = new Doctrine_Template_Searchable(array(
              'fields' => 
              array(

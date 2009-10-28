@@ -66,7 +66,7 @@ abstract class BaseFile extends Doctrine_Record
     {
         parent::setUp();
         $taggable0 = new Doctrine_Template_Taggable();
-        $balauditable0 = new BALAuditable(array(
+        $balauditable0 = new BalAuditable(array(
              'status' => 
              array(
               'disabled' => true,

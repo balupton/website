@@ -73,7 +73,7 @@ abstract class BaseTemplate extends Doctrine_Record
              'local' => 'avatar_id',
              'foreign' => 'id'));
 
-        $balauditable0 = new BALAuditable(array(
+        $balauditable0 = new BalAuditable(array(
              'status' => 
              array(
               'disabled' => true,
