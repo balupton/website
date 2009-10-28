@@ -104,6 +104,7 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 		$pathColumn = $defaults['pathColumn'];
 		$dataColumn = $defaults['dataColumn'];
 		$typeColumn = $defaults['typeColumn'];
+		$firstAsHome = $defaults['firstAsHome'];
 
 		// Get Path
 		$path = $values['map_path'];
@@ -131,7 +132,15 @@ class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 		$Map = Doctrine::getTable($routeTable)->findOneBy($pathColumn,$path);
 		if ( !$Map || !$Map->exists() ) {
 			// Could not find anything!
-			return false; // Will cause 404
+			// Should we default to first
+			if ( empty($path) && $firstAsHome ) {
+				$Map = Doctrine::getTable($routeTable)->createQuery()->limit(1)->execute()->get(0);
+			}
+			// Check again
+			if ( !$Map || !$Map->exists() ) {
+				// 404
+				return false;
+			}
 		}
 
 		// Retrieve Page routing information

@@ -20,9 +20,7 @@
  */
 
 /**
- * Doctrine_Template_Item
- *
- * Easily create a balFramework Page
+ * Add permission capabilities to your models
  *
  * @package     Doctrine
  * @subpackage  Template
@@ -32,69 +30,46 @@
  * @version     $Revision$
  * @author      Benjamin "balupton" Lupton <contact@balupton.com>
  */
-class BalContentExtension extends BalTemplate {
-	
+class Doctrine_Template_Permissionable extends Doctrine_Template
+{
     /**
      * Array of options
      * @var string
      */
     protected $_options = array(
-		'content_id' => array(
-	        'relation'     	=>  'Content',
-	        'class'     	=>  'Content',
-	        'name'          =>  'content_id',
-	        'alias'         =>  null,
-	        'type'          =>  'integer',
-	        'length'        =>  4,
-	        'options'       =>  array(
-				'unsigned'	=>	true,
-				'notnull'	=>	true
-			)
+		'Permissions' => array(
+	        'class'			=>  'PermissionablePermission',
+	        'relation'		=>  'Permissions',
+			'refClass'		=>	'%CLASS%PermissionablePermission',
+			'generateFiles'	=>	false,
+			'table'			=>	false,
+			'pluginTable'	=>	false,
+			'children'		=>	array()
 		),
-		'id' => array(
-	        'name'          =>  'id',
-	        'alias'         =>  null,
-	        'type'          =>  'integer',
-	        'length'        =>  4,
-	        'options'       =>  array(
-				'primary'	=>	true,
-				'unsigned'	=>	true,
-				'notnull'	=>	true
-			)
-		),
-		'content' => array(
-	        'name'          =>  'content',
-	        'alias'         =>  null,
-	        'type'          =>  'string',
-	        'length'        =>  null,
-	        'options'       =>  array(
-				'extra'		=>	array(
-					'html'	=>	true
-				)
-			)
-		),
+		'PermissionGroups' => array(
+	        'class'			=>  'PermissionablePermissionGroup',
+	        'relation'		=>  'PermissionGroups',
+			'refClass'		=>	'%CLASS%PermissionGroups',
+			'generateFiles'	=>	false,
+			'table'			=>	false,
+			'pluginTable'	=>	false,
+			'children'		=>	array()
+		)
     );
 
     /**
-     * Set table definition for Sluggable behavior
+     * Setup table columns
      * @return void
      */
     public function setTableDefinition() {
-    	// column: content_id
-		$this->hasColumnHelper($this->_options['content_id']);
-		
-		// column: id
-		$this->hasColumnHelper($this->_options['id']);
-		
-		// column: content
-		$this->hasColumnHelper($this->_options['content']);
-		
-		//
-        //$this->addListener(new Doctrine_Template_Listener_BALContent($this->_options));
     }
 	
+    /**
+     * Setup table relations
+     * @return void
+     */
     public function setUp(){
-        $this->hasOneHelper($this->_options['content_id']);
+        $this->hasManyHelper($this->_options['permissions']);
 	}
 	
 }

@@ -39,62 +39,29 @@ class BalContentExtension extends BalTemplate {
      * @var string
      */
     protected $_options = array(
-		'content_id' => array(
-	        'relation'     	=>  'Content',
-	        'class'     	=>  'Content',
-	        'name'          =>  'content_id',
-	        'alias'         =>  null,
-	        'type'          =>  'integer',
-	        'length'        =>  4,
-	        'options'       =>  array(
-				'unsigned'	=>	true,
-				'notnull'	=>	true
-			)
-		),
-		'id' => array(
-	        'name'          =>  'id',
-	        'alias'         =>  null,
-	        'type'          =>  'integer',
-	        'length'        =>  4,
-	        'options'       =>  array(
-				'primary'	=>	true,
-				'unsigned'	=>	true,
-				'notnull'	=>	true
-			)
-		),
-		'content' => array(
-	        'name'          =>  'content',
-	        'alias'         =>  null,
-	        'type'          =>  'string',
-	        'length'        =>  null,
-	        'options'       =>  array(
-				'extra'		=>	array(
-					'html'	=>	true
-				)
-			)
-		),
+		'permissions' => array(
+	        'relation'		=>  'Permissions',
+	        'class'			=>  'BalPermissionTemplate',
+	        'local'			=>  '%CLASS%_id',
+	        'foreign'		=>  'permission_id',
+	        'foreignAlias'	=>  'integer',
+	        'refClass'		=>  '%CLASS%Permission'
+		)
     );
 
     /**
-     * Set table definition for Sluggable behavior
+     * Setup table columns
      * @return void
      */
     public function setTableDefinition() {
-    	// column: content_id
-		$this->hasColumnHelper($this->_options['content_id']);
-		
-		// column: id
-		$this->hasColumnHelper($this->_options['id']);
-		
-		// column: content
-		$this->hasColumnHelper($this->_options['content']);
-		
-		//
-        //$this->addListener(new Doctrine_Template_Listener_BALContent($this->_options));
     }
 	
+    /**
+     * Setup table relations
+     * @return void
+     */
     public function setUp(){
-        $this->hasOneHelper($this->_options['content_id']);
+        $this->hasManyHelper($this->_options['permissions']);
 	}
 	
 }

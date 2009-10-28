@@ -32,7 +32,7 @@
  * @version     $Revision$
  * @author      Benjamin "balupton" Lupton <contact@balupton.com>
  */
-class BALAuditable extends BALTemplate {
+class BalAuditable extends BalTemplate {
 	
     /**
      * Array of options
@@ -99,7 +99,7 @@ class BALAuditable extends BALTemplate {
 		$this->hasColumnHelper($this->_options['author']);
 		$this->hasColumnHelper($this->_options['enabled']);
 		$this->hasColumnHelper($this->_options['status']);
-		// 
+		//
         $timestampable0 = new Doctrine_Template_Timestampable(array(
 			'created' => $this->_options['created_at'],
 			'updated' => $this->_options['updated_at']

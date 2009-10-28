@@ -32,7 +32,7 @@
  * @version     $Revision$
  * @author      Benjamin "balupton" Lupton <contact@balupton.com>
  */
-abstract class BALTemplate extends Doctrine_Template {
+abstract class BalTemplate extends Doctrine_Template {
 	
 	protected function hasColumnHelper($column){
 		if ( isset($column['disabled']) && $column['disabled'] ) return;
@@ -52,6 +52,25 @@ abstract class BALTemplate extends Doctrine_Template {
 			)
 		);
 	}
+
+	protected function hasManyHelper($column){
+		// Prepare
+		extract($column);
+		
+		// Primary
+        $this->hasMany("$class as $relation", array(
+             'refClass'	=> $refClass,
+             'local'	=> $local,
+             'foreign'	=> $foreign
+		));
+		
+		// Secondary
+        $this->hasMany($refClass, array(
+             'local'	=> 'id',
+             'foreign'	=> $local
+        ));
+	}
+	
 }
 
 	

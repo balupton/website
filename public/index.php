@@ -1,13 +1,13 @@
 <?php
 
 // Include paths
-if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') === '/home/content/h/e/n/henfa/html' ) {
+if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	// We are probably on the devleopment sever
 	define('APPLICATION_ENV', 				'development');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2/lib'));
-	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions/lib'));
+	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.4/library'));
 	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
 	define('BASE_URL', 						'/projects/balcms/public/');
@@ -17,7 +17,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') === '/home/content/h/e/n/henfa/html
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2/lib'));
-	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions/lib'));
+	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.4/library'));
 	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
 	//define('BASE_URL', 					'/stage/public/');
@@ -34,8 +34,8 @@ if ( !defined('LIBRARY_PATH') )
 	define('LIBRARY_PATH', 					realpath(APPLICATION_PATH.'/../library'));
 if ( !defined('PUBLIC_PATH') )
 	define('PUBLIC_PATH', 					realpath(APPLICATION_PATH.'/../public'));
-if ( !defined('HANDLER_PATH') )
-	define('HANDLER_PATH', 					realpath(APPLICATION_PATH.'/handlers'));
+//if ( !defined('HANDLER_PATH') )
+//	define('HANDLER_PATH', 					realpath(APPLICATION_PATH.'/handlers'));
 
 // Ensure library/ is on include_path
 $include_paths = array();
@@ -45,7 +45,7 @@ if ( defined('DOCTRINE_PATH') )
 	$include_paths[] = DOCTRINE_PATH;
 //$include_paths[] = get_include_path();
 $include_paths[] = LIBRARY_PATH;
-$include_paths[] = HANDLER_PATH;
+//$include_paths[] = HANDLER_PATH;
 //if ( defined('BALPHP_PATH') )
 //	$include_paths[] = BALPHP_PATH;
 set_include_path(implode(PATH_SEPARATOR, $include_paths));

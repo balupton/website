@@ -104,10 +104,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
 	 	// Version Handle
 		$version_1_2 = version_compare('1.1', Doctrine::VERSION, '<');
-
+		
+		// Options
+		$extensions_path = $doctrineOptions['extensions_path'];
+		
 		// Apply Paths
 		//Doctrine::setModelsDirectory($doctrineOptions['models_path']);
-	 	if ( $version_1_2 ) Doctrine::setExtensionsPath($doctrineOptions['extensions_path']);
+	 	if ( $version_1_2 ) Doctrine::setExtensionsPath($extensions_path);
 
 		// Autoload
 		if ( $version_1_2 ) spl_autoload_register(array('Doctrine', 'autoload'));

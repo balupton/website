@@ -3,7 +3,7 @@ detect_relations: false
 
 Route:
     actAs:
-        BALAuditable:
+        BalAuditable:
         Searchable:
             fields: [path]
     columns:
@@ -22,7 +22,7 @@ Route:
 
 Template:
     actAs:
-        BALAuditable:
+        BalAuditable:
             status:
                 disabled: true
             enabled:
@@ -73,7 +73,7 @@ Content:
         extends: Template
         type: concrete
     actAs:
-        BALAuditable:
+        BalAuditable:
             status:
                 disabled: false
             enabled:
@@ -117,11 +117,11 @@ Content:
             local: content_id
             foreign: subscriber_id
             foreignAlias: Articles
-            refClass: ContentSubscriber
+            refClass: ContentAndSubscriber
 
 Event:
     actAs:
-        BALContentExtension:
+        BalContentExtension:
     columns:
         start_at:
             type: timestamp
@@ -130,16 +130,16 @@ Event:
 
 Venue:
     actAs:
-        BALContentExtension:
+        BalContentExtension:
     columns:
         google_map_uri:
             type: string(255)
 
 Performer:
     actAs:
-        BALContentExtension:
+        BalContentExtension:
 
-ContentSubscriber:
+ContentAndSubscriber:
     columns:
         id:
             primary: true
@@ -184,7 +184,7 @@ Subscriber:
 File:
     actAs:
         Taggable:
-        BALAuditable:
+        BalAuditable:
             status:
                 disabled: true
             enabled:
@@ -236,23 +236,9 @@ Image:
             values: [avatar,image]
             default: image
             notnull: true
-    
-    
-PermissionGroup:
-    actAs:
-        BalPermissionable_PermissionGroup:
-        
-PermissionGroupPermission:
-    actAs:
-        BalPermissionable_PermissionGroupPermission:
-        
-Permission:
-    actAs:
-        BalPermissionable_Permission:
 
 User:
     actAs:
-        BalPermissionable:
         Searchable:
             fields: [username]
     columns:
@@ -278,3 +264,91 @@ User:
         email:
             type: string(255)
             notblank: true
+
+PermissionGroup:
+    columns:
+        id:
+            type: integer(2)
+            primary: true
+            autoincrement: true
+            unsigned: true
+        code:
+            type: string(15)
+            notblank: true
+            unique: true
+    relations:
+        PermissionList:
+            class: Permission
+            local: permissiongroup_id
+            foreign: permission_id
+            foreignAlias: PermissionGroups
+            refClass: PermissionAndPermissionGroup
+
+PermissionAndPermissionGroup:
+    columns:
+        id:
+            type: integer(4)
+            primary: true
+            autoincrement: true
+            unsigned: true
+        permissiongroup_id:
+            type: integer(2)
+            unsigned: true
+            notnull: true
+        permission_id:
+            type: integer(2)
+            unsigned: true
+            notnull: true
+    relations:
+        PermissionGroup:
+            local: permissiongroup_id
+            foreign: id
+        Permission:
+            local: permission_id
+            foreign: id
+        
+Permission:
+    columns:
+        id:
+            type: integer(2)
+            primary: true
+            autoincrement: true
+            unsigned: true
+        code:
+            type: string(50)
+            notblank: true
+            unique: true
+
+PermissionAndUser:
+    columns:
+        id:
+            type: integer(6)
+            primary: true
+            autoincrement: true
+            unsigned: true
+        assigned_date:
+            type: timestamp
+            notnull: false
+        assignee_user_id:
+            type: integer(4)
+            notnull: false
+            unsigned: true
+        user_id:
+            type: integer(4)
+            notnull: true
+            unsigned: true
+        permission_id:
+            type: integer(2)
+            notnull: true
+            unsigned: true
+    relations:
+        Assignee:
+            class: User
+            local: assignee_user_id
+            foreign: id
+        User:
+            local: user_id
+            foreign: id
+        Permission:
+            local: permission_id
+            foreign: id
