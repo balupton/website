@@ -1,99 +1,12 @@
 <?
 	$baseUrl = $this->bal()->getBaseUrl('back');
 ?>
-<div id="screen-meta">
-    <div id="screen-options-wrap" class="hidden">
-        <form id="adv-settings" action="" method="post">
-            <h5>Show on screen</h5>
-            <div class="metabox-prefs">
-                <label for="tagsdiv-post_tag-hide">
-                    <input class="hide-postbox-tog" name="tagsdiv-post_tag-hide" type="checkbox" id="tagsdiv-post_tag-hide" value="tagsdiv-post_tag" checked="checked" />Post Tags
-                </label>
-                <label for="categorydiv-hide">
-                    <input class="hide-postbox-tog" name="categorydiv-hide" type="checkbox" id="categorydiv-hide" value="categorydiv" checked="checked" />Categories
-                </label>
-                <label for="postexcerpt-hide">
-                    <input class="hide-postbox-tog" name="postexcerpt-hide" type="checkbox" id="postexcerpt-hide" value="postexcerpt" checked="checked" />Excerpt
-                </label>
-                <label for="trackbacksdiv-hide">
-                    <input class="hide-postbox-tog" name="trackbacksdiv-hide" type="checkbox" id="trackbacksdiv-hide" value="trackbacksdiv" checked="checked" />Send Trackbacks
-                </label>
-                <label for="commentstatusdiv-hide">
-                    <input class="hide-postbox-tog" name="commentstatusdiv-hide" type="checkbox" id="commentstatusdiv-hide" value="commentstatusdiv" checked="checked" />Discussion
-                </label>
-                <label for="commentsdiv-hide">
-                    <input class="hide-postbox-tog" name="commentsdiv-hide" type="checkbox" id="commentsdiv-hide" value="commentsdiv" checked="checked" />Comments
-                </label>
-                <label for="slugdiv-hide">
-                    <input class="hide-postbox-tog" name="slugdiv-hide" type="checkbox" id="slugdiv-hide" value="slugdiv" />Post Slug
-                </label>
-                <label for="revisionsdiv-hide">
-                    <input class="hide-postbox-tog" name="revisionsdiv-hide" type="checkbox" id="revisionsdiv-hide" value="revisionsdiv" checked="checked" />Post Revisions
-                </label>
-                <br class="clear" />
-            </div>
-            <h5>Screen Layout</h5>
-            <div class='columns-prefs'>
-                Number of Columns:
-                <label>
-                    <input type='radio' name='screen_columns' value='1' /> 1
-                </label>
-                <label>
-                    <input type='radio' name='screen_columns' value='2' checked='checked' /> 2
-                </label>
-            </div>
-            <div>
-                <input type="hidden" id="screenoptionnonce" name="screenoptionnonce" value="d9d5f4451d" />
-            </div>
-        </form>
-    </div>
-    <div id="contextual-help-wrap" class="hidden">
-        <h5>Get help with &#8220;Edit Post&#8221;</h5>
-        <div class="metabox-prefs">
-            <p>
-                Most of the modules on this screen can be moved. If you hover your mouse over the title bar of a module you&rsquo;ll notice the 4 arrow cursor appears to let you know it is movable. Click on it, hold down the mouse button and start dragging the module to a new location. As you drag the module, notice the dotted gray box that also moves. This box indicates where the module will be placed when you release the mouse button.
-            </p>
-            <p>
-                The same modules can be expanded and collapsed by clicking once on their title bar and also completely hidden from the Screen Options tab.
-            </p>
-            <p>
-                <a href="http://codex.wordpress.org/Writing_Posts" target="_blank">Writing Posts</a>
-            </p>
-        </div>
-        <h5>Other Help</h5>
-        <div class="metabox-prefs">
-            <p>
-                <a href="http://en.forums.wordpress.com" target="_blank" title="Forums"><strong>WordPress.com Forums</strong></a>
-            </p>
-            <p>
-                <a href="http://en.support.wordpress.com/" target="_blank" title="Support"><strong>WordPress.com Support</strong></a>
-            </p>
-            <p>
-                <a href="http://wordpress.tv/flavor/wordpresscom/" target="_blank" title="WordPress.com Videos on WordPress.tv"><strong>WordPress.com Videos on WordPress.tv</strong></a>
-            </p>
-            <p id="feedbackstatus">
-            </p>
-        </div>
-    </div>
-    <div id="screen-meta-links">
-        <div id="contextual-help-link-wrap" class="hide-if-no-js screen-meta-toggle">
-            <a href="#contextual-help" id="contextual-help-link" class="show-settings">Help</a>
-        </div>
-        <div id="screen-options-link-wrap" class="hide-if-no-js screen-meta-toggle">
-            <a href="#screen-options" id="show-settings-link" class="show-settings">Screen Options</a>
-        </div>
-    </div>
-</div>
 <div class="wrap">
     <div id="icon-edit" class="icon32">
         <br/>
     </div>
     <h2>Edit Post</h2>
-    <div id="message" class="updated fade">
-        <p>
-            Post updated. <a href="http://balupton.wordpress.com/2007/11/16/hello-world/">View post</a>
-        </p>
-    </div>
+    <?=$this->message()->render()?>
     <form name="post" action="post.php" method="post" id="post">
         <input type="hidden" id="_wpnonce" name="_wpnonce" value="b060cedf26" /><input type="hidden" name="_wp_http_referer" value="/wp-admin/post.php?action=edit&amp;post=1&amp;message=1" /><input type="hidden" id="user-id" name="user_ID" value="2212518" /><input type="hidden" id="hiddenaction" name="action" value="editpost" /><input type="hidden" id="originalaction" name="originalaction" value="editpost" /><input type="hidden" id="post_author" name="post_author" value="2212518" /><input type="hidden" id="post_type" name="post_type" value="post" /><input type="hidden" id="original_post_status" name="original_post_status" value="publish" /><input name="referredby" type="hidden" id="referredby" value="http://balupton.wordpress.com/wp-admin/post.php?action=edit&#038;post=1" /><input type="hidden" name="_wp_original_http_referer" value="http://balupton.wordpress.com/wp-admin/post.php?action=edit&amp;post=1" /><input type='hidden' id='post_ID' name='post_ID' value='1' />
         <div id="poststuff" class="metabox-holder has-right-sidebar">
@@ -324,38 +237,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="postdivrich" class="postarea">
-                        <div id="editor-toolbar">
-                            <div class="zerosize">
-                                <input accesskey="e" type="button" onclick="switchEditors.go('content')"/>
-                            </div><a id="edButtonHTML" class="active hide-if-no-js" onclick="switchEditors.go('content', 'html');">HTML</a>
-                            <a id="edButtonPreview" class="hide-if-no-js" onclick="switchEditors.go('content', 'tinymce');">Visual</a>
-                            <div id="media-buttons" class="hide-if-no-js">
-                                Upload/Insert <a href="media-upload.php?post_id=1&amp;type=image&amp;TB_iframe=true" id="add_image" class="thickbox" title='Add an Image' onclick="return false;"><img src='<?=$baseUrl?>/images/media-button-image.gif' alt='Add an Image' /></a><a href="media-upload.php?post_id=1&amp;type=video&amp;TB_iframe=true" id="add_video" class="thickbox" title='Add Video' onclick="return false;"><img src='<?=$baseUrl?>/images/media-button-video.gif' alt='Add Video' /></a><a href="media-upload.php?post_id=1&amp;type=audio&amp;TB_iframe=true" id="add_audio" class="thickbox" title='Add Audio' onclick="return false;"><img src='<?=$baseUrl?>/images/media-button-music.gif' alt='Add Audio' /></a><a href="media-upload.php?post_id=1&amp;TB_iframe=true" id="add_media" class="thickbox" title='Add Media' onclick="return false;"><img src='<?=$baseUrl?>/images/media-button-other.gif' alt='Add Media' /></a><a href='admin.php?page=polls&amp;iframe&amp;TB_iframe=true' onclick='return false;' id='add_poll' class='thickbox' title='Add Poll'><img src='/wp-content/admin-plugins/polldaddy/polldaddy.png' alt='Add Poll' /></a>
-                            </div>
-                        </div>
-                        <div id="quicktags">
-                        	<script type="text/javascript">edToolbar()</script>
-                        </div>
-                        <div id='editorcontainer'>
-                            <textarea rows='10' cols='40' name='content' tabindex='2' id='content' class='mceEditor'>
-                                Welcome to &lt;a href="http://wordpress.com/"&gt;WordPress.com&lt;/a&gt;. This is your first post. Edit or delete it and start blogging!
-                            </textarea>
-                        </div>
-                        <table id="post-status-info" cellspacing="0">
-                            <tbody>
-                                <tr>
-                                    <td id="wp-word-count">
-                                    </td>
-                                    <td class="autosave-info">
-                                        <span id="autosave">&nbsp;</span>
-                                        <span id="last-edit">Last edited by balupton on October 25, 2009 at 10:38 am</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <input type="hidden" id="autosavenonce" name="autosavenonce" value="f9e0b03645" /><input type="hidden" id="closedpostboxesnonce" name="closedpostboxesnonce" value="7d3212b7f6" /><input type="hidden" id="getpermalinknonce" name="getpermalinknonce" value="84e6a63653" /><input type="hidden" id="samplepermalinknonce" name="samplepermalinknonce" value="e4543439c9" /><input type="hidden" id="meta-box-order-nonce" name="meta-box-order-nonce" value="78514744ab" />
-                    </div>
+                    <?=$this->editor()->render()?>
                     <div id='normal-sortables' class='meta-box-sortables'>
                         <div id="postexcerpt" class="postbox ">
                             <div class="handlediv" title="Click to toggle">

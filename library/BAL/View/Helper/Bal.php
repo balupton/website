@@ -1,8 +1,15 @@
 <?php
 class BAL_View_Helper_Bal extends Zend_View_Helper_Abstract {
+
+	public $view;
+	public function setView (Zend_View_Interface $view) {
+		$this->view = $view;
+	}
+
 	public function bal ( ) {
 		return $this;
 	}
+
 	public function getBaseUrl ( $area = 'front ') {
 		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$suffix = '';
@@ -18,4 +25,5 @@ class BAL_View_Helper_Bal extends Zend_View_Helper_Abstract {
 		}
 		return $baseUrl.$suffix;
 	}
+
 }

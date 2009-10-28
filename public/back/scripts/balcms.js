@@ -87,7 +87,7 @@ var switchEditors = {
 		catch(e) { ed = false; }
 
 		if ( 'tinymce' == mode ) {
-			if ( ed && ! ed.isHidden() )
+			if ( ed && !ed.isHidden() )
 				return false;
 
 			//setUserSetting( 'editor', 'tinymce' );

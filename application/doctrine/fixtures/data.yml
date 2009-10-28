@@ -28,6 +28,7 @@ Content:
         title: "Events"
         description: "Event Listing"
         content: "[eventlist/]"
+        tags: [event]
         Route:
             id: 2
             path: "events"
@@ -66,7 +67,7 @@ Content:
                 code: "newsite"
                 title: "New Site"
                 description: "New Site!"
-                content: "[article]1[/article]"
+                content: "Our new website is live!"
                 Route:
                     id: 5
                     path: "articles/newsite"
@@ -120,14 +121,102 @@ Event:
         content: "Bloc Party are famous and kick ass"
         Content: Content_Events_BlocParty
 
-Article:
-    Article_NewSite:
-        id: 1
-        content: "Our new website is live!"
-        Content: Content_Articles_NewSite
-                    
 Subscriber:
     Subscriber_Balupton:
         id: 1
         email: "balupton@gmail.com"
         enabled: true
+        tags: [newsletter]
+
+User:
+    User_Balcms:
+        id: 1
+        username: "balcms"
+        password: "random"
+        enabled: true
+        title: "Administrator"
+        email: "balcms@balupton.com"
+        PermissionGroup: SuperAdmin
+    User_Mydance:
+        id: 2
+        username: "mydance"
+        password: "password"
+        enabled: true
+        title: "myDance"
+        email: "balcms@balupton.com"
+        PermissionGroup: Admin
+
+Permission:
+    Permission_Admin:
+        id: 1
+        code: admin
+    Permission_AdminContentView:
+        id: 2
+        code: admin-content-view
+    Permission_AdminContentEdit:
+        id: 3
+        code: admin-content-edit
+    Permission_AdminUserView:
+        id: 4
+        code: admin-user-view
+    Permission_AdminUserEdit:
+        id: 5
+        code: admin-user-edit
+    Permission_AdminSystemView:
+        id: 6
+        code: admin-system-view
+    Permission_AdminSystemEdit:
+        id: 7
+        code: admin-system-edit
+    Permission_AdminPermissionView:
+        id: 8
+        code: admin-permission-edit
+    Permission_AdminPermissionEdit:
+        id: 9
+        code: admin-permission-edit
+    Permission_AdminCrudView:
+        id: 10
+        code: admin-crud-view
+    Permission_AdminCrudEdit:
+        id: 11
+        code: admin-crud-edit
+    Permission_AdminEventView:
+        id: 12
+        code: admin-event-view
+    Permission_AdminEventEdit:
+        id: 13
+        code: admin-event-edit
+
+PermissionGroup:
+    PermissionGroup_SuperAdmin:
+        id: 1
+        code: superadmin
+        PermissionList:
+            - Permission_Admin
+            - Permission_AdminContentView
+            - Permission_AdminContentEdit
+            - Permission_AdminUserView
+            - Permission_AdminUserEdit
+            - Permission_AdminSystemView
+            - Permission_AdminSystemEdit
+            - Permission_AdminPermissionView
+            - Permission_AdminPermissionEdit
+            - Permission_AdminCrudView
+            - Permission_AdminCrudEdit
+            - Permission_AdminEventView
+            - Permission_AdminEventEdit
+    PermissionGroup_MyDanceAdmin:
+        id: 2
+        code: admin
+        PermissionList:
+            - Permission_Admin
+            - Permission_AdminContentView
+            - Permission_AdminContentEdit
+            - Permission_AdminUserView
+            - Permission_AdminUserEdit
+            - Permission_AdminSystemView
+            - Permission_AdminSystemEdit
+            - Permission_AdminEventView
+            - Permission_AdminEventEdit
+            - Permission_AdminSystemEdit
+            

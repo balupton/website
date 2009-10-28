@@ -1,39 +1,53 @@
 {
 	"favorites": [{
 		"id": "content-new",
+		"resource": "admin-content-edit",
 		"label": "New Content",
 		"controller": "content",
 		"action": "content-new",
 		"route": "admin"
 	},{
 		"id": "event-new",
+		"resource": "admin-event-edit",
 		"label": "New Event",
 		"controller": "event",
 		"action": "event-new",
 		"route": "admin"
 	},{
 		"id": "media-new",
+		"resource": "admin-content-edit",
 		"label": "New Media",
 		"controller": "media",
 		"action": "media-new",
 		"route": "admin"
 	},{
 		"id": "user-new",
+		"resource": "admin-user-edit",
 		"label": "New User",
 		"controller": "user",
 		"action": "user-new",
 		"route": "admin"
 	}],
 	"menu": [{
-		"id": "dashboard",
+		"id": "index",
+		"resource": "admin",
 		"label": "Dashboard",
+		"controller": "index",
 		"route": "admin",
 		"class": "menu-top-last",
 		"pages": [{
-			"id": "dashboard-dashboard",
+			"id": "index-dashboard",
+			"resource": "admin",
 			"label": "Dashboard",
-			"controller": "content",
+			"controller": "index",
 			"action": "dashboard",
+			"route": "admin"
+		},{
+			"id": "index-dashboard",
+			"resource": "admin",
+			"label": "About",
+			"controller": "index",
+			"action": "about",
 			"route": "admin"
 		}]
 	},{
@@ -41,30 +55,37 @@
 		"uri": "#"
 	},{
 		"id": "content",
+		"resource": "admin-content-view",
 		"label": "Content",
 		"controller": "content",
 		"route": "admin",
 		"pages": [{
-			"id": "content-list",
+			"id": "content-content-list",
+			"resource": "admin-content-view",
 			"label": "Content",
 			"controller": "content",
 			"action": "content-list",
 			"route": "admin",
 			"class": "parent"
 		},{
-			"id": "content-new",
+			"id": "content-content-edit",
+			"resource": "admin-content-edit",
 			"label": "&mdash; New Content",
 			"controller": "content",
 			"action": "content-new",
 			"route": "admin",
 			"class": "child"
 		},{
+			"id": "content-template-view",
+			"resource": "admin-content-view",
 			"label": "Templates",
 			"controller": "content",
 			"action": "template-list",
 			"route": "admin",
 			"class": "parent"
 		},{
+			"id": "content-template-edit",
+			"resource": "admin-content-edit",
 			"label": "&mdash; New Templates",
 			"controller": "content",
 			"action": "template-new",
@@ -72,47 +93,60 @@
 			"class": "child"
 		},{
 			"label": "Tags",
+			"resource": "admin-content-view",
 			"controller": "content",
 			"action": "tags",
 			"route": "admin"
 		}]
 	},{
 		"id": "event",
+		"resource": "admin-event-view",
 		"label": "Events",
 		"controller": "event",
 		"route": "admin",
 		"pages": [{
-			"id": "event-list",
+			"id": "event-event-list",
+			"resource": "admin-event-view",
 			"label": "Events",
 			"controller": "event",
 			"action": "event-list",
 			"route": "admin",
 			"class": "parent"
 		},{
+			"id": "event-event-edit",
+			"resource": "admin-event-edit",
 			"label": "&mdash; New Event",
 			"controller": "event",
 			"action": "event-new",
 			"route": "admin",
 			"class": "child"
 		},{
+			"id": "event-venue-view",
+			"resource": "admin-event-view",
 			"label": "Venues",
 			"controller": "event",
 			"action": "venue-list",
 			"route": "admin",
 			"class": "parent"
 		},{
+			"id": "event-venue-edit",
+			"resource": "admin-event-edit",
 			"label": "&mdash;New Venue",
 			"controller": "event",
 			"action": "venue-new",
 			"route": "admin",
 			"class": "child"
 		},{
+			"id": "event-performer-view",
+			"resource": "admin-event-view",
 			"label": "Performers",
 			"controller": "event",
 			"action": "performer-list",
 			"route": "admin",
 			"class": "parent"
 		},{
+			"id": "event-performer-edit",
+			"resource": "admin-event-edit",
 			"label": "&mdash; New Performer",
 			"controller": "event",
 			"action": "performer-list",
@@ -121,16 +155,21 @@
 		}]
 	},{
 		"id": "subscription",
+		"resource": "admin-content-edit",
 		"label": "Subscriptions",
 		"controller": "subscription",
 		"route": "admin",
 		"pages": [{
+			"id": "subscription-subscriber-view",
+			"resource": "admin-content-view",
 			"label": "Subscribers",
 			"controller": "subscription",
 			"action": "subscription-list",
 			"route": "admin",
 			"class": "parent"
 		},{
+			"id": "subscription-subscriber-edit",
+			"resource": "admin-content-edit",
 			"label": "&mdash; New Subscriber",
 			"controller": "subscription",
 			"action": "subscription-new",
@@ -139,16 +178,21 @@
 		}]
 	},{
 		"id": "media",
+		"resource": "admin-content-view",
 		"label": "Media",
 		"controller": "media",
 		"route": "admin",
 		"pages": [{
+			"id": "media-media-view",
+			"resource": "admin-content-view",
 			"label": "Media",
 			"controller": "media",
 			"action": "media-list",
 			"route": "admin",
 			"class": "parent"
 		},{
+			"id": "media-media-edit",
+			"resource": "admin-content-edit",
 			"label": "&mdash; New Media",
 			"controller": "media",
 			"action": "media-new",
@@ -157,17 +201,22 @@
 		}]
 	},{
 		"id": "user",
+		"resource": "admin-user-view",
 		"label": "Users",
 		"controller": "user",
 		"route": "admin",
 		"class": "menu-top-last",
 		"pages": [{
+			"id": "user-user-view",
+			"resource": "admin-user-view",
 			"label": "Users",
 			"controller": "user",
 			"action": "user-list",
 			"route": "admin",
 			"class": "parent"
 		},{
+			"id": "user-user-edit",
+			"resource": "admin-user-edit",
 			"label": "&mdash; New User",
 			"controller": "user",
 			"action": "user-new",
@@ -179,21 +228,28 @@
 		"uri": "#"
 	},{
 		"id": "system",
+		"resource": "admin-system-view",
 		"label": "System",
 		"controller": "system",
 		"route": "admin",
 		"class": "menu-top-last",
 		"pages": [{
+			"id": "system-configuration",
+			"resource": "admin-system-view",
 			"label": "Configuration",
 			"controller": "system",
 			"action": "system-config",
 			"route": "admin"
 		},{
+			"id": "system-local",
+			"resource": "admin-system-view",
 			"label": "Localisation",
 			"controller": "system",
 			"action": "system-local",
 			"route": "admin"
 		},{
+			"id": "system-crud",
+			"resource": "admin-crud-view",
 			"label": "CRUD",
 			"controller": "system",
 			"action": "system-crud",

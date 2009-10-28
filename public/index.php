@@ -1,38 +1,41 @@
 <?php
 
 // Include paths
-if ( $_SERVER['DOCUMENT_ROOT'] === '/home/content/h/e/n/henfa/html' ) {
-	// We are on the product server
-	define('APPLICATION_ENV', !empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
-	define('ROOT_PATH', realpath($_SERVER['DOCUMENT_ROOT']));
-	define('DOCTRINE_PATH', realpath(ROOT_PATH.'/common/doctrine/lib'));
-	define('ZEND_PATH', realpath(ROOT_PATH.'/common/zend/library'));
-	define('BALPHP_PATH', realpath(ROOT_PATH.'/common/balphp/lib'));
-	define('BASE_URL', '/stage/public/');
-} else {
+if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') === '/home/content/h/e/n/henfa/html' ) {
 	// We are probably on the devleopment sever
-	define('APPLICATION_ENV', 'development');
-	define('ROOT_PATH', realpath('C:/Server/www'));
-	define('COMMON_PATH', realpath(ROOT_PATH.'/common'));
-	define('DOCTRINE_PATH', realpath(ROOT_PATH.'/common/doctrine-1.2/lib'));
-	define('ZEND_PATH', realpath(ROOT_PATH.'/common/ZendFramework-1.9.4/library'));
-	define('BALPHP_PATH', realpath(ROOT_PATH.'/common/balphp/lib'));
-	define('BASE_URL', '/projects/balcms/public/');
+	define('APPLICATION_ENV', 				'development');
+	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
+	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
+	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2/lib'));
+	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions/lib'));
+	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.4/library'));
+	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
+	define('BASE_URL', 						'/projects/balcms/public/');
+} else {
+	// We are on the production server
+	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
+	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
+	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
+	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2/lib'));
+	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions/lib'));
+	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.4/library'));
+	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
+	//define('BASE_URL', 					'/stage/public/');
 }
 
 // Define application environment
 if ( !defined('APPLICATION_ENV') )
-	define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
+	define('APPLICATION_ENV', 				(getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
 if ( !defined('APPLICATION_PATH') )
-	define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/../application'));
 if ( !defined('CONFIG_PATH') )
-	define('CONFIG_PATH', realpath(APPLICATION_PATH.'/configs'));
+	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 if ( !defined('LIBRARY_PATH') )
-	define('LIBRARY_PATH', realpath(APPLICATION_PATH.'/../library'));
+	define('LIBRARY_PATH', 					realpath(APPLICATION_PATH.'/../library'));
 if ( !defined('PUBLIC_PATH') )
-	define('PUBLIC_PATH', realpath(APPLICATION_PATH.'/../public'));
+	define('PUBLIC_PATH', 					realpath(APPLICATION_PATH.'/../public'));
 if ( !defined('HANDLER_PATH') )
-	define('HANDLER_PATH', realpath(APPLICATION_PATH.'/handlers'));
+	define('HANDLER_PATH', 					realpath(APPLICATION_PATH.'/handlers'));
 
 // Ensure library/ is on include_path
 $include_paths = array();

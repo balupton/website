@@ -97,10 +97,27 @@ Content:
             unsigned: true
             unique: true
             notnull: true
+        sent_at:
+            type: timestamp
+        sent_all:
+            type: integer(4)
+        sent_remaining:
+            type: integer(4)
+        sent_status:
+            type: enum
+            values: [none,pending,completed]
+            default: unsent
+            notblank: true
     relations:
         Route:
             local: route_id
             foreign: id
+        Subscribers:
+            class: Subscriber
+            local: content_id
+            foreign: subscriber_id
+            foreignAlias: Articles
+            refClass: ContentSubscriber
 
 Event:
     actAs:
@@ -122,36 +139,13 @@ Performer:
     actAs:
         BALContentExtension:
 
-Article:
-    actAs:
-        BALContentExtension:
-    columns:
-        sent_at:
-            type: timestamp
-        sent_all:
-            type: integer(4)
-        sent_remaining:
-            type: integer(4)
-        satus:
-            type: enum
-            values: [unsent,sending,sent]
-            default: unsent
-            notblank: true
-    relations:
-        Subscribers:
-            class: Subscriber
-            local: article_id
-            foreign: subscriber_id
-            foreignAlias: Articles
-            refClass: ArticleSubscriber
-
-ArticleSubscriber:
+ContentSubscriber:
     columns:
         id:
             primary: true
             type: integer(4)
             unsigned: true
-        article_id:
+        content_id:
             type: integer(4)
             unsigned: true
         subscriber_id:
@@ -163,8 +157,8 @@ ArticleSubscriber:
             default: pending
             notnull: true
     relations:
-        Article:
-            local: article_id
+        Content:
+            local: content_id
             foreign: id
         Subscriber:
             local: subscriber_id
@@ -243,8 +237,22 @@ Image:
             default: image
             notnull: true
     
+    
+PermissionGroup:
+    actAs:
+        BalPermissionable_PermissionGroup:
+        
+PermissionGroupPermission:
+    actAs:
+        BalPermissionable_PermissionGroupPermission:
+        
+Permission:
+    actAs:
+        BalPermissionable_Permission:
+
 User:
     actAs:
+        BalPermissionable:
         Searchable:
             fields: [username]
     columns:
