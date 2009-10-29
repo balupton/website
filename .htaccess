@@ -1,7 +1,16 @@
+Options -Indexes
 RewriteEngine On
+
+RewriteCond %{HTTP_HOST} mydance.com.au$ [NC]
+RewriteCond %{HTTP_HOST} !.mydance.com.au$ [NC]
+RewriteRule ^/?(.*)$ http://www.mydance.com.au/$1 [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-s
 RewriteCond %{REQUEST_FILENAME} !-l
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !^/public/.*$
 RewriteCond %{REQUEST_URI} !^/projects/balcms/public/.*$
-RewriteRule ^(.*)$ /public/$1
+RewriteRule ^(.*)$ ./public/$1 [NC,L]
+
+RewriteCond %{REQUEST_URI} ""
+RewriteRule ^.*$ ./public/index.php [NC,L]

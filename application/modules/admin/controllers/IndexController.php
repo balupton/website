@@ -34,7 +34,7 @@ class Admin_IndexController extends Zend_Controller_Action {
 
 	public function dashboardAction ( ) {
 		// Prepare
-		$this->registerMenu('dashboard-dashboard');
+		$this->registerMenu('index-dashboard');
 	}
 
 }

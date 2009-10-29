@@ -33,18 +33,18 @@ class Admin_ContentController extends Zend_Controller_Action {
 	}
 
 	public function contentEditAction ( ) {
-		$this->registerMenu('content-list');
+		$this->registerMenu('content-content-list');
 	}
 
 	public function contentNewAction ( ) {
-		$this->registerMenu('content-new');
+		$this->registerMenu('content-content-edit');
 	}
 
 	public function contentListAction ( ) {
 		# Prepare
 		$content = $this->_getParam('content', false);
 		$Content = $ContentCrumbArray = $ContentListArray = $ContentArray = array();
-		$this->registerMenu('content-list');
+		$this->registerMenu('content-content-list');
 		# Fetch Crumbs
 		// Check
 		if ( $content ) {

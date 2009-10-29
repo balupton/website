@@ -134,7 +134,15 @@
                         <?=empty($Content['Author'])?'Unkown':$Content['Author']['title']?>
                     </td>
                     <td class="author column-tags">
-                        <?=empty($Content['Tags'])?'':implode(',', $Content['Tags'])?>
+                        <? if ( empty($Content['Tags']) ) :
+                        	echo '';
+                        else:
+                        	$tags = array();
+                        	foreach ( $Content['Tags'] as $Tag ) :
+                        		$tags[] = $Tag['name'];
+                       		endforeach;
+                       		echo implode(',', $tags);
+                        endif; ?>
                     </td>
                     <!--<td class="comments column-comments">
                         <div class="post-com-count-wrapper">
