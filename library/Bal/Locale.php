@@ -18,7 +18,7 @@
  * @license http://www.gnu.org/licenses/agpl.html GNU Affero General Public License
  */
 
-class BAL_Locale {
+class Bal_Locale {
 	
 	public $Zend_Locale;
 	public $Zend_Translate;

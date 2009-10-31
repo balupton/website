@@ -5,7 +5,7 @@
     </div>
 	<!-- Header -->
     <h2>
-    	 <a href="<?=$this->url(array('controller'=>'content','action'=>'content-list'),'admin',true)?>">Content List</a>
+		<a href="<?=$this->url(array('controller'=>'content','action'=>'content-list'),'admin',true)?>">Content List</a>
 		<? foreach ( $this->ContentCrumbArray as $Content ): ?>
 			&raquo; <a href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
 		<? endforeach; ?>
@@ -118,7 +118,7 @@
                         <input name="content[]" value="<?=$Content['id']?>" type="checkbox">
                     </th>-->
                     <td class="post-title page-title column-title">
-                        <strong><a class="row-title" href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>" title="<?=$this->locale->translate('edit-%s',$Content['title'])?>">
+                        <strong><a class="row-title" href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>" title="<?=$this->locale()->translate('edit-%s',$Content['title'])?>">
                         	<?=/*str_repeat('&nbsp;',$Content['level']).' '.*/$Content['title']?>
 						</a></strong>
 						<div class="row-actions">
@@ -150,8 +150,8 @@
                         </div>
                     </td>-->
                     <td class="date column-date">
-                        <abbr title="<?=$this->locale->datetime($Content['updated_at'])?>">
-                            <?=$this->locale->timeago($Content['updated_at'])?>
+                        <abbr title="<?=$this->locale()->datetime($Content['updated_at'])?>">
+                            <?=$this->locale()->timeago($Content['updated_at'])?>
                         </abbr>
                         <br/>
                         <?=$Content['status']?>

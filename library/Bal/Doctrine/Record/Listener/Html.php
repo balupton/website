@@ -1,6 +1,6 @@
 <?php
-
-class BAL_Doctrine_Record_Listener_Html extends Doctrine_Record_Listener {
+require_once 'Doctrine/Record/Listener.php';
+class Bal_Doctrine_Record_Listener_Html extends Doctrine_Record_Listener {
 	
 	protected $_default = false;
 	protected $Purifier;
@@ -8,7 +8,7 @@ class BAL_Doctrine_Record_Listener_Html extends Doctrine_Record_Listener {
 	/**
 	 * Construct our HTML santizer for Doctrine Record
 	 * @param object $default [optional]
-	 * @return 
+	 * @return
 	 */
 	public function __construct ( $default = false ) {
 		$this->_default = $default;
@@ -20,7 +20,7 @@ class BAL_Doctrine_Record_Listener_Html extends Doctrine_Record_Listener {
 	/**
 	 * Apply HTML sanitization automaticly on a save.
 	 * @param object $event
-	 * @return 
+	 * @return
 	 */
     public function preSave (Doctrine_Event $event) {
     	$Record = $event->getInvoker();

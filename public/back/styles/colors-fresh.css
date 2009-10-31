@@ -469,8 +469,7 @@ h3.dashboard-widget-title small a:hover {
 
 a,
 #adminmenu a,
-#poststuff #edButtonPreview,
-#poststuff #edButtonHTML,
+#poststuff #tab-buttons .tab-button,
 #the-comment-list p.comment-author strong a,
 #media-upload a.del-link,
 #media-items a.delete,
@@ -773,8 +772,7 @@ abbr.required,
 	border-color: #EDEDED;
 }
 
-#poststuff #edButtonPreview,
-#poststuff #edButtonHTML {
+#poststuff #tab-buttons .tab-button {
 	background-color: #f1f1f1;
 	border-color: #dfdfdf;
 	color: #999;

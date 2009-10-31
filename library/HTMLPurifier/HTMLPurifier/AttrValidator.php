@@ -41,7 +41,7 @@ class HTMLPurifier_AttrValidator
 
         // create alias to global definition array, see also $defs
         // DEFINITION CALL
-        $d_defs = $definition->info_global_attr;
+        $d_defs = $definition->info_gloBal_attr;
 
         // don't update token until the very end, to ensure an atomic update
         $attr = $token->attr;

@@ -1,5 +1,6 @@
-<?php 
-class BAL_View_Helper_Show extends Zend_View_Helper_Partial {
+<?php
+require_once 'Zend/View/Helper/Partial.php';
+class Bal_View_Helper_Show extends Zend_View_Helper_Partial {
 
     /**
      * Redirectes to Partial

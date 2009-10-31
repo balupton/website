@@ -60,7 +60,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
 
         $ret .= $this->start('tr');
             $ret .= $this->element('th', 'Global attributes');
-            $ret .= $this->element('td', $this->listifyAttr($def->info_global_attr),0,0);
+            $ret .= $this->element('td', $this->listifyAttr($def->info_gloBal_attr),0,0);
         $ret .= $this->end('tr');
 
         $ret .= $this->start('tr');

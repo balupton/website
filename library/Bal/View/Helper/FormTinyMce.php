@@ -1,4 +1,5 @@
 <?php
+require_once 'Zend/View/Helper/FormTextArea.php';
 class Bal_View_Helper_FormTinyMce extends Zend_View_Helper_FormTextarea {
 	// http://steven.macintyre.name/zend-framework-tinymce-view-helper/
 	

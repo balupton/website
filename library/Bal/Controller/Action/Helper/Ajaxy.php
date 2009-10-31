@@ -1,21 +1,22 @@
 <?php
+require_once 'Zend/Cotnroller/Action/Helper/Abstract.php';
 /**
  * AJAXY Zend Plugin
  * Copyright (C) 2009 Benjamin Arthur Lupton
  * http://www.balupton.com/projects/ajaxy/
  *
  * This file is part of Balupton's Resource Library (balPHP).
- * 
+ *
  * Balupton's Resource Library (balPHP) is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * Balupton's Resource Library (balPHP)is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with Balupton's Resource Library (balPHP).  If not, see <http://www.gnu.org/licenses/>.
  *
@@ -27,7 +28,7 @@
  * @copyright Copyright (c) 2009, Benjamin Arthur Lupton - {@link http://www.balupton.com/}
  * @license http://www.gnu.org/licenses/agpl.html GNU Affero General Public License
  */
-class BAL_Controller_Action_Helper_Ajaxy extends Zend_Controller_Action_Helper_Abstract
+class Bal_Controller_Action_Helper_Ajaxy extends Zend_Controller_Action_Helper_Abstract
 {
 	// Reference Variables
 	protected $_actionController = null;
@@ -43,7 +44,7 @@ class BAL_Controller_Action_Helper_Ajaxy extends Zend_Controller_Action_Helper_A
 	
 	/**
 	 * Initialise Ajaxy
-	 * @return 
+	 * @return
 	 */
 	public function init(){
 		$this->configure($this->getActionController(), $this->_actionController->view, $this->_actionController->getRequest());
@@ -61,7 +62,7 @@ class BAL_Controller_Action_Helper_Ajaxy extends Zend_Controller_Action_Helper_A
 	 * @param object $actionController
 	 * @param object $actionView
 	 * @param object $actionRequest
-	 * @return 
+	 * @return
 	 */
 	public function configure($actionController, $actionView, $actionRequest) {
 		$this->_actionController = $actionController;
@@ -71,7 +72,7 @@ class BAL_Controller_Action_Helper_Ajaxy extends Zend_Controller_Action_Helper_A
 	
 	/**
 	 * Get URL
-	 * @return 
+	 * @return
 	 */
 	public function getURL ( ) {
 		return $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'];
@@ -79,7 +80,7 @@ class BAL_Controller_Action_Helper_Ajaxy extends Zend_Controller_Action_Helper_A
 	
 	/**
 	 * Check if we are a Ajaxy request
-	 * @return 
+	 * @return
 	 */
 	public function isAjax ( ) {
 		if ( $this->_xhr === null ) {
@@ -107,7 +108,7 @@ class BAL_Controller_Action_Helper_Ajaxy extends Zend_Controller_Action_Helper_A
 	/**
 	 * Send JSON Data
 	 * @param object $data
-	 * @return 
+	 * @return
 	 */
 	public function send ( $data ) {
 		$this->_json->sendJson($data);
@@ -117,7 +118,7 @@ class BAL_Controller_Action_Helper_Ajaxy extends Zend_Controller_Action_Helper_A
 	 * Render our Action, via html or json depending on request
 	 * @param string $html_view
 	 * @param array $ajaxy_levels
-	 * @return 
+	 * @return
 	 */
     public function render($html_view, $ajaxy_levels, $ajaxy_data = array()){
 		// Render

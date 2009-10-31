@@ -7,12 +7,12 @@
 
 
 /* menu icons */
-#adminmenu #menu-dashboard div.wp-menu-image {
+#adminmenu #menu-index div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -61px -33px;
 }
-#adminmenu #menu-dashboard:hover div.wp-menu-image,
-#adminmenu #menu-dashboard.wp-has-current-submenu div.wp-menu-image,
-#adminmenu #menu-dashboard.current div.wp-menu-image {
+#adminmenu #menu-index:hover div.wp-menu-image,
+#adminmenu #menu-index.wp-has-current-submenu div.wp-menu-image,
+#adminmenu #menu-index.current div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -61px -1px;
 }
 

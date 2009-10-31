@@ -1,6 +1,6 @@
 <?php
-
-class BAL_Auth_Adapter_Doctrine implements Zend_Auth_Adapter_Interface {
+require_once 'Zend/Auth/Adapter/Interface.php';
+class Bal_Auth_Adapter_Doctrine implements Zend_Auth_Adapter_Interface {
 	
 	private $_username;
 	private $_password;

@@ -1,9 +1,9 @@
-<?php
-// Load
-require_once(dirname(__FILE__).'/Payment.php');
-
-// Paypal
-class BAL_Payment_Paypal {
+<?php;
+require_once 'Bal/Payment/Item.php';
+require_once 'Bal/Payment/Payer.php';
+require_once 'Bal/Payment/Cart.php';
+require_once 'Bal/Payment/Order.php';
+class Bal_Payment_Paypal {
 	
 	protected $request = array();
 	protected $response = array();
@@ -230,7 +230,7 @@ class BAL_Payment_Paypal {
 		return $this;
 	}
 	
-	public function handlePDT ( ) { 
+	public function handlePDT ( ) {
 		// Check
 		if ( empty($this->response['tx']) ) {
 			// Error
@@ -286,7 +286,7 @@ class BAL_Payment_Paypal {
 		$multiple = !empty($this->response['item_name1']);
 		$Items = array();
 		if ( !$multiple ) {
-			$Item = new BAL_Payment_Item();
+			$Item = new Bal_Payment_Item();
 			foreach ( $map as $field => $key ) {
 				$key = trim($key, '_');
 				if ( isset($this->response[$key]) ) {
@@ -300,7 +300,7 @@ class BAL_Payment_Paypal {
 					// No more
 					break;
 				}
-				$Item = new BAL_Payment_Item();
+				$Item = new Bal_Payment_Item();
 				foreach ( $map as $field => $key ) {
 					$key .= $i;
 					if ( isset($this->response[$key]) ) {
@@ -322,7 +322,7 @@ class BAL_Payment_Paypal {
 		);
 		
 		// Fetch
-		$Cart = new BAL_Payment_Cart();
+		$Cart = new Bal_Payment_Cart();
 		foreach ( $map as $field => $key ) {
 			if ( !is_array($key) ) {
 				$keys = array($key);
@@ -354,7 +354,7 @@ class BAL_Payment_Paypal {
 		);
 		
 		// Apply
-		$Payer = new BAL_Payment_Payer();
+		$Payer = new Bal_Payment_Payer();
 		foreach ( $map as $field => $key ) {
 			if ( isset($this->response[$key]) ) {
 				$Payer->$field = $this->response[$key];
@@ -362,7 +362,7 @@ class BAL_Payment_Paypal {
 		}
 		
 		// Rebuild
-		$Order = new BAL_Payment_Order($Cart, $Payer, $Cart->id);
+		$Order = new Bal_Payment_Order($Cart, $Payer, $Cart->id);
 		$Store = $this->getStore($Order->id);
 		$this->Order = $Store['Order'];
 		

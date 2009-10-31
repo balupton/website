@@ -1,4 +1,5 @@
 <?php
+require_once 'Zend/View/Helper/Abstract.php';
 abstract class Bal_View_Helper_RenderPartialAbstract extends Zend_View_Helper_Abstract {
 	
     /**
@@ -59,14 +60,14 @@ abstract class Bal_View_Helper_RenderPartialAbstract extends Zend_View_Helper_Ab
     public function renderPartial($model = array(), $partial = null) {
         if (empty($partial)) {
             require_once 'Zend/View/Exception.php';
-            throw new Zend_View_Exception('Unable to render menu: No partial view script provided');
+            throw new Zend_View_Exception('Unable to render partial: No partial view script provided');
         }
 		
         if (is_array($partial)) {
             if (count($partial) != 2) {
                 require_once 'Zend/View/Exception.php';
                 throw new Zend_View_Exception(
-                        'Unable to render menu: A view partial supplied as ' .
+                        'Unable to render partial: A view partial supplied as ' .
                         'an array must contain two values: partial view ' .
                         'script and module where script can be found');
             }

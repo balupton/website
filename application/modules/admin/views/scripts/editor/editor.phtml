@@ -1,0 +1,126 @@
+<?
+	$baseUrl = $this->bal()->getBaseUrl('back');
+?>
+<div id="postdivrich" class="postarea">
+	<div id="editor-toolbar">
+		<div class="zerosize">
+			<input accesskey="e" type="button" onclick="switchEditors.go('content')"/>
+		</div>
+		<div id="tab-buttons">
+			<a id="edButtonStandard" class="tab-button active">HTML</a>
+			<a id="edButtonVisual" class="tab-button">Visual</a>
+		</div>
+		<div id="media-buttons" class="hide-if-no-js">
+			Upload/Insert
+			<a href="media-upload.php?post_id=1&amp;type=image&amp;TB_iframe=true" id="add_image" class="thickbox" title='Add an Image' onclick="return false;">
+				<img src='<?=$baseUrl?>/images/media-button-image.gif' alt='Add an Image' />
+			</a>
+			<a href="media-upload.php?post_id=1&amp;type=video&amp;TB_iframe=true" id="add_video" class="thickbox" title='Add Video' onclick="return false;">
+				<img src='<?=$baseUrl?>/images/media-button-video.gif' alt='Add Video' />
+			</a>
+			<a href="media-upload.php?post_id=1&amp;type=audio&amp;TB_iframe=true" id="add_audio" class="thickbox" title='Add Audio' onclick="return false;">
+				<img src='<?=$baseUrl?>/images/media-button-music.gif' alt='Add Audio' />
+			</a>
+			<a href="media-upload.php?post_id=1&amp;TB_iframe=true" id="add_media" class="thickbox" title='Add Media' onclick="return false;">
+				<img src='<?=$baseUrl?>/images/media-button-other.gif' alt='Add Media' />
+			</a>
+		</div>
+	</div>
+	<div id="quicktags"></div>
+	<div id='editorcontainer'>
+		<textarea rows='10' cols='40' name='content' tabindex='2' id='content'>
+			Welcome to &lt;a href="http://wordpress.com/"&gt;WordPress.com&lt;/a&gt;. This is your first post. Edit or delete it and start blogging!
+		</textarea>
+	</div>
+	<table id="post-status-info" cellspacing="0">
+		<tbody>
+			<tr>
+				<td id="wp-word-count">
+				</td>
+				<td class="autosave-info">
+					<span id="autosave">&nbsp;</span>
+					<span id="last-edit">Last edited by balupton on October 25, 2009 at 10:38 am</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<input type="hidden" id="autosavenonce" name="autosavenonce" value="f9e0b03645" /><input type="hidden" id="closedpostboxesnonce" name="closedpostboxesnonce" value="7d3212b7f6" /><input type="hidden" id="getpermalinknonce" name="getpermalinknonce" value="84e6a63653" /><input type="hidden" id="samplepermalinknonce" name="samplepermalinknonce" value="e4543439c9" /><input type="hidden" id="meta-box-order-nonce" name="meta-box-order-nonce" value="78514744ab" />
+</div>
+<!-- TinyMCE -->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    tinyMCEPreInit = {
+        base: "<?=$baseUrl?>/scripts/tinymce",
+        suffix: "",
+        query: "ver=3241-1141-sh20090924b",
+        mceInit: {
+            mode: "specific_textareas",
+            editor_selector: "mceEditor",
+            width: "100%",
+            theme: "advanced",
+            skin: "wp_theme",
+            theme_advanced_buttons1: "bold,italic,strikethrough,|,bullist,numlist,blockquote,|,justifyleft,justifycenter,justifyright,|,link,unlink,wp_more,|,AtD,fullscreen,wp_adv",
+            theme_advanced_buttons2: "formatselect,underline,justifyfull,forecolor,|,pastetext,pasteword,removeformat,|,charmap,|,outdent,indent,|,undo,redo,wp_help",
+            theme_advanced_buttons3: "",
+            theme_advanced_buttons4: "",
+            language: "en",
+            spellchecker_languages: "+English=en",
+            theme_advanced_toolbar_location: "top",
+            theme_advanced_toolbar_align: "left",
+            theme_advanced_statusbar_location: "bottom",
+            theme_advanced_resizing: "1",
+            theme_advanced_resize_horizontal: "",
+            dialog_type: "modal",
+            relative_urls: "",
+            remove_script_host: "",
+            convert_urls: "",
+            apply_source_formatting: "",
+            remove_linebreaks: "1",
+            gecko_spellcheck: "false",
+            entities: "38,amp,60,lt,62,gt",
+            accessibility_focus: "1",
+            tabfocus_elements: "major-publishing-actions",
+            media_strict: "",
+            save_callback: "switchEditors.saveCallback",
+            plugins: "safari,inlinepopups,spellchecker,paste,media,fullscreen"
+        },
+        load_ext: function(url, lang){
+            var sl = tinymce.ScriptLoader;
+            sl.markDone(url + '/langs/' + lang + '.js');
+            sl.markDone(url + '/langs/' + lang + '_dlg.js');
+        }
+    };
+    /* ]]> */
+</script>
+<script type='text/javascript' src='<?=$baseUrl?>/scripts/tinymce/tiny_mce.js?ver=3241-1141-sh20090924b'></script>
+<script type='text/javascript' src='<?=$baseUrl?>/scripts/tinymce/langs/wp-langs-en.js?ver=3241-1141-sh20090924b'></script>
+<script type="text/javascript">
+    /* <![CDATA[ */
+    (function(){
+        var t = tinyMCEPreInit, sl = tinymce.ScriptLoader, ln = t.mceInit.language, th = t.mceInit.theme, pl = t.mceInit.plugins;
+        sl.markDone(t.base + '/langs/' + ln + '.js');
+        sl.markDone(t.base + '/themes/' + th + '/langs/' + ln + '.js');
+        sl.markDone(t.base + '/themes/' + th + '/langs/' + ln + '_dlg.js');
+        tinymce.each(pl.split(','), function(n){
+            if (n && n.charAt(0) != '-') {
+                sl.markDone(t.base + '/plugins/' + n + '/langs/' + ln + '.js');
+                sl.markDone(t.base + '/plugins/' + n + '/langs/' + ln + '_dlg.js');
+            }
+        });
+    })();
+    tinyMCE.init(tinyMCEPreInit.mceInit);
+    /* ]]> */
+</script>
+
+	<script type="text/javascript">
+		$(function(){
+			$.CMS.Editor.render('#content','#quicktags');
+			$.CMS.Editor.Toolbar.render('#content','#quicktags');
+			$('#edButtonStandard').click(function(){
+				$.CMS.Editor.render('#content','#quicktags','standard');
+			});
+			$('#edButtonVisual').click(function(){
+				$.CMS.Editor.render('#content','#quicktags','visual');
+			});
+		});
+	</script>

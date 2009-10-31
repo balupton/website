@@ -1,5 +1,5 @@
 <?php
-class BAL_View_Helper_Bal extends Zend_View_Helper_Abstract {
+class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 
 	public $view;
 	public function setView (Zend_View_Interface $view) {

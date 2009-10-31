@@ -1,4 +1,5 @@
 <?php
+require_once 'Zend/View/Helper/Abstract.php';
 class Bal_View_Helper_TinyMce extends Zend_View_Helper_Abstract {
 	// http://steven.macintyre.name/zend-framework-tinymce-view-helper/
 	
@@ -15,21 +16,22 @@ class Bal_View_Helper_TinyMce extends Zend_View_Helper_Abstract {
                              'iespell', 'insertdatetime', 'preview', 'media',
                              'searchreplace', 'print', 'contextmenu', 'paste',
                              'directionality', 'fullscreen', 'noneditable', 'visualchars',
-                             'nonbreaking', 'xhtmlxtras', 'imagemanager', 'filemanager','template'));
+                             'nonbreaking', 'xhtmlxtras', 'imagemanager', 'filemanager','template')
+    );
 
-							 protected $_config = array('mode'  =>'textareas',
-							'theme' => 'advanced',
-                               'element_format' => 'html',
-							   'skin' => "o2k7",
-							   'skin_variant' => "silver",
-							   'plugins' => "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,imagemanager,filemanager",
-							   'theme_advanced_resizing' => true,
-							   'theme_advanced_buttons1'=>"cut,copy,paste,pastetext,pasteword,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,styleselect,formatselect,forecolor,backcolor",
-
-							   'theme_advanced_buttons2' => "tablecontrols,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,",
-
-							  'theme_advanced_buttons3' => "hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,fullscreen,insertlayer,moveforward,movebackward,absolute,|,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak",
-							   );
+	protected $_config = array(
+		'mode'  =>'textareas',
+		'theme' => 'advanced',
+		'element_format' => 'html',
+		'skin' => "o2k7",
+		'skin_variant' => "silver",
+		'plugins' => "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,imagemanager,filemanager",
+		'theme_advanced_resizing' => true,
+		'theme_advanced_buttons1'=>"cut,copy,paste,pastetext,pasteword,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,styleselect,formatselect,forecolor,backcolor",
+		'theme_advanced_buttons2' => "tablecontrols,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,",
+		'theme_advanced_buttons3' => "hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,fullscreen,insertlayer,moveforward,movebackward,absolute,|,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak",
+	);
+	
     protected $_scriptPath;
     protected $_scriptFile;
     protected $_useCompressor = false;

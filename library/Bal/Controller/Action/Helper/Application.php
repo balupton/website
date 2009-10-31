@@ -1,6 +1,6 @@
 <?php
-
-class BAL_Controller_Action_Helper_Application extends Zend_Controller_Action_Helper_Abstract {
+require_once 'Zend/Cotnroller/Action/Helper/Abstract.php';
+class Bal_Controller_Action_Helper_Application extends Zend_Controller_Action_Helper_Abstract {
 	
 	protected $_options = array(
 		'logged_out_forward' => array('login', 'index'),
@@ -190,7 +190,7 @@ class BAL_Controller_Action_Helper_Application extends Zend_Controller_Action_He
 	 * Get a Pager Object
 	 * @param integer $page_current [optional] Which page are we on?
 	 * @param integer $page_items [optional] How many items per page?
-	 * @return 
+	 * @return
 	 */
 	public function getPager($DQ, $page_current = 1, $page_items = 10){
 		// Fetch

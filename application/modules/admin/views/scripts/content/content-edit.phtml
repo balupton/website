@@ -5,7 +5,12 @@
     <div id="icon-edit" class="icon32">
         <br/>
     </div>
-    <h2>Edit Post</h2>
+    <h2>
+		Editing
+		<? foreach ( $this->ContentCrumbArray as $Content ): ?>
+			&raquo; <a href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
+		<? endforeach; ?>
+	</h2>
     <?=$this->message()->render()?>
     <form name="post" action="post.php" method="post" id="post">
         <input type="hidden" id="_wpnonce" name="_wpnonce" value="b060cedf26" /><input type="hidden" name="_wp_http_referer" value="/wp-admin/post.php?action=edit&amp;post=1&amp;message=1" /><input type="hidden" id="user-id" name="user_ID" value="2212518" /><input type="hidden" id="hiddenaction" name="action" value="editpost" /><input type="hidden" id="originalaction" name="originalaction" value="editpost" /><input type="hidden" id="post_author" name="post_author" value="2212518" /><input type="hidden" id="post_type" name="post_type" value="post" /><input type="hidden" id="original_post_status" name="original_post_status" value="publish" /><input name="referredby" type="hidden" id="referredby" value="http://balupton.wordpress.com/wp-admin/post.php?action=edit&#038;post=1" /><input type="hidden" name="_wp_original_http_referer" value="http://balupton.wordpress.com/wp-admin/post.php?action=edit&amp;post=1" /><input type='hidden' id='post_ID' name='post_ID' value='1' />
@@ -164,57 +169,6 @@
                             </p>
                         </div>
                     </div>
-                    <div id="categorydiv" class="postbox ">
-                        <div class="handlediv" title="Click to toggle">
-                            <br/>
-                        </div>
-                        <h3 class='hndle'><span>Categories</span></h3>
-                        <div class="inside">
-                            <ul id="category-tabs">
-                                <li class="tabs">
-                                    <a href="#categories-all" tabindex="3">All Categories</a>
-                                </li>
-                                <li class="hide-if-no-js">
-                                    <a href="#categories-pop" tabindex="3">Most Used</a>
-                                </li>
-                            </ul>
-                            <div id="categories-pop" class="tabs-panel" style="display: none;">
-                                <ul id="categorychecklist-pop" class="categorychecklist form-no-clear">
-                                    <li id="popular-category-1" class="popular-category">
-                                        <label class="selectit">
-                                            <input id="in-popular-category-1" type="checkbox" value="1" />Uncategorized
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div id="categories-all" class="tabs-panel">
-                                <ul id="categorychecklist" class="list:category categorychecklist form-no-clear">
-                                    <li id='category-1' class="popular-category">
-                                        <label class="selectit">
-                                            <input value="1" type="checkbox" name="post_category[]" id="in-category-1" checked="checked"/> Uncategorized
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div id="category-adder" class="wp-hidden-children">
-                                <h4><a id="category-add-toggle" href="#category-add" class="hide-if-no-js" tabindex="3">+ Add New Category</a></h4>
-                                <p id="category-add" class="wp-hidden-child">
-                                    <label class="screen-reader-text" for="newcat">
-                                        Add New Category
-                                    </label>
-                                    <input type="text" name="newcat" id="newcat" class="form-required form-input-tip" value="New category name" tabindex="3" aria-required="true"/>
-                                    <label class="screen-reader-text" for="newcat_parent">
-                                        Parent category:
-                                    </label>
-                                    <select name='newcat_parent' id='newcat_parent' class='postform' tabindex="3">
-                                        <option value='-1'>Parent category</option>
-                                        <option class="level-0" value="1">Uncategorized</option>
-                                    </select>
-                                    <input type="button" id="category-add-sumbit" class="add:categorychecklist:category-add button" value="Add" tabindex="3" /><input type="hidden" id="_ajax_nonce" name="_ajax_nonce" value="e29e1173fd" /><span id="category-ajax-response"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div id="post-body">
@@ -224,16 +178,17 @@
                             <label class="screen-reader-text" for="title">
                                 Title
                             </label>
-                            <input type="text" name="post_title" size="30" tabindex="1" value="Hello world!" id="title" autocomplete="off" />
+                            <input type="text" name="post_title" size="30" tabindex="1" value="<?=$this->ContentArray['title']?>" id="title" autocomplete="off" />
                         </div>
                         <div class="inside">
                             <div id="edit-slug-box">
-                                <strong>Permalink:</strong>
-                                <span id="sample-permalink">http://balupton.wordpress.com/2007/11/16/<span id="editable-post-name" title="Click to edit this part of the permalink">hello-world</span>/</span>
+                                <strong>Location:</strong>
+                                <span id="sample-permalink">
+                                	http://www.mydance.com.au/<span id="editable-post-name" title="Click to edit this part of the permalink"><?=$this->ContentArray['Route']['path']?></span>/
+                                </span>
                                 <span id="edit-slug-buttons"><a href="#post_name" class="edit-slug button hide-if-no-js" onclick="edit_permalink(1); return false;">Edit</a></span>
-                                <span id="editable-post-name-full">hello-world</span>
-                                <span id='view-post-btn'><a href='http://balupton.wordpress.com/2007/11/16/hello-world/' class='button' target='_blank'>View Post</a></span>
-                                <input id="shortlink" type="hidden" value="http://wp.me/p8XiL-1" /><a href="#" class="button" onclick="prompt(&#39;URL:&#39;, jQuery('#shortlink').val()); return false;">Get Shortlink</a>
+                                <span id="editable-post-name-full"><?=$this->ContentArray['Route']['path']?></span>
+                                <span id='view-post-btn'><a href='http://balupton.wordpress.com/2007/11/16/hello-world/' class='button' target='_blank'>Open</a></span>
                             </div>
                         </div>
                     </div>
@@ -255,7 +210,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div id="trackbacksdiv" class="postbox ">
+                        <!--<div id="trackbacksdiv" class="postbox ">
                             <div class="handlediv" title="Click to toggle">
                                 <br/>
                             </div>
@@ -293,7 +248,7 @@
                                 </p>
                             </div>
                         </div>
-                        <!--<div id="commentsdiv" class="postbox ">
+                        <div id="commentsdiv" class="postbox ">
                             <div class="handlediv" title="Click to toggle">
                                 <br/>
                             </div>
@@ -319,7 +274,7 @@
                                     <img class="waiting" style="display:none;" src="<?=$baseUrl?>/images/wpspin_light.gif" alt="" />
                                 </p>
                             </div>
-                        </div>-->
+                        </div>
                         <div id="slugdiv" class="postbox closed" style="display:none;">
                             <div class="handlediv" title="Click to toggle">
                                 <br/>
@@ -345,7 +300,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <input type="hidden" id="wp-old-slug" name="wp-old-slug" value="hello-world" />
                     <div id='advanced-sortables' class='meta-box-sortables'>
@@ -357,52 +312,6 @@
         <!-- /poststuff -->
     </form>
 </div>
-<form method="get" action="">
-    <table style="display:none;">
-        <tbody id="com-reply">
-            <tr id="replyrow">
-                <td colspan="4">
-                    <div id="replyhead" style="display:none;">
-                        Reply to Comment
-                    </div>
-                    <div id="edithead" style="display:none;">
-                        <div class="inside">
-                            <label for="author">
-                                Name
-                            </label>
-                            <input type="text" name="newcomment_author" size="50" value="" tabindex="101" id="author" />
-                        </div>
-                        <div class="inside">
-                            <label for="author-email">
-                                E-mail
-                            </label>
-                            <input type="text" name="newcomment_author_email" size="50" value="" tabindex="102" id="author-email" />
-                        </div>
-                        <div class="inside">
-                            <label for="author-url">
-                                URL
-                            </label>
-                            <input type="text" id="author-url" name="newcomment_author_url" size="103" value="" tabindex="103" />
-                        </div>
-                        <div style="clear:both;">
-                        </div>
-                    </div>
-                    <div id="replycontainer">
-                        <textarea rows="8" cols="40" name="replycontent" tabindex="104" id="replycontent">
-                        </textarea>
-                    </div>
-                    <p id="replysubmit" class="submit">
-                        <a href="#comments-form" class="cancel button-secondary alignleft" tabindex="106">Cancel</a>
-                        <a href="#comments-form" class="save button-primary alignright" tabindex="104"><span id="savebtn" style="display:none;">Update Comment</span><span id="replybtn" style="display:none;">Submit Reply</span></a>
-                        <img class="waiting" style="display:none;" src="<?=$baseUrl?>/images/wpspin_light.gif" alt="" /><span class="error" style="display:none;"></span>
-                        <br class="clear" />
-                    </p>
-                    <input type="hidden" name="user_ID" id="user_ID" value="2212518" /><input type="hidden" name="action" id="action" value="" /><input type="hidden" name="comment_ID" id="comment_ID" value="" /><input type="hidden" name="comment_post_ID" id="comment_post_ID" value="" /><input type="hidden" name="status" id="status" value="" /><input type="hidden" name="position" id="position" value="1" /><input type="hidden" name="checkbox" id="checkbox" value="0" /><input type="hidden" name="mode" id="mode" value="single" /><input type="hidden" id="_ajax_nonce" name="_ajax_nonce" value="41e3cb7660" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</form>
 <div class="clear">
 </div>
 <!-- Helpers -->
@@ -413,70 +322,5 @@
     }
     catch (e) {
     }
-    /* ]]> */
-</script>
-<!-- TinyMCE -->
-<script type="text/javascript">
-    /* <![CDATA[ */
-    tinyMCEPreInit = {
-        base: "<?=$baseUrl?>/scripts/tinymce",
-        suffix: "",
-        query: "ver=3241-1141-sh20090924b",
-        mceInit: {
-            mode: "specific_textareas",
-            editor_selector: "mceEditor",
-            width: "100%",
-            theme: "advanced",
-            skin: "wp_theme",
-            theme_advanced_buttons1: "bold,italic,strikethrough,|,bullist,numlist,blockquote,|,justifyleft,justifycenter,justifyright,|,link,unlink,wp_more,|,AtD,fullscreen,wp_adv",
-            theme_advanced_buttons2: "formatselect,underline,justifyfull,forecolor,|,pastetext,pasteword,removeformat,|,charmap,|,outdent,indent,|,undo,redo,wp_help",
-            theme_advanced_buttons3: "",
-            theme_advanced_buttons4: "",
-            language: "en",
-            spellchecker_languages: "+English=en",
-            theme_advanced_toolbar_location: "top",
-            theme_advanced_toolbar_align: "left",
-            theme_advanced_statusbar_location: "bottom",
-            theme_advanced_resizing: "1",
-            theme_advanced_resize_horizontal: "",
-            dialog_type: "modal",
-            relative_urls: "",
-            remove_script_host: "",
-            convert_urls: "",
-            apply_source_formatting: "",
-            remove_linebreaks: "1",
-            gecko_spellcheck: "false",
-            entities: "38,amp,60,lt,62,gt",
-            accessibility_focus: "1",
-            tabfocus_elements: "major-publishing-actions",
-            media_strict: "",
-            save_callback: "switchEditors.saveCallback",
-            plugins: "safari,inlinepopups,spellchecker,paste,media,fullscreen"
-        },
-        load_ext: function(url, lang){
-            var sl = tinymce.ScriptLoader;
-            sl.markDone(url + '/langs/' + lang + '.js');
-            sl.markDone(url + '/langs/' + lang + '_dlg.js');
-        }
-    };
-    /* ]]> */
-</script>
-<script type='text/javascript' src='<?=$baseUrl?>/scripts/tinymce/tiny_mce.js?ver=3241-1141-sh20090924b'></script>
-<script type='text/javascript' src='<?=$baseUrl?>/scripts/tinymce/langs/wp-langs-en.js?ver=3241-1141-sh20090924b'></script>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    (function(){
-        var t = tinyMCEPreInit, sl = tinymce.ScriptLoader, ln = t.mceInit.language, th = t.mceInit.theme, pl = t.mceInit.plugins;
-        sl.markDone(t.base + '/langs/' + ln + '.js');
-        sl.markDone(t.base + '/themes/' + th + '/langs/' + ln + '.js');
-        sl.markDone(t.base + '/themes/' + th + '/langs/' + ln + '_dlg.js');
-        tinymce.each(pl.split(','), function(n){
-            if (n && n.charAt(0) != '-') {
-                sl.markDone(t.base + '/plugins/' + n + '/langs/' + ln + '.js');
-                sl.markDone(t.base + '/plugins/' + n + '/langs/' + ln + '_dlg.js');
-            }
-        });
-    })();
-    tinyMCE.init(tinyMCEPreInit.mceInit);
     /* ]]> */
 </script>

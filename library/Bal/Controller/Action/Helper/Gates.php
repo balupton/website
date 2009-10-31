@@ -1,6 +1,6 @@
 <?php
-
-class BAL_Controller_Action_Helper_Gates extends Zend_Controller_Action_Helper_Abstract {
+require_once 'Zend/Cotnroller/Action/Helper/Abstract.php';
+class Bal_Controller_Action_Helper_Gates extends Zend_Controller_Action_Helper_Abstract {
 	
 	protected $_options = array(
 	);

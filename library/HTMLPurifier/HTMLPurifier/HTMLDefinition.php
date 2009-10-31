@@ -36,7 +36,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
     /**
      * Associative array of global attribute name to attribute definition.
      */
-    public $info_global_attr = array();
+    public $info_gloBal_attr = array();
 
     /**
      * String name of parent element HTML will be going into.
@@ -274,7 +274,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
             // This actually doesn't do anything, since we went away from
             // global attributes. It's possible that userland code uses
             // it, but HTMLModuleManager doesn't!
-            foreach ($this->info_global_attr as $attr => $x) {
+            foreach ($this->info_gloBal_attr as $attr => $x) {
                 $keys = array($attr, "*@$attr", "*.$attr");
                 $delete = true;
                 foreach ($keys as $key) {
@@ -285,7 +285,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                         unset($allowed_attributes_mutable[$key]);
                     }
                 }
-                if ($delete) unset($this->info_global_attr[$attr]);
+                if ($delete) unset($this->info_gloBal_attr[$attr]);
             }
 
             foreach ($this->info as $tag => $info) {

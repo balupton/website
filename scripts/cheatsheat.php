@@ -1,6 +1,6 @@
 <?php
 
-class BAL_Auth_Adapter_Doctrine implements Zend_Auth_Adapter_Interface {
+class Bal_Auth_Adapter_Doctrine implements Zend_Auth_Adapter_Interface {
 	
 	private $_username;
 	private $_password;
@@ -111,7 +111,7 @@ class BAL_Auth_Adapter_Doctrine implements Zend_Auth_Adapter_Interface {
     }
 }
 
-class BAL_Controller_Action_Helper_ extends Zend_Controller_Action_Helper_Abstract {
+class Bal_Controller_Action_Helper_ extends Zend_Controller_Action_Helper_Abstract {
 	
 	protected $_options = array(
 		'forward' => array('login', 'index')

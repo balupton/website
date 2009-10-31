@@ -10,6 +10,7 @@ $baseUrlBack = $this->bal()->getBaseUrl('back');
     <?
     // CSS
     $this->headLink()
+		//->appendStylesheet($baseUrl.'/back/styles/wp-admin.css')
 		->appendStylesheet($baseUrl.'/back/styles/load-styles.css')
 		->appendStylesheet($baseUrl.'/back/styles/colors-fresh.css')
 		->appendStylesheet($baseUrl.'/back/styles/balcms.css');
@@ -31,7 +32,7 @@ $baseUrlBack = $this->bal()->getBaseUrl('back');
     ->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.history.js')->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.ajaxy.js')
     // Application
     ->appendFile($baseUrl.'/scripts/jquery.sparkle.js')
-    ->appendFile($baseUrlBack.'/scripts/balcms.js')
+    ->appendFile($baseUrlBack.'/scripts/cms.js')
     ?>
         <script type="text/javascript">
             //<![CDATA[

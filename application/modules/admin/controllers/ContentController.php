@@ -33,27 +33,45 @@ class Admin_ContentController extends Zend_Controller_Action {
 	}
 
 	public function contentEditAction ( ) {
+		# Prepare
 		$this->registerMenu('content-content-list');
+		$content = $this->_getParam('content', false);
+		$Content = $ContentCrumbArray = $ContentArray = array();
+		
+		# Fetch
+		$Content = $this->_getContent($content);
+		$ContentArray = $Content->toArray();
+		$ContentCrumbArray[] = $ContentArray;
+		
+		# Apply
+		$this->view->ContentCrumbArray = $ContentCrumbArray;
+		$this->view->ContentArray = $ContentArray;
 	}
 
 	public function contentNewAction ( ) {
 		$this->registerMenu('content-content-edit');
 	}
-
+	
+	protected function _getContent($content){
+		$Content = Doctrine_Query::create()
+			->select('c.*, cr.*, ct.*, ca.*')
+			->from('Content c, c.Route cr, c.Tags ct, c.Author ca')
+			->where('c.code = ?', $content)
+			->fetchOne();
+		return $Content;
+	}
+	
 	public function contentListAction ( ) {
 		# Prepare
+		$this->registerMenu('content-content-list');
 		$content = $this->_getParam('content', false);
 		$Content = $ContentCrumbArray = $ContentListArray = $ContentArray = array();
-		$this->registerMenu('content-content-list');
+		
 		# Fetch Crumbs
 		// Check
 		if ( $content ) {
 			// We have a content as a root
-			$Content = Doctrine_Query::create()
-				->select('c.*, cr.*, ct.*, ca.*')
-				->from('Content c, c.Route cr, c.Tags ct, c.Author ca')
-				->where('c.code = ?', $content)
-				->fetchOne();
+			$Content = $this->_getContent($content);
 			$ContentArray = $Content->toArray();
 			// Customise Tree Handling
 			$Query = Doctrine_Query::create()
@@ -92,10 +110,11 @@ class Admin_ContentController extends Zend_Controller_Action {
 		// Reset Tree
 		$Tree->resetBaseQuery();
 
-		# Finish
+		# Clean
 		// Release
 		//$Content->free();
-		// Apply
+		
+		# Apply
 		$this->view->ContentCrumbArray = $ContentCrumbArray;
 		$this->view->ContentListArray = $ContentListArray;
 		$this->view->ContentArray = $ContentArray;

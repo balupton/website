@@ -1,4 +1,5 @@
 <?php
+require_once 'Zend/View/Helper/Abstract.php';
 class Bal_View_Helper_Message extends Zend_View_Helper_Abstract {
 
 	public $messages = array();

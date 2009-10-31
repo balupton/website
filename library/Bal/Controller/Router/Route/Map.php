@@ -1,7 +1,6 @@
 <?php
-require_once 'Zend/Controller/Router/Route/Interface.php';
-
-class BAL_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex {
+require_once 'Zend/Controller/Router/Route/Regex.php';
+class Bal_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex {
 
     /**#@+
      * Array keys to use for module, controller, and action. Should be taken out of request.

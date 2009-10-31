@@ -1,6 +1,17 @@
 <?php
+require_once 'Bal/View/Helper/RenderPartialAbstract.php';
 class Bal_View_Helper_Editor extends Bal_View_Helper_RenderPartialAbstract {
 	
+    /**
+     * Partial view script to use for rendering menu
+     *
+     * @var string|array
+     */
+    protected $_partial = 'editor/editor.phtml';
+    
+    /**
+     * Self Referencing Chaining Function
+     */
 	public function editor ( ) {
 		return $this;
 	}

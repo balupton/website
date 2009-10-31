@@ -1,6 +1,6 @@
 <?php
 
-class BAL_Framework {
+class Bal_Framework {
 	
 	public static function import ( $libraries = array() ) {
 		$balphp__sub_packages = $libraries;

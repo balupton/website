@@ -10,13 +10,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initLocale () {
 		// Prepare
 		$this->bootstrap('autoload');
-		$this->bootstrap('view');
 		$this->bootstrap('balphp');
 		// Locale
-		$Locale = new BAL_Locale($this->getOption('locale'));
-		// Assign
-		$view = $this->getResource('view');
-		$view->locale = $Locale;
+		$Locale = new Bal_Locale($this->getOption('locale'));
 	}
 
 	/**
@@ -46,7 +42,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('view');
 		// View Helpers
 		$view = $this->getResource('view');
-		$view->addHelperPath('BAL/View/Helper/', 'BAL_View_Helper');
+		$view->addHelperPath('BAL/View/Helper/', 'Bal_View_Helper');
 		// Done
 		return true;
 	}
@@ -80,7 +76,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initAutoload () {
 		// Initialise Zend's Autoloader, used for plugins etc
 		$autoloader = Zend_Loader_Autoloader::getInstance();
-		$autoloader->registerNamespace('BAL_');
+		$autoloader->registerNamespace('Bal_');
 
 		// Done
 		return $autoloader;
@@ -147,7 +143,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		if ( $version_1_2 ) $Manager->registerExtension('Taggable');
 
 		// Apply Listener
-		$Manager->addRecordListener(new BAL_Doctrine_Record_Listener_Html(false));
+		$Manager->addRecordListener(new Bal_Doctrine_Record_Listener_Html(false));
 
 		// Cache
 		//$cacheConn = Doctrine_Manager::connection(new PDO('sqlite::memory:'));
@@ -173,7 +169,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('autoload');
 
 		// balPHP
-		BAL_Framework::import();
+		Bal_Framework::import();
 
 		// Done
 		return true;
