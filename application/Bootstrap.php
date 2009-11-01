@@ -93,7 +93,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('view');
 		// View Helpers
 		$view = $this->getResource('view');
-		$view->addHelperPath('BAL/View/Helper/', 'Bal_View_Helper');
+		$view->addHelperPath('Bal/View/Helper/', 'Bal_View_Helper');
 		// Done
 		return true;
 	}
