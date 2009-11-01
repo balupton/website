@@ -9,47 +9,6 @@
 		if ( typeof z === 'undefined' || z === null ) z = this.length;
 		return this.substring(0,a)+start+this.substring(a,z)+end+this.substring(z);
 	};
-	String.prototype.autop = function(){
-		var pee = this;
-		var blocklist = 'table|thead|tfoot|caption|col|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|p|h[1-6]';
-
-		if ( pee.indexOf('<object') != -1 ) {
-			pee = pee.replace(/<object[\s\S]+?<\/object>/g, function(a){
-				return a.replace(/[\r\n]+/g, '');
-			});
-		}
-
-		pee = pee.replace(/<[^<>]+>/g, function(a){
-			return a.replace(/[\r\n]+/g, ' ');
-		});
-
-		pee = pee + "\n\n";
-		pee = pee.replace(new RegExp('<br />\\s*<br />', 'gi'), "\n\n");
-		pee = pee.replace(new RegExp('(<(?:'+blocklist+')[^>]*>)', 'gi'), "\n$1");
-		pee = pee.replace(new RegExp('(</(?:'+blocklist+')>)', 'gi'), "$1\n\n");
-		pee = pee.replace(new RegExp("\\r\\n|\\r", 'g'), "\n");
-		pee = pee.replace(new RegExp("\\n\\s*\\n+", 'g'), "\n\n");
-		pee = pee.replace(new RegExp('([\\s\\S]+?)\\n\\n', 'mg'), "<p>$1</p>\n");
-		pee = pee.replace(new RegExp('<p>\\s*?</p>', 'gi'), '');
-		pee = pee.replace(new RegExp('<p>\\s*(</?(?:'+blocklist+')[^>]*>)\\s*</p>', 'gi'), "$1");
-		pee = pee.replace(new RegExp("<p>(<li.+?)</p>", 'gi'), "$1");
-		pee = pee.replace(new RegExp('<p>\\s*<blockquote([^>]*)>', 'gi'), "<blockquote$1><p>");
-		pee = pee.replace(new RegExp('</blockquote>\\s*</p>', 'gi'), '</p></blockquote>');
-		pee = pee.replace(new RegExp('<p>\\s*(</?(?:'+blocklist+')[^>]*>)', 'gi'), "$1");
-		pee = pee.replace(new RegExp('(</?(?:'+blocklist+')[^>]*>)\\s*</p>', 'gi'), "$1");
-		pee = pee.replace(new RegExp('\\s*\\n', 'gi'), "<br />\n");
-		pee = pee.replace(new RegExp('(</?(?:'+blocklist+')[^>]*>)\\s*<br />', 'gi'), "$1");
-		pee = pee.replace(new RegExp('<br />(\\s*</?(?:p|li|div|dl|dd|dt|th|pre|td|ul|ol)>)', 'gi'), '$1');
-		pee = pee.replace(new RegExp('(?:<p>|<br ?/?>)*\\s*\\[caption([^\\[]+)\\[/caption\\]\\s*(?:</p>|<br ?/?>)*', 'gi'), '[caption$1[/caption]');
-
-		// Fix the pre|script tags
-		pee = pee.replace(/<(pre|script)[^>]*>[\s\S]+?<\/\1>/g, function(a) {
-			a = a.replace(/<br ?\/?>[\r\n]*/g, '\n');
-			return a.replace(/<\/?p( [^>]*)?>[\r\n]*/g, '\n');
-		});
-
-		return pee;
-	};
 	Number.prototype.zeroise = String.prototype.zeroise = function(threshold){
 		var number = this,
 			str = number.toString();
@@ -71,10 +30,6 @@
 
 	
 	// jQuery Prototypes
-	$.fn.valAutop = function(){
-		var $field = $(this);
-		return $field.val($field.val().autop());
-	};
 	$.fn.valWrap = function(start,end){
 		var $field = $(this);
 		return $field.val($field.val().wrap(start,end));
@@ -106,414 +61,255 @@
 		}
 		return $field;
 	};
+	$.fn.giveFocus = function(){
+		var $this = $(this);
+		var selector = ':input:visible:first';
+		if ( $this.is(selector) ) {
+			$this.focus();
+		} else {
+			$this.find(selector).focus();
+		}
+		return this;
+	}
+	$.fn.findAndSelf = function(selector){
+		var $this = $(this);
+		return $this.is(selector) ? $this : $this.find(selector);
+	};
+	$.fn.firstInput = function(){
+		return $(this).findAndSelf(':input:first');
+	}
 	
-	// CMS
-	$.CMS = {
-		// Editor
-		Editor: {
-			// Toolbar
-			Toolbar: {
-				get: function(toolbar){
-					return $(toolbar||'#quicktags');
-				},
-				render: function(editor,toolbar){
-					var CMS = $.CMS; var Editor = CMS.Editor; var Toolbar = Editor.Toolbar;
-					var $toolbar = Toolbar.get(toolbar);
-					var $holder = $('<div id="ed_toolbar">');
-					$.each(Toolbar.buttons, function(i,button){
-						button = $.extend({
-							title: '',
-							id: '',
-							class: '',
-							accesskey: '',
-							onclick: function(){}
-						}, button);
-						var $button = $('<input class="ed_button" type="button"/>');
-						$button.attr('id',button.id);
-						$button.addClass(button.class);
-						$button.attr('accesskey', button.accesskey);
-						$button.val(button.title);
-						$button.click(function(){
-							return button.onclick.apply(this,[editor,toolbar]);
-						});
-						$holder.append($button);
-					});
-					$toolbar.append($holder);
-				},
-				buttons: [{
-					title: 'b',
-					id: 'ed_strong',
-					accesskey: 'b',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						Editor.insertTag(editor, '<strong>', '</strong>');
-						return true;
-					}
-				},{
-					title: 'i',
-					id: 'ed_em',
-					accesskey: 'i',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						Editor.insertTag(editor, '<em>', '</em>');
-						return true;
-					}
-				},{
-					title: 'link',
-					id: 'ed_link',
-					accesskey: 'a',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						Editor.insertLink(editor);
-						return true;
-					}
-				},{
-					title: 'quote',
-					id: 'ed_block',
-					accesskey: 'q',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						Editor.insertTag(editor, '<blockquote>', '</blockquote>');
-						return true;
-					}
-				},{
-					title: 'del',
-					id: 'ed_del',
-					accesskey: 'd',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						var now = new Date();
-						var start = '<del datetime="'+now.getDatetime()+'">';
-						var end = '</del>';
-						Editor.insertTag(editor, start, end);
-						return true;
-					}
-				},{
-					title: 'ins',
-					id: 'ed_ins',
-					accesskey: 's',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						var now = new Date();
-						var start = '<ins datetime="'+now.getDatetime()+'">';
-						var end = '</ins>';
-						Editor.insertTag(editor, start, end);
-						return true;
-					}
-				},{
-					title: 'img',
-					id: 'ed_img',
-					accesskey: 'm',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						Editor.insertImage(editor);
-						return true;
-					}
-				},{
-					title: 'ul',
-					id: 'ed_ul',
-					accesskey: 'u',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						Editor.insertTag(editor, '<ul>', '</ul>');
-						return true;
-					}
-				},{
-					title: 'ol',
-					id: 'ed_ol',
-					accesskey: 'o',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						Editor.insertTag(editor, '<ol>', '</ol>');
-						return true;
-					}
-				},{
-					title: 'li',
-					id: 'ed_li',
-					accesskey: 'li',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						Editor.insertTag(editor, '<li>', '</li>');
-						return true;
-					}
-				},{
-					title: 'code',
-					id: 'ed_code',
-					accesskey: 'c',
-					onclick: function(editor, toolbar){
-						var CMS = $.CMS; var Editor = CMS.Editor;
-						Editor.insertTag(editor, '<code>', '</code>');
-						return true;
-					}
-				}]
-			}, // Toolbar
-			
-			// Editor
-			get: function(editor){
-				return $(editor||'#content');
-			},
-			insertImage: function(editor){
-				var CMS = $.CMS; var Editor = CMS.Editor;
-				// Prepare
-				var value = 'http://';
-				var textUrl = 'Enter the image\'s URL';
-				var textAlt = 'Enter the image\'s description';
-				var url = prompt(textUrl, value); if ( !url ) return;
-				var alt = prompt(textAlt, value); if ( !alt ) return;
-				// Apply
-				var start = '<img src="'+url+'" alt="'+alt+'">',
-					end = '</a>';
-				Editor.insertTag(editor,start,end);
-				// Done
+	// Helpers
+	$.fn.cancel = function(callback){
+		return $(this).findAndSelf(':input').keypress(function(e){
+			if ( e.keyCode === 27 ) { // ESC
+				callback.call(this);
+			}
+		});
+	};
+	$.fn.enter = function(callback){
+		return $(this).findAndSelf(':input').keypress(function(e){
+			if ( e.keyCode === 13 ) { // Enter
+				callback.call(this);
+			}
+		});
+	};
+	$.fn.value = function(){
+		var $input = $(this).firstInput();
+		var val = $input.val();
+		if ( $input.is('select') ) {
+			val = $input.find('option:selected').text();
+		}
+		return val;
+	}
+	
+	// checklist
+	if ( false ) $.fn.checklist = function(){
+		// Prepare
+		var options = {};
+		var defaults = {
+			list: '<span class="checklist">',
+			item: '<span class="checklist-item">',
+			title: '<span class="checklist-title">',
+			remove_button: '<a class="checklist-delete">x</a>',
+			remove: function($select,e){
+				var $remove_button = $(this);
+				var $item = $remove_button.parent();
+				var value = $item.data('value');
+				$select.children('option[value='+value+']').removeAttr('selected');
 				return true;
 			},
-			insertLink: function(editor){
-				var CMS = $.CMS; var Editor = CMS.Editor;
-				// Prepare
-				var value = 'http://';
-				var textUrl = 'Enter the URL';
-				var url = prompt(textUrl, value); if ( !url ) return;
-				// Apply
-				var start = '<a href="'+url+'">',
-					end = '</a>';
-				Editor.insertTag(editor,start,end);
-				// Done
+			clear: '<span class="clear"></span>',
+			hideClass: 'hide',
+			add_button: '',
+			add_field: '',
+			add: function(){
+			}
+		}
+		if ( typeof arguments[0] === 'string' ) {
+			options = {
+				edit: arguments[0]
+			};
+		} else if ( typeof arguments[0] === 'object' ) {
+			options = arguments[0];
+		}
+		options = $.extend(defaults,options);
+		// Fetch
+		var $select = $(this).firstInput().hide().removeClass(options.hideClass);
+		var $list = $(options.list);
+		var $item = $(options.item);
+		var $title = $(options.title);
+		var $remove_button = $(options.remove_button);
+		var $clear = $(options.clear);
+		// Bind
+		$remove_button.click(function(e){
+			return options.remove.apply(this,[$select,e]);
+		});
+		if ( options.add_button && options.add_field ) {
+			var $add = $(options.add_button);
+			var $field = $(options.add_field);
+		}
+		// Build
+		$list.insertAfter($select);
+		$clear.insertAfter($list);
+		$select.children('option').each(function(){
+			var $option = $(this);
+			var title = $option.text();
+			var value = $option.value();
+			$title.text(title);
+			$item.clone().append($remove_button).append($title).data('value',value).attr('title',title).appendTo($list);
+		});
+	}
+	
+	// inlineEdit
+	$.fn.inlineEdit = function() {
+		// Prepare
+		var options = {};
+		var defaults = {
+			edit_button: '<a class="inline-edit-button inline-edit-button-edit">Edit</a>',
+			edit_button_class: '',
+			remove_button: '<a class="inline-edit-button inline-edit-button-remove">Remove</a>',
+			ok_button: '<a class="inline-edit-button inline-edit-button-ok button">OK</a>',
+			cancel_button: '<a class="inline-edit-button inline-edit-button-cancel">Cancel</a>',
+			panel: '<span class="inline-edit-panel">',
+			view_panel: '<span class="inline-edit-panel-view">',
+			edit_panel: '<span class="inline-edit-panel-edit">',
+			hideClass: 'hide',
+			highlightClass: 'editable',
+			clickableSelector: '.inline-edit-clickable,label',
+			open: function(els,e){
+				els.$edit.data('orig', els.$edit.val());
+				els.$views.hide();
+				els.$edits.show();
+				els.$edit.giveFocus();
+			},
+			update: function(els,e){
+				els.$view.html($edit.value());
+				els.$views.show();
+				els.$edits.hide();
 				return true;
 			},
-			insertTag: function(editor, start, end){
-				var CMS = $.CMS; var Editor = CMS.Editor;
-				// Prepare
-				var $editor = Editor.get(editor);
-				// Apply
-				$editor.valWrapSelection(start,end);
-				// Done
-				return true;
+			cancel: function(els,e){
+				els.$edit.val(els.$edit.data('orig'));
+				els.$views.show();
+				els.$edits.hide();
 			},
-			render: function(editor,toolbar,mode){
-				var CMS = $.CMS; var Editor = CMS.Editor; var Toolbar = Editor.Toolbar;
-				
-				// Prepare
-				var $editor = Editor.get(editor);
-				var $toolbar = Toolbar.get(toolbar);
-				mode = mode||'visual';
-				
-				// Elements
-				var $buttonVisual	= $('#edButtonVisual'),
-					$buttonStandard	= $('#edButtonStandard');
-				
-				// TinyMCE
-				var ed = false;
-				try { ed = tinyMCE.get(editor); }
-				catch(e) { ed = false; }
-				
-				// Mode
-				if ( 'visual' == mode ) {
-					if ( ed && !ed.isHidden() )
-						return false;
-					
-					// Apply
-					$buttonVisual.addClass('active');
-					$buttonStandard.removeClass('active');
-					$editor.valAutop();
+			remove: false
+		};
+		if ( typeof arguments[0] === 'string' ) {
+			options = {
+				edit: arguments[0]
+			};
+		} else if ( typeof arguments[0] === 'object' ) {
+			options = arguments[0];
+		}
+		if ( typeof arguments[1] === 'string' ) {
+			options.panel = arguments[1];
+		}
+		var appendPanel = typeof options.panel === 'undefined';
+		options = $.extend(defaults,options);
+		// Fetch
+		var $view = $(this).addClass(options.highlightClass);
+		var $edit = $(options.edit).hide().removeClass(options.hideClass);
+		var $edit_button = $(options.edit_button); if ( options.edit_button_class && options.edit_button_class.length ) {
+			$edit_button.addClass(options.edit_button_class);
+		} 
+		var $ok_button = $(options.ok_button);
+		var $cancel_button = $(options.cancel_button);
+		var $panel = $(options.panel);
+		var $view_panel = $(options.view_panel);
+		var $edit_panel = $(options.edit_panel).hide();
+		// Apply
+		$view_panel.append($edit_button);
+		if ( options.remove ) {
+			var $remove_button = $(options.remove_button);
+			$view_panel.append($remove_button);
+		}
+		$edit_panel.append($ok_button).append($cancel_button);
+		$panel.append($view_panel).append($edit_panel);
+		if ( appendPanel ) {
+			$panel.insertAfter($edit);
+		} 
+		// Simplify
+		var $views = $($view_panel).add($view);
+		var $edits = $($edit_panel).add($edit);
+		var $edit_buttons = $edit_button.add($view);
+		if ( options.clickableSelector ) {
+			$edit_buttons = $edit_buttons.add(
+				$view.add($edit).add($panel).siblings(options.clickableSelector)
+			);
+		}
+		// Functions
+		var pack = function(){
+			return {
+				$views: $views,
+				$edits: $edits,
+				$view: $view,
+				$edit: $edit,
+				$panel: $panel
+			}
+		}
+		var open = function(e){
+			options.open.apply(this,[pack(),e]);
+		};
+		var cancel = function(e){
+			options.cancel.apply(this,[pack(),e]);
+		};
+		var update = function(e){
+			options.update.apply(this,[pack(),e]);
+		};
+		var remove = function(e){
+			options.remove.apply(this,[pack(),e]);
+		};
+		// Bind
+		$edit_buttons.click(open);
+		$cancel_button.click(cancel); $edit.cancel(cancel);
+		$ok_button.click(update); $edit.enter(update);
+		if ( options.remove ) {
+			$remove_button.click(remove);
+		}
+		// Done
+		return this;
+	};
+	
+	$.fn.editor = function(options) {
+		var defaults = {
+			// Location of TinyMCE script
+			script_url: '/scripts/tiny_mce/tiny_mce.js',
 
-					// Toolbar
-					$toolbar.hide();
-					
-					// Display
-					if ( ed ) {
-						ed.show();
-					} else {
-						try{tinyMCE.execCommand('mceAddControl', false, editor);}
-						catch(e){}
-					}
-					
-				}
-				else {
-					// Apply
-					//ta.style.color = '#000';
-					$buttonVisual.removeClass('active');
-					$buttonStandard.addClass('active');
-					
-					// Display
-					if ( ed && !ed.isHidden() ) {
-						$editor.height(ed.getContentAreaContainer().offsetHeight+24+'px');
-						ed.hide();
-					}
-					
-					// Toolbar
-					$toolbar.show();
-				}
-			} // render
+			// General options
+			theme: "advanced",
+			plugins: "autoresize,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+			// Theme options
+			theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+			theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,undo,redo,|,link,unlink,image,|,preview,|,forecolor,backcolor,|,bullist,numlist,|,outdent,indent,blockquote",
+			theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,code,|,fullscreen",
+			theme_advanced_toolbar_location: "top",
+			theme_advanced_toolbar_align: "left",
+			theme_advanced_statusbar_location: "bottom",
+			theme_advanced_path: false,
+			theme_advanced_resizing: false,
+			width: "100%",
 			
-		} // Editor
-	
-	}; // CMS
+			// Example content CSS (should be your site CSS)
+			content_css : "css/content.css",
+
+			// Drop lists for link/image/media/template dialogs
+			/*
+			template_external_list_url: "lists/template_list.js",
+			external_link_list_url: "lists/link_list.js",
+			external_image_list_url: "lists/image_list.js",
+			media_external_list_url: "lists/media_list.js",
+			*/
+			
+			// Replace values for the template plugin
+			template_replace_values: {
+				
+			}
+		};
+		var options = $.extend(defaults, options);
+		return $(this).tinymce(options);
+	};
 	
 })();
-
-var switchEditors = {
-
-	mode : '',
-
-	I : function(e) {
-		return document.getElementById(e);
-	},
-
-	edInit : function() {
-	},
-
-	saveCallback : function(el, content, body) {
-
-		if ( tinyMCE.activeEditor.isHidden() )
-			content = this.I(el).value;
-		else
-			content = this.pre_wpautop(content);
-
-		return content;
-	},
-
-	pre_wpautop : function(content) {
-		var blocklist1, blocklist2;
-
-		// Protect pre|script tags
-		content = content.replace(/<(pre|script)[^>]*>[\s\S]+?<\/\1>/g, function(a) {
-			a = a.replace(/<br ?\/?>[\r\n]*/g, '<wp_temp>');
-			return a.replace(/<\/?p( [^>]*)?>[\r\n]*/g, '<wp_temp>');
-		});
-
-		// Pretty it up for the source editor
-		blocklist1 = 'blockquote|ul|ol|li|table|thead|tbody|tr|th|td|div|h[1-6]|p';
-		content = content.replace(new RegExp('\\s*</('+blocklist1+')>\\s*', 'mg'), '</$1>\n');
-		content = content.replace(new RegExp('\\s*<(('+blocklist1+')[^>]*)>', 'mg'), '\n<$1>');
-
-		// Mark </p> if it has any attributes.
-		content = content.replace(new RegExp('(<p [^>]+>.*?)</p>', 'mg'), '$1</p#>');
-
-		// Sepatate <div> containing <p>
-		content = content.replace(new RegExp('<div([^>]*)>\\s*<p>', 'mgi'), '<div$1>\n\n');
-
-		// Remove <p> and <br />
-		content = content.replace(new RegExp('\\s*<p>', 'mgi'), '');
-		content = content.replace(new RegExp('\\s*</p>\\s*', 'mgi'), '\n\n');
-		content = content.replace(new RegExp('\\n\\s*\\n', 'mgi'), '\n\n');
-		content = content.replace(new RegExp('\\s*<br ?/?>\\s*', 'gi'), '\n');
-
-		// Fix some block element newline issues
-		content = content.replace(new RegExp('\\s*<div', 'mg'), '\n<div');
-		content = content.replace(new RegExp('</div>\\s*', 'mg'), '</div>\n');
-		content = content.replace(new RegExp('\\s*\\[caption([^\\[]+)\\[/caption\\]\\s*', 'gi'), '\n\n[caption$1[/caption]\n\n');
-		content = content.replace(new RegExp('caption\\]\\n\\n+\\[caption', 'g'), 'caption]\n\n[caption');
-
-		blocklist2 = 'blockquote|ul|ol|li|table|thead|tr|th|td|h[1-6]|pre';
-		content = content.replace(new RegExp('\\s*<(('+blocklist2+') ?[^>]*)\\s*>', 'mg'), '\n<$1>');
-		content = content.replace(new RegExp('\\s*</('+blocklist2+')>\\s*', 'mg'), '</$1>\n');
-		content = content.replace(new RegExp('<li([^>]*)>', 'g'), '\t<li$1>');
-
-		if ( content.indexOf('<object') != -1 ) {
-			content = content.replace(/<object[\s\S]+?<\/object>/g, function(a){
-				return a.replace(/[\r\n]+/g, '');
-			});
-		}
-
-		// Unmark special paragraph closing tags
-		content = content.replace(new RegExp('</p#>', 'g'), '</p>\n');
-		content = content.replace(new RegExp('\\s*(<p [^>]+>.*</p>)', 'mg'), '\n$1');
-
-		// Trim whitespace
-		content = content.replace(new RegExp('^\\s*', ''), '');
-		content = content.replace(new RegExp('[\\s\\u00a0]*$', ''), '');
-
-		// put back the line breaks in pre|script
-		content = content.replace(/<wp_temp>/g, '\n');
-
-		// Hope.
-		return content;
-	},
-
-	go : function(id, mode) {
-		id = id || 'content';
-		mode = mode || this.mode || '';
-
-		var ed, qt = this.I('quicktags'), H = this.I('edButtonHTML'), P = this.I('edButtonPreview'), ta = this.I(id);
-
-		try { ed = tinyMCE.get(id); }
-		catch(e) { ed = false; }
-
-		if ( 'tinymce' == mode ) {
-			if ( ed && !ed.isHidden() )
-				return false;
-
-			//setUserSetting( 'editor', 'tinymce' );
-			this.mode = 'html';
-
-			P.className = 'active';
-			H.className = '';
-			//edCloseAllTags(); // :-(
-			qt.style.display = 'none';
-
-			ta.value = this.wpautop(ta.value);
-
-			if ( ed ) {
-				ed.show();
-			} else {
-				try{tinyMCE.execCommand("mceAddControl", false, id);}
-				catch(e){}
-			}
-		} else {
-			//setUserSetting( 'editor', 'html' );
-			ta.style.color = '#000';
-			this.mode = 'tinymce';
-			H.className = 'active';
-			P.className = '';
-
-			if ( ed && !ed.isHidden() ) {
-				ta.style.height = ed.getContentAreaContainer().offsetHeight + 24 + 'px';
-				ed.hide();
-			}
-
-			qt.style.display = 'block';
-		}
-		return false;
-	},
-
-	wpautop : function(pee) {
-		var blocklist = 'table|thead|tfoot|caption|col|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|p|h[1-6]';
-
-		if ( pee.indexOf('<object') != -1 ) {
-			pee = pee.replace(/<object[\s\S]+?<\/object>/g, function(a){
-				return a.replace(/[\r\n]+/g, '');
-			});
-		}
-
-		pee = pee.replace(/<[^<>]+>/g, function(a){
-			return a.replace(/[\r\n]+/g, ' ');
-		});
-
-		pee = pee + "\n\n";
-		pee = pee.replace(new RegExp('<br />\\s*<br />', 'gi'), "\n\n");
-		pee = pee.replace(new RegExp('(<(?:'+blocklist+')[^>]*>)', 'gi'), "\n$1");
-		pee = pee.replace(new RegExp('(</(?:'+blocklist+')>)', 'gi'), "$1\n\n");
-		pee = pee.replace(new RegExp("\\r\\n|\\r", 'g'), "\n");
-		pee = pee.replace(new RegExp("\\n\\s*\\n+", 'g'), "\n\n");
-		pee = pee.replace(new RegExp('([\\s\\S]+?)\\n\\n', 'mg'), "<p>$1</p>\n");
-		pee = pee.replace(new RegExp('<p>\\s*?</p>', 'gi'), '');
-		pee = pee.replace(new RegExp('<p>\\s*(</?(?:'+blocklist+')[^>]*>)\\s*</p>', 'gi'), "$1");
-		pee = pee.replace(new RegExp("<p>(<li.+?)</p>", 'gi'), "$1");
-		pee = pee.replace(new RegExp('<p>\\s*<blockquote([^>]*)>', 'gi'), "<blockquote$1><p>");
-		pee = pee.replace(new RegExp('</blockquote>\\s*</p>', 'gi'), '</p></blockquote>');
-		pee = pee.replace(new RegExp('<p>\\s*(</?(?:'+blocklist+')[^>]*>)', 'gi'), "$1");
-		pee = pee.replace(new RegExp('(</?(?:'+blocklist+')[^>]*>)\\s*</p>', 'gi'), "$1");
-		pee = pee.replace(new RegExp('\\s*\\n', 'gi'), "<br />\n");
-		pee = pee.replace(new RegExp('(</?(?:'+blocklist+')[^>]*>)\\s*<br />', 'gi'), "$1");
-		pee = pee.replace(new RegExp('<br />(\\s*</?(?:p|li|div|dl|dd|dt|th|pre|td|ul|ol)>)', 'gi'), '$1');
-		pee = pee.replace(new RegExp('(?:<p>|<br ?/?>)*\\s*\\[caption([^\\[]+)\\[/caption\\]\\s*(?:</p>|<br ?/?>)*', 'gi'), '[caption$1[/caption]');
-
-		// Fix the pre|script tags
-		pee = pee.replace(/<(pre|script)[^>]*>[\s\S]+?<\/\1>/g, function(a) {
-			a = a.replace(/<br ?\/?>[\r\n]*/g, '\n');
-			return a.replace(/<\/?p( [^>]*)?>[\r\n]*/g, '\n');
-		});
-
-		return pee;
-	}
-};

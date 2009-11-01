@@ -31,7 +31,7 @@ class Bal_View_Helper_Message extends Zend_View_Helper_Abstract {
 	}
 
 	public function render ( ) {
-		?><div id="message" class="updated fade">
+		?><div id="message" class="message updated fade">
 	        <p>
 	            Post updated. <a href="http://balupton.wordpress.com/2007/11/16/hello-world/">View post</a>
 	        </p>

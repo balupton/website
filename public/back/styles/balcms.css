@@ -5,6 +5,135 @@
 	/*font-weight: normal;*/
 }
 
+.hide {
+	display: none;
+}
+
+.clear {
+	display:block;
+	clear:both;
+}
+
+.checklist span a:hover {
+	background:transparent url(../images/xit.gif) no-repeat scroll -10px 0;
+}
+.checklist span a {
+	background:transparent url(../images/xit.gif) no-repeat scroll 0 0;
+	cursor:pointer;
+	display:block;
+	float:left;
+	height:10px;
+	margin:6px -13px; 0 0;
+	overflow:hidden;
+	position:absolute;
+	text-indent:-9999px;
+	width:10px;
+}
+.checklist span {
+	margin-left:15px;
+	cursor:default;
+	display:block;
+	float:left;
+	font-size:11px;
+	line-height:1.8em;
+	margin-right:20px;
+	white-space:nowrap;
+}
+.checklist {
+}
+
+.content-published_at-field {
+	background-image:url(../images/date-button.gif);
+	background-position:left top;
+	background-repeat:no-repeat;
+	padding-left:18px;
+}
+ 
+.inline-edit-button {
+	margin-right: 5px;
+}
+.editable {
+	cursor: text;
+}
+.editable:hover, .field:hover .editable {
+	background-color:#E4F2FD;
+	color:#D54E21;
+}
+.weak {
+	color: #999;
+}
+label {
+	vertical-align:inherit;
+}
+.message {
+	margin:5px 0 0 !IMPORTANT;
+}
+
+.field .highlight {
+	background:#FFFBCC;
+	color:inherit;
+}
+
+.field-container {
+
+}
+.field-container .field {
+	margin-bottom:2em;
+
+}
+.field-container .field p {
+	margin:0;
+	padding:0;
+}
+.field-container .field p,
+.field-container .field {
+	font-size: 11px;
+	line-height: 1.4em;
+	color: #666;
+}
+.field-container .field-normal textarea {
+	width:100%;
+}
+.field-container .field-normal,
+.field-container .field-normal p {
+	color: #333333;
+}
+.field-container .field-normal label {
+	display:block;
+	font-weight:bold;
+	color: #464646;
+	font-size:12px;
+}
+.field-container .field-simple label {
+	display:none;
+}
+.field-container .field-simple input {
+	-moz-border-radius-bottomleft:6px;
+	-moz-border-radius-bottomright:6px;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	border-style:solid;
+	border-width:1px;
+	font-size:1.7em;
+	outline-color:-moz-use-text-color;
+	outline-style:none;
+	outline-width:medium;
+	padding:3px 4px;
+	width:100%;
+}
+.field-container .field-little label {
+	color: #777;
+	font-weight:bold;
+}
+.field-container .field-little {
+	padding:0;
+	margin:-1em 0 1em 8px;
+}
+
+
+#editorcontainer {
+	border: none;
+}
 
 /* menu icons */
 #adminmenu #menu-index div.wp-menu-image {
