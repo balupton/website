@@ -13,6 +13,57 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('balphp');
 		// Locale
 		$Locale = new Bal_Locale($this->getOption('locale'));
+		// Done
+		return true;
+	}
+
+	/**
+	 * Initialise our Mail
+	 * @return
+	 */
+	protected function _initMail ( ) {
+		// Fetch
+		$mail = $this->getOption('mail');
+		$transport = $mail['transport'];
+		$smtp = $transport['smtp'];
+		$address = $smtp['address']; unset($smtp['address']);
+		// Apply
+		$Transport = new Zend_Mail_Transport_Smtp($address, $smtp);
+		Zend_Mail::setDefaultTransport($Transport);
+		// Done
+		return true;
+	}
+	
+	/**
+	 * Initialise our Log
+	 * @return
+	 */
+	protected function _initLog ( ) {
+		// Prepare
+		$this->bootstrap('autoload');
+		// Mail
+		$mail = $this->getOption('mail');
+		$Mail = new Zend_Mail();
+		$Mail->setFrom($mail['from']['address'], $mail['from']['name']);
+		$Mail->addTo($mail['log']['address'], $mail['log']['name']);
+		// Create Log
+		$Log = new Zend_Log();
+		Zend_Registry::set('Log',$Log);
+		// Create Writer: SysLog
+		$Writer_Syslog = new Zend_Log_Writer_Syslog();
+		$Log->addWriter($Writer_Syslog);
+		// Create Writer: Email
+		$Writer_Mail = new Zend_Log_Writer_Mail($Mail);
+		$Writer_Mail->setSubjectPrependText('Error Log: mydance.com.au');
+		//$Writer->addFilter(Zend_Log::WARN);
+		$Log->addWriter($Writer_Mail);
+		// Create Writer: Firebug
+		if ( DEBUG_MODE ) {
+			//$Writer_Firebug = new Zend_Log_Writer_Firebug();
+			//$Log->addWriter($Writer_Firebug);
+		}
+		// Done
+		return true;
 	}
 
 	/**

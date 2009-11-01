@@ -1,17 +1,34 @@
-<h1>An error occurred</h1>
-<h2><?= $this->message ?></h2>
-
-<? if ('development' == APPLICATION_ENV): ?>
-<h3>Exception information:</h3>
-<p>
-  <b>Message:</b> <?= $this->exception->getMessage() ?>
-</p>
-
-<h3>Stack trace:</h3>
-<pre><?= $this->exception->getTraceAsString() ?>
-</pre>
-
-<h3>Request Parameters:</h3>
-<pre><? var_dump($this->request->getParams()) ?>
-</pre>
-<? endif ?>
+<div style="margin:10px;" id="error">
+	<h1>An error occurred</h1>
+	<h2><?= $this->locale()->translate($this->error) ?></h2>
+	
+	<h3>Exception information:</h3>
+	<p>
+		<strong>Message:</strong>
+		<span class="message">
+			<? if ( empty($this->messages) ): ?>
+				<pre><?= $this->locale()->translate($this->exception->getMessage()) ?></pre>
+			<? else: ?>
+				<? foreach ( $this->messages as $message ): ?>
+					<?
+						$message['field'] = $this->locale()->translate($message['table'].'-field-'.$message['field']);
+						$message['plural'] = $this->locale()->translate($message['table'].'-title-plural');
+						$message['singular'] = $this->locale()->translate($message['table'].'-title-singular');
+						$message['ownership'] = $this->locale()->translate($message['table'].'-title-ownership');
+					?>
+					<?= $this->locale()->translate($message['code'], $message) ?><br />
+				<? endforeach; ?>
+			<? endif; ?>
+		</span>
+	</p>
+	
+	<? if ( DEBUG_MODE ): ?>
+	<h3>Stack trace:</h3>
+	<pre><?= $this->exception->getTraceAsString() ?>
+	</pre>
+	
+	<h3>Request Parameters:</h3>
+	<pre><? var_dump($this->request->getParams()) ?>
+	</pre>
+	<? endif ?>
+</div>

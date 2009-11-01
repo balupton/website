@@ -28,6 +28,14 @@ class ErrorController extends Zend_Controller_Action
 		
 		$this->view->exception = $errors->exception;
 		$this->view->request   = $errors->request;
+		
+		// Log the error
+		$Log = Zend_Registry::get('Log');
+		if ( $Log ) {
+			$Log->err($errors->exception);
+			$Log->info(var_export($errors->request->getParams(),true));
+		}
+		
     }
 
 

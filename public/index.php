@@ -23,6 +23,15 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	//define('BASE_URL', 					'/stage/public/');
 }
 
+// Debug Mode
+if ( !defined('DEBUG_MODE') ) define('DEBUG_MODE',
+	('development' === APPLICATION_ENV || 'testing' === APPLICATION_ENV ||
+		(!empty($_COOKIE['debug']) && $_COOKIE['debug'] === 'secret')
+	)
+	? 1
+	: 0
+);
+
 // Define application environment
 if ( !defined('APPLICATION_ENV') )
 	define('APPLICATION_ENV', 				(getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
