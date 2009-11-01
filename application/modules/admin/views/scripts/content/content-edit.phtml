@@ -45,7 +45,9 @@
 											</select>
 										</span>
 										<script type="text/javascript">
-											$("#content-status-view").inlineEdit("#content-status-edit");
+											$("#content-status-view").inlineEdit({
+												edit: "#content-status-edit"
+											});
 										</script>
 									</div>
 									<div class="misc-pub-section misc-pub-section-last field" id="content-published_at-field">
@@ -56,7 +58,9 @@
 											<input type="text" name="content[published_at]" id="content-published_at" value="2009-05-11 11:53" class="sparkle-datetime"></input>
 										</span>
 										<script type="text/javascript">
-											$("#content-published_at-view").inlineEdit("#content-published_at-edit");
+											$("#content-published_at-view").inlineEdit({
+												edit: "#content-published_at-edit"
+											});
 										</script>
 									</div>
 								</div>
@@ -104,8 +108,7 @@
 						<span class="inline-edit-clickable">http://www.mydance.com.au/</span><span id="content-code-view" title="Click to edit this part of the permalink" class="highlight"><?=$this->ContentArray['Route']['path']?></span><input type="text" name="content[code]" id="content-code-edit" value="<?=$this->ContentArray['Route']['path']?>" />/
 						<span class="inline-edit-panel" id="content-code-panel"></span>
 						<script type="text/javascript">
-							$("#content-code-view").inlineEdit({
-								edit_button_class: 'button',
+							$("#content-code-view").inlineEdit('editbutton', {
 								edit: '#content-code-edit',
 								panel: '#content-code-panel'
 							});
