@@ -73,7 +73,7 @@
 	}
 	$.fn.findAndSelf = function(selector){
 		var $this = $(this);
-		return $this.is(selector) ? $this : $this.find(selector);
+		return $this.find(selector).andSelf().filter(selector);
 	};
 	$.fn.firstInput = function(){
 		return $(this).findAndSelf(':input:first');
@@ -171,9 +171,9 @@
 			remove_button: '<a class="inline-edit-button inline-edit-button-remove">Remove</a>',
 			ok_button: '<a class="inline-edit-button inline-edit-button-ok button">OK</a>',
 			cancel_button: '<a class="inline-edit-button inline-edit-button-cancel">Cancel</a>',
-			panel: '<span class="inline-edit-panel">',
-			view_panel: '<span class="inline-edit-panel-view">',
-			edit_panel: '<span class="inline-edit-panel-edit">',
+			panel: '<span class="inline-edit-panel"/>',
+			view_panel: '<span class="inline-edit-panel-view"/>',
+			edit_panel: '<span class="inline-edit-panel-edit"/>',
 			hideClass: 'hide',
 			highlightClass: 'editable',
 			clickableSelector: '.inline-edit-clickable,label',
@@ -211,25 +211,25 @@
 		// Fetch
 		var $view = $(this).addClass(options.highlightClass);
 		var $edit = $(options.edit).hide().removeClass(options.hideClass);
-		var $edit_button = $(options.edit_button); if ( options.edit_button_class && options.edit_button_class.length ) {
-			$edit_button.addClass(options.edit_button_class);
-		} 
+		var $edit_button = $(options.edit_button);
 		var $ok_button = $(options.ok_button);
 		var $cancel_button = $(options.cancel_button);
+		var $remove_button = $(options.remove_button);
 		var $panel = $(options.panel);
 		var $view_panel = $(options.view_panel);
 		var $edit_panel = $(options.edit_panel).hide();
-		// Apply
-		$view_panel.append($edit_button);
-		if ( options.remove ) {
-			var $remove_button = $(options.remove_button);
-			$view_panel.append($remove_button);
+		// Handle
+		if ( options.edit_button_class && options.edit_button_class.length ) {
+			$edit_button.addClass(options.edit_button_class);
 		}
+		if ( !options.remove ) {
+			$remove_button.hide();
+		}
+		// Build
+		$view_panel.append($edit_button).append($remove_button);}
 		$edit_panel.append($ok_button).append($cancel_button);
 		$panel.append($view_panel).append($edit_panel);
-		if ( appendPanel ) {
-			$panel.insertAfter($edit);
-		} 
+		$panel.insertAfter($edit);
 		// Simplify
 		var $views = $($view_panel).add($view);
 		var $edits = $($edit_panel).add($edit);
@@ -272,19 +272,57 @@
 		return this;
 	};
 	
-	$.fn.editor = function(options) {
-		var defaults = {
+	// Editor
+	$.BalClass = function(config){
+		this.configure(config);
+	};
+	$.BalClass.prototype = {
+		config: {
+			'default': {}
+		},
+		configure: function(config){
+			var Me = this;
+			Me.config = $.extend({},Me.config,config||{});
+			return Me;
+		},
+		applyConfig: function(name,config){
+			var Me = this;
+			$.extend(Me.config[name],config||{});
+			return Me;
+		},
+		getConfig: function(name,config){
+			var Me = this;
+			if ( typeof name !== 'string' ) {
+				if ( typeof config === 'undefined' ) {
+					config = name;
+				}
+				name = 'default';
+			}
+			if ( typeof config !== 'object' ) {
+				config = {};
+			}
+			return $.extend({}, Me.config[name]||{}, config||{});
+		},
+		getConfigWithDefault: function(name,config){
+			var Me = this;
+			return Me.getConfig('default',Me.getConfig(name,config));
+		}
+	};
+	
+	// Editor
+	$.Editor = new $.BalClass({
+		'default': {
 			// Location of TinyMCE script
 			script_url: '/scripts/tiny_mce/tiny_mce.js',
-
+			
 			// General options
 			theme: "advanced",
 			plugins: "autoresize,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
 			// Theme options
-			theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
-			theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,undo,redo,|,link,unlink,image,|,preview,|,forecolor,backcolor,|,bullist,numlist,|,outdent,indent,blockquote",
-			theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,code,|,fullscreen",
+			theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect,|,code,",
+			theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,undo,redo,|,link,unlink,image,|,preview,|,forecolor,backcolor,|,bullist,numlist,|,outdent,indent,blockquote,|,fullscreen",
+			theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup",
 			theme_advanced_toolbar_location: "top",
 			theme_advanced_toolbar_align: "left",
 			theme_advanced_statusbar_location: "bottom",
@@ -294,22 +332,61 @@
 			
 			// Example content CSS (should be your site CSS)
 			content_css : "css/content.css",
-
-			// Drop lists for link/image/media/template dialogs
-			/*
-			template_external_list_url: "lists/template_list.js",
-			external_link_list_url: "lists/link_list.js",
-			external_image_list_url: "lists/image_list.js",
-			media_external_list_url: "lists/media_list.js",
-			*/
 			
 			// Replace values for the template plugin
 			template_replace_values: {
 				
 			}
-		};
-		var options = $.extend(defaults, options);
-		return $(this).tinymce(options);
+		},
+		'rich': {
+		},
+		'simple': {
+			theme_advanced_buttons2: "",
+			theme_advanced_buttons3: ""
+		}
+	});
+	$.fn.editor = function(options) {
+		var Me = $.Editor;
+		var config = Me.getConfigWithDefault(options,options);
+		var $this = $(this);
+		return $this.tinymce(config);
 	};
+	
+	// Help
+	$.Help = new $.BalClass({
+		'default': {
+			// Elements
+			wrap: '<span class="help-wrap"/>',
+			icon: '<span class="help-icon"/>',
+			text: '<span class="help-text"/>',
+			parentClass: '',
+			title: ''
+		}
+	});
+	$.Help = $.extend($.Help,{
+		
+	});
+	$.fn.help = function(options){
+		var Me = $.Help;
+		if ( typeof options === 'string' ) {
+			options = {
+				title: options
+			};
+		}
+		var config = Me.getConfigWithDefault(options,options);
+		// Fetch
+		var $this = $(this);
+		var $wrap = $(config.wrap);
+		var $icon = $(config.icon);
+		var $text = $(config.text);
+		var $parent = $this.parent().addClass(config.parentClass);
+		// Build
+		var $contents = $this.contents();
+		$this.append($wrap.append($text).append($icon));
+		$contents.appendTo($text);
+		$this.attr('title', config.title);
+		// Done
+		return $this;
+	}
 	
 })();

@@ -1,5 +1,6 @@
 <?
-	$baseUrl = $this->bal()->getBaseUrl('back');
+	$baseUrl = $this->bal()->getBaseUrl();
+	$baseUrlBack = $this->bal()->getBaseUrl('back');
 ?>
 <div class="wrap">
 	<div id="icon-edit" class="icon32">
@@ -14,98 +15,78 @@
 	<?=$this->message()->render()?>
 	<form name="post" action="post.php" method="post" id="post">
 		<input type="hidden" id="_wpnonce" name="_wpnonce" value="b060cedf26" /><input type="hidden" name="_wp_http_referer" value="/wp-admin/post.php?action=edit&amp;post=1&amp;message=1" /><input type="hidden" id="user-id" name="user_ID" value="2212518" /><input type="hidden" id="hiddenaction" name="action" value="editpost" /><input type="hidden" id="originalaction" name="originalaction" value="editpost" /><input type="hidden" id="post_author" name="post_author" value="2212518" /><input type="hidden" id="post_type" name="post_type" value="post" /><input type="hidden" id="original_post_status" name="original_post_status" value="publish" /><input name="referredby" type="hidden" id="referredby" value="http://balupton.wordpress.com/wp-admin/post.php?action=edit&#038;post=1" /><input type="hidden" name="_wp_original_http_referer" value="http://balupton.wordpress.com/wp-admin/post.php?action=edit&amp;post=1" /><input type='hidden' id='post_ID' name='post_ID' value='1' />
-		<div id="poststuff" class="metabox-holder has-right-sidebar">
+		<div class="metabox-holder has-right-sidebar">
 			<div id="side-info-column" class="inner-sidebar">
-				<div id='side-sortables' class='meta-box-sortables'>
-					<div id="submitdiv" class="postbox">
-						<h3 class='hndle'><span>Publish</span></h3>
+				<div id='side-sortables' class='meta-box-sortables sidebar-boxes'>
+				
+					<div id="sidebar-publish-box" class="postbox sidebar-box sidebar-box-sections">
+						<h3><span>Publish</span></h3>
 						<div class="inside">
-							<div class="submitbox" id="submitpost">
-								<div id="minor-publishing">
-									<div style="display:none;">
-										<input type="submit" name="save" value="Save" />
+							<div id="minor-publishing">
+								<div id="minor-publishing-actions">
+									<div id="save-action">
+										<input name="save" id="save-post" value="Open" tabindex="4" class="button" type="submit">
 									</div>
-									<div id="minor-publishing-actions">
-										<div id="save-action">
-											<input name="save" id="save-post" value="Open" tabindex="4" class="button" type="submit">
-										</div>
-										<div id="preview-action">
-											<a class="preview button" href="http://balupton.wordpress.com/?p=46&amp;preview=true" target="wp-preview" id="post-preview" tabindex="4">Preview</a>
-										</div>
-										<div class="clear"></div>
+									<div id="preview-action">
+										<a class="preview button" href="http://balupton.wordpress.com/?p=46&amp;preview=true" target="wp-preview" id="post-preview" tabindex="4">Preview</a>
 									</div>
-									<div id="misc-publishing-actions">
-										<div class="misc-pub-section">
-											<label for="content-status">Status:</label>
-											<span id="content-status-view">Published</span>
-											<span id="content-status-edit">
-												<br/>
-												<select name="content[status]" id="content-status" tabindex="4" class="hide">
-													<option selected='selected' value='publish'>Published</option>
-													<option value='pending'>Pending Review</option>
-													<option value='draft'>Draft</option>
-												</select>
-											</span>
-											<script type="text/javascript">
-												$("#content-status-view").inlineEdit("#content-status-edit");
-											</script>
-										</div>
-										<div class="misc-pub-section misc-pub-section-last field" id="content-published_at-field">
-											<label for="content-published_at">Publish<span class="weak">ed</span> on:</label>
-											<span class="datetime" id="content-published_at-view">Nov 16, 2007 @ 1:53</span>
-											<span id="content-published_at-edit">
-												<br/>
-												<input type="text" name="content[published_at]" id="content-published_at" value="2009-05-11 11:53" class="sparkle-datetime"></input>
-											</span>
-											<script type="text/javascript">
-												$("#content-published_at-view").inlineEdit("#content-published_at-edit");
-											</script>
-										</div>
+									<div class="clear"></div>
+								</div>
+								<div id="misc-publishing-actions">
+									<div class="misc-pub-section field">
+										<label for="content-status">Status:</label>
+										<span id="content-status-view" class="field-value">Published</span>
+										<span id="content-status-edit" class="hide">
+											<br/>
+											<select name="content[status]" id="content-status" tabindex="4">
+												<option selected='selected' value='publish'>Published</option>
+												<option value='pending'>Pending Review</option>
+												<option value='draft'>Draft</option>
+											</select>
+										</span>
+										<script type="text/javascript">
+											$("#content-status-view").inlineEdit("#content-status-edit");
+										</script>
 									</div>
-									<div class="clear">
+									<div class="misc-pub-section misc-pub-section-last field" id="content-published_at-field">
+										<label for="content-published_at">Publish<span class="weak">ed</span> on:</label>
+										<span class="field-value" id="content-published_at-view">Nov 16, 2007 @ 1:53</span>
+										<span id="content-published_at-edit" class="hide">
+											<br/>
+											<input type="text" name="content[published_at]" id="content-published_at" value="2009-05-11 11:53" class="sparkle-datetime"></input>
+										</span>
+										<script type="text/javascript">
+											$("#content-published_at-view").inlineEdit("#content-published_at-edit");
+										</script>
 									</div>
 								</div>
-								<div id="major-publishing-actions">
-									<div id="delete-action">
-										<a class="submitdelete deletion" href="post.php?action=delete&amp;post=1&amp;_wpnonce=7509c09b14" onclick="if ( confirm('You are about to delete this post \'Hello world!\'\n  \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;">Delete</a>
-									</div>
-									<div id="publishing-action">
-										<input name="original_publish" type="hidden" id="original_publish" value="Update Post" /><input name="save" type="submit" class="button-primary" id="publish" tabindex="5" accesskey="p" value="Update Post" />
-									</div>
-									<div class="clear">
-									</div>
+								<div class="clear">
+								</div>
+							</div>
+							<div id="major-publishing-actions">
+								<div id="delete-action">
+									<a class="delete" href="#">Delete</a>
+								</div>
+								<div id="publishing-action">
+									<input name="save" type="submit" class="button-primary" id="publish" tabindex="5" accesskey="p" value="Save" />
+								</div>
+								<div class="clear">
 								</div>
 							</div>
 						</div>
 					</div>
-					<div id="tagsdiv-post_tag" class="postbox">
-						<h3 class='hndle'><span>Post Tags</span></h3>
+					
+					<div id="sidebar-tags-box" class="postbox sidebar-box">
+						<h3>Post Tags</h3>
 						<div class="inside">
-							<div class="tagsdiv" id="post_tag">
-								<div class="jaxtag">
-									<span class="ajaxtag">
-										<label class="screen-reader-text" for="new-tag-post_tag">
-											Post Tags
-										</label>
-										<input id="content-tags-new" type="text" class="newtag form-input-tip" size="16" autocomplete="off" value="Add new tag" />
-										<input id="content-tags-add" type="button" class="button" value="Add" tabindex="3" />
-									</span>
-								</div>
-								<p class="howto">
-									Separate tags with commas.
-								</p>
-								<select multiple="multiple" name="content[tags]" id="content-tags" class="hide">
-									<option>tag1</option>
-								</select>
-								<script type="text/javascript">
-									$('#content-tags').checklist({
-										add_field: '#content-tags-new',
-										add_button: '#content-tags-add'
-									);
-								</script>
-							</div>
+							<label class="screen-reader-text" for="content-tags">Post Tags</label>
+							<input id="content-tags" name="content[tags]" type="text" class="form-input-tip" autocomplete="off" value="Add tags" />
+							<p class="description">
+								Add your tags to the post above, separating them with commas.
+							</p>
 						</div>
 					</div>
+					
 				</div>
 			</div>
 			<div id="post-body">
@@ -131,17 +112,18 @@
 						</script>
 					</div>
 					<div id="content-content-field" class="field field-rich">
-						<?=$this->editor()->render()?>
+						<textarea name="content" tabindex="2" id="content"><?=$Content['content']?></textarea>
+						<script type="text/javascript">$(function(){$('#content').editor('rich');});</script>
 					</div>
-					<div id="content-description-field" class="field field-normal postbox">
-						<h3 class='hndle'><span>Excerpt</span></h3>
+					<div id="content-description-field" class="field field-wrapper postbox widget">
+						<div class="widget-top">Excerpt</div>
 						<div class="inside">
-							<label class="screen-reader-text" for="excerpt">
-								Excerpt
-							</label>
-							<textarea rows="1" cols="40" name="content[description]" tabindex="6" id="content-description"></textarea>
-							<p class="field-description">Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.</p>
+							<textarea rows="3" cols="40" name="content[description]" tabindex="6" id="content-description"></textarea>
 						</div>
+						<script type="text/javascript">
+							$('#content-description-field .widget-top').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');
+							$('#content-description').editor('simple');
+						</script>
 					</div>
 				</div>
 			</div>

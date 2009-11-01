@@ -5,6 +5,61 @@
 	/*font-weight: normal;*/
 }
 
+#misc-publishing-actions {
+	padding:0 0 0.5em;
+}
+
+
+.widget .widget-top {
+	font-size:12px;
+	font-weight:bold;
+	line-height:1;
+	margin:0;
+	padding:7px 9px;
+	display:block;
+}
+
+.help-wrap {
+	cursor: help;
+}
+.help-wrap:hover .help-text {
+	border-bottom: 1px #666 dotted;
+}
+.help-wrap .help-icon {
+	margin:0px 0px -4px 5px;
+}
+
+a.delete {
+	border-bottom-color:#FF0000;
+	color:#FF0000;
+	border-bottom-style:solid;
+	border-bottom-width:1px;
+	padding:1px 2px;
+	text-decoration:none;
+}
+
+.sidebar-boxes {
+	font-size:11px;
+}
+.sidebar-box .inside {
+	margin:6px;
+}
+.sidebar-box-sections .inside {
+	margin:0;
+}
+
+.field-value {
+	font-weight: bold;
+}
+
+.description {
+	margin:0 0 6px 8px;
+	color:#666666;
+	font-size:11px;
+	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+	font-style:italic;
+}
+
 .hide {
 	display: none;
 }
