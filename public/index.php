@@ -8,7 +8,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2/lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions'));
-	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.4/library'));
+	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.5/library'));
 	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
 	define('BASE_URL', 						'/projects/balcms/public/');
 } else {
@@ -18,7 +18,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2/lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions'));
-	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.4/library'));
+	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.5/library'));
 	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
 	//define('BASE_URL', 					'/stage/public/');
 }

@@ -9,6 +9,14 @@
 	padding:0 0 0.5em;
 }
 
+.sparkle-hint-has {
+	
+}
+.sparkle-hint-hinted {
+	font-size:11px;
+	color:#AAA;
+}
+
 
 .widget .widget-top {
 	font-size:12px;
@@ -36,6 +44,10 @@ a.delete {
 	border-bottom-width:1px;
 	padding:1px 2px;
 	text-decoration:none;
+}
+
+.sidebar-box textarea {
+	width:100%;
 }
 
 .sidebar-boxes {

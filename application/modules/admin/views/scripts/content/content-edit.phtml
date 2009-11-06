@@ -20,7 +20,7 @@
 				<div id='side-sortables' class='meta-box-sortables sidebar-boxes'>
 				
 					<div id="sidebar-publish-box" class="postbox sidebar-box sidebar-box-sections">
-						<h3><span>Publish</span></h3>
+						<h3>Publish</h3>
 						<div class="inside">
 							<div id="minor-publishing">
 								<div id="minor-publishing-actions">
@@ -84,7 +84,7 @@
 						<h3>Post Tags</h3>
 						<div class="inside">
 							<label class="screen-reader-text" for="content-tags">Post Tags</label>
-							<input id="content-tags" name="content[tags]" type="text" class="form-input-tip" autocomplete="off" value="Add tags" />
+							<textarea id="content-tags" name="content[tags]" class="form-input-tip autosize" title="Add tags"></textarea>
 							<p class="description">
 								Add your tags to the post above, separating them with commas.
 							</p>
@@ -119,12 +119,12 @@
 						<script type="text/javascript">$(function(){$('#content').editor('rich');});</script>
 					</div>
 					<div id="content-description-field" class="field field-wrapper postbox widget">
-						<div class="widget-top">Excerpt</div>
+						<h3>Excerpt</h3>
 						<div class="inside">
 							<textarea rows="3" cols="40" name="content[description]" tabindex="6" id="content-description"></textarea>
 						</div>
 						<script type="text/javascript">
-							$('#content-description-field .widget-top').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');
+							$('#content-description-field h3').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');
 							$('#content-description').editor('simple');
 						</script>
 					</div>

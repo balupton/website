@@ -34,8 +34,9 @@ $baseUrlBack = $this->bal()->getBaseUrl('back');
 		->offsetSetFile(4,$baseUrl.'/scripts/tiny_mce/jquery.tinymce.dev.js')
 		->offsetSetScript(100,'$.Editor.applyConfig("default",{script_url: "'.$baseUrl.'/scripts/tiny_mce/tiny_mce.js"});')
 	    // Application
-	    ->offsetSetFile(5,$baseUrl.'/scripts/jquery.sparkle.js')
-	    ->offsetSetFile(6,$baseUrlBack.'/scripts/cms.js')
+	    ->offsetSetFile(5,$baseUrl.'/scripts/jquery.autogrow.js')
+	    ->offsetSetFile(6,$baseUrl.'/scripts/jquery.sparkle.js')
+	    ->offsetSetFile(7,$baseUrlBack.'/scripts/cms.js')
 	    ->offsetSetScript(101,'$.Help.applyConfig("default",{icon: \'<img src="'.$baseUrl.'/images/help.png" alt="help" class="help-icon" />\'});')
     ?>
         <div id="wpwrap">
