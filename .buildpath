@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
+	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/balphp"/>
+	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/doctrine-1.2"/>
+	<buildpathentry kind="con" path="org.zend.php.framework.CONTAINER"/>
 </buildpath>

@@ -50,8 +50,7 @@ class Bal_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
      * Instantiates route based on passed Zend_Config structure
      * @param Zend_Config $config Configuration object
      */
-    public static function getInstance(Zend_Config $config)
-    {
+    public static function getInstance(Zend_Config $config) {
         $defs = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
         $map = ($config->map instanceof Zend_Config) ? $config->map->toArray() : array();
         $reverse = (isset($config->reverse)) ? $config->reverse : null;
@@ -59,7 +58,7 @@ class Bal_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
     }
 
 	protected function _getOptions(){
-		$options = $GLOBALS['Application']->getOption('balcms'); $options = $options['routing'];
+		$options = $GLOBALS['Application']->getOption('bal'); $options = $options['routing'];
 		return $options;
 	}
 	protected function _getDefaults($prefix = array(), $postfix = array()){

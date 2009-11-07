@@ -9,12 +9,33 @@
 	padding:0 0 0.5em;
 }
 
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+.button-action {
+	min-width:80px;
+	text-align:center;
+}
+
 .sparkle-hint-has {
 	
 }
 .sparkle-hint-hinted {
 	font-size:11px;
 	color:#AAA;
+}
+
+.youtube-embed {
+	width:100%;
+	height:300px;
+}
+
+textarea.autosize {
+	min-height: 20px;
+	line-height: 15px;
 }
 
 

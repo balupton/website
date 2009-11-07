@@ -1,14 +1,16 @@
 <?
 	$baseUrl = $this->bal()->getBaseUrl();
 	$baseUrlBack = $this->bal()->getBaseUrl('back');
+	$mode = empty($this->ContentArray) ? 'new' : 'edit';
+	$mode_edit = $mode === 'edit';
 ?>
 <div class="wrap">
-	<div id="icon-edit" class="icon32">
+	<div id="icon-edit-pages" class="icon32">
 		<br/>
 	</div>
 	<h2>
-		Editing
-		<? foreach ( $this->ContentCrumbArray as $Content ): ?>
+		<?=$mode_edit?'Editing':'Create New Content'?>
+		<? if ( $mode_edit ) foreach ( $this->ContentCrumbArray as $Content ): ?>
 			&raquo; <a href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
 		<? endforeach; ?>
 	</h2>
@@ -24,12 +26,12 @@
 						<div class="inside">
 							<div id="minor-publishing">
 								<div id="minor-publishing-actions">
-									<div id="save-action">
-										<input name="save" id="save-post" value="Open" tabindex="4" class="button" type="submit">
-									</div>
-									<div id="preview-action">
-										<a class="preview button" href="http://balupton.wordpress.com/?p=46&amp;preview=true" target="wp-preview" id="post-preview" tabindex="4">Preview</a>
-									</div>
+									<?if($mode_edit):?>
+									<!--  Open Action -->
+									<a class="button button-action left" id="action-open" tabindex="4">Open</a>
+									<?endif;?>
+									<!--  Preview Action -->
+									<a class="button button-action right" id="action-preview" tabindex="4">Preview</a>
 									<div class="clear"></div>
 								</div>
 								<div id="misc-publishing-actions">
@@ -68,11 +70,13 @@
 								</div>
 							</div>
 							<div id="major-publishing-actions">
+								<!-- Delete Action -->
 								<div id="delete-action">
-									<a class="delete" href="#">Delete</a>
+									<a class="delete" id="action-delete" ><?=$mode_edit?'Delete':'Discard'?></a>
 								</div>
+								<!--  Save ACtion -->
 								<div id="publishing-action">
-									<input name="save" type="submit" class="button-primary" id="publish" tabindex="5" accesskey="p" value="Save" />
+									<input name="save" type="submit" class="button-primary" id="action-save" tabindex="5" accesskey="p" value="Save" />
 								</div>
 								<div class="clear">
 								</div>
@@ -81,7 +85,7 @@
 					</div>
 					
 					<div id="sidebar-tags-box" class="postbox sidebar-box">
-						<h3>Post Tags</h3>
+						<h3>Tags</h3>
 						<div class="inside">
 							<label class="screen-reader-text" for="content-tags">Post Tags</label>
 							<textarea id="content-tags" name="content[tags]" class="form-input-tip autosize" title="Add tags"></textarea>
@@ -89,6 +93,42 @@
 								Add your tags to the post above, separating them with commas.
 							</p>
 						</div>
+						<script type="text/javascript">
+							$('#sidebar-tags-box h3').help('Tags are the keywords used to find your content during a search.');
+						</script>
+					</div>
+					
+					<div id="sidebar-avatar-box" class="postbox sidebar-box">
+						<h3>Avatar</h3>
+						<div class="inside">
+							<div class="field">
+								<label for="content-avatar">
+									Want to upload a different image?
+								</label>
+								<input type="file" id="content-avatar"  name="content[avatar]"" />
+							</div>
+						</div>
+						<script type="text/javascript">
+							$('#sidebar-avatar-box h3').help('Avatars display side by side your content. They are a nice visual addition and will be uploaded to your media directory.');
+						</script>
+					</div>
+					
+					<div id="sidebar-subscription-box" class="postbox sidebar-box">
+						<h3>Subscriptions</h3>
+						<div class="inside">
+							<div class="field">
+								<input type="checkbox" id="subscription-tags" name="subscription[tags]" value="newsletter" />
+								<label for="subscription-tags">
+									Send out as a
+									<a href="<?=$this->url(array('controller'=>'subscription','action'=>'content-list'),'admin',true)?>" title="go to Sent Content List">newsletter</a>
+									to
+									<a href="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'admin',true)?>" title="go to Subscriber List">subscribers</a>?
+								</label>
+							</div>
+						</div>
+						<script type="text/javascript">
+							$('#sidebar-subscription-box h3').help('Subscribers are visitors of the website which have marked themselves down to receive email notificationsom from the website.');
+						</script>
 					</div>
 					
 				</div>
@@ -96,10 +136,10 @@
 			<div id="post-body">
 				<div id="post-body-content" class="field-container">
 					<div id="content-title-field" class="field field-simple">
-						<label class="screen-reader-text" for="title">
+						<label class="screen-reader-text" for="content-title">
 							Title
 						</label>
-						<input type="text" name="post_title" size="30" tabindex="1" value="<?=$this->ContentArray['title']?>" id="title" autocomplete="off" />
+						<input type="text" name="content[title]" id="content-title" tabindex="1" value="<?=$this->ContentArray['title']?>" autocomplete="off" />
 					</div>
 					<div id="content-code-field" class="field field-little">
 						<label for="post-content">
@@ -108,20 +148,44 @@
 						<span class="inline-edit-clickable">http://www.mydance.com.au/</span><span id="content-code-view" title="Click to edit this part of the permalink" class="highlight"><?=$this->ContentArray['Route']['path']?></span><input type="text" name="content[code]" id="content-code-edit" value="<?=$this->ContentArray['Route']['path']?>" />/
 						<span class="inline-edit-panel" id="content-code-panel"></span>
 						<script type="text/javascript">
-							$("#content-code-view").inlineEdit('editbutton', {
-								edit: '#content-code-edit',
-								panel: '#content-code-panel'
+							$(function(){
+								var update_slug = true;
+								var $edit = $('#content-code-edit');
+								var $view = $('#content-code-view');
+								var $title = $('#content-title');
+								$view.inlineEdit('editbutton', {
+									edit: $edit,
+									panel: '#content-code-panel',
+									update: function(e,els,config) {
+										update_slug = false;
+										els.$view.html(els.$edit.value().toSlug());
+										els.$views.show();
+										els.$edits.hide();
+										return true;
+									}
+								});
+								if ( update_slug && (!$edit.val() || $edit.val() === $title.text().toSlug()) ) {
+									// We are not already a custom slug
+									$title.change(function(){
+										if ( !update_slug ) return true;
+										var val = $(this).val();
+										var slug = val.toSlug();
+										$edit.val(slug);
+										$view.text(slug);
+										return true;
+									});
+								}
 							});
 						</script>
 					</div>
 					<div id="content-content-field" class="field field-rich">
-						<textarea name="content" tabindex="2" id="content"><?=$Content['content']?></textarea>
+						<textarea name="content" tabindex="2" id="content"><?=$this->ContentArray['content']?></textarea>
 						<script type="text/javascript">$(function(){$('#content').editor('rich');});</script>
 					</div>
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Excerpt</h3>
 						<div class="inside">
-							<textarea rows="3" cols="40" name="content[description]" tabindex="6" id="content-description"></textarea>
+							<textarea rows="3" cols="40" name="content[description]" tabindex="6" id="content-description"><?=$this->ContentArray['description']?></textarea>
 						</div>
 						<script type="text/javascript">
 							$('#content-description-field h3').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');

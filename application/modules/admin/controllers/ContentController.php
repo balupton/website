@@ -65,54 +65,75 @@ class Admin_ContentController extends Zend_Controller_Action {
 		# Prepare
 		$this->registerMenu('content-content-list');
 		$content = $this->_getParam('content', false);
+		$search = $this->_getParam('search', false);
 		$Content = $ContentCrumbArray = $ContentListArray = $ContentArray = array();
 		
-		# Fetch Crumbs
-		// Check
-		if ( $content ) {
-			// We have a content as a root
-			$Content = $this->_getContent($content);
-			$ContentArray = $Content->toArray();
-			// Customise Tree Handling
-			$Query = Doctrine_Query::create()
-				->select('c.*')
-				->from('Content c');
-			$Tree = Doctrine::getTable('Content')->getTree();
-			$Tree->setBaseQuery($Query);
-			// Fetch Content Crumbs
-			$ContentCrumbArray = array();
-			$Temp = $Content; while ( $Temp = $Temp->getNode()->getParent() ) {
-				$ContentCrumbArray[] = $Temp->toARray();
-			}
-			$ContentCrumbArray[] = $ContentArray;
-			// Reset Tree
-			$Tree->resetBaseQuery();
-		}
-
-		# Fetch Content
-		// Customise Tree Handling
-		$Query = Doctrine_Query::create()
+		# Prepare
+		// Base Query
+		$BaseQuery = Doctrine_Query::create()
 			->select('c.*, cr.*, ct.*, ca.*')
 			->from('Content c, c.Route cr, c.Tags ct, c.Author ca')
 			->where('c.enabled = true AND c.system = false')
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
-		$Tree = Doctrine::getTable('Content')->getTree();
-		$Tree->setBaseQuery($Query);
-		// Fetch
-		if( $Content ) {
-			$ContentListArray = $Content->getNode()->getChildren();
-		} else {
-			$ContentListArray = $Tree->fetchRoots();
+		
+		# Handle
+		// Check
+		if ( $search ) {
+			// Search
+			$Query = Doctrine::getTable('Content')->search($search,$BaseQuery);
+			//die($Query->getSqlQuery());
+			$ContentListArray = $Query->execute();
 		}
-		if ( !$ContentListArray && $ContentArray ) {
-			$ContentListArray = array($ContentArray);
+		else {
+			// No Search
+			
+			# Fetch Crumbs
+			
+			// Check
+			if ( $content ) {
+				// We have a content as a root
+				$Content = $this->_getContent($content);
+				$ContentArray = $Content->toArray();
+				
+				// Customise Tree Handling
+				$Query = Doctrine_Query::create()
+					->select('c.*')
+					->from('Content c');
+				$Tree = Doctrine::getTable('Content')->getTree();
+				$Tree->setBaseQuery($Query);
+				
+				// Fetch Content Crumbs
+				$ContentCrumbArray = array();
+				$Temp = $Content; while ( $Temp = $Temp->getNode()->getParent() ) {
+					$ContentCrumbArray[] = $Temp->toARray();
+				}
+				$ContentCrumbArray[] = $ContentArray;
+				
+				// Reset Tree
+				$Tree->resetBaseQuery();
+			}
+			
+			
+			# Fetch Content Tree
+			
+			// Customise Tree Handling
+			$Tree = Doctrine::getTable('Content')->getTree();
+			$Tree->setBaseQuery($BaseQuery);
+			
+			// Fetch
+			if( $Content ) {
+				$ContentListArray = $Content->getNode()->getChildren();
+			} else {
+				$ContentListArray = $Tree->fetchRoots();
+			}
+			if ( !$ContentListArray && $ContentArray ) {
+				$ContentListArray = array($ContentArray);
+			}
+			
+			// Reset Tree
+			$Tree->resetBaseQuery();
+			
 		}
-		// Reset Tree
-		$Tree->resetBaseQuery();
-
-		# Clean
-		// Release
-		//$Content->free();
 		
 		# Apply
 		$this->view->ContentCrumbArray = $ContentCrumbArray;

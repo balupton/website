@@ -94,6 +94,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		// View Helpers
 		$view = $this->getResource('view');
 		$view->addHelperPath('Bal/View/Helper/', 'Bal_View_Helper');
+		// Widgets
+		$widgetConfig = $this->getOption('bal'); $widgetConfig = $widgetConfig['widget'];
+		$view->getHelper('widget')->addWidgets($widgetConfig);
 		// Done
 		return true;
 	}
@@ -132,7 +135,29 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		// Done
 		return $autoloader;
 	}
-
+	
+	/**
+	 * Initialise Lucence Index
+	 * @return
+	 */
+	protected function _initIndex ( ) {
+		// Prepare
+		$config = array();
+		$config['data'] = $this->getOption('data');
+		
+		// Check
+		if ( empty($config['data']['index_path']) ) {
+			return true;
+		}
+		
+		// Initialise
+		$Index = Zend_Search_Lucene::create($config['data']['index_path']);
+		Zend_Registry::set('Index', $Index);
+		
+		// Done
+		return true;
+	}
+	
 	/**
 	 * Initialise our Doctrine ORM.
 	 * Options: +VALIDATE_ALL
@@ -147,16 +172,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	    $Loader->pushAutoloader(array('Doctrine', 'autoload'));
 
 	    // Get Config
-	    $doctrineOptions = $this->getOption('doctrine');
+	    $config = array();
+	    $config['data'] = $this->getOption('data');
 
 	 	// Version Handle
 		$version_1_2 = version_compare('1.1', Doctrine::VERSION, '<');
 		
 		// Options
-		$extensions_path = $doctrineOptions['extensions_path'];
+		$extensions_path = $config['data']['extensions_path'];
 		
 		// Apply Paths
-		//Doctrine::setModelsDirectory($doctrineOptions['models_path']);
+		//Doctrine::setModelsDirectory($config['data']['models_path']);
 	 	if ( $version_1_2 ) Doctrine::setExtensionsPath($extensions_path);
 
 		// Autoload
@@ -203,10 +229,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		//$manager->setAttribute(Doctrine::ATTR_RESULT_CACHE, $cacheDriver);
 
 	    // Add models and generated base classes to Doctrine autoloader
-	    Doctrine::loadModels($doctrineOptions['models_path']);
+	    Doctrine::loadModels($config['data']['models_path']);
 
 	    // Create Connection
-	    $Connection = $Manager->openConnection($doctrineOptions['connection_string']);
+	    $Connection = $Manager->openConnection($config['data']['connection_string']);
 
 	    // Return Manager
 	    return $Manager;

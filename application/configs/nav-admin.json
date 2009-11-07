@@ -86,7 +86,7 @@
 		},{
 			"id": "content-template-edit",
 			"resource": "admin-content-edit",
-			"label": "&mdash; New Templates",
+			"label": "&mdash; New Template",
 			"controller": "content",
 			"action": "template-new",
 			"route": "admin",
@@ -131,7 +131,7 @@
 		},{
 			"id": "event-venue-edit",
 			"resource": "admin-event-edit",
-			"label": "&mdash;New Venue",
+			"label": "&mdash; New Venue",
 			"controller": "event",
 			"action": "venue-new",
 			"route": "admin",
@@ -160,21 +160,28 @@
 		"controller": "subscription",
 		"route": "admin",
 		"pages": [{
-			"id": "subscription-subscriber-view",
+			"id": "subscription-subscriber-list",
 			"resource": "admin-content-view",
 			"label": "Subscribers",
 			"controller": "subscription",
-			"action": "subscription-list",
+			"action": "subscriber-list",
 			"route": "admin",
 			"class": "parent"
 		},{
-			"id": "subscription-subscriber-edit",
+			"id": "subscription-subscriber-new",
 			"resource": "admin-content-edit",
 			"label": "&mdash; New Subscriber",
 			"controller": "subscription",
-			"action": "subscription-new",
+			"action": "subscriber-new",
 			"route": "admin",
 			"class": "child"
+		},{
+			"id": "subscription-content-list",
+			"resource": "admin-content-view",
+			"label": "Sent Content",
+			"controller": "subscription",
+			"action": "content-list",
+			"route": "admin"
 		}]
 	},{
 		"id": "media",

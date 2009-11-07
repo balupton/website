@@ -12,45 +12,14 @@
 	</h2>
     <!-- Filters -->
     <form id="posts-filter" action="" method="get">
-        <ul class="subsubsub">
-            <li>
-                <a href="http://localhost/wordpress/wp-admin/edit-pages.php" class="current">All <span class="count">(1)</span></a> |
-            </li>
-            <li>
-                <a href="http://localhost/wordpress/wp-admin/edit-pages.php?post_status=publish">Published <span class="count">(1)</span></a> |
-            </li>
-            <li>
-                <a href="http://localhost/wordpress/wp-admin/edit-pages.php?post_status=future">Scheduled <span class="count">(0)</span></a> |
-            </li>
-            <li>
-                <a href="http://localhost/wordpress/wp-admin/edit-pages.php?post_status=pending">Pending Review <span class="count">(0)</span></a> |
-            </li>
-            <li>
-                <a href="http://localhost/wordpress/wp-admin/edit-pages.php?post_status=draft">Drafts <span class="count">(0)</span></a> |
-            </li>
-            <li>
-                <a href="http://localhost/wordpress/wp-admin/edit-pages.php?post_status=private">Private <span class="count">(0)</span></a>
-            </li>
-        </ul>
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="page-search-input">
                 Search Content:
             </label>
-            <input id="page-search-input" name="s" type="text"><input value="Search Content" class="button" type="submit">
+            <input id="page-search-input" name="search" type="text" />
+            <input value="Search Content" class="button" type="submit" />
         </p>
-		<!-- Bulk Actions --><!--
-        <div class="tablenav">
-            <div class="alignleft actions">
-                <select name="action">
-                    <option value="-1" selected="selected">Bulk Actions</option>
-                    <option value="edit">Edit</option>
-                    <option value="delete">Delete</option>
-                </select>
-                <input value="Apply" name="doaction" id="doaction" class="button-secondary action" type="submit"><input id="_wpnonce" name="_wpnonce" value="44c4e08b11" type="hidden"><input name="_wp_http_referer" value="/wordpress/wp-admin/edit-pages.php" type="hidden">
-            </div>
-            <br class="clear">
-        </div>-->
         <div class="clear">
         </div>
 		<!-- Content Table -->
@@ -160,17 +129,5 @@
 				<? endforeach; ?>
             </tbody>
         </table>
-		<!-- Bulk Actions -->
-        <!--<div class="tablenav">
-            <div class="alignleft actions">
-                <select name="action2">
-                    <option value="-1" selected="selected">Bulk Actions</option>
-                    <option value="edit">Edit</option>
-                    <option value="delete">Delete</option>
-                </select>
-                <input value="Apply" name="doaction2" id="doaction2" class="button-secondary action" type="submit">
-            </div>
-            <br class="clear">
-        </div>-->
     </form>
 </div>

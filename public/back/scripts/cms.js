@@ -24,6 +24,9 @@
 		if ( typeof z === 'undefined' || z === null ) z = this.length;
 		return this.substring(0,a)+start+this.substring(a,z)+end+this.substring(z);
 	};
+	String.prototype.toSlug = function(){
+		return this.toLowerCase().replace(/[\s_]/g, '-').replace(/[^-a-z0-9]/g, '').replace(/--+/g, '-');
+	}
 	Number.prototype.zeroise = String.prototype.zeroise = function(threshold){
 		var number = this,
 			str = number.toString();
@@ -160,7 +163,7 @@
 	$.Sparkle.extensions.add('autogrow', function(){
 		var $this = $(this); var Sparkle = $.Sparkle;
 		// Fetch
-		var $inputs = $this.findAndSelf(':text.autogrow,:text.autosize').autogrow();
+		var $inputs = $this.findAndSelf('textarea.autogrow,textarea.autosize').autogrow();
 		// Done
 		return $this;
 	});
@@ -221,22 +224,24 @@
 			hideClass: 'hide',
 			highlightClass: 'editable',
 			clickableSelector: '.inline-edit-clickable,label',
-			open: function(els,e){
+			open: function(e,els){
 				els.$edit.data('orig', els.$edit.val());
 				els.$views.hide();
 				els.$edits.show();
 				els.$edit.giveFocus();
+				return true;
 			},
-			update: function(els,e){
-				els.$view.html($edit.value());
+			update: function(e,els){
+				els.$view.html(els.$edit.value());
 				els.$views.show();
 				els.$edits.hide();
 				return true;
 			},
-			cancel: function(els,e){
+			cancel: function(e,els){
 				els.$edit.val(els.$edit.data('orig'));
 				els.$views.show();
 				els.$edits.hide();
+				return true;
 			},
 			remove: false
 		},
@@ -293,16 +298,16 @@
 			};
 		}
 		var open = function(e){
-			config.open.apply(this,[pack(),e]);
+			config.open.apply(this,[e,pack(),config]);
 		};
 		var cancel = function(e){
-			config.cancel.apply(this,[pack(),e]);
+			config.cancel.apply(this,[e,pack(),config]);
 		};
 		var update = function(e){
-			config.update.apply(this,[pack(),e]);
+			config.update.apply(this,[e,pack(),config]);
 		};
 		var remove = function(e){
-			config.remove.apply(this,[pack(),e]);
+			config.remove.apply(this,[e,pack(),config]);
 		};
 		// Bind
 		$edit_buttons.click(open);
@@ -337,7 +342,7 @@
 			width: "100%",
 			
 			// Example content CSS (should be your site CSS)
-			content_css : "css/content.css",
+			// content_css : "css/content.css",
 			
 			// Replace values for the template plugin
 			template_replace_values: {
