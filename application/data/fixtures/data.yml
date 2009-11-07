@@ -1,13 +1,5 @@
 ---
 
-User:
-    User_Admin:
-        id: 1
-        username: admin
-        password: my.dance
-        title: MyDance
-        email: mydance@balupton.com
-        
 Content:
     Content_Welcome:
         id: 1
@@ -15,6 +7,7 @@ Content:
         title: "Welcome"
         description: "Home Page"
         content: "[carousel]1,2,3[/carousel]<br/>[taglist/]<br/>[recentlist/]"
+        Author: User_Mydance
         Route:
             id: 1
             path: "welcome"
@@ -29,6 +22,7 @@ Content:
         description: "Event Listing"
         content: "[eventlist/]"
         tags: [event]
+        Author: User_Mydance
         Route:
             id: 2
             path: "events"
@@ -49,12 +43,14 @@ Content:
                     type: content
                     data:
                         id: 4
+                children: []
     Content_Articles:
         id: 3
         code: "articles"
         title: "Articles"
         description: "Article Listing"
         content: "[articlelist/]"
+        Author: User_Mydance
         Route:
             id: 3
             path: "articles"
@@ -68,6 +64,7 @@ Content:
                 title: "New Site"
                 description: "New Site!"
                 content: "Our new website is live!"
+                tags: [news,newsletter]
                 Route:
                     id: 5
                     path: "articles/newsite"
@@ -80,6 +77,7 @@ Content:
         title: "Resources"
         description: "Knowledge Base Area"
         content: "[contentlist/]"
+        Author: User_Mydance
         Route:
             id: 6
             path: "resources"
@@ -112,6 +110,7 @@ Content:
                             type: content
                             data:
                                 id: 8
+                        children: []
 
 Event:
     Event_BlocParty:
@@ -134,7 +133,8 @@ User:
         username: "balcms"
         password: "random"
         enabled: true
-        title: "Administrator"
+        displayname: "Administrator"
+        fullname: "Benajmin Lupton"
         email: "balcms@balupton.com"
         PermissionGroups:
             - PermissionGroup_SuperAdmin
@@ -143,7 +143,8 @@ User:
         username: "mydance"
         password: "password"
         enabled: true
-        title: "myDance"
+        displayname: "Premala"
+        fullname: "Premala"
         email: "balcms@balupton.com"
         PermissionGroups:
             - PermissionGroup_MyDanceAdmin

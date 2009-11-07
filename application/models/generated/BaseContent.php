@@ -106,9 +106,10 @@ abstract class BaseContent extends Template
              'fields' => 
              array(
               0 => 'code',
-              1 => 'status',
-              2 => 'enabled',
-              3 => 'system',
+              1 => 'tagstr',
+              2 => 'authorstr',
+              3 => 'title',
+              4 => 'description',
              ),
              ));
         $this->actAs($balauditable0);

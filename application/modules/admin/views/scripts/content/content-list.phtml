@@ -11,7 +11,7 @@
 		<? endforeach; ?>
 	</h2>
     <!-- Filters -->
-    <form id="posts-filter" action="" method="get">
+    <form id="posts-filter" action="<?=$this->url(array('controller'=>'content','action'=>'content-list'),'admin',true)?>" method="get">
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="page-search-input">
@@ -87,32 +87,48 @@
                         <input name="content[]" value="<?=$Content['id']?>" type="checkbox">
                     </th>-->
                     <td class="post-title page-title column-title">
-                        <strong><a class="row-title" href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>" title="<?=$this->locale()->translate('edit-%s',$Content['title'])?>">
+                        <strong><a class="row-title" href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin',true)?>" title="<?=$this->locale()->translate('edit-%s',$Content['title'])?>">
                         	<?=/*str_repeat('&nbsp;',$Content['level']).' '.*/$Content['title']?>
 						</a></strong>
 						<div class="row-actions">
-							<span class="edit"><a title="Edit this page" href="<?=$this->url(array('controller'=>'content','action'=>'content-edit','content'=>$Content['code']),'admin')?>">Edit</a> | </span>
-							<span class="delete"><a class="delete-action" title="Delete this page" href="<?=$this->url(array('controller'=>'content','action'=>'content-delete','content'=>$Content['code']),'admin')?>">Delete</a> | </span>
-							<span class="view"><a rel="permalink" title="View" href="<?=$this->url(array('Map'=>$Content['Route']),'map')?>">View</a></span>
+							<span class="edit"><a title="Edit this page" href="<?=$this->url(array('controller'=>'content','action'=>'content-edit','content'=>$Content['code']),'admin',true)?>">Edit</a> | </span>
+							<span class="delete"><a class="delete-action" title="Delete this page" href="<?=$this->url(array('controller'=>'content','action'=>'content-delete','content'=>$Content['code']),'admin',true)?>">Delete</a> | </span>
+							<span class="view"><a rel="permalink" title="View" href="<?=$this->url(array('Map'=>$Content['Route']),'map',true)?>">View</a></span>
 						</div>
                     </td>
                     <td class="author column-author">
                         <?=$Content['description']?>
                     </td>
-                    <td class="author column-author">
-                        <?=empty($Content['Author'])?'Unkown':$Content['Author']['title']?>
-                    </td>
-                    <td class="author column-tags">
-                        <? if ( empty($Content['Tags']) ) :
-                        	echo '';
+                    <td class="author column-author"><?
+                        if ( empty($Content['Author']) ) :
+                        	echo 'Unkown';
+                        else:
+                        	$author = $Content['Author']['displayname'];
+                        	$author_url = $this->url(array(
+                        		'controller'=>'content',
+                        		'action'=>'content-list',
+                        		'search'=>$author
+                        	), 'admin', true);
+                        	echo '<a href="'.$author_url.'" title="View all content by '.$author.'">'.$author.'</a>';
+                    	endif;
+                    ?></td>
+                    <td class="author column-tags"> <?
+                        if ( empty($Content['Tags']) ) :
+                        	// nothing
                         else:
                         	$tags = array();
-                        	foreach ( $Content['Tags'] as $Tag ) :
-                        		$tags[] = $Tag['name'];
-                       		endforeach;
-                       		echo implode(',', $tags);
-                        endif; ?>
-                    </td>
+                        	foreach ( $Content['Tags'] as $Tag ) {
+                        		$tag = ucfirst($Tag['name']);
+	                        	$tag_url = $this->url(array(
+	                        		'controller'=>'content',
+	                        		'action'=>'content-list',
+	                        		'search'=>$tag
+	                        	), 'admin', true);
+	                        	$tags[] = '<a href="'.$tag_url.'" title="View all content by '.$tag.'">'.$tag.'</a>';
+                        	}
+                        	echo implode($tags, ', ');
+                    	endif;
+                    ?></td>
                     <!--<td class="comments column-comments">
                         <div class="post-com-count-wrapper">
                             <a href="http://localhost/wordpress/wp-admin/edit-comments.php?p=2" title="0 pending" class="post-com-count"><span class="comment-count">0</span></a>

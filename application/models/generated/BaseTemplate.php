@@ -9,6 +9,8 @@
  * @property string $code
  * @property string $title
  * @property string $description
+ * @property string $authorstr
+ * @property string $tagstr
  * @property string $content
  * @property boolean $system
  * @property integer $avatar_id
@@ -46,6 +48,18 @@ abstract class BaseTemplate extends Doctrine_Record
              array(
               'html' => 'rich',
              ),
+             ));
+        $this->hasColumn('authorstr', 'string', 50, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => '',
+             'length' => '50',
+             ));
+        $this->hasColumn('tagstr', 'string', 255, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => '',
+             'length' => '255',
              ));
         $this->hasColumn('content', 'string', null, array(
              'type' => 'string',

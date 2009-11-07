@@ -51,6 +51,14 @@ Template:
             type: string
             extra:
                 html: rich
+        authorstr:
+            type: string(50)
+            notnull: true
+            default: ""
+        tagstr:
+            type: string(255)
+            notnull: true
+            default: ""
         content:
             type: string
             extra:
@@ -90,7 +98,7 @@ Content:
             hasManyRoots: true
             rootColumnName: root_id
         Searchable:
-            fields: [code, description, status, enabled, system]
+            fields: [code, tagstr, authorstr, title, description]
     columns:
         route_id:
             type: integer(4)
@@ -240,7 +248,7 @@ Image:
 User:
     actAs:
         Searchable:
-            fields: [username]
+            fields: [username,displayname,fullname,email]
     columns:
         id:
             type: integer(4)
@@ -258,7 +266,10 @@ User:
             type: boolean
             notnull: true
             default: true
-        title:
+        displayname:
+            type: string(50)
+            notblank: true
+        fullname:
             type: string(255)
             notblank: true
         email:

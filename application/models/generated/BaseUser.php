@@ -9,7 +9,8 @@
  * @property string $username
  * @property string $password
  * @property boolean $enabled
- * @property string $title
+ * @property string $displayname
+ * @property string $fullname
  * @property string $email
  * @property Doctrine_Collection $Permissions
  * @property Doctrine_Collection $PermissionGroups
@@ -49,7 +50,12 @@ abstract class BaseUser extends Doctrine_Record
              'notnull' => true,
              'default' => true,
              ));
-        $this->hasColumn('title', 'string', 255, array(
+        $this->hasColumn('displayname', 'string', 50, array(
+             'type' => 'string',
+             'notblank' => true,
+             'length' => '50',
+             ));
+        $this->hasColumn('fullname', 'string', 255, array(
              'type' => 'string',
              'notblank' => true,
              'length' => '255',
@@ -86,6 +92,9 @@ abstract class BaseUser extends Doctrine_Record
              'fields' => 
              array(
               0 => 'username',
+              1 => 'displayname',
+              2 => 'fullname',
+              3 => 'email',
              ),
              ));
         $this->actAs($searchable0);
