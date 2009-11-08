@@ -122,10 +122,14 @@ abstract class BaseContent extends Doctrine_Record
              ));
         $this->hasColumn('send_all', 'integer', 4, array(
              'type' => 'integer',
+             'notnull' => true,
+             'default' => 0,
              'length' => '4',
              ));
         $this->hasColumn('send_remaining', 'integer', 4, array(
              'type' => 'integer',
+             'notnull' => true,
+             'default' => 0,
              'length' => '4',
              ));
         $this->hasColumn('send_status', 'enum', null, array(

@@ -101,8 +101,16 @@ class ErrorController extends Zend_Controller_Action {
 		// Log the error
 		$Log = Zend_Registry::get('Log');
 		if ( $Log ) {
-			$Log->err($errors->exception);
-			$Log->info(var_export($errors->request->getParams(),true));
+			$Log->err($Exception);
+			$Log->info(var_export(array(
+				'server'	=> $_SERVER,
+				'get'		=> $_GET,
+				'post'		=> $_POST,
+				'session'	=> $_SESSION,
+				'cookie'	=> $_COOKIE,
+				'params' 	=> $Request->getParams(),
+				'messages' 	=> $messages
+			),true));
 		}
 		
     }

@@ -127,14 +127,14 @@
 									</label>
 								</div>
 							<? else: ?>
-								<div class="field">
+								<!--<div class="field">
 									<span class="label">Send started:</span>
 									<span class="value"><?=$this->locale()->datetime($this->ContentArray['send_at'])?></span>
 								</div>
 								<div class="field">
 									<span class="label">Send completed:</span>
 									<span class="value"><?=$this->locale()->datetime($this->ContentArray['send_finished_at'])?></span>
-								</div>
+								</div>-->
 								<div class="field">
 									<span class="label">Sent to:</span>
 									<span class="value"><?=$this->ContentArray['send_all']-$this->ContentArray['send_remaining']?> of <?=$this->ContentArray['send_all']?> <a href="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'admin',true)?>" title="go to Subscriber List">subscribers</a></span>
@@ -163,6 +163,7 @@
 						<select name="content[parent]" id="content-parent">
 							<option <?=($this->ContentArray['Parent']['id']==0?'selected="selected" ':'')?> value="0">Root</option>
 							<? foreach($this->ContentListArray as $Content ):
+								if ( $Content['id'] == $this->ContentArray['id'] ) continue;
 								echo '<option '.($this->ContentArray['Parent']['id']==$Content['id']?'selected="selected" ':'').' value="'.$Content['id'].'" title="'.$Content['Route']['path'].'">'.
 									str_repeat('-', $Content['level']).' '.$Content['title'].
 								'</option';
