@@ -66,7 +66,31 @@ class Admin_ContentController extends Zend_Controller_Action {
 	}
 
 	public function contentNewAction ( ) {
+		// Prepare
 		$this->registerMenu('content-content-edit');
+		$Content = $ContentCrumbArray = $ContentArray = array();
+	
+		# Fetch
+		$Content = new Content();
+		$Content->published_at = date('Y-m-d H:i:s', time());
+		$ContentArray = $Content->toArray();
+		$ContentCrumbArray[] = $ContentArray;
+		
+		# Fetch parent
+		$ContentArray['Parent'] = array('id'=>0);
+		
+		# Fetch content for use in dropdown
+		$ContentListQuery = Doctrine_Query::create()
+			->select('c.title, c.root_id, c.level, c.id, cr.path')
+			->from('Content c, c.Route cr')
+			->where('c.enabled = true AND c.system = false')
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ContentListArray = $ContentListQuery->execute();
+		
+		# Apply
+		$this->view->ContentCrumbArray = $ContentCrumbArray;
+		$this->view->ContentListArray = $ContentListArray;
+		$this->view->ContentArray = $ContentArray;
 	}
 	
 	protected function _getContent($content){
@@ -114,7 +138,7 @@ class Admin_ContentController extends Zend_Controller_Action {
 				
 				// Customise Tree Handling
 				$Query = Doctrine_Query::create()
-					->select('c.*')
+					->select('c.title, c.code')
 					->from('Content c');
 				$Tree = Doctrine::getTable('Content')->getTree();
 				$Tree->setBaseQuery($Query);

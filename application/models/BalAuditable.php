@@ -52,7 +52,12 @@ class BalAuditable extends BalTemplate {
 		'published_at' => array(
 			'disabled'		=>	false,
         	'name'			=>	'published_at',
-			'type'			=>	'timestamp'
+	        'alias'         =>  null,
+			'type'			=>	'timestamp',
+			'length'		=>	null,
+	        'options'       =>  array(
+				'notblank'	=>	true
+			)
 		),
 		'status' => array(
 			'disabled'		=>	false,
@@ -92,24 +97,30 @@ class BalAuditable extends BalTemplate {
     );
 
     /**
-     * Set table definition for Sluggable behavior
+     * Set table definition
      * @return void
      */
     public function setTableDefinition() {
+		$this->hasColumnHelper($this->_options['published_at']);
 		$this->hasColumnHelper($this->_options['author']);
 		$this->hasColumnHelper($this->_options['enabled']);
 		$this->hasColumnHelper($this->_options['status']);
-		//
+		// // Behaviours
         $timestampable0 = new Doctrine_Template_Timestampable(array(
 			'created' => $this->_options['created_at'],
 			'updated' => $this->_options['updated_at']
 		));
         $this->actAs($timestampable0);
+        // Listener
+        $this->addListener(new BalAuditableListener($this->_options));
     }
 	
+    /**
+     * Setup table relations
+     * @return void
+     */
     public function setUp(){
         $this->hasOneHelper($this->_options['author']);
 	}
-	
 	
 }

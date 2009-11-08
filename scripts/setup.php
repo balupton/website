@@ -6,8 +6,11 @@ if ( empty($Application) ) {
 	require_once(dirname(__FILE__).'/../public/index.php');
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
-	header('Content-Type', 'text/plain');
 }
+
+// Load
+$Application->bootstrap('doctrine');
+$Application->bootstrap('balphp');
 
 // Get Config
 $config = array();
@@ -57,16 +60,16 @@ if ( !empty($_GET['usedump']) ) {
 // Doctrine: makedump
 if ( !empty($_GET['makedump']) ) {
 	echo 'Doctrine: makedump ['.$config['data']['dump_path'].']'."<br/>\n";
-	$Application->bootstrap('doctrine');
 	Doctrine::dumpData($config['data']['dump_path'].'/data.yml', false);
 }
 
 // Doctrine: reload
 if ( !empty($_GET['reload']) ) {
 	echo 'Doctrine: reload ['.$data_path_to_use.']'."<br/>\n";
-	$Application->bootstrap('doctrine');
 	Doctrine::dropDatabases();
 	Doctrine::createDatabases();
+	if ( APPLICATION_ENV === 'development' )
+	Doctrine::generateModelsFromYaml($config['data']['yaml_schema_path'],$config['data']['models_path']);
 	Doctrine::createTablesFromModels();
 	Doctrine::loadData($data_path_to_use);
 }

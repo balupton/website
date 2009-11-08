@@ -7,13 +7,14 @@
  * 
  * @property integer $id
  * @property string $code
- * @property string $location
+ * @property string $name
+ * @property string $path
  * @property integer $size
  * @property enum $type
  * @property string $mimetype
  * @property integer $width
  * @property integer $height
- * @property Doctrine_Collection $Template
+ * @property Doctrine_Collection $Content
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -37,7 +38,12 @@ abstract class BaseFile extends Doctrine_Record
              'notblank' => true,
              'length' => '255',
              ));
-        $this->hasColumn('location', 'string', 255, array(
+        $this->hasColumn('name', 'string', 255, array(
+             'type' => 'string',
+             'notblank' => true,
+             'length' => '255',
+             ));
+        $this->hasColumn('path', 'string', 255, array(
              'type' => 'string',
              'notblank' => true,
              'length' => '255',
@@ -50,10 +56,14 @@ abstract class BaseFile extends Doctrine_Record
              'type' => 'enum',
              'values' => 
              array(
-              0 => 'document',
-              1 => 'image',
-              2 => 'video',
-              3 => 'application',
+              0 => 'file',
+              1 => 'document',
+              2 => 'image',
+              3 => 'video',
+              4 => 'audio',
+              5 => 'web',
+              6 => 'application',
+              7 => 'archive',
              ),
              'default' => 'unknown',
              'notnull' => true,
@@ -78,11 +88,10 @@ abstract class BaseFile extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Template', array(
+        $this->hasMany('Content', array(
              'local' => 'id',
              'foreign' => 'avatar_id'));
 
-        $taggable0 = new Doctrine_Template_Taggable();
         $balauditable0 = new BalAuditable(array(
              'status' => 
              array(
@@ -109,7 +118,6 @@ abstract class BaseFile extends Doctrine_Record
               'disabled' => true,
              ),
              ));
-        $this->actAs($taggable0);
         $this->actAs($balauditable0);
     }
 }

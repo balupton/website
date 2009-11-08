@@ -11,4 +11,70 @@
  * @version    SVN: $Id: Builder.php 6365 2009-09-15 18:22:38Z jwage $
  */
 class Content extends BaseContent {
+	
+	protected $_old = array();
+	
+	public function preSave ( Doctrine_Event $Event ) {
+		$this->_old = $Event->getInvoker()->getModified(true);
+	}
+	
+	/**
+	 * Handle tagstr, authorstr, and code changes
+	 * @param Doctrine_Event $Event
+	 * @return string
+	 */
+	public function postSave ( Doctrine_Event $Event ) {
+		// Prepare
+		$Invoker = $Event->getInvoker();
+		$save = false;
+		$modified = $Invoker->getLastModified();
+		
+		// Tags
+		$tags = array();
+		foreach ( $Invoker['Tags'] as $Tag ) {
+			$tags[] = $Tag['name'];
+		}
+		$tags = implode($tags, ', ');
+		if ( $Invoker->tagstr != $tags ) {
+			$Invoker->tagstr = $tags;
+			$save = true;
+		}
+		
+		// Author
+		if ( !empty($Invoker->Author) && $Invoker->Author->exists() ) {
+			$author = $Invoker->Author->displayname;
+			if ( $Invoker->authorstr != $author ) {
+				$Invoker->authorstr = $author;
+				$save = true;
+			}
+		}
+		
+		// Check if code has changed
+		if ( !empty($modified['code']) && !empty($this->_old['code']) ) {
+			// The code has changed, update route and all children, eee
+			$old_code = $this->_old['code'];
+			$new_code = $Invoker->code;
+			$Route = $this->Route;
+			$old_path = $Route->path;
+			$new_path = $Route->path = rtrim_value($Route->path, $old_code).$new_code;
+			$Route->save();
+			// Get children
+			$Children = $Invoker->getNode()->getDescendants();
+			if ( $Children ) foreach ( $Children as $Child ) {
+				$ChildRoute = $Child->Route;
+				$ChildRoute->path = $new_path.ltrim_value($ChildRoute->path, $old_path);
+				$ChildRoute->save();
+			}
+			// Done
+		}
+		
+		// Save
+		if ( $save ) {
+			$Invoker->save();
+		}
+		
+		// Done
+		return true;
+	}
+	
 }

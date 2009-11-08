@@ -39,11 +39,12 @@ abstract class BaseTemplate extends Doctrine_Record
              ));
         $this->hasColumn('title', 'string', 50, array(
              'type' => 'string',
-             'default' => true,
+             'notblank' => true,
              'length' => '50',
              ));
         $this->hasColumn('description', 'string', null, array(
              'type' => 'string',
+             'notblank' => true,
              'extra' => 
              array(
               'html' => 'rich',
@@ -63,6 +64,7 @@ abstract class BaseTemplate extends Doctrine_Record
              ));
         $this->hasColumn('content', 'string', null, array(
              'type' => 'string',
+             'notblank' => true,
              'extra' => 
              array(
               'html' => 'rich',

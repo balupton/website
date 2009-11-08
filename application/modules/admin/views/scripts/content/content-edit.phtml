@@ -1,7 +1,7 @@
 <?
 	$baseUrl = $this->bal()->getBaseUrl();
 	$baseUrlBack = $this->bal()->getBaseUrl('back');
-	$mode = empty($this->ContentArray) ? 'new' : 'edit';
+	$mode = empty($this->ContentArray) || empty($this->ContentArray['id']) ? 'new' : 'edit';
 	$mode_edit = $mode === 'edit';
 ?>
 <div class="wrap">
@@ -15,7 +15,7 @@
 		<? endforeach; ?>
 	</h2>
 	<?=$this->message()->render()?>
-	<form name="post" action="post.php" method="post" id="post">
+	<form name="post" action="" method="post">
 		<input type="hidden" id="_wpnonce" name="_wpnonce" value="b060cedf26" /><input type="hidden" name="_wp_http_referer" value="/wp-admin/post.php?action=edit&amp;post=1&amp;message=1" /><input type="hidden" id="user-id" name="user_ID" value="2212518" /><input type="hidden" id="hiddenaction" name="action" value="editpost" /><input type="hidden" id="originalaction" name="originalaction" value="editpost" /><input type="hidden" id="post_author" name="post_author" value="2212518" /><input type="hidden" id="post_type" name="post_type" value="post" /><input type="hidden" id="original_post_status" name="original_post_status" value="publish" /><input name="referredby" type="hidden" id="referredby" value="http://balupton.wordpress.com/wp-admin/post.php?action=edit&#038;post=1" /><input type="hidden" name="_wp_original_http_referer" value="http://balupton.wordpress.com/wp-admin/post.php?action=edit&amp;post=1" /><input type='hidden' id='post_ID' name='post_ID' value='1' />
 		<div class="metabox-holder has-right-sidebar">
 			<div id="side-info-column" class="inner-sidebar">
@@ -41,9 +41,9 @@
 										<span id="content-status-edit" class="hide">
 											<br/>
 											<select name="content[status]" id="content-status" tabindex="4">
-												<option selected='selected' value='publish'>Published</option>
-												<option value='pending'>Pending Review</option>
-												<option value='draft'>Draft</option>
+												<option selected='selected' value='pending'>Pending</option>
+												<option value='published'>Published</option>
+												<option value='deprecated'>Deprecated</option>
 											</select>
 										</span>
 										<script type="text/javascript">
@@ -53,16 +53,16 @@
 										</script>
 									</div>
 									<div class="misc-pub-section misc-pub-section-last field" id="content-published_at-field">
-										<label for="content-published_at">Publish<span class="weak">ed</span> on:</label>
-										<span class="field-value" id="content-published_at-view">Nov 16, 2007 @ 1:53</span>
+										<label for="content-published_at">Publish<?=$mode_edit?'<span class="weak">ed</span>':''?> on:</label>
+										<span class="field-value" id="content-published_at-view"><?=$this->locale()->datetime($this->ContentArray['published_at'])?></span>
 										<span id="content-published_at-edit" class="hide">
 											<br/>
-											<input type="text" name="content[published_at]" id="content-published_at" value="2009-05-11 11:53" class="sparkle-datetime"></input>
+											<input type="text" name="content[published_at]" id="content-published_at" value="<?=$this->ContentArray['published_at']?>" class="sparkle-datetime"></input>
 										</span>
 										<script type="text/javascript">
-											$("#content-published_at-view").inlineEdit({
-												edit: "#content-published_at-edit"
-											});
+											//$("#content-published_at-view").inlineEdit({
+											//	edit: "#content-published_at-edit"
+											//});
 										</script>
 									</div>
 								</div>

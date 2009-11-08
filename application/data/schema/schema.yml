@@ -20,13 +20,16 @@ Route:
         data:
             type: array
 
-Template:
+Content:
     actAs:
+        NestedSet:
+            hasManyRoots: true
+            rootColumnName: root_id
         BalAuditable:
             status:
-                disabled: true
+                disabled: false
             enabled:
-                disabled: true
+                disabled: false
             author:
                 disabled: false
             created_at:
@@ -34,7 +37,9 @@ Template:
             updated_at:
                 disabled: false
             published_at:
-                disabled: true
+                disabled: false
+        Searchable:
+            fields: [code, tagstr, authorstr, title, description]
         Taggable:
     columns:
         id:
@@ -46,9 +51,10 @@ Template:
             notblank: true
         title:
             type: string(50)
-            default: true
+            notblank: true
         description:
             type: string
+            notblank: true
             extra:
                 html: rich
         authorstr:
@@ -61,50 +67,23 @@ Template:
             default: ""
         content:
             type: string
+            notblank: true
             extra:
                 html: rich
         system:
             type: boolean
             default: false
             notnull: true
+            
         avatar_id:
             type: integer(4)
             unsigned: true
-    relations:
-        Avatar:
-            class: File
-            local: avatar_id
-            foreign: id
-    
-Content:
-    inheritance:
-        extends: Template
-        type: concrete
-    actAs:
-        BalAuditable:
-            status:
-                disabled: false
-            enabled:
-                disabled: false
-            author:
-                disabled: false
-            created_at:
-                disabled: false
-            updated_at:
-                disabled: false
-            published_at:
-                disabled: false
-        NestedSet:
-            hasManyRoots: true
-            rootColumnName: root_id
-        Searchable:
-            fields: [code, tagstr, authorstr, title, description]
-    columns:
         route_id:
             type: integer(4)
             unsigned: true
             unique: true
             notnull: true
+            
         sent_at:
             type: timestamp
         sent_all:
@@ -117,6 +96,10 @@ Content:
             default: none
             notblank: true
     relations:
+        Avatar:
+            class: File
+            local: avatar_id
+            foreign: id
         Route:
             local: route_id
             foreign: id
