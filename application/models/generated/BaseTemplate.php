@@ -14,7 +14,7 @@
  * @property string $content
  * @property boolean $system
  * @property integer $avatar_id
- * @property Image $Avatar
+ * @property File $Avatar
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -83,7 +83,7 @@ abstract class BaseTemplate extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Image as Avatar', array(
+        $this->hasOne('File as Avatar', array(
              'local' => 'avatar_id',
              'foreign' => 'id'));
 

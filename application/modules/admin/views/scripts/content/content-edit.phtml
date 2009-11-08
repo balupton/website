@@ -141,43 +141,62 @@
 						</label>
 						<input type="text" name="content[title]" id="content-title" tabindex="1" value="<?=$this->ContentArray['title']?>" autocomplete="off" />
 					</div>
+					<div id="content-parent-field" class="field field-little">
+						<label for="content-parent">
+							File under:
+						</label>
+						<select name="content[parent]" id="content-parent">
+							<option <?=($this->ContentArray['Parent']['id']==0?'selected="selected" ':'')?> value="0">Root</option>
+							<? foreach($this->ContentListArray as $Content ):
+								echo '<option '.($this->ContentArray['Parent']['id']==$Content['id']?'selected="selected" ':'').' value="'.$Content['id'].'" title="'.$Content['Route']['path'].'">'.
+									str_repeat('-', $Content['level']).' '.$Content['title'].
+								'</option';
+							endforeach; ?>
+						</select>
+					</div>
 					<div id="content-code-field" class="field field-little">
-						<label for="post-content">
+						<label for="content-code">
 							Location:
 						</label>
-						<span class="inline-edit-clickable">http://www.mydance.com.au/</span><span id="content-code-view" title="Click to edit this part of the permalink" class="highlight"><?=$this->ContentArray['Route']['path']?></span><input type="text" name="content[code]" id="content-code-edit" value="<?=$this->ContentArray['Route']['path']?>" />/
+						<span class="inline-edit-clickable">http://www.mydance.com.au/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=$this->ContentArray['code']?></span><input type="text" name="content[code]" id="content-code" value="<?=$this->ContentArray['code']?>" />/
 						<span class="inline-edit-panel" id="content-code-panel"></span>
-						<script type="text/javascript">
-							$(function(){
-								var update_slug = true;
-								var $edit = $('#content-code-edit');
-								var $view = $('#content-code-view');
-								var $title = $('#content-title');
-								$view.inlineEdit('editbutton', {
-									edit: $edit,
-									panel: '#content-code-panel',
-									update: function(e,els,config) {
-										update_slug = false;
-										els.$view.html(els.$edit.value().toSlug());
-										els.$views.show();
-										els.$edits.hide();
-										return true;
-									}
-								});
-								if ( update_slug && (!$edit.val() || $edit.val() === $title.text().toSlug()) ) {
-									// We are not already a custom slug
-									$title.change(function(){
-										if ( !update_slug ) return true;
-										var val = $(this).val();
-										var slug = val.toSlug();
-										$edit.val(slug);
-										$view.text(slug);
-										return true;
-									});
+					</div>
+					<script type="text/javascript">
+						$(function(){
+							var update_slug = true;
+							var $edit = $('#content-code');
+							var $view = $('#content-code-view');
+							var $title = $('#content-title');
+							var $parent_path = $('#content-parent-path');
+							var $parent = $('#content-parent');
+							$parent.change(function(){
+								$parent_path.text($parent.val().toInt() ? $parent.find('option:selected').attr('title').strip('/')+'/' : '');
+								return true;
+							}).trigger('change');
+							$view.inlineEdit('editbutton', {
+								edit: $edit,
+								panel: '#content-code-panel',
+								update: function(e,els,config) {
+									update_slug = false;
+									els.$view.html(els.$edit.value().toSlug());
+									els.$views.show();
+									els.$edits.hide();
+									return true;
 								}
 							});
-						</script>
-					</div>
+							if ( update_slug && (!$edit.val() || $edit.val() === $title.text().toSlug()) ) {
+								// We are not already a custom slug
+								$title.change(function(){
+									if ( !update_slug ) return true;
+									var val = $(this).val();
+									var slug = val.toSlug();
+									$edit.val(slug);
+									$view.text(slug);
+									return true;
+								});
+							}
+						});
+					</script>
 					<div id="content-content-field" class="field field-rich">
 						<textarea name="content" tabindex="2" id="content"><?=$this->ContentArray['content']?></textarea>
 						<script type="text/javascript">$(function(){$('#content').editor('rich');});</script>

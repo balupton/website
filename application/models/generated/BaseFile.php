@@ -11,6 +11,9 @@
  * @property integer $size
  * @property enum $type
  * @property string $mimetype
+ * @property integer $width
+ * @property integer $height
+ * @property Doctrine_Collection $Template
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -60,11 +63,25 @@ abstract class BaseFile extends Doctrine_Record
              'notnull' => true,
              'length' => '20',
              ));
+        $this->hasColumn('width', 'integer', 2, array(
+             'type' => 'integer',
+             'unsigned' => true,
+             'length' => '2',
+             ));
+        $this->hasColumn('height', 'integer', 2, array(
+             'type' => 'integer',
+             'unsigned' => true,
+             'length' => '2',
+             ));
     }
 
     public function setUp()
     {
         parent::setUp();
+        $this->hasMany('Template', array(
+             'local' => 'id',
+             'foreign' => 'avatar_id'));
+
         $taggable0 = new Doctrine_Template_Taggable();
         $balauditable0 = new BalAuditable(array(
              'status' => 

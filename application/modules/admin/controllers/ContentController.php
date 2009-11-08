@@ -43,8 +43,25 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$ContentArray = $Content->toArray();
 		$ContentCrumbArray[] = $ContentArray;
 		
+		# Fetch parent
+		$ContentParent = $Content->getNode()->getParent();
+		if ( $ContentParent && $ContentParent->exists() ) {
+			$ContentArray['Parent'] = array('id'=>$Content->getNode()->getParent()->id);
+		} else {
+			$ContentArray['Parent'] = array('id'=>0);
+		}
+		
+		# Fetch content for use in dropdown
+		$ContentListQuery = Doctrine_Query::create()
+			->select('c.title, c.root_id, c.level, c.id, cr.path')
+			->from('Content c, c.Route cr')
+			->where('c.enabled = true AND c.system = false')
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ContentListArray = $ContentListQuery->execute();
+		
 		# Apply
 		$this->view->ContentCrumbArray = $ContentCrumbArray;
+		$this->view->ContentListArray = $ContentListArray;
 		$this->view->ContentArray = $ContentArray;
 	}
 
@@ -105,7 +122,7 @@ class Admin_ContentController extends Zend_Controller_Action {
 				// Fetch Content Crumbs
 				$ContentCrumbArray = array();
 				$Temp = $Content; while ( $Temp = $Temp->getNode()->getParent() ) {
-					$ContentCrumbArray[] = $Temp->toARray();
+					$ContentCrumbArray[] = $Temp->toArray();
 				}
 				$ContentCrumbArray[] = $ContentArray;
 				

@@ -9,6 +9,9 @@
 	padding:0 0 0.5em;
 }
 
+#content-parent {
+	min-width:250px;
+}
 .left {
 	float:left;
 }

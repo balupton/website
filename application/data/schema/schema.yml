@@ -72,7 +72,7 @@ Template:
             unsigned: true
     relations:
         Avatar:
-            class: Image
+            class: File
             local: avatar_id
             foreign: id
     
@@ -191,7 +191,6 @@ Subscriber:
 
 File:
     actAs:
-        Taggable:
         BalAuditable:
             status:
                 disabled: true
@@ -214,36 +213,28 @@ File:
             type: string(255)
             unique: true
             notblank: true
-        location:
+        name:
+            type: string(255)
+            notblank: true
+        path:
             type: string(255)
             notblank: true
         size:
             type: integer(4)
         type:
             type: enum
-            values: [document,image,video,application]
+            values: [file,document,image,video,audio,web,application,archive]
             default: unknown
             notnull: true
         mimetype:
             type: string(20)
             notnull: true
-
-Image:
-    inheritance:
-        extends: File
-        type: concrete
-    columns:
         width:
             type: integer(2)
             unsigned: true
         height:
             type: integer(2)
             unsigned: true
-        type:
-            type: enum
-            values: [avatar,image]
-            default: image
-            notnull: true
 
 User:
     actAs:

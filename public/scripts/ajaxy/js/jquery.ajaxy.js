@@ -90,7 +90,7 @@
 	console.profileEnd	= console.profileEnd	|| console.log;
 	
 	/**
-	 * String.prototype.trim - Trim a value off the front or back
+	 * String.prototype.strip - Trim a value off the front or back
 	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
 	 */
 	String.prototype.strip = String.prototype.strip || function(value){

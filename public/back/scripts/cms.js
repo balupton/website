@@ -16,18 +16,34 @@
 	console.profileEnd	= console.profileEnd	|| console.log;
 	
 	// Core Prototypes
-	String.prototype.wrap = function(start,end){
+	String.prototype.strip = String.prototype.strip || function(value){
+		var str = this;
+		value = String(value);
+		if ( value && str.length >= value.length ) {
+			if ( str.substr(0, value.length) === value ) {
+				str = str.substring(value.length);
+			}
+			if ( str.substr(str.length-value.length, value.length) === value ) {
+				str = str.substring(0,str.length-value.length);
+			}
+		}
+		return String(str);
+	}
+	String.prototype.toInt = String.prototype.toInt || function(){
+		return parseInt(this);
+	};
+	String.prototype.wrap = String.prototype.wrap || function(start,end){
 		return start+this+end;
 	};
-	String.prototype.wrapSelection = function(start,end,a,z){
+	String.prototype.wrapSelection = String.prototype.wrapSelection || function(start,end,a,z){
 		if ( typeof a === 'undefined' || a === null ) a = this.length;
 		if ( typeof z === 'undefined' || z === null ) z = this.length;
 		return this.substring(0,a)+start+this.substring(a,z)+end+this.substring(z);
 	};
-	String.prototype.toSlug = function(){
+	String.prototype.toSlug = String.prototype.toSlug || function(){
 		return this.toLowerCase().replace(/[\s_]/g, '-').replace(/[^-a-z0-9]/g, '').replace(/--+/g, '-');
 	}
-	Number.prototype.zeroise = String.prototype.zeroise = function(threshold){
+	Number.prototype.zeroise = String.prototype.zeroise = String.prototype.zeroise ||function(threshold){
 		var number = this,
 			str = number.toString();
 		if (number < 0) { str = str.substr(1, str.length) }
@@ -35,7 +51,7 @@
 		if (number < 0) { str = '-' + str }
 		return str;
 	};
-	Date.prototype.getDatetime = function(){
+	Date.prototype.getDatetime = String.prototype.getDatetime || function(){
 		var now = this;
 		var datetime = now.getUTCFullYear() + '-' +
 			(now.getUTCMonth()+1).zeroise(2) + '-' +
