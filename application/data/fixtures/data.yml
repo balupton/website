@@ -189,6 +189,13 @@ Permission:
     Permission_AdminEventEdit:
         id: 13
         code: admin-event-edit
+    Permission_Dev:
+        id: 14
+        code: dev
+    Permission_Beta:
+        id: 15
+        code: beta
+        
 
 PermissionGroup:
     PermissionGroup_SuperAdmin:
@@ -208,6 +215,7 @@ PermissionGroup:
             - Permission_AdminCrudEdit
             - Permission_AdminEventView
             - Permission_AdminEventEdit
+            - Permission_Dev
     PermissionGroup_MyDanceAdmin:
         id: 2
         code: mydanceadmin
