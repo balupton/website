@@ -12,10 +12,46 @@
  */
 class Content extends BaseContent {
 	
+	/** Old values */
 	protected $_old = array();
+	protected $_new = array();
+	protected $_View = null;
 	
+	/**
+	 * Backup old values
+	 * @param Doctrine_Event $Event
+	 */
 	public function preSave ( Doctrine_Event $Event ) {
+		// Prepare
+		$Invoker = $Event->getInvoker();
+		
+		// Modified
 		$this->_old = $Event->getInvoker()->getModified(true);
+		$this->_new = $Event->getInvoker()->getModified(false);
+		
+		// Get View
+		$View = $this->getView();
+		
+		// Render content
+		if ( !empty($this->_new['content']) ) {
+			$Invoker->content_rendered = $View->content()->render($Invoker->content);
+			$Invoker->description_rendered = $View->content()->render($Invoker->description);
+		}
+		
+		// Done
+		return true;
+	}
+	
+	/**
+	 * Get's the View object
+	 */
+	public function getView ( ) {
+		if ( empty($this->_view) ) {
+			$Bootstrap = $GLOBALS['Application']->getBootstrap();
+			$Bootstrap->bootstrap('presentation');
+			$this->_View = $Bootstrap->getResource('view');
+		}
+		return $this->_View;
 	}
 	
 	/**
@@ -34,9 +70,10 @@ class Content extends BaseContent {
 		foreach ( $Invoker['Tags'] as $Tag ) {
 			$tags[] = $Tag['name'];
 		}
-		$tags = implode($tags, ', ');
-		if ( $Invoker->tagstr != $tags ) {
-			$Invoker->tagstr = $tags;
+		sort($tags);
+		$tagstr = implode($tags, ', ');
+		if ( $Invoker->tagstr != $tagstr ) {
+			$Invoker->tagstr = $tagstr;
 			$save = true;
 		}
 		
@@ -68,7 +105,57 @@ class Content extends BaseContent {
 			// Done
 		}
 		
-		// Save
+		// Get View
+		$View = $this->getView();
+	
+		// Check if we need to send out to any subscribers
+		$SubscriberQuery = Doctrine_Query::create()
+			->select('s.email')
+			->from('Subscriber s, s.Tags st')
+			->where('s.enabled = ?', true)
+			->andWhere('NOT EXISTS (SELECT cas.id FROM ContentAndSubscriber cas WHERE cas.subscriber_id = s.id AND cas.content_id = ?)', $Invoker->id)
+			->andWhereIn('st.name', $tags)
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$SubscribersArray = $SubscriberQuery->execute();
+		if ( !empty($SubscribersArray) ) {
+			// Update
+			if ( empty($Invoker->send_at) ) {
+				$Invoker->send_at = date('Y-m-d H:i:s', time());
+			}
+			// We would like to send out
+			$View = clone $View;
+			$View->ContentArray = $Invoker->toArray();
+			$View->headTitle()->append($Invoker->title);
+			// Mail
+			$mail = $GLOBALS['Application']->getOption('mail');
+			$mail['subject'] = $Invoker->title;
+			$mail['html'] = $View->render('email/subscription.phtml');
+			$mail['text'] = strip_tags($mail['html']);
+			$Mail = new Zend_Mail();
+			$Mail->setFrom($mail['from']['address'], $mail['from']['name']);
+			// $Mail->addTo($mail['from']['address'], $mail['from']['name']);
+			foreach ( $SubscribersArray as $SubscriberArray ) {
+				$Mail->addBcc($SubscriberArray['email']);
+				// Save send
+				$ContentAndSubscriber = new ContentAndSubscriber();
+				$ContentAndSubscriber->content_id = $Invoker->id;
+				$ContentAndSubscriber->subscriber_id = $SubscriberArray['id'];
+				$ContentAndSubscriber->status = 'delivered';
+				$ContentAndSubscriber->save();
+			}
+			$Mail->setSubject($mail['subject']);
+			$Mail->setBodyText($mail['text']);
+			$Mail->setBodyHtml($mail['html']);
+			$Mail->send();
+			// Update
+			$Invoker->send_finished_at = date('Y-m-d H:i:s', time());
+			$Invoker->send_status = 'completed';
+			$Invoker->send_all += count($SubscribersArray);
+			$Invoker->send_remaining = 0;
+			$save = true;
+		}
+		
+		// Apply
 		if ( $save ) {
 			$Invoker->save();
 		}

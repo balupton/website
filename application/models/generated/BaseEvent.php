@@ -7,6 +7,8 @@
  * 
  * @property timestamp $start_at
  * @property timestamp $finish_at
+ * @property integer $venue_id
+ * @property Venue $Venue
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -24,11 +26,20 @@ abstract class BaseEvent extends Doctrine_Record
         $this->hasColumn('finish_at', 'timestamp', null, array(
              'type' => 'timestamp',
              ));
+        $this->hasColumn('venue_id', 'integer', 4, array(
+             'type' => 'integer',
+             'unsigned' => true,
+             'length' => '4',
+             ));
     }
 
     public function setUp()
     {
         parent::setUp();
+        $this->hasOne('Venue', array(
+             'local' => 'venue_id',
+             'foreign' => 'id'));
+
         $balcontentextension0 = new BalContentExtension();
         $this->actAs($balcontentextension0);
     }

@@ -1,5 +1,12 @@
 ---
 
+Subscriber:
+    Subscriber_Balupton:
+        id: 1
+        email: "balupton@gmail.com"
+        enabled: true
+        tags: [newsletter]
+
 Content:
     Content_Welcome:
         id: 1
@@ -119,13 +126,6 @@ Event:
         finish_at: "2009-03-14 23:14"
         content: "Bloc Party are famous and kick ass"
         Content: Content_Events_BlocParty
-
-Subscriber:
-    Subscriber_Balupton:
-        id: 1
-        email: "balupton@gmail.com"
-        enabled: true
-        tags: [newsletter]
 
 User:
     User_Balcms:

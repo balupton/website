@@ -9,6 +9,13 @@
 	padding:0 0 0.5em;
 }
 
+.field .label {
+	font-weight: normal;
+}
+.field .value {
+	font-weight: bold;
+}
+
 #content-parent {
 	min-width:250px;
 }

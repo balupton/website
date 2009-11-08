@@ -8,7 +8,7 @@
  * @property integer $id
  * @property string $email
  * @property boolean $enabled
- * @property Doctrine_Collection $Articles
+ * @property Doctrine_Collection $ContentList
  * @property Doctrine_Collection $ContentAndSubscriber
  * 
  * @package    ##PACKAGE##
@@ -43,7 +43,7 @@ abstract class BaseSubscriber extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Content as Articles', array(
+        $this->hasMany('Content as ContentList', array(
              'refClass' => 'ContentAndSubscriber',
              'local' => 'subscriber_id',
              'foreign' => 'content_id'));

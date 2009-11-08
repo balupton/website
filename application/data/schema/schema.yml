@@ -57,6 +57,11 @@ Content:
             notblank: true
             extra:
                 html: rich
+        description_rendered:
+            type: string
+            notblank: true
+            extra:
+                html: rich
         authorstr:
             type: string(50)
             notnull: true
@@ -66,6 +71,11 @@ Content:
             notnull: true
             default: ""
         content:
+            type: string
+            notblank: true
+            extra:
+                html: rich
+        content_rendered:
             type: string
             notblank: true
             extra:
@@ -84,13 +94,19 @@ Content:
             unique: true
             notnull: true
             
-        sent_at:
+        send_at:
             type: timestamp
-        sent_all:
+        send_finished_at:
+            type: timestamp
+        send_all:
             type: integer(4)
-        sent_remaining:
+            notnull: true
+            default: 0
+        send_remaining:
             type: integer(4)
-        sent_status:
+            notnull: true
+            default: 0
+        send_status:
             type: enum
             values: [none,pending,completed]
             default: none
@@ -107,7 +123,7 @@ Content:
             class: Subscriber
             local: content_id
             foreign: subscriber_id
-            foreignAlias: Articles
+            foreignAlias: ContentList
             refClass: ContentAndSubscriber
 
 Event:
@@ -118,6 +134,13 @@ Event:
             type: timestamp
         finish_at:
             type: timestamp
+        venue_id:
+            type: integer(4)
+            unsigned: true
+    relations:
+        Venue:
+            local: venue_id
+            foreign: id
 
 Venue:
     actAs:
@@ -125,10 +148,6 @@ Venue:
     columns:
         google_map_uri:
             type: string(255)
-
-Performer:
-    actAs:
-        BalContentExtension:
 
 ContentAndSubscriber:
     columns:

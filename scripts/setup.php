@@ -7,6 +7,7 @@ if ( empty($Application) ) {
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 }
+header('Content-Type: text/plain');
 
 // Load
 $Application->bootstrap('doctrine');

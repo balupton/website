@@ -9,16 +9,19 @@
  * @property string $code
  * @property string $title
  * @property string $description
+ * @property string $description_rendered
  * @property string $authorstr
  * @property string $tagstr
  * @property string $content
+ * @property string $content_rendered
  * @property boolean $system
  * @property integer $avatar_id
  * @property integer $route_id
- * @property timestamp $sent_at
- * @property integer $sent_all
- * @property integer $sent_remaining
- * @property enum $sent_status
+ * @property timestamp $send_at
+ * @property timestamp $send_finished_at
+ * @property integer $send_all
+ * @property integer $send_remaining
+ * @property enum $send_status
  * @property File $Avatar
  * @property Route $Route
  * @property Doctrine_Collection $Subscribers
@@ -58,6 +61,14 @@ abstract class BaseContent extends Doctrine_Record
               'html' => 'rich',
              ),
              ));
+        $this->hasColumn('description_rendered', 'string', null, array(
+             'type' => 'string',
+             'notblank' => true,
+             'extra' => 
+             array(
+              'html' => 'rich',
+             ),
+             ));
         $this->hasColumn('authorstr', 'string', 50, array(
              'type' => 'string',
              'notnull' => true,
@@ -71,6 +82,14 @@ abstract class BaseContent extends Doctrine_Record
              'length' => '255',
              ));
         $this->hasColumn('content', 'string', null, array(
+             'type' => 'string',
+             'notblank' => true,
+             'extra' => 
+             array(
+              'html' => 'rich',
+             ),
+             ));
+        $this->hasColumn('content_rendered', 'string', null, array(
              'type' => 'string',
              'notblank' => true,
              'extra' => 
@@ -95,18 +114,21 @@ abstract class BaseContent extends Doctrine_Record
              'notnull' => true,
              'length' => '4',
              ));
-        $this->hasColumn('sent_at', 'timestamp', null, array(
+        $this->hasColumn('send_at', 'timestamp', null, array(
              'type' => 'timestamp',
              ));
-        $this->hasColumn('sent_all', 'integer', 4, array(
+        $this->hasColumn('send_finished_at', 'timestamp', null, array(
+             'type' => 'timestamp',
+             ));
+        $this->hasColumn('send_all', 'integer', 4, array(
              'type' => 'integer',
              'length' => '4',
              ));
-        $this->hasColumn('sent_remaining', 'integer', 4, array(
+        $this->hasColumn('send_remaining', 'integer', 4, array(
              'type' => 'integer',
              'length' => '4',
              ));
-        $this->hasColumn('sent_status', 'enum', null, array(
+        $this->hasColumn('send_status', 'enum', null, array(
              'type' => 'enum',
              'values' => 
              array(

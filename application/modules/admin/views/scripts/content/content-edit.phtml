@@ -88,7 +88,7 @@
 						<h3>Tags</h3>
 						<div class="inside">
 							<label class="screen-reader-text" for="content-tags">Post Tags</label>
-							<textarea id="content-tags" name="content[tags]" class="form-input-tip autosize" title="Add tags"></textarea>
+							<textarea id="content-tags" name="content[tags]" class="form-input-tip autosize" title="Add tags"><?=$this->ContentArray['tagstr']?></textarea>
 							<p class="description">
 								Add your tags to the post above, separating them with commas.
 							</p>
@@ -116,15 +116,30 @@
 					<div id="sidebar-subscription-box" class="postbox sidebar-box">
 						<h3>Subscriptions</h3>
 						<div class="inside">
-							<div class="field">
-								<input type="checkbox" id="subscription-tags" name="subscription[tags]" value="newsletter" />
-								<label for="subscription-tags">
-									Send out as a
-									<a href="<?=$this->url(array('controller'=>'subscription','action'=>'content-list'),'admin',true)?>" title="go to Sent Content List">newsletter</a>
-									to
-									<a href="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'admin',true)?>" title="go to Subscriber List">subscribers</a>?
-								</label>
-							</div>
+							<? if ( $this->ContentArray['send_status'] === 'none' ): ?>
+								<div class="field">
+									<input type="checkbox" id="subscription-tags" name="subscription[tags]" value="newsletter" />
+									<label for="subscription-tags">
+										Send out as a
+										<a href="<?=$this->url(array('controller'=>'subscription','action'=>'content-list'),'admin',true)?>" title="go to Sent Content List">newsletter</a>
+										to
+										<a href="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'admin',true)?>" title="go to Subscriber List">subscribers</a>?
+									</label>
+								</div>
+							<? else: ?>
+								<div class="field">
+									<span class="label">Send started:</span>
+									<span class="value"><?=$this->locale()->datetime($this->ContentArray['send_at'])?></span>
+								</div>
+								<div class="field">
+									<span class="label">Send completed:</span>
+									<span class="value"><?=$this->locale()->datetime($this->ContentArray['send_finished_at'])?></span>
+								</div>
+								<div class="field">
+									<span class="label">Sent to:</span>
+									<span class="value"><?=$this->ContentArray['send_all']-$this->ContentArray['send_remaining']?> of <?=$this->ContentArray['send_all']?> <a href="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'admin',true)?>" title="go to Subscriber List">subscribers</a></span>
+								</div>
+							<? endif; ?>
 						</div>
 						<script type="text/javascript">
 							$('#sidebar-subscription-box h3').help('Subscribers are visitors of the website which have marked themselves down to receive email notificationsom from the website.');

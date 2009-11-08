@@ -94,6 +94,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		// View Helpers
 		$view = $this->getResource('view');
 		$view->addHelperPath('Bal/View/Helper/', 'Bal_View_Helper');
+		$view->addHelperPath(APPLICATION_PATH.'/modules/admin/views/helpers', 'Content');
 		// Widgets
 		$widgetConfig = $this->getOption('bal'); $widgetConfig = $widgetConfig['widget'];
 		$view->getHelper('widget')->addWidgets($widgetConfig);

@@ -43,6 +43,10 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$ContentArray = $Content->toArray();
 		$ContentCrumbArray[] = $ContentArray;
 		
+		# Test
+		$Content->title = $Content->title.' '.rand();
+		$Content->save();
+		
 		# Fetch parent
 		$ContentParent = $Content->getNode()->getParent();
 		if ( $ContentParent && $ContentParent->exists() ) {
