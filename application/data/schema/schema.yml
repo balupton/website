@@ -184,7 +184,9 @@ ContentAndSubscriber:
 
 Subscriber:
     actAs:
-         Taggable:
+        Taggable:
+        Searchable:
+            fields: [email]
     columns:
         id:
             primary: true
@@ -215,16 +217,14 @@ File:
                 disabled: false
             published_at:
                 disabled: true
+        Searchable:
+            fields: [name,path,type]
     columns:
         id:
             primary: true
             type: integer(4)
             unsigned: true
             autoincrement: true
-        code:
-            type: string(255)
-            unique: true
-            notblank: true
         name:
             type: string(255)
             notblank: true

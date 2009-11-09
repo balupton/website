@@ -54,6 +54,13 @@ abstract class BaseSubscriber extends Doctrine_Record
              'foreign' => 'subscriber_id'));
 
         $taggable0 = new Doctrine_Template_Taggable();
+        $searchable0 = new Doctrine_Template_Searchable(array(
+             'fields' => 
+             array(
+              0 => 'email',
+             ),
+             ));
         $this->actAs($taggable0);
+        $this->actAs($searchable0);
     }
 }
