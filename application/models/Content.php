@@ -67,8 +67,8 @@ class Content extends BaseContent {
 		
 		// Tags
 		$tags = array();
-		foreach ( $Invoker['Tags'] as $Tag ) {
-			$tags[] = $Tag['name'];
+		foreach ( $Invoker->Tags as $Tag ) {
+			$tags[] = $Tag->name;
 		}
 		sort($tags);
 		$tagstr = implode($tags, ', ');
@@ -77,8 +77,14 @@ class Content extends BaseContent {
 			$save = true;
 		}
 		
+		// Position
+		if ( !$Invoker->position ) {
+			$Invoker->position = $Invoker->id;
+			$save = true;
+		}
+		
 		// Author
-		if ( !empty($Invoker->Author) && $Invoker->Author->exists() ) {
+		if ( isset($Invoker->Author) && $Invoker->Author->exists() ) {
 			$author = $Invoker->Author->displayname;
 			if ( $Invoker->authorstr != $author ) {
 				$Invoker->authorstr = $author;
@@ -87,11 +93,10 @@ class Content extends BaseContent {
 		}
 		
 		// Route
-		if ( empty($Invoker->Route) || !$Invoker->Route->exists() ) {
+		if ( !isset($Invoker->Route) && !$Invoker->Route->exists() ) {
 			$Route = new Route();
 			$path = $Invoker->code;
-			$Parent = $Invoker->getNode()->getParent();
-			if ( $Parent && $Parent->exists() ) $path = $Parent->Route->path.'/'.$path;
+			if ( isset($Invoker->Parent) ) $path = $Invoker->Parent->Route->path.'/'.$path;
 			$Route->path = $path;
 			$Route->type = 'content';
 			$Route->data = array('id'=>$Invoker->id);
@@ -110,8 +115,8 @@ class Content extends BaseContent {
 			$new_path = $Route->path = rtrim_value($Route->path, $old_code).$new_code;
 			$Route->save();
 			// Get children
-			$Children = $Invoker->getNode()->getDescendants();
-			if ( $Children ) foreach ( $Children as $Child ) {
+			$Children = $Invoker->Children;
+			foreach ( $Children as $Child ) {
 				$ChildRoute = $Child->Route;
 				$ChildRoute->path = $new_path.ltrim_value($ChildRoute->path, $old_path);
 				$ChildRoute->save();
@@ -142,6 +147,7 @@ class Content extends BaseContent {
 				$View->ContentArray = $Invoker->toArray();
 				$View->headTitle()->append($Invoker->title);
 				// Mail
+				$GLOBALS['Application']->getBootstrap()->bootstrap('mail');
 				$mail = $GLOBALS['Application']->getOption('mail');
 				$mail['subject'] = $Invoker->title;
 				$mail['html'] = $View->render('email/subscription.phtml');

@@ -48,20 +48,18 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$ContentCrumbArray[] = $ContentArray;
 		
 		# Fetch parent
-		$ContentParent = $Content->getNode()->getParent();
-		if ( $ContentParent && $ContentParent->exists() ) {
-			$ContentArray['Parent'] = array('id'=>$Content->getNode()->getParent()->id);
-		} else {
+		if ( empty($ContentArray['Parent']) ) {
 			$ContentArray['Parent'] = array('id'=>0);
 		}
 		
 		# Fetch content for use in dropdown
 		$ContentListQuery = Doctrine_Query::create()
-			->select('c.title, c.root_id, c.level, c.id, cr.path')
+			->select('c.title, c.id, c.parent_id, c.position, cr.path')
 			->from('Content c, c.Route cr')
 			->where('c.enabled = true AND c.system = false')
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
+		$ContentListArray = array_tree($ContentListArray,'id','parent_id','level','position');
 		
 		# Apply
 		$this->view->ContentCrumbArray = $ContentCrumbArray;
@@ -88,9 +86,6 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$Content->published_at = date('Y-m-d H:i:s', time());
 		$ContentArray = $Content->toArray();
 		$ContentCrumbArray[] = $ContentArray;
-		
-		# Fetch parent
-		$ContentArray['Parent'] = array('id'=>0);
 		
 		# Fetch content for use in dropdown
 		$ContentListQuery = Doctrine_Query::create()
@@ -137,6 +132,11 @@ class Admin_ContentController extends Zend_Controller_Action {
 		# Parent
 		$parent = $content['parent'];
 		unset($content['parent']);
+		if ( $parent ) {
+			$Content->Parent = Doctrine::getTable('Content')->find($parent);
+		} else {
+			$Content->unlink('Parent');
+		}
 		
 		# Avatar
 		unset($content['avatar']);
@@ -147,16 +147,6 @@ class Admin_ContentController extends Zend_Controller_Action {
 		
 		# Tags
 		$Content->setTags($tags);
-		
-		# Parent
-		if ( empty($parent) ) {
-			$treeObject = Doctrine_Core::getTable('Content')->getTree();
-			$treeObject->createRoot($Content);
-		} else {
-			$Parent = Doctrine::getTable('Content')->find($parent);
-			$Content->getNode()->moveAsLastChildOf($Parent);
-		}
-		$Content->save();
 		
 		# Stop Duplicates
 		$Request->setPost('content', $Content->code);
@@ -172,8 +162,8 @@ class Admin_ContentController extends Zend_Controller_Action {
 			return new Content();
 		}
 		$Content = Doctrine_Query::create()
-			->select('c.*, cr.*, ct.*, ca.*')
-			->from('Content c, c.Route cr, c.Tags ct, c.Author ca')
+			->select('c.*, cr.*, ct.*, ca.*, cp.*')
+			->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')
 			->where('c.code = ?', $content)
 			->fetchOne();
 		return $Content;
@@ -187,19 +177,17 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$Content = $ContentCrumbArray = $ContentListArray = $ContentArray = array();
 		
 		# Prepare
-		// Base Query
-		$BaseQuery = Doctrine_Query::create()
-			->select('c.*, cr.*, ct.*, ca.*')
-			->from('Content c, c.Route cr, c.Tags ct, c.Author ca')
-			->where('c.enabled = true AND c.system = false')
+		$ListQuery = Doctrine_Query::create()
+			->select('c.*, cr.*, ct.*, ca.*, cp.*')
+			->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')
+			->where('c.enabled = ? AND c.system = ?', array(true,false))
+			->orderBy('c.position ASC')
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle
-		// Check
 		if ( $search ) {
 			// Search
-			$Query = Doctrine::getTable('Content')->search($search,$BaseQuery);
-			//die($Query->getSqlQuery());
+			$Query = Doctrine::getTable('Content')->search($search,$ListQuery);
 			$ContentListArray = $Query->execute();
 		}
 		else {
@@ -213,43 +201,34 @@ class Admin_ContentController extends Zend_Controller_Action {
 				$Content = $this->_getContent($content);
 				$ContentArray = $Content->toArray();
 				
-				// Customise Tree Handling
-				$Query = Doctrine_Query::create()
-					->select('c.title, c.code')
-					->from('Content c');
-				$Tree = Doctrine::getTable('Content')->getTree();
-				$Tree->setBaseQuery($Query);
-				
-				// Fetch Content Crumbs
+				// Fetch Crumbs
 				$ContentCrumbArray = array();
-				$Temp = $Content; while ( $Temp = $Temp->getNode()->getParent() ) {
-					$ContentCrumbArray[] = $Temp->toArray();
+				$Crumb = $Content;
+				while ( $Crumb->parent_id ) {
+					$Crumb = $Crumb->Parent;
+					$ContentCrumbArray[] = $Crumb->toArray();
 				}
-				$ContentCrumbArray[] = $ContentArray;
 				
-				// Reset Tree
-				$Tree->resetBaseQuery();
+				// Let us be the last crumb
+				$ContentCrumbArray[] = $ContentArray;
 			}
 			
 			
-			# Fetch Content Tree
-			
-			// Customise Tree Handling
-			$Tree = Doctrine::getTable('Content')->getTree();
-			$Tree->setBaseQuery($BaseQuery);
+			# Fetch list
 			
 			// Fetch
 			if( $Content ) {
-				$ContentListArray = $Content->getNode()->getChildren();
+				// Children
+				$ContentListArray = $ListQuery->andWhere('cp.id = ?',$Content->id)->execute();
 			} else {
-				$ContentListArray = $Tree->fetchRoots();
+				// Roots
+				$ContentListArray = $ListQuery->andWhere('NOT EXISTS (SELECT cpc.id FROM Content cpc WHERE cpc.id = c.parent_id)')->execute();
 			}
+			
+			// If nothing, use us
 			if ( !$ContentListArray && $ContentArray ) {
 				$ContentListArray = array($ContentArray);
 			}
-			
-			// Reset Tree
-			$Tree->resetBaseQuery();
 			
 		}
 		

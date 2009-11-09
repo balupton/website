@@ -154,17 +154,17 @@
 						<select name="content[parent]" id="content-parent">
 							<option <?=($this->ContentArray['Parent']['id']==0?'selected="selected" ':'')?> value="0">Root</option>
 							<?
-							$skip = $skip_level = false;
+							$skip = $skip_factor = false;
 							foreach($this->ContentListArray as $Content ):
 								if ( $skip ) {
-									if ( $Content['level'] <= $skip_level ) {
-										$skip = $skip_level = false;
+									if ( $Content['parent_id'] <= $skip_factor ) {
+										$skip = $skip_factor = false;
 									} else {
 										continue;
 									}
 								} elseif ( $Content['id'] == $this->ContentArray['id'] ) {
 									$skip = true;
-									$skip_level = $Content['level'];
+									$skip_factor = $Content['id'];
 									continue;
 								}
 								echo '<option '.($this->ContentArray['Parent']['id']==$Content['id']?'selected="selected" ':'').' value="'.$Content['id'].'" title="'.$Content['Route']['path'].'">'.

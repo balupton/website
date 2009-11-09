@@ -2,74 +2,69 @@
 
 Subscriber:
     Subscriber_Balupton:
-        id: 1
         email: "balupton@gmail.com"
         enabled: true
         tags: [newsletter]
 
 Content:
     Content_Welcome:
-        id: 1
         code: "welcome"
         title: "Welcome"
         description: "Home Page"
         content: "[carousel]1,2,3[/carousel]<br/>[taglist/]<br/>[recentlist/]"
         Author: User_Mydance
-        children: []
+        
     Content_Events:
-        id: 2
         code: "events"
         title: "Events"
         description: "Event Listing"
         content: "[eventlist/]"
         tags: [event]
         Author: User_Mydance
-        children:
-            Content_Events_BlocParty:
-                id: 4
-                code: "bloc-party"
-                title: "Bloc Party"
-                description: "Event for Bloc Party"
-                content: "[event]1[/event]"
-                system: true
-                children: []
+        
+    Content_Events_BlocParty:
+        code: "bloc-party"
+        title: "Bloc Party"
+        description: "Event for Bloc Party"
+        content: "[event]1[/event]"
+        system: true
+        Parent: Content_Events
+        
     Content_Articles:
-        id: 3
         code: "articles"
         title: "Articles"
         description: "Article Listing"
         content: "[articlelist/]"
         Author: User_Mydance
-        children:
-            Content_Articles_NewSite:
-                id: 5
-                code: "newsite"
-                title: "New Site"
-                description: "New Site!"
-                content: "Our new website is live!"
-                tags: [news,newsletter]
+        
+    Content_Articles_NewSite:
+        code: "newsite"
+        title: "New Site"
+        description: "New Site!"
+        content: "Our new website is live!"
+        tags: [news,newsletter]
+        Parent: Content_Articles
+        
     Content_Resources:
-        id: 6
         code: "resources"
         title: "Resources"
         description: "Knowledge Base Area"
         content: "[contentlist/]"
         Author: User_Mydance
-        children:
-            Content_Resources_Equipment:
-                id: 7
-                code: "equipment"
-                title: "Equipment"
-                description: "Equipment Listing"
-                content: "[contentlist/]"
-                children:
-                    Content_Resources_Equipment_Shoes:
-                        id: 8
-                        code: "shoes"
-                        title: "New Shoes"
-                        description: "New Shoes!"
-                        content: "some new shoes!"
-                        children: []
+        
+    Content_Resources_Equipment:
+        code: "equipment"
+        title: "Equipment"
+        description: "Equipment Listing"
+        content: "[contentlist/]"
+        Parent: Content_Resources
+        
+    Content_Resources_Equipment_Shoes:
+        code: "shoes"
+        title: "New Shoes"
+        description: "New Shoes!"
+        content: "some new shoes!"
+        Parent: Content_Resources_Equipment
 
 Event:
     Event_BlocParty:

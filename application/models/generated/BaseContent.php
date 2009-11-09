@@ -17,6 +17,8 @@
  * @property boolean $system
  * @property integer $avatar_id
  * @property integer $route_id
+ * @property integer $parent_id
+ * @property integer $position
  * @property timestamp $send_at
  * @property timestamp $send_finished_at
  * @property integer $send_all
@@ -24,7 +26,9 @@
  * @property enum $send_status
  * @property File $Avatar
  * @property Route $Route
+ * @property Content $Parent
  * @property Doctrine_Collection $Subscribers
+ * @property Doctrine_Collection $Children
  * @property Doctrine_Collection $ContentAndSubscriber
  * 
  * @package    ##PACKAGE##
@@ -114,6 +118,18 @@ abstract class BaseContent extends Doctrine_Record
              'unique' => true,
              'length' => '4',
              ));
+        $this->hasColumn('parent_id', 'integer', 4, array(
+             'type' => 'integer',
+             'unsigned' => true,
+             'length' => '4',
+             ));
+        $this->hasColumn('position', 'integer', 2, array(
+             'type' => 'integer',
+             'unsigned' => true,
+             'notnull' => true,
+             'default' => 0,
+             'length' => '2',
+             ));
         $this->hasColumn('send_at', 'timestamp', null, array(
              'type' => 'timestamp',
              ));
@@ -156,19 +172,23 @@ abstract class BaseContent extends Doctrine_Record
              'local' => 'route_id',
              'foreign' => 'id'));
 
+        $this->hasOne('Content as Parent', array(
+             'local' => 'parent_id',
+             'foreign' => 'id'));
+
         $this->hasMany('Subscriber as Subscribers', array(
              'refClass' => 'ContentAndSubscriber',
              'local' => 'content_id',
              'foreign' => 'subscriber_id'));
 
+        $this->hasMany('Content as Children', array(
+             'local' => 'id',
+             'foreign' => 'parent_id'));
+
         $this->hasMany('ContentAndSubscriber', array(
              'local' => 'id',
              'foreign' => 'content_id'));
 
-        $nestedset0 = new Doctrine_Template_NestedSet(array(
-             'hasManyRoots' => true,
-             'rootColumnName' => 'root_id',
-             ));
         $balauditable0 = new BalAuditable(array(
              'status' => 
              array(
@@ -206,7 +226,6 @@ abstract class BaseContent extends Doctrine_Record
              ),
              ));
         $taggable0 = new Doctrine_Template_Taggable();
-        $this->actAs($nestedset0);
         $this->actAs($balauditable0);
         $this->actAs($searchable0);
         $this->actAs($taggable0);

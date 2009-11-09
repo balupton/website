@@ -22,9 +22,6 @@ Route:
 
 Content:
     actAs:
-        NestedSet:
-            hasManyRoots: true
-            rootColumnName: root_id
         BalAuditable:
             status:
                 disabled: false
@@ -93,6 +90,14 @@ Content:
             type: integer(4)
             unsigned: true
             unique: true
+        parent_id:
+            type: integer(4)
+            unsigned: true
+        position:
+            type: integer(2)
+            unsigned: true
+            notnull: true
+            default: 0
             
         send_at:
             type: timestamp
@@ -119,6 +124,11 @@ Content:
         Route:
             local: route_id
             foreign: id
+        Parent:
+            class: Content
+            local: parent_id
+            foreign: id
+            foreignAlias: Children
         Subscribers:
             class: Subscriber
             local: content_id
