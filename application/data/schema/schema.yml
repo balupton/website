@@ -186,7 +186,7 @@ Subscriber:
     actAs:
         Taggable:
         Searchable:
-            fields: [email]
+            fields: [email,tagstr]
     columns:
         id:
             primary: true
@@ -201,6 +201,10 @@ Subscriber:
             type: boolean
             notnull: true
             default: true
+        tagstr:
+            type: string(255)
+            notnull: true
+            default: ""
 
 File:
     actAs:

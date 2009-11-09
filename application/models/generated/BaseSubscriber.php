@@ -8,6 +8,7 @@
  * @property integer $id
  * @property string $email
  * @property boolean $enabled
+ * @property string $tagstr
  * @property Doctrine_Collection $ContentList
  * @property Doctrine_Collection $ContentAndSubscriber
  * 
@@ -39,6 +40,12 @@ abstract class BaseSubscriber extends Doctrine_Record
              'notnull' => true,
              'default' => true,
              ));
+        $this->hasColumn('tagstr', 'string', 255, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => '',
+             'length' => '255',
+             ));
     }
 
     public function setUp()
@@ -58,6 +65,7 @@ abstract class BaseSubscriber extends Doctrine_Record
              'fields' => 
              array(
               0 => 'email',
+              1 => 'tagstr',
              ),
              ));
         $this->actAs($taggable0);

@@ -1,0 +1,89 @@
+<div class="wrap">
+	<!-- Edit Button -->
+    <div id="icon-edit-pages" class="icon32">
+        <br/>
+    </div>
+	<!-- Header -->
+    <h2>
+		Subscriber List
+	</h2>
+    <!-- Filters -->
+    <form id="posts-filter" action="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'admin',true)?>" method="get">
+		<!-- Search -->
+        <p class="search-box">
+            <label class="screen-reader-text" for="page-search-input">
+                Search:
+            </label>
+            <input id="page-search-input" name="search" type="text" />
+            <input value="Search" class="button" type="submit" />
+        </p>
+        <div class="clear">
+        </div>
+		<!-- Content Table -->
+        <table class="widefat page fixed" cellspacing="0">
+        	<!-- Content Table: Heading -->
+            <thead>
+                <tr>
+                    <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <input type="checkbox">
+                    </th>-->
+                    <th scope="col" id="title" class="manage-column column-title" style="">
+                        Email
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        Received
+                    </th>
+                    <th scope="col" id="author" class="manage-column column-tags" style="">
+                        Tags
+                    </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <input type="checkbox">
+                    </th>-->
+                    <th scope="col" id="title" class="manage-column column-title" style="">
+                        Email
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        Received
+                    </th>
+                    <th scope="col" id="author" class="manage-column column-tags" style="">
+                        Tags
+                    </th>
+                </tr>
+            </tfoot>
+			<!-- Content Table: Content -->
+            <tbody id="subscriber-list">
+            	<? foreach ( $this->SubscriberListArray as $Subscriber ): ?>
+                <tr id="subscriber-<?=$Subscriber['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?> iedit">
+                    <td class="title column-title">
+                        <?=$Subscriber['email']?>
+                    </td>
+                    <td class="author column-author"><?
+                        echo count($Subscriber['ContentList']);
+                    ?></td>
+                    <td class="author column-tags"> <?
+                        if ( empty($Subscriber['Tags']) ) :
+                        	// nothing
+                        else:
+                        	$tags = array();
+                        	foreach ( $Subscriber['Tags'] as $Tag ) {
+                        		$tag = ucfirst($Tag['name']);
+	                        	$tag_url = $this->url(array(
+	                        		'controller'=>'subscription',
+	                        		'action'=>'subscriber-list',
+	                        		'search'=>$tag
+	                        	), 'admin', true);
+	                        	$tags[] = '<a href="'.$tag_url.'" title="View all by '.$tag.'">'.$tag.'</a>';
+                        	}
+                        	echo implode($tags, ', ');
+                    	endif;
+                    ?></td>
+                </tr>
+				<? endforeach; ?>
+            </tbody>
+        </table>
+    </form>
+</div>
