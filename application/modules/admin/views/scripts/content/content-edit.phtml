@@ -26,10 +26,10 @@
 							<div id="minor-publishing">
 								<div id="minor-publishing-actions">
 									<?if($mode_edit):?>
-									<!--  Open Action -->
+									<!-- Open Action -->
 									<a class="button button-action right" id="action-open" tabindex="4" href="<?=$this->url(array('Map'=>$this->ContentArray['Route']),'map',true)?>" >Open</a>
 									<?endif;?>
-									<!--  Preview Action -->
+									<!-- Preview Action -->
 									<!-- <a class="button button-action right" id="action-preview" tabindex="4">Preview</a>  -->
 									<div class="clear"></div>
 								</div>
@@ -73,7 +73,7 @@
 								<div id="delete-action">
 									<a class="delete delete-action" id="action-delete" title="Are you sure you want to delete <?=$this->ContentArray['title']?>" href="<?=$this->url(array('controller'=>'content','action'=>'content-delete','content'=>$this->ContentArray['code']),'admin',true)?>" ><?=$mode_edit?'Delete':'Discard'?></a>
 								</div>
-								<!--  Save ACtion -->
+								<!-- Save ACtion -->
 								<div id="publishing-action">
 									<input name="save" type="submit" class="button-primary" id="action-save" tabindex="5" accesskey="p" value="Save" />
 								</div>
@@ -177,7 +177,7 @@
 						<label for="content-code">
 							Location:
 						</label>
-						<span class="inline-edit-clickable">http://www.mydance.com.au/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=$this->ContentArray['code']?></span><input type="text" name="content[code]" id="content-code" value="<?=$this->ContentArray['code']?>" />/
+						<span class="inline-edit-clickable"><?=$this->bal()->getBaseUrl('front',true)?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=$this->ContentArray['code']?></span><input type="text" name="content[code]" id="content-code" value="<?=$this->ContentArray['code']?>" />/
 						<span class="inline-edit-panel" id="content-code-panel"></span>
 					</div>
 					<script type="text/javascript">

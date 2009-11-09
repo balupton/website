@@ -46,12 +46,12 @@ $baseUrlBack = $this->bal()->getBaseUrl('back');
                     <div id="wphead-info">
                         <div id="user_info">
                             <p>
-                                User: <a href="http://localhost/wordpress/wp-admin/profile.php" title="Edit your profile">MyDance</a>
-                                <span style="display: inline;" class="turbo-nag hidden">| <a href="http://www.balupton.com/balCMS/feedback/" class="feedback-action">Feedback</a></span>
+                                User: MyDance
+                                | <a href="http://www.balupton.com/balCMS/feedback/" class="feedback-action">Feedback</a>
                                 | <a href="http://localhost/wordpress/wp-login.php?action=logout&amp;_wpnonce=4a471fc4e5" title="Log Out">Log Out</a>
                             </p>
                         </div>
-	                    <?=$this->navigation()->menu()->setPartial(array('navigation/favorites.phtml', 'default'))->setContainer($this->NavigationFavorites)->render()?>
+	                    <?=true?'':$this->navigation()->menu()->setPartial(array('navigation/favorites.phtml', 'default'))->setContainer($this->NavigationFavorites)->render()?>
                     </div>
                 </div>
                 <div id="wpbody">
@@ -78,10 +78,10 @@ $baseUrlBack = $this->bal()->getBaseUrl('back');
                 | <a href="http://www.balupton.com/balCMS/documentation/">Documentation</a>
                 | <a href="http://www.balupton.com/balCMS/feedback" class="feedback-action">Feedback</a>
                 | <a href="http://www.balupton.com/balCMS/support">Support</a>
-                | <a href="<?=$this->url(array('controller'=>'index','action'=>'about'),'admin',true)?>">About</a>
+                <?if(false):?>| <a href="<?=$this->url(array('controller'=>'index','action'=>'about'),'admin',true)?>">About</a><?endif;?>
             </p>
             <p id="footer-upgrade" class="alignright">
-                Version 0.1.0-dev Goat
+                Version 0.1.0-dev Movember
             </p>
             <div class="clear">
             </div>

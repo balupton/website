@@ -11,6 +11,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.5/library'));
 	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
 	define('BASE_URL', 						'/projects/balcms/public/');
+	define('ROOT_URL',						'http://localhost');
 } else {
 	// We are on the production server
 	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');

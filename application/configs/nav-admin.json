@@ -29,28 +29,6 @@
 		"route": "admin"
 	}],
 	"menu": [{
-		"id": "index",
-		"resource": "admin",
-		"label": "Dashboard",
-		"controller": "index",
-		"route": "admin",
-		"class": "menu-top-last",
-		"pages": [{
-			"id": "index-dashboard",
-			"resource": "admin",
-			"label": "Dashboard",
-			"controller": "index",
-			"action": "dashboard",
-			"route": "admin"
-		},{
-			"id": "index-dashboard",
-			"resource": "admin",
-			"label": "About",
-			"controller": "index",
-			"action": "about",
-			"route": "admin"
-		}]
-	},{
 		"label": "---",
 		"uri": "#"
 	},{
@@ -75,28 +53,6 @@
 			"action": "content-new",
 			"route": "admin",
 			"class": "child"
-		},{
-			"id": "content-template-view",
-			"resource": "admin-content-view",
-			"label": "Templates",
-			"controller": "content",
-			"action": "template-list",
-			"route": "admin",
-			"class": "parent"
-		},{
-			"id": "content-template-edit",
-			"resource": "admin-content-edit",
-			"label": "&mdash; New Template",
-			"controller": "content",
-			"action": "template-new",
-			"route": "admin",
-			"class": "child"
-		},{
-			"label": "Tags",
-			"resource": "admin-content-view",
-			"controller": "content",
-			"action": "tags",
-			"route": "admin"
 		}]
 	},{
 		"id": "event",
@@ -120,38 +76,6 @@
 			"action": "event-new",
 			"route": "admin",
 			"class": "child"
-		},{
-			"id": "event-venue-view",
-			"resource": "admin-event-view",
-			"label": "Venues",
-			"controller": "event",
-			"action": "venue-list",
-			"route": "admin",
-			"class": "parent"
-		},{
-			"id": "event-venue-edit",
-			"resource": "admin-event-edit",
-			"label": "&mdash; New Venue",
-			"controller": "event",
-			"action": "venue-new",
-			"route": "admin",
-			"class": "child"
-		},{
-			"id": "event-performer-view",
-			"resource": "admin-event-view",
-			"label": "Performers",
-			"controller": "event",
-			"action": "performer-list",
-			"route": "admin",
-			"class": "parent"
-		},{
-			"id": "event-performer-edit",
-			"resource": "admin-event-edit",
-			"label": "&mdash; New Performer",
-			"controller": "event",
-			"action": "performer-list",
-			"route": "admin",
-			"class": "child"
 		}]
 	},{
 		"id": "subscription",
@@ -167,21 +91,6 @@
 			"action": "subscriber-list",
 			"route": "admin",
 			"class": "parent"
-		},{
-			"id": "subscription-subscriber-new",
-			"resource": "admin-content-edit",
-			"label": "&mdash; New Subscriber",
-			"controller": "subscription",
-			"action": "subscriber-new",
-			"route": "admin",
-			"class": "child"
-		},{
-			"id": "subscription-content-list",
-			"resource": "admin-content-view",
-			"label": "Sent Content",
-			"controller": "subscription",
-			"action": "content-list",
-			"route": "admin"
 		}]
 	},{
 		"id": "media",
@@ -189,6 +98,7 @@
 		"label": "Media",
 		"controller": "media",
 		"route": "admin",
+		"class": "menu-top-last",
 		"pages": [{
 			"id": "media-media-view",
 			"resource": "admin-content-view",
@@ -207,60 +117,7 @@
 			"class": "child"
 		}]
 	},{
-		"id": "user",
-		"resource": "admin-user-view",
-		"label": "Users",
-		"controller": "user",
-		"route": "admin",
-		"class": "menu-top-last",
-		"pages": [{
-			"id": "user-user-view",
-			"resource": "admin-user-view",
-			"label": "Users",
-			"controller": "user",
-			"action": "user-list",
-			"route": "admin",
-			"class": "parent"
-		},{
-			"id": "user-user-edit",
-			"resource": "admin-user-edit",
-			"label": "&mdash; New User",
-			"controller": "user",
-			"action": "user-new",
-			"route": "admin",
-			"class": "child"
-		}]
-	},{
 		"label": "---",
 		"uri": "#"
-	},{
-		"id": "system",
-		"resource": "admin-system-view",
-		"label": "System",
-		"controller": "system",
-		"route": "admin",
-		"class": "menu-top-last",
-		"pages": [{
-			"id": "system-configuration",
-			"resource": "admin-system-view",
-			"label": "Configuration",
-			"controller": "system",
-			"action": "system-config",
-			"route": "admin"
-		},{
-			"id": "system-local",
-			"resource": "admin-system-view",
-			"label": "Localisation",
-			"controller": "system",
-			"action": "system-local",
-			"route": "admin"
-		},{
-			"id": "system-crud",
-			"resource": "admin-crud-view",
-			"label": "CRUD",
-			"controller": "system",
-			"action": "system-crud",
-			"route": "admin"
-		}]
 	}]
 }

@@ -119,7 +119,7 @@ class Admin_ContentController extends Zend_Controller_Action {
 				'controller'	=> 'content',
 				'action'		=> 'content-edit',
 				'content'		=> $Content->code
-			), 'admin');
+			), 'admin', true);
 		}
 		
 		# Fetch
@@ -127,13 +127,19 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$ContentArray = $Content->toArray();
 		$ContentCrumbArray[] = $ContentArray;
 		
+		# Fetch parent
+		if ( empty($ContentArray['Parent']) ) {
+			$ContentArray['Parent'] = array('id'=>0);
+		}
+		
 		# Fetch content for use in dropdown
 		$ContentListQuery = Doctrine_Query::create()
-			->select('c.title, c.root_id, c.level, c.id, cr.path')
+			->select('c.title, c.id, c.parent_id, c.position, cr.path')
 			->from('Content c, c.Route cr')
 			->where('c.enabled = true AND c.system = false')
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
+		$ContentListArray = array_tree($ContentListArray,'id','parent_id','level','position');
 		
 		# Apply
 		$this->view->ContentCrumbArray = $ContentCrumbArray;
@@ -190,6 +196,13 @@ class Admin_ContentController extends Zend_Controller_Action {
 		
 		# Stop Duplicates
 		$Request->setPost('content', $Content->code);
+		
+		# Add the saved message
+		$url = $this->view->getHelper('bal')->getBaseUrl('front',true).'/'.$Content->Route->path;
+		$this->view->getHelper('message')->addMessage(
+			'<p>Updated successfully! and viewable here <a href="'.$url.'">'.$url.'</a></p>',
+			'updated'
+		);
 		
 		# Done
 		return $Content;
