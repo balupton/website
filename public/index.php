@@ -21,6 +21,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.5/library'));
 	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
 	//define('BASE_URL', 					'/stage/public/');
+	define('ROOT_URL',						'http://www.mydance.com.au');
 }
 
 // Debug Mode

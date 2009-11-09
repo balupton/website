@@ -85,6 +85,27 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$this->view->ContentListArray = $ContentListArray;
 		$this->view->ContentArray = $ContentArray;
 	}
+	
+	public function contentPositionAction ( ) {
+		# Prepare
+		$Request = $this->getRequest();
+		$json = json_decode($Request->getPost('json'), true);
+		$positions = $json['positions'];
+		
+		# Handle
+		$data = array('success'=>false);
+		if ( !empty($positions) ) {
+			foreach ( $positions as $id => $position ) {
+				$Content = Doctrine::getTable('Content')->find($id);
+				$Content->position = $position;
+				$Content->save();
+			}
+			$data = array('success'=>true);
+		}
+		
+		# Done
+		$this->getHelper('json')->sendJson($data);
+	}
 
 	public function contentNewAction ( ) {
 		# Prepare
@@ -201,7 +222,7 @@ class Admin_ContentController extends Zend_Controller_Action {
 			->select('c.*, cr.*, ct.*, ca.*, cp.*')
 			->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')
 			->where('c.enabled = ? AND c.system = ?', array(true,false))
-			->orderBy('c.position ASC')
+			->orderBy('c.position ASC, c.id ASC')
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle

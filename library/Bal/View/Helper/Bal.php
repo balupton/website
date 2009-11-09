@@ -10,9 +10,9 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 		return $this;
 	}
 
-	public function getBaseUrl ( $area = 'front ') {
+	public function getBaseUrl ( $area = 'front', $root_url = false ) {
 		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-		$suffix = '';
+		$prefix = $suffix = '';
 		switch ( $area ) {
 			case 'front':
 				break;
@@ -23,7 +23,10 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 			default:
 				break;
 		}
-		return $baseUrl.$suffix;
+		if ( $root_url && defined('ROOT_URL') ) {
+			$prefix = ROOT_URL;
+		}
+		return $prefix.$baseUrl.$suffix;
 	}
 
 }

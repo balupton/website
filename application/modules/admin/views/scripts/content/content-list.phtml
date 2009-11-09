@@ -151,14 +151,22 @@
 				update: function(event, ui) {
 					var $this = $(this);
 					var conpos = {};
-					$this.children().each(function(i,v){
+					var $children = $this.children().each(function(i,v){
 						var $content = $(this);
 						var id = $content.find(':input.content-id').val();
-						conpos[id] = i;
+						conpos[id] = i+1;
 					});
 					// Ajax Request
-					$this.highlight();
-					console.debug(conpos);
+					var data = {json:JSON.stringify({positions:conpos})};
+					$.ajax({
+						url: '<?=$this->url(array('controller'=>'content','action'=>'content-position'),'admin',true)?>',
+						type: 'post',
+						data: data,
+						dataType: 'json',
+						success: function(){
+							$children.highlight();
+						}
+					});
 				}
     		});
     	});
