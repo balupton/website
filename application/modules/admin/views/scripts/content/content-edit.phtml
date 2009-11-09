@@ -71,7 +71,7 @@
 							<div id="major-publishing-actions">
 								<!-- Delete Action -->
 								<div id="delete-action">
-									<a class="delete" id="action-delete" ><?=$mode_edit?'Delete':'Discard'?></a>
+									<a class="delete delete-action" id="action-delete" title="Are you sure you want to delete <?=$this->ContentArray['title']?>" href="<?=$this->url(array('controller'=>'content','action'=>'content-delete','content'=>$this->ContentArray['code']),'admin',true)?>" ><?=$mode_edit?'Delete':'Discard'?></a>
 								</div>
 								<!--  Save ACtion -->
 								<div id="publishing-action">

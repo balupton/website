@@ -137,7 +137,10 @@
 			val = $input.find('option:selected').text();
 		}
 		return val;
-	}
+	};
+	$.fn.highlight = function(){
+		return $(this).effect("highlight", {}, 3000);
+	};
 	
 	
 	// Sparkle: form-input-tip
@@ -183,6 +186,21 @@
 		var $this = $(this); var Sparkle = $.Sparkle;
 		// Fetch
 		var $inputs = $this.findAndSelf('textarea.autogrow,textarea.autosize').autogrow();
+		// Done
+		return $this;
+	});
+	// Sparkle: delete warning
+	$.Sparkle.extensions.add('deletewarn', function(){
+		var $this = $(this); var Sparkle = $.Sparkle;
+		// Fetch
+		var $inputs = $this.findAndSelf('.delete-action').click(function(event){
+			var $this = $(this);
+			if ( !confirm($this.attr('title')||'Are you sure you want to delete this?') ) {
+				// Prevent
+				event.stopPropagation();
+				event.preventDefault();
+			}
+		});
 		// Done
 		return $this;
 	});

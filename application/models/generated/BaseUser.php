@@ -88,6 +88,7 @@ abstract class BaseUser extends Doctrine_Record
              'local' => 'id',
              'foreign' => 'assignee_user_id'));
 
+        $softdelete0 = new Doctrine_Template_SoftDelete();
         $searchable0 = new Doctrine_Template_Searchable(array(
              'fields' => 
              array(
@@ -97,6 +98,7 @@ abstract class BaseUser extends Doctrine_Record
               3 => 'email',
              ),
              ));
+        $this->actAs($softdelete0);
         $this->actAs($searchable0);
     }
 }

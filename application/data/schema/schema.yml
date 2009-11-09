@@ -3,6 +3,7 @@ detect_relations: false
 
 Route:
     actAs:
+        SoftDelete:
         Searchable:
             fields: [path]
     columns:
@@ -22,6 +23,7 @@ Route:
 
 Content:
     actAs:
+        SoftDelete:
         BalAuditable:
             status:
                 disabled: false
@@ -138,6 +140,7 @@ Content:
 
 Event:
     actAs:
+        SoftDelete:
         BalContentExtension:
     columns:
         start_at:
@@ -147,17 +150,6 @@ Event:
         venue_id:
             type: integer(4)
             unsigned: true
-    relations:
-        Venue:
-            local: venue_id
-            foreign: id
-
-Venue:
-    actAs:
-        BalContentExtension:
-    columns:
-        google_map_uri:
-            type: string(255)
 
 ContentAndSubscriber:
     columns:
@@ -253,6 +245,7 @@ File:
 
 User:
     actAs:
+        SoftDelete:
         Searchable:
             fields: [username,displayname,fullname,email]
     columns:

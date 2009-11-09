@@ -8,7 +8,6 @@
  * @property timestamp $start_at
  * @property timestamp $finish_at
  * @property integer $venue_id
- * @property Venue $Venue
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -36,11 +35,9 @@ abstract class BaseEvent extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Venue', array(
-             'local' => 'venue_id',
-             'foreign' => 'id'));
-
+        $softdelete0 = new Doctrine_Template_SoftDelete();
         $balcontentextension0 = new BalContentExtension();
+        $this->actAs($softdelete0);
         $this->actAs($balcontentextension0);
     }
 }

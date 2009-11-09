@@ -189,6 +189,7 @@ abstract class BaseContent extends Doctrine_Record
              'local' => 'id',
              'foreign' => 'content_id'));
 
+        $softdelete0 = new Doctrine_Template_SoftDelete();
         $balauditable0 = new BalAuditable(array(
              'status' => 
              array(
@@ -226,6 +227,7 @@ abstract class BaseContent extends Doctrine_Record
              ),
              ));
         $taggable0 = new Doctrine_Template_Taggable();
+        $this->actAs($softdelete0);
         $this->actAs($balauditable0);
         $this->actAs($searchable0);
         $this->actAs($taggable0);

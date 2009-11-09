@@ -31,6 +31,25 @@ class Admin_ContentController extends Zend_Controller_Action {
 	public function indexAction () {
 		return $this->_forward('content-list');
 	}
+	
+	public function contentDeleteAction ( ) {
+		# Prepare
+		$code = null;
+		$Content = $this->_getContent();
+		# Handle
+		if ( $Content && $Content->exists() ) {
+			if ( isset($Content->Parent) && $Content->Parent->exists() ) {
+				$code = $Content->Parent->code;
+			}
+			$Content->delete();
+		}
+		# Done
+		return $this->getHelper('redirector')->gotoRoute(array(
+			'controller'	=> 'content',
+			'action'		=> 'content-list',
+			'code'			=> $code
+		), 'admin', true);
+	}
 
 	public function contentEditAction ( ) {
 		# Prepare
@@ -135,7 +154,7 @@ class Admin_ContentController extends Zend_Controller_Action {
 		if ( $parent ) {
 			$Content->Parent = Doctrine::getTable('Content')->find($parent);
 		} else {
-			$Content->unlink('Parent');
+			$Content->Parent = null;
 		}
 		
 		# Avatar
@@ -157,15 +176,16 @@ class Admin_ContentController extends Zend_Controller_Action {
 	
 	protected function _getContent(){
 		$content = $this->_getParam('content', false);
-		if ( !$content || !is_string($content) ) {
-			// No content
+		if ( is_string($content) ) {
+			$Content = Doctrine_Query::create()
+				->select('c.*, cr.*, ct.*, ca.*, cp.*')
+				->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')
+				->where('c.code = ?', $content)
+				->fetchOne();
+		}
+		if ( empty($Content) ) {
 			return new Content();
 		}
-		$Content = Doctrine_Query::create()
-			->select('c.*, cr.*, ct.*, ca.*, cp.*')
-			->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')
-			->where('c.code = ?', $content)
-			->fetchOne();
 		return $Content;
 	}
 	

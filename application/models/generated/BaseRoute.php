@@ -50,12 +50,14 @@ abstract class BaseRoute extends Doctrine_Record
              'local' => 'id',
              'foreign' => 'route_id'));
 
+        $softdelete0 = new Doctrine_Template_SoftDelete();
         $searchable0 = new Doctrine_Template_Searchable(array(
              'fields' => 
              array(
               0 => 'path',
              ),
              ));
+        $this->actAs($softdelete0);
         $this->actAs($searchable0);
     }
 }

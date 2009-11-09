@@ -80,19 +80,17 @@
                 </tr>
             </tfoot>
 			<!-- Content Table: Content -->
-            <tbody>
+            <tbody id="content-list">
             	<? foreach ( $this->ContentListArray as $Content ): ?>
                 <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?> iedit">
-                    <!--<th scope="row" class="check-column">
-                        <input name="content[]" value="<?=$Content['id']?>" type="checkbox">
-                    </th>-->
                     <td class="post-title page-title column-title">
+                    	<input type="hidden" name="content[id]" class="content-id" value="<?=$Content['id']?>" />
                         <strong><a class="row-title" href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin',true)?>" title="<?=$this->locale()->translate('edit-%s',$Content['title'])?>">
                         	<?=/*str_repeat('&nbsp;',$Content['level']).' '.*/$Content['title']?>
 						</a></strong>
 						<div class="row-actions">
 							<span class="edit"><a title="Edit this page" href="<?=$this->url(array('controller'=>'content','action'=>'content-edit','content'=>$Content['code']),'admin',true)?>">Edit</a> | </span>
-							<span class="delete"><a class="delete-action" title="Delete this page" href="<?=$this->url(array('controller'=>'content','action'=>'content-delete','content'=>$Content['code']),'admin',true)?>">Delete</a> | </span>
+							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$Content['title']?>" href="<?=$this->url(array('controller'=>'content','action'=>'content-delete','content'=>$Content['code']),'admin',true)?>">Delete</a> | </span>
 							<span class="view"><a rel="permalink" title="View" href="<?=$this->url(array('Map'=>$Content['Route']),'map',true)?>">View</a></span>
 						</div>
                     </td>
@@ -146,4 +144,23 @@
             </tbody>
         </table>
     </form>
+    <script type="text/javascript">
+    	$(function(){
+			$content_list = $('#content-list');
+			$content_list.sortable({
+				update: function(event, ui) {
+					var $this = $(this);
+					var conpos = {};
+					$this.children().each(function(i,v){
+						var $content = $(this);
+						var id = $content.find(':input.content-id').val();
+						conpos[id] = i;
+					});
+					// Ajax Request
+					$this.highlight();
+					console.debug(conpos);
+				}
+    		});
+    	});
+    </script>
 </div>

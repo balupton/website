@@ -217,6 +217,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			Doctrine::ATTR_VALIDATE,
 			Doctrine::VALIDATE_ALL
 		);
+		$Manager->setAttribute(Doctrine_Core::ATTR_USE_DQL_CALLBACKS, true);
 
 		// Apply Extensions
 		if ( $version_1_2 ) $Manager->registerExtension('Taggable');
