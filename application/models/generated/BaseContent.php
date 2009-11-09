@@ -41,6 +41,7 @@ abstract class BaseContent extends Doctrine_Record
              'primary' => true,
              'type' => 'integer',
              'unsigned' => true,
+             'autoincrement' => true,
              'length' => '4',
              ));
         $this->hasColumn('code', 'string', 30, array(
@@ -111,7 +112,6 @@ abstract class BaseContent extends Doctrine_Record
              'type' => 'integer',
              'unsigned' => true,
              'unique' => true,
-             'notnull' => true,
              'length' => '4',
              ));
         $this->hasColumn('send_at', 'timestamp', null, array(

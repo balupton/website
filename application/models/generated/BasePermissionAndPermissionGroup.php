@@ -24,8 +24,8 @@ abstract class BasePermissionAndPermissionGroup extends Doctrine_Record
         $this->hasColumn('id', 'integer', 4, array(
              'type' => 'integer',
              'primary' => true,
-             'autoincrement' => true,
              'unsigned' => true,
+             'autoincrement' => true,
              'length' => '4',
              ));
         $this->hasColumn('permissiongroup_id', 'integer', 2, array(

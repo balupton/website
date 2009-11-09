@@ -21,14 +21,43 @@
 			<? endif; ?>
 		</span>
 	</p>
-	
+
 	<? if ( DEBUG_MODE ): ?>
-	<h3>Stack trace:</h3>
-	<pre><?= $this->exception->getTraceAsString() ?>
-	</pre>
-	
-	<h3>Request Parameters:</h3>
-	<pre><? var_dump($this->request->getParams()) ?>
-	</pre>
-	<? endif ?>
+		<h3>Stack trace:</h3>
+		<pre><?= $this->exception->getTraceAsString() ?>
+		</pre>
+		
+		<h3>Request Parameters:</h3>
+		<pre><? var_dump($this->request->getParams()) ?>
+		</pre>
+		
+		<? if ( !empty($this->profiler) ) : ?>
+			<h3>Profiler:</h3>
+			<pre><?
+				$time = 0;
+				foreach ( $this->profiler as $event) {
+				    $time += $event->getElapsedSecs();
+				    echo $event->getName() . " " . sprintf("%f", $event->getElapsedSecs()) . "\n";
+				    echo $event->getQuery() . "\n";
+				    $params = $event->getParams();
+				    if( ! empty($params)) {
+				        print_r($params);
+				    }
+				}
+				echo "Total time: " . $time  . "\n";
+			?></pre>
+		<? endif; ?>
+		
+		<? if ( !empty($this->identity) ) : ?>
+			<h3>Identity:</h3>
+			<pre><?= var_export($this->identity,true) ?>
+			</pre>
+		<? endif; ?>
+		
+		<? if ( !empty($this->permissions) ) : ?>
+			<h3>Permissions:</h3>
+			<pre><?= var_export($this->permissions,true) ?>
+			</pre>
+		<? endif; ?>
+	<? endif; ?>
 </div>

@@ -35,11 +35,15 @@ class Admin_ContentController extends Zend_Controller_Action {
 	public function contentEditAction ( ) {
 		# Prepare
 		$this->registerMenu('content-content-list');
-		$content = $this->_getParam('content', false);
 		$Content = $ContentCrumbArray = $ContentArray = array();
 		
+		# Save
+		$Content = $this->_saveContent();
+		if ( !$Content->id ){
+			return $this->_forward('content-new');
+		}
+		
 		# Fetch
-		$Content = $this->_getContent($content);
 		$ContentArray = $Content->toArray();
 		$ContentCrumbArray[] = $ContentArray;
 		
@@ -66,12 +70,21 @@ class Admin_ContentController extends Zend_Controller_Action {
 	}
 
 	public function contentNewAction ( ) {
-		// Prepare
+		# Prepare
 		$this->registerMenu('content-content-edit');
 		$Content = $ContentCrumbArray = $ContentArray = array();
 	
+		# Save
+		$Content = $this->_saveContent();
+		if ( $Content->id ){
+			return $this->getHelper('redirector')->gotoRoute(array(
+				'controller'	=> 'content',
+				'action'		=> 'content-edit',
+				'content'		=> $Content->code
+			), 'admin');
+		}
+		
 		# Fetch
-		$Content = new Content();
 		$Content->published_at = date('Y-m-d H:i:s', time());
 		$ContentArray = $Content->toArray();
 		$ContentCrumbArray[] = $ContentArray;
@@ -93,7 +106,71 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$this->view->ContentArray = $ContentArray;
 	}
 	
-	protected function _getContent($content){
+	protected function _saveContent(){
+		# Prepare
+		$Content = $this->_getContent();
+		
+		# Fetch
+		$Request = $this->_request;
+		$content = $Request->getPost('content');
+		$subscription = $Request->getPost('subscription', array());
+		$content_files = !empty($_FILES['content']) ? $_FILES['content'] : array();
+		
+		# Check
+		if ( empty($content) || is_string($content) ) {
+			return $Content;
+		}
+		
+		# Ensure
+		array_key_ensure($subscription, 'tags', '');
+		array_key_ensure($content_files, 'avatar', '');
+		
+		# Prepare
+		array_keep($content, array('code','content','description','parent','status','tags','title'));
+		$content['tags'] .= ', '.$subscription['tags'];
+		$content['avatar'] = $content_files['avatar'];
+		
+		# Tags
+		$tags = implode(', ',array_clean(explode(',',$content['tags'])));
+		unset($content['tags']);
+		
+		# Parent
+		$parent = $content['parent'];
+		unset($content['parent']);
+		
+		# Avatar
+		unset($content['avatar']);
+		
+		# Apply
+		$Content->merge($content);
+		$Content->save();
+		
+		# Tags
+		$Content->setTags($tags);
+		
+		# Parent
+		if ( empty($parent) ) {
+			$treeObject = Doctrine_Core::getTable('Content')->getTree();
+			$treeObject->createRoot($Content);
+		} else {
+			$Parent = Doctrine::getTable('Content')->find($parent);
+			$Content->getNode()->moveAsLastChildOf($Parent);
+		}
+		$Content->save();
+		
+		# Stop Duplicates
+		$Request->setPost('content', $Content->code);
+		
+		# Done
+		return $Content;
+	}
+	
+	protected function _getContent(){
+		$content = $this->_getParam('content', false);
+		if ( !$content || !is_string($content) ) {
+			// No content
+			return new Content();
+		}
 		$Content = Doctrine_Query::create()
 			->select('c.*, cr.*, ct.*, ca.*')
 			->from('Content c, c.Route cr, c.Tags ct, c.Author ca')

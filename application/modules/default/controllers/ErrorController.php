@@ -41,6 +41,9 @@ class ErrorController extends Zend_Controller_Action {
 				// Check if doctrine
 				$class = get_class($Exception);
 				switch ( $class ) {
+					case 'Doctrine_Connection_Mysql_Exception':
+						$this->view->error = $Exception->getPortableMessage();
+						break;
 					case 'Doctrine_Validator_Exception':
 						$this->view->error = 'error-doctrine-validation';
 						// Fetch
@@ -89,10 +92,14 @@ class ErrorController extends Zend_Controller_Action {
 		        break;
 		}
 		
+		// Profiler
+		$Profiler = Zend_Registry::get('Profiler');
+		
 		// Assign
 		$this->view->exception 	= $Exception;
 		$this->view->request   	= $Request;
 		$this->view->messages	= $messages;
+		$this->view->profiler	= $Profiler;
 		
 		// Render
 		$this->view->headTitle()->append('Error');

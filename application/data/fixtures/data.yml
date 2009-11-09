@@ -15,12 +15,6 @@ Content:
         description: "Home Page"
         content: "[carousel]1,2,3[/carousel]<br/>[taglist/]<br/>[recentlist/]"
         Author: User_Mydance
-        Route:
-            id: 1
-            path: "welcome"
-            type: content
-            data:
-                id: 1
         children: []
     Content_Events:
         id: 2
@@ -30,12 +24,6 @@ Content:
         content: "[eventlist/]"
         tags: [event]
         Author: User_Mydance
-        Route:
-            id: 2
-            path: "events"
-            type: content
-            data:
-                id: 2
         children:
             Content_Events_BlocParty:
                 id: 4
@@ -44,12 +32,6 @@ Content:
                 description: "Event for Bloc Party"
                 content: "[event]1[/event]"
                 system: true
-                Route:
-                    id: 4
-                    path: "events/bloc-party"
-                    type: content
-                    data:
-                        id: 4
                 children: []
     Content_Articles:
         id: 3
@@ -58,12 +40,6 @@ Content:
         description: "Article Listing"
         content: "[articlelist/]"
         Author: User_Mydance
-        Route:
-            id: 3
-            path: "articles"
-            type: content
-            data:
-                id: 3
         children:
             Content_Articles_NewSite:
                 id: 5
@@ -72,12 +48,6 @@ Content:
                 description: "New Site!"
                 content: "Our new website is live!"
                 tags: [news,newsletter]
-                Route:
-                    id: 5
-                    path: "articles/newsite"
-                    type: content
-                    data:
-                        id: 5
     Content_Resources:
         id: 6
         code: "resources"
@@ -85,12 +55,6 @@ Content:
         description: "Knowledge Base Area"
         content: "[contentlist/]"
         Author: User_Mydance
-        Route:
-            id: 6
-            path: "resources"
-            type: content
-            data:
-                id: 6
         children:
             Content_Resources_Equipment:
                 id: 7
@@ -98,12 +62,6 @@ Content:
                 title: "Equipment"
                 description: "Equipment Listing"
                 content: "[contentlist/]"
-                Route:
-                    id: 7
-                    path: "resources/equipment"
-                    type: content
-                    data:
-                        id: 7
                 children:
                     Content_Resources_Equipment_Shoes:
                         id: 8
@@ -111,12 +69,6 @@ Content:
                         title: "New Shoes"
                         description: "New Shoes!"
                         content: "some new shoes!"
-                        Route:
-                            id: 8
-                            path: "resources/equipment/shoes"
-                            type: content
-                            data:
-                                id: 8
                         children: []
 
 Event:

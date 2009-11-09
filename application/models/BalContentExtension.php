@@ -57,9 +57,10 @@ class BalContentExtension extends BalTemplate {
 	        'type'          =>  'integer',
 	        'length'        =>  4,
 	        'options'       =>  array(
-				'primary'	=>	true,
-				'unsigned'	=>	true,
-				'notnull'	=>	true
+				'primary'		=>	true,
+				'unsigned'		=>	true,
+				'notnull'		=>	true,
+				'autoincrement' =>	true
 			)
 		),
 		'content' => array(

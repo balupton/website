@@ -30,6 +30,7 @@ abstract class BaseFile extends Doctrine_Record
              'primary' => true,
              'type' => 'integer',
              'unsigned' => true,
+             'autoincrement' => true,
              'length' => '4',
              ));
         $this->hasColumn('code', 'string', 255, array(

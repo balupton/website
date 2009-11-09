@@ -86,6 +86,20 @@ class Content extends BaseContent {
 			}
 		}
 		
+		// Route
+		if ( empty($Invoker->Route) || !$Invoker->Route->exists() ) {
+			$Route = new Route();
+			$path = $Invoker->code;
+			$Parent = $Invoker->getNode()->getParent();
+			if ( $Parent && $Parent->exists() ) $path = $Parent->Route->path.'/'.$path;
+			$Route->path = $path;
+			$Route->type = 'content';
+			$Route->data = array('id'=>$Invoker->id);
+			$Route->save();
+			$Invoker->link('Route', $Route->id);
+			$save = true;
+		}
+	
 		// Check if code has changed
 		if ( !empty($modified['code']) && !empty($this->_old['code']) ) {
 			// The code has changed, update route and all children, eee
@@ -109,50 +123,52 @@ class Content extends BaseContent {
 		$View = $this->getView();
 	
 		// Check if we need to send out to any subscribers
-		$SubscriberQuery = Doctrine_Query::create()
-			->select('s.email')
-			->from('Subscriber s, s.Tags st')
-			->where('s.enabled = ?', true)
-			->andWhere('NOT EXISTS (SELECT cas.id FROM ContentAndSubscriber cas WHERE cas.subscriber_id = s.id AND cas.content_id = ?)', $Invoker->id)
-			->andWhereIn('st.name', $tags)
-			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
-		$SubscribersArray = $SubscriberQuery->execute();
-		if ( !empty($SubscribersArray) ) {
-			// Update
-			if ( empty($Invoker->send_at) ) {
-				$Invoker->send_at = date('Y-m-d H:i:s', time());
+		if ( !empty($tags) ) {
+			$SubscriberQuery = Doctrine_Query::create()
+				->select('s.email')
+				->from('Subscriber s, s.Tags st')
+				->where('s.enabled = ?', true)
+				->andWhere('NOT EXISTS (SELECT cas.id FROM ContentAndSubscriber cas WHERE cas.subscriber_id = s.id AND cas.content_id = ?)', $Invoker->id)
+				->andWhereIn('st.name', $tags)
+				->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+			$SubscribersArray = $SubscriberQuery->execute();
+			if ( !empty($SubscribersArray) ) {
+				// Update
+				if ( empty($Invoker->send_at) ) {
+					$Invoker->send_at = date('Y-m-d H:i:s', time());
+				}
+				// We would like to send out
+				$View = clone $View;
+				$View->ContentArray = $Invoker->toArray();
+				$View->headTitle()->append($Invoker->title);
+				// Mail
+				$mail = $GLOBALS['Application']->getOption('mail');
+				$mail['subject'] = $Invoker->title;
+				$mail['html'] = $View->render('email/subscription.phtml');
+				$mail['text'] = strip_tags($mail['html']);
+				$Mail = new Zend_Mail();
+				$Mail->setFrom($mail['from']['address'], $mail['from']['name']);
+				// $Mail->addTo($mail['from']['address'], $mail['from']['name']);
+				foreach ( $SubscribersArray as $SubscriberArray ) {
+					$Mail->addBcc($SubscriberArray['email']);
+					// Save send
+					$ContentAndSubscriber = new ContentAndSubscriber();
+					$ContentAndSubscriber->content_id = $Invoker->id;
+					$ContentAndSubscriber->subscriber_id = $SubscriberArray['id'];
+					$ContentAndSubscriber->status = 'delivered';
+					$ContentAndSubscriber->save();
+				}
+				$Mail->setSubject($mail['subject']);
+				$Mail->setBodyText($mail['text']);
+				$Mail->setBodyHtml($mail['html']);
+				$Mail->send();
+				// Update
+				$Invoker->send_finished_at = date('Y-m-d H:i:s', time());
+				$Invoker->send_status = 'completed';
+				$Invoker->send_all += count($SubscribersArray);
+				$Invoker->send_remaining = 0;
+				$save = true;
 			}
-			// We would like to send out
-			$View = clone $View;
-			$View->ContentArray = $Invoker->toArray();
-			$View->headTitle()->append($Invoker->title);
-			// Mail
-			$mail = $GLOBALS['Application']->getOption('mail');
-			$mail['subject'] = $Invoker->title;
-			$mail['html'] = $View->render('email/subscription.phtml');
-			$mail['text'] = strip_tags($mail['html']);
-			$Mail = new Zend_Mail();
-			$Mail->setFrom($mail['from']['address'], $mail['from']['name']);
-			// $Mail->addTo($mail['from']['address'], $mail['from']['name']);
-			foreach ( $SubscribersArray as $SubscriberArray ) {
-				$Mail->addBcc($SubscriberArray['email']);
-				// Save send
-				$ContentAndSubscriber = new ContentAndSubscriber();
-				$ContentAndSubscriber->content_id = $Invoker->id;
-				$ContentAndSubscriber->subscriber_id = $SubscriberArray['id'];
-				$ContentAndSubscriber->status = 'delivered';
-				$ContentAndSubscriber->save();
-			}
-			$Mail->setSubject($mail['subject']);
-			$Mail->setBodyText($mail['text']);
-			$Mail->setBodyHtml($mail['html']);
-			$Mail->send();
-			// Update
-			$Invoker->send_finished_at = date('Y-m-d H:i:s', time());
-			$Invoker->send_status = 'completed';
-			$Invoker->send_all += count($SubscribersArray);
-			$Invoker->send_remaining = 0;
-			$save = true;
 		}
 		
 		// Apply

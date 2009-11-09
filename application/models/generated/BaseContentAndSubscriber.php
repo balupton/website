@@ -26,6 +26,7 @@ abstract class BaseContentAndSubscriber extends Doctrine_Record
              'primary' => true,
              'type' => 'integer',
              'unsigned' => true,
+             'autoincrement' => true,
              'length' => '4',
              ));
         $this->hasColumn('content_id', 'integer', 4, array(

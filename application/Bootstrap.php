@@ -234,7 +234,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
 	    // Create Connection
 	    $Connection = $Manager->openConnection($config['data']['connection_string']);
-
+		
+	    // Profile Connection
+	    $Profiler = new Doctrine_Connection_Profiler();
+		$Connection->setListener($Profiler);
+		Zend_Registry::set('Profiler',$Profiler);
+	    
 	    // Return Manager
 	    return $Manager;
 	}

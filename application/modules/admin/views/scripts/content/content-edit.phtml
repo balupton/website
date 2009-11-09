@@ -15,8 +15,7 @@
 		<? endforeach; ?>
 	</h2>
 	<?=$this->message()->render()?>
-	<form name="post" action="" method="post">
-		<input type="hidden" id="_wpnonce" name="_wpnonce" value="b060cedf26" /><input type="hidden" name="_wp_http_referer" value="/wp-admin/post.php?action=edit&amp;post=1&amp;message=1" /><input type="hidden" id="user-id" name="user_ID" value="2212518" /><input type="hidden" id="hiddenaction" name="action" value="editpost" /><input type="hidden" id="originalaction" name="originalaction" value="editpost" /><input type="hidden" id="post_author" name="post_author" value="2212518" /><input type="hidden" id="post_type" name="post_type" value="post" /><input type="hidden" id="original_post_status" name="original_post_status" value="publish" /><input name="referredby" type="hidden" id="referredby" value="http://balupton.wordpress.com/wp-admin/post.php?action=edit&#038;post=1" /><input type="hidden" name="_wp_original_http_referer" value="http://balupton.wordpress.com/wp-admin/post.php?action=edit&amp;post=1" /><input type='hidden' id='post_ID' name='post_ID' value='1' />
+	<form action="" method="post" enctype="multipart/form-data">
 		<div class="metabox-holder has-right-sidebar">
 			<div id="side-info-column" class="inner-sidebar">
 				<div id='side-sortables' class='meta-box-sortables sidebar-boxes'>
@@ -37,13 +36,13 @@
 								<div id="misc-publishing-actions">
 									<div class="misc-pub-section field">
 										<label for="content-status">Status:</label>
-										<span id="content-status-view" class="field-value">Published</span>
+										<span id="content-status-view" class="field-value"><?=ucfirst($this->ContentArray['status'])?></span>
 										<span id="content-status-edit" class="hide">
 											<br/>
 											<select name="content[status]" id="content-status" tabindex="4">
-												<option selected='selected' value='pending'>Pending</option>
-												<option value='published'>Published</option>
-												<option value='deprecated'>Deprecated</option>
+												<? foreach ( Doctrine::getTable('Content')->getEnumValues('status') as $value ):
+													echo '<option '.($this->ContentArray['status']==$value?'selected="selected" ':'').' value="'.$value.'">'.ucfirst($value).'</option>';
+												endforeach; ?>
 											</select>
 										</span>
 										<script type="text/javascript">
@@ -127,14 +126,6 @@
 									</label>
 								</div>
 							<? else: ?>
-								<!--<div class="field">
-									<span class="label">Send started:</span>
-									<span class="value"><?=$this->locale()->datetime($this->ContentArray['send_at'])?></span>
-								</div>
-								<div class="field">
-									<span class="label">Send completed:</span>
-									<span class="value"><?=$this->locale()->datetime($this->ContentArray['send_finished_at'])?></span>
-								</div>-->
 								<div class="field">
 									<span class="label">Sent to:</span>
 									<span class="value"><?=$this->ContentArray['send_all']-$this->ContentArray['send_remaining']?> of <?=$this->ContentArray['send_all']?> <a href="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'admin',true)?>" title="go to Subscriber List">subscribers</a></span>
@@ -162,8 +153,20 @@
 						</label>
 						<select name="content[parent]" id="content-parent">
 							<option <?=($this->ContentArray['Parent']['id']==0?'selected="selected" ':'')?> value="0">Root</option>
-							<? foreach($this->ContentListArray as $Content ):
-								if ( $Content['id'] == $this->ContentArray['id'] ) continue;
+							<?
+							$skip = $skip_level = false;
+							foreach($this->ContentListArray as $Content ):
+								if ( $skip ) {
+									if ( $Content['level'] <= $skip_level ) {
+										$skip = $skip_level = false;
+									} else {
+										continue;
+									}
+								} elseif ( $Content['id'] == $this->ContentArray['id'] ) {
+									$skip = true;
+									$skip_level = $Content['level'];
+									continue;
+								}
 								echo '<option '.($this->ContentArray['Parent']['id']==$Content['id']?'selected="selected" ':'').' value="'.$Content['id'].'" title="'.$Content['Route']['path'].'">'.
 									str_repeat('-', $Content['level']).' '.$Content['title'].
 								'</option';
@@ -214,7 +217,7 @@
 						});
 					</script>
 					<div id="content-content-field" class="field field-rich">
-						<textarea name="content" tabindex="2" id="content"><?=$this->ContentArray['content']?></textarea>
+						<textarea name="content[content]" tabindex="2" id="content"><?=$this->ContentArray['content']?></textarea>
 						<script type="text/javascript">$(function(){$('#content').editor('rich');});</script>
 					</div>
 					<div id="content-description-field" class="field field-wrapper postbox widget">

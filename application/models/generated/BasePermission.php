@@ -25,8 +25,8 @@ abstract class BasePermission extends Doctrine_Record
         $this->hasColumn('id', 'integer', 2, array(
              'type' => 'integer',
              'primary' => true,
-             'autoincrement' => true,
              'unsigned' => true,
+             'autoincrement' => true,
              'length' => '2',
              ));
         $this->hasColumn('code', 'string', 50, array(

@@ -172,6 +172,9 @@
 			var $input = $(this);
 			$input.focus(focus).blur(blur).trigger('blur');
 		});
+		$this.find('form').one('submit',function(){
+			$inputs.trigger('focus');
+		});
 		// Done
 		return $this;
 	});
@@ -357,6 +360,10 @@
 			theme_advanced_resizing: false,
 			width: "100%",
 			
+			// Compat
+			//add_form_submit_trigger: false,
+			//submit_patch: false,
+			
 			// Example content CSS (should be your site CSS)
 			// content_css : "css/content.css",
 			
@@ -376,6 +383,9 @@
 		var Me = $.Editor;
 		var config = Me.getConfigWithDefault(options,options);
 		var $this = $(this);
+		//$this.parent('form:first').unbind().submit(function(){
+			//tinyMCE.triggerSave();
+		//});
 		return $this.tinymce(config);
 	};
 	

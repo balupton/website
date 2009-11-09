@@ -25,6 +25,7 @@ abstract class BaseRoute extends Doctrine_Record
              'primary' => true,
              'type' => 'integer',
              'unsigned' => true,
+             'autoincrement' => true,
              'length' => '4',
              ));
         $this->hasColumn('path', 'string', 150, array(
@@ -49,14 +50,12 @@ abstract class BaseRoute extends Doctrine_Record
              'local' => 'id',
              'foreign' => 'route_id'));
 
-        $balauditable0 = new BalAuditable();
         $searchable0 = new Doctrine_Template_Searchable(array(
              'fields' => 
              array(
               0 => 'path',
              ),
              ));
-        $this->actAs($balauditable0);
         $this->actAs($searchable0);
     }
 }

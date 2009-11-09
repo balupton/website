@@ -27,8 +27,8 @@ abstract class BasePermissionAndUser extends Doctrine_Record
         $this->hasColumn('id', 'integer', 6, array(
              'type' => 'integer',
              'primary' => true,
-             'autoincrement' => true,
              'unsigned' => true,
+             'autoincrement' => true,
              'length' => '6',
              ));
         $this->hasColumn('assigned_date', 'timestamp', null, array(
