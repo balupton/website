@@ -230,21 +230,6 @@
 							$('#content-description').editor('simple');
 						</script>
 					</div>
-					<? if ( isset($this->EventArray) ): ?>
-					<div id="content-description-field" class="field field-wrapper postbox widget">
-						<h3>Event Information</h3>
-						<div class="inside">
-							<p>
-								<label for="event-start-at">Start time:</label>
-								<input type="text" name="event[start_at]" id="event-start-at" value="<?=$this->EventArray['start_date']?>" />
-							<p>
-							<p>
-								<label for="event-finish-at">Finish time:</label>
-								<input type="text" name="event[finish_at]" id="event-finish-at" value="<?=$this->EventArray['finish_time']?>" />
-							</p>
-						</div>
-					</div>
-					<? endif; ?>
 				</div>
 			</div>
 			<br class="clear" />

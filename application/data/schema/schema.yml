@@ -147,9 +147,6 @@ Event:
             type: timestamp
         finish_at:
             type: timestamp
-        venue_id:
-            type: integer(4)
-            unsigned: true
 
 ContentAndSubscriber:
     columns:

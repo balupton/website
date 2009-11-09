@@ -32,6 +32,10 @@ class Admin_ContentController extends Zend_Controller_Action {
 		return $this->_forward('content-list');
 	}
 	
+	public function eventAction ( ) {
+		return $this->_forward('event-list');
+	}
+	
 	public function contentDeleteAction ( ) {
 		# Prepare
 		$code = null;
@@ -86,27 +90,6 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$this->view->ContentArray = $ContentArray;
 	}
 	
-	public function contentPositionAction ( ) {
-		# Prepare
-		$Request = $this->getRequest();
-		$json = json_decode($Request->getPost('json'), true);
-		$positions = $json['positions'];
-		
-		# Handle
-		$data = array('success'=>false);
-		if ( !empty($positions) ) {
-			foreach ( $positions as $id => $position ) {
-				$Content = Doctrine::getTable('Content')->find($id);
-				$Content->position = $position;
-				$Content->save();
-			}
-			$data = array('success'=>true);
-		}
-		
-		# Done
-		$this->getHelper('json')->sendJson($data);
-	}
-
 	public function contentNewAction ( ) {
 		# Prepare
 		$this->registerMenu('content-content-edit');
@@ -140,6 +123,136 @@ class Admin_ContentController extends Zend_Controller_Action {
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
 		$ContentListArray = array_tree($ContentListArray,'id','parent_id','level','position');
+		
+		# Apply
+		$this->view->ContentCrumbArray = $ContentCrumbArray;
+		$this->view->ContentListArray = $ContentListArray;
+		$this->view->ContentArray = $ContentArray;
+	}
+	
+	public function eventListAction ( ) {
+		# Prepare
+		$this->registerMenu('content-event-list');
+		$event = $this->_getParam('event', false);
+		$search = $this->_getParam('search', false);
+		$Event = $EventCrumbArray = $EventListArray = $EventArray = array();
+		
+		# Prepare
+		$ListQuery = Doctrine_Query::create()
+			->select('e.*, c.*, cr.*, ct.*, ca.*, cp.*')
+			->from('Event e, e.Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')
+			//->where('c.enabled = ?', true)
+			->orderBy('c.published_at DESC')
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		
+		# Handle
+		if ( $search ) {
+			// Search
+			$Query = Doctrine::getTable('Content')->search($search,$ListQuery);
+			$EventListArray = $Query->execute();
+		}
+		else {
+			// No Search
+			
+			# Fetch Crumbs
+			if ( $event ) {
+				// We have a content as a root
+				$Event = $this->_getEvent($event);
+				$EventArray = $Event->toArray();
+				
+				// Fetch Crumbs
+				$EventCrumbArray = array();
+				$Crumb = $Event;
+				while ( $Crumb->parent_id ) {
+					$Crumb = $Crumb->Parent;
+					$EventCrumbArray[] = $Crumb->toArray();
+				}
+				
+				// Let us be the last crumb
+				$EventCrumbArray[] = $EventArray;
+			}
+			
+			
+			# Fetch list
+			if( $Event ) {
+				// Children
+				$EventListArray = $ListQuery->andWhere('cp.id = ?',$Event->id)->execute();
+			} else {
+				// Roots
+				$EventListArray = $ListQuery->andWhere('NOT EXISTS (SELECT cpc.id FROM Content cpc WHERE cpc.id = c.parent_id)')->execute();
+			}
+			
+			// If nothing, use us
+			if ( !$EventListArray && $EventArray ) {
+				$EventListArray = array($EventArray);
+			}
+			
+		}
+		
+		# Apply
+		$this->view->EventCrumbArray = $EventCrumbArray;
+		$this->view->EventListArray = $EventListArray;
+		$this->view->EventArray = $EventArray;
+	}
+	
+	public function contentListAction ( ) {
+		# Prepare
+		$this->registerMenu('content-content-list');
+		$content = $this->_getParam('content', false);
+		$search = $this->_getParam('search', false);
+		$Content = $ContentCrumbArray = $ContentListArray = $ContentArray = array();
+		
+		# Prepare
+		$ListQuery = Doctrine_Query::create()
+			->select('c.*, cr.*, ct.*, ca.*, cp.*')
+			->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')
+			->where('c.enabled = ? AND c.system = ?', array(true,false))
+			->orderBy('c.position ASC, c.id ASC')
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		
+		# Handle
+		if ( $search ) {
+			// Search
+			$Query = Doctrine::getTable('Content')->search($search,$ListQuery);
+			$ContentListArray = $Query->execute();
+		}
+		else {
+			// No Search
+			
+			# Fetch Crumbs
+			if ( $content ) {
+				// We have a content as a root
+				$Content = $this->_getContent($content);
+				$ContentArray = $Content->toArray();
+				
+				// Fetch Crumbs
+				$ContentCrumbArray = array();
+				$Crumb = $Content;
+				while ( $Crumb->parent_id ) {
+					$Crumb = $Crumb->Parent;
+					$ContentCrumbArray[] = $Crumb->toArray();
+				}
+				
+				// Let us be the last crumb
+				$ContentCrumbArray[] = $ContentArray;
+			}
+			
+			
+			# Fetch list
+			if( $Content ) {
+				// Children
+				$ContentListArray = $ListQuery->andWhere('cp.id = ?',$Content->id)->execute();
+			} else {
+				// Roots
+				$ContentListArray = $ListQuery->andWhere('NOT EXISTS (SELECT cpc.id FROM Content cpc WHERE cpc.id = c.parent_id)')->execute();
+			}
+			
+			// If nothing, use us
+			if ( !$ContentListArray && $ContentArray ) {
+				$ContentListArray = array($ContentArray);
+			}
+			
+		}
 		
 		# Apply
 		$this->view->ContentCrumbArray = $ContentCrumbArray;
@@ -223,74 +336,26 @@ class Admin_ContentController extends Zend_Controller_Action {
 		return $Content;
 	}
 	
-	public function contentListAction ( ) {
+	public function contentPositionAction ( ) {
 		# Prepare
-		$this->registerMenu('content-content-list');
-		$content = $this->_getParam('content', false);
-		$search = $this->_getParam('search', false);
-		$Content = $ContentCrumbArray = $ContentListArray = $ContentArray = array();
-		
-		# Prepare
-		$ListQuery = Doctrine_Query::create()
-			->select('c.*, cr.*, ct.*, ca.*, cp.*')
-			->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')
-			->where('c.enabled = ? AND c.system = ?', array(true,false))
-			->orderBy('c.position ASC, c.id ASC')
-			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$Request = $this->getRequest();
+		$json = json_decode($Request->getPost('json'), true);
+		$positions = $json['positions'];
 		
 		# Handle
-		if ( $search ) {
-			// Search
-			$Query = Doctrine::getTable('Content')->search($search,$ListQuery);
-			$ContentListArray = $Query->execute();
-		}
-		else {
-			// No Search
-			
-			# Fetch Crumbs
-			
-			// Check
-			if ( $content ) {
-				// We have a content as a root
-				$Content = $this->_getContent($content);
-				$ContentArray = $Content->toArray();
-				
-				// Fetch Crumbs
-				$ContentCrumbArray = array();
-				$Crumb = $Content;
-				while ( $Crumb->parent_id ) {
-					$Crumb = $Crumb->Parent;
-					$ContentCrumbArray[] = $Crumb->toArray();
-				}
-				
-				// Let us be the last crumb
-				$ContentCrumbArray[] = $ContentArray;
+		$data = array('success'=>false);
+		if ( !empty($positions) ) {
+			foreach ( $positions as $id => $position ) {
+				$Content = Doctrine::getTable('Content')->find($id);
+				$Content->position = $position;
+				$Content->save();
 			}
-			
-			
-			# Fetch list
-			
-			// Fetch
-			if( $Content ) {
-				// Children
-				$ContentListArray = $ListQuery->andWhere('cp.id = ?',$Content->id)->execute();
-			} else {
-				// Roots
-				$ContentListArray = $ListQuery->andWhere('NOT EXISTS (SELECT cpc.id FROM Content cpc WHERE cpc.id = c.parent_id)')->execute();
-			}
-			
-			// If nothing, use us
-			if ( !$ContentListArray && $ContentArray ) {
-				$ContentListArray = array($ContentArray);
-			}
-			
+			$data = array('success'=>true);
 		}
 		
-		# Apply
-		$this->view->ContentCrumbArray = $ContentCrumbArray;
-		$this->view->ContentListArray = $ContentListArray;
-		$this->view->ContentArray = $ContentArray;
+		# Done
+		$this->getHelper('json')->sendJson($data);
 	}
-
+	
 
 }

@@ -55,24 +55,25 @@
 			"class": "child"
 		}]
 	},{
-		"id": "event",
+		"id": "content-event",
 		"resource": "admin-event-view",
 		"label": "Events",
-		"controller": "event",
+		"controller": "content",
+		"action": "event",
 		"route": "admin",
 		"pages": [{
-			"id": "event-event-list",
+			"id": "content-event-list",
 			"resource": "admin-event-view",
 			"label": "Events",
-			"controller": "event",
+			"controller": "content",
 			"action": "event-list",
 			"route": "admin",
 			"class": "parent"
 		},{
-			"id": "event-event-edit",
+			"id": "content-event-edit",
 			"resource": "admin-event-edit",
 			"label": "&mdash; New Event",
-			"controller": "event",
+			"controller": "content",
 			"action": "event-new",
 			"route": "admin",
 			"class": "child"
