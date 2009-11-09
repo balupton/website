@@ -80,10 +80,6 @@ Content:
             notblank: true
             extra:
                 html: rich
-        system:
-            type: boolean
-            default: false
-            notnull: true
             
         avatar_id:
             type: integer(4)
@@ -118,6 +114,12 @@ Content:
             values: [none,pending,completed]
             default: none
             notblank: true
+            
+        type:
+            type: enum
+            values: [content,event]
+            default: content
+            notblank: true
     relations:
         Avatar:
             class: File
@@ -139,14 +141,20 @@ Content:
             refClass: ContentAndSubscriber
 
 Event:
-    actAs:
-        SoftDelete:
-        BalContentExtension:
+    inheritance:
+        extends: Content
+        type: column_aggregation
+        keyField: type
+        keyValue: event
     columns:
-        start_at:
+        event_start_at:
             type: timestamp
-        finish_at:
+        event_finish_at:
             type: timestamp
+        event_content:
+            type: string
+            extra:
+                html: rich
 
 ContentAndSubscriber:
     columns:

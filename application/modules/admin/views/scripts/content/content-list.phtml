@@ -1,11 +1,14 @@
-<div class="wrap">
+<?
+	$type = $this->type;
+	$Type = ucfirst($type);
+?><div class="wrap">
 	<!-- Edit Button -->
     <div id="icon-edit-pages" class="icon32">
         <br/>
     </div>
 	<!-- Header -->
     <h2>
-		<a href="<?=$this->url(array('controller'=>'content','action'=>'content-list'),'admin',true)?>">Content List</a>
+		<a href="<?=$this->url(array('controller'=>'content','action'=>'content-list'),'admin',true)?>"><?=$Type?> List</a>
 		<? foreach ( $this->ContentCrumbArray as $Content ): ?>
 			&raquo; <a href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
 		<? endforeach; ?>
@@ -15,7 +18,7 @@
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="page-search-input">
-                Search Content:
+                Search:
             </label>
             <input id="page-search-input" name="search" type="text" />
             <input value="Search Content" class="button" type="submit" />

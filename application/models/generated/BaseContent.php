@@ -14,7 +14,6 @@
  * @property string $tagstr
  * @property string $content
  * @property string $content_rendered
- * @property boolean $system
  * @property integer $avatar_id
  * @property integer $route_id
  * @property integer $parent_id
@@ -24,6 +23,10 @@
  * @property integer $send_all
  * @property integer $send_remaining
  * @property enum $send_status
+ * @property enum $type
+ * @property timestamp $event_start_at
+ * @property timestamp $event_finish_at
+ * @property string $event_content
  * @property File $Avatar
  * @property Route $Route
  * @property Content $Parent
@@ -102,11 +105,6 @@ abstract class BaseContent extends Doctrine_Record
               'html' => 'rich',
              ),
              ));
-        $this->hasColumn('system', 'boolean', null, array(
-             'type' => 'boolean',
-             'default' => false,
-             'notnull' => true,
-             ));
         $this->hasColumn('avatar_id', 'integer', 4, array(
              'type' => 'integer',
              'unsigned' => true,
@@ -158,6 +156,36 @@ abstract class BaseContent extends Doctrine_Record
              ),
              'default' => 'none',
              'notblank' => true,
+             ));
+        $this->hasColumn('type', 'enum', null, array(
+             'type' => 'enum',
+             'values' => 
+             array(
+              0 => 'content',
+              1 => 'event',
+             ),
+             'default' => 'content',
+             'notblank' => true,
+             ));
+        $this->hasColumn('event_start_at', 'timestamp', null, array(
+             'type' => 'timestamp',
+             ));
+        $this->hasColumn('event_finish_at', 'timestamp', null, array(
+             'type' => 'timestamp',
+             ));
+        $this->hasColumn('event_content', 'string', null, array(
+             'type' => 'string',
+             'extra' => 
+             array(
+              'html' => 'rich',
+             ),
+             ));
+
+        $this->setSubClasses(array(
+             'Event' => 
+             array(
+              'type' => 'event',
+             ),
              ));
     }
 

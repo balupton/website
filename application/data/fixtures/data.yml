@@ -11,7 +11,7 @@ Content:
         code: "welcome"
         title: "Welcome"
         description: "Home Page"
-        content: "[carousel]1,2,3[/carousel]<br/>[taglist/]<br/>[recentlist/]"
+        content: "[carousel]bloc-party,noite,pokemon[/carousel]<br/>[taglist/]<br/>[recentlist/]"
         Author: User_Mydance
         
     Content_Events:
@@ -26,8 +26,11 @@ Content:
         code: "bloc-party"
         title: "Bloc Party"
         description: "Event for Bloc Party"
-        content: "[event]1[/event]"
-        system: true
+        content: "[event]bloc-party[/event]"
+        type: event
+        event_start_at: "2009-03-14 21:14"
+        event_finish_at: "2009-03-14 23:14"
+        event_content: "Bloc Party are famous and kick ass"
         Parent: Content_Events
         
     Content_Articles:
@@ -65,14 +68,6 @@ Content:
         description: "New Shoes!"
         content: "some new shoes!"
         Parent: Content_Resources_Equipment
-
-Event:
-    Event_BlocParty:
-        id: 1
-        start_at: "2009-03-14 21:14"
-        finish_at: "2009-03-14 23:14"
-        content: "Bloc Party are famous and kick ass"
-        Content: Content_Events_BlocParty
 
 User:
     User_Balcms:

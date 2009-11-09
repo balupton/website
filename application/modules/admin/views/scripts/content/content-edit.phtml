@@ -3,19 +3,22 @@
 	$baseUrlBack = $this->bal()->getBaseUrl('back');
 	$mode = empty($this->ContentArray) || empty($this->ContentArray['id']) ? 'new' : 'edit';
 	$mode_edit = $mode === 'edit';
+	$type = $this->type;
+	$Type = ucfirst($type);
 ?>
 <div class="wrap">
 	<div id="icon-edit-pages" class="icon32">
 		<br/>
 	</div>
 	<h2>
-		<?=$mode_edit?'Editing':'Create New Content'?>
+		<?=$mode_edit?'Editing':'Create New '.$Type?>
 		<? if ( $mode_edit ) foreach ( $this->ContentCrumbArray as $Content ): ?>
 			&raquo; <a href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
 		<? endforeach; ?>
 	</h2>
 	<?=$this->message()->render()?>
 	<form action="" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="content[type]" value="<?=$type?>" />
 		<div class="metabox-holder has-right-sidebar">
 			<div id="side-info-column" class="inner-sidebar">
 				<div id='side-sortables' class='meta-box-sortables sidebar-boxes'>
@@ -230,17 +233,17 @@
 							$('#content-description').editor('simple');
 						</script>
 					</div>
-					<? if ( isset($this->EventArray) ): ?>
+					<? if ( $type === 'event' ): ?>
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Event Information</h3>
 						<div class="inside">
 							<p>
-								<label for="event-start-at">Start time:</label>
-								<input type="text" name="event[start_at]" id="event-start-at" value="<?=$this->EventArray['start_date']?>" />
+								<label for="content-event-start-at">Start time:</label>
+								<input type="text" name="content[event_start_at]" id="content-event-start-at" value="<?=$this->ContentArray['event_start_at']?>" />
 							<p>
 							<p>
-								<label for="event-finish-at">Finish time:</label>
-								<input type="text" name="event[finish_at]" id="event-finish-at" value="<?=$this->EventArray['finish_time']?>" />
+								<label for="content-event-finish-at">Finish time:</label>
+								<input type="text" name="content[event_finish_at]" id="content-event-finish-at" value="<?=$this->ContentArray['event_finish_at']?>" />
 							</p>
 						</div>
 					</div>

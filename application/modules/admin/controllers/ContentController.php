@@ -35,6 +35,14 @@ class Admin_ContentController extends Zend_Controller_Action {
 	public function eventAction ( ) {
 		return $this->_forward('event-list');
 	}
+
+	public function eventDeleteAction ( ) {
+		return $this->getHelper('redirector')->gotoRoute(array(
+			'controller'	=> 'content',
+			'action'		=> 'content-delete',
+			'type'			=> 'event'
+		), 'admin');
+	}
 	
 	public function contentDeleteAction ( ) {
 		# Prepare
@@ -55,9 +63,16 @@ class Admin_ContentController extends Zend_Controller_Action {
 		), 'admin', true);
 	}
 
+	public function eventEditAction ( ) {
+		return $this->getHelper('redirector')->gotoRoute(array(
+			'controller'	=> 'content',
+			'action'		=> 'content-edit',
+			'type'			=> 'event'
+		), 'admin');
+	}
+	
 	public function contentEditAction ( ) {
 		# Prepare
-		$this->registerMenu('content-content-list');
 		$Content = $ContentCrumbArray = $ContentArray = array();
 		
 		# Save
@@ -65,6 +80,8 @@ class Admin_ContentController extends Zend_Controller_Action {
 		if ( !$Content->id ){
 			return $this->_forward('content-new');
 		}
+		$type = $Content->type;
+		$this->registerMenu('content-'.$type.'-list');
 		
 		# Fetch
 		$ContentArray = $Content->toArray();
@@ -79,20 +96,30 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$ContentListQuery = Doctrine_Query::create()
 			->select('c.title, c.id, c.parent_id, c.position, cr.path')
 			->from('Content c, c.Route cr')
-			->where('c.enabled = true AND c.system = false')
+			->where('c.enabled = ? AND c.type = ?', array(true, 'content'))
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
 		$ContentListArray = array_tree($ContentListArray,'id','parent_id','level','position');
 		
 		# Apply
+		$this->view->type = $type;
 		$this->view->ContentCrumbArray = $ContentCrumbArray;
 		$this->view->ContentListArray = $ContentListArray;
 		$this->view->ContentArray = $ContentArray;
 	}
+
+	public function eventNewAction ( ) {
+		return $this->getHelper('redirector')->gotoRoute(array(
+			'controller'	=> 'content',
+			'action'		=> 'content-new',
+			'type'			=> 'event'
+		), 'admin');
+	}
 	
 	public function contentNewAction ( ) {
 		# Prepare
-		$this->registerMenu('content-content-edit');
+		$type = $this->_getParam('type', 'content');
+		$this->registerMenu('content-'.$type.'-edit');
 		$Content = $ContentCrumbArray = $ContentArray = array();
 	
 		# Save
@@ -105,8 +132,14 @@ class Admin_ContentController extends Zend_Controller_Action {
 			), 'admin', true);
 		}
 		
-		# Fetch
+		# Prepare
 		$Content->published_at = date('Y-m-d H:i:s', time());
+		if ( $type === 'event' ) {
+			$Content->event_start_at = date('Y-m-d H:i:s', time());
+			$Content->event_finish_at = date('Y-m-d H:i:s', time());
+		}
+		
+		# Fetch
 		$ContentArray = $Content->toArray();
 		$ContentCrumbArray[] = $ContentArray;
 		
@@ -119,85 +152,30 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$ContentListQuery = Doctrine_Query::create()
 			->select('c.title, c.id, c.parent_id, c.position, cr.path')
 			->from('Content c, c.Route cr')
-			->where('c.enabled = true AND c.system = false')
+			->where('c.enabled = ? AND c.type = ?', array(true, 'content'))
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
 		$ContentListArray = array_tree($ContentListArray,'id','parent_id','level','position');
 		
 		# Apply
+		$this->view->type = $type;
 		$this->view->ContentCrumbArray = $ContentCrumbArray;
 		$this->view->ContentListArray = $ContentListArray;
 		$this->view->ContentArray = $ContentArray;
 	}
 	
 	public function eventListAction ( ) {
-		# Prepare
-		$this->registerMenu('content-event-list');
-		$event = $this->_getParam('event', false);
-		$search = $this->_getParam('search', false);
-		$Event = $EventCrumbArray = $EventListArray = $EventArray = array();
-		
-		# Prepare
-		$ListQuery = Doctrine_Query::create()
-			->select('e.*, c.*, cr.*, ct.*, ca.*, cp.*')
-			->from('Event e, e.Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')
-			//->where('c.enabled = ?', true)
-			->orderBy('c.published_at DESC')
-			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
-		
-		# Handle
-		if ( $search ) {
-			// Search
-			$Query = Doctrine::getTable('Content')->search($search,$ListQuery);
-			$EventListArray = $Query->execute();
-		}
-		else {
-			// No Search
-			
-			# Fetch Crumbs
-			if ( $event ) {
-				// We have a content as a root
-				$Event = $this->_getEvent($event);
-				$EventArray = $Event->toArray();
-				
-				// Fetch Crumbs
-				$EventCrumbArray = array();
-				$Crumb = $Event;
-				while ( $Crumb->parent_id ) {
-					$Crumb = $Crumb->Parent;
-					$EventCrumbArray[] = $Crumb->toArray();
-				}
-				
-				// Let us be the last crumb
-				$EventCrumbArray[] = $EventArray;
-			}
-			
-			
-			# Fetch list
-			if( $Event ) {
-				// Children
-				$EventListArray = $ListQuery->andWhere('cp.id = ?',$Event->id)->execute();
-			} else {
-				// Roots
-				$EventListArray = $ListQuery->andWhere('NOT EXISTS (SELECT cpc.id FROM Content cpc WHERE cpc.id = c.parent_id)')->execute();
-			}
-			
-			// If nothing, use us
-			if ( !$EventListArray && $EventArray ) {
-				$EventListArray = array($EventArray);
-			}
-			
-		}
-		
-		# Apply
-		$this->view->EventCrumbArray = $EventCrumbArray;
-		$this->view->EventListArray = $EventListArray;
-		$this->view->EventArray = $EventArray;
+		return $this->getHelper('redirector')->gotoRoute(array(
+			'controller'	=> 'content',
+			'action'		=> 'content-list',
+			'type'			=> 'event'
+		), 'admin');
 	}
 	
 	public function contentListAction ( ) {
 		# Prepare
-		$this->registerMenu('content-content-list');
+		$type = $this->_getParam('type', 'content');
+		$this->registerMenu('content-'.$type.'-list');
 		$content = $this->_getParam('content', false);
 		$search = $this->_getParam('search', false);
 		$Content = $ContentCrumbArray = $ContentListArray = $ContentArray = array();
@@ -206,7 +184,7 @@ class Admin_ContentController extends Zend_Controller_Action {
 		$ListQuery = Doctrine_Query::create()
 			->select('c.*, cr.*, ct.*, ca.*, cp.*')
 			->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')
-			->where('c.enabled = ? AND c.system = ?', array(true,false))
+			->where('c.enabled = ? AND c.type = ?', array(true, $type))
 			->orderBy('c.position ASC, c.id ASC')
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
@@ -244,7 +222,10 @@ class Admin_ContentController extends Zend_Controller_Action {
 				$ContentListArray = $ListQuery->andWhere('cp.id = ?',$Content->id)->execute();
 			} else {
 				// Roots
-				$ContentListArray = $ListQuery->andWhere('NOT EXISTS (SELECT cpc.id FROM Content cpc WHERE cpc.id = c.parent_id)')->execute();
+				if ( $type === 'content' )
+					$ContentListArray = $ListQuery->andWhere('NOT EXISTS (SELECT cpc.id FROM Content cpc WHERE cpc.id = c.parent_id)')->execute();
+				else
+					$ContentListArray = $ListQuery->execute();
 			}
 			
 			// If nothing, use us
@@ -255,6 +236,7 @@ class Admin_ContentController extends Zend_Controller_Action {
 		}
 		
 		# Apply
+		$this->view->type = $type;
 		$this->view->ContentCrumbArray = $ContentCrumbArray;
 		$this->view->ContentListArray = $ContentListArray;
 		$this->view->ContentArray = $ContentArray;
@@ -280,7 +262,7 @@ class Admin_ContentController extends Zend_Controller_Action {
 		array_key_ensure($content_files, 'avatar', '');
 		
 		# Prepare
-		array_keep($content, array('code','content','description','parent','status','tags','title'));
+		array_keep($content, array('code','content','description','parent','status','tags','title','type'));
 		$content['tags'] .= ', '.$subscription['tags'];
 		$content['avatar'] = $content_files['avatar'];
 		
