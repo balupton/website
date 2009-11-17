@@ -113,7 +113,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		// Route
 		$config = new Zend_Config_Ini(CONFIG_PATH.'/routes.ini', 'production');
 		$frontController = Zend_Controller_Front::getInstance();
-		if ( defined('BASE_URL') ) $frontController->setBaseUrl(BASE_URL);
+		if ( defined('BASE_URL') ) {
+			$frontController->setBaseUrl(BASE_URL);
+		} else {
+			define('BASE_URL', $frontController->getBaseUrl());
+		}
     	$router = $frontController->getRouter();
 		$router->removeDefaultRoutes();
     	$router->addConfig($config, 'routes');
@@ -158,6 +162,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
 		// Done
 		return true;
+	}
+	
+	/**
+	 * Initialise our Config
+	 * @return
+	 */
+	protected function _initConfig () {
+		$GLOBALS['config'] = $this->getOptions();
 	}
 	
 	/**

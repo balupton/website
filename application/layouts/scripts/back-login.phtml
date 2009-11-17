@@ -1,0 +1,50 @@
+<?php
+	echo $this->doctype();
+	$baseUrl = $this->bal()->getBaseUrl();
+	$baseUrlBack = $this->bal()->getBaseUrl('back');
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <?=$this->headMeta()?>
+    <?=$this->headTitle()?>
+    <?
+    // CSS
+    $this->headLink()
+		//->appendStylesheet($baseUrl.'/back/styles/wp-admin.css')
+		->appendStylesheet($baseUrl.'/back/styles/login.css')
+		->appendStylesheet($baseUrl.'/back/styles/wpcon.css')
+		->appendStylesheet($baseUrl.'/back/styles/colors-fresh.css')
+		->appendStylesheet($baseUrl.'/back/styles/balcms.css')
+		->appendStylesheet($baseUrl.'/scripts/jquery-ui/css/cupertino/jquery-ui-1.7.2.custom.css');
+    // Output
+    echo $this->headLink();
+    ?>
+    <?=$this->headStyle()?>
+</head>
+<body class="login">
+    <? // headScript
+    echo $this->headScript()
+	    // JSON
+	    ->offsetSetFile(1,'http://www.json.org/json2.js')
+	    // jQuery
+	    ->offsetSetFile(2,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js' : $baseUrl.'/scripts/jquery-1.3.2.min.js')
+	    // UI
+	    ->offsetSetFile(3,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' : $baseUrl.'/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js')
+	    // Ajaxy
+		//->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.history.js')->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.ajaxy.js')
+		// TinyMCE
+		//->offsetSetFile(4,$baseUrl.'/scripts/tiny_mce/jquery.tinymce.dev.js')
+		//->offsetSetScript(100,'$.Editor.applyConfig("default",{script_url: "'.$baseUrl.'/scripts/tiny_mce/tiny_mce.js"});')
+	    // Application
+	    ->offsetSetFile(5,$baseUrl.'/scripts/jquery.autogrow.js')
+	    ->offsetSetFile(6,$baseUrl.'/scripts/jquery.sparkle.js')
+	    ->offsetSetFile(7,$baseUrlBack.'/scripts/cms.js')
+	    // GSFN
+	    ->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
+	    ->offsetSetScript(81,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
+	    // Configuration
+	    ->offsetSetScript(101,'$.Help.applyConfig("default",{icon: \'<img src="'.$baseUrl.'/images/help.png" alt="help" class="help-icon" />\'});')
+    ?>
+	<?=$this->layout()->content?>
+</body>
+</html>

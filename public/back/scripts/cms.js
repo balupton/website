@@ -1,19 +1,5 @@
-(function(){
+(function($){
 	// By Benjamin "balupton" Lupton (MIT Licenced) - unless specified otherwise
-	
-	// Debug
-	if (typeof console === 'undefined') {
-		console = typeof window.console !== 'undefined' ? window.console : {};
-	}
-	console.log			= console.log 			|| function(){};
-	console.debug		= console.debug 		|| console.log;
-	console.warn		= console.warn			|| console.log;
-	console.error		= console.error			|| function(){var args = [];for (var i = 0; i < arguments.length; i++) { args.push(arguments[i]); } alert(args.join("\n")); };
-	console.trace		= console.trace			|| console.log;
-	console.group		= console.group			|| console.log;
-	console.groupEnd	= console.groupEnd		|| console.log;
-	console.profile		= console.profile		|| console.log;
-	console.profileEnd	= console.profileEnd	|| console.log;
 	
 	// Core Prototypes
 	String.prototype.strip = String.prototype.strip || function(value){
@@ -109,10 +95,6 @@
 		}
 		return this;
 	}
-	$.fn.findAndSelf = function(selector){
-		var $this = $(this);
-		return $this.find(selector).andSelf().filter(selector);
-	};
 	$.fn.firstInput = function(){
 		return $(this).findAndSelf(':input:first');
 	}
@@ -142,9 +124,8 @@
 		return $(this).effect("highlight", {}, 3000);
 	};
 	
-	
 	// Sparkle: form-input-tip
-	$.Sparkle.extensions.add('hint', function(){
+	$.Sparkle.add('hint', function(){
 		var $this = $(this); var Sparkle = $.Sparkle;
 		// Events
 		var focus = function(){
@@ -181,16 +162,9 @@
 		// Done
 		return $this;
 	});
-	// Sparkle: autogrow
-	$.Sparkle.extensions.add('autogrow', function(){
-		var $this = $(this); var Sparkle = $.Sparkle;
-		// Fetch
-		var $inputs = $this.findAndSelf('textarea.autogrow,textarea.autosize').autogrow();
-		// Done
-		return $this;
-	});
+	
 	// Sparkle: delete warning
-	$.Sparkle.extensions.add('deletewarn', function(){
+	$.Sparkle.add('deletewarn', function(){
 		var $this = $(this); var Sparkle = $.Sparkle;
 		// Fetch
 		var $inputs = $this.findAndSelf('.delete-action').click(function(event){
@@ -204,48 +178,6 @@
 		// Done
 		return $this;
 	});
-	
-	// Sparkle
-	$(function(){
-		$(document.body).sparkle();
-	});
-	
-	// BalClass
-	$.BalClass = function(config){
-		this.configure(config);
-	};
-	$.BalClass.prototype = {
-		config: {
-			'default': {}
-		},
-		configure: function(config){
-			var Me = this;
-			Me.config = $.extend({},Me.config,config||{});
-			return Me;
-		},
-		applyConfig: function(name,config){
-			var Me = this;
-			$.extend(Me.config[name],config||{});
-			return Me;
-		},
-		getConfig: function(name,config){
-			var Me = this;
-			if ( typeof name !== 'string' ) {
-				if ( typeof config === 'undefined' ) {
-					config = name;
-				}
-				name = 'default';
-			}
-			if ( typeof config !== 'object' ) {
-				config = {};
-			}
-			return $.extend({}, Me.config[name]||{}, config||{});
-		},
-		getConfigWithDefault: function(name,config){
-			var Me = this;
-			return Me.getConfig('default',Me.getConfig(name,config));
-		}
-	};
 	
 	// InlineEdit
 	$.InlineEdit = new $.BalClass({
@@ -441,4 +373,4 @@
 		return $this;
 	}
 	
-})();
+})(jQuery);

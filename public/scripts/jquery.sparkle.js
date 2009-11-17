@@ -29,132 +29,293 @@
  * @example Visit {@link http://jquery.com/plugins/project/jquerylightbox_bal} for more information.
  */
 
-// -----------------
-// Sparkle
-
-$.Sparkle = {
-	options: {
-		dateformat: 'yy-mm-dd',
-		timeconvention: 24
-	},
-	extensions: {
-		listArray: [],
-		listObject: {},
-		add: function(key, extension){
-			var Sparkle = $.Sparkle;
-			if ( typeof extension === 'undefined' || typeof key !== 'string' ) {
-				if ( typeof key === 'object' ) {
-					// Series
-					for (var i in key) {
-						var extension = key[i];
-						Sparkle.extensions.add(i, extension);
-					}
-				} else {
-					// Si Nombre
-					Sparkle.extensions.listArray.push(key);
-				}
-			} else {
-				// Defined
-				Sparkle.extensions.listObject[key] = extension;
-			}
-			// Done
+(function($){
+	
+	// Debug
+	if (typeof console === 'undefined') {
+		console = typeof window.console !== 'undefined' ? window.console : {};
+	}
+	console.log			= console.log 			|| function(){};
+	console.debug		= console.debug 		|| console.log;
+	console.warn		= console.warn			|| console.log;
+	console.error		= console.error			|| function(){var args = [];for (var i = 0; i < arguments.length; i++) { args.push(arguments[i]); } alert(args.join("\n")); };
+	console.trace		= console.trace			|| console.log;
+	console.group		= console.group			|| console.log;
+	console.groupEnd	= console.groupEnd		|| console.log;
+	console.profile		= console.profile		|| console.log;
+	console.profileEnd	= console.profileEnd	|| console.log;
+	
+	
+	// Prototypes
+	$.fn.findAndSelf = $.fn.findAndSelf || function(selector){
+		var $this = $(this);
+		return $this.find(selector).andSelf().filter(selector);
+	};
+	
+	// BalClass
+	$.BalClass = $.BalClass || function(config){
+		this.construct(config);
+	};
+	$.extend($.BalClass.prototype, {
+		config: {
+			'default': {}
+		},
+		construct: function(config){
+			this.configure(config);
 			return true;
 		},
-		cycle: function(obj){
+		configure: function(config){
+			var Me = this;
+			Me.config = $.extend({},Me.config,config||{});
+			return Me;
+		},
+		addConfig: function(name, config){
+			var Me = this;
+			if ( typeof config === 'undefined' ) {
+				if ( typeof name === 'object' ) {
+					// Series
+					for ( var i in name ) {
+						Me.applyConfig(i, name[i]);
+					}
+				}
+				return false;
+			} else if ( typeof config === 'object' ) {
+				// Single
+				Me.applyConfig(name, config);
+			}
+			return Me;
+		},
+		applyConfig: function(name,config){
+			var Me = this;
+			$.extend(Me.config[name],config||{});
+			return Me;
+		},
+		getConfig: function(name){
+			var Me = this;
+			if ( typeof name !== 'string' ) {
+				return this.config;
+			}
+			return this.getConfigWith(name);
+		},
+		getConfigWith: function(name,config){
+			var Me = this;
+			if ( typeof name !== 'string' ) {
+				if ( typeof config === 'undefined' ) {
+					config = name;
+				}
+				name = 'default';
+			}
+			if ( typeof config !== 'object' ) {
+				config = {};
+			}
+			return $.extend({}, Me.config[name]||{}, config||{});
+		},
+		getConfigWithDefault: function(name,config){
+			var Me = this;
+			return Me.getConfigWith('default',Me.getConfigWith(name,config));
+		}
+	});
+	
+	// SparkleClass
+	$.SparkleClass = function(config){
+		this.construct(config);
+	};
+	$.extend($.SparkleClass.prototype, $.BalClass.prototype, {
+		add: function(name, func, config) {
 			var Sparkle = $.Sparkle;
-			for ( var i = 0, n = Sparkle.extensions.listArray.length; i<n; ++i ) {
-				var extension = Sparkle.extensions.listArray[i];
-				extension.apply(obj, [$.Sparkle]);
+			if ( name === 'object' ) {
+				// Series
+				for ( var i in name ) {
+					Sparkle.add(i, name[i]);
+				}
+			} else {
+				// Individual
+				var Extension = {
+					config: {},
+					extension: false
+				};
+				// Discover
+				if ( typeof func === 'object' && typeof func.config !== 'undefined' ) {
+					Extension.config = func.config;
+					Extension.extension = func.extension;
+				} else {
+					Extension.extension = func;
+				}
+				// Apply
+				Sparkle.addConfig(name, Extension);
 			}
-			for ( var i in Sparkle.extensions.listObject ) {
-				var extension = Sparkle.extensions.listObject[i];
-				extension.apply(obj, [$.Sparkle]);
+			return true;
+		},
+		fn: function(extension){
+			var $this = $(this); var Sparkle = $.Sparkle;
+			if ( extension ) {
+				// Individual
+				Sparkle.trigger.apply($this, [extension]);
+			} else {
+				// Series
+				Sparkle.cycle.apply($this, []);
 			}
-			// Done
+			return $this;
+		},
+		cycle: function(){
+			var $this = $(this); var Sparkle = $.Sparkle;
+			var Extensions = Sparkle.getConfig();
+			for ( extension in Extensions ) {
+				Sparkle.trigger.apply($this, [extension]);
+			}
+			return $this;
+		},
+		trigger: function(extension){
+			var $this = $(this); var Sparkle = $.Sparkle;
+			var Extension = Sparkle.getConfigWithDefault(extension);
+			if ( typeof Extension.extension !== 'undefined' ) {
+				// We are not just a config object but an actual extension
+				return Extension.extension.apply($this, [Sparkle, Extension.config, Extension]);
+			}
+			return false;
+		},
+		construct: function(config){
+			var Sparkle = this;
+			Sparkle.configure(config);
+			$(function(){
+				$.fn.sparkle = Sparkle.fn;
+				$(document.body).sparkle();
+			});
 			return true;
 		}
-	},
-	fn: function(extension){
-		var Sparkle = $.Sparkle;
-		if ( extension ) {
-			// Individual
-			Sparkle.extensions.listObject[extension].apply(obj, [$.Sparkle]);
-		} else {
-			// Series
-			Sparkle.extensions.cycle(this);
-		}
-		return this;
-	},
-	construct: function(){
-		var Sparkle = $.Sparkle;
-		$.fn.sparkle = Sparkle.fn;
-		// Done
-		return true;
-	}
-};
-$.Sparkle.construct();
-
-// -----------------
-// Effects
-
-$.Sparkle.extensions.add({
-	'date': function(){
-		var $this = $(this); var Sparkle = $.Sparkle;
-		var $item = $this.find('.jquery-date');
-		return typeof $item.datepicker === 'undefined' ? $item : $item.datepicker({
-			dateFormat: Sparkle.options.dateformat
-		});
-	},
-	'time': function(){
-		var $this = $(this); var Sparkle = $.Sparkle;
-		var $item = $this.find('.jquery-time');
-		return typeof $item.timepicker === 'undefined' ? $item : $item.timepicker({
-			convention: Sparkle.options.timeconvention
-		});
-	},
-	'hide-if-empty': function(){
-		var $this = $(this); var Sparkle = $.Sparkle;
-		return $this.find('.jquery-hide-if-empty:empty').hide();
-	},
-	'hide': function(){
-		var $this = $(this); var Sparkle = $.Sparkle;
-		return $this.find('.jquery-hide').hide();
-	},
-	'subtle': function(){
-		var $this = $(this);
-		var $suble = $this.find('.sparkle-subtle');
-		return $suble.css({
-			'opacity': 0.5,
-			'font-size': '80%'
-		}).hover(function(){
-			// Over
-			$(this).stop(true,false).animate({
-				'opacity': 1
-			}, 200);
-		},function(){
-			// Out
-			$(this).stop(true,false).animate({
-				'opacity': 0.5
-			}, 400);
-		});
-	},
-	'panelshower': function(){
-		var $this = $(this); var Sparkle = $.Sparkle;
-		var $switches = $this.find('.jquery-panelshower-switch');
-		var $panels = $this.find('.jquery-panelshower-panel');
-		var panelswitch = function(){
-			var $switch = $(this);
-			var $panel = $switch.siblings('.jquery-panelshower-panel:first');
-			var value = $switch.val();
-			var show = $switch.is(':checked,:selected') && !(!value || value === 0 || value === '0' || value === 'false' || value === false || value === 'no' || value === 'off');
-			if ( show ) {
-				$panel.fadeIn(200);
-			} else {
-				$panel.fadeOut(200);
+	});
+	
+	// Sparkle
+	$.Sparkle = new $.SparkleClass({
+		'date': {
+			config: {
+				selector: '.sparkle-date',
+				dateformat: 'yy-mm-dd'
+			},
+			extension: function(Sparkle, config){
+				var $this = $(this);
+				var $item = $this.findAndSelf(config.selector);
+				return typeof $item.datepicker === 'undefined' ? $item : $item.datepicker({
+					dateFormat: config.dateformat
+				});
 			}
-		};
-		$switches.click(panelswitch);
-		$panels.hide();
-	}
-});
-
+		},
+		'time': {
+			config: {
+				selector: '.sparkle-time',
+				timeconvention: 24
+			},
+			extension: function(Sparkle, config){
+				var $this = $(this);
+				var $item = $this.findAndSelf(config.selector);
+				return typeof $item.timepicker === 'undefined' ? $item : $item.timepicker({
+					convention: config.timeconvention
+				});
+			}
+		},
+		'hide-if-empty': {
+			config: {
+				selector: '.sparkle-hide-if-empty:empty'
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this);
+				return $this.findAndSelf(config.selector).hide();
+			}
+		},
+		'hide': {
+			config: {
+				selector: '.sparkle-hide'
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this);
+				return $this.findAndSelf(config.selector).hide();
+			}
+		},
+		'subtle': {
+			config: {
+				selector: '.sparkle-subtle',
+				css: {
+					'font-size': '80%'
+				},
+				inSpeed: 200,
+				inCss: {
+					'opacity': 1
+				},
+				outSpeed: 400,
+				outCss: {
+					'opacity': 0.5
+				}
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this);
+				var $suble = $this.findAndSelf(config.selector);
+				return $suble.css(config.css).css(config.start).hover(function() {
+					// Over
+					$(this).stop(true, false).animate(config.inCss, config.inSpeed);
+				}, function() {
+					// Out
+					$(this).stop(true, false).animate(config.outCss, config.outSpeed);
+				});
+			}
+		},
+		'panelshower': {
+			config: {
+				selectorSwitch: '.sparkle-panelshower-switch',
+				selectorPanel: '.sparkle-panelshower-panel',
+				inSpeed: 200,
+				outSpeed: 200
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this);
+				var $switches = $this.findAndSelf(config.selectorSwitch);
+				var $panels = $this.findAndSelf(config.selectorPanel);
+				var panelswitch = function() {
+					var $switch = $(this);
+					var $panel = $switch.siblings(config.selectorPanel).filter(':first');
+					var value = $switch.val();
+					var show = $switch.is(':checked,:selected') && !(!value || value === 0 || value === '0' || value === 'false' || value === false || value === 'no' || value === 'off');
+					if (show) {
+						$panel.fadeIn(config.inSpeed);
+					}
+					else {
+						$panel.fadeOut(config.outSpeed);
+					}
+				};
+				$switches.click(panelswitch);
+				$panels.hide();
+			}
+		},
+		'autogrow': {
+			config: {
+				selector: 'textarea.autogrow,textarea.autosize'
+			},
+			extension: function(Sparkle, config){
+				var $this = $(this);
+				return $this.findAndSelf(config.selector).autogrow();
+			}
+		},
+		'gsfn': {
+			config: {
+				selector: '.gsfn'
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this);
+				// Apply Action
+				$(function() {
+					// Apply
+					$this.findAndSelf(config.selector).click(function(event) {
+						if ( typeof GSFN_feedback_widget === 'undefined' ) {
+							console.warn('GSFN has failed to load.');
+							return false;
+						}
+						GSFN_feedback_widget.show();
+						//event.stopPropagation();
+						event.preventDefault();
+						return false;
+					});
+				});
+			}
+		}
+	});
+	
+})(jQuery);

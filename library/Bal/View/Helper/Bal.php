@@ -28,5 +28,16 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 		}
 		return $prefix.$baseUrl.$suffix;
 	}
-
+	
+	public function config ( $confs = null ) {
+		global $config;
+		if ( !$confs ) return $config;
+		$confs = explode('.',$confs);
+		$value = $config;
+		foreach ( $confs as $conf ) {
+			if ( !array_key_exists($conf, $value) ) return null;
+			$value = $value[$conf];
+		}
+		return $value;
+	}
 }
