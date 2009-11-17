@@ -1,30 +1,30 @@
 {
 	"favorites": [{
-		"id": "content-new",
+		"id": "admin-content-new",
 		"resource": "admin-content-edit",
 		"label": "New Content",
-		"controller": "content",
+		"controller": "admin",
 		"action": "content-new",
 		"route": "admin"
 	},{
-		"id": "event-new",
+		"id": "admin-event-new",
 		"resource": "admin-event-edit",
 		"label": "New Event",
-		"controller": "event",
+		"controller": "admin",
 		"action": "event-new",
 		"route": "admin"
 	},{
-		"id": "media-new",
+		"id": "admin-media-new",
 		"resource": "admin-content-edit",
 		"label": "New Media",
-		"controller": "media",
+		"controller": "admin",
 		"action": "media-new",
 		"route": "admin"
 	},{
-		"id": "user-new",
+		"id": "admin-user-new",
 		"resource": "admin-user-edit",
 		"label": "New User",
-		"controller": "user",
+		"controller": "admin",
 		"action": "user-new",
 		"route": "admin"
 	}],
@@ -32,87 +32,87 @@
 		"label": "---",
 		"uri": "#"
 	},{
-		"id": "content",
+		"id": "admin-content",
 		"resource": "admin-content-view",
 		"label": "Content",
-		"controller": "content",
+		"controller": "admin",
 		"route": "admin",
 		"pages": [{
-			"id": "content-content-list",
+			"id": "admin-content-list",
 			"resource": "admin-content-view",
 			"label": "Content",
-			"controller": "content",
+			"controller": "admin",
 			"action": "content-list",
 			"route": "admin",
 			"class": "parent"
 		},{
-			"id": "content-content-edit",
+			"id": "admin-content-edit",
 			"resource": "admin-content-edit",
 			"label": "&mdash; New Content",
-			"controller": "content",
+			"controller": "admin",
 			"action": "content-new",
 			"route": "admin",
 			"class": "child"
 		}]
 	},{
-		"id": "content-event",
+		"id": "admin-event",
 		"resource": "admin-event-view",
 		"label": "Events",
-		"controller": "content",
+		"controller": "admin",
 		"action": "event",
 		"route": "admin",
 		"pages": [{
-			"id": "content-event-list",
+			"id": "admin-event-list",
 			"resource": "admin-event-view",
 			"label": "Events",
-			"controller": "content",
+			"controller": "admin",
 			"action": "event-list",
 			"route": "admin",
 			"class": "parent"
 		},{
-			"id": "content-event-edit",
+			"id": "admin-event-edit",
 			"resource": "admin-event-edit",
 			"label": "&mdash; New Event",
-			"controller": "content",
+			"controller": "admin",
 			"action": "event-new",
 			"route": "admin",
 			"class": "child"
 		}]
 	},{
-		"id": "subscription",
+		"id": "admin-subscription",
 		"resource": "admin-content-edit",
 		"label": "Subscriptions",
-		"controller": "subscription",
+		"controller": "admin",
 		"route": "admin",
 		"pages": [{
-			"id": "subscription-subscriber-list",
+			"id": "admin-subscriber-list",
 			"resource": "admin-content-view",
 			"label": "Subscribers",
-			"controller": "subscription",
+			"controller": "admin",
 			"action": "subscriber-list",
 			"route": "admin",
 			"class": "parent"
 		}]
 	},{
-		"id": "media",
+		"id": "admin-media",
 		"resource": "admin-content-view",
 		"label": "Media",
-		"controller": "media",
+		"controller": "admin",
 		"route": "admin",
 		"class": "menu-top-last",
 		"pages": [{
-			"id": "media-media-view",
+			"id": "admin-media-view",
 			"resource": "admin-content-view",
 			"label": "Media",
-			"controller": "media",
+			"controller": "admin",
 			"action": "media-list",
 			"route": "admin",
 			"class": "parent"
 		},{
-			"id": "media-media-edit",
+			"id": "admin-media-edit",
 			"resource": "admin-content-edit",
 			"label": "&mdash; New Media",
-			"controller": "media",
+			"controller": "admin",
 			"action": "media-new",
 			"route": "admin",
 			"class": "child"

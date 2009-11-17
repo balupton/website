@@ -22,8 +22,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 * @return
 	 */
 	protected function _initMail ( ) {
+		// Prepare
+		$this->bootstrap('config');
+		// Load Config
+		global $config;
+		$mail = $config['mail'];
 		// Fetch
-		$mail = $this->getOption('mail');
 		$transport = $mail['transport'];
 		$smtp = $transport['smtp'];
 		$address = $smtp['address']; unset($smtp['address']);
@@ -41,8 +45,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initLog ( ) {
 		// Prepare
 		$this->bootstrap('autoload');
+		$this->bootstrap('config');
+		// Load Config
+		global $config;
+		$mail = $config['mail'];
 		// Mail
-		$mail = $this->getOption('mail');
 		$Mail = new Zend_Mail();
 		$Mail->setFrom($mail['from']['address'], $mail['from']['name']);
 		$Mail->addTo($mail['log']['address'], $mail['log']['name']);
@@ -91,14 +98,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initPresentation () {
 		// Prepare
 		$this->bootstrap('view');
+		$this->bootstrap('config');
+		// Load config
+		global $config;
 		// View Helpers
 		$view = $this->getResource('view');
 		$view->addHelperPath('Bal/View/Helper/', 'Bal_View_Helper');
 		$view->addHelperPath(APPLICATION_PATH.'/modules/admin/views/helpers', 'Content');
 		$view->addScriptPath(APPLICATION_PATH.'/modules/admin/views/scripts');
 		// Widgets
-		$widgetConfig = $this->getOption('bal'); $widgetConfig = $widgetConfig['widget'];
-		$view->getHelper('widget')->addWidgets($widgetConfig);
+		$view->getHelper('widget')->addWidgets($config['bal']['widget']);
 		// Done
 		return true;
 	}
@@ -109,9 +118,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */
 	protected function _initRoutes () {
 		// Prepare
+		$this->bootstrap('defaults');
 		$this->bootstrap('doctrine');
 		// Route
-		$config = new Zend_Config_Ini(CONFIG_PATH.'/routes.ini', 'production');
+		$routeConfig = new Zend_Config_Ini(CONFIG_PATH.'/routes.ini', 'production');
 		$frontController = Zend_Controller_Front::getInstance();
 		if ( defined('BASE_URL') ) {
 			$frontController->setBaseUrl(BASE_URL);
@@ -120,7 +130,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		}
     	$router = $frontController->getRouter();
 		$router->removeDefaultRoutes();
-    	$router->addConfig($config, 'routes');
+    	$router->addConfig($routeConfig, 'routes');
     	// Location
     	// $resources = $this->getOption('resources');
     	// $frontController->addModuleDirectory($resources['frontController']['moduleDirectory']);
@@ -148,8 +158,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */
 	protected function _initIndex ( ) {
 		// Prepare
-		$config = array();
-		$config['data'] = $this->getOption('data');
+		$this->bootstrap('config');
+		
+		// Load Config
+		global $config;
 		
 		// Check
 		if ( empty($config['data']['index_path']) ) {
@@ -169,7 +181,34 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 * @return
 	 */
 	protected function _initConfig () {
+		// Apply
 		$GLOBALS['config'] = $this->getOptions();
+		// Done
+		return true;
+	}
+	
+	/**
+	 * Initialise our Defaults
+	 * @return
+	 */
+	protected function _initDefaults ( ) {
+		// Prepare
+		$this->bootstrap('autoload');
+		
+		// Load Front Controller
+		$frontController = Zend_Controller_Front::getInstance();
+		
+		// Apply
+		$frontController
+        	//->setDefaultModule('cms')
+        	->setDefaultControllerName('front')
+        	->setDefaultAction('index');
+        
+        // Module Specific Error Controllers
+		$frontController->registerPlugin(new Bal_Controller_Plugin_ErrorControllerSelector());
+		
+        // Done
+        return true;
 	}
 	
 	/**
@@ -178,17 +217,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 * @return
 	 */
 	protected function _initDoctrine () {
+		// Prepare
 		$this->bootstrap('autoload');
+		$this->bootstrap('config');
+		
+		// Load Config
+		global $config;
 
 		// Load Doctrine
 	    require_once 'Doctrine.php';
 	    $Loader = Zend_Loader_Autoloader::getInstance();
 	    $Loader->pushAutoloader(array('Doctrine', 'autoload'));
-
-	    // Get Config
-	    $config = array();
-	    $config['data'] = $this->getOption('data');
-
+		
 	 	// Version Handle
 		$version_1_2 = version_compare('1.1', Doctrine::VERSION, '<');
 		

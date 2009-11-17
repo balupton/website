@@ -111,6 +111,8 @@ class Bal_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 		// Prepare
 		$this->_setRequestKeys();
 		$values = parent::match($path, $partial);
+		//$frontController = Zend_Controller_Front::getInstance();
+		//$Request = $frontController->getRequest();
 		
 		// Get defaults and options
 		$options = $this->_getOptions();
@@ -171,7 +173,8 @@ class Bal_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 			throw new Zend_Controller_Router_Exception('Route type [' . $type . '] has no configuration.');
 		}
 		$routeType = $options['routeTypes'][$type];
-		$module = !empty($routeType['module']) ? $routeType['module'] : null;
+		$defaultRouteType = $options['routeTypes']['default'];
+		$module = !empty($routeType['module']) ? $routeType['module'] : $defaultRouteType['module'];
 		$controller = $routeType['controller'];
 		$action = $routeType['action'];
 		
