@@ -1,0 +1,138 @@
+<?
+	$baseUrl = $this->bal()->getBaseUrl();
+	$baseUrlBack = $this->bal()->getBaseUrl('back');
+?>
+<div class="wrap">
+	<form action="<?=$this->url(array('action'=>'media-list'),'admin',true)?>" method="post" enctype="multipart/form-data">
+		<!-- Edit Button -->
+	    <div id="icon-upload" class="icon32">
+	        <br/>
+	    </div>
+		<!-- Header -->
+	    <h2>
+			Media Library
+			<a class="button add-new-h2" id="media-add">Add New</a>
+			<input type="file" id="media-file" name="media" class="hide" />
+			<input type="submit" id="media-submit" class="hide" />
+			<script type="text/javascript">
+				$(function(){
+					var $file = $('#media-file'),
+						$submit = $('#media-submit'),
+						$add = $('#media-add');
+					$file.change(function(){
+						if ( $file.val() ) $submit.trigger('click');
+					});
+					var width = $add.width();
+					$file.css('opacity',0).removeClass('hide').width(width+'px').css('margin-left',-width+'px');
+				});
+			</script>
+		</h2>
+		<!-- Search -->
+        <p class="search-box">
+            <label class="screen-reader-text" for="page-search-input">
+                Search:
+            </label>
+            <input id="page-search-input" name="search" type="text" />
+            <input value="Search" class="button" type="submit" />
+        </p>
+        <div class="clear">
+        </div>
+		<!-- Content Table -->
+        <table class="widefat page fixed" cellspacing="0">
+        	<!-- Content Table: Heading -->
+            <thead>
+                <tr>
+                    <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <input type="checkbox">
+                    </th>-->
+                    <th scope="col" class="manage-column column-icon" />
+                    <th scope="col" class="manage-column column-media" style="">
+                        File
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        Filename
+                    </th>
+                    <th scope="col" class="manage-column column-tags" style="">
+                        Size
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        Author
+                    </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <input type="checkbox">
+                    </th>-->
+                    <th scope="col" class="manage-column column-icon" />
+                    <th scope="col" class="manage-column column-media" style="">
+                        File
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        Filename
+                    </th>
+                    <th scope="col" class="manage-column column-tags" style="">
+                        Size
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        Author
+                    </th>
+                </tr>
+            </tfoot>
+			<!-- Content Table: Content -->
+            <tbody id="subscriber-list">
+            	<? foreach ( $this->MediaListArray as $Media ): ?>
+            	<tr id="media-<?=$Media['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
+					<td class="column-icon media-icon">
+						<a title="Edit “Invoice_v.0.2.2”" href="media.php?action=edit&amp;attachment_id=49">
+							<? if ( $Media['type'] === 'image' ) : ?>
+								<img height="60" title="n206700536_30532208_8076 copy" alt="" class="attachment-80x60" src="<?=$baseUrl.$Media['url']?>?w=59"/>
+							<? else: ?>
+								<img width="46" height="60" title="Invoice_v.0.2.2" alt="" class="attachment-80x60" src="<?=$baseUrlBack?>/images/files/<?=$Media['type']?>.png"/>
+							<? endif; ?>
+						</a>
+					</td>
+					<td class="media column-media">
+						<strong><a title="Edit “Invoice_v.0.2.2”" href="http://balupton.wordpress.com/wp-admin/media.php?action=edit&amp;attachment_id=49">
+							<?=$Media['title']?>
+						</a></strong>
+						<br/>
+						<?=$Media['humantype']?>
+						<p></p>
+						<div class="row-actions">
+							<span class="edit">
+								<a href="http://balupton.wordpress.com/wp-admin/media.php?action=edit&amp;attachment_id=49">Edit</a> |
+							</span>
+							<span class="delete">
+								<a href="post.php?action=trash&amp;post=49&amp;_wpnonce=7d61d538f5" class="submitdelete">Delete</a> |
+							</span>
+							<span class="view">
+								<a rel="permalink" title="View “Media Library”" href="http://balupton.wordpress.com/?attachment_id=49">View</a>
+							</span>
+						</div>
+					</td>
+                    <td class="tags column-author">
+                    	<?=filesize_human($Media['code'])?>
+                    </td>
+                    <td class="tags column-tags">
+                    	<?=filesize_human($Media['size'])?>
+                    </td>
+                    <td class="author column-author"><?
+                        if ( empty($Media['Author']) ) :
+                        	echo 'Unkown';
+                        else:
+                        	$author = $Media['Author']['displayname'];
+                        	$author_url = $this->url(array(
+                        		'action'=>'media-list',
+                        		'search'=>$author
+                        	), 'admin', true);
+                        	echo '<a href="'.$author_url.'" title="View all media by '.$author.'">'.$author.'</a>';
+                    	endif;
+                    ?></td>
+				</tr>
+				<? endforeach; ?>
+            </tbody>
+        </table>
+    </form>
+</div>

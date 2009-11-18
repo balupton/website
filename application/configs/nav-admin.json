@@ -3,28 +3,24 @@
 		"id": "admin-content-new",
 		"resource": "admin-content-edit",
 		"label": "New Content",
-		"controller": "admin",
 		"action": "content-new",
 		"route": "admin"
 	},{
 		"id": "admin-event-new",
 		"resource": "admin-event-edit",
 		"label": "New Event",
-		"controller": "admin",
 		"action": "event-new",
 		"route": "admin"
 	},{
 		"id": "admin-media-new",
 		"resource": "admin-content-edit",
 		"label": "New Media",
-		"controller": "admin",
 		"action": "media-new",
 		"route": "admin"
 	},{
 		"id": "admin-user-new",
 		"resource": "admin-user-edit",
 		"label": "New User",
-		"controller": "admin",
 		"action": "user-new",
 		"route": "admin"
 	}],
@@ -35,13 +31,12 @@
 		"id": "admin-content",
 		"resource": "admin-content-view",
 		"label": "Content",
-		"controller": "admin",
+		"action": "content",
 		"route": "admin",
 		"pages": [{
 			"id": "admin-content-list",
 			"resource": "admin-content-view",
 			"label": "Content",
-			"controller": "admin",
 			"action": "content-list",
 			"route": "admin",
 			"class": "parent"
@@ -49,7 +44,6 @@
 			"id": "admin-content-edit",
 			"resource": "admin-content-edit",
 			"label": "&mdash; New Content",
-			"controller": "admin",
 			"action": "content-new",
 			"route": "admin",
 			"class": "child"
@@ -58,14 +52,12 @@
 		"id": "admin-event",
 		"resource": "admin-event-view",
 		"label": "Events",
-		"controller": "admin",
 		"action": "event",
 		"route": "admin",
 		"pages": [{
 			"id": "admin-event-list",
 			"resource": "admin-event-view",
 			"label": "Events",
-			"controller": "admin",
 			"action": "event-list",
 			"route": "admin",
 			"class": "parent"
@@ -73,7 +65,6 @@
 			"id": "admin-event-edit",
 			"resource": "admin-event-edit",
 			"label": "&mdash; New Event",
-			"controller": "admin",
 			"action": "event-new",
 			"route": "admin",
 			"class": "child"
@@ -82,13 +73,12 @@
 		"id": "admin-subscription",
 		"resource": "admin-content-edit",
 		"label": "Subscriptions",
-		"controller": "admin",
+		"action": "subscription",
 		"route": "admin",
 		"pages": [{
 			"id": "admin-subscriber-list",
 			"resource": "admin-content-view",
 			"label": "Subscribers",
-			"controller": "admin",
 			"action": "subscriber-list",
 			"route": "admin",
 			"class": "parent"
@@ -97,14 +87,13 @@
 		"id": "admin-media",
 		"resource": "admin-content-view",
 		"label": "Media",
-		"controller": "admin",
+		"action": "media",
 		"route": "admin",
 		"class": "menu-top-last",
 		"pages": [{
 			"id": "admin-media-view",
 			"resource": "admin-content-view",
 			"label": "Media",
-			"controller": "admin",
 			"action": "media-list",
 			"route": "admin",
 			"class": "parent"
@@ -112,7 +101,6 @@
 			"id": "admin-media-edit",
 			"resource": "admin-content-edit",
 			"label": "&mdash; New Media",
-			"controller": "admin",
 			"action": "media-new",
 			"route": "admin",
 			"class": "child"

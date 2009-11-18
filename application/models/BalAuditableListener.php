@@ -61,7 +61,7 @@ class BalAuditableListener extends Doctrine_Record_Listener {
 		$created_column = $this->_options['created_at']['name'];
 		$published_column = $this->_options['published_at']['name'];
 		// Apply
-		if ( empty($Invoker->$published_column) ) {
+		if ( empty($Invoker->$published_column) && !$this->_options['published_at']['disabled'] ) {
 			$Invoker->$published_column = $Invoker->$created_column;
 		}
 		// Done

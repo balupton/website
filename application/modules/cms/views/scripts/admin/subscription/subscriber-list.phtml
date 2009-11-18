@@ -8,7 +8,7 @@
 		Subscriber List
 	</h2>
     <!-- Filters -->
-    <form id="posts-filter" action="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'admin',true)?>" method="get">
+    <form id="posts-filter" action="<?=$this->url(array('action'=>'subscriber-list'),'admin',true)?>" method="get">
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="page-search-input">
@@ -57,7 +57,7 @@
 			<!-- Content Table: Content -->
             <tbody id="subscriber-list">
             	<? foreach ( $this->SubscriberListArray as $Subscriber ): ?>
-                <tr id="subscriber-<?=$Subscriber['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?> iedit">
+                <tr id="subscriber-<?=$Subscriber['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
                     <td class="title column-title">
                         <?=$Subscriber['email']?>
                     </td>
@@ -72,7 +72,6 @@
                         	foreach ( $Subscriber['Tags'] as $Tag ) {
                         		$tag = ucfirst($Tag['name']);
 	                        	$tag_url = $this->url(array(
-	                        		'controller'=>'subscription',
 	                        		'action'=>'subscriber-list',
 	                        		'search'=>$tag
 	                        	), 'admin', true);

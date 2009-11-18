@@ -41,6 +41,10 @@ class Cms_AdminController extends Zend_Controller_Action {
 	# SUBSCRIPTION
 	
 
+	public function subscriptionAction ( ) {
+		$this->_forward('subscriber-list');
+	}
+
 	public function subscriberListAction ( ) {
 		# Prepare
 		$this->registerMenu('admin-subscriber-list');
@@ -62,11 +66,153 @@ class Cms_AdminController extends Zend_Controller_Action {
 		
 		# Apply
 		$this->view->SubscriberListArray = $SubscriberListArray;
+		
+		# Render
+		$this->render('subscription/subscriber-list');
 	}
 
 	# ========================
 	# MEDIA
 	
+
+	public function mediaAction ( ) {
+		$this->_forward('media-list');
+	}
+
+	public function mediaDeleteAction ( ) {
+		# Prepare
+		$Media = $this->_getMedia();
+		
+		# Handle
+		if ( $Media && $Media->exists() ) {
+			$Media->delete();
+		}
+		
+		# Done
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-list'), 'admin', true);
+	}
+
+	public function mediaEditAction ( ) {
+		# Prepare
+		$Media = $MediaArray = array();
+		
+		# Save
+		$Media = $this->_saveMedia();
+		if ( !$Media->id ) {
+			return $this->_forward('media-new');
+		}
+		$this->registerMenu('admin-media-list');
+		
+		# Fetch
+		$MediaArray = $Media->toArray();
+		
+		# Apply
+		$this->view->MediaArray = $MediaArray;
+		
+		# Render
+		$this->render('media/media-edit');
+	}
+
+	public function mediaNewAction ( ) {
+		# Prepare
+		$this->registerMenu('admin-media-edit');
+		$Media = $MediaArray = array();
+		
+		# Save
+		$Media = $this->_saveMedia();
+		if ( $Media->id ) {
+			return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-edit', 'media' => $Media->code), 'admin', true);
+		}
+		
+		# Fetch
+		$MediaArray = $Media->toArray();
+		
+		# Apply
+		$this->view->MediaArray = $MediaArray;
+		
+		# Render
+		$this->render('media/media-edit');
+	}
+
+	public function mediaListAction ( ) {
+		# Prepare
+		$this->registerMenu('admin-media-list');
+		$MediaListArray = array();
+		$search = $this->_getParam('search', false);
+		
+		# Save
+		$Media = $MediaArray = array();
+		$Media = $this->_saveMedia();
+		$MediaArray = $Media->toArray();
+		
+		# Prepare
+		$ListQuery = Doctrine_Query::create()->select('m.*, ma.*')->from('Media m, m.Author')->orderBy('m.code ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		
+		# Handle
+		if ( $search ) {
+			// Search
+			$Query = Doctrine::getTable('Media')->search($search, $ListQuery);
+			$MediaListArray = $Query->execute();
+		} else {
+			// No Search
+			$MediaListArray = $ListQuery->execute();
+		}
+		
+		# Apply
+		$this->view->MediaListArray = $MediaListArray;
+		$this->view->MediaArray = $MediaArray;
+		
+		# Render
+		$this->render('media/media-list');
+	}
+
+	# ========================
+	# MEDIA: GENERIC
+	
+
+	protected function _saveMedia ( ) {
+		# Prepare
+		$Media = $this->_getMedia();
+		
+		# Fetch
+		$Request = $this->_request;
+		$post = $Request->getPost('media', array());
+		$file = !empty($_FILES['media']) ? $_FILES['media'] : array();
+		
+		# Check
+		if ( (empty($post) && empty($file)) || is_string($post) ) {
+			return $Media;
+		}
+		
+		# Prepare
+		array_keep($post, array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'));
+		
+		# Apply
+		$Media->merge($post);
+		$Media->file = $file;
+		$Media->save();
+		
+		# Stop Duplicates
+		$Request->setPost('media', $Media->code);
+		
+		# Add the saved message
+		$url = $Media->code; // $this->view->getHelper('bal')->getBaseUrl('front', true) . '/' . $Content->Route->path;
+		$this->view->getHelper('message')->addMessage('<p>Completed successfully! Viewable here <a href="' . $url . '">' . $url . '</a></p>', 'updated');
+		
+		# Done
+		return $Media;
+	}
+
+	protected function _getMedia ( ) {
+		$media = $this->_getParam('media', false);
+		if ( is_string($media) ) {
+			$Media = Doctrine_Query::create()->select('m.*, ma.*')->from('Media m, m.Author ma')->where('m.code = ?', $media)->fetchOne();
+		}
+		if ( empty($Media) ) {
+			return new Media();
+		}
+		return $Media;
+	}
 
 	# ========================
 	# CONTENT
@@ -75,10 +221,9 @@ class Cms_AdminController extends Zend_Controller_Action {
 	public function contentAction ( ) {
 		return $this->_forward('content-list');
 	}
-	
+
 	public function contentDeleteAction ( ) {
 		# Prepare
-		$code = null;
 		$Content = $this->_getContent();
 		# Handle
 		if ( $Content && $Content->exists() ) {
@@ -88,7 +233,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 			$Content->delete();
 		}
 		# Done
-		return $this->getHelper('redirector')->gotoRoute(array('controller' => 'content', 'action' => 'content-list', 'code' => $code), 'admin', true);
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list'), 'admin', true);
 	}
 
 	public function contentEditAction ( ) {
@@ -136,7 +281,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		# Save
 		$Content = $this->_saveContent();
 		if ( $Content->id ) {
-			return $this->getHelper('redirector')->gotoRoute(array('controller' => 'content', 'action' => 'content-edit', 'content' => $Content->code), 'admin', true);
+			return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-edit', 'content' => $Content->code), 'admin', true);
 		}
 		
 		# Prepare
@@ -259,31 +404,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 	}
 
 	# ========================
-	# EVENT
-	
-
-	public function eventAction ( ) {
-		return $this->_forward('event-list');
-	}
-
-	public function eventDeleteAction ( ) {
-		return $this->getHelper('redirector')->gotoRoute(array('controller' => 'content', 'action' => 'content-delete', 'type' => 'event'), 'admin');
-	}
-
-	public function eventEditAction ( ) {
-		return $this->getHelper('redirector')->gotoRoute(array('controller' => 'content', 'action' => 'content-edit', 'type' => 'event'), 'admin');
-	}
-
-	public function eventNewAction ( ) {
-		return $this->getHelper('redirector')->gotoRoute(array('controller' => 'content', 'action' => 'content-new', 'type' => 'event'), 'admin');
-	}
-
-	public function eventListAction ( ) {
-		return $this->getHelper('redirector')->gotoRoute(array('controller' => 'content', 'action' => 'content-list', 'type' => 'event'), 'admin');
-	}
-
-	# ========================
-	# GENERIC
+	# CONTENT: GENERIC
 	
 
 	protected function _saveContent ( ) {
@@ -353,6 +474,30 @@ class Cms_AdminController extends Zend_Controller_Action {
 			return new Content();
 		}
 		return $Content;
+	}
+
+	# ========================
+	# EVENT
+	
+
+	public function eventAction ( ) {
+		return $this->_forward('event-list');
+	}
+
+	public function eventDeleteAction ( ) {
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-delete', 'type' => 'event'), 'admin');
+	}
+
+	public function eventEditAction ( ) {
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-edit', 'type' => 'event'), 'admin');
+	}
+
+	public function eventNewAction ( ) {
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-new', 'type' => 'event'), 'admin');
+	}
+
+	public function eventListAction ( ) {
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list', 'type' => 'event'), 'admin');
 	}
 
 }

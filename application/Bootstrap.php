@@ -25,14 +25,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		// Prepare
 		$this->bootstrap('config');
 		// Load Config
-		global $config;
-		$mail = $config['mail'];
+		global $applicationConfig;
 		// Fetch
-		$transport = $mail['transport'];
-		$smtp = $transport['smtp'];
-		$address = $smtp['address']; unset($smtp['address']);
+		$smtp_host = $applicationConfig['mail']['transport']['smtp']['host'];
+		$smtp_config = $applicationConfig['mail']['transport']['smtp']['config'];
+		if ( empty($smtp_config) ) $smtp_config = array();
 		// Apply
-		$Transport = new Zend_Mail_Transport_Smtp($address, $smtp);
+		$Transport = new Zend_Mail_Transport_Smtp($smtp_host, $smtp_config);
 		Zend_Mail::setDefaultTransport($Transport);
 		// Done
 		return true;
@@ -47,8 +46,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('autoload');
 		$this->bootstrap('config');
 		// Load Config
-		global $config;
-		$mail = $config['mail'];
+		global $applicationConfig;
+		$mail = $applicationConfig['mail'];
 		// Mail
 		$Mail = new Zend_Mail();
 		$Mail->setFrom($mail['from']['address'], $mail['from']['name']);
@@ -100,14 +99,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('view');
 		$this->bootstrap('config');
 		// Load config
-		global $config;
+		global $applicationConfig;
 		// View Helpers
 		$view = $this->getResource('view');
 		$view->addHelperPath('Bal/View/Helper/', 'Bal_View_Helper');
-		$view->addHelperPath(APPLICATION_PATH.'/modules/admin/views/helpers', 'Content');
-		$view->addScriptPath(APPLICATION_PATH.'/modules/admin/views/scripts');
+		$view->addHelperPath(APPLICATION_PATH.'/modules/cms/views/helpers', 'Content');
+		$view->addScriptPath(APPLICATION_PATH.'/modules/cms/views/scripts');
 		// Widgets
-		$view->getHelper('widget')->addWidgets($config['bal']['widget']);
+		$view->getHelper('widget')->addWidgets($applicationConfig['bal']['widget']);
 		// Done
 		return true;
 	}
@@ -161,15 +160,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('config');
 		
 		// Load Config
-		global $config;
+		global $applicationConfig;
 		
 		// Check
-		if ( empty($config['data']['index_path']) ) {
+		if ( empty($applicationConfig['data']['index_path']) ) {
 			return true;
 		}
 		
 		// Initialise
-		$Index = Zend_Search_Lucene::create($config['data']['index_path']);
+		$Index = Zend_Search_Lucene::create($applicationConfig['data']['index_path']);
 		Zend_Registry::set('Index', $Index);
 		
 		// Done
@@ -182,7 +181,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */
 	protected function _initConfig () {
 		// Apply
-		$GLOBALS['config'] = $this->getOptions();
+		if ( empty($GLOBALS['applicationConfig']) )
+		$GLOBALS['applicationConfig'] = $this->getOptions();
 		// Done
 		return true;
 	}
@@ -222,7 +222,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('config');
 		
 		// Load Config
-		global $config;
+		global $applicationConfig;
 
 		// Load Doctrine
 	    require_once 'Doctrine.php';
@@ -233,10 +233,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$version_1_2 = version_compare('1.1', Doctrine::VERSION, '<');
 		
 		// Options
-		$extensions_path = $config['data']['extensions_path'];
+		$extensions_path = $applicationConfig['data']['extensions_path'];
 		
 		// Apply Paths
-		//Doctrine::setModelsDirectory($config['data']['models_path']);
+		//Doctrine::setModelsDirectory($applicationConfig['data']['models_path']);
 	 	if ( $version_1_2 ) Doctrine::setExtensionsPath($extensions_path);
 
 		// Autoload
@@ -284,10 +284,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		//$manager->setAttribute(Doctrine::ATTR_RESULT_CACHE, $cacheDriver);
 
 	    // Add models and generated base classes to Doctrine autoloader
-	    Doctrine::loadModels($config['data']['models_path']);
+	    Doctrine::loadModels($applicationConfig['data']['models_path']);
 
 	    // Create Connection
-	    $Connection = $Manager->openConnection($config['data']['connection_string']);
+	    $Connection = $Manager->openConnection($applicationConfig['data']['connection_string']);
 		
 	    // Profile Connection
 	    $Profiler = new Doctrine_Connection_Profiler();

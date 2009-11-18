@@ -146,9 +146,11 @@ class Content extends BaseContent {
 				$View = clone $View;
 				$View->ContentArray = $Invoker->toArray();
 				$View->headTitle()->append($Invoker->title);
+				// Configure
+				global $applicationConfig, $Application;
+				$Application->getBootstrap()->bootstrap('mail');
 				// Mail
-				$GLOBALS['Application']->getBootstrap()->bootstrap('mail');
-				$mail = $GLOBALS['Application']->getOption('mail');
+				$mail = $applicationConfig['mail'];
 				$mail['subject'] = $Invoker->title;
 				$mail['html'] = $View->render('email/subscription.phtml');
 				$mail['text'] = strip_tags($mail['html']);

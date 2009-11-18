@@ -7,13 +7,15 @@
 	$Type = ucfirst($type);
 ?>
 <div class="wrap">
-	<div id="icon-edit-pages" class="icon32">
-		<br/>
-	</div>
+	<? if ( $type === 'event' ): ?>
+		<div id="icon-themes" class="icon32"><br/></div>
+	<? else: ?>
+		<div id="icon-edit-pages" class="icon32"><br/></div>
+	<? endif; ?>
 	<h2>
 		<?=$mode_edit?'Editing':'Create New '.$Type?>
 		<? if ( $mode_edit ) foreach ( $this->ContentCrumbArray as $Content ): ?>
-			&raquo; <a href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
+			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
 		<? endforeach; ?>
 	</h2>
 	<?=$this->message()->render()?>
@@ -74,7 +76,7 @@
 							<div id="major-publishing-actions">
 								<!-- Delete Action -->
 								<div id="delete-action">
-									<a class="delete delete-action" id="action-delete" title="Are you sure you want to delete <?=$this->ContentArray['title']?>" href="<?=$this->url(array('controller'=>'content','action'=>'content-delete','content'=>$this->ContentArray['code']),'admin',true)?>" ><?=$mode_edit?'Delete':'Discard'?></a>
+									<a class="delete delete-action" id="action-delete" title="Are you sure you want to delete <?=$this->ContentArray['title']?>" href="<?=$this->url(array('action'=>'content-delete','content'=>$this->ContentArray['code']),'admin',true)?>" ><?=$mode_edit?'Delete':'Discard'?></a>
 								</div>
 								<!-- Save ACtion -->
 								<div id="publishing-action">
@@ -219,20 +221,35 @@
 							}
 						});
 					</script>
-					<div id="content-content-field" class="field field-rich">
-						<textarea name="content[content]" tabindex="2" id="content"><?=$this->ContentArray['content']?></textarea>
-						<script type="text/javascript">$(function(){$('#content').editor('rich');});</script>
+					
+					<div id="content-content-field" class="field field-rich ">
+						<? if ( $type === 'event' ): ?>
+							<textarea name="content[content]" tabindex="2" id="content-content">[event/]</textarea>
+							<script type="text/javascript">$(function(){$('#content-content-field').hide();});</script>
+						<? else: ?>
+							<textarea name="content[content]" tabindex="2" id="content-content"><?=$this->ContentArray['content']?></textarea>
+							<script type="text/javascript">$(function(){$('#content-content').editor('rich');});</script>
+						<? endif; ?>
 					</div>
+					
+					<? if ( $type === 'event' ): ?>
+					<div id="content-event-content-field" class="field field-rich ">
+						<textarea name="content[event_content]" tabindex="3" id="content-event-content"><?=$this->ContentArray['event_content']?></textarea>
+						<script type="text/javascript">$(function(){$('#content-event-content').editor('rich');});</script>
+					</div>
+					<? endif; ?>
+					
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Excerpt</h3>
 						<div class="inside">
-							<textarea rows="3" cols="40" name="content[description]" tabindex="6" id="content-description"><?=$this->ContentArray['description']?></textarea>
+							<textarea rows="3" cols="40" name="content[description]" tabindex="4" id="content-description"><?=$this->ContentArray['description']?></textarea>
 						</div>
 						<script type="text/javascript">
 							$('#content-description-field h3').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');
 							$('#content-description').editor('simple');
 						</script>
 					</div>
+					
 					<? if ( $type === 'event' ): ?>
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Event Information</h3>

@@ -8,13 +8,13 @@
     </div>
 	<!-- Header -->
     <h2>
-		<a href="<?=$this->url(array('controller'=>'content','action'=>'content-list'),'admin',true)?>"><?=$Type?> List</a>
+		<a href="<?=$this->url(array('action'=>'content-list'),'admin',true)?>"><?=$Type?> List</a>
 		<? foreach ( $this->ContentCrumbArray as $Content ): ?>
-			&raquo; <a href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
+			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
 		<? endforeach; ?>
 	</h2>
     <!-- Filters -->
-    <form id="posts-filter" action="<?=$this->url(array('controller'=>'content','action'=>'content-list'),'admin',true)?>" method="get">
+    <form id="posts-filter" action="<?=$this->url(array('action'=>'content-list'),'admin',true)?>" method="get">
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="page-search-input">
@@ -85,15 +85,15 @@
 			<!-- Content Table: Content -->
             <tbody id="content-list">
             	<? foreach ( $this->ContentListArray as $Content ): ?>
-                <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?> iedit">
+                <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
                     <td class="post-title page-title column-title">
                     	<input type="hidden" name="content[id]" class="content-id" value="<?=$Content['id']?>" />
-                        <strong><a class="row-title" href="<?=$this->url(array('controller'=>'content','action'=>'content-list','content'=>$Content['code']),'admin',true)?>" title="<?=$this->locale()->translate('edit-%s',$Content['title'])?>">
+                        <strong><a class="row-title" href="<?=$this->url(array('action'=>'content-list','content'=>$Content['code']),'admin',true)?>" title="<?=$this->locale()->translate('edit-%s',$Content['title'])?>">
                         	<?=/*str_repeat('&nbsp;',$Content['level']).' '.*/$Content['title']?>
 						</a></strong>
 						<div class="row-actions">
-							<span class="edit"><a title="Edit this page" href="<?=$this->url(array('controller'=>'content','action'=>'content-edit','content'=>$Content['code']),'admin',true)?>">Edit</a> | </span>
-							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$Content['title']?>" href="<?=$this->url(array('controller'=>'content','action'=>'content-delete','content'=>$Content['code']),'admin',true)?>">Delete</a> | </span>
+							<span class="edit"><a title="Edit this page" href="<?=$this->url(array('action'=>'content-edit','content'=>$Content['code']),'admin',true)?>">Edit</a> | </span>
+							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$Content['title']?>" href="<?=$this->url(array('action'=>'content-delete','content'=>$Content['code']),'admin',true)?>">Delete</a> | </span>
 							<span class="view"><a rel="permalink" title="View" href="<?=$this->url(array('Map'=>$Content['Route']),'map',true)?>">View</a></span>
 						</div>
                     </td>
@@ -106,7 +106,7 @@
                         else:
                         	$author = $Content['Author']['displayname'];
                         	$author_url = $this->url(array(
-                        		'controller'=>'content',
+                        		
                         		'action'=>'content-list',
                         		'search'=>$author
                         	), 'admin', true);
@@ -121,7 +121,7 @@
                         	foreach ( $Content['Tags'] as $Tag ) {
                         		$tag = ucfirst($Tag['name']);
 	                        	$tag_url = $this->url(array(
-	                        		'controller'=>'content',
+	                        		
 	                        		'action'=>'content-list',
 	                        		'search'=>$tag
 	                        	), 'admin', true);
@@ -162,7 +162,7 @@
 					// Ajax Request
 					var data = {json:JSON.stringify({positions:conpos})};
 					$.ajax({
-						url: '<?=$this->url(array('controller'=>'content','action'=>'content-position'),'admin',true)?>',
+						url: '<?=$this->url(array('action'=>'content-position'),'admin',true)?>',
 						type: 'post',
 						data: data,
 						dataType: 'json',

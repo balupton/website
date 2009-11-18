@@ -206,7 +206,7 @@ Subscriber:
             notnull: true
             default: ""
 
-File:
+Media:
     actAs:
         BalAuditable:
             status:
@@ -222,27 +222,43 @@ File:
             published_at:
                 disabled: true
         Searchable:
-            fields: [name,path,type]
+            fields: [code,title,path,type]
     columns:
         id:
             primary: true
             type: integer(4)
             unsigned: true
             autoincrement: true
-        name:
+        code:
             type: string(255)
             notblank: true
+        title:
+            type: string(255)
+            notblank: true
+        extension:
+            type: string(3)
+            notnull: true
         path:
+            type: string(255)
+            notblank: true
+        relativepath:
+            type: string(255)
+            notblank: true
+        url:
             type: string(255)
             notblank: true
         size:
             type: integer(4)
+            notnull: true
         type:
             type: enum
             values: [file,document,image,video,audio,web,application,archive]
             default: unknown
             notnull: true
         mimetype:
+            type: string(20)
+            notnull: true
+        humantype:
             type: string(20)
             notnull: true
         width:
