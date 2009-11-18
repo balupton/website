@@ -30,12 +30,12 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 	}
 	
 	public function config ( $confs = null ) {
-		global $config;
+		global $applicationConfig;
 		if ( !$confs ) return $config;
 		$confs = explode('.',$confs);
-		$value = $config;
+		$value = $applicationConfig;
 		foreach ( $confs as $conf ) {
-			if ( !array_key_exists($conf, $value) ) return null;
+			if ( !is_array($value) || !array_key_exists($conf, $value) ) return null;
 			$value = $value[$conf];
 		}
 		return $value;

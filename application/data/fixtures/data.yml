@@ -32,6 +32,7 @@ Content:
         event_finish_at: "2009-03-14 23:14"
         event_content: "Bloc Party are famous and kick ass"
         Parent: Content_Events
+        Author: User_Mydance
         
     Content_Articles:
         code: "articles"
@@ -47,6 +48,7 @@ Content:
         content: "Our new website is live!"
         tags: [news,newsletter]
         Parent: Content_Articles
+        Author: User_Mydance
         
     Content_Resources:
         code: "resources"
@@ -61,6 +63,7 @@ Content:
         description: "Equipment Listing"
         content: "[contentlist/]"
         Parent: Content_Resources
+        Author: User_Mydance
         
     Content_Resources_Equipment_Shoes:
         code: "shoes"
@@ -68,6 +71,7 @@ Content:
         description: "New Shoes!"
         content: "some new shoes!"
         Parent: Content_Resources_Equipment
+        Author: User_Mydance
 
 User:
     User_Balcms:
@@ -78,98 +82,57 @@ User:
         displayname: "Administrator"
         fullname: "Benajmin Lupton"
         email: "balcms@balupton.com"
-        PermissionGroups:
-            - PermissionGroup_SuperAdmin
+        Roles:
+            - Role_SuperAdmin
     User_Mydance:
         id: 2
         username: "mydance"
         password: "password"
         enabled: true
-        displayname: "Premala"
-        fullname: "Premala"
-        email: "balcms@balupton.com"
-        PermissionGroups:
-            - PermissionGroup_MyDanceAdmin
+        displayname: "myDance"
+        fullname: "myDance"
+        email: "contact@mydance.com.au"
+        Roles:
+            - Role_MyDanceAdmin
 
 Permission:
     Permission_Admin:
         id: 1
         code: admin
-    Permission_AdminContentView:
+    Permission_Content:
         id: 2
-        code: admin-content-view
-    Permission_AdminContentEdit:
+        code: content
+    Permission_Event:
         id: 3
-        code: admin-content-edit
-    Permission_AdminUserView:
+        code: event
+    Permission_Media:
         id: 4
-        code: admin-user-view
-    Permission_AdminUserEdit:
+        code: media
+    Permission_Subscription:
         id: 5
-        code: admin-user-edit
-    Permission_AdminSystemView:
+        code: subscription
+    Permission_User:
         id: 6
-        code: admin-system-view
-    Permission_AdminSystemEdit:
-        id: 7
-        code: admin-system-edit
-    Permission_AdminPermissionView:
-        id: 8
-        code: admin-permission-view
-    Permission_AdminPermissionEdit:
-        id: 9
-        code: admin-permission-edit
-    Permission_AdminCrudView:
-        id: 10
-        code: admin-crud-view
-    Permission_AdminCrudEdit:
-        id: 11
-        code: admin-crud-edit
-    Permission_AdminEventView:
-        id: 12
-        code: admin-event-view
-    Permission_AdminEventEdit:
-        id: 13
-        code: admin-event-edit
-    Permission_Dev:
-        id: 14
-        code: dev
-    Permission_Beta:
-        id: 15
-        code: beta
-        
+        code: user
 
-PermissionGroup:
-    PermissionGroup_SuperAdmin:
+Role:
+    Role_SuperAdmin:
         id: 1
         code: superadmin
         PermissionList:
             - Permission_Admin
-            - Permission_AdminContentView
-            - Permission_AdminContentEdit
-            - Permission_AdminUserView
-            - Permission_AdminUserEdit
-            - Permission_AdminSystemView
-            - Permission_AdminSystemEdit
-            - Permission_AdminPermissionView
-            - Permission_AdminPermissionEdit
-            - Permission_AdminCrudView
-            - Permission_AdminCrudEdit
-            - Permission_AdminEventView
-            - Permission_AdminEventEdit
-            - Permission_Dev
-    PermissionGroup_MyDanceAdmin:
+            - Permission_Content
+            - Permission_Event
+            - Permission_Media
+            - Permission_Subscription
+            - Permission_User
+    Role_MyDanceAdmin:
         id: 2
         code: mydanceadmin
         PermissionList:
             - Permission_Admin
-            - Permission_AdminContentView
-            - Permission_AdminContentEdit
-            - Permission_AdminUserView
-            - Permission_AdminUserEdit
-            - Permission_AdminSystemView
-            - Permission_AdminSystemEdit
-            - Permission_AdminEventView
-            - Permission_AdminEventEdit
-            - Permission_AdminSystemEdit
+            - Permission_Content
+            - Permission_Event
+            - Permission_Media
+            - Permission_Subscription
             

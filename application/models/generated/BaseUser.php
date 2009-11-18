@@ -13,8 +13,8 @@
  * @property string $fullname
  * @property string $email
  * @property Doctrine_Collection $Permissions
- * @property Doctrine_Collection $PermissionGroups
- * @property Doctrine_Collection $PermissionGroupAndUser
+ * @property Doctrine_Collection $Roles
+ * @property Doctrine_Collection $RoleAndUser
  * @property Doctrine_Collection $PermissionAndUser
  * 
  * @package    ##PACKAGE##
@@ -75,12 +75,12 @@ abstract class BaseUser extends Doctrine_Record
              'local' => 'user_id',
              'foreign' => 'permission_id'));
 
-        $this->hasMany('PermissionGroup as PermissionGroups', array(
-             'refClass' => 'PermissionGroupAndUser',
+        $this->hasMany('Role as Roles', array(
+             'refClass' => 'RoleAndUser',
              'local' => 'user_id',
-             'foreign' => 'permissiongroup_id'));
+             'foreign' => 'role_id'));
 
-        $this->hasMany('PermissionGroupAndUser', array(
+        $this->hasMany('RoleAndUser', array(
              'local' => 'id',
              'foreign' => 'assignee_user_id'));
 

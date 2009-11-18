@@ -8,8 +8,8 @@
  * @property integer $id
  * @property string $code
  * @property Doctrine_Collection $Users
- * @property Doctrine_Collection $PermissionGroups
- * @property Doctrine_Collection $PermissionAndPermissionGroup
+ * @property Doctrine_Collection $Roles
+ * @property Doctrine_Collection $PermissionAndRole
  * @property Doctrine_Collection $PermissionAndUser
  * 
  * @package    ##PACKAGE##
@@ -45,12 +45,12 @@ abstract class BasePermission extends Doctrine_Record
              'local' => 'permission_id',
              'foreign' => 'user_id'));
 
-        $this->hasMany('PermissionGroup as PermissionGroups', array(
-             'refClass' => 'PermissionAndPermissionGroup',
+        $this->hasMany('Role as Roles', array(
+             'refClass' => 'PermissionAndRole',
              'local' => 'permission_id',
-             'foreign' => 'permissiongroup_id'));
+             'foreign' => 'role_id'));
 
-        $this->hasMany('PermissionAndPermissionGroup', array(
+        $this->hasMany('PermissionAndRole', array(
              'local' => 'id',
              'foreign' => 'permission_id'));
 

@@ -312,14 +312,14 @@ User:
             foreign: permission_id
             foreignAlias: Users
             refClass: PermissionAndUser
-        PermissionGroups:
-            class: PermissionGroup
+        Roles:
+            class: Role
             local: user_id
-            foreign: permissiongroup_id
+            foreign: role_id
             foreignAlias: Users
-            refClass: PermissionGroupAndUser
+            refClass: RoleAndUser
 
-PermissionGroup:
+Role:
     columns:
         id:
             type: integer(2)
@@ -334,19 +334,19 @@ PermissionGroup:
     relations:
         PermissionList:
             class: Permission
-            local: permissiongroup_id
+            local: role_id
             foreign: permission_id
-            foreignAlias: PermissionGroups
-            refClass: PermissionAndPermissionGroup
+            foreignAlias: Roles
+            refClass: PermissionAndRole
 
-PermissionAndPermissionGroup:
+PermissionAndRole:
     columns:
         id:
             type: integer(4)
             primary: true
             unsigned: true
             autoincrement: true
-        permissiongroup_id:
+        role_id:
             type: integer(2)
             unsigned: true
             notnull: true
@@ -355,8 +355,8 @@ PermissionAndPermissionGroup:
             unsigned: true
             notnull: true
     relations:
-        PermissionGroup:
-            local: permissiongroup_id
+        Role:
+            local: role_id
             foreign: id
         Permission:
             local: permission_id
@@ -374,7 +374,7 @@ Permission:
             notblank: true
             unique: true
 
-PermissionGroupAndUser:
+RoleAndUser:
     columns:
         id:
             type: integer(4)
@@ -392,7 +392,7 @@ PermissionGroupAndUser:
             type: integer(4)
             notnull: true
             unsigned: true
-        permissiongroup_id:
+        role_id:
             type: integer(2)
             notnull: true
             unsigned: true
@@ -404,8 +404,8 @@ PermissionGroupAndUser:
         User:
             local: user_id
             foreign: id
-        PermissionGroup:
-            local: permissiongroup_id
+        Role:
+            local: role_id
             foreign: id
 
 PermissionAndUser:

@@ -3,7 +3,7 @@
 	$baseUrl = $this->bal()->getBaseUrl();
 ?>
 <div id="login">
-	<h1><a title="Powered by balCMS" href="<?=$this->url(array(),'balcmshome')?>">balCMS</a></h1>
+	<h1><a title="Powered by balCMS" href="<?=$this->url(array(),'balcmshome',true)?>">balCMS</a></h1>
 	
 	<form method="post" action="https://balupton.wordpress.com/wp-login.php" id="loginform" name="loginform">
 		<p>
@@ -23,8 +23,8 @@
 	</form>
 	
 	<p id="nav">
-		<a href="<?=$this->url(array(),'balcmshome')?>">Learn More</a> |
-		<a href="<?=$this->url(array(),'balcmshelp')?>" class="gsfn">Provide Feedback</a>
+		<a href="<?=$this->url(array(),'balcmshome',true)?>">Learn More</a> |
+		<a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Provide Feedback</a>
 		<!-- <a title="Password Lost and Found" href="http://balupton.wordpress.com/wp-login.php?action=lostpassword">Provide Feedback</a> -->
 	</p>
 	

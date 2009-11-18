@@ -1,25 +1,25 @@
 {
 	"favorites": [{
 		"id": "admin-content-new",
-		"resource": "admin-content-edit",
+		"resource": "content",
 		"label": "New Content",
 		"action": "content-new",
 		"route": "admin"
 	},{
 		"id": "admin-event-new",
-		"resource": "admin-event-edit",
+		"resource": "aevent",
 		"label": "New Event",
 		"action": "event-new",
 		"route": "admin"
 	},{
 		"id": "admin-media-new",
-		"resource": "admin-content-edit",
+		"resource": "media",
 		"label": "New Media",
 		"action": "media-new",
 		"route": "admin"
 	},{
 		"id": "admin-user-new",
-		"resource": "admin-user-edit",
+		"resource": "user",
 		"label": "New User",
 		"action": "user-new",
 		"route": "admin"
@@ -29,20 +29,20 @@
 		"uri": "#"
 	},{
 		"id": "admin-content",
-		"resource": "admin-content-view",
+		"resource": "content",
 		"label": "Content",
 		"action": "content",
 		"route": "admin",
 		"pages": [{
 			"id": "admin-content-list",
-			"resource": "admin-content-view",
+			"resource": "content",
 			"label": "Content",
 			"action": "content-list",
 			"route": "admin",
 			"class": "parent"
 		},{
 			"id": "admin-content-edit",
-			"resource": "admin-content-edit",
+			"resource": "content",
 			"label": "&mdash; New Content",
 			"action": "content-new",
 			"route": "admin",
@@ -50,20 +50,20 @@
 		}]
 	},{
 		"id": "admin-event",
-		"resource": "admin-event-view",
+		"resource": "event",
 		"label": "Events",
 		"action": "event",
 		"route": "admin",
 		"pages": [{
 			"id": "admin-event-list",
-			"resource": "admin-event-view",
+			"resource": "event",
 			"label": "Events",
 			"action": "event-list",
 			"route": "admin",
 			"class": "parent"
 		},{
 			"id": "admin-event-edit",
-			"resource": "admin-event-edit",
+			"resource": "event",
 			"label": "&mdash; New Event",
 			"action": "event-new",
 			"route": "admin",
@@ -71,13 +71,13 @@
 		}]
 	},{
 		"id": "admin-subscription",
-		"resource": "admin-content-edit",
+		"resource": "subscription",
 		"label": "Subscriptions",
 		"action": "subscription",
 		"route": "admin",
 		"pages": [{
 			"id": "admin-subscriber-list",
-			"resource": "admin-content-view",
+			"resource": "subscription",
 			"label": "Subscribers",
 			"action": "subscriber-list",
 			"route": "admin",
@@ -85,7 +85,7 @@
 		}]
 	},{
 		"id": "admin-media",
-		"resource": "admin-content-view",
+		"resource": "media",
 		"label": "Media",
 		"action": "media",
 		"route": "admin",

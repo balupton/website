@@ -2,8 +2,7 @@
 echo $this->doctype();
 $baseUrl = $this->bal()->getBaseUrl();
 $baseUrlBack = $this->bal()->getBaseUrl('back');
-?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+?><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <?= $this->headMeta()?>
     <?= $this->headTitle()?>
@@ -43,13 +42,17 @@ $baseUrlBack = $this->bal()->getBaseUrl('back');
         <div id="wpwrap">
             <div id="wpcontent">
                 <div id="wphead">
-                    <!--<img id="header-logo" src="edit-pages.php_files/blank.gif" alt="" height="32" width="32">--><h1 id="site-heading"><a href="http://localhost/wordpress/" title="Visit Site"><span id="site-title">MyDance.com.au</span><em id="site-visit-button">Visit Site</em></a></h1>
+                    <!--<img id="header-logo" src="edit-pages.php_files/blank.gif" alt="" height="32" width="32">-->
+                    <h1 id="site-heading"><a href="<?=$baseUrl?>" title="Visit Site">
+                    	<span id="site-title"><?=$this->bal()->config('bal.site.name')?></span>
+                    	<em id="site-visit-button">Visit Site</em>
+                    </a></h1>
                     <div id="wphead-info">
                         <div id="user_info">
                             <p>
                                 User: MyDance
-                                | <a href="http://www.balupton.com/balCMS/feedback/" class="feedback-action">Feedback</a>
-                                | <a href="http://localhost/wordpress/wp-login.php?action=logout&amp;_wpnonce=4a471fc4e5" title="Log Out">Log Out</a>
+                                | <a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Feedback</a>
+                                | <a href="<?=$this->url(array('action'=>'logout'),'admin',true)?>" title="Log Out">Log Out</a>
                             </p>
                         </div>
 	                    <?=true?'':$this->navigation()->menu()->setPartial(array('navigation/favorites.phtml', 'default'))->setContainer($this->NavigationFavorites)->render()?>
@@ -75,11 +78,11 @@ $baseUrlBack = $this->bal()->getBaseUrl('back');
         <!-- wpwrap -->
         <div id="footer">
             <p id="footer-left" class="alignleft">
-                <span id="footer-thankyou">Thank you for creating with <a href="http://www.balupton.com/balCMS/">balCMS</a>.</span>
-                | <a href="http://www.balupton.com/balCMS/documentation/">Documentation</a>
-                | <a href="http://www.balupton.com/balCMS/feedback" class="feedback-action">Feedback</a>
-                | <a href="http://www.balupton.com/balCMS/support">Support</a>
-                <?if(false):?>| <a href="<?=$this->url(array('controller'=>'index','action'=>'about'),'admin',true)?>">About</a><?endif;?>
+                <span id="footer-thankyou">Thank you for creating with <a href="<?=$this->url(array(),'balcmshome',true)?>">balCMS</a>.</span>
+                | <a href="<?=$this->url(array(),'balcmsdocs',true)?>">Documentation</a>
+                | <a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Feedback</a>
+                | <a href="<?=$this->url(array(),'balcmshelp',true)?>">Support</a>
+                <!-- | <a href="<?=$this->url(array('action'=>'about'),'admin',true)?>">About</a> -->
             </p>
             <p id="footer-upgrade" class="alignright">
                 Version 0.1.0-dev Movember
