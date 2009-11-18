@@ -1,1 +1,1 @@
-<? setcookie('debug','secret'); ?>
+<? setcookie('debug','secret',0,'/'); ?>

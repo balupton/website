@@ -180,7 +180,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		$file = !empty($_FILES[$param]) ? $_FILES[$param] : array();
 		
 		# Check
-		if ( (empty($post) && empty($file)) || is_string($post) ) {
+		if ( (empty($post) && (empty($file) || empty($file['name']))) || is_string($post) ) {
 			return $Media;
 		}
 		
