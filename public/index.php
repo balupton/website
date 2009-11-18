@@ -25,6 +25,10 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('ROOT_URL',						'http://www.mydance.com.au');
 }
 
+// Fix magic quotes
+require_once BALPHP_PATH.'/core/functions/_params.funcs.php';
+fix_magic_quotes();
+
 // Debug Mode
 if ( !defined('DEBUG_MODE') ) define('DEBUG_MODE',
 	('development' === APPLICATION_ENV || 'testing' === APPLICATION_ENV ||
