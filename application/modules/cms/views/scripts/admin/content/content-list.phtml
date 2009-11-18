@@ -85,6 +85,7 @@
 			<!-- Content Table: Content -->
             <tbody id="content-list">
             	<? foreach ( $this->ContentListArray as $Content ): ?>
+            	<? $contentUrl = $this->url(array('Map'=>$Content['Route']),'map',true); ?>
                 <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
                     <td class="post-title page-title column-title">
                     	<input type="hidden" name="content[id]" class="content-id" value="<?=$Content['id']?>" />
@@ -94,7 +95,7 @@
 						<div class="row-actions">
 							<span class="edit"><a title="Edit this page" href="<?=$this->url(array('action'=>'content-edit','content'=>$Content['code']),'admin',true)?>">Edit</a> | </span>
 							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$Content['title']?>" href="<?=$this->url(array('action'=>'content-delete','content'=>$Content['code']),'admin',true)?>">Delete</a> | </span>
-							<span class="view"><a rel="permalink" title="View" href="<?=$this->url(array('Map'=>$Content['Route']),'map',true)?>">View</a></span>
+							<span class="view"><a rel="permalink" title="View" href="<?=$contentUrl?>">View</a></span>
 						</div>
                     </td>
                     <td class="author column-author">
@@ -106,7 +107,6 @@
                         else:
                         	$author = $Content['Author']['displayname'];
                         	$author_url = $this->url(array(
-                        		
                         		'action'=>'content-list',
                         		'search'=>$author
                         	), 'admin', true);

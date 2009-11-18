@@ -122,23 +122,27 @@ Content:
             notblank: true
     relations:
         Avatar:
-            class: File
+            class: Media
             local: avatar_id
             foreign: id
+            onDelete: "SET NULL"
         Route:
             local: route_id
             foreign: id
+            onDelete: CASCADE
         Parent:
             class: Content
             local: parent_id
             foreign: id
             foreignAlias: Children
+            onDelete: CASCADE
         Subscribers:
             class: Subscriber
             local: content_id
             foreign: subscriber_id
             foreignAlias: ContentList
             refClass: ContentAndSubscriber
+            onDelete: CASCADE
 
 Event:
     inheritance:
@@ -232,6 +236,7 @@ Media:
         code:
             type: string(255)
             notblank: true
+            unique: true
         title:
             type: string(255)
             notblank: true

@@ -49,7 +49,7 @@
                     <th scope="col" class="manage-column column-media" style="">
                         File
                     </th>
-                    <th scope="col" class="manage-column column-author" style="">
+                    <th scope="col" class="manage-column column-author hide" style="">
                         Filename
                     </th>
                     <th scope="col" class="manage-column column-tags" style="">
@@ -69,7 +69,7 @@
                     <th scope="col" class="manage-column column-media" style="">
                         File
                     </th>
-                    <th scope="col" class="manage-column column-author" style="">
+                    <th scope="col" class="manage-column column-author hide" style="">
                         Filename
                     </th>
                     <th scope="col" class="manage-column column-tags" style="">
@@ -83,37 +83,38 @@
 			<!-- Content Table: Content -->
             <tbody id="subscriber-list">
             	<? foreach ( $this->MediaListArray as $Media ): ?>
+            	<? $mediaUrl = $baseUrl.$Media['url']; ?>
             	<tr id="media-<?=$Media['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
 					<td class="column-icon media-icon">
-						<a title="Edit “Invoice_v.0.2.2”" href="media.php?action=edit&amp;attachment_id=49">
+						<a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
 							<? if ( $Media['type'] === 'image' ) : ?>
-								<img height="60" title="n206700536_30532208_8076 copy" alt="" class="attachment-80x60" src="<?=$baseUrl.$Media['url']?>?w=59"/>
+								<img height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?w=59"/>
 							<? else: ?>
-								<img width="46" height="60" title="Invoice_v.0.2.2" alt="" class="attachment-80x60" src="<?=$baseUrlBack?>/images/files/<?=$Media['type']?>.png"/>
+								<img width="46" height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$baseUrlBack?>/images/files/<?=$Media['type']?>.png"/>
 							<? endif; ?>
 						</a>
 					</td>
 					<td class="media column-media">
-						<strong><a title="Edit “Invoice_v.0.2.2”" href="http://balupton.wordpress.com/wp-admin/media.php?action=edit&amp;attachment_id=49">
+						<strong><a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
 							<?=$Media['title']?>
 						</a></strong>
 						<br/>
 						<?=$Media['humantype']?>
 						<p></p>
 						<div class="row-actions">
-							<span class="edit">
-								<a href="http://balupton.wordpress.com/wp-admin/media.php?action=edit&amp;attachment_id=49">Edit</a> |
+							<span class="edit hide">
+								<a href="<?=$this->url(array('action'=>'media-edit','media'=>$Media['code']),'admin',true)?>">Edit</a> |
 							</span>
 							<span class="delete">
-								<a href="post.php?action=trash&amp;post=49&amp;_wpnonce=7d61d538f5" class="submitdelete">Delete</a> |
+								<a href="<?=$this->url(array('action'=>'media-delete','media'=>$Media['code']),'admin',true)?>" class="delete-action">Delete</a> |
 							</span>
 							<span class="view">
-								<a rel="permalink" title="View “Media Library”" href="http://balupton.wordpress.com/?attachment_id=49">View</a>
+								<a rel="permalink" title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">View</a>
 							</span>
 						</div>
 					</td>
-                    <td class="tags column-author">
-                    	<?=filesize_human($Media['code'])?>
+                    <td class="tags column-author hide">
+                    	<?=$Media['code']?>
                     </td>
                     <td class="tags column-tags">
                     	<?=filesize_human($Media['size'])?>

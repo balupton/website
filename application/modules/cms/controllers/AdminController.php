@@ -170,14 +170,14 @@ class Cms_AdminController extends Zend_Controller_Action {
 	# MEDIA: GENERIC
 	
 
-	protected function _saveMedia ( ) {
+	protected function _saveMedia ( $param = 'media' ) {
 		# Prepare
 		$Media = $this->_getMedia();
 		
 		# Fetch
 		$Request = $this->_request;
-		$post = $Request->getPost('media', array());
-		$file = !empty($_FILES['media']) ? $_FILES['media'] : array();
+		$post = $Request->getPost($param, array());
+		$file = !empty($_FILES[$param]) ? $_FILES[$param] : array();
 		
 		# Check
 		if ( (empty($post) && empty($file)) || is_string($post) ) {
@@ -193,11 +193,11 @@ class Cms_AdminController extends Zend_Controller_Action {
 		$Media->save();
 		
 		# Stop Duplicates
-		$Request->setPost('media', $Media->code);
+		$Request->setPost($param, $Media->code);
 		
 		# Add the saved message
-		$url = $Media->code; // $this->view->getHelper('bal')->getBaseUrl('front', true) . '/' . $Content->Route->path;
-		$this->view->getHelper('message')->addMessage('<p>Completed successfully! Viewable here <a href="' . $url . '">' . $url . '</a></p>', 'updated');
+		$url = $this->view->getHelper('bal')->getBaseUrl().$Media->url;
+		$this->view->getHelper('message')->addMessage('<p>Updated the media <a href="' . $url . '">' . $Media->title . '</a></p>', 'updated');
 		
 		# Done
 		return $Media;
@@ -415,7 +415,6 @@ class Cms_AdminController extends Zend_Controller_Action {
 		$Request = $this->_request;
 		$content = $Request->getPost('content');
 		$subscription = $Request->getPost('subscription', array());
-		$content_files = !empty($_FILES['content']) ? $_FILES['content'] : array();
 		
 		# Check
 		if ( empty($content) || is_string($content) ) {
@@ -424,12 +423,10 @@ class Cms_AdminController extends Zend_Controller_Action {
 		
 		# Ensure
 		array_key_ensure($subscription, 'tags', '');
-		array_key_ensure($content_files, 'avatar', '');
 		
 		# Prepare
 		array_keep($content, array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type'));
 		$content['tags'] .= ', ' . $subscription['tags'];
-		$content['avatar'] = $content_files['avatar'];
 		
 		# Tags
 		$tags = implode(', ', array_clean(explode(',', $content['tags'])));
@@ -444,11 +441,23 @@ class Cms_AdminController extends Zend_Controller_Action {
 			$Content->Parent = null;
 		}
 		
-		# Avatar
-		unset($content['avatar']);
-		
 		# Apply
 		$Content->merge($content);
+		
+		# Avatar
+		$Avatar = $this->_saveMedia('avatar');
+		if ( $Avatar->id ) {
+			if ( $Avatar->type !== 'image' ) {
+				$Avatar->delete();
+			} else {
+				if ( $Content->avatar_id ) {
+					$Content->Avatar->delete(); // delete the old avatar
+				}
+				$Content->Avatar = $Avatar;
+			}
+		}
+		
+		# Apply
 		$Content->save();
 		
 		# Tags
@@ -459,7 +468,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		
 		# Add the saved message
 		$url = $this->view->getHelper('bal')->getBaseUrl('front', true) . '/' . $Content->Route->path;
-		$this->view->getHelper('message')->addMessage('<p>Updated successfully! and viewable here <a href="' . $url . '">' . $url . '</a></p>', 'updated');
+		$this->view->getHelper('message')->addMessage('<p>Updated the content <a href="' . $url . '">' . $Content->title . '</a></p>', 'updated');
 		
 		# Done
 		return $Content;
@@ -468,7 +477,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 	protected function _getContent ( ) {
 		$content = $this->_getParam('content', false);
 		if ( is_string($content) ) {
-			$Content = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')->where('c.code = ?', $content)->fetchOne();
+			$Content = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.code = ?', $content)->fetchOne();
 		}
 		if ( empty($Content) ) {
 			return new Content();

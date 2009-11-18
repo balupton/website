@@ -106,10 +106,20 @@
 						<h3>Avatar</h3>
 						<div class="inside">
 							<div class="field">
+            					<? if ( !empty($Content['Avatar']) && !empty($Content['Avatar']['id']) ) :
+            						$Media = $Content['Avatar'];
+            						$mediaUrl = $baseUrl.$Media['url'];
+            						?>
+									<p style="text-align:center;">
+										<a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
+											<img height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?w=59"/>
+										</a>
+									</p>
+								<? endif; ?>
 								<label for="content-avatar">
 									Want to upload a different image?
 								</label>
-								<input type="file" id="content-avatar"  name="content[avatar]"" />
+								<input type="file" id="content-avatar"  name="avatar"" />
 							</div>
 						</div>
 						<script type="text/javascript">

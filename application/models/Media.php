@@ -66,7 +66,7 @@ class Media extends BaseMedia {
 		}
 		
 		// Prepare file
-		$file_name = $file['name'];
+		$file_title = $file_name = $file['name'];
 		$file_old_path = $file['tmp_name'];
 		$file_new_path = $upload_path . DIRECTORY_SEPARATOR . $file_name;
 		$exist_attempt = 0;
@@ -76,7 +76,8 @@ class Media extends BaseMedia {
 			// Pump exist attempts
 			++$exist_attempt;
 			// Add the attempt to the end of the file
-			$file_new_path = $upload_path . DIRECTORY_SEPARATOR . get_filename($file_name, false) . $exist_attempt . '.' . $extension;
+			$file_name = get_filename($file_title, false) . $exist_attempt . '.' . $extension;
+			$file_new_path = $upload_path . DIRECTORY_SEPARATOR . $file_name;
 		}
 		
 		// Move file
@@ -100,7 +101,7 @@ class Media extends BaseMedia {
 		if ( !$this->code )
 			$this->code = $file_name;
 		if ( !$this->title )
-			$this->title = $file_name;
+			$this->title = $file_title;
 		if ( $this->path && file_exists($this->path) )
 			unlink($this->path); // delete previous copy of the file
 		$this->path = $file_path;

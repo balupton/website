@@ -27,6 +27,7 @@
  * @property timestamp $event_start_at
  * @property timestamp $event_finish_at
  * @property string $event_content
+ * @property Media $Avatar
  * @property Route $Route
  * @property Content $Parent
  * @property Doctrine_Collection $Subscribers
@@ -191,18 +192,26 @@ abstract class BaseContent extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
+        $this->hasOne('Media as Avatar', array(
+             'local' => 'avatar_id',
+             'foreign' => 'id',
+             'onDelete' => 'SET NULL'));
+
         $this->hasOne('Route', array(
              'local' => 'route_id',
-             'foreign' => 'id'));
+             'foreign' => 'id',
+             'onDelete' => 'CASCADE'));
 
         $this->hasOne('Content as Parent', array(
              'local' => 'parent_id',
-             'foreign' => 'id'));
+             'foreign' => 'id',
+             'onDelete' => 'CASCADE'));
 
         $this->hasMany('Subscriber as Subscribers', array(
              'refClass' => 'ContentAndSubscriber',
              'local' => 'content_id',
-             'foreign' => 'subscriber_id'));
+             'foreign' => 'subscriber_id',
+             'onDelete' => 'CASCADE'));
 
         $this->hasMany('Content as Children', array(
              'local' => 'id',

@@ -18,6 +18,7 @@
  * @property string $humantype
  * @property integer $width
  * @property integer $height
+ * @property Doctrine_Collection $Content
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -39,6 +40,7 @@ abstract class BaseMedia extends Doctrine_Record
         $this->hasColumn('code', 'string', 255, array(
              'type' => 'string',
              'notblank' => true,
+             'unique' => true,
              'length' => '255',
              ));
         $this->hasColumn('title', 'string', 255, array(
@@ -112,6 +114,10 @@ abstract class BaseMedia extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
+        $this->hasMany('Content', array(
+             'local' => 'id',
+             'foreign' => 'avatar_id'));
+
         $balauditable0 = new BalAuditable(array(
              'status' => 
              array(

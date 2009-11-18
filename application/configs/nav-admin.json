@@ -91,19 +91,12 @@
 		"route": "admin",
 		"class": "menu-top-last",
 		"pages": [{
-			"id": "admin-media-view",
+			"id": "admin-media-list",
 			"resource": "admin-content-view",
 			"label": "Media",
 			"action": "media-list",
 			"route": "admin",
 			"class": "parent"
-		},{
-			"id": "admin-media-edit",
-			"resource": "admin-content-edit",
-			"label": "&mdash; New Media",
-			"action": "media-new",
-			"route": "admin",
-			"class": "child"
 		}]
 	},{
 		"label": "---",
