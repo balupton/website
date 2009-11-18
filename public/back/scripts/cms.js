@@ -112,14 +112,6 @@
 			}
 		});
 	};
-	$.fn.value = function(){
-		var $input = $(this).firstInput();
-		var val = $input.val();
-		if ( $input.is('select') ) {
-			val = $input.find('option:selected').text();
-		}
-		return val;
-	};
 	$.fn.highlight = function(){
 		return $(this).effect("highlight", {}, 3000);
 	};

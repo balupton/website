@@ -457,11 +457,15 @@ class Cms_AdminController extends Zend_Controller_Action {
 			}
 		}
 		
-		# Apply
+		# Pre Save
+		if ( !$Content->id ) $Content->save();
+		
+		# Relations
+		$Content->setTags($tags);
+		
+		# Post Save
 		$Content->save();
 		
-		# Tags
-		$Content->setTags($tags);
 		
 		# Stop Duplicates
 		$Request->setPost('content', $Content->code);

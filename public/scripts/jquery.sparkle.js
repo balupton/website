@@ -45,11 +45,188 @@
 	console.profile		= console.profile		|| console.log;
 	console.profileEnd	= console.profileEnd	|| console.log;
 	
+	// Prototypes
+	Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft ||function(ch, num){
+		var val = String(this);
+	    var re = new RegExp(".{" + num + "}$");
+	    var pad = "";
+        if ( !ch && ch !== 0 ) ch = " ";
+	    do  {
+	        pad += ch;
+	    } while(pad.length < num);
+	    return re.exec(pad + val)[0];
+	};
+	Number.prototype.padRight = String.prototype.padRight = String.prototype.padRight ||function(ch, num){
+		var val = String(this);
+        var re = new RegExp("^.{" + num + "}");
+        var pad = "";
+        if ( !ch && ch !== 0 ) ch = " ";
+        do {
+            pad += ch;
+        } while (pad.length < num);
+        return re.exec(val + pad)[0];
+	};
+	Date.prototype.setDatetimestr = Date.prototype.setDatetimestr || function(timestamp){
+		var pieces = timestamp.split(/[\-\s\:]/g);
+		var year = pieces[0];
+		var month = pieces[1];
+		var day = pieces[2];
+		var hour = pieces[3]||0;
+		var min = pieces[4]||0;
+		var sec = pieces[5]||0;
+		this.setUTCFullYear(year,month-1,day);
+		this.setUTCHours(hour);
+		this.setUTCMinutes(min);
+		this.setUTCSeconds(sec);
+		return this;
+	};
+	Date.prototype.setDatestr = Date.prototype.setDatestr || function(timestamp){
+		var pieces = timestamp.split(/[\-\s\:]/g);
+		var year = pieces[0]||1978;
+		var month = pieces[1]||0;
+		var day = pieces[2]||1;
+		this.setUTCFullYear(year,month-1,day);
+		return this;
+	};
+	Date.prototype.setTimestr = Date.prototype.setTimestr || function(timestamp){
+		var pieces = timestamp.split(/[\-\s\:]/g);
+		var hour = pieces[0]||0;
+		var min = pieces[1]||0;
+		var sec = pieces[2]||0;
+		this.setUTCHours(hour);
+		this.setUTCMinutes(min);
+		this.setUTCSeconds(sec);
+		return this;
+	};
+	Date.prototype.getDatetimestr = Date.prototype.getDatetimestr || function() {
+		var date = this;
+		return date.getDatestr()+' '+date.getTimestr();
+	}
+	Date.prototype.getDatestr = Date.prototype.getDatestr || function() {
+		var date = this;
+		var year = date.getUTCFullYear();
+		var month = (this.getUTCMonth() + 1).padLeft(0,2);
+		var date = this.getUTCDate().padLeft(0,2);
+		return year+'-'+month+'-'+date;
+	}
+	Date.prototype.getTimestr = Date.prototype.getTimestr || function(){
+		var date = this;
+		var hours = date.getUTCHours();
+		var minutes = date.getUTCMinutes();
+		var seconds = date.getUTCSeconds();
+		return hours+':'+minutes+':'+seconds;
+	}
 	
 	// Prototypes
 	$.fn.findAndSelf = $.fn.findAndSelf || function(selector){
 		var $this = $(this);
 		return $this.find(selector).andSelf().filter(selector);
+	};
+	$.fn.value = function(value){
+		var $input = $(this).firstInput();
+		if ( value ) {
+			$input.val(value);
+			if ( $input.is('select') ) {
+				$input.find('option[value=' + value + ']:first').attr('selected', 'selected');
+			}
+			return $input;
+		} else {
+			var val = $input.val();
+			if ( $input.is('select') ) {
+				val = $input.find('option:selected').text();
+			}
+			return val;
+		}
+	};
+	
+	// Timepicker
+	$.fn.timepicker = $.fn.timepicker || function(options){
+		return $(this).each(function(){
+			var $input = $(this);
+			$input.hide();
+			// Prepare
+			if ( $input.hasClass('jquery-time-has') ) return $input; // already done
+			$input.addClass('jquery-time').addClass('jquery-time-has');
+			// Generate
+			var $hours = $('<select class="jquery-time-hours" />');
+			for ( var hours=12,hour=1; hour<=hours; ++hour ) {
+				$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
+			}
+			var $minutes = $('<select class="jquery-time-minutes" />');
+			for ( var mins=60,min=5; min<=mins; min+=5) {
+				$minutes.append('<option value="'+min+'">'+min.padLeft('0',2)+'</option>');
+			}
+			var $meridian = $('<select class="jquery-time-meridian" />');
+			$meridian.append('<option>am</option>');
+			$meridian.append('<option>pm</option>');
+			// Defaults
+			var value = $input.val();
+			var date = new Date(); date.setTimestr(value);
+			var hours = date.getUTCHours();
+			var minutes = date.getUTCMinutes();
+			var meridian = 'am';
+			if ( hours > 12 ) {
+				hours -= 12; meridian = 'pm';
+			}
+			// Append
+			$meridian.insertAfter($input);
+			$minutes.insertAfter($input);
+			$hours.insertAfter($input);
+			// Apply
+			if ( hours > 12 && meridian == 'pm' ) hours -= 12;
+			$hours.value(hours);
+			$minutes.value(minutes);
+			$meridian.value(meridian);
+			// Bind
+			var updateFunction = function(){
+				var hours = parseInt($hours.val(),10);
+				var minutes = $minutes.val();
+				var meridian = $meridian.val();
+				if ( meridian == 'pm' ) hours += 12;
+				if ( hours >= 24 ) hours = 0;
+				var value = hours.padLeft(0,2)+':'+minutes.padLeft(0,2)+':00';
+				$input.val(value).trigger('change');
+			};
+			$hours.add($minutes).add($meridian).change(updateFunction);
+			$input.parent('form:first').submit(updateFunction);
+			// Done
+			return $input;
+		});
+	};
+	$.fn.datetimepicker = $.fn.datetimepicker || function(){
+		return $(this).each(function(){
+			var $input = $(this);
+			$input.hide();
+			// Prepare
+			if ( $input.hasClass('jquery-datetime-has') ) return $input; // already done
+			$input.addClass('jquery-datetime').addClass('jquery-datetime-has');
+			// Create date part
+			var $date = $('<input type="text" class="jquery-date"/>');
+			var $sep = $('<span class="jquery-datetime-sep"> @ </span>');
+			var $time = $('<input type="text" class="jquery-time"/>');
+			// Defaults
+			var value = $input.val();
+			var date = new Date(); date.setDatetimestr(value);
+			var datestr = date.getDatestr();
+			var timestr = date.getTimestr();
+			// Append
+			$time.insertAfter($input);
+			$sep.insertAfter($input);
+			$date.insertAfter($input);
+			// Apply
+			$date.value(datestr);
+			$time.value(timestr);
+			// Bind
+			var updateFunction = function(){
+				var value = $date.val()+' '+$time.val();
+				$input.val(value).trigger('change');
+			};
+			$date.add($time).change(updateFunction);
+			// Sparkle
+			$date.add($time).sparkle();
+			// Done
+			return $input;
+		});
 	};
 	
 	// BalClass
@@ -189,7 +366,7 @@
 	$.Sparkle = new $.SparkleClass({
 		'date': {
 			config: {
-				selector: '.sparkle-date',
+				selector: '.jquery-date',
 				dateformat: 'yy-mm-dd'
 			},
 			extension: function(Sparkle, config){
@@ -202,7 +379,7 @@
 		},
 		'time': {
 			config: {
-				selector: '.sparkle-time',
+				selector: '.jquery-time',
 				timeconvention: 24
 			},
 			extension: function(Sparkle, config){
@@ -213,9 +390,24 @@
 				});
 			}
 		},
+		'datetime': {
+			config: {
+				selector: '.jquery-datetime',
+				dateformat: 'yy-mm-dd',
+				timeconvention: 24
+			},
+			extension: function(Sparkle, config){
+				var $this = $(this);
+				var $item = $this.findAndSelf(config.selector);
+				return typeof $item.datetimepicker === 'undefined' ? $item : $item.datetimepicker({
+					dateFormat: config.dateformat,
+					convention: config.timeconvention
+				});
+			}
+		},
 		'hide-if-empty': {
 			config: {
-				selector: '.sparkle-hide-if-empty:empty'
+				selector: '.jquery-hide-if-empty:empty'
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this);
@@ -224,7 +416,7 @@
 		},
 		'hide': {
 			config: {
-				selector: '.sparkle-hide'
+				selector: '.jquery-hide'
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this);
@@ -233,7 +425,7 @@
 		},
 		'subtle': {
 			config: {
-				selector: '.sparkle-subtle',
+				selector: '.jquery-subtle',
 				css: {
 					'font-size': '80%'
 				},
@@ -260,8 +452,8 @@
 		},
 		'panelshower': {
 			config: {
-				selectorSwitch: '.sparkle-panelshower-switch',
-				selectorPanel: '.sparkle-panelshower-panel',
+				selectorSwitch: '.jquery-panelshower-switch',
+				selectorPanel: '.jquery-panelshower-panel',
 				inSpeed: 200,
 				outSpeed: 200
 			},
