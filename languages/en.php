@@ -9,7 +9,7 @@ return array(
 	'%s MB' => '%s MB',
 	'%s GB' => '%s GB',
 
-	'file-upload-size' => 'The maximum file size allowed is limited to <em>%s</em>',
+	'file-upload-size' => 'The largest file you may upload is <em>%s</em>.',
 	
 	# General Actions
 	
@@ -17,7 +17,7 @@ return array(
 	'cancel' => 'cancel',
 	'add' => 'add',
 	'edit' => 'edit',
-	'edit-%s' => 'Edit “%s”',
+	'edit-%s' => 'Edit %s',
 	'remove' => 'remove',
 	'submit' => 'submit',
 	'view' => 'view',
@@ -56,8 +56,8 @@ return array(
 	'error-doctrine-validation-email' => '<em>$field</em> must be a valid <em>email</em>.',
 	'error-doctrine-validation-time' => '<em>$field</em> must be a valid <em>time</em>.',
 	'error-doctrine-validation-timestamp' => '<em>$field</em> must be a valid <em>date and time</em>.',
-	'error-doctrine-validation-unique' => 'There already exists an <em>$singular</em> with a <em>$field</em> of that value.',
+	'error-doctrine-validation-unique' => 'A <em>$singular</em> item already exists with the same <em>$field</em>.',
 	'error-doctrine-validation-length' => '<em>$field</em> must not be more than <em>$length</em> characters long.',
 	
-	# 
+	#
 );

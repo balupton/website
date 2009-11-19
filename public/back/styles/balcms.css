@@ -102,6 +102,10 @@ a.delete {
 	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
 	font-style:italic;
 }
+.little {
+	color:#666666;
+	font-size:11px;
+}
 
 .hide {
 	display: none;

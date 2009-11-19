@@ -4,14 +4,26 @@ require_once 'Zend/Controller/Action.php';
 class Cms_AdminController extends Zend_Controller_Action {
 
 	public function init ( ) {
-		// Layout
+		# Layout
 		$this->getHelper('Layout')->setLayout('back-full');
-		// Navigation
+		
+		# Login
+		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'Admin'));
+		
+		# Authenticate / redirect to login if need be
+		if ( !in_array($this->getRequest()->getActionName(), array(false,'login','index')) ) {
+			# Within unsafe area, must authenticate
+			$this->getHelper('App')->authenticate(true, false);
+		}
+		
+		# Navigation
 		$nav = file_get_contents(CONFIG_PATH . '/nav-admin.json');
 		$nav = Zend_Json::decode($nav, Zend_Json::TYPE_ARRAY);
 		$this->view->NavigationFavorites = new Zend_Navigation($nav['favorites']);
 		$this->view->NavigationMenu = new Zend_Navigation($nav['menu']);
-	
+		
+		# Done
+		return true;
 	}
 
 	public function registerMenu ( $id ) {
@@ -25,16 +37,56 @@ class Cms_AdminController extends Zend_Controller_Action {
 	
 
 	public function indexAction ( ) {
-		$this->_forward('content');
+		# Redirect
+		return $this->_forward('content');
 	}
-
+	
+	/**
+	 * Logout the User and redirect
+	 * @return bool
+	 */
+	public function logoutAction ( ) {
+		# Logout
+		$this->getHelper('App')->logout(true);
+		# Done
+		return true;
+	}
+	
+	/**
+	 * Login the User and redirect
+	 * @return bool
+	 */
 	public function loginAction ( ) {
+		# Prepare
+		$Request = $this->getRequest();
+		
+		# Load
+		$login = $Request->getParam('login', array());
+		array_key_ensure($login, array('username','password','locale'));
+		
+		# Check
+		if ( !empty($login['username']) && !empty($login['password']) ) {
+			# Login
+			$username = $login['username'];
+			$password = $login['password'];
+			$locale = $login['locale'];
+			# Login and Forward
+			return $this->getHelper('App')->authenticate($username, $password, $locale, false, true);
+		}
+			
+		# Render
 		$this->getHelper('layout')->setLayout('back-login');
+		
+		# Done
+		return true;
 	}
 
 	public function dashboardAction ( ) {
-		// Prepare
+		# Prepare
 		$this->registerMenu('admin-dashboard');
+		
+		# Done
+		return true;
 	}
 
 	# ========================
@@ -42,7 +94,8 @@ class Cms_AdminController extends Zend_Controller_Action {
 	
 
 	public function subscriptionAction ( ) {
-		$this->_forward('subscriber-list');
+		# Redirect
+		return $this->_forward('subscriber-list');
 	}
 
 	public function subscriberListAction ( ) {
@@ -69,6 +122,9 @@ class Cms_AdminController extends Zend_Controller_Action {
 		
 		# Render
 		$this->render('subscription/subscriber-list');
+		
+		# Done
+		return true;
 	}
 
 	# ========================
@@ -76,7 +132,8 @@ class Cms_AdminController extends Zend_Controller_Action {
 	
 
 	public function mediaAction ( ) {
-		$this->_forward('media-list');
+		# Redirect
+		return $this->_forward('media-list');
 	}
 
 	public function mediaDeleteAction ( ) {
@@ -88,7 +145,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 			$Media->delete();
 		}
 		
-		# Done
+		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-list'), 'admin', true);
 	}
 
@@ -111,6 +168,9 @@ class Cms_AdminController extends Zend_Controller_Action {
 		
 		# Render
 		$this->render('media/media-edit');
+		
+		# Done
+		return true;
 	}
 
 	public function mediaNewAction ( ) {
@@ -132,6 +192,9 @@ class Cms_AdminController extends Zend_Controller_Action {
 		
 		# Render
 		$this->render('media/media-edit');
+		
+		# Done
+		return true;
 	}
 
 	public function mediaListAction ( ) {
@@ -164,6 +227,9 @@ class Cms_AdminController extends Zend_Controller_Action {
 		
 		# Render
 		$this->render('media/media-list');
+		
+		# Done
+		return true;
 	}
 
 	# ========================
@@ -219,6 +285,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 	
 
 	public function contentAction ( ) {
+		# Redirect
 		return $this->_forward('content-list');
 	}
 
@@ -232,7 +299,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 			}
 			$Content->delete();
 		}
-		# Done
+		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list'), 'admin', true);
 	}
 
@@ -270,6 +337,9 @@ class Cms_AdminController extends Zend_Controller_Action {
 		
 		# Render
 		$this->render('content/content-edit');
+		
+		# Done
+		return true;
 	}
 
 	public function contentNewAction ( ) {
@@ -313,6 +383,9 @@ class Cms_AdminController extends Zend_Controller_Action {
 		
 		# Render
 		$this->render('content/content-edit');
+		
+		# Done
+		return true;
 	}
 
 	public function contentListAction ( ) {
@@ -380,6 +453,9 @@ class Cms_AdminController extends Zend_Controller_Action {
 		
 		# Render
 		$this->render('content/content-list');
+		
+		# Done
+		return true;
 	}
 
 	public function contentPositionAction ( ) {
@@ -399,7 +475,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 			$data = array('success' => true);
 		}
 		
-		# Done
+		# Respond
 		$this->getHelper('json')->sendJson($data);
 	}
 
@@ -479,37 +555,49 @@ class Cms_AdminController extends Zend_Controller_Action {
 	}
 
 	protected function _getContent ( ) {
+		# Fetch
 		$content = $this->_getParam('content', false);
+		
+		# Load
 		if ( is_string($content) ) {
 			$Content = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.code = ?', $content)->fetchOne();
 		}
+		
+		# Check
 		if ( empty($Content) ) {
 			return new Content();
 		}
+		
+		# Done
 		return $Content;
 	}
 
 	# ========================
 	# EVENT
 	
-
+	
 	public function eventAction ( ) {
+		# Redirect
 		return $this->_forward('event-list');
 	}
 
 	public function eventDeleteAction ( ) {
+		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-delete', 'type' => 'event'), 'admin');
 	}
 
 	public function eventEditAction ( ) {
+		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-edit', 'type' => 'event'), 'admin');
 	}
 
 	public function eventNewAction ( ) {
+		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-new', 'type' => 'event'), 'admin');
 	}
 
 	public function eventListAction ( ) {
+		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list', 'type' => 'event'), 'admin');
 	}
 

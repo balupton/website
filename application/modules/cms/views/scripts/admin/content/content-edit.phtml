@@ -122,6 +122,8 @@
 									Want to upload a different image?
 								</label>
 								<input type="file" id="content-avatar"  name="avatar"" />
+								<input type="hidden" name="MAX_FILE_SIZE" value="<?=filesize_from_human(ini_get('upload_max_filesize').'B')?>" />
+								<p class="description"><span class="little"><?=$this->locale()->translate('file-upload-size',$this->locale()->filesize(filesize_from_human(ini_get('upload_max_filesize').'B')))?></span></p>
 							</div>
 						</div>
 						<script type="text/javascript">

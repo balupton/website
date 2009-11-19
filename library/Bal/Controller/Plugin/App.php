@@ -1,0 +1,443 @@
+<?php
+require_once 'Zend/Controller/Plugin/Abstract.php';
+class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
+	
+	# ========================
+	# VARIABLES
+	
+	protected $_options = array(
+	);
+	
+	# ========================
+	# CONSTRUCTORS
+	
+	/**
+	 * Construct
+	 * @param array $options
+	 */
+	public function __construct ( array $options = array() ) {
+		$this->mergeOptions($options);
+	}
+	
+	
+	# ========================
+	# CONFIG
+	
+	/**
+	 * Gets the Application Configuration (as array)
+	 * @return array
+	 */
+	public function getConfig ( ) {
+		# Prepare:
+		$applicationConfig = array();
+		
+		# Load
+		if ( Zend_Registry::isRegistered('applicationConfig') ) {
+			$applicationConfig = Zend_Registry::get('applicationConfig');
+		}
+		
+		# Done
+		return $applicationConfig;
+	}
+	
+	/**
+	 * Set the Application Configuration
+	 * @param array $applicationConfig
+	 */
+	public function setConfig ( array $applicationConfig = array() ) {
+		# Load
+		Zend_Registry::set('applicationConfig', $applicationConfig);
+		
+		# Chain
+		return $this;
+	}
+	
+	/**
+	 * Get the helper option
+	 * @param string $name
+	 * @param mixed $default
+	 */
+	public function getOption ( $name, $default = null ) {
+		# Get
+		return empty($this->_options[$name]) ? $default : $this->_options[$name];
+	}
+	
+	/**
+	 * Set the helper option
+	 * @param string $name
+	 * @param mixed $value
+	 */
+	public function setOption ( $name, $value ) {
+		# Set
+		$this->_options[$name] = $value;
+		# Chain
+		return $this;
+	}
+	
+	/**
+	 * Merge the helper options
+	 * @param array $options
+	 */
+	public function mergeOptions ( array $options ) {
+		# Merge
+		$this->_options = array_merge($this->_options, $options);
+		# Chain
+		return $this;
+	}
+	
+	# -----------
+	# Authentication
+	
+	/**
+	 * Logout the User
+	 * @param bool $redirect
+	 */
+	public function logout ( ) {
+		# Locale
+	   	Zend_Registry::get('Locale')->clearLocale();
+		# Logout
+		$this->getAuth()->clearIdentity();
+		# Chain
+		return $this;
+	}
+
+	/**
+	 * Login the User
+	 * @param string $username
+	 * @param string $password
+	 * @param string $locale
+	 * @return bool
+	 */
+	public function login ( $username, $password, $locale = null ) {
+		# Prepare
+		$Session = new Zend_Session_Namespace('login'); // not sure why needed but it is here
+		$Auth = $this->getAuth();
+		
+		# Load
+		$AuthAdapter = new BAL_Auth_Adapter_Doctrine($username, $password);
+		$AuthResult = $Auth->authenticate($AuthAdapter);
+		
+		# Check
+		if ( !$AuthResult->isValid() ) {
+			# Failed
+			$error = implode($AuthResult->getMessages(),"\n");
+			$error = empty($error) ? 'The credentials that were supplied are invalid' : $error;
+			throw new Zend_Auth_Exception($error);
+		}
+		
+		# Passed
+	
+		# Set Locale
+		if ( $locale ) {
+   			$Locale = Zend_Registry::get('Locale');
+			$Locale->setLocale($locale);
+		}
+		
+		# User
+		$User = $this->setUser();
+		
+		# Acl
+		$this->loadUserAcl($User);
+		
+		# Done
+		return true;
+	}
+	
+	/**
+	 * Get the Zend Auth
+	 * @return Zend_Auth
+	 */
+	public function getAuth ( ) {
+		# Return the Zend_Auth Singleton
+		return Zend_Auth::getInstance();
+	}
+	
+	/**
+	 * Do we have an Identity
+	 * @return bool
+	 */
+	public function hasIdentity ( ) {
+		# Check
+		return $this->getIdentity() ? true : false;
+	}
+	
+	/**
+	 * Return the logged in Identity
+	 * @return Doctrine_Record
+	 */
+	public function getIdentity ( ) {
+		# Fetch
+		return $this->getAuth()->getIdentity();
+	}
+	
+	/**
+	 * Do we have a User
+	 * @return bool
+	 */
+	public function hasUser ( ) {
+		# Check
+		return !empty($this->_User);
+	}
+	
+	/**
+	 * Return the logged in User
+	 * @return Doctrine_Record
+	 */
+	public function getUser ( ) {
+		# Return
+		return $this->_User;
+	}
+	
+	/**
+	 * Sets the logged in User
+	 * @return Doctrine_Record
+	 */
+	public function setUser ( ) {
+		$Auth = $this->getAuth();
+		$this->_User = $Auth->hasIdentity() ? Doctrine::getTable('User')->find($Auth->getIdentity()) : false;
+		return $this->_User;
+	}
+	
+	# -----------
+	# Authorisation
+	
+	/**
+	 * Return the Zend Registry
+	 * @return Zend_Registry
+	 */
+	public function getRegistry ( ) {
+		return Zend_Registry::getInstance();
+	}
+	
+	/**
+	 * Return the applied Acl
+	 * @param Zend_Acl $Acl [optional]
+	 * @return Zend_Acl
+	 */
+	public function getAcl ( Zend_Acl $Acl = null ) {
+		# Check
+		if ( $Acl) {
+			return $Acl;
+		}
+		
+		# Check
+		if ( !Zend_Registry::isRegistered('acl') ) {
+			# Create
+			$Acl = new Zend_Acl();
+			$this->loadAcl($Acl);
+			$this->setAcl($Acl);
+		}
+		else {
+			# Load
+			$Acl = Zend_Registry::get('acl');
+		}
+		
+		# Return
+		return $Acl;
+	}
+	
+	/**
+	 * Apply the Acl
+	 * @param Zend_Acl $Acl [optional]
+	 */
+	public function setAcl ( Zend_Acl $Acl ) {
+		# Set
+		$Acl = Zend_Registry::set('acl', $Acl);
+		
+		# Chain
+		return $this;
+	}
+	
+	/**
+	 * Load the User into the Acl
+	 * @param Doctrine_Record $Identity [optional]
+	 * @param Zend_Acl $Acl [optional]
+	 * @return bool
+	 */
+	public function loadUserAcl ( $Identity = null, Zend_Acl $Acl = null ) {
+		# Ensure User
+		if ( !$Identity && !($Identity = $this->getIdentity()) ) return false;
+		
+		# Fetch ACL
+		$Acl = $this->getAcl($Acl);
+		
+		# Create User Acl
+		$AclUser = new Zend_Acl_Role('user-'.$Role->code);
+		
+		# Add User Roles to Acl
+		/* What we do here is add the user role to the ACL.
+		 * We also make it so the user role inherits from the actual roles
+		 */
+		$Roles = $Identity->Roles; $roles = array();
+		foreach ( $Roles as $Role ) {
+			$roles[] = 'role-'.$Role->code;
+		}
+		$Acl->addRole($AclUser, $roles);
+		
+		# Add User Permissions to Acl
+		$Permissions = $Identity->Permissions; $permissions = array();
+		foreach ( $Permissions as $Permission ) {
+			$permissions[] = 'permission-'.$Permission->code;
+		}
+		$Acl->allow($AclUser, null, $permissions);
+		
+		# Done
+		return true;
+	}
+	
+	public function loadAcl ( Zend_Acl $Acl = null ) {
+		# Fetch ACL
+		$Acl = $this->getAcl($Acl);
+		
+		# Add Permissions to Acl
+		$Permissions = Doctrine::getTable('Permission')->findAll(Doctrine::HYDRATE_ARRAY);
+		foreach ( $Permissions as $Permission ) {
+			$permission = 'permission-'.$Permission['code'];
+			$Acl->add(new Zend_Acl_Resource($permission));
+		}
+		
+		# Add Roles to Acl
+		$Roles = Doctrine::getTable('Role')->createQuery()->select('r.code, rp.code')->from('Role r, r.Permission rp')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		foreach ( $Roles as $Role ) {
+			$role = 'role-'.$Role['code'];
+			$AclRole = new Zend_Acl_Role($role);
+			$Acl->addRole($AclRole);
+			$permissions = array();
+			foreach ( $Role['Permissions'] as $Permission ) {
+				$permissions[] = 'permission-'.$Permission['code'];
+			}
+			$Acl->allow($AclRole, null, $permissions);
+		}
+		
+		# Done
+		return true;
+	}
+	
+	/**
+	 * Do we have that Acl entry?
+	 * @param string $role
+	 * @param string $action
+	 * @param mixed $resource
+	 * @param bool
+	 */
+	public function hasAclEntry ( $role, $action, $resource, Zend_Acl $Acl = null ) {
+		# Prepare
+		$Acl = $this->getAcl($Acl);
+		
+		# Check
+		return $Acl->isAllowed($role, $action, $resource);
+	}
+	
+	/**
+	 * Does the loaded User have that Permission?
+	 * @param string $action
+	 * @param mixed $permissions [optional]
+	 * @return bool
+	 */
+	public function hasPermission ( $action, $permissions = null ) {
+		# Prepare
+		if ( $permissions === null ) {
+			// Shortcut simplified
+			$permissions = $action;
+			$action = null;
+		}
+		
+		# Fetch
+		$Identity = $this->getIdentity();
+		
+		# Check
+		if ( $Identity->id && ($result = $this->hasAclEntry('user-'.$Identity->id, $action, $permissions)) ) {
+			return $result;
+		}
+		
+		# Done
+		return false;
+	}
+	
+	# -----------
+	# Helpers
+	
+	/**
+	 * Get the Pager
+	 * @param integer $page_current [optional] Which page are we on?
+	 * @param integer $page_items [optional] How many items per page?
+	 * @return
+	 */
+	public function getPager($DQ, $page_current = 1, $page_items = 10){
+		# Fetch
+		$Pager = new Doctrine_Pager(
+			$DQ,
+			$page_current,
+			$page_items
+		);
+		
+		# Return
+		return $Pager;
+	}
+	
+	/**
+	 * Get the Pages
+	 * @param unknown_type $Pager
+	 * @param unknown_type $PagerRange
+	 * @param unknown_type $page_current
+	 */
+	public function getPages($Pager, $PagerRange, $page_current = 1){
+		# Paging
+		$page_first = $Pager->getFirstPage();
+		$page_last = $Pager->getLastPage();
+		$Pages = $PagerRange->rangeAroundPage();
+		foreach ( $Pages as &$Page ) {
+			$Page = array(
+				'number' => $Page,
+				'title' => $Page
+			);
+		}
+		$Pages[] = array('number' => $Pager->getPreviousPage(), 'title' => 'prev');
+		$Pages[] = array('number' => $Pager->getNextPage(), 'title' => 'next');
+		foreach ( $Pages as &$Page ) {
+			$page = $Page['number'];
+			$Page['selected'] = $page == $page_current;
+			if ( is_numeric($Page['title']) ) {
+				$Page['disabled'] = $page < $page_first || $page > $page_last;
+			} else {
+				$Page['disabled'] = $page < $page_first || $page > $page_last || $page == $page_current;
+			}
+		}
+		
+		# Done
+		return $Pages;
+	}
+	
+	/**
+	 * Get the Paging Details
+	 * @param unknown_type $DQ
+	 * @param unknown_type $page_current
+	 * @param unknown_type $page_items
+	 * @param unknown_type $pages_chunk
+	 */
+	public function getPaging($DQ, $page_current = 1, $page_items = 5, $pages_chunk = 5){
+		# Fetch
+		$Pager = $this->getPager($DQ, $page_current, $page_items);
+		
+		# Results
+		$PagerRange = new Doctrine_Pager_Range_Sliding(array(
+				'chunk' => $pages_chunk
+    		),
+			$Pager
+		);
+		$Items = $Pager->execute();
+		
+		# Get Pages
+		$Pages = $this->getPages($Pager, $PagerRange, $page_current);
+		
+		# Check page current
+		$page_first = $Pager->getFirstPage();
+		$page_last = $Pager->getLastPage();
+		if ( $page_current > $page_last ) $page_current = $page_last;
+		elseif ( $page_current < $page_first ) $page_current = $page_first;
+		
+		# Done
+		return array($Items, $Pages, $page_current);
+	}
+	
+}

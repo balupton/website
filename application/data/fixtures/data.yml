@@ -89,8 +89,8 @@ User:
         username: "mydance"
         password: "password"
         enabled: true
-        displayname: "myDance"
-        fullname: "myDance"
+        displayname: "MyDance"
+        fullname: "MyDance"
         email: "contact@mydance.com.au"
         Roles:
             - Role_MyDanceAdmin

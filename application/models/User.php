@@ -10,46 +10,71 @@
  * @author     ##NAME## <##EMAIL##>
  * @version    SVN: $Id: Builder.php 6508 2009-10-14 06:28:49Z jwage $
  */
-class User extends BaseUser
-{
-	
-	/** Set the PermissionGroup for a User (clear others) */
-	public function setPermissionGroup($permissiongroup){
-		// Clear Relation
-		$this->unlink('PermissionGroup');
-		$this->link('PermissionGroup', $permissiongroup);
-		// Done
+class User extends BaseUser {
+
+	/**
+	 * Set the Role(s) for a User (clear others)
+	 * @param mixed $role
+	 */
+	public function setRole ( $role ) {
+		$this->unlink('Roles');
+		$this->link('Roles', $role);
 		return true;
 	}
-	
-	/*
-	public function linkPermissionGroup($permissiongroup){
-		// Fetch
-		die($permissiongroup);
-		$PermissionGroup = null;
-		if ( is_numeric($permissiongroup) ) {
-			$PermissionGroup = Doctrine::getTable('PermissionGroup')->find($permissiongroup);
-		} else {
-			$PermissionGroup = Doctrine::getTable('PermissionGroup')->findOneByCode($permissiongroup);
-		}
-		
+
+	/**
+	 * Add a Role(s) to the User
+	 * @param mixed $role
+	 */
+	public function addRole ( $role ) {
+		$this->link('Roles', $role);
+		return true;
 	}
-	*/
-	
-	/** Checks if the User has a certain Permission */
-	public function hasPermission ( $code ) {
+
+	/**
+	 * Does user have Role?
+	 * @param mixed $permission
+	 */
+	public function hasRole ( $role ) {
 		// Prepare
-		$this->loadReferenceInit('PermissionList');
-		$PermissionList = $this->PermissionList;
-		$result = false;
-		// Seek
-		foreach ( $PermissionList as $Permission ) {
-			if ( $code === $Permission->get('code') ) {
+		if ( is_object($role) ) {
+			$role = $role->code;
+		} elseif ( is_array($role) ) {
+			$role = $role['code'];
+		}
+		// Search
+		$List = $this->Roles;
+		foreach ( $List as $Role ) {
+			if ( $role === $Role->code ) {
 				$result = true;
 				break;
 			}
 		}
-		// Exhausted
+		// Done
 		return $result;
 	}
+	
+	/**
+	 * Does user have Permission?
+	 * @param mixed $permission
+	 */
+	public function hasPermission ( $permission ) {
+		// Prepare
+		if ( is_object($permission) ) {
+			$permission = $permission->code;
+		} elseif ( is_array($permission) ) {
+			$permission = $permission['code'];
+		}
+		// Search
+		$List = $this->Permissions;
+		foreach ( $List as $Permission ) {
+			if ( $permission === $Permission->code ) {
+				$result = true;
+				break;
+			}
+		}
+		// Done
+		return $result;
+	}
+	
 }
