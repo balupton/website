@@ -7,16 +7,12 @@ class Cms_FrontController extends Zend_Controller_Action {
 	# INDEX
 	
 	public function indexAction () {
-		// Navigation
-		die('indexACtion reached');
-		$NavigationList = $this->applyNavigation();
+		# Get Index Page
+		$Content = Doctrine::getTable('Content')->createQuery()->where('enabled = ? AND status = ?', array(true,'published'))->orderBy('position ASC, id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY)->fetchOne();
+		$content = $Content['id'];
 		
-		// Get Page
-		$Item = $NavigationList->getFirst();
-		$Item->load();
-		
-		// Forward
-		return $this->_forward('item', null, null, array('Item'=>$Item));
+		# Forward
+		return $this->_forward('content-page', null, null, array('id'=>$content));
 	}
 	
 	# ========================
@@ -39,35 +35,5 @@ class Cms_FrontController extends Zend_Controller_Action {
 		$this->view->Content = $Item->toArray();
 	}
 	
-	# ========================
-	# EVENTS
-	
-	public function eventsPageAction ( ) {
-		// Prepare
-		$Request = $this->getRequest();
-		$Response = $this->getResponse();
-		
-		// Handle
-		var_dump($Request->getParams());
-		die('events found');
-		
-		// View
-		die;
-	}
-	
-	public function eventPageAction ( ) {
-		// Request
-		$Request = $this->getRequest();
-		$Response = $this->getResponse();
-		$Item_id = $this->_getParam('Item_id');
-		$Event = Doctrine::getTable('Event')->find($Item_id);
-		
-		// Get the Event
-		echo($Item_id.':'.$Event->title.'<br />');
-		
-		// Dev
-		$this->view->Event = $Event->toArray();
-		$Response->insert('event', $this->render('event'));
-	}
 	
 }

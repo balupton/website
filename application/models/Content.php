@@ -47,14 +47,16 @@ class Content extends BaseContent {
 	 */
 	public function setPosition ( $position = null ) {
 		// Default
-		if ( is_null($position) && $this->id ) {
+		if ( !$this->position && is_null($position) && $this->id ) {
 			$position = $this->id;
 		}
+		
 		// Is Change?
-		if ( $this->position != $position ) {
+		if ( $this->position != $position && $position ) {
 			$this->_set('position', $position);
 			return true;
 		}
+		
 		// No Change
 		return false;
 	}
@@ -350,4 +352,26 @@ class Content extends BaseContent {
 		return true;
 	}
 
+	/**
+	 * Ensure Route id exists
+	 * @param Doctrine_Event $Event
+	 * @return string
+	 */
+	public function postInsert ( Doctrine_Event $Event ) {
+		// Prepare
+		$Invoker = $Event->getInvoker();
+		$Route = $Invoker->Route;
+		
+		// Ensure
+		if ( !$Route->data['id'] ) {
+			$data = $Route->data;
+			$data['id'] = $Invoker->id;
+			$Route->data = $data;
+			$Route->save();
+		}
+		
+		// Done
+		return true;
+	}
+	
 }
