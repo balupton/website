@@ -18,7 +18,7 @@
  * @property string $humantype
  * @property integer $width
  * @property integer $height
- * @property Doctrine_Collection $Content
+ * @property Doctrine_Collection $ContentList
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -114,7 +114,7 @@ abstract class BaseMedia extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Content', array(
+        $this->hasMany('Content as ContentList', array(
              'local' => 'id',
              'foreign' => 'avatar_id'));
 

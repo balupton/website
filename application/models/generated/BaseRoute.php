@@ -9,7 +9,7 @@
  * @property string $path
  * @property string $type
  * @property array $data
- * @property Doctrine_Collection $Content
+ * @property Doctrine_Collection $ContentList
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -31,6 +31,7 @@ abstract class BaseRoute extends Doctrine_Record
         $this->hasColumn('path', 'string', 150, array(
              'type' => 'string',
              'notblank' => true,
+             'unique' => true,
              'length' => '150',
              ));
         $this->hasColumn('type', 'string', 15, array(
@@ -46,7 +47,7 @@ abstract class BaseRoute extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Content', array(
+        $this->hasMany('Content as ContentList', array(
              'local' => 'id',
              'foreign' => 'route_id'));
 

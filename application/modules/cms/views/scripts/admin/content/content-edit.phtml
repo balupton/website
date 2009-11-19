@@ -5,6 +5,8 @@
 	$mode_edit = $mode === 'edit';
 	$type = $this->type;
 	$Type = ucfirst($type);
+	$this->headTitle()->append($Type);
+	$this->headTitle()->append(empty($this->ContentArray['title'])?'New':$this->ContentArray['title']);
 ?>
 <div class="wrap">
 	<? if ( $type === 'event' ): ?>
@@ -167,7 +169,7 @@
 							File under:
 						</label>
 						<select name="content[parent]" id="content-parent">
-							<option <?=($this->ContentArray['Parent']['id']==0?'selected="selected" ':'')?> value="0">Root</option>
+							<option <?=($this->ContentArray['Parent']['id']==0?'selected="selected" ':'')?> value="0">- Top Level</option>
 							<?
 							$skip = $skip_factor = false;
 							foreach($this->ContentListArray as $Content ):
@@ -183,7 +185,7 @@
 									continue;
 								}
 								echo '<option '.($this->ContentArray['Parent']['id']==$Content['id']?'selected="selected" ':'').' value="'.$Content['id'].'" title="'.$Content['Route']['path'].'">'.
-									str_repeat('-', $Content['level']).' '.$Content['title'].
+									str_repeat('&nbsp;', ((int)$Content['level'])*2+2).'-&nbsp;'.$Content['title'].
 								'</option';
 							endforeach; ?>
 						</select>

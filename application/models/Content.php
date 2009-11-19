@@ -12,36 +12,22 @@
  */
 class Content extends BaseContent {
 	
-	/** Old values */
-	protected $_old = array();
-	protected $_new = array();
 	protected $_View = null;
-	
+
 	/**
-	 * Backup old values
-	 * @param Doctrine_Event $Event
+	 * Apply modifiers
+	 * @return
 	 */
-	public function preSave ( Doctrine_Event $Event ) {
-		// Prepare
-		$Invoker = $Event->getInvoker();
-		
-		// Modified
-		$this->_old = $Event->getInvoker()->getModified(true);
-		$this->_new = $Event->getInvoker()->getModified(false);
-		
-		// Get View
-		$View = $this->getView();
-		
-		// Render content
-		if ( !empty($this->_new['content']) ) {
-			$Invoker->content_rendered = $View->content()->render($Invoker->content);
-			$Invoker->description_rendered = $View->content()->render($Invoker->description);
-		}
-		
-		// Done
-		return true;
+	public function setUp ( ) {
+		$this->hasMutator('position', 'setPosition');
+		$this->hasMutator('authorstr', 'setAuthorstr');
+		$this->hasMutator('path', 'setPath');
+		$this->hasMutator('code', 'setCode');
+		$this->hasMutator('content', 'setContent');
+		$this->hasMutator('description', 'setDescription');
+		parent::setUp();
 	}
-	
+
 	/**
 	 * Get's the View object
 	 */
@@ -53,6 +39,291 @@ class Content extends BaseContent {
 		}
 		return $this->_View;
 	}
+
+	/**
+	 * Sets the position
+	 * @param int $position [optional] defaults to id
+	 * @return bool
+	 */
+	public function setPosition ( $position = null ) {
+		// Default
+		if ( is_null($position) && $this->id ) {
+			$position = $this->id;
+		}
+		// Is Change?
+		if ( $this->position != $position ) {
+			$this->_set('position', $position);
+			return true;
+		}
+		// No Change
+		return false;
+	}
+
+	/**
+	 * Sets the authorstr field
+	 * @param int $position [optional] defaults to id
+	 * @return bool
+	 */
+	public function setAuthorstr ( $author = null ) {
+		/// Default
+		if ( is_null($author) ) {
+			if ( isset($this->Author) && $this->Author->exists() ) {
+				$author = $this->Author->displayname;
+			}
+		}
+		// Is Change?
+		if ( $this->authorstr != $author ) {
+			$this->_set('authorstr', $author);
+			return true;
+		}
+		// No Change
+		return false;
+	}
+
+	/**
+	 * Get's a tag array
+	 * @return array
+	 */
+	public function getTagArray ( ) {
+		$tags = array();
+		if ( isset($this->Tags) ) {
+			$tags = array();
+			foreach ( $this->Tags as $Tag ) {
+				$tags[] = $Tag->name;
+			}
+			sort($tags);
+		}
+		return $tags;
+	}
+
+	/**
+	 * Sets the tagstr field
+	 * @param int $value [optional]
+	 * @return bool
+	 */
+	public function setTagstr ( $value = null ) {
+		/// Default
+		if ( is_null($value) ) {
+			$tags = $this->getTagArray();
+			$value = implode($tags, ', ');
+		}
+		// Is Change?
+		if ( $this->tagstr != $value ) {
+			$this->_set('tagstr', $value);
+			return true;
+		}
+		// No Change
+		return false;
+	}
+
+	/**
+	 * Sets the code field
+	 * @param int $code
+	 * @return bool
+	 */
+	public function setCode ( $code ) {
+		$this->_set('code', $code);
+		$this->setPath();
+		return true;
+	}
+
+	/**
+	 * Sets the content field
+	 * @param int $code
+	 * @return bool
+	 */
+	public function setContent ( $content ) {
+		$View = $this->getView();
+		$this->content_rendered = $View->content()->render($content);
+		$this->_set('content', $content);
+		return true;
+	}
+	
+	/**
+	 * Sets the description field
+	 * @param int $code
+	 * @return bool
+	 */
+	public function setDescription ( $description ) {
+		$View = $this->getView();
+		$this->description_rendered = $View->content()->render($description);
+		$this->_set('description', $description);
+		return true;
+	}
+	
+	/**
+	 * Sets the Route's path field
+	 * @param int $path [optional]
+	 * @return bool
+	 */
+	public function setPath ( $path = null ) {
+		// Prepare
+		$save = false;
+		// Default
+		if ( is_null($path) ) {
+			$path = $this->code;
+			if ( $this->parent_id )
+				$path = trim($this->Parent->Route->path,'/') . '/' . trim($path,'/');
+		}
+		$path = trim($path, '/');
+		if ( empty($path) ) {
+			return false;
+		}
+		// Update
+		if ( $this->route_id ) {
+			$Route = $this->Route;
+		} else {
+			$Route = new Route();
+			$Route->type = 'content';
+			$Route->data = array('id' => $this->id);
+			$this->Route = $Route;
+			$save = true;
+		}
+		// Apply
+		if ( $Route->path != $path ) {
+			$Route->path = $path;
+			$Route->save();
+			// Update Children
+			$Children = $this->Children;
+			foreach ( $Children as $Child ) {
+				$Child->setPath($path.'/'.$Child->code);
+			}
+		}
+		// Done
+		return $save;
+	}
+	
+	/**
+	 * Ensure Consistency
+	 * @return bool
+	 */
+	public function ensureConsistency(){
+		// Prepare
+		$save = false;
+		
+		// Tags
+		if ( $this->setTagstr() ) {
+			$save = true;
+		}
+		
+		// Position
+		if ( $this->setPosition() ) {
+			$save = true;
+		}
+		
+		// Author
+		if ( $this->setAuthorstr() ) {
+			$save = true;
+		}
+		
+		// Route
+		if ( $this->setPath() ) {
+			$save = true;
+		}
+		
+		// Send
+		if ( $this->send() ) {
+			$save = true;
+		}
+		
+		// Done
+		return $save;
+	}
+
+	/**
+	 * Get Subscribers
+	 * @param constant $hydrateMode
+	 * @param Doctrine_Query $SubscriberQuery
+	 */
+	public function getSubscribers ( $hydrateMode = null, Doctrine_Query $SubscriberQuery = null ) {
+		$SubscribersArray = array();
+		$tags = $this->getTagArray();
+		if ( is_null($SubscriberQuery) && $this->id && !empty($tags) ) {
+			$SubscriberQuery = Doctrine_Query::create()->select('s.email')->from('Subscriber s, s.Tags st')->where('s.enabled = ?', true)->andWhere('NOT EXISTS (SELECT cas.id FROM ContentAndSubscriber cas WHERE cas.subscriber_id = s.id AND cas.content_id = ?)', $this->id)->andWhereIn('st.name', $tags);
+			if ( !is_null($hydrateMode) ) {
+				$SubscriberQuery->setHydrationMode($hydrateMode);
+			}
+			$SubscribersArray = $SubscriberQuery->execute();
+		}
+		return $SubscribersArray;
+	}
+
+	/**
+	 * Send out to subscribers
+	 */
+	public function send ( ) {
+		// Check if we can
+		$tags = $this->getTagArray();
+		if ( empty($tags) )
+			return false;
+			// We can
+		$SubscribersArray = $this->getSubscribers(Doctrine::HYDRATE_ARRAY);
+		if ( !empty($SubscribersArray) ) {
+			// Get View
+			$View = $this->getView();
+			// Update
+			if ( empty($this->send_at) ) {
+				$this->send_at = date('Y-m-d H:i:s', time());
+			}
+			// We would like to send out
+			$View = clone $View;
+			$View->ContentArray = $this->toArray();
+			$View->headTitle()->append($this->title);
+			// Configure
+			global $applicationConfig, $Application;
+			$Application->getBootstrap()->bootstrap('mail');
+			// Mail
+			$mail = $applicationConfig['mail'];
+			$mail['subject'] = $this->title;
+			$mail['html'] = $View->render('email/subscription.phtml');
+			$mail['text'] = strip_tags($mail['html']);
+			$Mail = new Zend_Mail();
+			$Mail->setFrom($mail['from']['address'], $mail['from']['name']);
+			// $Mail->addTo($mail['from']['address'], $mail['from']['name']);
+			foreach ( $SubscribersArray as $SubscriberArray ) {
+				$Mail->addBcc($SubscriberArray['email']);
+				// Save send
+				$ContentAndSubscriber = new ContentAndSubscriber();
+				$ContentAndSubscriber->content_id = $this->id;
+				$ContentAndSubscriber->subscriber_id = $SubscriberArray['id'];
+				$ContentAndSubscriber->status = 'delivered';
+				$ContentAndSubscriber->save();
+			}
+			$Mail->setSubject($mail['subject']);
+			$Mail->setBodyText($mail['text']);
+			$Mail->setBodyHtml($mail['html']);
+			$Mail->send();
+			// Update
+			$this->send_finished_at = date('Y-m-d H:i:s', time());
+			$this->send_status = 'completed';
+			$this->send_all += count($SubscribersArray);
+			$this->send_remaining = 0;
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Ensure
+	 */
+	
+	/**
+	 * Backup old values
+	 * @param Doctrine_Event $Event
+	 */
+	public function preSave ( Doctrine_Event $Event ) {
+		// Prepare
+		$Invoker = $Event->getInvoker();
+		$save = false;
+		
+		// Ensure
+		if ( $Invoker->ensureConsistency() ) {
+			$save = true;
+		}
+		
+		// Done
+		return true;
+	}
 	
 	/**
 	 * Handle tagstr, authorstr, and code changes
@@ -63,120 +334,10 @@ class Content extends BaseContent {
 		// Prepare
 		$Invoker = $Event->getInvoker();
 		$save = false;
-		$modified = $Invoker->getLastModified();
-		
-		// Tags
-		$tags = array();
-		foreach ( $Invoker->Tags as $Tag ) {
-			$tags[] = $Tag->name;
-		}
-		sort($tags);
-		$tagstr = implode($tags, ', ');
-		if ( $Invoker->tagstr != $tagstr ) {
-			$Invoker->tagstr = $tagstr;
-			$save = true;
-		}
-		
-		// Position
-		if ( !$Invoker->position ) {
-			$Invoker->position = $Invoker->id;
-			$save = true;
-		}
-		
-		// Author
-		if ( isset($Invoker->Author) && $Invoker->Author->exists() ) {
-			$author = $Invoker->Author->displayname;
-			if ( $Invoker->authorstr != $author ) {
-				$Invoker->authorstr = $author;
-				$save = true;
-			}
-		}
-		
-		// Route
-		if ( !isset($Invoker->Route) && !$Invoker->Route->exists() ) {
-			$Route = new Route();
-			$path = $Invoker->code;
-			if ( isset($Invoker->Parent) ) $path = $Invoker->Parent->Route->path.'/'.$path;
-			$Route->path = $path;
-			$Route->type = 'content';
-			$Route->data = array('id'=>$Invoker->id);
-			$Route->save();
-			$Invoker->link('Route', $Route->id);
-			$save = true;
-		}
 	
-		// Check if code has changed
-		if ( !empty($modified['code']) && !empty($this->_old['code']) ) {
-			// The code has changed, update route and all children, eee
-			$old_code = $this->_old['code'];
-			$new_code = $Invoker->code;
-			$Route = $this->Route;
-			$old_path = $Route->path;
-			$new_path = $Route->path = rtrim_value($Route->path, $old_code).$new_code;
-			$Route->save();
-			// Get children
-			$Children = $Invoker->Children;
-			foreach ( $Children as $Child ) {
-				$ChildRoute = $Child->Route;
-				$ChildRoute->path = $new_path.ltrim_value($ChildRoute->path, $old_path);
-				$ChildRoute->save();
-			}
-			// Done
-		}
-		
-		// Get View
-		$View = $this->getView();
-	
-		// Check if we need to send out to any subscribers
-		if ( !empty($tags) ) {
-			$SubscriberQuery = Doctrine_Query::create()
-				->select('s.email')
-				->from('Subscriber s, s.Tags st')
-				->where('s.enabled = ?', true)
-				->andWhere('NOT EXISTS (SELECT cas.id FROM ContentAndSubscriber cas WHERE cas.subscriber_id = s.id AND cas.content_id = ?)', $Invoker->id)
-				->andWhereIn('st.name', $tags)
-				->setHydrationMode(Doctrine::HYDRATE_ARRAY);
-			$SubscribersArray = $SubscriberQuery->execute();
-			if ( !empty($SubscribersArray) ) {
-				// Update
-				if ( empty($Invoker->send_at) ) {
-					$Invoker->send_at = date('Y-m-d H:i:s', time());
-				}
-				// We would like to send out
-				$View = clone $View;
-				$View->ContentArray = $Invoker->toArray();
-				$View->headTitle()->append($Invoker->title);
-				// Configure
-				global $applicationConfig, $Application;
-				$Application->getBootstrap()->bootstrap('mail');
-				// Mail
-				$mail = $applicationConfig['mail'];
-				$mail['subject'] = $Invoker->title;
-				$mail['html'] = $View->render('email/subscription.phtml');
-				$mail['text'] = strip_tags($mail['html']);
-				$Mail = new Zend_Mail();
-				$Mail->setFrom($mail['from']['address'], $mail['from']['name']);
-				// $Mail->addTo($mail['from']['address'], $mail['from']['name']);
-				foreach ( $SubscribersArray as $SubscriberArray ) {
-					$Mail->addBcc($SubscriberArray['email']);
-					// Save send
-					$ContentAndSubscriber = new ContentAndSubscriber();
-					$ContentAndSubscriber->content_id = $Invoker->id;
-					$ContentAndSubscriber->subscriber_id = $SubscriberArray['id'];
-					$ContentAndSubscriber->status = 'delivered';
-					$ContentAndSubscriber->save();
-				}
-				$Mail->setSubject($mail['subject']);
-				$Mail->setBodyText($mail['text']);
-				$Mail->setBodyHtml($mail['html']);
-				$Mail->send();
-				// Update
-				$Invoker->send_finished_at = date('Y-m-d H:i:s', time());
-				$Invoker->send_status = 'completed';
-				$Invoker->send_all += count($SubscribersArray);
-				$Invoker->send_remaining = 0;
-				$save = true;
-			}
+		// Ensure
+		if ( $Invoker->ensureConsistency() ) {
+			$save = true;
 		}
 		
 		// Apply
@@ -187,5 +348,5 @@ class Content extends BaseContent {
 		// Done
 		return true;
 	}
-	
+
 }

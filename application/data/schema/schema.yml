@@ -15,6 +15,7 @@ Route:
         path:
             type: string(150)
             notblank: true
+            unique: true
         type:
             type: string(15)
             notblank: true
@@ -49,6 +50,7 @@ Content:
         code:
             type: string(30)
             notblank: true
+            unique: true
         title:
             type: string(50)
             notblank: true
@@ -125,10 +127,12 @@ Content:
             class: Media
             local: avatar_id
             foreign: id
+            foreignAlias: ContentList
             onDelete: "SET NULL"
         Route:
             local: route_id
             foreign: id
+            foreignAlias: ContentList
             onDelete: CASCADE
         Parent:
             class: Content

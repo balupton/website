@@ -78,10 +78,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */
 	protected function _initView ( ) {
 		$this->bootstrap('autoload');
+		$this->bootstrap('config');
+		global $applicationConfig;
         // Initialize view
         $view = new Zend_View();
         $view->doctype('XHTML1_STRICT');
-        $view->headTitle('Default Title')->setSeparator(' > ');
+        $view->headTitle($applicationConfig['bal']['site']['title'])->setSeparator($applicationConfig['bal']['site']['separator']);
 		$view->headMeta()->setHttpEquiv('Content-Type', 'text/html; charset=utf-8');
         // Add it to the ViewRenderer
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');

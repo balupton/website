@@ -54,6 +54,7 @@ abstract class BaseContent extends Doctrine_Record
         $this->hasColumn('code', 'string', 30, array(
              'type' => 'string',
              'notblank' => true,
+             'unique' => true,
              'length' => '30',
              ));
         $this->hasColumn('title', 'string', 50, array(
