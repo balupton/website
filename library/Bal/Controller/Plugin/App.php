@@ -5,6 +5,7 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	# ========================
 	# VARIABLES
 	
+	protected $_User = null;
 	protected $_options = array(
 	);
 	
@@ -114,7 +115,7 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 		$Auth = $this->getAuth();
 		
 		# Load
-		$AuthAdapter = new BAL_Auth_Adapter_Doctrine($username, $password);
+		$AuthAdapter = new Bal_Auth_Adapter_Doctrine($username, $password);
 		$AuthResult = $Auth->authenticate($AuthAdapter);
 		
 		# Check
@@ -133,11 +134,11 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 			$Locale->setLocale($locale);
 		}
 		
-		# User
-		$User = $this->setUser();
+		# Flush User
+		$this->setUser();
 		
 		# Acl
-		$this->loadUserAcl($User);
+		$this->loadUserAcl();
 		
 		# Done
 		return true;
@@ -185,6 +186,9 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	 */
 	public function getUser ( ) {
 		# Return
+		if ( $this->_User === null ) {
+			$User = $this->setUser();
+		}
 		return $this->_User;
 	}
 	
@@ -250,32 +254,32 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	
 	/**
 	 * Load the User into the Acl
-	 * @param Doctrine_Record $Identity [optional]
+	 * @param Doctrine_Record $User [optional]
 	 * @param Zend_Acl $Acl [optional]
 	 * @return bool
 	 */
-	public function loadUserAcl ( $Identity = null, Zend_Acl $Acl = null ) {
+	public function loadUserAcl ( $User = null, Zend_Acl $Acl = null ) {
 		# Ensure User
-		if ( !$Identity && !($Identity = $this->getIdentity()) ) return false;
+		if ( !$User && !($User = $this->getUser()) ) return false;
 		
 		# Fetch ACL
 		$Acl = $this->getAcl($Acl);
 		
 		# Create User Acl
-		$AclUser = new Zend_Acl_Role('user-'.$Role->code);
+		$AclUser = new Zend_Acl_Role('user-'.$User->id);
 		
 		# Add User Roles to Acl
 		/* What we do here is add the user role to the ACL.
 		 * We also make it so the user role inherits from the actual roles
 		 */
-		$Roles = $Identity->Roles; $roles = array();
+		$Roles = $User->Roles; $roles = array();
 		foreach ( $Roles as $Role ) {
 			$roles[] = 'role-'.$Role->code;
 		}
 		$Acl->addRole($AclUser, $roles);
 		
 		# Add User Permissions to Acl
-		$Permissions = $Identity->Permissions; $permissions = array();
+		$Permissions = $User->Permissions; $permissions = array();
 		foreach ( $Permissions as $Permission ) {
 			$permissions[] = 'permission-'.$Permission->code;
 		}
@@ -297,9 +301,10 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 		}
 		
 		# Add Roles to Acl
-		$Roles = Doctrine::getTable('Role')->createQuery()->select('r.code, rp.code')->from('Role r, r.Permission rp')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$Roles = Doctrine::getTable('Role')->createQuery()->select('r.code, rp.code')->from('Role r, r.Permissions rp')->setHydrationMode(Doctrine::HYDRATE_ARRAY)->execute();
 		foreach ( $Roles as $Role ) {
 			$role = 'role-'.$Role['code'];
+			var_dump($role);
 			$AclRole = new Zend_Acl_Role($role);
 			$Acl->addRole($AclRole);
 			$permissions = array();
@@ -343,10 +348,10 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 		}
 		
 		# Fetch
-		$Identity = $this->getIdentity();
+		$User = $this->getUser();
 		
 		# Check
-		if ( $Identity->id && ($result = $this->hasAclEntry('user-'.$Identity->id, $action, $permissions)) ) {
+		if ( $Identity->id && ($result = $this->hasAclEntry('user-'.$User->id, $action, $permissions)) ) {
 			return $result;
 		}
 		

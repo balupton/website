@@ -56,15 +56,26 @@ class BalAuditableListener extends Doctrine_Record_Listener {
 	 * @return void
 	 */
 	public function preInsert ( Doctrine_Event $Event ) {
-		// Prepare
+		# Prepare
 		$Invoker = $Event->getInvoker();
 		$created_column = $this->_options['created_at']['name'];
 		$published_column = $this->_options['published_at']['name'];
-		// Apply
+		
+		# Published
 		if ( empty($Invoker->$published_column) && !$this->_options['published_at']['disabled'] ) {
 			$Invoker->$published_column = $Invoker->$created_column;
 		}
-		// Done
+		
+		# Author
+		if ( empty($Invoker->author_id) ) {
+			$User = Zend_Controller_Front::getInstance()->getPlugin('Bal_Controller_Plugin_App')->getUser();
+			if ( $User && $User->id ) {
+				$Invoker->Author = $User;
+			}
+		}
+		
+		# Done
 		return true;
 	}
+	
 }

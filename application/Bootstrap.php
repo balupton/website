@@ -172,7 +172,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Initialise Zend's Autoloader, used for plugins etc
 		$autoloader = Zend_Loader_Autoloader::getInstance();
 		$autoloader->registerNamespace('Bal_');
-
+		
+		# Action Controllers
+		Zend_Controller_Action_HelperBroker::addPrefix('Bal_Controller_Action_Helper_');
+		
 		# Done
 		return $autoloader;
 	}

@@ -475,6 +475,8 @@
 				};
 				$switches.click(panelswitch);
 				$panels.hide();
+				// Done
+				return true;
 			}
 		},
 		'autogrow': {
@@ -506,6 +508,53 @@
 						return false;
 					});
 				});
+				// Done
+				return true;
+			}
+		},
+		'hint': {
+			config: {
+				selector: '.form-input-tip,.sparkle-hint,.sparkle-hint-has',
+				hasClass: 'sparkle-hint-has',
+				hintedClass: 'sparkle-hint-hinted',
+				
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this);
+				// Events
+				var focus = function(){
+					var $input = $(this);
+					var tip = $input.attr('title');
+					var val = $input.val();
+					// Handle
+					if (tip === val) {
+						$input.val('').removeClass(config.hintedClass);
+					}
+					// Done
+					return true;
+				}
+				var blur = function(){
+					var $input = $(this);
+					var tip = $input.attr('title');
+					var val = $input.val();
+					// Handle
+					if (tip === val || !val) {
+						$input.val('').addClass(config.hintedClass).val(tip);
+					}
+					// Done
+					return true;
+				}
+				// Fetch
+				var $inputs = $this.findAndSelf(config.selector).addClass(config.hasClass);
+				$inputs.each(function(){
+					var $input = $(this);
+					$input.focus(focus).blur(blur).trigger('blur');
+				});
+				$this.find('form').one('submit',function(){
+					$inputs.trigger('focus');
+				});
+				// Done
+				return $this;
 			}
 		}
 	});

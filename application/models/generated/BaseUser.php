@@ -34,16 +34,16 @@ abstract class BaseUser extends Doctrine_Record
              'unsigned' => true,
              'length' => '4',
              ));
-        $this->hasColumn('username', 'string', 15, array(
+        $this->hasColumn('username', 'string', 16, array(
              'type' => 'string',
              'notblank' => true,
              'unique' => true,
-             'length' => '15',
+             'length' => '16',
              ));
-        $this->hasColumn('password', 'string', 10, array(
+        $this->hasColumn('password', 'string', 16, array(
              'type' => 'string',
              'notblank' => true,
-             'length' => '10',
+             'length' => '16',
              ));
         $this->hasColumn('enabled', 'boolean', null, array(
              'type' => 'boolean',

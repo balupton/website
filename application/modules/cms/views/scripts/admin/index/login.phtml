@@ -5,16 +5,16 @@
 <div id="login">
 	<h1><a title="Powered by balCMS" href="<?=$this->url(array(),'balcmshome',true)?>">balCMS</a></h1>
 	
-	<form method="post" action="https://balupton.wordpress.com/wp-login.php" id="loginform" name="loginform">
+	<form method="post" action="<?=$this->url(array('action'=>'login'),'admin',true)?>" id="login-form">
 		<p>
 			<label>Username<br/>
-			<input type="text" tabindex="10" size="20" value="" class="input" id="user_login" name="log"/></label>
+			<input type="text" tabindex="10" size="20" value="" class="input text" id="login-username" name="login[username]"/></label>
 		</p>
 		<p>
 			<label>Password<br/>
-			<input type="password" tabindex="20" size="20" value="" class="input" id="user_pass" name="pwd"/></label>
+			<input type="password" tabindex="20" size="20" value="" class="input text" id="login-password" name="login[password]"/></label>
 		</p>
-		<p class="forgetmenot"><label><input type="checkbox" tabindex="90" value="forever" id="rememberme" name="rememberme"/> Remember Me</label></p>
+		<p class="forgetmenot"><label><input type="checkbox" tabindex="90" value="forever" id="login-remember" name="login[remember]"/> Remember Me</label></p>
 		<p class="submit">
 			<input type="submit" tabindex="100" value="Log In" class="button-primary" id="wp-submit" name="wp-submit"/>
 			<input type="hidden" value="http://balupton.wordpress.com/wp-admin/" name="redirect_to"/>

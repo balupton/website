@@ -116,45 +116,6 @@
 		return $(this).effect("highlight", {}, 3000);
 	};
 	
-	// Sparkle: form-input-tip
-	$.Sparkle.add('hint', function(){
-		var $this = $(this); var Sparkle = $.Sparkle;
-		// Events
-		var focus = function(){
-			var $input = $(this);
-			var tip = $input.attr('title');
-			var val = $input.val();
-			// Handle
-			if (tip === val) {
-				$input.val('').removeClass('sparkle-hint-hinted');
-			}
-			// Done
-			return true;
-		}
-		var blur = function(){
-			var $input = $(this);
-			var tip = $input.attr('title');
-			var val = $input.val();
-			// Handle
-			if (tip === val || !val) {
-				$input.val('').addClass('sparkle-hint-hinted').val(tip);
-			}
-			// Done
-			return true;
-		}
-		// Fetch
-		var $inputs = $this.findAndSelf('.form-input-tip,.sparkle-hint-has').addClass('sparkle-hint-has');
-		$inputs.each(function(){
-			var $input = $(this);
-			$input.focus(focus).blur(blur).trigger('blur');
-		});
-		$this.find('form').one('submit',function(){
-			$inputs.trigger('focus');
-		});
-		// Done
-		return $this;
-	});
-	
 	// Sparkle: delete warning
 	$.Sparkle.add('deletewarn', function(){
 		var $this = $(this); var Sparkle = $.Sparkle;

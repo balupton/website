@@ -87,7 +87,7 @@ User:
     User_Mydance:
         id: 2
         username: "mydance"
-        password: "password"
+        password: "benlupton123"
         enabled: true
         displayname: "MyDance"
         fullname: "MyDance"
@@ -119,7 +119,7 @@ Role:
     Role_SuperAdmin:
         id: 1
         code: superadmin
-        PermissionList:
+        Permissions:
             - Permission_Admin
             - Permission_Content
             - Permission_Event
@@ -129,7 +129,7 @@ Role:
     Role_MyDanceAdmin:
         id: 2
         code: mydanceadmin
-        PermissionList:
+        Permissions:
             - Permission_Admin
             - Permission_Content
             - Permission_Event

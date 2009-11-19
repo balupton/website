@@ -270,7 +270,8 @@ class Content extends BaseContent {
 			$View->ContentArray = $this->toArray();
 			$View->headTitle()->append($this->title);
 			// Configure
-			global $applicationConfig, $Application;
+			global $Application;
+			$applicationConfig = Zend_Registry::get('applicationConfig');
 			$Application->getBootstrap()->bootstrap('mail');
 			// Mail
 			$mail = $applicationConfig['mail'];

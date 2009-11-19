@@ -58,6 +58,20 @@
 											});
 										</script>
 									</div>
+									<? if ( !empty($this->ContentArray['Author']) ) :
+										$Author = $this->ContentArray['Author'];
+			                        	$author = $Content['Author']['displayname'];
+			                        	$author_url = $this->url(array(
+			                        		'action'=>'content-list',
+			                        		'search'=>$author
+			                        	), 'admin', true);
+			                        	$author_link = '<a href="'.$author_url.'" title="View all content by '.$author.'">'.$author.'</a>';
+										?>
+										<div class="misc-pub-section field" id="content-author-field">
+											<label for="content-author">Author:</label>
+											<span class="field-value" id="content-author-view"><?=$author_link?></span>
+										</div>
+									<? endif; ?>
 									<div class="misc-pub-section misc-pub-section-last field" id="content-published_at-field">
 										<label for="content-published_at">Publish<?=$mode_edit?'<span class="weak">ed</span>':''?> on:</label>
 										<span class="field-value" id="content-published_at-view"><?=$this->locale()->datetime($this->ContentArray['published_at'])?></span>
@@ -164,7 +178,7 @@
 						<label class="screen-reader-text" for="content-title">
 							Title
 						</label>
-						<input type="text" name="content[title]" id="content-title" tabindex="1" value="<?=$this->ContentArray['title']?>" autocomplete="off" />
+						<input type="text" name="content[title]" id="content-title" tabindex="1" value="<?=$this->ContentArray['title']?>" autocomplete="off" class="form-input-tip" title="Title" />
 					</div>
 					<div id="content-parent-field" class="field field-little">
 						<label for="content-parent">

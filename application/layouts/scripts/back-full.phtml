@@ -1,7 +1,8 @@
 <?php
-echo $this->doctype();
-$baseUrl = $this->bal()->getBaseUrl();
-$baseUrlBack = $this->bal()->getBaseUrl('back');
+	echo $this->doctype();
+	$baseUrl = $this->bal()->getBaseUrl();
+	$baseUrlBack = $this->bal()->getBaseUrl('back');
+	$User = $this->bal()->getUser();
 ?><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <?= $this->headMeta()?>
@@ -50,7 +51,7 @@ $baseUrlBack = $this->bal()->getBaseUrl('back');
                     <div id="wphead-info">
                         <div id="user_info">
                             <p>
-                                User: MyDance
+                                User: <?=$User['displayname']?>
                                 | <a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Feedback</a>
                                 | <a href="<?=$this->url(array('action'=>'logout'),'admin',true)?>" title="Log Out">Log Out</a>
                             </p>

@@ -2,7 +2,7 @@
 require_once 'Zend/Controller/Action/Helper/Abstract.php';
 class Bal_Controller_Action_Helper_App extends Zend_Controller_Action_Helper_Abstract {
 
-	protected $_App;
+	protected $_App = null;
 	
 	protected $_options = array(
 		'logged_out_forward' => array('login'),
@@ -14,11 +14,11 @@ class Bal_Controller_Action_Helper_App extends Zend_Controller_Action_Helper_Abs
 	 * @param array $options
 	 */
 	public function __construct ( array $options = array() ) {
-		$this->_App = Zend_Controller_Front::getInstance()->getPlugin('App');
+		$this->_App = Zend_Controller_Front::getInstance()->getPlugin('Bal_Controller_Plugin_App');
 		$this->mergeOptions($options);
 	}
 	
-	/*
+	/**
 	 * Returns @see Bal_Controller_Plugin_App
 	 */
 	public function getApp(){

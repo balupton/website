@@ -71,11 +71,12 @@ class Cms_AdminController extends Zend_Controller_Action {
 			$password = $login['password'];
 			$locale = $login['locale'];
 			# Login and Forward
-			return $this->getHelper('App')->authenticate($username, $password, $locale, false, true);
+			return $this->getHelper('App')->login($username, $password, $locale, false, true);
 		}
 			
 		# Render
 		$this->getHelper('layout')->setLayout('back-login');
+		$this->render('index/login');
 		
 		# Done
 		return true;
@@ -84,6 +85,9 @@ class Cms_AdminController extends Zend_Controller_Action {
 	public function dashboardAction ( ) {
 		# Prepare
 		$this->registerMenu('admin-dashboard');
+		
+		# Render
+		$this->render('index/dashboard');
 		
 		# Done
 		return true;

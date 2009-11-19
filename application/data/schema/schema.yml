@@ -290,11 +290,11 @@ User:
             unsigned: true
             autoincrement: true
         username:
-            type: string(15)
+            type: string(16)
             notblank: true
             unique: true
         password:
-            type: string(10)
+            type: string(16)
             notblank: true
         enabled:
             type: boolean
@@ -336,7 +336,7 @@ Role:
             notblank: true
             unique: true
     relations:
-        PermissionList:
+        Permissions:
             class: Permission
             local: role_id
             foreign: permission_id

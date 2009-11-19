@@ -5,7 +5,7 @@
  * http://www.balupton.com/
  *
  * This file is part of Balupton's Resource Library (balPHP).
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with Balupton's Resource Library (balPHP).  If not, see <http://www.gnu.org/licenses/>.
  *
@@ -97,7 +97,11 @@ class Bal_Locale {
 		// Done
 		return $this;
 	}
-	
+
+	public function clearLocale() {
+		$this->Session->locale = null;
+		return true;
+	}
 	public function setLocale($locale){
 		// Check Locale
         $language = explode('_', $locale); $language = $language[0];
@@ -181,7 +185,7 @@ class Bal_Locale {
 		} else {
 			$text = $this->Zend_Translate->_($text);
 			if ( $numargs !== 1 ) {
-				$args[0] = $text;	
+				$args[0] = $text;
 				$text = call_user_func_array('sprintf', $args);
 			}
 		}
@@ -223,7 +227,7 @@ class Bal_Locale {
 	    $now		= time();
 	    $timestamp	= strtotime($timestamp);
 	    // is it future date or past date
-	    if($now > $timestamp) {   
+	    if($now > $timestamp) {
 	        $difference	= $now - $timestamp;
 	        $tense		= 'ago';
 	       

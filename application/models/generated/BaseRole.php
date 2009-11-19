@@ -7,7 +7,7 @@
  * 
  * @property integer $id
  * @property string $code
- * @property Doctrine_Collection $PermissionList
+ * @property Doctrine_Collection $Permissions
  * @property Doctrine_Collection $Users
  * @property Doctrine_Collection $PermissionAndRole
  * @property Doctrine_Collection $RoleAndUser
@@ -40,7 +40,7 @@ abstract class BaseRole extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Permission as PermissionList', array(
+        $this->hasMany('Permission as Permissions', array(
              'refClass' => 'PermissionAndRole',
              'local' => 'role_id',
              'foreign' => 'permission_id'));

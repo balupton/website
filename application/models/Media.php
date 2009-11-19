@@ -27,7 +27,7 @@ class Media extends BaseMedia {
 	 */
 	public function setFile ( $file ) {
 		// Configuration
-		global $applicationConfig;
+		$applicationConfig = Zend_Registry::get('applicationConfig');
 		$upload_path = realpath($applicationConfig['bal']['files']['upload_path']);
 		$upload_url = $applicationConfig['bal']['files']['upload_url'];
 		
