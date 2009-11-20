@@ -40,22 +40,14 @@
 			<div id="logo"><h1><?=$this->bal()->getConfig('bal.site.name')?></h1></div>
 			
 			<div id="nav-top">
-				<ul class="ul-unstyled-horizontal">
-					<li><a href="#">Home</a> |</li>
-					<li><a href="#">Events</a> |</li>
-					<li><a href="#">Contact Us</a></li>
-				</ul>
+				<?=$this->navigation()->menu()->renderMenu($this->NavigationActions,array('ulClass'=>'ul-unstyled-horizontal'))?>
 			</div>
 			
 			<div class="clear"></div>
 		</div>
 		
 		<div id="nav-main">
-			<ul class="ul-unstyled-horizontal">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Events</a></li>
-				<li><a href="#">Contact Us</a></li>
-			</ul>
+			<?=$this->navigation()->menu()->renderMenu($this->NavigationMenu,array('ulClass'=>'ul-unstyled-horizontal'))?>
 		</div>
 		
 		<div id="content-wrap">
@@ -64,17 +56,11 @@
 		
 		<div id="footer">
 			<div id="footer-links">
-				<ul class="ul-unstyled-horizontal">
-					<li><a href="#">Safe Shopping Guarantee</a></li>
-					<li><a href="#">Customer Service</a></li>
-					<li><a href="#">About Us</a></li>
-					<li><a href="#">Contact Us</a></li>
-					<li><a href="#">Jobs</a></li>
-				</ul>
+				<?=$this->navigation()->menu()->renderMenu($this->NavigationFooter,array('ulClass'=>'ul-unstyled-horizontal'))?>
 			</div>
 			
 			<div id="footer-text">
-				<p><?=$this->bal()->getConfig('bal.site.name')?> &copy; 2009 | <a href="#">Privacy Policy</a> | <a href="#">Terms Of Use</a></p>
+				<p><?=$this->bal()->getConfig('bal.site.name')?> &copy; 2009
 			</div>
 		</div>
 			

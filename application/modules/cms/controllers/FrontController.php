@@ -8,6 +8,7 @@ class Cms_FrontController extends Zend_Controller_Action {
 	# CONSTRUCTORS
 	
 	public function init ( ) {
+		
 		# Layout
 		$this->getHelper('Layout')->setLayout($this->getHelper('App')->getApp()->getConfig('bal.site.skin'));
 		
@@ -18,19 +19,46 @@ class Cms_FrontController extends Zend_Controller_Action {
 		$this->getHelper('App')->authenticate(false, false);
 		
 		# Navigation
-		//$nav = file_get_contents(CONFIG_PATH . '/nav-admin.json');
-		//$nav = Zend_Json::decode($nav, Zend_Json::TYPE_ARRAY);
-		//$this->view->NavigationFavorites = new Zend_Navigation($nav['favorites']);
-		//$this->view->NavigationMenu = new Zend_Navigation($nav['menu']);
+		$this->applyNavigation();
+		
+		# Done
+		return true;
+	}
+	
+	public function applyNavigation ( ) {
+		# Content
+		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.*')->from('Content c, c.Route cr')->where('c.enabled = ? AND c.status = ? AND NOT EXISTS (SELECT cp.id FROM Content cp WHERE cp.id = c.parent_id)', array(true, 'published'))->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ContentListArray = $ContentListQuery->execute();
+		foreach ( $ContentListArray as &$Content ) {
+			$Content['route'] = 'map';
+			$Content['label'] = $Content['title'];
+			$Content['order'] = $Content['position'];
+			$Content['params'] = array('Map'=>$Content['Route']);
+			$Content['route'] = 'map';
+		}
+		
+		# Navigation Menu
+		$NavTree = array_tree_round($ContentListArray, 'id', 'parent_id', 'level', 'position', 'pages', array('id','route','order','uri','label','title','children','map','params'));
+		$this->view->NavigationMenu = new Zend_Navigation($NavTree);
+		
+		# Navigation Actions + Footer
+		$NavFront = file_get_contents(CONFIG_PATH . '/nav-front.json');
+		$NavFront = Zend_Json::decode($NavFront, Zend_Json::TYPE_ARRAY);
+		$this->view->NavigationActions = new Zend_Navigation($NavFront['actions']);
+		$this->view->NavigationFooter = new Zend_Navigation($NavFront['footer']);
 		
 		# Done
 		return true;
 	}
 
 	public function registerMenu ( $id ) {
+		# Navigation
 		$NavigationMenu = $this->view->NavigationMenu;
 		$NavItem = $NavigationMenu->findBy('id', $id);
 		$NavItem->parent->active = $NavItem->active = true;
+		
+		# Done
+		return true;
 	}
 	
 	

@@ -336,7 +336,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		# Fetch content for use in dropdown
 		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->where('c.enabled = ? AND c.type = ?', array(true, 'content'))->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
-		$ContentListArray = array_tree($ContentListArray, 'id', 'parent_id', 'level', 'position');
+		$ContentListArray = array_tree_flat($ContentListArray, 'id', 'parent_id', 'level', 'position');
 		
 		# Apply
 		$this->view->type = $type;
@@ -382,7 +382,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		# Fetch content for use in dropdown
 		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->where('c.enabled = ? AND c.type = ?', array(true, 'content'))->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
-		$ContentListArray = array_tree($ContentListArray, 'id', 'parent_id', 'level', 'position');
+		$ContentListArray = array_tree_flat($ContentListArray, 'id', 'parent_id', 'level', 'position');
 		
 		# Apply
 		$this->view->type = $type;

@@ -7,7 +7,7 @@
 		"route": "admin"
 	},{
 		"id": "admin-event-new",
-		"resource": "aevent",
+		"resource": "event",
 		"label": "New Event",
 		"action": "event-new",
 		"route": "admin"

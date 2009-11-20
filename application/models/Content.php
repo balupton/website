@@ -307,10 +307,6 @@ class Content extends BaseContent {
 	}
 	
 	/**
-	 * Ensure
-	 */
-	
-	/**
 	 * Backup old values
 	 * @param Doctrine_Event $Event
 	 */
