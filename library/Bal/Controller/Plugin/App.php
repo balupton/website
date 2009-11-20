@@ -18,40 +18,13 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	 */
 	public function __construct ( array $options = array() ) {
 		$this->mergeOptions($options);
+		$this->getIdentity();
 	}
 	
 	
 	# ========================
 	# CONFIG
 	
-
-	/**
-	 * Get the application Config or a specific config variable
-	 * @param string $confs
-	 * @return mixed
-	 */
-	public function config ( $confs = null ) {
-		# Get Config
-		$applicationConfig = Zend_Registry::get('applicationConfig');
-		
-		# Check
-		if ( !$confs ) {
-			return $config;
-		}
-		
-		# Detailed
-		$confs = explode('.',$confs);
-		$value = $applicationConfig;
-		
-		# Cycle
-		foreach ( $confs as $conf ) {
-			if ( !is_array($value) || !array_key_exists($conf, $value) ) return null;
-			$value = $value[$conf];
-		}
-		
-		# Done
-		return $value;
-	}
 	
 	/**
 	 * Gets the Application Configuration (as array) or specific config variable
@@ -66,7 +39,7 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 		if ( Zend_Registry::isRegistered('applicationConfig') ) {
 			$applicationConfig = Zend_Registry::get('applicationConfig');
 		}
-	
+		
 		# Check
 		if ( !$confs ) {
 			return $applicationConfig;
@@ -84,18 +57,6 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 		
 		# Done
 		return $value;
-	}
-	
-	/**
-	 * Set the Application Configuration
-	 * @param array $applicationConfig
-	 */
-	public function setConfig ( array $applicationConfig = array() ) {
-		# Load
-		Zend_Registry::set('applicationConfig', $applicationConfig);
-		
-		# Chain
-		return $this;
 	}
 	
 	/**

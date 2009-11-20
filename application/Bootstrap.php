@@ -210,18 +210,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */
 	protected function _initConfig () {
 		# Prepare
-		$this->bootstrap('app');
-		
-		# Load Front Controller
-		$FrontController = Zend_Controller_Front::getInstance();
-		
-		# Apply
-		$App = $FrontController->getPlugin('Bal_Controller_Plugin_App');
-		$applicationConfig = $this->getOptions();
-		$App->setConfig($applicationConfig);
+		$this->bootstrap('autoload');
+	
+		# Load
+		if ( !Zend_Registry::isRegistered('applicationConfig') ) {
+			$applicationConfig = $this->getOptions();
+			Zend_Registry::set('applicationConfig', $applicationConfig);
+		}
 		
 		# Done
-		return $applicationConfig;
+		return true;
 	}
 	
 	/**
@@ -251,6 +249,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initApp ( ) {
 		# Prepare
 		$this->bootstrap('autoload');
+		$this->bootstrap('config');
+		$this->bootstrap('doctrine');
 		
 		# Load
 		$FrontController = Zend_Controller_Front::getInstance();
