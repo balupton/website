@@ -9,7 +9,7 @@ class Cms_FrontController extends Zend_Controller_Action {
 	
 	public function init ( ) {
 		# Layout
-		$this->getHelper('Layout')->setLayout($this->getHelper('App')->getApp()->getConfig('bal.site.layout'));
+		$this->getHelper('Layout')->setLayout($this->getHelper('App')->getApp()->getConfig('bal.site.skin'));
 		
 		# Login
 		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'Admin'));

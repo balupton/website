@@ -16,6 +16,7 @@
     echo $this->headLink();
     ?>
     <?=$this->headStyle()?>
+	<link rel="Shortcut Icon" href="<?=$baseUrlFront?>/favicon.ico" type="image/x-icon" />
 </head>
 <body class="login">
     <? // headScript
@@ -39,7 +40,7 @@
 	    ->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
 	    ->offsetSetScript(81,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
 	    // Configuration
-	    ->offsetSetScript(101,'$.Help.applyConfig("default",{icon: \'<img src="'.$baseUrl.'/images/help.png" alt="help" class="help-icon" />\'});')
+	    ->offsetSetScript(101,'$.Help.applyConfig("default",{icon: \'<img src="'.$baseUrlBack.'/images/help.png" alt="help" class="help-icon" />\'});')
     ?>
 	<?=$this->layout()->content?>
 </body>

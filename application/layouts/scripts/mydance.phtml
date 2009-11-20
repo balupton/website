@@ -16,7 +16,7 @@
     echo $this->headLink();
     ?>
     <?= $this->headStyle()?>
-	<link rel="Shortcut Icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="Shortcut Icon" href="<?=$baseUrlFront?>/favicon.ico" type="image/x-icon" />
 </head>
 <body class="wp-admin js edit-pages-php">
     <? // headScript
@@ -47,7 +47,7 @@
 				</ul>
 			</div>
 			
-			<div class="clear" />
+			<div class="clear"></div>
 		</div>
 		
 		<div id="nav-main">
@@ -58,7 +58,7 @@
 			</ul>
 		</div>
 		
-		<div id="content">
+		<div id="content-wrap">
 			<?=$this->layout()->content?>
 		</div>
 		

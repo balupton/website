@@ -50,7 +50,7 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 	 * @param bool $root_url
 	 * @return string
 	 */
-	public function getBaseUrl ( $area = 'front', $root_url = false ) {
+	public function getBaseUrl ( $area = null, $root_url = false ) {
 		$skin = null;
 		switch ( $area ) {
 			case 'front':

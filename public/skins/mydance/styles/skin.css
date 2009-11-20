@@ -1,0 +1,100 @@
+@import url("http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css");
+
+body {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	font-family: Tahoma;
+	font-size: 11px;
+}
+#main {
+	padding-top: 20px;
+	margin: 0 auto;
+	text-align: left;
+	width: 80%;
+	min-width:600px;
+	max-width:800px;
+}
+#logo {
+	margin-top: 10px;
+	float: left;
+	text-indent: -9999px;
+	background: url("../images/logo-mydance.jpg");
+	width: 168px;
+	height: 44px;
+}
+#nav-top {
+	float: right;
+	background-color: #F2F2F2;
+	height: 34px;
+	text-align: right;
+	padding-top: 15px;
+	padding-right: 20px;
+}
+#nav-main {
+	margin-top: 5px;
+	background: url("../images/menu-bg.jpg") repeat-x;
+	height: 37px;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	border: 1px solid #CFCFCF;
+}
+#nav-main ul {
+	padding-top: 12px;
+}
+#content-wrap {
+	border: 1px solid #CFCFCF;
+	border-width: 0 1px 10px 1px;
+}
+#content {
+	padding:1em 10px;
+}
+
+#footer-bar {
+	height: 8px;
+	background-color: #CFCFCF;
+}
+#footer-links {
+	text-align: center;
+	margin-top: 10px;
+}
+#footer-text {
+	color: #A0A0A0;
+	text-align: center;
+}
+#footer-text p {
+	padding: 5px 0 0 0;
+	margin: 0;
+}
+#footer-text a {
+	color: #A0A0A0;
+	text-decoration: none;
+}
+
+/* 
+	Styles
+*/
+.clear {
+	clear: both;
+	height: 0;
+}
+.ul-unstyled-horizontal {
+	padding: 0;
+	margin: 0;
+}
+.ul-unstyled-horizontal li {
+	padding: 0;
+	margin: 0;
+	display: inline;
+	list-style: none;
+	color: #606060;
+	text-decoration: none;
+	font-size: 11px;
+}
+.ul-unstyled-horizontal li a {
+	color: #606060;
+	text-decoration: none;
+	font-size: 11px;
+	margin-left: 20px;
+}

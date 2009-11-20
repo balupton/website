@@ -1,6 +1,6 @@
-@import url("cms.css");
-@import url("import/login.css");
-@import url("import/wpcon.css");
+@import url("skin.css");
+@import url("login.css");
+@import url("wpcon.css");
 
 * { margin: 0; padding: 0; }
 
