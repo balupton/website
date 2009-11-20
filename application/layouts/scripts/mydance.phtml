@@ -1,7 +1,7 @@
 <?php
 	echo $this->doctype();
 	$baseUrl = $this->bal()->getBaseUrl();
-	$baseUrlBack = $this->bal()->getBaseUrl('back');
+	$baseUrlFront = $this->bal()->getBaseUrl('front');
 	$User = $this->bal()->getUser();
 ?><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
@@ -10,7 +10,7 @@
     <?
     // CSS
     $this->headLink()
-		->appendStylesheet($baseUrl.'/front/styles/mydance.css')
+		->appendStylesheet($baseUrlFront.'/styles/skin.css')
 		;
     // Output
     echo $this->headLink();
@@ -30,7 +30,7 @@
 		// Application
 	    //->offsetSetFile(5,$baseUrl.'/scripts/jquery.autogrow.js')
 	    ->offsetSetFile(6,$baseUrl.'/scripts/jquery.sparkle.js')
-	    ->offsetSetFile(7,$baseUrlBack.'/scripts/cms.js')
+	    ->offsetSetFile(7,$baseUrl.'/scripts/cms/front.js')
 	    ;
     ?>
 <body>
@@ -74,7 +74,7 @@
 			</div>
 			
 			<div id="footer-text">
-				<p>MyDance.com.au &copy; 2009 | <a href="#">Privacy Policy</a> | <a href="#">Terms Of Use</a></p>
+				<p><?=$this->bal()->getConfig('bal.site.name')?> &copy; 2009 | <a href="#">Privacy Policy</a> | <a href="#">Terms Of Use</a></p>
 			</div>
 		</div>
 			

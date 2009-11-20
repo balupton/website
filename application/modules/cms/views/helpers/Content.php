@@ -15,6 +15,7 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 	
 	
 	public function render ( $Content ) {
+		$content = $Content;
 		if ( is_array($Content) ) {
 			// Grab the content
 			// Do we want to cache?

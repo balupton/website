@@ -9,7 +9,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 	
 	public function init ( ) {
 		# Layout
-		$this->getHelper('Layout')->setLayout('back-full');
+		$this->getHelper('Layout')->setLayout($this->getHelper('App')->getApp()->getConfig('bal.cms.skin'));
 		
 		# Login
 		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'Admin'));
@@ -80,7 +80,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		}
 			
 		# Render
-		$this->getHelper('layout')->setLayout('back-login');
+		$this->getHelper('layout')->setLayout($this->getHelper('App')->getApp()->getConfig('bal.cms.skin').'-login');
 		$this->render('index/login');
 		
 		# Done

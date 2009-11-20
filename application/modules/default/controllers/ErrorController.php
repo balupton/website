@@ -29,15 +29,12 @@ class ErrorController extends Zend_Controller_Action {
 		$messages = array();
 		
         // Use defined error layout
-        if ($this->getInvokeArg('errorlayout') && $this->getInvokeArg('errorlayout') != 'error') {
-            $this->getHelper('layout')->setLayout($this->getInvokeArg('errorlayout'));
-        } else {
-        	$this->getHelper('layout')->disableLayout();
-        }
-    
+        $this->getHelper('layout')->disableLayout();
+        
         // Use defined error view
-        if ($this->getInvokeArg('errorview') && $this->getInvokeArg('errorview') != 'error') {
-            $this->_helper->viewRenderer($this->getInvokeArg('errorview'));
+        $skin = $this->getHelper('App')->getApp()->getConfig('bal.error.skin');
+        if ( $skin ) {
+            $this->_helper->viewRenderer($skin);
         }
         
 		// Determine

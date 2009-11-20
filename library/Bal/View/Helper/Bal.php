@@ -44,23 +44,40 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 	}
 
 	/**
-	 * Get a base_url
+	 * Get a base_url for an area
+	 * @see getSkinUrl
 	 * @param string $area
 	 * @param bool $root_url
 	 * @return string
 	 */
 	public function getBaseUrl ( $area = 'front', $root_url = false ) {
-		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-		$prefix = $suffix = '';
+		$skin = null;
 		switch ( $area ) {
 			case 'front':
+				$skin = $this->getConfig('bal.site.skin');
 				break;
-			case 'back':
+			case 'cms':
 			case 'admin':
-				$suffix = '/back';
+			case 'back':
+				$skin = $this->getConfig('bal.cms.skin');
 				break;
 			default:
 				break;
+		}
+		return $this->getSkinUrl($skin, $root_url);
+	}
+	
+	/**
+	 * Get a base_url for a skin
+	 * @param string $skin
+	 * @param bool $root_url
+	 * @return string
+	 */
+	public function getSkinUrl ( $skin = null, $root_url = false ) {
+		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+		$prefix = $suffix = '';
+		if ( !empty($skin) ) {
+			$suffix = '/skins/'.$skin;
 		}
 		if ( $root_url && defined('ROOT_URL') ) {
 			$prefix = ROOT_URL;
@@ -84,10 +101,12 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 	public function getUser ( ) {
 		# Prepare
 		$user = array();
+		
 		# Load
 		if ( $this->_User === null ) {
 			$this->_User = $this->getApp()->getUser();
 		}
+		
 		# Check
 		if ( $this->_User ) {
 			$user = $this->_User->toArray();

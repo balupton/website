@@ -10,7 +10,7 @@
     <?
     // CSS
     $this->headLink()
-		->appendStylesheet($baseUrl.'/back/styles/cms.css')
+		->appendStylesheet($baseUrlBack.'/styles/skin-login.css')
 		->appendStylesheet($baseUrl.'/scripts/jquery-ui/css/cupertino/jquery-ui-1.7.2.custom.css');
     // Output
     echo $this->headLink();
@@ -34,7 +34,7 @@
 	    // Application
 	    ->offsetSetFile(5,$baseUrl.'/scripts/jquery.autogrow.js')
 	    ->offsetSetFile(6,$baseUrl.'/scripts/jquery.sparkle.js')
-	    ->offsetSetFile(7,$baseUrlBack.'/scripts/cms.js')
+	    ->offsetSetFile(7,$baseUrl.'/scripts/cms/back.js')
 	    // GSFN
 	    ->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
 	    ->offsetSetScript(81,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
