@@ -12,6 +12,7 @@ header('Content-Type: text/plain');
 // Load
 $Application->bootstrap('doctrine');
 $Application->bootstrap('balphp');
+$Application->bootstrap('app');
 
 // Get Config
 $config = array();
