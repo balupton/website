@@ -1,3 +1,6 @@
+@import url("import/load-styles.css");
+@import url("import/colors-fresh.css");
+
 #adminmenu li.parent a {
 	/*font-weight: bold;*/
 }

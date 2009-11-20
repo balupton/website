@@ -10,10 +10,7 @@
     <?
     // CSS
     $this->headLink()
-		//->appendStylesheet($baseUrl.'/back/styles/wp-admin.css')
-		->appendStylesheet($baseUrl.'/back/styles/load-styles.css')
-		->appendStylesheet($baseUrl.'/back/styles/colors-fresh.css')
-		->appendStylesheet($baseUrl.'/back/styles/balcms.css')
+		->appendStylesheet($baseUrl.'/back/styles/cms.css')
 		->appendStylesheet($baseUrl.'/scripts/jquery-ui/css/cupertino/jquery-ui-1.7.2.custom.css');
     // Output
     echo $this->headLink();
@@ -45,7 +42,7 @@
                 <div id="wphead">
                     <!--<img id="header-logo" src="edit-pages.php_files/blank.gif" alt="" height="32" width="32">-->
                     <h1 id="site-heading"><a href="<?=$baseUrl?>" title="Visit Site">
-                    	<span id="site-title"><?=$this->bal()->config('bal.site.name')?></span>
+                    	<span id="site-title"><?=$this->bal()->getConfig('bal.site.name')?></span>
                     	<em id="site-visit-button">Visit Site</em>
                     </a></h1>
                     <div id="wphead-info">

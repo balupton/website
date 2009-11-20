@@ -69,20 +69,12 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 	}
 	
 	/**
-	 * Get a Config variable
-	 * @param string $confs
+	 * Get the application Config or a specific config variable
+	 * @param string $confs [optional]
 	 * @return mixed
 	 */
-	public function config ( $confs = null ) {
-		$applicationConfig = Zend_Registry::get('applicationConfig');
-		if ( !$confs ) return $config;
-		$confs = explode('.',$confs);
-		$value = $applicationConfig;
-		foreach ( $confs as $conf ) {
-			if ( !is_array($value) || !array_key_exists($conf, $value) ) return null;
-			$value = $value[$conf];
-		}
-		return $value;
+	public function getConfig ( $confs = null ) {
+		return $this->getApp()->getConfig($confs);
 	}
 	
 	/**

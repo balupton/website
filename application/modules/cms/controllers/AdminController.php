@@ -2,7 +2,11 @@
 
 require_once 'Zend/Controller/Action.php';
 class Cms_AdminController extends Zend_Controller_Action {
-
+	
+	
+	# ========================
+	# CONSTRUCTORS
+	
 	public function init ( ) {
 		# Layout
 		$this->getHelper('Layout')->setLayout('back-full');
@@ -31,7 +35,8 @@ class Cms_AdminController extends Zend_Controller_Action {
 		$NavItem = $NavigationMenu->findBy('id', $id);
 		$NavItem->parent->active = $NavItem->active = true;
 	}
-
+	
+	
 	# ========================
 	# INDEX
 	
