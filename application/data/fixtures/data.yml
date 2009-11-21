@@ -11,7 +11,7 @@ Content:
         code: "welcome"
         title: "Welcome"
         description: "Home Page"
-        content: "[carousel]bloc-party,noite,pokemon[/carousel]<br/>[taglist/]<br/>[recentlist/]"
+        content: "[carousel]bloc-party,zouk-festival,lala-festival[/carousel]<br/>[taglist/]<br/>[recentlist/]"
         Author: User_Mydance
         
     Content_Events:
@@ -26,11 +26,35 @@ Content:
         code: "bloc-party"
         title: "Bloc Party"
         description: "Event for Bloc Party"
-        content: "[event]bloc-party[/event]"
+        content: "[event/]"
         type: event
         event_start_at: "2009-03-14 21:14"
         event_finish_at: "2009-03-14 23:14"
         event_content: "Bloc Party are famous and kick ass"
+        Parent: Content_Events
+        Author: User_Mydance
+        
+    Content_Events_ZoukFestival:
+        code: "zouk-festival"
+        title: "Zouk Festival"
+        description: "Event for Zouk Festival"
+        content: "[event/]"
+        type: event
+        event_start_at: "2009-03-14 22:25"
+        event_finish_at: "2009-03-14 24:22"
+        event_content: "Zouk Festival are famous and kick ass"
+        Parent: Content_Events
+        Author: User_Mydance
+        
+    Content_Events_LaLa:
+        code: "lala-festival"
+        title: "LaLa Festival"
+        description: "Event for LaLa Festival"
+        content: "[event/]"
+        type: event
+        event_start_at: "2009-03-14 22:25"
+        event_finish_at: "2009-03-14 24:22"
+        event_content: "LaLa Festival are famous and kick ass"
         Parent: Content_Events
         Author: User_Mydance
         

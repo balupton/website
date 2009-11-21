@@ -7,26 +7,31 @@
 	
 	<form method="post" action="<?=$this->url(array('action'=>'login'),'admin',true)?>" id="login-form">
 		<p>
-			<label>Username<br/>
-			<input type="text" tabindex="10" size="20" value="" class="input text" id="login-username" name="login[username]"/></label>
+			<label>
+				Username<br/>
+				<input type="text" tabindex="10" size="20" value="" class="input text" id="login-username" name="login[username]"/>
+			</label>
 		</p>
 		<p>
-			<label>Password<br/>
-			<input type="password" tabindex="20" size="20" value="" class="input text" id="login-password" name="login[password]"/></label>
+			<label>
+				Password<br/>
+				<input type="password" tabindex="20" size="20" value="" class="input text" id="login-password" name="login[password]"/>
+			</label>
 		</p>
-		<p class="forgetmenot"><label><input type="checkbox" tabindex="90" value="forever" id="login-remember" name="login[remember]"/> Remember Me</label></p>
-		<p class="submit">
-			<input type="submit" tabindex="100" value="Log In" class="button-primary" id="wp-submit" name="wp-submit"/>
-			<input type="hidden" value="http://balupton.wordpress.com/wp-admin/" name="redirect_to"/>
-			<input type="hidden" value="1" name="testcookie"/>
+		<p id="forgetmenot">
+			<label><input type="checkbox" tabindex="90" value="forever" id="login-remember" name="login[remember]"/> Remember Me</label>
 		</p>
+		<p id="loginsubmit">
+			<input type="submit" tabindex="100" value="Log In" class="button-primary" id="wp-submit"/>
+		</p>
+		<div class="clear"></div>
 	</form>
 	
 	<p id="nav">
 		<a href="<?=$this->url(array(),'balcmshome',true)?>">Learn More</a> |
 		<a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Provide Feedback</a>
-		<!-- <a title="Password Lost and Found" href="http://balupton.wordpress.com/wp-login.php?action=lostpassword">Provide Feedback</a> -->
 	</p>
 	
 	<p id="backtoblog"><a title="Are you lost?" href="<?=$baseUrl?>">&larr; Back to <?=$this->bal()->getConfig('bal.site.name')?></a></p>
+	
 </div>

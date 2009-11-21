@@ -1,18 +1,15 @@
 @import url("skin.css");
-@import url("login.css");
 @import url("wpcon.css");
 
 * { margin: 0; padding: 0; }
 
 body {
-	border-top-width: 30px;
-	border-top-style: solid;
 	font: 11px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
 }
 
 form {
 	margin-left: 8px;
-	padding: 16px 16px 40px 16px;
+	padding: 16px;
 	font-weight: normal;
 	-moz-border-radius: 11px;
 	-khtml-border-radius: 11px;
@@ -26,9 +23,14 @@ form {
 	box-shadow: rgba(200,200,200,1) 0 4px 18px;
 }
 
-form .forgetmenot { font-weight: normal; float: left; margin-bottom: 0; }
+#forgetmenot, #loginsubmit {
+	display:block;
+	width:40%;
+}
 
-#login form .submit input {
+#forgetmenot { font-weight: normal; float: left; margin-bottom: 0; }
+
+#login form #loginsubmit input {
 	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
 	padding: 3px 10px;
 	border: none;
@@ -54,12 +56,15 @@ label {
 	font-size: 13px;
 }
 
-form .forgetmenot label {
+#forgetmenot label {
 	font-size: 11px;
 	line-height: 19px;
 }
 
-form .submit { float: right; }
+#loginsubmit {
+	float: right;
+	text-align:right;
+}
 
 form p { margin-bottom: 24px; }
 
@@ -77,10 +82,17 @@ h1 a {
 	text-shadow: rgba(255,255,255,1) 0 1px 0;
 }
 
-#backtoblog a {
+#backtoblog {
+	height: 20px;
+	background: #464646;
 	position: absolute;
-	top: 7px;
-	left: 15px;
+	top:0;
+	left:0;
+	width:100%;
+	margin:0;
+	padding:6px 15px 4px;
+}
+#backtoblog a {
 	text-decoration: none;
 }
 

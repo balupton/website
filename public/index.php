@@ -10,8 +10,8 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.5/library'));
 	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
-	define('BASE_URL', 						'/projects/balcms/public/');
 	define('ROOT_URL',						'http://localhost');
+	define('BASE_URL', 						'/projects/balcms/public/');
 } else {
 	// We are on the production server
 	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
@@ -21,7 +21,6 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.5/library'));
 	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
-	//define('BASE_URL', 					'/stage/public/');
 	define('ROOT_URL',						'http://www.mydance.com.au');
 }
 
@@ -45,6 +44,8 @@ if ( !defined('APPLICATION_PATH') )
 	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/../application'));
 if ( !defined('CONFIG_PATH') )
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
+if ( !defined('CONFIG_APP_PATH') )
+	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/application.ini'));
 if ( !defined('LIBRARY_PATH') )
 	define('LIBRARY_PATH', 					realpath(APPLICATION_PATH.'/../library'));
 if ( !defined('PUBLIC_PATH') )
@@ -71,7 +72,7 @@ require_once 'Zend/Application.php';
 // Create application, bootstrap, and run
 $Application = new Zend_Application(
     APPLICATION_ENV,
-    APPLICATION_PATH . '/configs/application.ini'
+    CONFIG_APP_PATH
 );
 
 // Check if we want to bootstrap
