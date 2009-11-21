@@ -30,6 +30,7 @@ class Content extends BaseContent {
 
 	/**
 	 * Get's the View object
+	 * @return Zend_View
 	 */
 	public function getView ( ) {
 		if ( empty($this->_view) ) {
@@ -38,6 +39,30 @@ class Content extends BaseContent {
 			$this->_View = $Bootstrap->getResource('view');
 		}
 		return $this->_View;
+	}
+	
+	/**
+	 * Get's the content's crumbs
+	 * @param const $hydrateMode [optional]
+	 * @param bool $includeSelf [optional]
+	 * @return mixed
+	 */
+	public function getCrumbs ( $hydrateMode = null, $includeSelf = true ) {
+		# Prepare
+		$Crumbs = array();
+		$Crumb = $this;
+		while ( $Crumb->parent_id ) {
+			$Crumb = $Crumb->Parent;
+			$Crumbs[] = Doctrine::HYDRATE_ARRAY ? $Crumb->toArray() : $Crumb;
+		}
+		
+		# Include?
+		if ( $includeSelf ) {
+			$Crumbs[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $this->toArray() : $this;
+		}
+		
+		# Done
+		return $Crumbs;
 	}
 
 	/**

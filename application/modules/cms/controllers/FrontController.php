@@ -67,14 +67,13 @@ class Cms_FrontController extends Zend_Controller_Action {
 	
 	public function indexAction () {
 		# Home Page
-		$Content = Doctrine::getTable('Content')->createQuery()->where('enabled = ? AND status = ?', array(true,'published'))->orderBy('position ASC, id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY)->fetchOne();
-		$content = $Content['id'];
+		$ContentArray = Doctrine::getTable('Content')->createQuery()->where('enabled = ? AND status = ?', array(true,'published'))->orderBy('position ASC, id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY)->fetchOne();
+		$content = $ContentArray['id'];
 		
 		# Popular Tags (as we are the home page)
-		$tags = Doctrine::getTable('Content')->getPopularTagsArray();
-		$tags = array_keys($tags);
-		$keywords = implode(', ', $tags);
-		$this->view->headMeta()->appendName('keywords', $keywords);
+		//$tags = Doctrine::getTable('Content')->getPopularTagsArray();
+		//$tags = array_keys($tags);
+		//$keywords = implode(', ', $tags);
 		
 		# Forward
 		return $this->_forward('content-page', null, null, array('id'=>$content));
@@ -91,9 +90,25 @@ class Cms_FrontController extends Zend_Controller_Action {
 		# Fetch
 		$content_id = $this->_getParam('id');
 		$Content = Doctrine::getTable('Content')->find($content_id);
+		$ContentArray = $Content->toArray();
+		
+		# Keywords
+		$keywords = explode(', ', $ContentArray['tagstr']);
+		
+		# Crumbs
+		$ContentCrumbsArray = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, false);
+		foreach ( $ContentCrumbsArray as $Crumb ) {
+			$keywords += explode(', ', $Crumb['tagstr']);
+			$this->view->headTitle()->append($Crumb['title']);
+		}
+		
+		# Keywords
+		$keywordstr = implode(', ' , $keywords);
 		
 		# Apply
-		$this->view->Content = $Content->toArray();
+		$this->view->ContentArray = $ContentArray;
+		$this->view->headTitle()->append($ContentArray['title']);
+		$this->view->headMeta()->appendName('keywords', $keywordstr);
 		
 		# Render
 		$this->render('content/content-page');

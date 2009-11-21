@@ -422,17 +422,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 				// We have a content as a root
 				$Content = $this->_getContent($content);
 				$ContentArray = $Content->toArray();
-				
-				// Fetch Crumbs
-				$ContentCrumbArray = array();
-				$Crumb = $Content;
-				while ( $Crumb->parent_id ) {
-					$Crumb = $Crumb->Parent;
-					$ContentCrumbArray[] = $Crumb->toArray();
-				}
-				
-				// Let us be the last crumb
-				$ContentCrumbArray[] = $ContentArray;
+				$ContentCrumbArray = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, true);
 			}
 			
 			# Fetch list
