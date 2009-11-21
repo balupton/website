@@ -66,9 +66,15 @@ class Cms_FrontController extends Zend_Controller_Action {
 	# INDEX
 	
 	public function indexAction () {
-		# Get Index Page
+		# Home Page
 		$Content = Doctrine::getTable('Content')->createQuery()->where('enabled = ? AND status = ?', array(true,'published'))->orderBy('position ASC, id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY)->fetchOne();
 		$content = $Content['id'];
+		
+		# Popular Tags (as we are the home page)
+		$tags = Doctrine::getTable('Content')->getPopularTagsArray();
+		$tags = array_keys($tags);
+		$keywords = implode(', ', $tags);
+		$this->view->headMeta()->appendName('keywords', $keywords);
 		
 		# Forward
 		return $this->_forward('content-page', null, null, array('id'=>$content));

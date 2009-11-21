@@ -105,6 +105,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         # Add it to the ViewRenderer
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
         $viewRenderer->setView($view);
+        
+        # Meta
+        $view->headMeta()->appendName('author',		'Benjamin \'balupton\' Lupton - http://www.balupton.com');
+        $view->headMeta()->appendName('generator',	'balCMS - http://www.balupton.com/balcms');
+        
 	    # Done
         return $view;
 	}

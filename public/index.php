@@ -6,7 +6,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('APPLICATION_ENV', 				'development');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
-	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2/lib'));
+	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2.0-beta3/lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.5/library'));
 	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
@@ -17,7 +17,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
-	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2/lib'));
+	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2.0-beta3/lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.5/library'));
 	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
