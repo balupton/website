@@ -1,26 +1,63 @@
 <?php
 require_once 'Zend/View/Helper/Abstract.php';
 class Bal_View_Helper_Widget extends Zend_View_Helper_Abstract {
+
+	/**
+	 * The App Plugin
+	 * @var Bal_Controller_Plugin_App
+	 */
+	protected $_App = null;
 	
+	/**
+	 * The View in use
+	 * @var Zend_View_Interface
+	 */
 	public $view;
-	public function setView (Zend_View_Interface $view) {
-		$this->view = $view;
-	}
 	
-	
+	/**
+	 * Widgets list
+	 * @var array
+	 */
 	protected $widgets = array();
 	
+	/**
+	 * Widgets view path
+	 * @var string
+	 */
+	public $widgets_view_path = 'widgets';
+	
+	/**
+	 * Apply View
+	 * @param Zend_View_Interface $view
+	 */
+	public function setView (Zend_View_Interface $view) {
+		# Apply
+		$this->_App = Zend_Controller_Front::getInstance()->getPlugin('Bal_Controller_Plugin_App');
+		//$this->widgets_view_path = $this->_App->getConfig('bal.widgets.viewpath');
+		
+		# Set
+		$this->view = $view;
+		
+		# Done
+		return true;
+	}
+	
+	/**
+	 * Self Reference
+	 * @return Zend_View_Helper_Interface
+	 */
 	public function widget ( ) {
 		return $this;
 	}
 	
-	public function addWidgets ( $widgets ) {
+	public function addWidgets ( array $widgets ) {
 		foreach ( $widgets as $code => $params ) {
 			$this->addWidget($code, $params);
 		}
 		return $this;
 	}
-	public function addWidget ( $code, $params = array() ) {
+	
+	public function addWidget ( $code, array $params = array() ) {
 		$this->widgets[$code] = $params;
 		return $this;
 	}
@@ -29,8 +66,8 @@ class Bal_View_Helper_Widget extends Zend_View_Helper_Abstract {
 		return $this->widgets[$code];
 	}
 	
-	public function render ( $code, $params = array() ) {
-		// Prepare
+	public function render ( $code, array $params = array() ) {
+		# Prepare
 		$widget = $this->getWidget($code);
 		if ( !empty($widget['helper']) ) {
 			$helper = $widget['helper'];
@@ -48,31 +85,44 @@ class Bal_View_Helper_Widget extends Zend_View_Helper_Abstract {
 			$action = 'render'.ucfirst($name).'Widget';
 		}
 		
-		// Handle
+		# Handle
 		$render = $this->view->getHelper($helper)->$action($params);
 		
-		// Done
+		# Done
 		return $render;
 	}
 	
-	protected function renderAllReplace ( $code, $content = '', $params = array() ) {
-		// Prepare
-		$params = array(); // not supported yet
+	public function renderWidgetView ( $widget, array $model = array() ) {
+		# Handle
+		$widget_view_path = $this->widgets_view_path . DIRECTORY_SEPARATOR . $widget.'.phtml';
 		
-		// Handle
+		# Render
+		return $this->view->partial($widget_view_path, $model);
+	}
+	
+	protected function renderAllReplace ( $code, $content = '', $attrs = array(), array $params = array() ) {
+		# Prepare
+		
+		# Handle
 		$params['content'] = $content;
 		
-		// Render
+		# Attributes
+		$attrs = array(); // not supported yet
+		
+		# Apply
+		$params += $attrs;
+		
+		# Render
 		$render = $this->render($code, $params);
 		
-		// Done
+		# Done
 		return $render;
 	}
 	
-	public function renderAll ( $content ) {
-		// Prepare
+	public function renderAll ( $content, array $params = array() ) {
+		# Prepare
 		
-		// Search
+		# Search
 		$matches = array();
 		$search =
 		'/' .
@@ -80,17 +130,19 @@ class Bal_View_Helper_Widget extends Zend_View_Helper_Abstract {
 				'(?<code>'.
 					'('.implode(array_keys($this->widgets),'|').')'.
 				')'.
-				'\s*(?<params>[^\]]*)'.
+				'\s*(?<attrs>[^\]]*)'.
 			'\]'.
 			'('.
 				'(?<content>[^\]]*)'.
 				'\[\/' . '\1' . '\]' .
 			')?'.
 		'/e';
-		$replace = '\$this->renderAllReplace( "${1}", "${5}", "${3}" )';
+		$replace = '\$this->renderAllReplace( "${1}", "${5}", "${3}", $params )';
+		
+		# Replace
 		$render = preg_replace($search, $replace, $content);
 		
-		// Done
+		# Done
 		return $render;
 	}
 	

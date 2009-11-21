@@ -1,28 +1,36 @@
 <?php
 class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 
+	/**
+	 * The App Plugin
+	 * @var Bal_Controller_Plugin_App
+	 */
 	protected $_App = null;
-	protected $_User = null;
-	
-	public $view;
 	
 	/**
-	 * Construct
+	 * The current User
+	 * @var Doctrine_Record
 	 */
-	public function __construct ( ) {
-		# Apply
-		$this->_App = Zend_Controller_Front::getInstance()->getPlugin('Bal_Controller_Plugin_App');
-		# Done
-		return true;
-	}
+	protected $_User = null;
+	
+	
+	/**
+	 * The View in use
+	 * @var Zend_View_Interface
+	 */
+	public $view;
 	
 	/**
 	 * Apply View
 	 * @param Zend_View_Interface $view
 	 */
 	public function setView (Zend_View_Interface $view) {
+		# Apply
+		$this->_App = Zend_Controller_Front::getInstance()->getPlugin('Bal_Controller_Plugin_App');
+		
 		# Set
 		$this->view = $view;
+		
 		# Chain
 		return $this;
 	}

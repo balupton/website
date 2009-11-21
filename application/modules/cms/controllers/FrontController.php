@@ -90,10 +90,9 @@ class Cms_FrontController extends Zend_Controller_Action {
 		# Fetch
 		$content_id = $this->_getParam('id');
 		$Content = Doctrine::getTable('Content')->find($content_id);
-		$ContentArray = $Content->toArray();
 		
 		# Keywords
-		$keywords = explode(', ', $ContentArray['tagstr']);
+		$keywords = explode(', ', $Content->tagstr);
 		
 		# Crumbs
 		$ContentCrumbsArray = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, false);
@@ -106,8 +105,8 @@ class Cms_FrontController extends Zend_Controller_Action {
 		$keywordstr = implode(', ' , $keywords);
 		
 		# Apply
-		$this->view->ContentArray = $ContentArray;
-		$this->view->headTitle()->append($ContentArray['title']);
+		$this->view->Content = $Content;
+		$this->view->headTitle()->append($Content->title);
 		$this->view->headMeta()->appendName('keywords', $keywordstr);
 		
 		# Render

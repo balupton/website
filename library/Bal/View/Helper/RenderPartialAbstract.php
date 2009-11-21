@@ -4,7 +4,6 @@ abstract class Bal_View_Helper_RenderPartialAbstract extends Zend_View_Helper_Ab
 	
     /**
      * Partial view script to use for rendering menu
-     *
      * @var string|array
      */
     protected $_partial = null;

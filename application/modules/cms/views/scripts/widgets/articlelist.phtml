@@ -1,0 +1,10 @@
+<div class="articlelist">
+	<? foreach ( $this->Articles as $Content ) : ?>
+		<div class="articlelist-content">
+			<h3><a href="<?=$this->content()->getUrl($Content)?>" title="<?=$Content->title?>"><?=$Content->title?></a></h3>
+			<div class="articlelist-content-content">
+				<?=$this->content()->renderDescription($Content)?>
+			</div>
+		</div>
+	<? endforeach; ?>
+</div>

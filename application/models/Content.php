@@ -161,7 +161,7 @@ class Content extends BaseContent {
 	 */
 	public function setContent ( $content ) {
 		$View = $this->getView();
-		$this->content_rendered = $View->content()->render($content);
+		$this->content_rendered = $View->content()->renderContent($content, array('Content'=>$this));
 		$this->_set('content', $content);
 		return true;
 	}
@@ -173,7 +173,7 @@ class Content extends BaseContent {
 	 */
 	public function setDescription ( $description ) {
 		$View = $this->getView();
-		$this->description_rendered = $View->content()->render($description);
+		$this->description_rendered = $View->content()->renderDescription($description, array('Content'=>$this));
 		$this->_set('description', $description);
 		return true;
 	}

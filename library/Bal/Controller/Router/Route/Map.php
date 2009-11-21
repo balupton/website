@@ -203,34 +203,42 @@ class Bal_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 	 * @return string Route path with user submitted parameters
 	 */
 	public function assemble ( $data = array(), $reset = false, $encode = false, $partial = false ) {
-		// Prepare
+		# Prepare
 		if ( !$this->_keysSet ) {
 			$this->_setRequestKeys();
 		}
 		
-		// Get defaults and options
+		# Get defaults and options
 		$options = $this->_getOptions();
 		$defaults = $this->_getDefaults($options['defaults']);
 		$pathColumn = $defaults['pathColumn'];
 		
-		// Fetch Page
-		if ( empty($data['Map']) ) {
+		# Fetch Path
+		$url_path = null;
+		if ( array_key_exists('path', $data) ) {
+			$url_path = $data['path'];
+		} elseif ( array_key_exists('Map', $data) ) {
+			$Map = $data['Map'];
+			$url_path = is_array($Map) ? $Map[$pathColumn] : $Map->get($pathColumn);
+		}
+		
+		# Check
+		if ( empty($url_path) ) {
 			require_once 'Zend/Controller/Router/Exception.php';
 			throw new Zend_Controller_Router_Exception('Cannot assemble. Map has not been specified.');
 		}
-		$Map = $data['Map'];
 		
-		// Get Params
+		# Params
 		$params = $data;
 		unset($params['Map']);
-		
-		// Generate URL
-		$url_path = is_array($Map) ? $Map[$pathColumn] : $Map->get($pathColumn);
+		unset($params['path']);
 		$url_params = $this->_getQueryString($params, $encode);
+		
+		# Generate URL
 		$url = @vsprintf($this->_reverse, compact('url_path', 'url_params'));
 		$url = trim($url, '/');
 		
-		// Return URL
+		# Return URL
 		return $url;
 	}
 
