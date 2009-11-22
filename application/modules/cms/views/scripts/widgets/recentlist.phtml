@@ -1,11 +1,13 @@
-<div class="recentlist">
-	<div class="recentlist-header">
+<div class="recentlist widget">
+	<div class="recentlist-header widget-header">
 		<h3>Recent Items</h3>
 	</div>
-	<? foreach ( $this->ContentList as $Content ) : ?>
-		<div class="recentlist-content">
-			<h4><a href="<?=$this->content()->getUrl($Content)?>" title="<?=$Content->title?>"><?=$Content->title?></a></h4>
-			<div class="recentlist-content-content">
+	<? foreach ( $this->ContentList as $Content ) :
+		$contentUrl = $this->content()->getUrl($Content);
+		?>
+		<div class="recentlist-content widget-content">
+			<h4 class="recentlist-content-header widget-content-header"><a href="<?=$contentUrl?>" title="<?=$Content->title?>"><?=$Content->title?></a></h4>
+			<div class="recentlist-content-content widget-content-content">
 				<?=strip_tags($Content->description)?>
 			</div>
 		</div>

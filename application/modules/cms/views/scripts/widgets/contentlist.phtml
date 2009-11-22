@@ -1,7 +1,9 @@
 <div class="contentlist">
-	<? foreach ( $this->ContentList as $Content ) : ?>
+	<? foreach ( $this->ContentList as $Content ) :
+		$contentUrl = $this->content()->getUrl($Content);
+		?>
 		<div class="contentlist-content">
-			<h3><a href="<?=$this->content()->getUrl($Content)?>" title="<?=$Content->title?>"><?=$Content->title?></a></h3>
+			<h3><a href="<?=$contentUrl?>" title="<?=$Content->title?>"><?=$Content->title?></a></h3>
 			<div class="contentlist-content-content">
 				<?=$this->content()->renderDescription($Content)?>
 			</div>

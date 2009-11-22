@@ -80,7 +80,7 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 	public function renderContent ( $Content, array $params = array() ) {
 		if ( is_object($Content) ) {
 			return $this->_cache ? $Content->content_rendered : $this->renderWidgets($Content->content, $params+=array('Content'=>$Content));
-		} elseif ( is_Array($Content) ) {
+		} elseif ( is_array($Content) ) {
 			return $this->_cache ? $Content['content_rendered'] : $this->renderWidgets($Content['content'], $params+=array('ContentArray'=>$Content));
 		} else {
 			return $this->_cache ? $Content : $this->renderWidgets($Content, $params);
@@ -96,7 +96,7 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 	public function renderDescription ( $Content, array $params = array() ) {
 		if ( is_object($Content) ) {
 			return $this->_cache ? $Content->description_rendered : $this->renderWidgets($Content->description, $params+=array('Content'=>$Content));
-		} elseif ( is_Array($Content) ) {
+		} elseif ( is_array($Content) ) {
 			return $this->_cache ? $Content['description_rendered'] : $this->renderWidgets($Content['description'], $params+=array('ContentArray'=>$Content));
 		} else {
 			return $this->_cache ? $Content : $this->renderWidgets($Content, $params);
@@ -140,10 +140,10 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 	public function renderTaglistWidget ( array $params = array() ) {
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$Tags = array();//Doctrine::getTable('Tag')->createQuery()->orderBy('name ASC')->exceute();
+		$TagList = Doctrine_Query::create()->select('t.*')->from('TaggableTag t')->orderBy('t.name ASC')->execute();
 		
 		# Apply
-		$model = compact('Content','Tags');
+		$model = compact('Content','TagList');
 		
 		# Render
 		return $this->renderWidgetView('taglist', $model);
@@ -164,7 +164,38 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 		# Render
 		return $this->renderWidgetView('subscribe', $model);
 	}
-	
+
+	/**
+	 * Render a content widget
+	 * @param $params
+	 * @return string
+	 */
+	public function renderContentWidget ( array $params = array() ) {
+		# Fetch
+		$Content = $this->getContentObjectFromParams($params);
+		
+		# Apply
+		$model = compact('Content');
+		
+		# Render
+		return $this->renderWidgetView('content', $model);
+	}
+
+	/**
+	 * Render a event widget
+	 * @param $params
+	 * @return string
+	 */
+	public function renderEventWidget ( array $params = array() ) {
+		# Fetch
+		$Content = $this->getContentObjectFromParams($params);
+		
+		# Apply
+		$model = compact('Content');
+		
+		# Render
+		return $this->renderWidgetView('event', $model);
+	}
 	
 	/**
 	 * Render a recentlist

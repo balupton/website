@@ -160,32 +160,23 @@
 
 /* Widgets */
 
-.carousel {
-	text-align:center;
-}
-.carousel > .carousel-content {
-	float:left;
-	width: 205px;
-	padding:0 20px;
-}
-
-.recentlist {
+#content-welcome .widget {
 	background: #755697 url("../images/purple-body.gif") repeat-x top left;
 	background-position-y: 30px;
 	padding-bottom:10px;
 }
-.recentlist > .recentlist-header {
+#content-welcome .widget > .widget-header {
 	border: 1px solid #5E4081;
 	border-width:1px 1px 0;
 	height:35px;
 	margin-bottom:5px;
 	background: #593B7B url("../images/purple-header.gif") repeat-x top left;
 }
-.recentlist > .recentlist-header > * {
+#content-welcome .widget > .widget-header > * {
 	color:#E2DBE9;
 	margin: 0.5em 1em;
 }
-.recentlist > .recentlist-content {
+#content-welcome .widget > .widget-content {
 	float:left;
 	font-family:Tahoma;
 	width:125px;
@@ -194,23 +185,49 @@
 	font-size:12px;
 	color:#E2DBE9;
 }
-.recentlist > .recentlist-content * {
-	display:inline;
+#content-welcome .widget a {
 	color:#E2DBE9;
 }
-.recentlist > .recentlist-content > .recentlist-content-content {
+#content-welcome .widget > .widget-content > * {
+	color:#E2DBE9;
+	display:inline;
+}
+#content-welcome .widget > .widget-content > .widget-content-content {
 	display:block;
 	font-size:11px;
 }
-.recentlist, .recentlist > .recentlist-header {
+#content-welcome .widget, #content-welcome .widget > .widget-header {
 	-moz-border-radius-topleft: 5px;
 	-webkit-border-top-left-radius: 5px;
 	-moz-border-radius-topright: 5px;
 	-webkit-border-top-right-radius: 5px;
 }
-.recentlist {
+#content-welcome .widget {
 	-moz-border-radius-bottomleft: 5px;
 	-webkit-border-bottom-left-radius: 5px;
 	-moz-border-radius-bottomright: 5px;
 	-webkit-border-bottom-right-radius: 5px;
+}
+
+
+#content-welcome .carousel > .carousel-header {
+	text-align:left;
+	margin-bottom:10px;
+}
+#content-welcome .carousel {
+	text-align:center;
+}
+#content-welcome .carousel > .carousel-content {
+	float:left;
+	width: 205px;
+	padding:0 20px;
+}
+#content-welcome .carousel > .carousel-content > h4 {
+	font-size:15px;
+	padding-bottom:7px;	
+	display:block;
+}
+
+#content-welcome .taglist > .widget-content > .widget-content-header {
+	text-transform:capitalize;
 }

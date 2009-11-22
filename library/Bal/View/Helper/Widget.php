@@ -85,6 +85,10 @@ class Bal_View_Helper_Widget extends Zend_View_Helper_Abstract {
 			$action = 'render'.ucfirst($name).'Widget';
 		}
 		
+		# Clean
+		var_dump(array_keys($params), $widget);
+		array_unique($params);
+		
 		# Handle
 		$render = $this->view->getHelper($helper)->$action($params);
 		

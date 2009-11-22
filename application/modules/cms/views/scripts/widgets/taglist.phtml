@@ -1,1 +1,14 @@
-<?php
+<div class="taglist widget">
+	<div class="taglist-header widget-header">
+		<h3>Popular Tags</h3>
+	</div>
+	<? foreach ( $this->TagList as $Tag ) :
+		$tag = $Tag->name;
+		$tagUrl = $this->url(array('action'=>'search','search'=>$tag),'app',true);
+		?>
+		<div class="taglist-content widget-content">
+			<h4 class="taglist-content-header widget-content-header"><a href="<?=$tagUrl?>" title="<?=$tag?>"><?=$tag?></a></h4>
+		</div>
+	<? endforeach; ?>
+	<div class="clear"></div>
+</div>
