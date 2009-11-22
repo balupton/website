@@ -12,6 +12,11 @@ html, body, .content {
 	text-align:left;
 }
 
+.content img {
+	border: 1px solid #CCC;
+	border-color:#CCC #999 #999 #CCC;
+}
+
 a, a:link, a:visited, a:hover {
 	color:#0862D0;
 	text-decoration:underline;

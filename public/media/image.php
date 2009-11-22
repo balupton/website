@@ -9,9 +9,9 @@ require_once(BALPHP_PATH.'/core/functions/_files.funcs.php');
 
 # Fetch
 $image_location = $_GET['image'];
-$height = intval(!empty($_GET['height']) ? $_GET['height'] : !empty($_GET['h']) ? $_GET['h'] : 0);
-$width = intval(!empty($_GET['width']) ? $_GET['width'] : !empty($_GET['w']) ? $_GET['w'] : 0);
-$quality = intval(!empty($_GET['quality']) ? $_GET['quality'] : !empty($_GET['q']) ? $_GET['q'] : 90);
+$height = intval(!empty($_GET['height']) ? $_GET['height'] : (!empty($_GET['h']) ? $_GET['h'] : 0));
+$width = intval(!empty($_GET['width']) ? $_GET['width'] : (!empty($_GET['w']) ? $_GET['w'] : 0));
+$quality = intval(!empty($_GET['quality']) ? $_GET['quality'] : (!empty($_GET['q']) ? $_GET['q'] : 90));
 
 # Prepare
 $image_path = realpath($image_location);

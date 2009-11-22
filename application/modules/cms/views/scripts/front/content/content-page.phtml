@@ -1,8 +1,23 @@
 <?
 	$Content = $this->Content;
+	$contentUrl = $this->content()->getUrl($Content);
+	$baseUrl = $this->bal()->getBaseUrl();
 ?>
 <div id="content-<?=$Content->code?>" class="content">
-	<h2><a href="<?=$this->content()->getUrl($Content)?>" title="<?=$Content->title?>"><?=$Content->title?></a></h2>
+	<h2>
+		<a href="<?=$contentUrl?>" title="<?=$Content->title?>">
+			<?=$Content->title?>
+		</a>
+	</h2>
+	<? if ( $Content->Avatar->exists() ) :
+		$Media = $Content->Avatar;
+		$mediaUrl = $baseUrl.$Media->url; ?>
+		<div class="content-avatar">
+			<a href="<?=$mediaUrl?>" title="View Image">
+				<img src="<?=$mediaUrl?>?width=200" title="<?=$Content->title?>" alt="<?=$Content->title?> Avatar" />
+			</a>
+		</div>
+	<? endif; ?>
 	<div id="content-content" class="content-content">
 		<?=$this->content()->renderContent($Content)?>
 	</div>

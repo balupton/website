@@ -102,8 +102,11 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	public function logout ( ) {
 		# Locale
 	   	Zend_Registry::get('Locale')->clearLocale();
+	   	
 		# Logout
 		$this->getAuth()->clearIdentity();
+		Zend_Session::forgetMe();
+		
 		# Chain
 		return $this;
 	}
@@ -113,9 +116,10 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	 * @param string $username
 	 * @param string $password
 	 * @param string $locale
+	 * @param string $remember
 	 * @return bool
 	 */
-	public function login ( $username, $password, $locale = null ) {
+	public function login ( $username, $password, $locale = null, $remember = null ) {
 		# Prepare
 		$Session = new Zend_Session_Namespace('login'); // not sure why needed but it is here
 		$Auth = $this->getAuth();
@@ -133,7 +137,16 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 		}
 		
 		# Passed
-	
+		
+		# RememberMe
+		if ( $remember ) {
+			$rememberMe = $this->getConfig('bal.auth.remember');
+			if ( $rememberMe ) {
+				$rememberMe = strtotime($rememberMe)-time();
+				Zend_Session::rememberMe($rememberMe);
+			}
+		}
+		
 		# Set Locale
 		if ( $locale ) {
    			$Locale = Zend_Registry::get('Locale');

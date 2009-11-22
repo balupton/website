@@ -485,7 +485,15 @@
 			},
 			extension: function(Sparkle, config){
 				var $this = $(this);
-				return $this.findAndSelf(config.selector).autogrow();
+				var $els = $this.findAndSelf(config.selector);
+				if ( $els.length ) {
+					if (typeof $.fn.autogrow === 'undefined') {
+						console.warn('Autogrow has failed to load.');
+						return false;
+					}
+					$els.autogrow();
+				}
+				return true;
 			}
 		},
 		'gsfn': {
@@ -500,7 +508,7 @@
 					$this.findAndSelf(config.selector).click(function(event) {
 						if ( typeof GSFN_feedback_widget === 'undefined' ) {
 							console.warn('GSFN has failed to load.');
-							return false;
+							return true;
 						}
 						GSFN_feedback_widget.show();
 						//event.stopPropagation();
@@ -509,7 +517,7 @@
 					});
 				});
 				// Done
-				return true;
+				return $this;
 			}
 		},
 		'hint': {

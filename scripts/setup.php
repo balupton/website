@@ -19,8 +19,8 @@ $config = array();
 $config['bal'] = $Application->getOption('bal');
 
 // Check Secret
-if ( $_GET['secret'] !== $config['bal']['install']['secret'] ) {
-	throw new Zend_Exception('Trying to install without the secret! Did we not tell you? Maybe it is for good reason!');
+if ( $_GET['secret'] !== $config['bal']['setup']['secret'] ) {
+	throw new Zend_Exception('Trying to setup without the secret! Did we not tell you? Maybe it is for good reason!');
 }
 
 // Get Config

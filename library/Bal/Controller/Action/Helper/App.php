@@ -95,12 +95,13 @@ class Bal_Controller_Action_Helper_App extends Zend_Controller_Action_Helper_Abs
 	 * @param string $username
 	 * @param string $password
 	 * @param string $locale
+	 * @param string $remember
 	 * @param bool $logged_out_forward
 	 * @param bool $logged_in_forward
 	 * @return bool
 	 */
-	public function login ( $username, $password, $locale = null, $logged_out_forward = false, $logged_in_forward = false ) {
-		$this->getApp()->login($username, $password, $locale);
+	public function login ( $username, $password, $locale = null, $remember = null, $logged_out_forward = false, $logged_in_forward = false ) {
+		$this->getApp()->login($username, $password, $locale, $remember);
 		return $this->authenticate($logged_out_forward, $logged_in_forward);;
 	}
 	

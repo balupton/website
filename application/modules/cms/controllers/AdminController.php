@@ -75,8 +75,9 @@ class Cms_AdminController extends Zend_Controller_Action {
 			$username = $login['username'];
 			$password = $login['password'];
 			$locale = $login['locale'];
+			$remember = $login['remember'];
 			# Login and Forward
-			return $this->getHelper('App')->login($username, $password, $locale, false, true);
+			return $this->getHelper('App')->login($username, $password, $locale, $remember, false, true);
 		}
 			
 		# Render
