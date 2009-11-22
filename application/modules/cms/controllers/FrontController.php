@@ -52,6 +52,16 @@ class Cms_FrontController extends Zend_Controller_Action {
 		return true;
 	}
 
+	public function registerNavigationAction ( $code ) {
+		# Navigation
+		$NavigationActions = $this->view->NavigationActions;
+		$NavItem = $NavigationActions->findBy('id', 'action-'.$code);
+		$NavItem->parent->active = $NavItem->active = true;
+		
+		# Done
+		return true;
+	}
+	
 	public function registerNavigationMenu ( $code ) {
 		# Navigation
 		$NavigationMenu = $this->view->NavigationMenu;
@@ -82,6 +92,35 @@ class Cms_FrontController extends Zend_Controller_Action {
 	
 	# ========================
 	# CONTENT
+
+	public function searchAction () {
+		# Prepare
+		$search = $this->_getParam('search');
+		
+		# Check
+		if ( !$search ) {
+			return $this->_forward('index');
+		}
+		
+		# Query
+		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.enabled = ? AND c.status = ?', array(true, 'published'))->orderBy('c.position ASC, c.id ASC');
+		
+		# Search
+		$ContentQuery = Doctrine::getTable('Content')->search($search, $ListQuery);
+		$ContentList = $ContentQuery->execute();
+		
+		# Apply
+		$this->view->search = $search;
+		$this->view->ContentList = $ContentList;
+		$this->view->headTitle()->append('Search');
+		$this->registerNavigationAction('search');
+		
+		# Render
+		$this->render('content/content-search');
+		
+		# Done
+		return true;
+	}
 	
 	public function contentPageAction ( ) {
 		# Prepare

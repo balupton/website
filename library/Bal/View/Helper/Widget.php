@@ -66,7 +66,7 @@ class Bal_View_Helper_Widget extends Zend_View_Helper_Abstract {
 		return $this->widgets[$code];
 	}
 	
-	public function render ( $code, array $params = array() ) {
+	public function renderWidget ( $code, array $params = array() ) {
 		# Prepare
 		$widget = $this->getWidget($code);
 		if ( !empty($widget['helper']) ) {
@@ -113,7 +113,7 @@ class Bal_View_Helper_Widget extends Zend_View_Helper_Abstract {
 		$params += $attrs;
 		
 		# Render
-		$render = $this->render($code, $params);
+		$render = $this->renderWidget($code, $params);
 		
 		# Done
 		return $render;

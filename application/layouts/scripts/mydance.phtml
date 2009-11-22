@@ -38,8 +38,15 @@
 		<div id="header">
 			<div id="logo"><h1><?=$this->bal()->getConfig('bal.site.name')?></h1></div>
 			
-			<div id="nav-top">
+			<div id="nav-top" class="nav-action">
 				<?=$this->navigation()->menu()->renderMenu($this->NavigationActions,array('ulClass'=>'ul-unstyled-horizontal'))?>
+			</div>
+			
+			<div id="nav-search" class="nav-action">
+				<form action="<?=$this->url(array('action'=>'search'),'app',true)?>" method="GET" >
+					<label for="search">Search</label>
+					<input type="text" name="search" id="search" title="Search" class="jquery-hint" />
+				</form>
 			</div>
 			
 			<div class="clear"></div>

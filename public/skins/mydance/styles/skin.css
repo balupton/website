@@ -19,13 +19,17 @@
 	width: 168px;
 	height: 44px;
 }
-#nav-top {
+#header > .nav-action {
 	float: right;
 	background-color: #F2F2F2;
 	height: 34px;
 	text-align: right;
 	padding-top: 15px;
 	padding-right: 20px;
+}
+#nav-search {
+	padding:0 15px;
+	margin:0 5px 0 15px;
 }
 #nav-main {
 	margin-top: 5px;
@@ -48,7 +52,7 @@
 	border-width: 1px 1px 5px 1px;
 }
 
-#content-wrap > .content, #nav-main, #footer, #nav-top {
+#content-wrap > .content, #nav-main, #footer, #header > .nav-action {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
