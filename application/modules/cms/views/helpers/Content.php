@@ -118,7 +118,18 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 	 * @return string
 	 */
 	public function renderCarouselWidget ( array $params = array() ) {
-		return $params['content'];
+		# Prepare
+		$codes = explode(',', str_replace(' ', '', $params['content']));
+		
+		# Fetch
+		$Content = $this->getContentObjectFromParams($params);
+		$ContentList = Doctrine_Query::create()->select('*')->from('Content c')->where('c.enabled = ? AND c.status = ?', array(true, 'published'))->andWhereIn('c.code',$codes)->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
+		
+		# Apply
+		$model = compact('Content','ContentList');
+		
+		# Render
+		return $this->renderWidgetView('carousel', $model);
 	}
 	
 	/**
@@ -163,10 +174,10 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 	public function renderRecentlistWidget ( array $params = array() ) {
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$Recent = Doctrine_Query::create()->select('*')->from('Content c')->where('c.enabled = ? AND c.status = ?', array(true, 'published'))->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
+		$ContentList = Doctrine_Query::create()->select('*')->from('Content c')->where('c.enabled = ? AND c.status = ?', array(true, 'published'))->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
 		
 		# Apply
-		$model = compact('Content','Recent');
+		$model = compact('Content','ContentList');
 		
 		# Render
 		return $this->renderWidgetView('recentlist', $model);
@@ -182,13 +193,13 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$Articles = Doctrine_Query::create()->select('*')->from('Content c, c.Parent cp')->where('c.enabled = ? AND c.status = ? AND cp.id = ?', array(true, 'published', $Content->id))->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
+		$ContentList = Doctrine_Query::create()->select('*')->from('Content c, c.Parent cp')->where('c.enabled = ? AND c.status = ? AND cp.id = ?', array(true, 'published', $Content->id))->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
 		
 		// need to fetch in the order of most recent first
 		// should add paging
 		
 		# Apply
-		$model = compact('Content','Articles');
+		$model = compact('Content','ContentList');
 		
 		# Render
 		return $this->renderWidgetView('articlelist', $model);

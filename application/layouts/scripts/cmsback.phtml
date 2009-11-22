@@ -1,6 +1,7 @@
 <?php
 	echo $this->doctype();
 	$baseUrl = $this->bal()->getBaseUrl();
+	$baseUrlFront = $this->bal()->getBaseUrl('front');
 	$baseUrlBack = $this->bal()->getBaseUrl('back');
 	$User = $this->bal()->getUser();
 ?><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -30,7 +31,7 @@
 		//->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.history.js')->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.ajaxy.js')
 		// TinyMCE
 		->offsetSetFile(4,$baseUrl.'/scripts/tiny_mce/jquery.tinymce.dev.js')
-		->offsetSetScript(100,'$.Editor.applyConfig("default",{script_url: "'.$baseUrl.'/scripts/tiny_mce/tiny_mce.js"});')
+		->offsetSetScript(100,'$.Editor.applyConfig("default",{script_url: "'.$baseUrl.'/scripts/tiny_mce/tiny_mce.js", content_css: "'.$baseUrlFront.'/styles/content.css"});')
 	    // Application
 	    ->offsetSetFile(5,$baseUrl.'/scripts/jquery.autogrow.js')
 	    ->offsetSetFile(6,$baseUrl.'/scripts/jquery.sparkle.js')

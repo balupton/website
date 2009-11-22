@@ -1,1 +1,25 @@
-<?php
+<?
+	$baseUrl = $this->bal()->getBaseUrl();
+?>
+<div class="carousel">
+	<? foreach ( $this->ContentList as $Content ) :
+		$contentUrl = $this->content()->getUrl($Content);
+		?>
+		<div class="carousel-content">
+			<h3><a href="<?=$contentUrl?>" title="<?=$Content->title?>"><?=$Content->title?></a></h3>
+			<? if ( $Content->Avatar->exists() ) :
+				$Media = $Content->Avatar;
+				$mediaUrl = $baseUrl.$Media->url; ?>
+				<div class="carousel-content-avatar">
+					<a href="<?=$contentUrl?>" title="View Image">
+						<img src="<?=$mediaUrl?>?width=200" title="<?=$Content->title?>" alt="<?=$Content->title?> Avatar" />
+					</a>
+				</div>
+			<? endif; ?>
+			<div class="carousel-content-content">
+				<?=$this->content()->renderDescription($Content)?>
+			</div>
+		</div>
+	<? endforeach; ?>
+	<div class="clear"></div>
+</div>

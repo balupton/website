@@ -1,1 +1,14 @@
-<?php
+<div class="recentlist">
+	<div class="recentlist-header">
+		<h3>Recent Items</h3>
+	</div>
+	<? foreach ( $this->ContentList as $Content ) : ?>
+		<div class="recentlist-content">
+			<h4><a href="<?=$this->content()->getUrl($Content)?>" title="<?=$Content->title?>"><?=$Content->title?></a></h4>
+			<div class="recentlist-content-content">
+				<?=strip_tags($Content->description)?>
+			</div>
+		</div>
+	<? endforeach; ?>
+	<div class="clear"></div>
+</div>
