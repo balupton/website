@@ -27,9 +27,10 @@ class Cms_FrontController extends Zend_Controller_Action {
 	
 	public function applyNavigation ( ) {
 		# Content
-		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.*')->from('Content c, c.Route cr')->where('c.enabled = ? AND c.status = ? AND NOT EXISTS (SELECT cp.id FROM Content cp WHERE cp.id = c.parent_id)', array(true, 'published'))->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.code, c.id, c.parent_id, c.position, cr.*')->from('Content c, c.Route cr')->where('c.enabled = ? AND c.status = ? AND NOT EXISTS (SELECT cp.id FROM Content cp WHERE cp.id = c.parent_id)', array(true, 'published'))->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
 		foreach ( $ContentListArray as &$Content ) {
+			$Content['id'] = 'content-'.$Content['code'];
 			$Content['route'] = 'map';
 			$Content['label'] = $Content['title'];
 			$Content['order'] = $Content['position'];
@@ -51,10 +52,10 @@ class Cms_FrontController extends Zend_Controller_Action {
 		return true;
 	}
 
-	public function registerMenu ( $id ) {
+	public function registerNavigationMenu ( $code ) {
 		# Navigation
 		$NavigationMenu = $this->view->NavigationMenu;
-		$NavItem = $NavigationMenu->findBy('id', $id);
+		$NavItem = $NavigationMenu->findBy('id', 'content-'.$code);
 		$NavItem->parent->active = $NavItem->active = true;
 		
 		# Done
@@ -108,6 +109,7 @@ class Cms_FrontController extends Zend_Controller_Action {
 		$this->view->Content = $Content;
 		$this->view->headTitle()->append($Content->title);
 		$this->view->headMeta()->appendName('keywords', $keywordstr);
+		$this->registerNavigationMenu($Content->code);
 		
 		# Render
 		$this->render('content/content-page');

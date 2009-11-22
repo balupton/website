@@ -4,7 +4,7 @@
 			<div class="eventlist-title"><h3>Past:</h3></div>
 			<? foreach ( $this->EventsPast as $Content ) : ?>
 				<div class="eventlist-content">
-					<h3><a href="<?=$this->content()->getUrl($Content)?>" title="<?=$Content->title?>"><?=$Content->title?></a></h3>
+					<h3><a href="<?=$this->content()->getUrl($Content)?>" title="<?=$Content->title?>"><?=$this->locale()->date($Content->event_start_at).' - '.$Content->title?></a></h3>
 					<div class="eventlist-content-content">
 						<?=$this->content()->renderDescription($Content)?>
 					</div>
