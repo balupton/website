@@ -116,7 +116,7 @@ class Cms_FrontController extends Zend_Controller_Action {
 		$this->registerNavigationAction('search');
 		
 		# Render
-		$this->render('content/content-search');
+		$this->render('content/search');
 		
 		# Done
 		return true;
