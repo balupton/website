@@ -192,6 +192,7 @@ class Cms_FrontController extends Zend_Controller_Action {
 		# Apply
 		$this->view->Content = $Content;
 		$this->view->headTitle()->append($Content->title);
+		$this->view->headMeta()->appendName('description', strip_tags($Content->description_rendered));
 		$this->view->headMeta()->appendName('keywords', $keywordstr);
 		$this->registerNavigationMenu($Content->code);
 		
