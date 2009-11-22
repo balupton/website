@@ -1,6 +1,7 @@
 <?
 	$baseUrl = $this->bal()->getBaseUrl();
 	$baseUrlBack = $this->bal()->getBaseUrl('back');
+	$this->headTitle()->append('Media');
 ?>
 <div class="wrap">
 	<form action="<?=$this->url(array('action'=>'media-list'),'admin',true)?>" method="post" enctype="multipart/form-data">

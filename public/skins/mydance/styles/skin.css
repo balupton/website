@@ -26,9 +26,9 @@
 	padding-top: 15px;
 	padding-right: 20px;
 }
-#nav-search {
+#nav-search,#nav-subscribe {
 	padding:0 15px;
-	margin:0 5px 0 15px;
+	margin:0 5px 0 0;
 }
 #nav-main {
 	margin-top: 5px;

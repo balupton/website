@@ -122,6 +122,51 @@ class Cms_FrontController extends Zend_Controller_Action {
 		return true;
 	}
 	
+	public function unsubscribeAction ( ) {
+		# Prepare
+		$Request = $this->getRequest();
+		$Response = $this->getResponse();
+		
+		# Fetch
+		$email = $this->_getParam('email');
+		if ( empty($email) ) {
+			# Apply
+			$this->view->headTitle()->append('Unsubscribe');
+			
+			# Render
+			return $this->render('subscription/unsubscribe');
+		}
+		
+		# Subscribe
+		$Subscriber = Doctrine::getTable('Subscriber')->findOneByEmail($email);
+		if ( count($Subscriber) && $Subscriber->exists() ) {
+			$Subscriber->removeAllTags();
+			$Subscriber->save();
+			$Subscriber->delete();
+		}
+		
+		# Done
+		return $this->_forward('index');
+	}
+	
+	public function subscribeAction ( ) {
+		# Prepare
+		$Request = $this->getRequest();
+		$Response = $this->getResponse();
+		
+		# Fetch
+		$email = $this->_getParam('email');
+		
+		# Subscribe
+		$Subscriber = new Subscriber();
+		$Subscriber->email = $email;
+		$Subscriber->setTags('newsletter');
+		$Subscriber->save();
+		
+		# Done
+		return $this->_forward('index');
+	}
+	
 	public function contentPageAction ( ) {
 		# Prepare
 		$Request = $this->getRequest();

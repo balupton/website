@@ -201,6 +201,7 @@ Subscriber:
             type: string(255)
             notnull: true
             unique: true
+            email: true
         enabled:
             type: boolean
             notnull: true

@@ -32,6 +32,9 @@
 		// TinyMCE
 		->offsetSetFile(4,$baseUrl.'/scripts/tiny_mce/jquery.tinymce.dev.js')
 		->offsetSetScript(100,'$.Editor.applyConfig("default",{script_url: "'.$baseUrl.'/scripts/tiny_mce/tiny_mce.js", content_css: "'.$baseUrlFront.'/styles/content.css"});')
+	    // GSFN
+	    ->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
+	    ->offsetSetScript(81,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
 	    // Application
 	    ->offsetSetFile(5,$baseUrl.'/scripts/jquery.autogrow.js')
 	    ->offsetSetFile(6,$baseUrl.'/scripts/jquery.sparkle.js')

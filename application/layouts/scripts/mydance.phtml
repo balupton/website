@@ -45,7 +45,14 @@
 			<div id="nav-search" class="nav-action">
 				<form action="<?=$this->url(array('action'=>'search'),'app',true)?>" method="GET" >
 					<label for="search">Search</label>
-					<input type="text" name="search" id="search" title="Search"  />
+					<input type="text" name="search" id="search" title="Search query" class="sparkle-hint"  />
+				</form>
+			</div>
+			
+			<div id="nav-subscribe" class="nav-action">
+				<form action="<?=$this->url(array('action'=>'subscribe'),'app',true)?>" method="POST" >
+					<label for="email">Newsletter</label>
+					<input type="text" name="email" id="email" title="Your email" class="sparkle-hint"  />
 				</form>
 			</div>
 			

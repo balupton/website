@@ -33,6 +33,7 @@ abstract class BaseSubscriber extends Doctrine_Record
              'type' => 'string',
              'notnull' => true,
              'unique' => true,
+             'email' => true,
              'length' => '255',
              ));
         $this->hasColumn('enabled', 'boolean', null, array(
