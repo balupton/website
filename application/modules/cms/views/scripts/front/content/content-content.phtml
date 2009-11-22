@@ -9,7 +9,7 @@
 			<?=$Content->title?>
 		</a>
 	</h2>
-	<? if ( $Content->Avatar->exists() ) :
+	<? if ( count($Content->Avatar) && $Content->Avatar->exists() ) :
 		$Media = $Content->Avatar;
 		$mediaUrl = $baseUrl.$Media->url; ?>
 		<div class="content-avatar">

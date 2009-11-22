@@ -159,10 +159,6 @@ Event:
             type: timestamp
         event_finish_at:
             type: timestamp
-        event_content:
-            type: string
-            extra:
-                html: rich
 
 ContentAndSubscriber:
     columns:

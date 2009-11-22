@@ -3,7 +3,11 @@
 		$contentUrl = $this->content()->getUrl($Content);
 		?>
 		<div class="articlelist-content">
-			<h3><a href="<?=$contentUrl?>" title="<?=$Content->title?>"><?=$Content->title?></a></h3>
+			<h3>
+				<a href="<?=$contentUrl?>" title="<?=$Content->title?>">
+					<?=$this->locale()->date($Content->event_start_at).' - '.$Content->title?>
+				</a>
+			</h3>
 			<div class="articlelist-content-content">
 				<?=$this->content()->renderDescription($Content)?>
 			</div>

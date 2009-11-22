@@ -111,9 +111,9 @@
 	}
 	Date.prototype.getTimestr = Date.prototype.getTimestr || function(){
 		var date = this;
-		var hours = date.getUTCHours();
-		var minutes = date.getUTCMinutes();
-		var seconds = date.getUTCSeconds();
+		var hours = date.getUTCHours().padLeft(0,2);
+		var minutes = date.getUTCMinutes().padLeft(0,2);
+		var seconds = date.getUTCSeconds().padLeft(0,2);
 		return hours+':'+minutes+':'+seconds;
 	}
 	

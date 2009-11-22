@@ -26,11 +26,10 @@ Content:
         code: "bloc-party"
         title: "Bloc Party"
         description: "Event for Bloc Party"
-        content: "[event/]"
         type: event
-        event_start_at: "2009-03-14 21:14"
-        event_finish_at: "2009-03-14 23:14"
-        event_content: "Bloc Party are famous and kick ass"
+        event_start_at: "2009-03-14 21:15"
+        event_finish_at: "2009-03-14 23:15"
+        content: "Bloc Party are famous and kick ass"
         tags: [event,bloc party,rock]
         Parent: Content_Events
         Author: User_Mydance
@@ -39,11 +38,10 @@ Content:
         code: "zouk-festival"
         title: "Zouk Festival"
         description: "Event for Zouk Festival"
-        content: "[event/]"
         type: event
         event_start_at: "2009-03-12 12:25"
-        event_finish_at: "2009-03-12 14:22"
-        event_content: "Zouk Festival are famous and kick ass"
+        event_finish_at: "2009-03-12 14:25"
+        content: "Zouk Festival are famous and kick ass"
         tags: [event,zouk,festival]
         Parent: Content_Events
         Author: User_Mydance
@@ -52,11 +50,10 @@ Content:
         code: "lala-festival"
         title: "LaLa Festival"
         description: "Event for LaLa Festival"
-        content: "[event/]"
         type: event
         event_start_at: "2009-04-14 12:25"
-        event_finish_at: "2009-04-14 14:22"
-        event_content: "LaLa Festival are famous and kick ass"
+        event_finish_at: "2009-04-14 14:25"
+        content: "LaLa Festival are famous and kick ass"
         tags: [event,lala,festival]
         Parent: Content_Events
         Author: User_Mydance

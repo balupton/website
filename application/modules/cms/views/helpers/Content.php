@@ -166,38 +166,6 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 	}
 
 	/**
-	 * Render a content widget
-	 * @param $params
-	 * @return string
-	 */
-	public function renderContentWidget ( array $params = array() ) {
-		# Fetch
-		$Content = $this->getContentObjectFromParams($params);
-		
-		# Apply
-		$model = compact('Content');
-		
-		# Render
-		return $this->renderWidgetView('content', $model);
-	}
-
-	/**
-	 * Render a event widget
-	 * @param $params
-	 * @return string
-	 */
-	public function renderEventWidget ( array $params = array() ) {
-		# Fetch
-		$Content = $this->getContentObjectFromParams($params);
-		
-		# Apply
-		$model = compact('Content');
-		
-		# Render
-		return $this->renderWidgetView('event', $model);
-	}
-	
-	/**
 	 * Render a recentlist
 	 * @param $params
 	 * @return string

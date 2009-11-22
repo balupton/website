@@ -86,8 +86,7 @@ class Bal_View_Helper_Widget extends Zend_View_Helper_Abstract {
 		}
 		
 		# Clean
-		var_dump(array_keys($params), $widget);
-		array_unique($params);
+		$params = array_unique($params);
 		
 		# Handle
 		$render = $this->view->getHelper($helper)->$action($params);

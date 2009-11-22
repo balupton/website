@@ -41,6 +41,10 @@
 		<pre><? var_dump($this->request->getParams()) ?>
 		</pre>
 		
+		<h3>Request Parameters (raw):</h3>
+		<pre><? var_dump($_REQUEST) ?>
+		</pre>
+		
 		<? if ( !empty($this->profiler) ) : ?>
 			<h3>Profiler:</h3>
 			<pre><?

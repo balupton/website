@@ -251,21 +251,9 @@
 					</script>
 					
 					<div id="content-content-field" class="field field-rich ">
-						<? if ( $type === 'event' ): ?>
-							<textarea name="content[content]" tabindex="2" id="content-content">[event/]</textarea>
-							<script type="text/javascript">$(function(){$('#content-content-field').hide();});</script>
-						<? else: ?>
-							<textarea name="content[content]" tabindex="2" id="content-content"><?=$this->ContentArray['content']?></textarea>
-							<script type="text/javascript">$(function(){$('#content-content').editor('rich');});</script>
-						<? endif; ?>
+						<textarea name="content[content]" tabindex="2" id="content-content"><?=$this->ContentArray['content']?></textarea>
+						<script type="text/javascript">$(function(){$('#content-content').editor('rich');});</script>
 					</div>
-					
-					<? if ( $type === 'event' ): ?>
-					<div id="content-event-content-field" class="field field-rich ">
-						<textarea name="content[event_content]" tabindex="3" id="content-event-content"><?=$this->ContentArray['event_content']?></textarea>
-						<script type="text/javascript">$(function(){$('#content-event-content').editor('rich');});</script>
-					</div>
-					<? endif; ?>
 					
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Excerpt</h3>

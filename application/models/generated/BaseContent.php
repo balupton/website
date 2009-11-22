@@ -26,7 +26,6 @@
  * @property enum $type
  * @property timestamp $event_start_at
  * @property timestamp $event_finish_at
- * @property string $event_content
  * @property Media $Avatar
  * @property Route $Route
  * @property Content $Parent
@@ -173,13 +172,6 @@ abstract class BaseContent extends Doctrine_Record
              ));
         $this->hasColumn('event_finish_at', 'timestamp', null, array(
              'type' => 'timestamp',
-             ));
-        $this->hasColumn('event_content', 'string', null, array(
-             'type' => 'string',
-             'extra' => 
-             array(
-              'html' => 'rich',
-             ),
              ));
 
         $this->setSubClasses(array(

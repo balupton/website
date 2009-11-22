@@ -151,7 +151,7 @@ class Cms_FrontController extends Zend_Controller_Action {
 		$this->registerNavigationMenu($Content->code);
 		
 		# Render
-		$this->render('content/content-page');
+		$this->render('content/content-'.$Content->type);
 		
 		# Done
 		return true;
