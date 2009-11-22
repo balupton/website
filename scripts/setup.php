@@ -27,15 +27,45 @@ if ( $_GET['secret'] !== $config['bal']['install']['secret'] ) {
 $config['data'] = $Application->getOption('data');
 
 
-// Install
-if ( !empty($_GET['install']) ) {
-	// Install All
-	$install = array('createindex', 'reload', 'optimiseindex');
-	echo 'Setup: install ['.implode($install,',').']'."<br/>\n";
-	foreach ( $install as $param ) {
-		$_GET[$param] = true;
+// Handle
+$mode = !empty($_GET['mode']) ? $_GET['mode'] : null;
+switch ( $mode ) {
+	
+	case 'install':
+		$install = array('createindex', 'reload', 'optimiseindex', 'media');
+		array_keys_ensure($_GET, $install, true);
+		echo 'Setup: mode:install ['.implode(array_keys($_GET),',').']'."<br/>\n";
+		break;
+		
+	case 'update':
+		$update = array('optimiseindex');
+		array_keys_ensure($_GET, $update, true);
+		echo 'Setup: mode:update ['.implode(array_keys($_GET),',').']'."<br/>\n";
+		break;
+		
+	default:
+		echo 'Setup: mode:normal ['.implode(array_keys($_GET),',').']'."<br/>\n";
+		break;
+}
+
+
+// Media: media
+if ( !empty($_GET['media']) ) {
+	echo 'Media: media'."<br/>\n";
+	// Delete the contents of media dirs; uploads and images
+	$images_path = $config['bal']['files']['images_path'].'/';
+	$upload_path = $config['bal']['files']['upload_path'].'/';
+	
+	// Scan directories
+	$scan = scan_dir($images_path,null,null,$images_path)+scan_dir($upload_path,null,null,$upload_path);
+	
+	// Wipe files
+	foreach ( $scan as $file ) {
+		echo 'Media: deleted file ['.$file.']'."<br/>\n";
+		unlink($file);
 	}
 }
+
 
 // Lucene
 $data_lucence = !empty($config['data']['index_path']);
@@ -48,6 +78,7 @@ if ( !empty($_GET['createindex']) && $data_lucence ) {
 } else {
 	$Application->bootstrap('index');
 }
+
 
 
 // Doctrine
