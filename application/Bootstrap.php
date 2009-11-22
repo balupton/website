@@ -106,10 +106,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
         $viewRenderer->setView($view);
         
-        # Meta
-        $view->headMeta()->appendName('author',		'Benjamin \'balupton\' Lupton - http://www.balupton.com');
-        $view->headMeta()->appendName('generator',	'balCMS - http://www.balupton.com/balcms');
-        
 	    # Done
         return $view;
 	}
@@ -122,6 +118,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Prepare
 		$this->bootstrap('view');
 		$this->bootstrap('config');
+		$this->bootstrap('app');
 		
 		# Config
 		$applicationConfig = Zend_Registry::get('applicationConfig');
@@ -135,6 +132,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Widgets
 		$view->getHelper('widget')->addWidgets($applicationConfig['bal']['widget']);
 		
+        # Meta
+        $view->headMeta()->appendName('author',		'Benjamin \'balupton\' Lupton - http://www.balupton.com');
+        $view->headMeta()->appendName('generator',	'balCMS - http://www.balupton.com/balcms');
+        $view->headLink(array('rel' => 'icon', 'href' => $view->bal()->getBaseUrl('front').'/favicon.ico', 'type'=> 'image/x-icon'), 'PREPEND');
+  		
 		# Done
 		return true;
 	}
@@ -145,8 +147,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */
 	protected function _initRoutes () {
 		# Prepare
-		$this->bootstrap('defaults');
-		$this->bootstrap('doctrine');
+		$this->bootstrap('autoload');
 		
 		# Route
 		$routeConfig = new Zend_Config_Ini(CONFIG_PATH.'/routes.ini', 'production');
@@ -154,12 +155,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		if ( defined('BASE_URL') ) {
 			$FrontController->setBaseUrl(BASE_URL);
 		} else {
-			define('BASE_URL', $FrontController->getBaseUrl());
+			define('BASE_URL', rtrim($FrontController->getBaseUrl(),'/'));
 		}
     	$router = $FrontController->getRouter();
 		$router->removeDefaultRoutes();
 		
     	$router->addConfig($routeConfig, 'routes');
+    	
     	# Location
     	# $resources = $this->getOption('resources');
     	# $FrontController->addModuleDirectory($resources['frontController']['moduleDirectory']);
@@ -255,6 +257,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Prepare
 		$this->bootstrap('autoload');
 		$this->bootstrap('config');
+		$this->bootstrap('routes');
 		$this->bootstrap('doctrine');
 		
 		# Load

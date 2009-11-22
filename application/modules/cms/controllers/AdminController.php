@@ -406,7 +406,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		$Content = $ContentCrumbArray = $ContentListArray = $ContentArray = array();
 		
 		# Prepare
-		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp')->where('c.enabled = ? AND c.type = ?', array(true, $type))->orderBy('c.position ASC, c.id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.enabled = ? AND c.type = ?', array(true, $type))->orderBy('c.position ASC, c.id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle
 		if ( $search ) {

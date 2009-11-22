@@ -2,6 +2,8 @@
 	$type = $this->type;
 	$Type = ucfirst($type);
 	$this->headTitle()->append($Type);
+	$baseUrl = $this->bal()->getBaseUrl();
+	$baseUrlBack = $this->bal()->getBaseUrl('back');
 ?><div class="wrap">
 	<!-- Edit Button -->
     <div id="icon-edit-pages" class="icon32">
@@ -34,6 +36,7 @@
                     <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
                         <input type="checkbox">
                     </th>-->
+                    <th scope="col" class="manage-column column-icon" />
                     <th scope="col" id="title" class="manage-column column-title" style="">
                         Title
                     </th>
@@ -61,6 +64,7 @@
                     <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
                         <input type="checkbox">
                     </th>-->
+                    <th scope="col" class="manage-column column-icon" />
                     <th scope="col" id="title" class="manage-column column-title" style="">
                         Title
                     </th>
@@ -86,15 +90,29 @@
 			<!-- Content Table: Content -->
             <tbody id="content-list">
             	<? foreach ( $this->ContentListArray as $Content ): ?>
-            	<? $contentUrl = $this->url(array('Map'=>$Content['Route']),'map',true); ?>
+            	<?
+            		$contentUrl = $this->content()->getUrl($Content);
+            		$contentOpenUrl = $this->url(array('action'=>'content-list','content'=>$Content['code']),'admin',true);
+            		$contentEditUrl = $this->url(array('action'=>'content-edit','content'=>$Content['code']),'admin',true);
+            	?>
                 <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
+                	<td class="column-icon media-icon">
+						<a title="View <?=$Content['title']?>" href="<?=$contentUrl?>">
+							<? if ( !empty($Content['Avatar']) && $Content['Avatar']['type'] === 'image' ) : ?>
+            					<? $mediaUrl = $baseUrl.$Content['Avatar']['url']; ?>
+								<img height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
+							<? else: ?>
+								<img width="46" height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$baseUrlBack?>/images/files/default.png"/>
+							<? endif; ?>
+						</a>
+					</td>
                     <td class="post-title page-title column-title">
                     	<input type="hidden" name="content[id]" class="content-id" value="<?=$Content['id']?>" />
-                        <strong><a class="row-title" href="<?=$this->url(array('action'=>'content-list','content'=>$Content['code']),'admin',true)?>" title="<?=$this->locale()->translate('edit-%s',$Content['title'])?>">
+                        <strong><a class="row-title" href="<?=$contentOpenUrl?>" title="Open this">
                         	<?=/*str_repeat('&nbsp;',$Content['level']).' '.*/$Content['title']?>
 						</a></strong>
 						<div class="row-actions">
-							<span class="edit"><a title="Edit this page" href="<?=$this->url(array('action'=>'content-edit','content'=>$Content['code']),'admin',true)?>">Edit</a> | </span>
+							<span class="edit"><a title="Edit this" href="<?=$contentEditUrl?>">Edit</a> | </span>
 							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$Content['title']?>" href="<?=$this->url(array('action'=>'content-delete','content'=>$Content['code']),'admin',true)?>">Delete</a> | </span>
 							<span class="view"><a rel="permalink" title="View" href="<?=$contentUrl?>">View</a></span>
 						</div>

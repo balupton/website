@@ -26,12 +26,12 @@ class Media extends BaseMedia {
 	 * @return
 	 */
 	public function setFile ( $file ) {
-		// Configuration
+		# Configuration
 		$applicationConfig = Zend_Registry::get('applicationConfig');
 		$upload_path = realpath($applicationConfig['bal']['files']['upload_path']);
 		$upload_url = $applicationConfig['bal']['files']['upload_url'];
 		
-		// Check the file
+		# Check the file
 		if ( !empty($file['error']) ) {
 			$error = $file['error'];
 			switch ( $file['error'] ) {
@@ -65,7 +65,7 @@ class Media extends BaseMedia {
 			return false;
 		}
 		
-		// Prepare file
+		# Prepare file
 		$file_title = $file_name = $file['name'];
 		$file_old_path = $file['tmp_name'];
 		$file_new_path = $upload_path . DIRECTORY_SEPARATOR . $file_name;
@@ -80,24 +80,67 @@ class Media extends BaseMedia {
 			$file_new_path = $upload_path . DIRECTORY_SEPARATOR . $file_name;
 		}
 		
-		// Move file
+		# Move file
 		$success = move_uploaded_file($file_old_path, $file_new_path);
 		if ( !$success ) {
 			throw new Doctrine_Exception('Unable to upload the file.');
 			return false;
 		}
 		
-		// Secure
+		# Prepare
 		$file_path = realpath($file_new_path);
+		$file_type = get_filetype($file_path);
+		$file_size = filesize($file_path);
+		
+		# Image
+		if ( $file_type === 'image' ) {
+			# Dimensions
+			$image_dimensions = image_dimensions($file_path);
+			if ( !empty($image_dimensions) ) {
+				// It is not a image we can modify
+				$this->width = 0;
+				$this->height = 0;
+			} else {
+				$this->width = $image_dimensions['width'];
+				$this->height = $image_dimensions['height'];
+			}
+			# Compress
+			$image_info = image_read($file_path, true);
+			if ( $image_info ) {
+				$image_info['image_type'] = IMAGETYPE_JPEG;
+				$image_info = image_write($image_info, true);
+				if ( $image_info ) {
+					$image_info = image_compress($image_info, true);
+					if ( $image_info ) {
+						$file_title = get_filename($file_title,false) . '.jpg';
+						$file_name = get_filename($file_name,false) . '.jpg';
+						$file_path = $upload_path . DIRECTORY_SEPARATOR . $file_name;
+						$image_contents = $image_info['image'];
+						file_put_contents($file_path, $image_contents, LOCK_EX);
+						$file_path = realpath($file_path);
+						$file_size = strlen($image_contents);
+					} else {
+						// Is not an image we can compress
+						//echo '!compress';
+					}
+				} else {
+					// Is not an image we can write to
+					//echo '!write';
+				}
+			} else {
+				// Is not an image we can read from
+				//echo '!read';
+			}
+		}
+		
+		# Secure
 		$file_relative_path = trim(str_replace($upload_path, '', $file_path),'/\\');
 		$file_url = $upload_url . '/' . $file_relative_path;
-		$file_size = filesize($file_path);
 		$file_mimetype = trim_mime_type(get_mime_type($file_path));
 		$file_humantype = filetype_human($file_path);
 		$file_extension = get_extension($file_path);
-		$file_type = get_filetype($file_path);
 		
-		// Apply
+		# Apply
 		if ( !$this->code )
 			$this->code = $file_name;
 		if ( !$this->title )
@@ -113,21 +156,7 @@ class Media extends BaseMedia {
 		$this->extension = $file_extension;
 		$this->type = $file_type;
 		
-		// Apply: Image
-		if ( $file_type === 'image' ) {
-			$image_dimensions = image_dimensions($file_path);
-			if ( !empty($image_dimensions) ) {
-				// It is not a image we can modify
-				$this->width = 0;
-				$this->height = 0;
-			} else {
-				$this->width = $image_dimensions['width'];
-				$this->height = $image_dimensions['height'];
-			}
-		
-		}
-		
-		// Done
+		# Done
 		return true;
 	}
 

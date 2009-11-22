@@ -94,7 +94,7 @@
 								<div id="delete-action">
 									<a class="delete delete-action" id="action-delete" title="Are you sure you want to delete <?=$this->ContentArray['title']?>" href="<?=$this->url(array('action'=>'content-delete','content'=>$this->ContentArray['code']),'admin',true)?>" ><?=$mode_edit?'Delete':'Discard'?></a>
 								</div>
-								<!-- Save ACtion -->
+								<!-- Save Action -->
 								<div id="publishing-action">
 									<input name="save" type="submit" class="button-primary" id="action-save" tabindex="5" accesskey="p" value="Save" />
 								</div>
@@ -128,7 +128,7 @@
             						?>
 									<p style="text-align:center;">
 										<a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
-											<img height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?w=59"/>
+											<img height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
 										</a>
 									</p>
 								<? endif; ?>

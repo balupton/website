@@ -82,7 +82,7 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 	 * @return string
 	 */
 	public function getSkinUrl ( $skin = null, $root_url = false ) {
-		$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+		$baseUrl = rtrim(Zend_Controller_Front::getInstance()->getBaseUrl(),'/');
 		$prefix = $suffix = '';
 		if ( !empty($skin) ) {
 			$suffix = '/skins/'.$skin;

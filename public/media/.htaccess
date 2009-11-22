@@ -1,0 +1,7 @@
+Options -Indexes
+RewriteEngine On
+
+# Block hotlinking on balupton.com
+RewriteCond %{REQUEST_FILENAME} \.(jpe?g|png|gif|js|css|tpl)$
+RewriteCond %{QUERY_STRING} ^.
+RewriteRule ^(.+)$ image.php?image=$1 [L,QSA]
