@@ -34,7 +34,7 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 		# Chain
 		return $this;
 	}
-
+	
 	/**
 	 * Returns @see Bal_Controller_Plugin_App
 	 */
