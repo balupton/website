@@ -1,0 +1,332 @@
+@import url("load-styles.css");
+@import url("colors-fresh.css");
+
+#adminmenu li.parent a {
+	/*font-weight: bold;*/
+}
+#adminmenu li.child a {
+	/*font-weight: normal;*/
+}
+
+#misc-publishing-actions {
+	padding:0 0 0.5em;
+}
+
+.field .label {
+	font-weight: normal;
+}
+.field .value {
+	font-weight: bold;
+}
+
+#content-parent {
+	min-width:250px;
+}
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+.button-action {
+	min-width:80px;
+	text-align:center;
+}
+
+.sparkle-hint-has {
+	
+}
+.sparkle-hint-hinted {
+	font-size:11px;
+	color:#BBB;
+}
+
+.youtube-embed {
+	width:100%;
+	height:300px;
+}
+
+textarea.autosize {
+	min-height: 20px;
+	line-height: 15px;
+}
+
+
+.widget .widget-top {
+	font-size:12px;
+	font-weight:bold;
+	line-height:1;
+	margin:0;
+	padding:7px 9px;
+	display:block;
+}
+
+.help-wrap {
+	cursor: help;
+}
+.help-wrap:hover .help-text {
+	border-bottom: 1px #666 dotted;
+}
+.help-wrap .help-icon {
+	margin:0px 0px -4px 5px;
+}
+
+a.delete {
+	border-bottom-color:#FF0000;
+	color:#FF0000;
+	border-bottom-style:solid;
+	border-bottom-width:1px;
+	padding:1px 2px;
+	text-decoration:none;
+}
+
+.sidebar-box textarea {
+	width:100%;
+}
+
+.sidebar-boxes {
+	font-size:11px;
+}
+.sidebar-box .inside {
+	margin:6px;
+}
+.sidebar-box-sections .inside {
+	margin:0;
+}
+
+.field-value {
+	font-weight: bold;
+}
+
+.description {
+	margin:0 0 6px 8px;
+	color:#666666;
+	font-size:11px;
+	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+	font-style:italic;
+}
+.little {
+	color:#666666;
+	font-size:11px;
+}
+
+.hide {
+	display: none;
+}
+
+.clear {
+	display:block;
+	clear:both;
+}
+
+.checklist span a:hover {
+	background:transparent url(../images/xit.gif) no-repeat scroll -10px 0;
+}
+.checklist span a {
+	background:transparent url(../images/xit.gif) no-repeat scroll 0 0;
+	cursor:pointer;
+	display:block;
+	float:left;
+	height:10px;
+	margin:6px -13px; 0 0;
+	overflow:hidden;
+	position:absolute;
+	text-indent:-9999px;
+	width:10px;
+}
+.checklist span {
+	margin-left:15px;
+	cursor:default;
+	display:block;
+	float:left;
+	font-size:11px;
+	line-height:1.8em;
+	margin-right:20px;
+	white-space:nowrap;
+}
+.checklist {
+}
+
+.content-published_at-field {
+	background-image:url(../images/date-button.gif);
+	background-position:left top;
+	background-repeat:no-repeat;
+	padding-left:18px;
+}
+ 
+.inline-edit-button {
+	margin-right: 5px;
+}
+.editable {
+	cursor: text;
+}
+.editable:hover, .field:hover .editable {
+	background-color:#E4F2FD;
+	color:#D54E21;
+}
+.weak {
+	color: #999;
+}
+label {
+	vertical-align:inherit;
+}
+.message {
+	margin:5px 0 0 !IMPORTANT;
+}
+
+.field .highlight {
+	background:#FFFBCC;
+	color:inherit;
+}
+
+.field-container {
+
+}
+.field-container .field {
+	margin-bottom:2em;
+
+}
+.field-container .field p {
+	margin:0;
+	padding:0;
+}
+.field-container .field p,
+.field-container .field {
+	font-size: 11px;
+	line-height: 1.4em;
+	color: #666;
+}
+.field-container .field-normal textarea {
+	width:100%;
+}
+.field-container .field-normal,
+.field-container .field-normal p {
+	color: #333333;
+}
+.field-container .field-normal label {
+	display:block;
+	font-weight:bold;
+	color: #464646;
+	font-size:12px;
+}
+.field-container .field-simple label {
+	display:none;
+}
+.field-container .field-simple input {
+	-moz-border-radius-bottomleft:6px;
+	-moz-border-radius-bottomright:6px;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	border-style:solid;
+	border-width:1px;
+	font-size:1.7em;
+	outline-color:-moz-use-text-color;
+	outline-style:none;
+	outline-width:medium;
+	padding:3px 4px;
+	width:100%;
+}
+.field-container .field-little label {
+	color: #777;
+	font-weight:bold;
+}
+.field-container .field-little {
+	padding:0;
+	margin:-1em 0 1em 8px;
+}
+
+
+#editorcontainer {
+	border: none;
+}
+
+/* menu icons */
+#adminmenu #menu-index div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -61px -33px;
+}
+#adminmenu #menu-index:hover div.wp-menu-image,
+#adminmenu #menu-index.wp-has-current-submenu div.wp-menu-image,
+#adminmenu #menu-index.current div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -61px -1px;
+}
+
+#adminmenu #menu-posts div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -272px -33px;
+}
+#adminmenu #menu-posts:hover div.wp-menu-image,
+#adminmenu #menu-posts.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -272px -1px;
+}
+
+#adminmenu #menu-admin-media div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -121px -33px;
+}
+#adminmenu #menu-admin-media:hover div.wp-menu-image,
+#adminmenu #menu-admin-media.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -121px -1px;
+}
+
+#adminmenu #menu-admin-subscription div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -91px -33px;
+}
+#adminmenu #menu-admin-subscription:hover div.wp-menu-image,
+#adminmenu #menu-admin-subscription.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -91px -1px;
+}
+
+#adminmenu #menu-admin-content div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -151px -33px;
+}
+#adminmenu #menu-admin-content:hover div.wp-menu-image,
+#adminmenu #menu-admin-content.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -151px -1px;
+}
+
+#adminmenu #menu-comments div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -31px -33px;
+}
+#adminmenu #menu-comments:hover div.wp-menu-image,
+#adminmenu #menu-comments.wp-has-current-submenu div.wp-menu-image,
+#adminmenu #menu-comments.current div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -31px -1px;
+}
+
+#adminmenu #menu-admin-event div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -1px -33px;
+}
+#adminmenu #menu-admin-event:hover div.wp-menu-image,
+#adminmenu #menu-admin-event.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -1px -1px;
+}
+
+#adminmenu #menu-plugins div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -181px -33px;
+}
+#adminmenu #menu-plugins:hover div.wp-menu-image,
+#adminmenu #menu-plugins.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -181px -1px;
+}
+
+#adminmenu #menu-user div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -301px -33px;
+}
+#adminmenu #menu-user:hover div.wp-menu-image,
+#adminmenu #menu-user.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -301px -1px;
+}
+
+#adminmenu #menu-tools div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -211px -33px;
+}
+#adminmenu #menu-tools:hover div.wp-menu-image,
+#adminmenu #menu-tools.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -211px -1px;
+}
+
+#adminmenu #menu-system div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -241px -33px;
+}
+#adminmenu #menu-system:hover div.wp-menu-image,
+#adminmenu #menu-system.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -241px -1px;
+}

@@ -1,0 +1,233 @@
+@import url("content.css");
+
+/* Areas */
+
+#main {
+	padding-top: 20px;
+	margin: 0 auto;
+	text-align: left;
+	width: 80%;
+	min-width:600px;
+	max-width:800px;
+}
+#logo {
+	margin-top: 10px;
+	float: left;
+	text-indent: -9999px;
+	background: url("../images/logo-mydance.jpg");
+	width: 168px;
+	height: 44px;
+}
+#header > .nav-action {
+	float: right;
+	background-color: #F2F2F2;
+	height: 34px;
+	text-align: right;
+	padding-top: 15px;
+	padding-right: 20px;
+}
+#nav-search,#nav-subscribe {
+	padding:0 15px;
+	margin:0 5px 0 0;
+}
+#nav-main {
+	margin-top: 5px;
+	background: url("../images/menu-bg.jpg") repeat-x;
+	height: 37px;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	border: 1px solid #CFCFCF;
+}
+#nav-main ul {
+	padding-top: 12px;
+}
+#content-wrap {
+	margin-top: 10px;
+}
+#content-wrap > .content {
+	min-height:300px;
+	border: 1px solid #CFCFCF;
+	border-width: 1px 1px 5px 1px;
+}
+
+#content-wrap > .content, #nav-main, #footer, #header > .nav-action {
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+#content-wrap > .content > .content-avatar {
+	margin: 0px 15px;
+	float:right;
+}
+
+
+#nav-main {
+	-moz-border-radius-bottomleft: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-moz-border-radius-bottomright: 0;
+	-webkit-border-bottom-right-radius: 0;
+}
+
+#content-wrap > .content {
+	-moz-border-radius-topleft: 0;
+	-webkit-border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+	-webkit-border-top-right-radius: 0;
+}
+
+#footer {
+	margin-top:10px;
+}
+#footer-links {
+	text-align: center;
+	margin-top: 10px;
+}
+#footer-text {
+	color: #A0A0A0;
+	text-align: center;
+}
+#footer-text p {
+	padding: 5px 0 0 0;
+	margin: 0;
+}
+#footer-text a {
+	color: #A0A0A0;
+	text-decoration: none;
+}
+
+/*#content h2 {
+	background: transparent url("../images/arrow-h9.gif") no-repeat scroll 0 10px;
+	padding-left: 10px;
+}*/
+
+#nav-main li a {
+	padding-left: 10px;
+}
+#nav-main li.active a {
+	background: transparent url("../images/arrow-h7.gif") no-repeat scroll 0 5px;
+}
+
+/* Generic */
+
+.clear {
+	clear: both;
+	height: 0;
+}
+.ul-unstyled-horizontal {
+	padding: 0;
+	margin: 0;
+}
+.ul-unstyled-horizontal li {
+	padding: 0;
+	margin: 0;
+	display: inline;
+	list-style: none;
+	color: #606060;
+	text-decoration: none;
+	font-size: 11px;
+}
+.ul-unstyled-horizontal li a {
+	color: #606060;
+	font-size: 11px;
+	margin-left: 20px;
+}
+
+
+/* Sparkle */
+
+.sparkle-hint-has {
+	
+}
+.sparkle-hint-hinted {
+	font-size:11px;
+	color:#BBB;
+}
+
+.youtube-embed {
+	width:100%;
+	height:300px;
+}
+
+/* Specific */
+
+#content-welcome.content {
+	border-width:0 0 5px 0;
+	color:#606060;
+}
+#content-welcome h1, #content-welcome h2 {
+	display:none;
+}
+
+/* Widgets */
+
+#content-welcome .widget {
+	background: #755697 url("../images/purple-body.gif") repeat-x top left;
+	background-position-y: 30px;
+	padding-bottom:10px;
+}
+#content-welcome .widget > .widget-header {
+	border: 1px solid #5E4081;
+	border-width:1px 1px 0;
+	height:35px;
+	margin-bottom:5px;
+	background: #593B7B url("../images/purple-header.gif") repeat-x top left;
+}
+#content-welcome .widget > .widget-header > * {
+	color:#E2DBE9;
+	margin: 0.5em 1em;
+}
+#content-welcome .widget > .widget-content {
+	float:left;
+	font-family:Tahoma;
+	width:125px;
+	padding:5px 25px;
+	line-height:15px;
+	font-size:12px;
+	color:#E2DBE9;
+}
+#content-welcome .widget a {
+	color:#E2DBE9;
+}
+#content-welcome .widget > .widget-content > * {
+	color:#E2DBE9;
+	display:inline;
+}
+#content-welcome .widget > .widget-content > .widget-content-content {
+	display:block;
+	font-size:11px;
+}
+#content-welcome .widget, #content-welcome .widget > .widget-header {
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+}
+#content-welcome .widget {
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+}
+
+
+#content-welcome .carousel > .carousel-header {
+	text-align:left;
+	margin-bottom:10px;
+}
+#content-welcome .carousel {
+	text-align:center;
+}
+#content-welcome .carousel > .carousel-content {
+	float:left;
+	width: 205px;
+	padding:0 20px;
+}
+#content-welcome .carousel > .carousel-content > h4 {
+	font-size:15px;
+	padding-bottom:7px;	
+	display:block;
+}
+
+#content-welcome .taglist > .widget-content > .widget-content-header {
+	text-transform:capitalize;
+}
