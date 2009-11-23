@@ -159,6 +159,12 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 		# Acl
 		$this->loadUserAcl();
 		
+		# Admin cookies
+		if ( $this->hasPermission('admin') ) {
+			// Enable debug
+			setcookie('debug','secret',0,'/');
+		}
+		
 		# Done
 		return true;
 	}
