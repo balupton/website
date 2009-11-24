@@ -53,7 +53,7 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 		# Handle
 		if ( is_object($Media) ) {
 			# Is Object
-			$url = $Media->Route;
+			$url = $Media->url;
 		} elseif ( is_array($Media) ) {
 			if ( array_key_exists('url', $Media) ) {
 				# Is Array
