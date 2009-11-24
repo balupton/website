@@ -10,7 +10,7 @@
 	</h2>
 	<? if ( count($Content->Avatar) && $Content->Avatar->exists() ) :
 		$Media = $Content->Avatar;
-		$mediaUrl = $this->content()->getMediaUrl($Content); ?>
+		$mediaUrl = $this->content()->getMediaUrl($Media); ?>
 		<div class="content-avatar">
 			<a href="<?=$mediaUrl?>" title="View Image">
 				<img src="<?=$mediaUrl?>?width=200" title="<?=$Content->title?>" alt="<?=$Content->title?> Avatar" />
