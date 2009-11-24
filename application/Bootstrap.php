@@ -119,12 +119,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('view');
 		$this->bootstrap('config');
 		$this->bootstrap('app');
+		$view = $this->getResource('view');
 		
 		# Config
 		$applicationConfig = Zend_Registry::get('applicationConfig');
 		
+		# Layout
+		$FrontController = Zend_Controller_Front::getInstance();
+		$App = $FrontController->getPlugin('Bal_Controller_Plugin_App');
+		$App->startLayout();
+		
 		# View Helpers
-		$view = $this->getResource('view');
 		$view->addHelperPath('Bal/View/Helper/', 'Bal_View_Helper');
 		$view->addHelperPath(APPLICATION_PATH.'/modules/cms/views/helpers', 'Content');
 		$view->addScriptPath(APPLICATION_PATH.'/modules/cms/views/scripts');
@@ -262,25 +267,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
 		# Load
 		$FrontController = Zend_Controller_Front::getInstance();
-		$App = null;
 		
 		# Register
-		if ( $FrontController->hasPlugin('Bal_Controller_Plugin_App') ) {
-			# Fetch
-			$App = $FrontController->getPlugin('Bal_Controller_Plugin_App');
-		} else {
+		if ( !$FrontController->hasPlugin('Bal_Controller_Plugin_App') ) {
+			
 			# Create
 			$App = new Bal_Controller_Plugin_App();
+			
 			# Configure
 			$applicationConfig = $App->getConfig();
 			$appConfig = empty($applicationConfig['bal']['app']) ? array() : $applicationConfig['bal']['app'];
 			$App->mergeOptions($appConfig);
+			
 			# Register
 			$FrontController->registerPlugin($App);
 		}
 		
-		# Defaults
-		return $App;
+		# Done
+		return true;
 	}
 	
 	/**

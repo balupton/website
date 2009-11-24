@@ -11,13 +11,13 @@
     </div>
 	<!-- Header -->
     <h2>
-		<a href="<?=$this->url(array('action'=>'content-list'),'admin',true)?>"><?=$Type?> List</a>
+		<a href="<?=$this->url(array('action'=>'content-list'),'back',true)?>"><?=$Type?> List</a>
 		<? foreach ( $this->ContentCrumbArray as $Content ): ?>
-			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>$Content['code']),'admin')?>"><?=$Content['title']?></a>
+			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>$Content['code']),'back')?>"><?=$Content['title']?></a>
 		<? endforeach; ?>
 	</h2>
     <!-- Filters -->
-    <form id="posts-filter" action="<?=$this->url(array('action'=>'content-list'),'admin',true)?>" method="get">
+    <form id="posts-filter" action="<?=$this->url(array('action'=>'content-list'),'back',true)?>" method="get">
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="page-search-input">
@@ -92,8 +92,8 @@
             	<? foreach ( $this->ContentListArray as $Content ): ?>
             	<?
             		$contentUrl = $this->content()->getUrl($Content);
-            		$contentOpenUrl = $this->url(array('action'=>'content-list','content'=>$Content['code']),'admin',true);
-            		$contentEditUrl = $this->url(array('action'=>'content-edit','content'=>$Content['code']),'admin',true);
+            		$contentOpenUrl = $this->url(array('action'=>'content-list','content'=>$Content['code']),'back',true);
+            		$contentEditUrl = $this->url(array('action'=>'content-edit','content'=>$Content['code']),'back',true);
             	?>
                 <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
                 	<td class="column-icon media-icon">
@@ -113,7 +113,7 @@
 						</a></strong>
 						<div class="row-actions">
 							<span class="edit"><a title="Edit this" href="<?=$contentEditUrl?>">Edit</a> | </span>
-							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$Content['title']?>" href="<?=$this->url(array('action'=>'content-delete','content'=>$Content['code']),'admin',true)?>">Delete</a> | </span>
+							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$Content['title']?>" href="<?=$this->url(array('action'=>'content-delete','content'=>$Content['code']),'back',true)?>">Delete</a> | </span>
 							<span class="view"><a rel="permalink" title="View" href="<?=$contentUrl?>">View</a></span>
 						</div>
                     </td>
@@ -128,7 +128,7 @@
                         	$author_url = $this->url(array(
                         		'action'=>'content-list',
                         		'search'=>$author
-                        	), 'admin', true);
+                        	), 'back', true);
                         	echo '<a href="'.$author_url.'" title="View all content by '.$author.'">'.$author.'</a>';
                     	endif;
                     ?></td>
@@ -143,7 +143,7 @@
 	                        		
 	                        		'action'=>'content-list',
 	                        		'search'=>$tag
-	                        	), 'admin', true);
+	                        	), 'back', true);
 	                        	$tags[] = '<a href="'.$tag_url.'" title="View all content by '.$tag.'">'.$tag.'</a>';
                         	}
                         	echo implode($tags, ', ');
@@ -151,7 +151,7 @@
                     ?></td>
                     <!--<td class="comments column-comments">
                         <div class="post-com-count-wrapper">
-                            <a href="http://localhost/wordpress/wp-admin/edit-comments.php?p=2" title="0 pending" class="post-com-count"><span class="comment-count">0</span></a>
+                            <a href="http://localhost/wordpress/wp-back/edit-comments.php?p=2" title="0 pending" class="post-com-count"><span class="comment-count">0</span></a>
                         </div>
                     </td>-->
                     <td class="date column-date">
@@ -181,7 +181,7 @@
 					// Ajax Request
 					var data = {json:JSON.stringify({positions:conpos})};
 					$.ajax({
-						url: '<?=$this->url(array('action'=>'content-position'),'admin',true)?>',
+						url: '<?=$this->url(array('action'=>'content-position'),'back',true)?>',
 						type: 'post',
 						data: data,
 						dataType: 'json',

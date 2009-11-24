@@ -32,9 +32,9 @@ class ErrorController extends Zend_Controller_Action {
         $this->getHelper('layout')->disableLayout();
         
         // Use defined error view
-        $skin = $this->getHelper('App')->getApp()->getConfig('bal.error.skin');
-        if ( $skin ) {
-            $this->_helper->viewRenderer($skin);
+        $template = $this->getHelper('App')->getApp()->getConfig('bal.error.template');
+        if ( $template ) {
+            $this->_helper->viewRenderer($template);
         }
         
 		// Determine

@@ -4,7 +4,7 @@
 	$this->headTitle()->append('Media');
 ?>
 <div class="wrap">
-	<form action="<?=$this->url(array('action'=>'media-list'),'admin',true)?>" method="post" enctype="multipart/form-data">
+	<form action="<?=$this->url(array('action'=>'media-list'),'back',true)?>" method="post" enctype="multipart/form-data">
 		<!-- Edit Button -->
 	    <div id="icon-upload" class="icon32">
 	        <br/>
@@ -106,10 +106,10 @@
 						<p></p>
 						<div class="row-actions">
 							<span class="edit hide">
-								<a href="<?=$this->url(array('action'=>'media-edit','media'=>$Media['code']),'admin',true)?>">Edit</a> |
+								<a href="<?=$this->url(array('action'=>'media-edit','media'=>$Media['code']),'back',true)?>">Edit</a> |
 							</span>
 							<span class="delete">
-								<a href="<?=$this->url(array('action'=>'media-delete','media'=>$Media['code']),'admin',true)?>" class="delete-action">Delete</a> |
+								<a href="<?=$this->url(array('action'=>'media-delete','media'=>$Media['code']),'back',true)?>" class="delete-action">Delete</a> |
 							</span>
 							<span class="view">
 								<a rel="permalink" title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">View</a>
@@ -130,7 +130,7 @@
                         	$author_url = $this->url(array(
                         		'action'=>'media-list',
                         		'search'=>$author
-                        	), 'admin', true);
+                        	), 'back', true);
                         	echo '<a href="'.$author_url.'" title="View all media by '.$author.'">'.$author.'</a>';
                     	endif;
                     ?></td>

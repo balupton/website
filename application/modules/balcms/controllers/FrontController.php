@@ -1,19 +1,18 @@
 <?php
 
 require_once 'Zend/Controller/Action.php';
-class Cms_FrontController extends Zend_Controller_Action {
+class Balcms_FrontController extends Zend_Controller_Action {
 
 	
 	# ========================
 	# CONSTRUCTORS
 	
 	public function init ( ) {
-		
 		# Layout
-		$this->getHelper('Layout')->setLayout($this->getHelper('App')->getApp()->getConfig('bal.site.skin'));
+		$this->getHelper('App')->getApp()->setAreaLayout('front');
 		
 		# Login
-		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'Admin'));
+		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'back'));
 		
 		# Authenticate
 		$this->getHelper('App')->authenticate(false, false);

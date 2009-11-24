@@ -4,25 +4,25 @@
 		"resource": "content",
 		"label": "New Content",
 		"action": "content-new",
-		"route": "admin"
+		"route": "back"
 	},{
 		"id": "admin-event-new",
 		"resource": "event",
 		"label": "New Event",
 		"action": "event-new",
-		"route": "admin"
+		"route": "back"
 	},{
 		"id": "admin-media-new",
 		"resource": "media",
 		"label": "New Media",
 		"action": "media-new",
-		"route": "admin"
+		"route": "back"
 	},{
 		"id": "admin-user-new",
 		"resource": "user",
 		"label": "New User",
 		"action": "user-new",
-		"route": "admin"
+		"route": "back"
 	}],
 	"menu": [{
 		"label": "---",
@@ -32,20 +32,20 @@
 		"resource": "content",
 		"label": "Content",
 		"action": "content",
-		"route": "admin",
+		"route": "back",
 		"pages": [{
 			"id": "admin-content-list",
 			"resource": "content",
 			"label": "Content",
 			"action": "content-list",
-			"route": "admin",
+			"route": "back",
 			"class": "parent"
 		},{
 			"id": "admin-content-edit",
 			"resource": "content",
 			"label": "&mdash; New Content",
 			"action": "content-new",
-			"route": "admin",
+			"route": "back",
 			"class": "child"
 		}]
 	},{
@@ -53,20 +53,20 @@
 		"resource": "event",
 		"label": "Events",
 		"action": "event",
-		"route": "admin",
+		"route": "back",
 		"pages": [{
 			"id": "admin-event-list",
 			"resource": "event",
 			"label": "Events",
 			"action": "event-list",
-			"route": "admin",
+			"route": "back",
 			"class": "parent"
 		},{
 			"id": "admin-event-edit",
 			"resource": "event",
 			"label": "&mdash; New Event",
 			"action": "event-new",
-			"route": "admin",
+			"route": "back",
 			"class": "child"
 		}]
 	},{
@@ -74,13 +74,13 @@
 		"resource": "subscription",
 		"label": "Subscriptions",
 		"action": "subscription",
-		"route": "admin",
+		"route": "back",
 		"pages": [{
 			"id": "admin-subscriber-list",
 			"resource": "subscription",
 			"label": "Subscribers",
 			"action": "subscriber-list",
-			"route": "admin",
+			"route": "back",
 			"class": "parent"
 		}]
 	},{
@@ -88,14 +88,14 @@
 		"resource": "media",
 		"label": "Media",
 		"action": "media",
-		"route": "admin",
+		"route": "back",
 		"class": "menu-top-last",
 		"pages": [{
 			"id": "admin-media-list",
 			"resource": "admin-content-view",
 			"label": "Media",
 			"action": "media-list",
-			"route": "admin",
+			"route": "back",
 			"class": "parent"
 		}]
 	},{

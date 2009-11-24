@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Zend/Controller/Action.php';
-class Cms_AdminController extends Zend_Controller_Action {
+class Balcms_BackController extends Zend_Controller_Action {
 	
 	
 	# ========================
@@ -9,10 +9,10 @@ class Cms_AdminController extends Zend_Controller_Action {
 	
 	public function init ( ) {
 		# Layout
-		$this->getHelper('Layout')->setLayout($this->getHelper('App')->getApp()->getConfig('bal.cms.skin'));
+		$this->getHelper('App')->getApp()->setAreaLayout('back');
 		
 		# Login
-		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'Admin'));
+		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'back'));
 		
 		# Authenticate / redirect to login if need be
 		if ( !in_array($this->getRequest()->getActionName(), array(false,'login','index')) ) {
@@ -21,7 +21,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		}
 		
 		# Navigation
-		$nav = file_get_contents(CONFIG_PATH . '/nav-admin.json');
+		$nav = file_get_contents(CONFIG_PATH . '/nav-back.json');
 		$nav = Zend_Json::decode($nav, Zend_Json::TYPE_ARRAY);
 		$this->view->NavigationFavorites = new Zend_Navigation($nav['favorites']);
 		$this->view->NavigationMenu = new Zend_Navigation($nav['menu']);
@@ -81,7 +81,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		}
 			
 		# Render
-		$this->getHelper('layout')->setLayout($this->getHelper('App')->getApp()->getConfig('bal.cms.skin').'-login');
+		$this->getHelper('App')->getApp()->setAreaLayout('back', 'theme-login');
 		$this->render('index/login');
 		
 		# Done
@@ -90,7 +90,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 
 	public function dashboardAction ( ) {
 		# Prepare
-		$this->registerMenu('admin-dashboard');
+		$this->registerMenu('back-dashboard');
 		
 		# Render
 		$this->render('index/dashboard');
@@ -110,7 +110,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 
 	public function subscriberListAction ( ) {
 		# Prepare
-		$this->registerMenu('admin-subscriber-list');
+		$this->registerMenu('back-subscriber-list');
 		$SubscriberListArray = array();
 		$search = $this->_getParam('search', false);
 		
@@ -156,7 +156,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		}
 		
 		# Redirect
-		return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-list'), 'admin', true);
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-list'), 'back', true);
 	}
 
 	public function mediaEditAction ( ) {
@@ -168,7 +168,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 		if ( !$Media->id ) {
 			return $this->_forward('media-new');
 		}
-		$this->registerMenu('admin-media-list');
+		$this->registerMenu('back-media-list');
 		
 		# Fetch
 		$MediaArray = $Media->toArray();
@@ -185,13 +185,13 @@ class Cms_AdminController extends Zend_Controller_Action {
 
 	public function mediaNewAction ( ) {
 		# Prepare
-		$this->registerMenu('admin-media-edit');
+		$this->registerMenu('back-media-edit');
 		$Media = $MediaArray = array();
 		
 		# Save
 		$Media = $this->_saveMedia();
 		if ( $Media->id ) {
-			return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-edit', 'media' => $Media->code), 'admin', true);
+			return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-edit', 'media' => $Media->code), 'back', true);
 		}
 		
 		# Fetch
@@ -209,7 +209,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 
 	public function mediaListAction ( ) {
 		# Prepare
-		$this->registerMenu('admin-media-list');
+		$this->registerMenu('back-media-list');
 		$MediaListArray = array();
 		$search = $this->_getParam('search', false);
 		
@@ -310,7 +310,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 			$Content->delete();
 		}
 		# Redirect
-		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list'), 'admin', true);
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list'), 'back', true);
 	}
 
 	public function contentEditAction ( ) {
@@ -323,7 +323,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 			return $this->_forward('content-new');
 		}
 		$type = $Content->type;
-		$this->registerMenu('admin-' . $type . '-list');
+		$this->registerMenu('back-' . $type . '-list');
 		
 		# Fetch
 		$ContentArray = $Content->toArray();
@@ -355,13 +355,13 @@ class Cms_AdminController extends Zend_Controller_Action {
 	public function contentNewAction ( ) {
 		# Prepare
 		$type = $this->_getParam('type', 'content');
-		$this->registerMenu('admin-' . $type . '-edit');
+		$this->registerMenu('back-' . $type . '-edit');
 		$Content = $ContentCrumbArray = $ContentArray = array();
 		
 		# Save
 		$Content = $this->_saveContent();
 		if ( $Content->id ) {
-			return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-edit', 'content' => $Content->code), 'admin', true);
+			return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-edit', 'content' => $Content->code), 'back', true);
 		}
 		
 		# Prepare
@@ -401,7 +401,7 @@ class Cms_AdminController extends Zend_Controller_Action {
 	public function contentListAction ( ) {
 		# Prepare
 		$type = $this->_getParam('type', 'content');
-		$this->registerMenu('admin-' . $type . '-list');
+		$this->registerMenu('back-' . $type . '-list');
 		$content = $this->_getParam('content', false);
 		$search = $this->_getParam('search', false);
 		$Content = $ContentCrumbArray = $ContentListArray = $ContentArray = array();
@@ -583,22 +583,22 @@ class Cms_AdminController extends Zend_Controller_Action {
 
 	public function eventDeleteAction ( ) {
 		# Redirect
-		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-delete', 'type' => 'event'), 'admin');
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-delete', 'type' => 'event'), 'back');
 	}
 
 	public function eventEditAction ( ) {
 		# Redirect
-		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-edit', 'type' => 'event'), 'admin');
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-edit', 'type' => 'event'), 'back');
 	}
 
 	public function eventNewAction ( ) {
 		# Redirect
-		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-new', 'type' => 'event'), 'admin');
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-new', 'type' => 'event'), 'back');
 	}
 
 	public function eventListAction ( ) {
 		# Redirect
-		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list', 'type' => 'event'), 'admin');
+		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list', 'type' => 'event'), 'back');
 	}
 
 }
