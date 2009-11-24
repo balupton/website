@@ -53,39 +53,38 @@ class Bal_View_Helper_Bal extends Zend_View_Helper_Abstract {
 
 	/**
 	 * Get a base_url for an area
-	 * @see getSkinUrl
+	 * @see getThemeUrl
 	 * @param string $area
 	 * @param bool $root_url
 	 * @return string
 	 */
 	public function getBaseUrl ( $area = null, $root_url = false ) {
-		$skin = null;
+		$theme = null;
 		switch ( $area ) {
 			case 'front':
-				$skin = $this->getConfig('bal.site.skin');
+				$theme = $this->getConfig('bal.themes.front');
 				break;
-			case 'cms':
-			case 'admin':
 			case 'back':
-				$skin = $this->getConfig('bal.cms.skin');
+				$theme = $this->getConfig('bal.themes.back');
 				break;
 			default:
 				break;
 		}
-		return $this->getSkinUrl($skin, $root_url);
+		return $this->getThemeUrl($theme, $root_url);
 	}
 	
 	/**
-	 * Get a base_url for a skin
-	 * @param string $skin
+	 * Get a base_url for a theme
+	 * @param string $theme
 	 * @param bool $root_url
 	 * @return string
 	 */
-	public function getSkinUrl ( $skin = null, $root_url = false ) {
+	public function getThemeUrl ( $theme = null, $root_url = false ) {
 		$baseUrl = rtrim(Zend_Controller_Front::getInstance()->getBaseUrl(),'/');
 		$prefix = $suffix = '';
-		if ( !empty($skin) ) {
-			$suffix = '/skins/'.$skin;
+		if ( !empty($theme) ) {
+			$themes_url = $this->getConfig('bal.themes.themes_url');
+			$suffix = $themes_url.'/'.$theme;
 		}
 		if ( $root_url && defined('ROOT_URL') ) {
 			$prefix = ROOT_URL;

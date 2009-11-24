@@ -4,7 +4,7 @@ if ( empty($Application) ) {
 	// Bootstrap
 	$run = $bootstrap = false;
 	require_once(dirname(__FILE__).'/../public/index.php');
-	error_reporting(E_ALL);
+	error_reporting(E_ALL | E_STRICT);
 	ini_set('display_errors', 1);
 }
 header('Content-Type: text/plain');

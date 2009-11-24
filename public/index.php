@@ -1,26 +1,41 @@
 <?php
 
+if ( !empty($_SERVER['REDIRECT_URL']) ) {
+	$_SERVER['REQUEST_URI'] = $_SERVER['REDIRECT_URL'];
+}
+
 // Include paths
 if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	// We are probably on the devleopment sever
 	define('APPLICATION_ENV', 				'development');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
+	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/../application'));
+	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
+	
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
-	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2.0-beta3/lib'));
-	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions'));
-	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.5/library'));
-	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
+	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-beta3/lib'));
+	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
+	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.5/library'));
+	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp/lib'));
+	
+	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/sites/mydance.ini'));
 	define('ROOT_URL',						'http://localhost');
-	define('BASE_URL', 						'/projects/balcms/public/');
-} else {
+	define('BASE_URL', 						'/projects/balcms/public');
+}
+elseif ( strpos($_SERVER['HTTP_HOST'], 'mydance.com.au') !== false ) {
 	// We are on the production server
 	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
+	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/../application'));
+	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
+	
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
-	define('DOCTRINE_PATH', 				realpath(ROOT_PATH.'/common/doctrine-1.2.0-beta3/lib'));
-	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(ROOT_PATH.'/common/doctrine-extensions'));
-	define('ZEND_PATH', 					realpath(ROOT_PATH.'/common/zend-1.9.5/library'));
-	define('BALPHP_PATH', 					realpath(ROOT_PATH.'/common/balphp/lib'));
+	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-rc1/lib'));
+	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
+	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.5/library'));
+	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp/lib'));
+	
+	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/sites/mydance.ini'));
 	define('ROOT_URL',						'http://www.mydance.com.au');
 }
 
@@ -46,10 +61,12 @@ if ( !defined('CONFIG_PATH') )
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 if ( !defined('CONFIG_APP_PATH') )
 	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/application.ini'));
+if ( !defined('APPLICATION_ROOT_PATH') )
+	define('APPLICATION_ROOT_PATH', 		realpath(APPLICATION_PATH.'/..'));
 if ( !defined('LIBRARY_PATH') )
-	define('LIBRARY_PATH', 					realpath(APPLICATION_PATH.'/../library'));
+	define('LIBRARY_PATH', 					realpath(APPLICATION_ROOT_PATH.'/library'));
 if ( !defined('PUBLIC_PATH') )
-	define('PUBLIC_PATH', 					realpath(APPLICATION_PATH.'/../public'));
+	define('PUBLIC_PATH', 					realpath(APPLICATION_ROOT_PATH.'/public'));
 //if ( !defined('HANDLER_PATH') )
 //	define('HANDLER_PATH', 					realpath(APPLICATION_PATH.'/handlers'));
 

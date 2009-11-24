@@ -11,7 +11,7 @@
     <?
     // CSS
     $this->headLink()
-		->appendStylesheet($baseUrlBack.'/styles/skin.css')
+		->appendStylesheet($baseUrlBack.'/styles/theme.css')
 		->appendStylesheet($baseUrl.'/scripts/jquery-ui/css/cupertino/jquery-ui-1.7.2.custom.css');
     // Output
     echo $this->headLink();
@@ -54,7 +54,7 @@
                             <p>
                                 User: <?=$User['displayname']?>
                                 | <a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Feedback</a>
-                                | <a href="<?=$this->url(array('action'=>'logout'),'admin',true)?>" title="Log Out">Log Out</a>
+                                | <a href="<?=$this->url(array('action'=>'logout'),'back',true)?>" title="Log Out">Log Out</a>
                             </p>
                         </div>
 	                    <?=true?'':$this->navigation()->menu()->setPartial(array('navigation/favorites.phtml', 'default'))->setContainer($this->NavigationFavorites)->render()?>
@@ -84,7 +84,7 @@
                 | <a href="<?=$this->url(array(),'balcmsdocs',true)?>">Documentation</a>
                 | <a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Feedback</a>
                 | <a href="<?=$this->url(array(),'balcmshelp',true)?>">Support</a>
-                <!-- | <a href="<?=$this->url(array('action'=>'about'),'admin',true)?>">About</a> -->
+                <!-- | <a href="<?=$this->url(array('action'=>'about'),'back',true)?>">About</a> -->
             </p>
             <p id="footer-upgrade" class="alignright">
                 Version 0.1.0-dev Movember
