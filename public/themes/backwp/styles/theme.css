@@ -258,27 +258,27 @@ label {
 	background: transparent url("../images/menu.png") no-repeat scroll -272px -1px;
 }
 
-#adminmenu #menu-admin-media div.wp-menu-image {
+#adminmenu #menu-back-media div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -121px -33px;
 }
-#adminmenu #menu-admin-media:hover div.wp-menu-image,
-#adminmenu #menu-admin-media.wp-has-current-submenu div.wp-menu-image {
+#adminmenu #menu-back-media:hover div.wp-menu-image,
+#adminmenu #menu-back-media.wp-has-current-submenu div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -121px -1px;
 }
 
-#adminmenu #menu-admin-subscription div.wp-menu-image {
+#adminmenu #menu-back-subscription div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -91px -33px;
 }
-#adminmenu #menu-admin-subscription:hover div.wp-menu-image,
-#adminmenu #menu-admin-subscription.wp-has-current-submenu div.wp-menu-image {
+#adminmenu #menu-back-subscription:hover div.wp-menu-image,
+#adminmenu #menu-back-subscription.wp-has-current-submenu div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -91px -1px;
 }
 
-#adminmenu #menu-admin-content div.wp-menu-image {
+#adminmenu #menu-back-content div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -151px -33px;
 }
-#adminmenu #menu-admin-content:hover div.wp-menu-image,
-#adminmenu #menu-admin-content.wp-has-current-submenu div.wp-menu-image {
+#adminmenu #menu-back-content:hover div.wp-menu-image,
+#adminmenu #menu-back-content.wp-has-current-submenu div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -151px -1px;
 }
 
@@ -291,11 +291,11 @@ label {
 	background: transparent url("../images/menu.png") no-repeat scroll -31px -1px;
 }
 
-#adminmenu #menu-admin-event div.wp-menu-image {
+#adminmenu #menu-back-event div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -1px -33px;
 }
-#adminmenu #menu-admin-event:hover div.wp-menu-image,
-#adminmenu #menu-admin-event.wp-has-current-submenu div.wp-menu-image {
+#adminmenu #menu-back-event:hover div.wp-menu-image,
+#adminmenu #menu-back-event.wp-has-current-submenu div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -1px -1px;
 }
 
