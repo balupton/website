@@ -1,7 +1,7 @@
 <?php
 # Init
 $bootstrap = $run = false;
-require_once(dirname(__FILE__).'/../index.php');
+require_once(dirname(__FILE__).'/../../index.php');
 
 # Requires
 require_once(BALPHP_PATH.'/core/functions/_image.funcs.php');
