@@ -35,7 +35,15 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 		# Done
 		return true;
 	}
+
 	
+	/**
+	 * Returns @see Bal_Controller_Plugin_App
+	 */
+	public function getApp(){
+		# Done
+		return $this->_App;
+	}
 	
 	/**
 	 * Self Reference
