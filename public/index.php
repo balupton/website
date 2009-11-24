@@ -30,7 +30,7 @@ elseif ( strpos($_SERVER['HTTP_HOST'], 'mydance.com.au') !== false ) {
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 	
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
-	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-rc1/lib'));
+	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-beta3/lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.5/library'));
 	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp/lib'));
