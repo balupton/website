@@ -1,7 +1,6 @@
 <?
 	$Content = $this->Content;
-	$contentUrl = $this->content()->getUrl($Content);
-	$baseUrl = $this->bal()->getBaseUrl();
+	$contentUrl = $this->content()->getContentUrl($Content);
 ?>
 <div id="content-<?=$Content->code?>" class="content event">
 	<h2>
@@ -11,7 +10,7 @@
 	</h2>
 	<? if ( count($Content->Avatar) && $Content->Avatar->exists() ) :
 		$Media = $Content->Avatar;
-		$mediaUrl = $baseUrl.$Media->url; ?>
+		$mediaUrl = $this->content()->getMediaUrl($Content); ?>
 		<div class="content-avatar">
 			<a href="<?=$mediaUrl?>" title="View Image">
 				<img src="<?=$mediaUrl?>?width=200" title="<?=$Content->title?>" alt="<?=$Content->title?> Avatar" />

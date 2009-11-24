@@ -1,6 +1,9 @@
 <?
-	$baseUrl = $this->bal()->getBaseUrl();
-	$baseUrlBack = $this->bal()->getBaseUrl('back');
+	// URLs
+	$publicUrl = $this->app()->getPublicUrl();
+	$backUrl = $this->app()->getAreaUrl('back');
+	$frontUrl = $this->app()->getAreaUrl('front');
+	// Title
 	$this->headTitle()->append('Media');
 ?>
 <div class="wrap">
@@ -86,14 +89,14 @@
 			<!-- Content Table: Content -->
             <tbody id="subscriber-list">
             	<? foreach ( $this->MediaListArray as $Media ): ?>
-            	<? $mediaUrl = $baseUrl.$Media['url']; ?>
+            	<? $mediaUrl = $this->content()->getMediaUrl($Media); ?>
             	<tr id="media-<?=$Media['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
 					<td class="column-icon media-icon">
 						<a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
 							<? if ( $Media['type'] === 'image' ) : ?>
 								<img height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
 							<? else: ?>
-								<img width="46" height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$baseUrlBack?>/images/files/<?=$Media['type']?>.png"/>
+								<img width="46" height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/<?=$Media['type']?>.png"/>
 							<? endif; ?>
 						</a>
 					</td>

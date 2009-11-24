@@ -30,14 +30,6 @@ class Bal_Controller_Action_Helper_App extends Zend_Controller_Action_Helper_Abs
 	# Options
 	
 	/**
-	 * Gets the Application Configuration (as array)
-	 * @return array
-	 */
-	public function getConfig ( ) {
-		$this->getApp()->getConfig();
-	}
-	
-	/**
 	 * Get the helper option
 	 * @param string $name
 	 * @param mixed $default
@@ -172,4 +164,18 @@ class Bal_Controller_Action_Helper_App extends Zend_Controller_Action_Helper_Abs
 		return $result;
 	}
 	
+
+	/**
+	 * Magic
+	 * @return mixed
+	 */
+	function __call ( $method, $args ) {
+		$App = $this->getApp();
+		if ( method_exists($App, $method) ) {
+			return call_user_func_array(array($App, $method), $args);
+		} else {
+			throw new Zend_Exception('Could not find the method: '.$method);
+		}
+		return false;
+	}
 }

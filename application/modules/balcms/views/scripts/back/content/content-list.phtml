@@ -1,9 +1,13 @@
 <?
+	// URLs
+	$publicUrl = $this->app()->getPublicUrl();
+	$backUrl = $this->app()->getAreaUrl('back');
+	$frontUrl = $this->app()->getAreaUrl('front');
+	// Type
 	$type = $this->type;
 	$Type = ucfirst($type);
+	// Title
 	$this->headTitle()->append($Type);
-	$baseUrl = $this->bal()->getBaseUrl();
-	$baseUrlBack = $this->bal()->getBaseUrl('back');
 ?><div class="wrap">
 	<!-- Edit Button -->
     <div id="icon-edit-pages" class="icon32">
@@ -91,7 +95,7 @@
             <tbody id="content-list">
             	<? foreach ( $this->ContentListArray as $Content ): ?>
             	<?
-            		$contentUrl = $this->content()->getUrl($Content);
+            		$contentUrl = $this->content()->getContentUrl($Content);
             		$contentOpenUrl = $this->url(array('action'=>'content-list','content'=>$Content['code']),'back',true);
             		$contentEditUrl = $this->url(array('action'=>'content-edit','content'=>$Content['code']),'back',true);
             	?>
@@ -99,10 +103,10 @@
                 	<td class="column-icon media-icon">
 						<a title="View <?=$Content['title']?>" href="<?=$contentUrl?>">
 							<? if ( !empty($Content['Avatar']) && $Content['Avatar']['type'] === 'image' ) : ?>
-            					<? $mediaUrl = $baseUrl.$Content['Avatar']['url']; ?>
+            					<? $mediaUrl = $this->content()->getMediaUrl($Content['Avatar']); ?>
 								<img height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
 							<? else: ?>
-								<img width="46" height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$baseUrlBack?>/images/files/default.png"/>
+								<img width="46" height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>
 							<? endif; ?>
 						</a>
 					</td>

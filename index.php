@@ -9,7 +9,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	// We are probably on the devleopment sever
 	define('APPLICATION_ENV', 				'development');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
-	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/../application'));
+	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/application'));
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 	
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
@@ -20,13 +20,13 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	
 	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/sites/mydance.ini'));
 	define('ROOT_URL',						'http://localhost');
-	define('BASE_URL', 						'/projects/balcms/public');
+	define('BASE_URL', 						'/projects/balcms');
 }
 elseif ( strpos($_SERVER['HTTP_HOST'], 'mydance.com.au') !== false ) {
 	// We are on the production server
 	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
-	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/../application'));
+	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/application'));
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 	
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));

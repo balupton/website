@@ -3,7 +3,7 @@
 		<h3>Recent Items</h3>
 	</div>
 	<? foreach ( $this->ContentList as $Content ) :
-		$contentUrl = $this->content()->getUrl($Content);
+		$contentUrl = $this->content()->getContentUrl($Content);
 		?>
 		<div class="recentlist-content widget-content">
 			<h4 class="recentlist-content-header widget-content-header"><a rel="nofollow" href="<?=$contentUrl?>" title="<?=$Content->title?>"><?=$Content->title?></a></h4>

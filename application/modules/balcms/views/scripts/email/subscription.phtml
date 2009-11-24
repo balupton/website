@@ -1,4 +1,11 @@
-<?php echo $this->doctype() ?>
+<?php
+	// Doctype
+	echo $this->doctype();
+	// URLs
+	$baseUrl = $this->app()->getBaseUrl();
+	$contentUrl = $this->content()->getContentUrl($this->ContentArray);
+	$unsubscribeUrl = $this->url(array('action'=>'unsubscribe'),'app',true);
+?>
 <html>
 <head>
     <?php echo $this->headTitle() ?>
@@ -8,8 +15,8 @@
 <body class="email">
 	<div class="email-wrapper">
 		<div class="email-header">
-			<p>You're receiving this email because it matches your subscription prefrences on <a href="<?=$this->bal()->getBaseUrl()?>">MyDance.com.au</a>.</p>
-			<p>Having trouble reading this email? <a href="<?=$this->content()->getUrl($this->ContentArray)?>">View it on your browser</a>. Not interested anymore? <a href="<?=$this->url(array('action'=>'unsubscribe'),'app',true)?>">Unsubscribe Instantly</a>.</p>
+			<p>You're receiving this email because it matches your subscription prefrences on <a href="<?=$baseUrl?>">MyDance.com.au</a>.</p>
+			<p>Having trouble reading this email? <a href="<?=$contentUrl?>">View it on your browser</a>. Not interested anymore? <a href="<?=$unsubscribeUrl?>">Unsubscribe Instantly</a>.</p>
 		</div>
 		<div class="email-body">
 			<h1 class="email-title"><?=$this->ContentArray['title']?></h1>

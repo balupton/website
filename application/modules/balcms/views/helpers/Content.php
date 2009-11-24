@@ -46,7 +46,33 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 		return $this;
 	}
 	
-	public function getUrl ( $Content ) {
+	public function getMediaUrl ( $Media ) {
+		# Prepare
+		$url = null;
+		
+		# Handle
+		if ( is_object($Media) ) {
+			# Is Object
+			$url = $Media->Route;
+		} elseif ( ICONV_IMPLs_array($Media) ) {
+			if ( array_key_exists('url', $Media) ) {
+				# Is Array
+				$url = $Media['Route'];
+			} elseif ( array_key_exists('id', $Content) ) {
+				# Is Content Array with Id
+				$url = Doctrine::getTable('Media')->find($Media['id'])->url;
+			}
+		}
+		
+		# Postfix
+		$publicUrl = $this->getApp()->getPublicUrl();
+		$mediaUrl = $publicUrl.$url;
+		
+		# Done
+		return $mediaUrl;
+	}
+	
+	public function getContentUrl ( $Content ) {
 		# Prepare
 		$Route = null;
 		

@@ -1,18 +1,17 @@
 <?
-	$baseUrl = $this->bal()->getBaseUrl();
 ?>
 <div class="carousel widget">
 	<div class="carousel-header widget-header">
 		<h3>Featured Items</h3>
 	</div>
 	<? foreach ( $this->ContentList as $Content ) :
-		$contentUrl = $this->content()->getUrl($Content);
+		$contentUrl = $this->content()->getContentUrl($Content);
 		?>
 		<div class="carousel-content widget-content">
 			<h4 class="carousel-content-header widget-content-header"><a href="<?=$contentUrl?>" title="<?=$Content->title?>"><?=$Content->title?></a></h4>
 			<? if ( count($Content->Avatar) && $Content->Avatar->exists() ) :
 				$Media = $Content->Avatar;
-				$mediaUrl = $baseUrl.$Media->url; ?>
+				$mediaUrl = $this->content()->getMediaUrl($Media); ?>
 				<div class="carousel-content-avatar widget-content-content">
 					<a href="<?=$contentUrl?>" title="View Image">
 						<img src="<?=$mediaUrl?>?width=200" title="<?=$Content->title?>" alt="<?=$Content->title?> Avatar" />

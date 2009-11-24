@@ -1,10 +1,15 @@
 <?
-	$baseUrl = $this->bal()->getBaseUrl();
-	$baseUrlBack = $this->bal()->getBaseUrl('back');
+	// URLs
+	$publicUrl = $this->app()->getPublicUrl();
+	$backUrl = $this->app()->getAreaUrl('back');
+	$frontUrl = $this->app()->getAreaUrl('front');
+	// Mode
 	$mode = empty($this->ContentArray) || empty($this->ContentArray['id']) ? 'new' : 'edit';
 	$mode_edit = $mode === 'edit';
+	// Type
 	$type = $this->type;
 	$Type = ucfirst($type);
+	// Title
 	$this->headTitle()->append($Type);
 	$this->headTitle()->append(empty($this->ContentArray['title'])?'New':$this->ContentArray['title']);
 ?>
@@ -34,7 +39,7 @@
 								<div id="minor-publishing-actions">
 									<?if($mode_edit):?>
 									<!-- Open Action -->
-									<a class="button button-action right" id="action-open" tabindex="4" href="<?=$this->url(array('Map'=>$this->ContentArray['Route']),'map',true)?>" >Open</a>
+									<a class="button button-action right" id="action-open" tabindex="4" href="<?=$this->content()->getUrl($this->ContentArray)?>" >Open</a>
 									<?endif;?>
 									<!-- Preview Action -->
 									<!-- <a class="button button-action right" id="action-preview" tabindex="4">Preview</a>  -->
@@ -124,7 +129,7 @@
 							<div class="field">
             					<? if ( !empty($Content['Avatar']) && !empty($Content['Avatar']['id']) ) :
             						$Media = $Content['Avatar'];
-            						$mediaUrl = $baseUrl.$Media['url'];
+            						$mediaUrl = $this->content()->getMediaUrl($Media);
             						?>
 									<p style="text-align:center;">
 										<a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
@@ -210,7 +215,7 @@
 						<label for="content-code">
 							Location:
 						</label>
-						<span class="inline-edit-clickable"><?=$this->bal()->getBaseUrl('front',true)?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=$this->ContentArray['code']?></span><input type="text" name="content[code]" id="content-code" value="<?=$this->ContentArray['code']?>" />/
+						<span class="inline-edit-clickable"><?=$this->app()->getAreaUrl('front',true)?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=$this->ContentArray['code']?></span><input type="text" name="content[code]" id="content-code" value="<?=$this->ContentArray['code']?>" />/
 						<span class="inline-edit-panel" id="content-code-panel"></span>
 					</div>
 					<script type="text/javascript">

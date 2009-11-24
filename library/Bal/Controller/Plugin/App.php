@@ -389,29 +389,54 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 
 	/**
 	 * Get the base url for the site
-	 * @param bool $root_url
+	 * @param bool $prefix
 	 * @return string
 	 */
-	public function getBaseUrl ( $root_url = false ) {
+	public function getBaseUrl ( $prefix = false ) {
 		$baseUrl = rtrim(Zend_Controller_Front::getInstance()->getBaseUrl(),'/');
 		$prefix = '';
-		if ( $root_url && defined('ROOT_URL') ) {
+		if ( $prefix && defined('ROOT_URL') ) {
 			$prefix = ROOT_URL;
 		}
 		return $prefix.$baseUrl;
+	}
+
+	/**
+	 * Get the base url for the public area
+	 * @see getBaseUrl
+	 * @param bool $prefix
+	 * @return string
+	 */
+	public function getPublicUrl ( $prefix = false ) {
+		$baseUrl = $this->getBaseUrl($prefix);
+		return $baseUrl.'/public';
 	}
 	
 	/**
 	 * Get the base url for an area
 	 * @see getThemeUrl
 	 * @param string $area
-	 * @param bool $root_url
+	 * @param bool $prefix
 	 * @return string
 	 */
-	public function getAreaUrl ( $area, $root_url = false ) {
+	public function getAreaUrl ( $area, $prefix = false ) {
 		$theme = $this->getAreaTheme($area);
-		return $this->getThemeUrl($theme, $root_url);
+		return $this->getThemeUrl($theme, $prefix);
 	}
+	
+	/**
+	 * Get the base url for a theme
+	 * @param string $theme
+	 * @param bool $prefix
+	 * @return string
+	 */
+	public function getThemeUrl ( $theme, $prefix = false ) {
+		$baseUrl = $this->getPublicUrl($prefix);
+		$themes_url = $this->getConfig('bal.themes.themes_url');
+		$suffix = $themes_url.'/'.$theme;
+		return $baseUrl.$suffix;
+	}
+	
 	
 	/**
 	 * Get a area's theme
@@ -431,19 +456,6 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 				break;
 		}
 		return $theme;
-	}
-	
-	/**
-	 * Get the base url for a theme
-	 * @param string $theme
-	 * @param bool $root_url
-	 * @return string
-	 */
-	public function getThemeUrl ( $theme, $root_url = false ) {
-		$baseUrl = $this->getBaseUrl();
-		$themes_url = $this->getConfig('bal.themes.themes_url');
-		$suffix = $themes_url.'/'.$theme;
-		return $baseUrl.$suffix;
 	}
 	
 	public function getThemePath ( $theme ) {

@@ -140,7 +140,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         # Meta
         $view->headMeta()->appendName('author',		'Benjamin \'balupton\' Lupton - http://www.balupton.com');
         $view->headMeta()->appendName('generator',	'balCMS - http://www.balupton.com/balcms');
-        $view->headLink(array('rel' => 'icon', 'href' => $view->bal()->getBaseUrl('front').'/favicon.ico', 'type'=> 'image/x-icon'), 'PREPEND');
+        $view->headLink(array('rel' => 'icon', 'href' => $App->getAreaUrl('front').'/favicon.ico', 'type'=> 'image/x-icon'), 'PREPEND');
   		
 		# Done
 		return true;

@@ -1,6 +1,6 @@
 <div class="contentlist">
 	<? foreach ( $this->ContentList as $Content ) :
-		$contentUrl = $this->content()->getUrl($Content);
+		$contentUrl = $this->content()->getContentUrl($Content);
 		?>
 		<div class="contentlist-content">
 			<h3><a href="<?=$contentUrl?>" title="<?=$Content->title?>"><?=$Content->title?></a></h3>
