@@ -67,6 +67,8 @@ if ( !defined('LIBRARY_PATH') )
 	define('LIBRARY_PATH', 					realpath(APPLICATION_ROOT_PATH.'/library'));
 if ( !defined('PUBLIC_PATH') )
 	define('PUBLIC_PATH', 					realpath(APPLICATION_ROOT_PATH.'/public'));
+if ( !defined('PUBLIC_URL') )
+	define('PUBLIC_URL', 					realpath(ROOT_URL.'/public'));
 //if ( !defined('HANDLER_PATH') )
 //	define('HANDLER_PATH', 					realpath(APPLICATION_PATH.'/handlers'));
 
