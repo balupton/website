@@ -18,8 +18,6 @@ $images_path = $applicationConfig['bal']['files']['images_path'];
 $upload_url = $applicationConfig['bal']['files']['upload_url'];
 $upload_path = $applicationConfig['bal']['files']['upload_path'];
 
-var_dump($media_path);
-die;
 # Fetch
 $image_location = ltrim($_GET['image'], '/');
 $height = intval(!empty($_GET['height']) ? $_GET['height'] : (!empty($_GET['h']) ? $_GET['h'] : 0));
