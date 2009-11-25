@@ -272,7 +272,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Request->setPost($param, $Media->code);
 		
 		# Add the saved message
-		$url = $this->view->getHelper('bal')->getBaseUrl().$Media->url;
+		$url = $this->view->getHelper('content')->getMediaUrl($Media);
 		$this->view->getHelper('message')->addMessage('<p>Updated the media <a href="' . $url . '">' . $Media->title . '</a></p>', 'updated');
 		
 		# Done
@@ -547,8 +547,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Request->setPost('content', $Content->code);
 		
 		# Add the saved message
-		$url = $this->view->getHelper('bal')->getBaseUrl('front', true) . '/' . $Content->Route->path;
-		$this->view->getHelper('message')->addMessage('<p>Updated the content <a href="' . $url . '">' . $Content->title . '</a></p>', 'updated');
+		$contentUrl = $this->view->getHelper('content')->getContentUrl($Content);
+		$this->view->getHelper('message')->addMessage('<p>Updated the content <a href="' . $contentUrl . '">' . $Content->title . '</a></p>', 'updated');
 		
 		# Done
 		return $Content;
