@@ -78,7 +78,7 @@ if ( !defined('LIBRARY_PATH') ) {
 }
 
 if ( !defined('BASE_URL') ) {
-	define('BASE_URL', 						'/');
+	define('BASE_URL', 						'');
 }
 
 if ( !defined('PUBLIC_PATH') ) {

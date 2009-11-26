@@ -44,7 +44,7 @@ if ( is_file($image_path_new) ) {
 	$image_args = array('image' => $image_path, 'resize_mode' => 'area', 'width_new' => $width, 'height_new' => $height, 'quality' => $quality);
 	
 	# Resize
-	$image = image_remake($image_args);
+	$image = @image_remake($image_args);
 	if ( !$image ) {
 		# Failed
 		$image_url_to_use = $image_url;
