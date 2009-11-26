@@ -25,7 +25,7 @@ if ( strpos($image_path, MEDIA_PATH) !== 0 ) {
 }
 $image_filename_new = get_filename($image_location, true) . '-' . $height . 'x' . $width . 'q' . $quality . '.' . get_extension($image_location);
 $image_path_new = IMAGES_PATH . DIRECTORY_SEPARATOR . $image_filename_new;
-$image_url_new = IMAGES_URL . '/' . $image_filename_new;
+$image_url_new = IMAGES_URL . '/' . urlencode($image_filename_new);
 
 # URL
 $image_url = MEDIA_URL . '/' . $image_location;
