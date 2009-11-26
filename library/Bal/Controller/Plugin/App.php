@@ -393,12 +393,9 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	 * @return string
 	 */
 	public function getBaseUrl ( $prefix = false ) {
-		$baseUrl = rtrim(Zend_Controller_Front::getInstance()->getBaseUrl(),'/');
-		$prefix = '';
-		if ( $prefix && defined('ROOT_URL') ) {
-			$prefix = ROOT_URL;
-		}
-		return $prefix.$baseUrl;
+		$prefix = $prefix ? ROOT_URL : '';
+		$suffix = BASE_URL;
+		return $prefix.$suffix;
 	}
 
 	/**
@@ -408,8 +405,9 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	 * @return string
 	 */
 	public function getPublicUrl ( $prefix = false ) {
-		$baseUrl = $this->getBaseUrl($prefix);
-		return $baseUrl.'/public';
+		$prefix = $prefix ? ROOT_URL : '';
+		$suffix = PUBLIC_URL;
+		return $prefix.$suffix;
 	}
 	
 	/**
@@ -431,10 +429,9 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	 * @return string
 	 */
 	public function getThemeUrl ( $theme, $prefix = false ) {
-		$baseUrl = $this->getPublicUrl($prefix);
-		$themes_url = $this->getConfig('bal.themes.themes_url');
-		$suffix = $themes_url.'/'.$theme;
-		return $baseUrl.$suffix;
+		$prefix = $prefix ? ROOT_URL : '';
+		$suffix = THEMES_URL.'/'.$theme;
+		return $prefix.$suffix;
 	}
 	
 	
@@ -459,7 +456,7 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	}
 	
 	public function getThemePath ( $theme ) {
-		$themes_path = $this->getConfig('bal.themes.themes_path');
+		$themes_path = THEMES_PATH;
 		return $themes_path . DIRECTORY_SEPARATOR . $theme;
 	}
 	

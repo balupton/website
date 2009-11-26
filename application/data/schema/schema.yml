@@ -238,6 +238,10 @@ Media:
             type: string(255)
             notblank: true
             unique: true
+        name:
+            type: string(255)
+            notblank: true
+            unique: true
         title:
             type: string(255)
             notblank: true
@@ -245,12 +249,6 @@ Media:
             type: string(3)
             notnull: true
         path:
-            type: string(255)
-            notblank: true
-        relativepath:
-            type: string(255)
-            notblank: true
-        url:
             type: string(255)
             notblank: true
         size:

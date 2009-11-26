@@ -1,19 +1,26 @@
 <?php
 
+// Prepare
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', 1);
+	
+// Prepare
 if ( !empty($_SERVER['REDIRECT_URL']) ) {
 	$_SERVER['REQUEST_URI'] = $_SERVER['REDIRECT_URL'];
 }
+
+// Prepare
+define('APPLICATION_ROOT_PATH', 			realpath(dirname(__FILE__)));
 
 // Include paths
 if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	// We are probably on the devleopment sever
 	define('APPLICATION_ENV', 				'development');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
-	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/application'));
-	define('APPLICATION_ROOT_PATH', 		realpath(APPLICATION_PATH.'/..'));
+	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 	
-	define('COMMON_PATH', 					realpath(APPLICATION_ROOT_PATH.'/common'));
+	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-rc1/lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.5/library'));
@@ -27,11 +34,10 @@ elseif ( strpos($_SERVER['HTTP_HOST'], 'mydance.com.au') !== false ) {
 	// We are on the production server
 	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
-	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/application'));
-	define('APPLICATION_ROOT_PATH', 		realpath(APPLICATION_PATH.'/..'));
+	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 	
-	define('COMMON_PATH', 					realpath(APPLICATION_ROOT_PATH.'/common'));
+	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-rc1/lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.5/library'));
@@ -71,36 +77,43 @@ if ( !defined('LIBRARY_PATH') ) {
 	define('LIBRARY_PATH', 					realpath(APPLICATION_ROOT_PATH.'/library'));
 }
 
+if ( !defined('BASE_URL') ) {
+	define('BASE_URL', 						'/');
+}
+
 if ( !defined('PUBLIC_PATH') ) {
 	define('PUBLIC_PATH', 					realpath(APPLICATION_ROOT_PATH.'/public'));
 }
 if ( !defined('PUBLIC_URL') ) {
-	define('PUBLIC_URL', 					realpath(BASE_URL.'/public'));
-}
-
-if ( !defined('BASE_URL') ) {
-	define('BASE_URL', 						'/');
+	define('PUBLIC_URL', 					BASE_URL.'/public');
 }
 
 if ( !defined('MEDIA_URL') ) {
 	define('MEDIA_URL', 					PUBLIC_URL . '/media');
 }
 if ( !defined('MEDIA_PATH') ) {
-	define('MEDIA_PATH', 					PUBLIC_PATH . '/media');
+	define('MEDIA_PATH', 					realpath(PUBLIC_PATH . '/media'));
 }
 
-if ( !defined('UPLOAD_URL') ) {
-	define('UPLOAD_URL', 					MEDIA_URL . '/uploads');
+if ( !defined('UPLOADS_URL') ) {
+	define('UPLOADS_URL', 					MEDIA_URL . '/uploads');
 }
-if ( !defined('UPLOAD_PATH') ) {
-	define('UPLOAD_PATH', 					MEDIA_PATH . '/uploads');
+if ( !defined('UPLOADS_PATH') ) {
+	define('UPLOADS_PATH', 					realpath(MEDIA_PATH . '/uploads'));
 }
 
 if ( !defined('IMAGES_URL') ) {
 	define('IMAGES_URL', 					MEDIA_URL . '/images');
 }
 if ( !defined('IMAGES_PATH') ) {
-	define('IMAGES_PATH', 					MEDIA_PATH . '/images');
+	define('IMAGES_PATH', 					realpath(MEDIA_PATH . '/images'));
+}
+
+if ( !defined('THEMES_URL') ) {
+	define('THEMES_URL', 					PUBLIC_URL . '/themes');
+}
+if ( !defined('THEMES_PATH') ) {
+	define('THEMES_PATH', 					realpath(PUBLIC_PATH . '/themes'));
 }
 
 // Ensure library/ is on include_path

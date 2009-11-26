@@ -9,7 +9,7 @@
 		<div class="contentlist">
 			<? foreach ( $this->ContentList as $Content ) : ?>
 				<div class="contentlist-content">
-					<h3><a href="<?=$this->content()->getUrl($Content)?>" title="<?=$Content->title?>"><?=$Content->title?></a></h3>
+					<h3><a href="<?=$this->content()->getContentUrl($Content)?>" title="<?=$Content->title?>"><?=$Content->title?></a></h3>
 					<div class="contentlist-content-content">
 						<?=$this->content()->renderDescription($Content)?>
 					</div>

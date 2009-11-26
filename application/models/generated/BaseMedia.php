@@ -7,11 +7,10 @@
  * 
  * @property integer $id
  * @property string $code
+ * @property string $name
  * @property string $title
  * @property string $extension
  * @property string $path
- * @property string $relativepath
- * @property string $url
  * @property integer $size
  * @property enum $type
  * @property string $mimetype
@@ -43,6 +42,12 @@ abstract class BaseMedia extends Doctrine_Record
              'unique' => true,
              'length' => '255',
              ));
+        $this->hasColumn('name', 'string', 255, array(
+             'type' => 'string',
+             'notblank' => true,
+             'unique' => true,
+             'length' => '255',
+             ));
         $this->hasColumn('title', 'string', 255, array(
              'type' => 'string',
              'notblank' => true,
@@ -54,16 +59,6 @@ abstract class BaseMedia extends Doctrine_Record
              'length' => '3',
              ));
         $this->hasColumn('path', 'string', 255, array(
-             'type' => 'string',
-             'notblank' => true,
-             'length' => '255',
-             ));
-        $this->hasColumn('relativepath', 'string', 255, array(
-             'type' => 'string',
-             'notblank' => true,
-             'length' => '255',
-             ));
-        $this->hasColumn('url', 'string', 255, array(
              'type' => 'string',
              'notblank' => true,
              'length' => '255',

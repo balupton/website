@@ -28,8 +28,6 @@ class Media extends BaseMedia {
 	public function setFile ( $file ) {
 		# Configuration
 		$applicationConfig = Zend_Registry::get('applicationConfig');
-		$upload_path = realpath($applicationConfig['bal']['files']['upload_path']);
-		$upload_url = $applicationConfig['bal']['files']['upload_url'];
 		
 		# Check the file
 		if ( !empty($file['error']) ) {
@@ -68,7 +66,7 @@ class Media extends BaseMedia {
 		# Prepare file
 		$file_title = $file_name = $file['name'];
 		$file_old_path = $file['tmp_name'];
-		$file_new_path = $upload_path . DIRECTORY_SEPARATOR . $file_name;
+		$file_new_path = UPLOADS_PATH . DIRECTORY_SEPARATOR . $file_name;
 		$exist_attempt = 0;
 		$extension = get_extension($file_name); if ( !$extension ) $extension = 'file';
 		while ( file_exists($file_new_path) ) {
@@ -77,7 +75,7 @@ class Media extends BaseMedia {
 			++$exist_attempt;
 			// Add the attempt to the end of the file
 			$file_name = get_filename($file_title, false) . $exist_attempt . '.' . $extension;
-			$file_new_path = $upload_path . DIRECTORY_SEPARATOR . $file_name;
+			$file_new_path = UPLOADS_PATH . DIRECTORY_SEPARATOR . $file_name;
 		}
 		
 		# Move file
@@ -114,7 +112,7 @@ class Media extends BaseMedia {
 					if ( $image_info ) {
 						$file_title = get_filename($file_title,false) . '.jpg';
 						$file_name = get_filename($file_name,false) . '.jpg';
-						$file_path = $upload_path . DIRECTORY_SEPARATOR . $file_name;
+						$file_path = UPLOADS_PATH . DIRECTORY_SEPARATOR . $file_name;
 						$image_contents = $image_info['image'];
 						file_put_contents($file_path, $image_contents, LOCK_EX);
 						$file_path = realpath($file_path);
@@ -133,23 +131,21 @@ class Media extends BaseMedia {
 			}
 		}
 		
+		# Delete Previous
+		if ( $this->path !== $file_path && file_exists($this->path) ) {
+			unlink($this->path);
+		}
+		
 		# Secure
-		$file_relative_path = trim(str_replace($upload_path, '', $file_path),'/\\');
-		$file_url = $upload_url . '/' . $file_relative_path;
 		$file_mimetype = trim_mime_type(get_mime_type($file_path));
 		$file_humantype = filetype_human($file_path);
 		$file_extension = get_extension($file_path);
 		
 		# Apply
-		if ( !$this->code )
-			$this->code = $file_name;
-		if ( !$this->title )
-			$this->title = $file_title;
-		if ( $this->path && file_exists($this->path) )
-			unlink($this->path); // delete previous copy of the file
+		$this->code = $file_name;
+		$this->name = $file_name;
+		$this->title = $file_title;
 		$this->path = $file_path;
-		$this->relativepath = $file_relative_path;
-		$this->url = $file_url;
 		$this->size = $file_size;
 		$this->mimetype = $file_mimetype;
 		$this->humantype = $file_humantype;

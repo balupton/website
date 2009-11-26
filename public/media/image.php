@@ -12,9 +12,6 @@ global $Application;
 $Application->bootstrap('config');
 $applicationConfig = Zend_Registry::get('applicationConfig');
 
-var_dump(PUBLIC_URL, MEDIA_URL, IMAGES_URL);
-die;
-
 # Fetch
 $image_location = ltrim($_GET['image'], '/');
 $height = intval(!empty($_GET['height']) ? $_GET['height'] : (!empty($_GET['h']) ? $_GET['h'] : 0));
@@ -23,7 +20,7 @@ $quality = intval(!empty($_GET['quality']) ? $_GET['quality'] : (!empty($_GET['q
 
 # Prepare
 $image_path = realpath(MEDIA_PATH . DIRECTORY_SEPARATOR . $image_location);
-if ( strpos($image_path, $media_path) !== 0 ) {
+if ( strpos($image_path, MEDIA_PATH) !== 0 ) {
 	throw new Exception('Invalid image location was attempted. <' . $image_path . ' | ' . $image_location . '>');
 }
 $image_filename_new = get_filename($image_location, true) . '-' . $height . 'x' . $width . 'q' . $quality . '.' . get_extension($image_location);

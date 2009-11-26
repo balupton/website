@@ -56,24 +56,24 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 	
 	public function getMediaUrl ( $Media ) {
 		# Prepare
-		$url = null;
+		$name = null;
 		
 		# Handle
 		if ( is_object($Media) ) {
 			# Is Object
-			$url = $Media->url;
+			$name = $Media->name;
 		} elseif ( is_array($Media) ) {
-			if ( array_key_exists('url', $Media) ) {
+			if ( array_key_exists('name', $Media) ) {
 				# Is Array
-				$url = $Media['url'];
+				$name = $Media['name'];
 			} elseif ( array_key_exists('id', $Media) ) {
 				# Is Content Array with Id
-				$url = Doctrine::getTable('Media')->find($Media['id'])->url;
+				$name = Doctrine::getTable('Media')->find($Media['id'])->name;
 			}
 		}
 		
 		# Postfix
-		$mediaUrl = MEDIA_URL.'/'.$url;
+		$mediaUrl = UPLOADS_URL.'/'.$name;
 		
 		# Done
 		return $mediaUrl;

@@ -8,7 +8,7 @@ $dir = dirname(__FILE__);
 chdir($dir);
 
 $boostrap = $run = false;
-require_once($dir.'/../public/index.php');
+require_once($dir.'/../index.php');
 $Application->getBootstrap()->bootstrap('doctrine');
 		
 // Load Config

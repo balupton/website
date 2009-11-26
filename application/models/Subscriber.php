@@ -17,7 +17,7 @@ class Subscriber extends BaseSubscriber {
 	 * @param Doctrine_Event $Event
 	 * @return string
 	 */
-	public function postSave ( Doctrine_Event $Event ) {
+	public function postSave ( $Event ) {
 		# Prepare
 		$Invoker = $Event->getInvoker();
 		$save = false;

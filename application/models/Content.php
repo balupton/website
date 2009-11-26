@@ -335,7 +335,7 @@ class Content extends BaseContent {
 	 * Backup old values
 	 * @param Doctrine_Event $Event
 	 */
-	public function preSave ( Doctrine_Event $Event ) {
+	public function preSave ( $Event ) {
 		// Prepare
 		$Invoker = $Event->getInvoker();
 		$save = false;
@@ -354,7 +354,7 @@ class Content extends BaseContent {
 	 * @param Doctrine_Event $Event
 	 * @return string
 	 */
-	public function postSave ( Doctrine_Event $Event ) {
+	public function postSave ( $Event ) {
 		// Prepare
 		$Invoker = $Event->getInvoker();
 		$save = false;
@@ -378,7 +378,7 @@ class Content extends BaseContent {
 	 * @param Doctrine_Event $Event
 	 * @return string
 	 */
-	public function postInsert ( Doctrine_Event $Event ) {
+	public function postInsert ( $Event ) {
 		// Prepare
 		$Invoker = $Event->getInvoker();
 		$Route = $Invoker->Route;

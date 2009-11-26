@@ -1,11 +1,13 @@
 <?php
+// Prepare
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', 1);
+	
 // Load
 if ( empty($Application) ) {
 	// Bootstrap
 	$run = $bootstrap = false;
-	require_once(dirname(__FILE__).'/../public/index.php');
-	error_reporting(E_ALL | E_STRICT);
-	ini_set('display_errors', 1);
+	require_once(dirname(__FILE__).'/../index.php');
 }
 header('Content-Type: text/plain');
 
@@ -53,8 +55,8 @@ switch ( $mode ) {
 if ( !empty($_GET['media']) ) {
 	echo 'Media: media'."<br/>\n";
 	// Delete the contents of media dirs; uploads and images
-	$images_path = $config['bal']['files']['images_path'].'/';
-	$upload_path = $config['bal']['files']['upload_path'].'/';
+	$images_path = IMAGES_PATH;
+	$upload_path = UPLOADS_PATH;
 	
 	// Scan directories
 	$scan = scan_dir($images_path,null,null,$images_path)+scan_dir($upload_path,null,null,$upload_path);
