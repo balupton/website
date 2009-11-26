@@ -33,7 +33,6 @@ class Media extends BaseMedia {
 		$code = preg_replace('/[^-a-z0-9]/', '', $code);
 		$code = preg_replace('/--+/', '-', $code);
 		$this->_set('code', $code);
-		$this->setPath();
 		return true;
 	}
 	
