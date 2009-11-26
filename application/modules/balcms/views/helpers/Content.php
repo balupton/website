@@ -73,7 +73,7 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 		}
 		
 		# Postfix
-		$mediaUrl = UPLOADS_URL.'/'.$name;
+		$mediaUrl = UPLOADS_URL.'/'.urlencode($name);
 		
 		# Done
 		return $mediaUrl;

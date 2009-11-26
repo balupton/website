@@ -149,6 +149,10 @@ class Content extends BaseContent {
 	 * @return bool
 	 */
 	public function setCode ( $code ) {
+		$code = strtolower($code);
+		$code = preg_replace('/[\s_]/g', '-', $code);
+		$code = preg_replace('/[^-a-z0-9]/g', '', $code);
+		$code = preg_replace('/--+/g', '-', $code);
 		$this->_set('code', $code);
 		$this->setPath();
 		return true;
