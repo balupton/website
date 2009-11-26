@@ -73,8 +73,7 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 		}
 		
 		# Postfix
-		$publicUrl = $this->getApp()->getPublicUrl();
-		$mediaUrl = $publicUrl.$url;
+		$mediaUrl = MEDIA_URL.'/'.$url;
 		
 		# Done
 		return $mediaUrl;

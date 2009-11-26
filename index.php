@@ -10,9 +10,10 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('APPLICATION_ENV', 				'development');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/application'));
+	define('APPLICATION_ROOT_PATH', 		realpath(APPLICATION_PATH.'/..'));
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 	
-	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
+	define('COMMON_PATH', 					realpath(APPLICATION_ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-rc1/lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.5/library'));
@@ -27,9 +28,10 @@ elseif ( strpos($_SERVER['HTTP_HOST'], 'mydance.com.au') !== false ) {
 	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/application'));
+	define('APPLICATION_ROOT_PATH', 		realpath(APPLICATION_PATH.'/..'));
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 	
-	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
+	define('COMMON_PATH', 					realpath(APPLICATION_ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-rc1/lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.5/library'));
@@ -52,25 +54,54 @@ if ( !defined('DEBUG_MODE') ) define('DEBUG_MODE',
 	: 0
 );
 
-// Define application environment
-if ( !defined('APPLICATION_ENV') )
+// Defines
+if ( !defined('APPLICATION_ENV') ) {
 	define('APPLICATION_ENV', 				(getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
-if ( !defined('APPLICATION_PATH') )
-	define('APPLICATION_PATH', 				realpath(dirname(__FILE__) . '/../application'));
-if ( !defined('CONFIG_PATH') )
-	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
-if ( !defined('CONFIG_APP_PATH') )
-	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/application.ini'));
-if ( !defined('APPLICATION_ROOT_PATH') )
+}
+if ( !defined('APPLICATION_ROOT_PATH') ) {
 	define('APPLICATION_ROOT_PATH', 		realpath(APPLICATION_PATH.'/..'));
-if ( !defined('LIBRARY_PATH') )
+}
+if ( !defined('CONFIG_PATH') ) {
+	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
+}
+if ( !defined('CONFIG_APP_PATH') ) {
+	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/application.ini'));
+}
+if ( !defined('LIBRARY_PATH') ) {
 	define('LIBRARY_PATH', 					realpath(APPLICATION_ROOT_PATH.'/library'));
-if ( !defined('PUBLIC_PATH') )
+}
+
+if ( !defined('PUBLIC_PATH') ) {
 	define('PUBLIC_PATH', 					realpath(APPLICATION_ROOT_PATH.'/public'));
-if ( !defined('PUBLIC_URL') )
-	define('PUBLIC_URL', 					realpath(ROOT_URL.'/public'));
-//if ( !defined('HANDLER_PATH') )
-//	define('HANDLER_PATH', 					realpath(APPLICATION_PATH.'/handlers'));
+}
+if ( !defined('PUBLIC_URL') ) {
+	define('PUBLIC_URL', 					realpath(BASE_URL.'/public'));
+}
+
+if ( !defined('BASE_URL') ) {
+	define('BASE_URL', 						'/');
+}
+
+if ( !defined('MEDIA_URL') ) {
+	define('MEDIA_URL', 					PUBLIC_URL . '/media');
+}
+if ( !defined('MEDIA_PATH') ) {
+	define('MEDIA_PATH', 					PUBLIC_PATH . '/media');
+}
+
+if ( !defined('UPLOAD_URL') ) {
+	define('UPLOAD_URL', 					MEDIA_URL . '/uploads');
+}
+if ( !defined('UPLOAD_PATH') ) {
+	define('UPLOAD_PATH', 					MEDIA_PATH . '/uploads');
+}
+
+if ( !defined('IMAGES_URL') ) {
+	define('IMAGES_URL', 					MEDIA_URL . '/images');
+}
+if ( !defined('IMAGES_PATH') ) {
+	define('IMAGES_PATH', 					MEDIA_PATH . '/images');
+}
 
 // Ensure library/ is on include_path
 $include_paths = array();
@@ -80,8 +111,6 @@ if ( defined('DOCTRINE_PATH') )
 	$include_paths[] = DOCTRINE_PATH;
 //$include_paths[] = get_include_path();
 $include_paths[] = LIBRARY_PATH;
-//$include_paths[] = HANDLER_PATH;
-//if ( defined('BALPHP_PATH') )
 //	$include_paths[] = BALPHP_PATH;
 set_include_path(implode(PATH_SEPARATOR, $include_paths));
 

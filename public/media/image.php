@@ -11,12 +11,9 @@ require_once (BALPHP_PATH . '/core/functions/_files.funcs.php');
 global $Application;
 $Application->bootstrap('config');
 $applicationConfig = Zend_Registry::get('applicationConfig');
-$media_url = $applicationConfig['bal']['files']['media_url'];
-$media_path = $applicationConfig['bal']['files']['media_path'];
-$images_url = $applicationConfig['bal']['files']['images_url'];
-$images_path = $applicationConfig['bal']['files']['images_path'];
-$upload_url = $applicationConfig['bal']['files']['upload_url'];
-$upload_path = $applicationConfig['bal']['files']['upload_path'];
+
+var_dump(PUBLIC_URL, MEDIA_URL, IMAGES_URL);
+die;
 
 # Fetch
 $image_location = ltrim($_GET['image'], '/');
@@ -25,16 +22,16 @@ $width = intval(!empty($_GET['width']) ? $_GET['width'] : (!empty($_GET['w']) ? 
 $quality = intval(!empty($_GET['quality']) ? $_GET['quality'] : (!empty($_GET['q']) ? $_GET['q'] : 90));
 
 # Prepare
-$image_path = realpath($media_path . DIRECTORY_SEPARATOR . $image_location);
+$image_path = realpath(MEDIA_PATH . DIRECTORY_SEPARATOR . $image_location);
 if ( strpos($image_path, $media_path) !== 0 ) {
 	throw new Exception('Invalid image location was attempted. <' . $image_path . ' | ' . $image_location . '>');
 }
 $image_filename_new = get_filename($image_location, true) . '-' . $height . 'x' . $width . 'q' . $quality . '.' . get_extension($image_location);
-$image_path_new = $images_path . DIRECTORY_SEPARATOR . $image_filename_new;
-$image_url_new = $images_url . '/' . $image_filename_new;
+$image_path_new = IMAGES_PATH . DIRECTORY_SEPARATOR . $image_filename_new;
+$image_url_new = IMAGES_URL . '/' . $image_filename_new;
 
 # URL
-$image_url = $media_url . '/' . $image_location;
+$image_url = MEDIA_URL . '/' . $image_location;
 
 # Prepare
 $image_url_to_use = $image_url_new;
