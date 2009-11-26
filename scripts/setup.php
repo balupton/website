@@ -59,7 +59,7 @@ if ( !empty($_GET['media']) ) {
 	$upload_path = UPLOADS_PATH;
 	
 	// Scan directories
-	$scan = scan_dir($images_path,null,null,$images_path)+scan_dir($upload_path,null,null,$upload_path);
+	$scan = scan_dir($images_path,null,null,$images_path.'/')+scan_dir($upload_path,null,null,$upload_path.'/');
 	
 	// Wipe files
 	foreach ( $scan as $file ) {
