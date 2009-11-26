@@ -54,7 +54,7 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 		return $this;
 	}
 	
-	public function getMediaUrl ( $Media ) {
+	public function getMediaUrl ( $Media, $prefix = false ) {
 		# Prepare
 		$name = null;
 		
@@ -72,14 +72,17 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 			}
 		}
 		
-		# Postfix
-		$mediaUrl = UPLOADS_URL.'/'.urlencode($name);
+		# Prefix
+		$prefix = $prefix ? ROOT_URL : '';
+		
+		# Apply
+		$mediaUrl = $prefix.UPLOADS_URL.'/'.urlencode($name);
 		
 		# Done
 		return $mediaUrl;
 	}
 	
-	public function getContentUrl ( $Content ) {
+	public function getContentUrl ( $Content, $prefix = false ) {
 		# Prepare
 		$Route = null;
 		
@@ -100,8 +103,14 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 			}
 		}
 		
+		# Prefix
+		$prefix = $prefix ? ROOT_URL : '';
+		
+		# Apply
+		$contentUrl = $prefix.$this->view->url(array('Map'=>$Route),'map',true);
+		
 		# Done
-		return $this->view->url(array('Map'=>$Route),'map',true);
+		return $contentUrl;
 	}
 	
 	/**

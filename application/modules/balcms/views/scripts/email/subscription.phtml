@@ -2,9 +2,9 @@
 	// Doctype
 	echo $this->doctype();
 	// URLs
-	$baseUrl = $this->app()->getBaseUrl();
-	$contentUrl = $this->content()->getContentUrl($this->ContentArray);
-	$unsubscribeUrl = $this->url(array('action'=>'unsubscribe'),'app',true);
+	$baseUrl = $this->app()->getBaseUrl(true);
+	$contentUrl = $this->content()->getContentUrl($this->ContentArray,true);
+	$unsubscribeUrl = ROOT_URL.'/'.$this->url(array('action'=>'unsubscribe'),'app',true);
 ?>
 <html>
 <head>

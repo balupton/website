@@ -28,6 +28,7 @@ class Bal_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 	protected $_moduleKey = 'module';
 	protected $_controllerKey = 'controller';
 	protected $_actionKey = 'action';
+	protected $_keysSet = false;
 	/**#@-*/
 	
 	/**
