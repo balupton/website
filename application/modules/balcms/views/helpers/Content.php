@@ -76,7 +76,7 @@ class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$prefix = $prefix ? ROOT_URL : '';
 		
 		# Apply
-		$mediaUrl = $prefix.UPLOADS_URL.'/'.urlencode($name);
+		$mediaUrl = $prefix.UPLOADS_URL.'/'.rawurlencode($name);
 		
 		# Done
 		return $mediaUrl;

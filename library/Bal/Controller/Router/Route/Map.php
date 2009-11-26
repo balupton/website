@@ -93,7 +93,7 @@ class Bal_Controller_Router_Route_Map extends Zend_Controller_Router_Route_Regex
 				$url .= $this->_getQueryString($value, $encode);
 			} else {
 				if ( $encode )
-					$value = urlencode($value);
+					$value = rawurlencode($value);
 				$url .= '/' . $key;
 				$url .= '/' . $value;
 			}

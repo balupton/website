@@ -527,7 +527,7 @@ class Bal_Payment_Paypal {
 		// Prepare
 		if ( is_array($fields) ) {
 			foreach ( $fields as $key => $value ) {
-				$fields[$key] = $key.'='.urlencode(htmlspecialchars($value));
+				$fields[$key] = $key.'='.rawurlencode(htmlspecialchars($value));
 			}
 			$fields = implode('&', $fields);
 		}

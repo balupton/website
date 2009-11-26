@@ -89,7 +89,7 @@ class Bal_Controller_Router_Route_Simple extends Zend_Controller_Router_Route_Ab
 				$url .= $this->_getQueryString($value, $encode);
 			} else {
 				if ( $encode )
-					$value = urlencode($value);
+					$value = rawurlencode($value);
 				if ( $mode === 'clean' )
 					$url .= '/' . $key . '/' . $value;
 				else
