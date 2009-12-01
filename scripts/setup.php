@@ -58,6 +58,11 @@ if ( !empty($_GET['media']) ) {
 	$images_path = IMAGES_PATH;
 	$upload_path = UPLOADS_PATH;
 	
+	// Check
+	if ( empty($images_path) ) {
+		die('You must first create your media paths');
+	}
+	
 	// Scan directories
 	$scan = scan_dir($images_path,null,null,$images_path.'/')+scan_dir($upload_path,null,null,$upload_path.'/');
 	

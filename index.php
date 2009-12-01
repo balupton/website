@@ -13,8 +13,8 @@ if ( !empty($_SERVER['REDIRECT_URL']) ) {
 define('APPLICATION_ROOT_PATH', 			realpath(dirname(__FILE__)));
 
 // Include paths
-if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
-	// We are probably on the devleopment sever
+if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') || $_SERVER['DOCUMENT_ROOT'] === '/usr/local/zend/apache2/htdocs' ) {
+	// Windows Development Environment
 	define('APPLICATION_ENV', 				'development');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
@@ -31,7 +31,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('BASE_URL', 						'/projects/balcms');
 }
 elseif ( strpos($_SERVER['HTTP_HOST'], 'mydance.com.au') !== false ) {
-	// We are on the production server
+	// MyDance Production Server
 	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
