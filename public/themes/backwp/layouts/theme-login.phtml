@@ -2,6 +2,8 @@
 	echo $this->doctype();
 	$baseUrl = $this->app()->getBaseUrl();
 	$publicUrl = $this->app()->getPublicUrl();
+	$jqueryUiUrl = $publicUrl.'/scripts/jquery-ui-1.7.2';
+	$jquerySparkleUrl = $publicUrl.'/scripts/jquery-sparkle';
 	$backUrl = $this->app()->getAreaUrl('back');
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -25,17 +27,10 @@
 	    ->offsetSetFile(1,'http://www.json.org/json2.js')
 	    // jQuery
 	    ->offsetSetFile(2,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js' : $publicUrl.'/scripts/jquery-1.3.2.min.js')
-	    // UI
-	    ->offsetSetFile(3,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' : $publicUrl.'/scripts/jquery-ui/js/jquery-ui-1.7.2.custom.min.js')
-	    // Ajaxy
-		//->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.history.js')->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.ajaxy.js')
-		// TinyMCE
-		//->offsetSetFile(4,$baseUrl.'/scripts/tiny_mce/jquery.tinymce.dev.js')
-		//->offsetSetScript(100,'$.Editor.applyConfig("default",{script_url: "'.$baseUrl.'/scripts/tiny_mce/tiny_mce.js"});')
 	    // Application
 	    ->offsetSetFile(5,$publicUrl.'/scripts/jquery.autogrow.js')
-	    ->offsetSetFile(6,$publicUrl.'/scripts/jquery.sparkle.js')
-	    ->offsetSetFile(7,$publicUrl.'/scripts/cms/back.js')
+	    ->offsetSetFile(6,$jquerySparkleUrl.'/scripts/jquery.sparkle.js')
+	    ->offsetSetFile(7,$publicUrl.'/scripts/balcms/back.js')
 	    // GSFN
 	    ->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
 	    ->offsetSetScript(81,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")

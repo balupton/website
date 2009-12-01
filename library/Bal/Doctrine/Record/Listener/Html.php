@@ -13,7 +13,7 @@ class Bal_Doctrine_Record_Listener_Html extends Doctrine_Record_Listener {
 	public function __construct ( $default = false ) {
 		$this->_default = $default;
 		// Require Necessary
-		require_once('HTMLPurifier/HTMLPurifier.auto.php');
+		require_once(HTMLPURIFIER_PATH.'/HTMLPurifier.auto.php');
 		$this->Purifier = HTMLPurifier::getInstance();
 	}
 	

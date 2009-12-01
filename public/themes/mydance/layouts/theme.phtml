@@ -3,6 +3,8 @@
 	$baseUrl = $this->app()->getBaseUrl();
 	$publicUrl = $this->app()->getPublicUrl();
 	$frontUrl = $this->app()->getAreaUrl('front');
+	$jqueryUiUrl = $publicUrl.'/scripts/jquery-ui-1.7.2';
+	$jquerySparkleUrl = $publicUrl.'/scripts/jquery-sparkle';
 	$User = $this->app()->getUser();
 ?><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
@@ -25,12 +27,9 @@
 	    ->offsetSetFile(1,'http://www.json.org/json2.js')
 	    // jQuery
 	    ->offsetSetFile(2,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js' : $publicUrl.'/scripts/jquery-1.3.2.min.js')
-	    // Ajaxy
-		//->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.history.js')->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.ajaxy.js')
-		// Application
-	    //->offsetSetFile(5,$baseUrl.'/scripts/jquery.autogrow.js')
-	    ->offsetSetFile(6,$publicUrl.'/scripts/jquery.sparkle.js')
-	    ->offsetSetFile(7,$publicUrl.'/scripts/cms/front.js')
+	    //
+	    ->offsetSetFile(6,$jquerySparkleUrl.'/scripts/jquery.sparkle.js')
+	    ->offsetSetFile(7,$publicUrl.'/scripts/balcms/front.js')
 	    ;
     ?>
 <body>

@@ -21,10 +21,10 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') ) {
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 	
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
-	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-rc1/lib'));
+	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
-	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.5/library'));
-	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp/lib'));
+	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.6-lib'));
+	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-lib'));
 	
 	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/sites/mydance.ini'));
 	define('ROOT_URL',						'http://localhost');
@@ -114,6 +114,10 @@ if ( !defined('THEMES_URL') ) {
 }
 if ( !defined('THEMES_PATH') ) {
 	define('THEMES_PATH', 					realpath(PUBLIC_PATH . '/themes'));
+}
+
+if ( !defined('HTMLPURIFIER_PATH') ) {
+	define('HTMLPURIFIER_PATH', 				realpath(COMMON_PATH . '/htmlpurifier-4.0.0-lib'));
 }
 
 // Ensure library/ is on include_path
