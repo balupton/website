@@ -1,6 +1,6 @@
 <?php
 require_once 'Zend/View/Helper/Abstract.php';
-class Bal_View_Helper_Content extends Zend_View_Helper_Abstract {
+class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	
     /**
      * Whether or not to cache content

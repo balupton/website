@@ -97,17 +97,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$applicationConfig = Zend_Registry::get('applicationConfig');
 		
         # Initialize view
-        $view = new Zend_View();
-        $view->doctype('XHTML1_STRICT');
-        $view->headTitle($applicationConfig['bal']['site']['title'])->setSeparator($applicationConfig['bal']['site']['separator']);
-		$view->headMeta()->setHttpEquiv('Content-Type', 'text/html; charset=utf-8');
+        $View = new Zend_View();
+        $View->doctype('XHTML1_STRICT');
+        $View->headTitle($applicationConfig['bal']['site']['title'])->setSeparator($applicationConfig['bal']['site']['separator']);
+		$View->headMeta()->setHttpEquiv('Content-Type', 'text/html; charset=utf-8');
 		
         # Add it to the ViewRenderer
-        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
-        $viewRenderer->setView($view);
+    	$ViewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+		$ViewRenderer->setView($View);
         
 	    # Done
-        return $view;
+        return $View;
 	}
 
 	/**
@@ -119,7 +119,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('view');
 		$this->bootstrap('config');
 		$this->bootstrap('app');
-		$view = $this->getResource('view');
+		$View = $this->getResource('view');
 		
 		# Config
 		$applicationConfig = Zend_Registry::get('applicationConfig');
@@ -130,17 +130,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$App->startLayout();
 		
 		# View Helpers
-		$view->addHelperPath('Bal/View/Helper/', 'Bal_View_Helper');
-		$view->addHelperPath(APPLICATION_PATH.'/modules/balcms/views/helpers', 'Content');
-		$view->addScriptPath(APPLICATION_PATH.'/modules/balcms/views/scripts');
+		$View->addHelperPath(LIBRARY_PATH.'/Bal/View/Helper', 'Bal_View_Helper');
+		$View->addHelperPath(APPLICATION_PATH.'/modules/balcms/views/helpers', 'Balcms_View_Helper');
+		$View->addScriptPath(APPLICATION_PATH.'/modules/balcms/views/scripts');
 		
 		# Widgets
-		$view->getHelper('widget')->addWidgets($applicationConfig['bal']['widget']);
+		$View->getHelper('widget')->addWidgets($applicationConfig['bal']['widget']);
 		
         # Meta
-        $view->headMeta()->appendName('author',		'Benjamin \'balupton\' Lupton - http://www.balupton.com');
-        $view->headMeta()->appendName('generator',	'balCMS - http://www.balupton.com/balcms');
-        $view->headLink(array('rel' => 'icon', 'href' => $App->getAreaUrl('front').'/favicon.ico', 'type'=> 'image/x-icon'), 'PREPEND');
+        $View->headMeta()->appendName('author',		'Benjamin \'balupton\' Lupton - http://www.balupton.com');
+        $View->headMeta()->appendName('generator',	'balCMS - http://www.balupton.com/balcms');
+        $View->headLink(array('rel' => 'icon', 'href' => $App->getAreaUrl('front').'/favicon.ico', 'type'=> 'image/x-icon'), 'PREPEND');
   		
 		# Done
 		return true;
@@ -182,14 +182,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */
 	protected function _initAutoload () {
 		# Initialise Zend's Autoloader, used for plugins etc
-		$autoloader = Zend_Loader_Autoloader::getInstance();
-		$autoloader->registerNamespace('Bal_');
+		$Autoloader = Zend_Loader_Autoloader::getInstance();
+		$Autoloader->registerNamespace('Bal_');
 		
 		# Action Controllers
 		Zend_Controller_Action_HelperBroker::addPrefix('Bal_Controller_Action_Helper_');
 		
 		# Done
-		return $autoloader;
+		return $Autoloader;
 	}
 	
 	/**

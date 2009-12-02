@@ -117,7 +117,7 @@ if ( !defined('THEMES_PATH') ) {
 }
 
 if ( !defined('HTMLPURIFIER_PATH') ) {
-	define('HTMLPURIFIER_PATH', 				realpath(COMMON_PATH . '/htmlpurifier-4.0.0-lib'));
+	define('HTMLPURIFIER_PATH', 			realpath(COMMON_PATH . '/htmlpurifier-4.0.0-lib'));
 }
 
 // Ensure library/ is on include_path

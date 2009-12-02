@@ -79,7 +79,9 @@ class Media extends BaseMedia {
 		}
 		
 		# Prepare file
-		$file_title = $file_name = $file['name'];
+		$file_name = $file['name'];
+		if ( strpos($file_name, '.') === 0 ) $file_name = 'file'.$file_name; // prevent .htaccess uploads and other dogies
+		$file_title = $file_name;
 		$file_old_path = $file['tmp_name'];
 		$file_new_path = UPLOADS_PATH . DIRECTORY_SEPARATOR . $file_name;
 		$exist_attempt = 0;
