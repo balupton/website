@@ -50,25 +50,20 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		# Done
 		return true;
 	}
-
-	public function registerNavigationAction ( $code ) {
-		# Navigation
-		$NavigationActions = $this->view->NavigationActions;
-		$NavItem = $NavigationActions->findBy('id', 'action-'.$code);
-		$NavItem->parent->active = $NavItem->active = true;
-		
-		# Done
-		return true;
+	
+	public function activateNavigationActionItem ( $code ) {
+		return $this->getHelper('App')->getApp()->activateNavigationItem($this->view->NavigationActions, 'action-'.$code);
 	}
 	
-	public function registerNavigationMenu ( $code ) {
-		# Navigation
-		$NavigationMenu = $this->view->NavigationMenu;
-		$NavItem = $NavigationMenu->findBy('id', 'content-'.$code);
-		$NavItem->parent->active = $NavItem->active = true;
-		
-		# Done
-		return true;
+	public function activateNavigationMenuItem ( $Content ) {
+		$result = false;
+		while ( $result === false ) {
+			$code = $Content->code;
+			$result = $this->getHelper('App')->getApp()->activateNavigationItem($this->view->NavigationMenu, 'content-'.$code);
+			if ( empty($Content->parent_id) ) break;
+			$Content = $Content->Parent;
+		}
+		return $result;
 	}
 	
 	
@@ -112,7 +107,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$this->view->search = $search;
 		$this->view->ContentList = $ContentList;
 		$this->view->headTitle()->append('Search');
-		$this->registerNavigationAction('search');
+		$this->activateNavigationActionItem('search');
 		
 		# Render
 		$this->render('content/search');
@@ -193,7 +188,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$this->view->headTitle()->append($Content->title);
 		$this->view->headMeta()->appendName('description', strip_tags($Content->description_rendered));
 		$this->view->headMeta()->appendName('keywords', $keywordstr);
-		$this->registerNavigationMenu($Content->code);
+		$this->activateNavigationMenuItem($Content);
 		
 		# Render
 		$this->render('content/content-'.$Content->type);

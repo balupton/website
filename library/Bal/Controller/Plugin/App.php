@@ -502,6 +502,40 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	
 	
 	# -----------
+	# Menu
+	
+	
+	/**
+	 * Activate a Navigation Menu Item
+	 * @return
+	 */
+	public function activateNavigationItem ( Zend_Navigation $Menu, $id, $parents = true ) {
+		# Find Current
+		$Item = $Menu->findBy('id', $id);
+		
+		# Check
+		if ( !$Item ) {
+			return false;
+		}
+		
+		# Active Current
+		$Item->active = true;
+		
+		# Activate Parents
+		if ( $parents ) {
+			$tmpItem = $Item;
+			while ( !empty($tmpItem->parent) ) {
+				$tmpItem = $tmpItem->parent;
+				$tmpItem->active = true;
+			}
+		}
+		
+		# Done
+		return true;
+	}
+	
+	
+	# -----------
 	# Helpers
 	
 	/**

@@ -30,10 +30,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return true;
 	}
 
-	public function registerMenu ( $id ) {
-		$NavigationMenu = $this->view->NavigationMenu;
-		$NavItem = $NavigationMenu->findBy('id', $id);
-		$NavItem->parent->active = $NavItem->active = true;
+	public function activateNavigationMenuItem ( $id ) {
+		return $this->getHelper('App')->getApp()->activateNavigationItem($this->view->NavigationMenu, $id);
 	}
 	
 	
@@ -90,7 +88,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function dashboardAction ( ) {
 		# Prepare
-		$this->registerMenu('back-dashboard');
+		$this->activateNavigationMenuItem('back-dashboard');
 		
 		# Render
 		$this->render('index/dashboard');
@@ -110,7 +108,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function subscriberListAction ( ) {
 		# Prepare
-		$this->registerMenu('back-subscriber-list');
+		$this->activateNavigationMenuItem('back-subscriber-list');
 		$SubscriberListArray = array();
 		$search = $this->_getParam('search', false);
 		
@@ -168,7 +166,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		if ( !$Media->id ) {
 			return $this->_forward('media-new');
 		}
-		$this->registerMenu('back-media-list');
+		$this->activateNavigationMenuItem('back-media-list');
 		
 		# Fetch
 		$MediaArray = $Media->toArray();
@@ -185,7 +183,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function mediaNewAction ( ) {
 		# Prepare
-		$this->registerMenu('back-media-edit');
+		$this->activateNavigationMenuItem('back-media-edit');
 		$Media = $MediaArray = array();
 		
 		# Save
@@ -209,7 +207,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function mediaListAction ( ) {
 		# Prepare
-		$this->registerMenu('back-media-list');
+		$this->activateNavigationMenuItem('back-media-list');
 		$MediaListArray = array();
 		$search = $this->_getParam('search', false);
 		
@@ -323,7 +321,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			return $this->_forward('content-new');
 		}
 		$type = $Content->type;
-		$this->registerMenu('back-' . $type . '-list');
+		$this->activateNavigationMenuItem('back-' . $type . '-list');
 		
 		# Fetch
 		$ContentArray = $Content->toArray();
@@ -355,7 +353,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function contentNewAction ( ) {
 		# Prepare
 		$type = $this->_getParam('type', 'content');
-		$this->registerMenu('back-' . $type . '-edit');
+		$this->activateNavigationMenuItem('back-' . $type . '-edit');
 		$Content = $ContentCrumbArray = $ContentArray = array();
 		
 		# Save
@@ -401,7 +399,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function contentListAction ( ) {
 		# Prepare
 		$type = $this->_getParam('type', 'content');
-		$this->registerMenu('back-' . $type . '-list');
+		$this->activateNavigationMenuItem('back-' . $type . '-list');
 		$content = $this->_getParam('content', false);
 		$search = $this->_getParam('search', false);
 		$Content = $ContentCrumbArray = $ContentListArray = $ContentArray = array();
