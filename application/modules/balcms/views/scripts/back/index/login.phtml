@@ -1,5 +1,6 @@
 <?php
 	// Url
+	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$baseUrl = $this->app()->getBaseUrl();
 ?>
 <div id="login">
@@ -32,6 +33,6 @@
 		<a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Provide Feedback</a>
 	</p>
 	
-	<p id="backtoblog"><a title="Are you lost?" href="<?=$baseUrl?>">&larr; Back to <?=$this->app()->getConfig('bal.site.name')?></a></p>
+	<p id="backtoblog"><a title="Are you lost?" href="<?=$baseFullUrl?>">&larr; Back to <?=$this->app()->getConfig('bal.site.name')?></a></p>
 	
 </div>

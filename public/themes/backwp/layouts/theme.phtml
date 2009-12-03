@@ -1,5 +1,6 @@
 <?php
 	echo $this->doctype();
+	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$baseUrl = $this->app()->getBaseUrl();
 	$publicUrl = $this->app()->getPublicUrl();
 	$backUrl = $this->app()->getAreaUrl('back');
@@ -49,7 +50,7 @@
             <div id="wpcontent">
                 <div id="wphead">
                     <!--<img id="header-logo" src="edit-pages.php_files/blank.gif" alt="" height="32" width="32">-->
-                    <h1 id="site-heading"><a href="<?=$baseUrl?>" title="Visit Site">
+                    <h1 id="site-heading"><a href="<?=$baseFullUrl?>" title="Visit Site">
                     	<span id="site-title"><?=$this->app()->getConfig('bal.site.name')?></span>
                     	<em id="site-visit-button">Visit Site</em>
                     </a></h1>

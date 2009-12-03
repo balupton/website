@@ -388,12 +388,20 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	# View stuff
 
 	/**
+	 * Get the root url for the site
+	 * @return string
+	 */
+	public function getRootUrl ( ) {
+		return ROOT_URL;
+	}
+	
+	/**
 	 * Get the base url for the site
 	 * @param bool $prefix
 	 * @return string
 	 */
 	public function getBaseUrl ( $prefix = false ) {
-		$prefix = $prefix ? ROOT_URL : '';
+		$prefix = $prefix ? $this->getRootUrl() : '';
 		$suffix = BASE_URL;
 		return $prefix.$suffix;
 	}
@@ -405,7 +413,7 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	 * @return string
 	 */
 	public function getPublicUrl ( $prefix = false ) {
-		$prefix = $prefix ? ROOT_URL : '';
+		$prefix = $prefix ? $this->getRootUrl() : '';
 		$suffix = PUBLIC_URL;
 		return $prefix.$suffix;
 	}
@@ -429,7 +437,7 @@ class Bal_Controller_Plugin_App extends Zend_Controller_Plugin_Abstract {
 	 * @return string
 	 */
 	public function getThemeUrl ( $theme, $prefix = false ) {
-		$prefix = $prefix ? ROOT_URL : '';
+		$prefix = $prefix ? $this->getRootUrl() : '';
 		$suffix = THEMES_URL.'/'.$theme;
 		return $prefix.$suffix;
 	}
