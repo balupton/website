@@ -10,7 +10,7 @@
  * @author     ##NAME## <##EMAIL##>
  * @version    SVN: $Id: Builder.php 6365 2009-09-15 18:22:38Z jwage $
  */
-class Media extends BaseMedia {
+class Media extends Base_Media {
 
 	/**
 	 * Apply modifiers

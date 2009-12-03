@@ -10,7 +10,7 @@
  * @author     ##NAME## <##EMAIL##>
  * @version    SVN: $Id: Builder.php 6365 2009-09-15 18:22:38Z jwage $
  */
-class Content extends BaseContent {
+class Content extends Base_Content {
 	
 	protected $_View = null;
 

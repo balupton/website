@@ -12,21 +12,21 @@ if ( empty($Application) ) {
 header('Content-Type: text/plain');
 
 // Load
+$Application->bootstrap('config');
 $Application->bootstrap('doctrine');
 $Application->bootstrap('balphp');
 $Application->bootstrap('app');
 
 // Get Config
-$config = array();
-$config['bal'] = $Application->getOption('bal');
+$applicationConfig = Zend_Registry::get('applicationConfig');
 
 // Check Secret
-if ( $_GET['secret'] !== $config['bal']['setup']['secret'] ) {
+if ( $_GET['secret'] !== $applicationConfig['bal']['setup']['secret'] ) {
 	throw new Zend_Exception('Trying to setup without the secret! Did we not tell you? Maybe it is for good reason!');
 }
 
 // Get Config
-$config['data'] = $Application->getOption('data');
+$applicationConfig['data'] = $Application->getOption('data');
 
 
 // Handle
@@ -75,12 +75,12 @@ if ( !empty($_GET['media']) ) {
 
 
 // Lucene
-$data_lucence = !empty($config['data']['index_path']);
+$data_lucence = !empty($applicationConfig['data']['index_path']);
 
 // Lucence: createindex
 if ( !empty($_GET['createindex']) && $data_lucence ) {
-	echo 'Lucene: createindex ['.$config['data']['index_path'].']'."<br/>\n";
-	$Index = Zend_Search_Lucene::create($config['data']['index_path']);
+	echo 'Lucene: createindex ['.$applicationConfig['data']['index_path'].']'."<br/>\n";
+	$Index = Zend_Search_Lucene::create($applicationConfig['data']['index_path']);
 	Zend_Registry::set('Index', $Index);
 } else {
 	$Application->bootstrap('index');
@@ -89,18 +89,18 @@ if ( !empty($_GET['createindex']) && $data_lucence ) {
 
 
 // Doctrine
-$data_path_to_use = $config['data']['fixtures_path'];
+$data_path_to_use = $applicationConfig['data']['fixtures_path'];
 
 // Doctrine: usedump
 if ( !empty($_GET['usedump']) ) {
-	$data_path_to_use = $config['data']['dump_path'];
+	$data_path_to_use = $applicationConfig['data']['dump_path'];
 	echo 'Doctrine: usedump ['.$data_path_to_use.']'."<br/>\n";
 }
 
 // Doctrine: makedump
 if ( !empty($_GET['makedump']) ) {
-	echo 'Doctrine: makedump ['.$config['data']['dump_path'].']'."<br/>\n";
-	Doctrine::dumpData($config['data']['dump_path'].'/data.yml', false);
+	echo 'Doctrine: makedump ['.$applicationConfig['data']['dump_path'].']'."<br/>\n";
+	Doctrine::dumpData($applicationConfig['data']['dump_path'].'/data.yml', false);
 }
 
 // Doctrine: reload
@@ -108,15 +108,27 @@ if ( !empty($_GET['reload']) ) {
 	echo 'Doctrine: reload ['.$data_path_to_use.']'."<br/>\n";
 	Doctrine::dropDatabases();
 	Doctrine::createDatabases();
-	if ( APPLICATION_ENV === 'development' )
-	Doctrine::generateModelsFromYaml($config['data']['yaml_schema_path'],$config['data']['models_path']);
+	if ( APPLICATION_ENV === 'development' ) {
+		# Importer
+		$Import = new Doctrine_Import_Schema();
+		$Import->setOptions(array(
+		    'pearStyle' => true,
+		    'baseClassesDirectory' => null,
+		    'baseClassPrefix' => 'Base_',
+		    'classPrefix' => '',
+		    'classPrefixFiles' => false
+		));
+		$Import->importSchema($applicationConfig['data']['yaml_schema_path'], 'yml', $applicationConfig['data']['models_path']);
+		##Doctrine::generateModelsFromYaml($applicationConfig['data']['yaml_schema_path'],$applicationConfig['data']['models_path']);
+	    Doctrine::loadModels($applicationConfig['data']['models_path']);
+	}
 	Doctrine::createTablesFromModels();
 	Doctrine::loadData($data_path_to_use);
 }
 
 // Lucene: index
 if ( !empty($_GET['optimiseindex']) && $data_lucence ) {
-	echo 'Lucene: optimiseindex ['.$config['data']['index_path'].']'."<br/>\n";
+	echo 'Lucene: optimiseindex ['.$applicationConfig['data']['index_path'].']'."<br/>\n";
 	$Index = Zend_Registry::get('Index');
 	$Index->optimize();
 }

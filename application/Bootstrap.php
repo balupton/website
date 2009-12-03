@@ -321,23 +321,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
 		# Apply Paths
 		//Doctrine::setModelsDirectory($applicationConfig['data']['models_path']);
-	 	if ( $version_1_2 ) Doctrine::setExtensionsPath($extensions_path);
+	 	Doctrine_Core::setExtensionsPath($extensions_path);
+		Doctrine_Core::setModelsDirectory($applicationConfig['data']['models_path']);
 
 		# Autoload
-		if ( $version_1_2 ) spl_autoload_register(array('Doctrine', 'autoload'));
-		if ( $version_1_2 ) spl_autoload_register(array('Doctrine', 'modelsAutoload'));
-		if ( $version_1_2 ) spl_autoload_register(array('Doctrine', 'extensionsAutoload'));
-
-		/*
-		# Importer
-		$Import = new Doctrine_Import_Schema();
-		$Import->setOptions(array(
-		    'pearStyle' => true,
-		    'baseClassesDirectory' => null,
-		    'baseClassPrefix' => 'Base_',
-		    //'classPrefix' => 'MyProject_Models_',
-		    //'classPrefixFiles' => true
-		));*/
+		$Autoloader = Zend_Loader_Autoloader::getInstance();
+		$Autoloader->pushAutoloader(array('Doctrine', 'autoload'), 'Doctrine_');
+		$Autoloader->pushAutoloader(array('Doctrine', 'modelsAutoload'));
+		$Autoloader->pushAutoloader(array('Doctrine', 'extensionsAutoload'));
 
 	    # Get Manager
 	    $Manager = Doctrine_Manager::getInstance();
@@ -354,21 +345,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			Doctrine::VALIDATE_ALL
 		);
 		$Manager->setAttribute(Doctrine_Core::ATTR_USE_DQL_CALLBACKS, true);
-
+		
 		# Apply Extensions
-		if ( $version_1_2 ) $Manager->registerExtension('Taggable');
-
+		$Manager->registerExtension('Taggable');
+		
 		# Apply Listener
 		$Manager->addRecordListener(new Bal_Doctrine_Record_Listener_Html(false));
-
+		
 		# Cache
 		//$cacheConn = Doctrine_Manager::connection(new PDO('sqlite::memory:'));
 		//$cacheDriver = new Doctrine_Cache_Db(array('connection' => $cacheConn,'tableName' => 'cache'));
 		//$manager->setAttribute(Doctrine::ATTR_QUERY_CACHE, $cacheDriver);
 		//$manager->setAttribute(Doctrine::ATTR_RESULT_CACHE, $cacheDriver);
-
-	    # Add models and generated base classes to Doctrine autoloader
-	    Doctrine::loadModels($applicationConfig['data']['models_path']);
 		
 	    # Prepare Connection
 	    $dsn = $applicationConfig['data']['connection_string'];
@@ -381,9 +369,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	    $Connection = $Manager->openConnection($dsn);
 		
 	    # Profile Connection
-	    $Profiler = new Doctrine_Connection_Profiler();
-		$Connection->setListener($Profiler);
-		Zend_Registry::set('Profiler',$Profiler);
+		if ( DEBUG_MODE ) {
+		    $Profiler = new Doctrine_Connection_Profiler();
+			$Connection->setListener($Profiler);
+			Zend_Registry::set('Profiler',$Profiler);
+		}
 	    
 	    # Return Manager
 	    return $Manager;

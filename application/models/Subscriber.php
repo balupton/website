@@ -10,7 +10,7 @@
  * @author     ##NAME## <##EMAIL##>
  * @version    SVN: $Id: Builder.php 6365 2009-09-15 18:22:38Z jwage $
  */
-class Subscriber extends BaseSubscriber {
+class Subscriber extends Base_Subscriber {
 
 	/**
 	 * Handle tagstr, authorstr, and code changes
