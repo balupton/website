@@ -2,7 +2,7 @@
 require_once 'Zend/Controller/Plugin/Abstract.php';
 class Bal_Controller_Plugin_ErrorControllerSelector extends Zend_Controller_Plugin_Abstract {
 
-	public function routeShutdown ( Zend_Controller_Request_Abstract $request ) {
+	public function dispatchLoopShutdown ( Zend_Controller_Request_Abstract $request ) {
 		$front = Zend_Controller_Front::getInstance();
 		
 		//If the ErrorHandler plugin is not registered, bail out

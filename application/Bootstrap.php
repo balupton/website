@@ -251,8 +251,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         	->setDefaultControllerName('front')
         	->setDefaultAction('index');
         
+        # Error Handler
+        $FrontController = Zend_Controller_Front::getInstance();
+		$FrontController->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
+		    'module'		=> 'default',
+		    'controller'	=> 'error',
+		    'action'		=> 'error'
+		)));
+
         # Module Specific Error Controllers
-		$FrontController->registerPlugin(new Bal_Controller_Plugin_ErrorControllerSelector());
+		# $FrontController->registerPlugin(new Bal_Controller_Plugin_ErrorControllerSelector());
 		
         # Done
         return true;
@@ -361,9 +369,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
 	    # Add models and generated base classes to Doctrine autoloader
 	    Doctrine::loadModels($applicationConfig['data']['models_path']);
-
+		
+	    # Prepare Connection
+	    $dsn = $applicationConfig['data']['connection_string'];
+	    $unix_socket = ini_get('mysql.default_socket');
+	    if ( $unix_socket ) {
+	    	$dsn .= ';unix_socket='.$unix_socket;
+	    }
+	    
 	    # Create Connection
-	    $Connection = $Manager->openConnection($applicationConfig['data']['connection_string']);
+	    $Connection = $Manager->openConnection($dsn);
 		
 	    # Profile Connection
 	    $Profiler = new Doctrine_Connection_Profiler();
