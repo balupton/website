@@ -130,7 +130,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$App->startLayout();
 		
 		# View Helpers
-		$View->addHelperPath(LIBRARY_PATH.'/Bal/View/Helper', 'Bal_View_Helper');
+		$View->addHelperPath(BALPHP_PATH.'/Bal/View/Helper', 'Bal_View_Helper');
 		$View->addHelperPath(APPLICATION_PATH.'/modules/balcms/views/helpers', 'Balcms_View_Helper');
 		$View->addScriptPath(APPLICATION_PATH.'/modules/balcms/views/scripts');
 		
@@ -307,29 +307,21 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
 		# Config
 		$applicationConfig = Zend_Registry::get('applicationConfig');
-
-		# Load Doctrine
-	    require_once 'Doctrine.php';
-	    $Loader = Zend_Loader_Autoloader::getInstance();
-	    $Loader->pushAutoloader(array('Doctrine', 'autoload'));
-		
-	 	# Version Handle
-		$version_1_2 = version_compare('1.1', Doctrine::VERSION, '<');
-		
-		# Options
 		$extensions_path = $applicationConfig['data']['extensions_path'];
 		
-		# Apply Paths
-		//Doctrine::setModelsDirectory($applicationConfig['data']['models_path']);
-	 	Doctrine_Core::setExtensionsPath($extensions_path);
-		Doctrine_Core::setModelsDirectory($applicationConfig['data']['models_path']);
-
 		# Autoload
+		require_once(DOCTRINE_PATH.'/Doctrine.php');
 		$Autoloader = Zend_Loader_Autoloader::getInstance();
 		$Autoloader->pushAutoloader(array('Doctrine', 'autoload'), 'Doctrine_');
 		$Autoloader->pushAutoloader(array('Doctrine', 'modelsAutoload'));
 		$Autoloader->pushAutoloader(array('Doctrine', 'extensionsAutoload'));
-
+		
+		# Apply Paths
+		Doctrine_Core::setPath(DOCTRINE_PATH);
+		Doctrine_Core::setModelsDirectory($applicationConfig['data']['models_path']);
+	 	Doctrine_Core::setExtensionsPath($extensions_path);
+		Doctrine_Core::setModelsDirectory($applicationConfig['data']['models_path']);
+		
 	    # Get Manager
 	    $Manager = Doctrine_Manager::getInstance();
 

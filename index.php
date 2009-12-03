@@ -124,11 +124,11 @@ if ( !defined('HTMLPURIFIER_PATH') ) {
 $include_paths = array();
 if ( defined('ZEND_PATH') )
 	$include_paths[] = ZEND_PATH;
-if ( defined('DOCTRINE_PATH') )
-	$include_paths[] = DOCTRINE_PATH;
+//if ( defined('DOCTRINE_PATH') )
+//	$include_paths[] = DOCTRINE_PATH;
 //$include_paths[] = get_include_path();
+$include_paths[] = BALPHP_PATH;
 $include_paths[] = LIBRARY_PATH;
-//	$include_paths[] = BALPHP_PATH;
 set_include_path(implode(PATH_SEPARATOR, $include_paths));
 
 // Zend_Application
