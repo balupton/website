@@ -182,7 +182,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	public function renderPopulartaglistWidget ( array $params = array() ) {
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$TagList = Doctrine::getTable('TaggableTag')->getPopularTags('BlogPost');
+		$TagList = Doctrine::getTable('TaggableTag')->getPopularTags('Content');
 		
 		# Apply
 		$model = compact('Content','TagList');
