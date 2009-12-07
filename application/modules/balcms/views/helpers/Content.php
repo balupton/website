@@ -56,21 +56,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	
 	public function getMediaUrl ( $Media, $prefix = false ) {
 		# Prepare
-		$name = null;
-		
-		# Handle
-		if ( is_object($Media) ) {
-			# Is Object
-			$name = $Media->name;
-		} elseif ( is_array($Media) ) {
-			if ( array_key_exists('name', $Media) ) {
-				# Is Array
-				$name = $Media['name'];
-			} elseif ( array_key_exists('id', $Media) ) {
-				# Is Content Array with Id
-				$name = Doctrine::getTable('Media')->find($Media['id'])->name;
-			}
-		}
+		$name = $this->getMedia($Media, 'name');
 		
 		# Prefix
 		$prefix = $prefix ? $this->getApp()->getRootUrl() : '';
@@ -82,26 +68,71 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		return $mediaUrl;
 	}
 	
-	public function getContentUrl ( $Content, $prefix = false ) {
+	public function getMedia ( $in, $key = null ) {
+		# Prepare
+		$Media = null;
+		$type = 'object';
+		
+		# Handle
+		if ( is_object($in) ) {
+			# Is Object
+			if ( $in instanceOf Media ) {
+				$Media = $in;
+			} elseif ( $in instanceOf Content ) {
+				$Media = $in->Avatar;
+			}
+		} elseif ( is_array($in) ) {
+			if ( array_key_exists('name', $in) ) {
+				# Is Array
+				$Media = $in;
+				$type = 'array';
+			} elseif ( array_key_exists('id', $in) ) {
+				# Is Content Array with Id
+				$Media = Doctrine::getTable('Media')->find($in['id']);
+			}
+		}
+		
+		# Done
+		if ( $key ) {
+			return $type === 'object' ? $Media->$key : $Media[$key];
+		} else {
+			return $Media;
+		}
+	}
+	
+	public function getRoute ( $in ) {
 		# Prepare
 		$Route = null;
 		
 		# Handle
-		if ( is_object($Content) ) {
+		if ( is_object($in) ) {
 			# Is Content Object
-			$Route = $Content->Route;
-		} elseif ( is_array($Content) ) {
-			if ( array_key_exists('Route', $Content) ) {
-				# Is Content Array
-				$Route = $Content['Route'];
-			} elseif ( array_key_exists('path', $Content) ) {
+			if ( $in instanceOf Route ) {
+				$Route = $in;
+			}
+			elseif ( $in instanceOf Content ) {
+				$Route = $in->Route;
+			}
+		} elseif ( is_array($in) ) {
+			if ( array_key_exists('path', $in) ) {
 				# Is Route
-				$Route = $Content;
-			} elseif ( array_key_exists('id', $Content) ) {
+				$Route = $in;
+			} elseif ( array_key_exists('Route', $in) ) {
+				# Is Content Array
+				$Route = $in['Route'];
+			} elseif ( array_key_exists('id', $in) ) {
 				# Is Content Array with Id
-				$Route = Doctrine::getTable('Content')->find($Content['id'])->Route;
+				$Route = Doctrine::getTable('Content')->find($in['id'])->Route;
 			}
 		}
+		
+		# Done
+		return $Route;
+	}
+	
+	public function getContentUrl ( $Content, $prefix = false ) {
+		# Prepare
+		$Route = $this->getRoute($Content);
 		
 		# Prefix
 		$prefix = $prefix ? $this->getApp()->getRootUrl() : ''; // map will return base url inclusive
