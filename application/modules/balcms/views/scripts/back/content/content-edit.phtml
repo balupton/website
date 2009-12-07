@@ -1,5 +1,6 @@
 <?
 	// URLs
+	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
 	// Mode
@@ -141,7 +142,16 @@
 								</label>
 								<input type="file" id="content-avatar"  name="avatar"" />
 								<input type="hidden" name="MAX_FILE_SIZE" value="<?=filesize_from_human(ini_get('upload_max_filesize').'B')?>" />
-								<p class="description"><span class="little"><?=$this->locale()->translate('file-upload-size',$this->locale()->filesize(filesize_from_human(ini_get('upload_max_filesize').'B')))?></span></p>
+								<p class="description"><span class="little"><?
+									echo $this->locale()->translate(
+										'file-upload-size',
+										$this->locale()->filesize(
+											filesize_from_human(
+												ini_get('upload_max_filesize').'B'
+											)
+										)
+									)
+								?></span></p>
 							</div>
 						</div>
 						<script type="text/javascript">
@@ -214,7 +224,7 @@
 						<label for="content-code">
 							Location:
 						</label>
-						<span class="inline-edit-clickable"><?=$this->app()->getAreaUrl('front',true)?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=$this->ContentArray['code']?></span><input type="text" name="content[code]" id="content-code" value="<?=$this->ContentArray['code']?>" />/
+						<span class="inline-edit-clickable"><?=$baseFullUrl?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=$this->ContentArray['code']?></span><input type="text" name="content[code]" id="content-code" value="<?=$this->ContentArray['code']?>" />/
 						<span class="inline-edit-panel" id="content-code-panel"></span>
 					</div>
 					<script type="text/javascript">

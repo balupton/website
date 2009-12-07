@@ -73,7 +73,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		}
 		
 		# Prefix
-		$prefix = $prefix ? ROOT_URL : '';
+		$prefix = $prefix ? $this->getApp()->getRootUrl() : '';
 		
 		# Apply
 		$mediaUrl = $prefix.UPLOADS_URL.'/'.rawurlencode($name);
@@ -104,7 +104,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		}
 		
 		# Prefix
-		$prefix = $prefix ? ROOT_URL : '';
+		$prefix = $prefix ? $this->getApp()->getRootUrl() : ''; // map will return base url inclusive
 		
 		# Apply
 		$contentUrl = $prefix.$this->view->url(array('Map'=>$Route),'map',true);
