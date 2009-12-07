@@ -22,6 +22,7 @@ class ErrorController extends Zend_Controller_Action {
 	 */
     public function errorAction() {
     	// Fetch
+		$Registry = Zend_Registry::getInstance();
         $errors = $this->_getParam('error_handler');
 		$Exception = $errors->exception;
 		$Request = $errors->request;
@@ -103,7 +104,7 @@ class ErrorController extends Zend_Controller_Action {
 		}
 		
 		// Profiler
-		$Profiler = Zend_Registry::get('Profiler');
+		$Profiler = isset($Registery->Profiler) ? $Registery->Profiler : null;
         
 		// Assign
         $this->view->env		= $env;
