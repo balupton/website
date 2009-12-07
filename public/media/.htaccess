@@ -1,4 +1,4 @@
-Options -Indexes –ExecCGI
+Options -Indexes
 RewriteEngine On
 
 # Block hotlinking on balupton.com
