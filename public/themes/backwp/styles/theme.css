@@ -8,6 +8,13 @@
 	/*font-weight: normal;*/
 }
 
+#sidebar-avatar-box .inside .avatar {
+	text-align:center;
+}
+#sidebar-avatar-box .inside .avatar.field {
+	float:right;
+}
+
 #misc-publishing-actions {
 	padding:0 0 0.5em;
 }

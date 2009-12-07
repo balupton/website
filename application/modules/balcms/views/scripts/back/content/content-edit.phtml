@@ -126,17 +126,23 @@
 					<div id="sidebar-avatar-box" class="postbox sidebar-box">
 						<h3>Avatar</h3>
 						<div class="inside">
+            				<? if ( !empty($Content['Avatar']) && !empty($Content['Avatar']['id']) ) :
+           						$Media = $Content['Avatar'];
+           						$mediaUrl = $this->content()->getMediaUrl($Media);
+           						?>
+								<div class="avatar">
+									<a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
+										<img height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
+									</a>
+								</div>
+								<div class="avatar field">
+									<input type="checkbox" id="content-avatar-delete" name="content_avatar_delete" value="true" />
+									<label for="content-avatar-delete">
+										Delete?
+									</label>
+								</div>
+							<? endif; ?>
 							<div class="field">
-            					<? if ( !empty($Content['Avatar']) && !empty($Content['Avatar']['id']) ) :
-            						$Media = $Content['Avatar'];
-            						$mediaUrl = $this->content()->getMediaUrl($Media);
-            						?>
-									<p style="text-align:center;">
-										<a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
-											<img height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
-										</a>
-									</p>
-								<? endif; ?>
 								<label for="content-avatar">
 									Want to upload a different image?
 								</label>

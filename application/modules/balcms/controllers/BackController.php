@@ -503,7 +503,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$content['tags'] .= ', ' . $subscription['tags'];
 		
 		# Tags
-		$tags = implode(', ', array_clean(explode(',', $content['tags'])));
+		$tags = explode(',', $content['tags']);
+		$tags = implode(', ', array_clean($tags));
 		unset($content['tags']);
 		
 		# Parent
@@ -519,6 +520,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Content->merge($content);
 		
 		# Avatar
+		if ( $Request->getPost('content_avatar_delete') && !empty($Content->Avatar) ) {
+			$Content->Avatar->delete(); // delete by user request
+			$Content->Avatar = null;
+		}
 		$Avatar = $this->_saveMedia('avatar');
 		if ( $Avatar->id ) {
 			if ( $Avatar->type !== 'image' ) {
