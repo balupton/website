@@ -55,6 +55,7 @@ abstract class BalTemplate extends Doctrine_Template {
 
 	protected function hasManyHelper($column){
 		// Prepare
+		$class = $relation = $refClass = $local = $foreign = null;
 		extract($column);
 		
 		// Primary

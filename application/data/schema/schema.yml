@@ -9,7 +9,7 @@ Route:
     columns:
         id:
             primary: true
-            type: integer(4)
+            type: integer(2)
             unsigned: true
             autoincrement: true
         path:
@@ -44,7 +44,7 @@ Content:
     columns:
         id:
             primary: true
-            type: integer(4)
+            type: integer(2)
             unsigned: true
             autoincrement: true
         code:
@@ -84,14 +84,14 @@ Content:
                 html: rich
             
         avatar_id:
-            type: integer(4)
+            type: integer(2)
             unsigned: true
         route_id:
-            type: integer(4)
+            type: integer(2)
             unsigned: true
             unique: true
         parent_id:
-            type: integer(4)
+            type: integer(2)
             unsigned: true
         position:
             type: integer(2)
@@ -104,11 +104,13 @@ Content:
         send_finished_at:
             type: timestamp
         send_all:
-            type: integer(4)
+            type: integer(2)
+            unsigned: true
             notnull: true
             default: 0
         send_remaining:
-            type: integer(4)
+            type: integer(2)
+            unsigned: true
             notnull: true
             default: 0
         send_status:
@@ -164,14 +166,14 @@ ContentAndSubscriber:
     columns:
         id:
             primary: true
-            type: integer(4)
+            type: integer(2)
             unsigned: true
             autoincrement: true
         content_id:
-            type: integer(4)
+            type: integer(2)
             unsigned: true
         subscriber_id:
-            type: integer(4)
+            type: integer(2)
             unsigned: true
         status:
             type: enum
@@ -194,7 +196,7 @@ Subscriber:
     columns:
         id:
             primary: true
-            type: integer(4)
+            type: integer(2)
             unsigned: true
             autoincrement: true
         email:
@@ -231,7 +233,7 @@ Media:
     columns:
         id:
             primary: true
-            type: integer(4)
+            type: integer(2)
             unsigned: true
             autoincrement: true
         code:
@@ -279,7 +281,7 @@ User:
             fields: [username,displayname,fullname,email]
     columns:
         id:
-            type: integer(4)
+            type: integer(2)
             primary: true
             autoincrement: true
             unsigned: true
@@ -341,7 +343,7 @@ Role:
 PermissionAndRole:
     columns:
         id:
-            type: integer(4)
+            type: integer(2)
             primary: true
             unsigned: true
             autoincrement: true
@@ -376,7 +378,7 @@ Permission:
 RoleAndUser:
     columns:
         id:
-            type: integer(4)
+            type: integer(2)
             primary: true
             unsigned: true
             autoincrement: true
@@ -384,11 +386,11 @@ RoleAndUser:
             type: timestamp
             notnull: false
         assignee_user_id:
-            type: integer(4)
+            type: integer(2)
             notnull: false
             unsigned: true
         user_id:
-            type: integer(4)
+            type: integer(2)
             notnull: true
             unsigned: true
         role_id:
@@ -410,7 +412,7 @@ RoleAndUser:
 PermissionAndUser:
     columns:
         id:
-            type: integer(6)
+            type: integer(3)
             primary: true
             unsigned: true
             autoincrement: true
@@ -418,11 +420,11 @@ PermissionAndUser:
             type: timestamp
             notnull: false
         assignee_user_id:
-            type: integer(4)
+            type: integer(2)
             notnull: false
             unsigned: true
         user_id:
-            type: integer(4)
+            type: integer(2)
             notnull: true
             unsigned: true
         permission_id:

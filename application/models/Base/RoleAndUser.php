@@ -24,28 +24,28 @@ abstract class Base_RoleAndUser extends Doctrine_Record
     public function setTableDefinition()
     {
         $this->setTableName('role_and_user');
-        $this->hasColumn('id', 'integer', 4, array(
+        $this->hasColumn('id', 'integer', 2, array(
              'type' => 'integer',
              'primary' => true,
              'unsigned' => true,
              'autoincrement' => true,
-             'length' => '4',
+             'length' => '2',
              ));
         $this->hasColumn('assigned_date', 'timestamp', null, array(
              'type' => 'timestamp',
              'notnull' => false,
              ));
-        $this->hasColumn('assignee_user_id', 'integer', 4, array(
+        $this->hasColumn('assignee_user_id', 'integer', 2, array(
              'type' => 'integer',
              'notnull' => false,
              'unsigned' => true,
-             'length' => '4',
+             'length' => '2',
              ));
-        $this->hasColumn('user_id', 'integer', 4, array(
+        $this->hasColumn('user_id', 'integer', 2, array(
              'type' => 'integer',
              'notnull' => true,
              'unsigned' => true,
-             'length' => '4',
+             'length' => '2',
              ));
         $this->hasColumn('role_id', 'integer', 2, array(
              'type' => 'integer',

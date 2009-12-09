@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
-	<buildpathentry kind="src" path="application/models/generated"/>
-	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/doctrine-1.2"/>
-	<buildpathentry excluding="generated/" kind="src" path="application/models"/>
-	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/balPHP"/>
-	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/Doctrine 1.2"/>
-	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/balphp"/>
+	<buildpathentry excluding="application/models/|library/" kind="src" path=""/>
+	<buildpathentry kind="src" path="library"/>
+	<buildpathentry kind="src" path="application/models"/>
 	<buildpathentry kind="con" path="org.zend.php.framework.CONTAINER"/>
+	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/doctrine-1.2.1"/>
+	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/balphp"/>
 </buildpath>

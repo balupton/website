@@ -89,7 +89,7 @@ class BalAuditable extends BalTemplate {
 	        'name'          =>  'user_id',
 	        'alias'         =>  null,
 	        'type'          =>  'integer',
-	        'length'        =>  4,
+	        'length'        =>  2,
 	        'options'       =>  array(
 				'unsigned'	=>	true
 			)

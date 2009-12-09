@@ -21,12 +21,12 @@ abstract class Base_PermissionAndRole extends Doctrine_Record
     public function setTableDefinition()
     {
         $this->setTableName('permission_and_role');
-        $this->hasColumn('id', 'integer', 4, array(
+        $this->hasColumn('id', 'integer', 2, array(
              'type' => 'integer',
              'primary' => true,
              'unsigned' => true,
              'autoincrement' => true,
-             'length' => '4',
+             'length' => '2',
              ));
         $this->hasColumn('role_id', 'integer', 2, array(
              'type' => 'integer',

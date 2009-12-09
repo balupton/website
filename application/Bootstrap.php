@@ -315,6 +315,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$Autoloader->pushAutoloader(array('Doctrine', 'autoload'), 'Doctrine_');
 		$Autoloader->pushAutoloader(array('Doctrine', 'modelsAutoload'));
 		$Autoloader->pushAutoloader(array('Doctrine', 'extensionsAutoload'));
+		$Autoloader->pushAutoloader(array('Doctrine', 'autoload'), 'sfYaml');
 		
 		# Apply Paths
 		Doctrine_Core::setPath(DOCTRINE_PATH);

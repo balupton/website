@@ -11,6 +11,13 @@ if ( !empty($_SERVER['REDIRECT_URL']) ) {
 
 // Prepare
 define('APPLICATION_ROOT_PATH', 			realpath(dirname(__FILE__)));
+if ( !isset($_SERVER) ) {
+	$_SERVER = array();
+}
+if ( empty($_SERVER['DOCUMENT_ROOT']) ) {
+	$_SERVER['DOCUMENT_ROOT'] = realpath(dirname(__FILE__).'/../../');
+}
+
 
 // Include paths
 if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') || $_SERVER['DOCUMENT_ROOT'] === '/usr/local/zend/apache2/htdocs' ) {
@@ -21,7 +28,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') || $_SERVER['DOCUMENT_ROOT'] === '/
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
 	
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
-	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.0-lib'));
+	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.1-lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
 	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.6-lib'));
 	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-lib'));

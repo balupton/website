@@ -2,7 +2,6 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-$_SERVER['DOCUMENT_ROOT'] = realpath('C:\Server\apache\htdocs');
 
 $dir = dirname(__FILE__);
 chdir($dir);

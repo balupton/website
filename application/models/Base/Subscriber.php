@@ -22,12 +22,12 @@ abstract class Base_Subscriber extends Doctrine_Record
     public function setTableDefinition()
     {
         $this->setTableName('subscriber');
-        $this->hasColumn('id', 'integer', 4, array(
+        $this->hasColumn('id', 'integer', 2, array(
              'primary' => true,
              'type' => 'integer',
              'unsigned' => true,
              'autoincrement' => true,
-             'length' => '4',
+             'length' => '2',
              ));
         $this->hasColumn('email', 'string', 255, array(
              'type' => 'string',

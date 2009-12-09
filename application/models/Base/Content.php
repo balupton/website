@@ -43,12 +43,12 @@ abstract class Base_Content extends Doctrine_Record
     public function setTableDefinition()
     {
         $this->setTableName('content');
-        $this->hasColumn('id', 'integer', 4, array(
+        $this->hasColumn('id', 'integer', 2, array(
              'primary' => true,
              'type' => 'integer',
              'unsigned' => true,
              'autoincrement' => true,
-             'length' => '4',
+             'length' => '2',
              ));
         $this->hasColumn('code', 'string', 30, array(
              'type' => 'string',
@@ -105,21 +105,21 @@ abstract class Base_Content extends Doctrine_Record
               'html' => 'rich',
              ),
              ));
-        $this->hasColumn('avatar_id', 'integer', 4, array(
+        $this->hasColumn('avatar_id', 'integer', 2, array(
              'type' => 'integer',
              'unsigned' => true,
-             'length' => '4',
+             'length' => '2',
              ));
-        $this->hasColumn('route_id', 'integer', 4, array(
+        $this->hasColumn('route_id', 'integer', 2, array(
              'type' => 'integer',
              'unsigned' => true,
              'unique' => true,
-             'length' => '4',
+             'length' => '2',
              ));
-        $this->hasColumn('parent_id', 'integer', 4, array(
+        $this->hasColumn('parent_id', 'integer', 2, array(
              'type' => 'integer',
              'unsigned' => true,
-             'length' => '4',
+             'length' => '2',
              ));
         $this->hasColumn('position', 'integer', 2, array(
              'type' => 'integer',
@@ -134,17 +134,19 @@ abstract class Base_Content extends Doctrine_Record
         $this->hasColumn('send_finished_at', 'timestamp', null, array(
              'type' => 'timestamp',
              ));
-        $this->hasColumn('send_all', 'integer', 4, array(
+        $this->hasColumn('send_all', 'integer', 2, array(
              'type' => 'integer',
+             'unsigned' => true,
              'notnull' => true,
              'default' => 0,
-             'length' => '4',
+             'length' => '2',
              ));
-        $this->hasColumn('send_remaining', 'integer', 4, array(
+        $this->hasColumn('send_remaining', 'integer', 2, array(
              'type' => 'integer',
+             'unsigned' => true,
              'notnull' => true,
              'default' => 0,
-             'length' => '4',
+             'length' => '2',
              ));
         $this->hasColumn('send_status', 'enum', null, array(
              'type' => 'enum',

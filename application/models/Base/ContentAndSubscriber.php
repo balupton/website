@@ -22,22 +22,22 @@ abstract class Base_ContentAndSubscriber extends Doctrine_Record
     public function setTableDefinition()
     {
         $this->setTableName('content_and_subscriber');
-        $this->hasColumn('id', 'integer', 4, array(
+        $this->hasColumn('id', 'integer', 2, array(
              'primary' => true,
              'type' => 'integer',
              'unsigned' => true,
              'autoincrement' => true,
-             'length' => '4',
+             'length' => '2',
              ));
-        $this->hasColumn('content_id', 'integer', 4, array(
+        $this->hasColumn('content_id', 'integer', 2, array(
              'type' => 'integer',
              'unsigned' => true,
-             'length' => '4',
+             'length' => '2',
              ));
-        $this->hasColumn('subscriber_id', 'integer', 4, array(
+        $this->hasColumn('subscriber_id', 'integer', 2, array(
              'type' => 'integer',
              'unsigned' => true,
-             'length' => '4',
+             'length' => '2',
              ));
         $this->hasColumn('status', 'enum', null, array(
              'type' => 'enum',
