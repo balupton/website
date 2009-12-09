@@ -35,7 +35,7 @@ $mode = !empty($_GET['mode']) ? $_GET['mode'] : null;
 switch ( $mode ) {
 	
 	case 'install':
-		$install = array('createindex', 'reload', 'optimiseindex', 'media');
+		$install = array('createindex', 'drop', 'reload', 'optimiseindex', 'media');
 		array_keys_ensure($_GET, $install, true);
 		echo 'Setup: mode:install ['.implode(array_keys($_GET),',').']'."<br/>\n";
 		break;
@@ -104,10 +104,15 @@ if ( !empty($_GET['makedump']) ) {
 	Doctrine::dumpData($applicationConfig['data']['dump_path'].'/data.yml', false);
 }
 
+// Doctrine: drop
+if ( !empty($_GET['drop']) ) {
+	echo 'Doctrine: drop ['.$data_path_to_use.']'."<br/>\n";
+	Doctrine::dropDatabases();
+}
+
 // Doctrine: reload
 if ( !empty($_GET['reload']) ) {
 	echo 'Doctrine: reload ['.$data_path_to_use.']'."<br/>\n";
-	Doctrine::dropDatabases();
 	Doctrine::createDatabases();
 	if ( APPLICATION_ENV === 'development' ) {
 		# Importer
