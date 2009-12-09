@@ -20,7 +20,6 @@ class Content extends Base_Content {
 	 */
 	public function setUp ( ) {
 		$this->hasMutator('position', 'setPosition');
-		$this->hasMutator('authorstr', 'setAuthorstr');
 		$this->hasMutator('path', 'setPath');
 		$this->hasMutator('code', 'setCode');
 		$this->hasMutator('content', 'setContent');
@@ -82,27 +81,6 @@ class Content extends Base_Content {
 			return true;
 		}
 		
-		// No Change
-		return false;
-	}
-
-	/**
-	 * Sets the authorstr field
-	 * @param int $position [optional] defaults to id
-	 * @return bool
-	 */
-	public function setAuthorstr ( $author = null ) {
-		/// Default
-		if ( is_null($author) ) {
-			if ( isset($this->Author) && $this->Author->exists() ) {
-				$author = $this->Author->displayname;
-			}
-		}
-		// Is Change?
-		if ( $this->authorstr != $author ) {
-			$this->_set('authorstr', $author);
-			return true;
-		}
 		// No Change
 		return false;
 	}
@@ -242,11 +220,6 @@ class Content extends Base_Content {
 			$save = true;
 		}
 		
-		// Author
-		if ( $this->setAuthorstr() ) {
-			$save = true;
-		}
-		
 		// Route
 		if ( $this->setPath() ) {
 			$save = true;
@@ -354,7 +327,7 @@ class Content extends Base_Content {
 	}
 	
 	/**
-	 * Handle tagstr, authorstr, and code changes
+	 * Handle tagstr, and code changes
 	 * @param Doctrine_Event $Event
 	 * @return string
 	 */

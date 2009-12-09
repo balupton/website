@@ -1,13 +1,11 @@
 <?php
-
-class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
-{
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
 	/**
 	 * Initialise our Locale
 	 * @return
 	 */
-	protected function _initLocale () {
+	protected function _initLocale ( ) {
 		# Prepare
 		$this->bootstrap('autoload');
 		$this->bootstrap('balphp');
@@ -33,8 +31,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Fetch
 		$smtp_host = $applicationConfig['mail']['transport']['smtp']['host'];
 		$smtp_config = $applicationConfig['mail']['transport']['smtp']['config'];
-		if ( empty($smtp_config) ) $smtp_config = array();
-		
+		if ( empty($smtp_config) )
+			$smtp_config = array();
+			
 		# Apply
 		$Transport = new Zend_Mail_Transport_Smtp($smtp_host, $smtp_config);
 		Zend_Mail::setDefaultTransport($Transport);
@@ -42,7 +41,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Done
 		return true;
 	}
-	
+
 	/**
 	 * Initialise our Log
 	 * @return
@@ -62,7 +61,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
 		# Create Log
 		$Log = new Zend_Log();
-		Zend_Registry::set('Log',$Log);
+		Zend_Registry::set('Log', $Log);
 		
 		# Create Writer: SysLog
 		$Writer_Syslog = new Zend_Log_Writer_Syslog();
@@ -77,7 +76,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Create Writer: Firebug
 		if ( DEBUG_MODE ) {
 			//$Writer_Firebug = new Zend_Log_Writer_Firebug();
-			//$Log->addWriter($Writer_Firebug);
+		//$Log->addWriter($Writer_Firebug);
 		}
 		
 		# Done
@@ -96,32 +95,30 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Config
 		$applicationConfig = Zend_Registry::get('applicationConfig');
 		
-        # Initialize view
-        $View = new Zend_View();
-        $View->doctype('XHTML1_STRICT');
-        $View->headTitle($applicationConfig['bal']['site']['title'])->setSeparator($applicationConfig['bal']['site']['separator']);
+		# Initialize view
+		$View = new Zend_View();
+		$View->doctype('XHTML1_STRICT');
+		$View->headTitle($applicationConfig['bal']['site']['title'])->setSeparator($applicationConfig['bal']['site']['separator']);
 		$View->headMeta()->setHttpEquiv('Content-Type', 'text/html; charset=utf-8');
 		
-        # Add it to the ViewRenderer
-    	$ViewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+		# Add it to the ViewRenderer
+		$ViewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
 		$ViewRenderer->setView($View);
-        
-	    # Done
-        return $View;
+		
+		# Done
+		return $View;
 	}
 
 	/**
 	 * Initialise our Presentation
 	 * @return
 	 */
-	protected function _initPresentation () {
+	protected function _initPresentation ( ) {
 		# Prepare
 		$this->bootstrap('view');
 		$this->bootstrap('config');
 		$this->bootstrap('app');
 		$View = $this->getResource('view');
-		
-		# Config
 		$applicationConfig = Zend_Registry::get('applicationConfig');
 		
 		# Layout
@@ -130,18 +127,34 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$App->startLayout();
 		
 		# View Helpers
-		$View->addHelperPath(BALPHP_PATH.'/Bal/View/Helper', 'Bal_View_Helper');
-		$View->addHelperPath(APPLICATION_PATH.'/modules/balcms/views/helpers', 'Balcms_View_Helper');
-		$View->addScriptPath(APPLICATION_PATH.'/modules/balcms/views/scripts');
+		$View->addHelperPath(BALPHP_PATH . '/Bal/View/Helper', 'Bal_View_Helper');
+		
+		# Meta
+		$View->headMeta()->appendName('author', 'Benjamin \'balupton\' Lupton - http://www.balupton.com');
+		$View->headMeta()->appendName('generator', 'balCMS - http://www.balupton.com/balcms');
+		$View->headLink(array('rel' => 'icon', 'href' => $App->getAreaUrl('front') . '/favicon.ico', 'type' => 'image/x-icon'), 'PREPEND');
+		
+		# Done
+		return true;
+	}
+	
+	/**
+	 * Initialise our balcms module
+	 * @return
+	 */
+	protected function _initBalcms ( ) {
+		# Prepare
+		$this->bootstrap('presentation');
+		$View = $this->getResource('view');
+		$applicationConfig = Zend_Registry::get('applicationConfig');
+		
+		# View Helpers
+		$View->addHelperPath(APPLICATION_PATH . '/modules/balcms/views/helpers', 'Balcms_View_Helper');
+		$View->addScriptPath(APPLICATION_PATH . '/modules/balcms/views/scripts');
 		
 		# Widgets
 		$View->getHelper('widget')->addWidgets($applicationConfig['bal']['widget']);
 		
-        # Meta
-        $View->headMeta()->appendName('author',		'Benjamin \'balupton\' Lupton - http://www.balupton.com');
-        $View->headMeta()->appendName('generator',	'balCMS - http://www.balupton.com/balcms');
-        $View->headLink(array('rel' => 'icon', 'href' => $App->getAreaUrl('front').'/favicon.ico', 'type'=> 'image/x-icon'), 'PREPEND');
-  		
 		# Done
 		return true;
 	}
@@ -150,27 +163,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 * Initialise our routes/routing/router
 	 * @return
 	 */
-	protected function _initRoutes () {
+	protected function _initRoutes ( ) {
 		# Prepare
 		$this->bootstrap('autoload');
 		
 		# Route
-		$routeConfig = new Zend_Config_Ini(CONFIG_PATH.'/routes.ini', 'production');
+		$routeConfig = new Zend_Config_Ini(CONFIG_PATH . '/routes.ini', 'production');
 		$FrontController = Zend_Controller_Front::getInstance();
 		if ( defined('BASE_URL') ) {
 			$FrontController->setBaseUrl(BASE_URL);
 		} else {
-			define('BASE_URL', rtrim($FrontController->getBaseUrl(),'/'));
+			define('BASE_URL', rtrim($FrontController->getBaseUrl(), '/'));
 		}
-    	$router = $FrontController->getRouter();
+		$router = $FrontController->getRouter();
 		$router->removeDefaultRoutes();
 		
-    	$router->addConfig($routeConfig, 'routes');
-    	
-    	# Location
-    	# $resources = $this->getOption('resources');
-    	# $FrontController->addModuleDirectory($resources['frontController']['moduleDirectory']);
-    	
+		$router->addConfig($routeConfig, 'routes');
+		
+		# Location
+		# $resources = $this->getOption('resources');
+		# $FrontController->addModuleDirectory($resources['frontController']['moduleDirectory']);
+		
+
 		# Done
 		return true;
 	}
@@ -180,7 +194,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 * +CU (Doctrine Forms)
 	 * @return
 	 */
-	protected function _initAutoload () {
+	protected function _initAutoload ( ) {
 		# Initialise Zend's Autoloader, used for plugins etc
 		$Autoloader = Zend_Loader_Autoloader::getInstance();
 		$Autoloader->registerNamespace('Bal_');
@@ -191,7 +205,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Done
 		return $Autoloader;
 	}
-	
+
 	/**
 	 * Initialise Lucence Index
 	 * @return
@@ -215,15 +229,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Done
 		return true;
 	}
-	
+
 	/**
 	 * Initialise our Config
 	 * @return array
 	 */
-	protected function _initConfig () {
+	protected function _initConfig ( ) {
 		# Prepare
 		$this->bootstrap('autoload');
-	
+		
 		# Load
 		if ( !Zend_Registry::isRegistered('applicationConfig') ) {
 			$applicationConfig = $this->getOptions();
@@ -233,7 +247,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Done
 		return true;
 	}
-	
+
 	/**
 	 * Initialise our Defaults
 	 * @return
@@ -246,26 +260,19 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$FrontController = Zend_Controller_Front::getInstance();
 		
 		# Apply
-		$FrontController
-        	//->setDefaultModule('cms')
-        	->setDefaultControllerName('front')
-        	->setDefaultAction('index');
-        
-        # Error Handler
-        $FrontController = Zend_Controller_Front::getInstance();
-		$FrontController->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
-		    'module'		=> 'default',
-		    'controller'	=> 'error',
-		    'action'		=> 'error'
-		)));
-
-        # Module Specific Error Controllers
+		$FrontController->setDefaultControllerName('front')->setDefaultAction('index');
+		
+		# Error Handler
+		$FrontController = Zend_Controller_Front::getInstance();
+		$FrontController->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array('module' => 'default', 'controller' => 'error', 'action' => 'error')));
+		
+		# Module Specific Error Controllers
 		# $FrontController->registerPlugin(new Bal_Controller_Plugin_ErrorControllerSelector());
 		
-        # Done
-        return true;
+		# Done
+		return true;
 	}
-	
+
 	protected function _initApp ( ) {
 		# Prepare
 		$this->bootstrap('autoload');
@@ -294,13 +301,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Done
 		return true;
 	}
-	
+
 	/**
 	 * Initialise our Doctrine ORM.
 	 * Options: +VALIDATE_ALL
 	 * @return
 	 */
-	protected function _initDoctrine () {
+	protected function _initDoctrine ( ) {
 		# Prepare
 		$this->bootstrap('autoload');
 		$this->bootstrap('config');
@@ -310,7 +317,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$extensions_path = $applicationConfig['data']['extensions_path'];
 		
 		# Autoload
-		require_once(DOCTRINE_PATH.'/Doctrine.php');
+		require_once (DOCTRINE_PATH . '/Doctrine.php');
 		$Autoloader = Zend_Loader_Autoloader::getInstance();
 		$Autoloader->pushAutoloader(array('Doctrine', 'autoload'), 'Doctrine_');
 		$Autoloader->pushAutoloader(array('Doctrine', 'modelsAutoload'));
@@ -320,23 +327,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		# Apply Paths
 		Doctrine_Core::setPath(DOCTRINE_PATH);
 		Doctrine_Core::setModelsDirectory($applicationConfig['data']['models_path']);
-	 	Doctrine_Core::setExtensionsPath($extensions_path);
+		Doctrine_Core::setExtensionsPath($extensions_path);
 		Doctrine_Core::setModelsDirectory($applicationConfig['data']['models_path']);
 		
-	    # Get Manager
-	    $Manager = Doctrine_Manager::getInstance();
-
-	    # Apply Config
-		$Manager->setAttribute(
-			Doctrine::ATTR_PORTABILITY,
-			Doctrine::PORTABILITY_EMPTY_TO_NULL | Doctrine::PORTABILITY_RTRIM);
-		$Manager->setAttribute(
-	        Doctrine::ATTR_MODEL_LOADING,
-	        Doctrine::MODEL_LOADING_CONSERVATIVE);
-	 	$Manager->setAttribute(
-			Doctrine::ATTR_VALIDATE,
-			Doctrine::VALIDATE_ALL
-		);
+		# Get Manager
+		$Manager = Doctrine_Manager::getInstance();
+		
+		# Apply Config
+		$Manager->setAttribute(Doctrine::ATTR_PORTABILITY, Doctrine::PORTABILITY_EMPTY_TO_NULL | Doctrine::PORTABILITY_RTRIM);
+		$Manager->setAttribute(Doctrine::ATTR_MODEL_LOADING, Doctrine::MODEL_LOADING_CONSERVATIVE);
+		$Manager->setAttribute(Doctrine::ATTR_VALIDATE, Doctrine::VALIDATE_ALL);
 		$Manager->setAttribute(Doctrine_Core::ATTR_USE_DQL_CALLBACKS, true);
 		
 		# Apply Extensions
@@ -351,25 +351,26 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		//$manager->setAttribute(Doctrine::ATTR_QUERY_CACHE, $cacheDriver);
 		//$manager->setAttribute(Doctrine::ATTR_RESULT_CACHE, $cacheDriver);
 		
-	    # Prepare Connection
-	    $dsn = $applicationConfig['data']['connection_string'];
-	    $unix_socket = ini_get('mysql.default_socket');
-	    if ( $unix_socket ) {
-	    	$dsn .= ';unix_socket='.$unix_socket;
-	    }
-	    
-	    # Create Connection
-	    $Connection = $Manager->openConnection($dsn);
-		
-	    # Profile Connection
-		if ( DEBUG_MODE ) {
-		    $Profiler = new Doctrine_Connection_Profiler();
-			$Connection->setListener($Profiler);
-			Zend_Registry::set('Profiler',$Profiler);
+
+		# Prepare Connection
+		$dsn = $applicationConfig['data']['connection_string'];
+		$unix_socket = ini_get('mysql.default_socket');
+		if ( $unix_socket ) {
+			$dsn .= ';unix_socket=' . $unix_socket;
 		}
-	    
-	    # Return Manager
-	    return $Manager;
+		
+		# Create Connection
+		$Connection = $Manager->openConnection($dsn);
+		
+		# Profile Connection
+		if ( DEBUG_MODE ) {
+			$Profiler = new Doctrine_Connection_Profiler();
+			$Connection->setListener($Profiler);
+			Zend_Registry::set('Profiler', $Profiler);
+		}
+		
+		# Return Manager
+		return $Manager;
 	}
 
 	/**
@@ -378,10 +379,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */
 	protected function _initBalphp ( ) {
 		$this->bootstrap('autoload');
-
+		
 		# balPHP
 		Bal_Framework::import();
-
+		
 		# Done
 		return true;
 	}

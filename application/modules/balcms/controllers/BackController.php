@@ -1,12 +1,11 @@
 <?php
-
 require_once 'Zend/Controller/Action.php';
 class Balcms_BackController extends Zend_Controller_Action {
-	
-	
+
 	# ========================
 	# CONSTRUCTORS
 	
+
 	public function init ( ) {
 		# Layout
 		$this->getHelper('App')->getApp()->setAreaLayout('back');
@@ -15,26 +14,34 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'back'));
 		
 		# Authenticate / redirect to login if need be
-		if ( !in_array($this->getRequest()->getActionName(), array(false,'login','index')) ) {
+		if ( !in_array($this->getRequest()->getActionName(), array(false, 'login', 'index')) ) {
 			# Within unsafe area, must authenticate
 			$this->getHelper('App')->authenticate(true, false);
 		}
 		
 		# Navigation
-		$nav = file_get_contents(CONFIG_PATH . '/nav-back.json');
-		$nav = Zend_Json::decode($nav, Zend_Json::TYPE_ARRAY);
-		$this->view->NavigationFavorites = new Zend_Navigation($nav['favorites']);
-		$this->view->NavigationMenu = new Zend_Navigation($nav['menu']);
+		$this->applyNavigation();
 		
 		# Done
 		return true;
+	}
+	
+	public function applyNavigation ( ) {
+		# Module Config
+		$module_path = Zend_Controller_Front::getInstance()->getModuleDirectory('balcms');
+		$module_config_path = $module_path . '/config';
+		
+		# Navigation
+		$NavBack = file_get_contents($module_config_path . '/nav-back.json');
+		$NavBack = Zend_Json::decode($nav, Zend_Json::TYPE_ARRAY);
+		$this->view->NavigationFavorites = new Zend_Navigation($NavBack['favorites']);
+		$this->view->NavigationMenu = new Zend_Navigation($NavBack['menu']);
 	}
 
 	public function activateNavigationMenuItem ( $id ) {
 		return $this->getHelper('App')->getApp()->activateNavigationItem($this->view->NavigationMenu, $id);
 	}
-	
-	
+
 	# ========================
 	# INDEX
 	
@@ -43,7 +50,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Redirect
 		return $this->_forward('content');
 	}
-	
+
 	/**
 	 * Logout the User and redirect
 	 * @return bool
@@ -54,7 +61,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Done
 		return true;
 	}
-	
+
 	/**
 	 * Login the User and redirect
 	 * @return bool
@@ -65,7 +72,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Load
 		$login = $Request->getParam('login', array());
-		array_key_ensure($login, array('username','password','locale'));
+		array_key_ensure($login, array('username', 'password', 'locale'));
 		
 		# Check
 		if ( !empty($login['username']) && !empty($login['password']) ) {
@@ -77,7 +84,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			# Login and Forward
 			return $this->getHelper('App')->login($username, $password, $locale, $remember, false, true);
 		}
-			
+		
 		# Render
 		$this->getHelper('App')->getApp()->setAreaLayout('back', 'theme-login');
 		$this->render('index/login');
@@ -537,14 +544,14 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Pre Save
-		if ( !$Content->id ) $Content->save();
-		
+		if ( !$Content->id )
+			$Content->save();
+			
 		# Relations
 		$Content->setTags($tags);
 		
 		# Post Save
 		$Content->save();
-		
 		
 		# Stop Duplicates
 		$Request->setPost('content', $Content->code);
@@ -578,7 +585,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	# ========================
 	# EVENT
 	
-	
+
 	public function eventAction ( ) {
 		# Redirect
 		return $this->_forward('event-list');

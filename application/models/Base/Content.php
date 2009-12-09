@@ -10,7 +10,6 @@
  * @property string $title
  * @property string $description
  * @property string $description_rendered
- * @property string $authorstr
  * @property string $tagstr
  * @property string $content
  * @property string $content_rendered
@@ -76,12 +75,6 @@ abstract class Base_Content extends Doctrine_Record
              array(
               'html' => 'rich',
              ),
-             ));
-        $this->hasColumn('authorstr', 'string', 50, array(
-             'type' => 'string',
-             'notnull' => true,
-             'default' => '',
-             'length' => '50',
              ));
         $this->hasColumn('tagstr', 'string', 255, array(
              'type' => 'string',
@@ -217,7 +210,7 @@ abstract class Base_Content extends Doctrine_Record
              'foreign' => 'content_id'));
 
         $softdelete0 = new Doctrine_Template_SoftDelete();
-        $balauditable0 = new BalAuditable(array(
+        $bal_doctrine_template_auditable0 = new Bal_Doctrine_Template_Auditable(array(
              'status' => 
              array(
               'disabled' => false,
@@ -227,6 +220,10 @@ abstract class Base_Content extends Doctrine_Record
               'disabled' => false,
              ),
              'author' => 
+             array(
+              'disabled' => false,
+             ),
+             'authorstr' => 
              array(
               'disabled' => false,
              ),
@@ -255,7 +252,7 @@ abstract class Base_Content extends Doctrine_Record
              ));
         $taggable0 = new Doctrine_Template_Taggable();
         $this->actAs($softdelete0);
-        $this->actAs($balauditable0);
+        $this->actAs($bal_doctrine_template_auditable0);
         $this->actAs($searchable0);
         $this->actAs($taggable0);
     }

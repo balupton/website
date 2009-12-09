@@ -25,12 +25,14 @@ Route:
 Content:
     actAs:
         SoftDelete:
-        BalAuditable:
+        Bal_Doctrine_Template_Auditable:
             status:
                 disabled: false
             enabled:
                 disabled: false
             author:
+                disabled: false
+            authorstr:
                 disabled: false
             created_at:
                 disabled: false
@@ -64,10 +66,6 @@ Content:
             notblank: true
             extra:
                 html: rich
-        authorstr:
-            type: string(50)
-            notnull: true
-            default: ""
         tagstr:
             type: string(255)
             notnull: true
@@ -215,13 +213,15 @@ Subscriber:
 
 Media:
     actAs:
-        BalAuditable:
+        Bal_Doctrine_Template_Auditable:
             status:
                 disabled: true
             enabled:
                 disabled: true
             author:
                 disabled: false
+            authorstr:
+                disabled: true
             created_at:
                 disabled: false
             updated_at:

@@ -113,7 +113,7 @@ abstract class Base_Media extends Doctrine_Record
              'local' => 'id',
              'foreign' => 'avatar_id'));
 
-        $balauditable0 = new BalAuditable(array(
+        $bal_doctrine_template_auditable0 = new Bal_Doctrine_Template_Auditable(array(
              'status' => 
              array(
               'disabled' => true,
@@ -125,6 +125,10 @@ abstract class Base_Media extends Doctrine_Record
              'author' => 
              array(
               'disabled' => false,
+             ),
+             'authorstr' => 
+             array(
+              'disabled' => true,
              ),
              'created_at' => 
              array(
@@ -148,7 +152,7 @@ abstract class Base_Media extends Doctrine_Record
               3 => 'type',
              ),
              ));
-        $this->actAs($balauditable0);
+        $this->actAs($bal_doctrine_template_auditable0);
         $this->actAs($searchable0);
     }
 }

@@ -16,6 +16,7 @@ $Application->bootstrap('config');
 $Application->bootstrap('doctrine');
 $Application->bootstrap('balphp');
 $Application->bootstrap('app');
+$Application->bootstrap('balcms');
 
 // Get Config
 $applicationConfig = Zend_Registry::get('applicationConfig');
