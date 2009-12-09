@@ -155,7 +155,7 @@
 /* Widgets */
 
 #content-wrap > .content, #content-welcome .widget {
-	background: ##F7FCFD;
+	background: #F7FCFD;
 	padding-bottom:10px;
 	border: 1px solid #85D3E1;
 }
@@ -212,6 +212,7 @@
 }
 
 #content-welcome.content {
+	background:inherit;
 	border:none;
 }
 #content-welcome .carousel {
