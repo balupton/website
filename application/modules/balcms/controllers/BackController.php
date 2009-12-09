@@ -33,7 +33,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Navigation
 		$NavBack = file_get_contents($module_config_path . '/nav-back.json');
-		$NavBack = Zend_Json::decode($nav, Zend_Json::TYPE_ARRAY);
+		$NavBack = Zend_Json::decode($NavBack, Zend_Json::TYPE_ARRAY);
 		$this->view->NavigationFavorites = new Zend_Navigation($NavBack['favorites']);
 		$this->view->NavigationMenu = new Zend_Navigation($NavBack['menu']);
 	}
