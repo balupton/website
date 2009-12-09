@@ -34,7 +34,7 @@ a, a:link, a:visited, a:hover {
 }
 
 h1,h2,h3,h4,h5,h6,h7,h8,h9 {
-	font-family: "serif";
+	font-family: Constantia, Georgia, "serif";
 	font-weight: bold;
 	color: #005F8B;
 }
