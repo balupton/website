@@ -1,3 +1,4 @@
+/* Used to style any editable content, for example tinymce editor, and front content areas */
 @import url("http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css");
 
 html, body, .content {
@@ -6,7 +7,7 @@ html, body, .content {
 	text-align: center;
 	font-family: Helvetica, "sans-serif";
 	font-size: 12px;
-	color: #8A8A8A;
+	background: #F3F3F3;
 }
 
 p {
@@ -17,7 +18,7 @@ body.mceContentBody{
 	color:black;
 }
 
-body.mceContentBody, .content {
+body.mceContentBody, #content-content{
 	padding:1em 10px;
 	text-align:left;
 }
@@ -35,19 +36,18 @@ a, a:link, a:visited, a:hover {
 h1,h2,h3,h4,h5,h6,h7,h8,h9 {
 	font-family: "serif";
 	font-weight: bold;
-	color: #626262;
+	color: #005F8B;
 }
 
 h1,h2,
 h1 a, h2 a,
 h1 a:link, h2 a:link,
 h1 a:visited, h2 a:visited {
-	color:#626262;
-	text-decoration:none;
+	color:#005F8B;
+	text-decoration:underline;
 }
 
 h2 {
-	border-bottom:1px solid #DDDDDD;
 	line-height:2em;
 	margin:0 0 1em 0;
 	font-size: 22px;
@@ -71,4 +71,14 @@ em {
 }
 strong {
 	font-weight: bold;
+}
+
+.clear-right {
+	clear:right;
+}
+.clear-left {
+	clear:left;
+}
+.clear {
+	clear:both;
 }

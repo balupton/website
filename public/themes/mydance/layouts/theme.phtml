@@ -1,6 +1,7 @@
 <?php
 	echo $this->doctype();
 	$baseUrl = $this->app()->getBaseUrl();
+	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$publicUrl = $this->app()->getPublicUrl();
 	$frontUrl = $this->app()->getAreaUrl('front');
 	$jqueryUiUrl = $publicUrl.'/scripts/jquery-ui-1.7.2';
@@ -35,9 +36,9 @@
 <body>
 	<div id="main">
 		
-		<div id="header">
-			<div id="logo"><h1><?=$this->app()->getConfig('bal.site.name')?></h1></div>
+		<a id="logo" href="<?=$baseFullUrl?>"><h1><?=$this->app()->getConfig('bal.site.name')?></h1></a>
 			
+		<div id="nav">
 			<div id="nav-top" class="nav-action">
 				<?=$this->navigation()->menu()->renderMenu($this->NavigationActions,array('ulClass'=>'ul-unstyled-horizontal'))?>
 			</div>
@@ -56,7 +57,7 @@
 				</form>
 			</div>
 			
-			<div class="clear"></div>
+			<div class="spacer"></div>
 		</div>
 		
 		<div id="nav-main">
