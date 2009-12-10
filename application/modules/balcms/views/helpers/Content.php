@@ -200,6 +200,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Apply
 		$model = compact('Content','ContentList');
+		$model = array_merge($params, $model);
 		
 		# Render
 		return $this->renderWidgetView('carousel', $model);
@@ -217,6 +218,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Apply
 		$model = compact('Content','TagList');
+		$model = array_merge($params, $model);
 		
 		# Render
 		return $this->renderWidgetView('taglist', $model);
@@ -234,6 +236,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Apply
 		$model = compact('Content','TagList');
+		$model = array_merge($params, $model);
 		
 		# Render
 		return $this->renderWidgetView('taglist', $model);
@@ -250,6 +253,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Apply
 		$model = compact('Content');
+		$model = array_merge($params, $model);
 		
 		# Render
 		return $this->renderWidgetView('subscribe', $model);
@@ -267,6 +271,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Apply
 		$model = compact('Content','ContentList');
+		$model = array_merge($params, $model);
 		
 		# Render
 		return $this->renderWidgetView('recentlist', $model);
@@ -289,6 +294,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Apply
 		$model = compact('Content','ContentList');
+		$model = array_merge($params, $model);
 		
 		# Render
 		return $this->renderWidgetView('articlelist', $model);
@@ -308,6 +314,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Apply
 		$model = compact('Content','ContentList');
+		$model = array_merge($params, $model);
 		
 		# Render
 		return $this->renderWidgetView('contentlist', $model);
@@ -329,6 +336,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Apply
 		$model = compact('Content','EventsPast','EventsFuture');
+		$model = array_merge($params, $model);
 		
 		# Render
 		return $this->renderWidgetView('eventlist', $model);

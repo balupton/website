@@ -1,8 +1,9 @@
 <?
+	$title = !empty($this->title) ? $this->title : 'Popular Tags';
 ?>
 <div class="carousel widget">
 	<div class="carousel-header widget-header">
-		<h3>Featured Items</h3>
+		<h3><?=$title?></h3>
 	</div>
 	<? foreach ( $this->ContentList as $Content ) :
 		$contentUrl = $this->content()->getContentUrl($Content);

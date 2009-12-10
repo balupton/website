@@ -1,6 +1,9 @@
+<?
+	$title = !empty($this->title) ? $this->title : 'Popular Tags';
+?>
 <div class="taglist widget">
 	<div class="taglist-header widget-header">
-		<h3>Popular Tags</h3>
+		<h3><?=$title?></h3>
 	</div>
 	<? foreach ( $this->TagList as $Tag ) :
 		$tag = $Tag->name;
