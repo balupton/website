@@ -1,7 +1,7 @@
 /* Used to style any editable content, for example tinymce editor, and front content areas */
 @import url("http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css");
 
-html, body, .content {
+html, body, #content-wrap > .content {
 	margin: 0;
 	padding: 0;
 	text-align: center;
@@ -14,13 +14,11 @@ p {
 	margin:0 0 1em 0;
 }
 
-body.mceContentBody{
-	color:black;
-}
-
 body.mceContentBody, #content-content{
 	padding:1em 10px;
 	text-align:left;
+	background: #F7FCFD;
+	color:#005F8B;
 }
 
 .content img {
