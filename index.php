@@ -128,15 +128,19 @@ if ( !defined('HTMLPURIFIER_PATH') ) {
 }
 
 // Ensure library/ is on include_path
-$include_paths = array();
+$include_paths = $include_paths_original = array();
 if ( defined('ZEND_PATH') )
 	$include_paths[] = ZEND_PATH;
 //if ( defined('DOCTRINE_PATH') )
 //	$include_paths[] = DOCTRINE_PATH;
-//$include_paths[] = get_include_path();
 $include_paths[] = BALPHP_PATH;
 $include_paths[] = LIBRARY_PATH;
-set_include_path(implode(PATH_SEPARATOR, $include_paths));
+$include_paths_original = str_replace('.:/usr/local/zend/share/ZendFramework/library:', '', get_include_path());
+$include_paths_original = array_diff(explode(':',$include_paths_original),$include_paths);
+$include_paths = array_merge($include_paths, $include_paths_original);
+$include_paths = implode(PATH_SEPARATOR, $include_paths);
+set_include_path($include_paths);
+unset($include_paths, $include_paths_original);
 
 // Zend_Application
 require_once 'Zend/Application.php';

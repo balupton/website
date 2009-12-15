@@ -1,5 +1,6 @@
 @import url("load-styles.css");
 @import url("colors-fresh.css");
+@import url("../../../public/error.css");
 
 #adminmenu li.parent a {
 	/*font-weight: bold;*/

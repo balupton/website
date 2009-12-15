@@ -1,0 +1,68 @@
+@CHARSET "UTF-8";
+
+.debug .link:hover {
+	text-decoration:underline;
+}
+.debug .link {
+	cursor:pointer;
+}
+.debug .help {
+	font-style: italic;
+	cursor:help;
+}
+
+.debug {
+	font-family: Consolas, "Courier New";
+	font-size: 12px;
+	background: white;
+	border:1px solid #CCC;
+	padding:1em 0em;
+}
+.debug * {
+	margin:0px;
+	padding:0px;
+}
+.debug pre,
+.debug .array .var,
+.debug .object .var {
+	margin-left: 2em;
+}
+.debug .var {
+	display:block;
+	position:relative;
+}
+.debug .name {
+	font-weight:bold;
+	display:block;
+	float:left;
+	min-width:2em;
+}
+.debug .type {
+	color:gray;
+}
+.debug .type,
+.debug .value,
+.debug .help,
+.debug .help-link {
+	margin-left: 1em;
+}
+.debug .array .value,
+.debug .object .value {
+	color:black;
+}
+.debug .string .value {
+	color:green;
+}
+.debug .double .value,
+.debug .integer .value {
+	color:pink;
+}
+.debug .resource .value {
+	color:black;
+}
+.debug .method .value {
+	color:black;
+}
+.debug .null .value {
+	color:blue;
+}

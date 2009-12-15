@@ -1,20 +1,30 @@
-<?php echo $this->doctype() ?>
+<?php
+	echo $this->doctype();
+	$publicUrl = $this->app()->getPublicUrl();
+	$frontUrl = $this->app()->getAreaUrl('front');
+?>
 <html>
 <head>
-    <?php echo $this->headTitle() ?>
-    <?php echo $this->headLink() ?>
-    <?php echo $this->headStyle() ?>
-    <?php echo $this->headScript() ?>
+    <?= $this->headTitle() ?>
+    <?= $this->headLink()
+		->setStylesheet($publicUrl.'/styles/error.css') ?>
+    <?= $this->headStyle() ?>
+    <?= $this->headScript() ?>
+<style type="text/css">
+dt {
+	margin-top:1em;
+}
+</style>
 </head>
 <body>
 
 <div style="margin:10px;" id="error">
 	<h1>An error occurred</h1>
 	<h2><?= $this->locale()->translate($this->error) ?></h2>
-	
-	<h3>Exception information:</h3>
-	<p>
-		<strong>Message:</strong>
+
+<dl>
+	<dt>Exception information:</dt>
+	<dd>
 		<span class="message">
 			<? if ( empty($this->messages) ): ?>
 				<pre><?= $this->locale()->translate($this->exception->getMessage()) ?></pre>
@@ -30,24 +40,21 @@
 				<? endforeach; ?>
 			<? endif; ?>
 		</span>
-	</p>
+	</dd>
 
 	<? if ( DEBUG_MODE ): ?>
-		<h3>Stack trace:</h3>
-		<pre><?= $this->exception->getTraceAsString() ?>
-		</pre>
+		<dt>Stack trace:</dt>
+		<dd><?= Bal_Debug::render($this->exception->getTraceAsString()) ?></dd>
 		
-		<h3>Request Parameters (raw):</h3>
-		<pre><? var_dump($_REQUEST) ?>
-		</pre>
+		<dt>Request Parameters (raw):</dt>
+		<dd><?= Bal_Debug::render($_REQUEST) ?></dd>
 		
-		<h3>Server Parameters (raw):</h3>
-		<pre><? var_dump($_SERVER) ?>
-		</pre>
+		<dt>Server Parameters (raw):</dt>
+		<dd><?= Bal_Debug::render($_SERVER) ?></dd>
 		
 		<? if ( !empty($this->profiler) ) : ?>
 			<h3>Profiler:</h3>
-			<pre><?
+			<dd><?
 				$time = 0;
 				foreach ( $this->profiler as $event) {
 				    $time += $event->getElapsedSecs();
@@ -59,21 +66,21 @@
 				    }
 				}
 				echo "Total time: " . $time  . "\n";
-			?></pre>
+			?></dd>
 		<? endif; ?>
 		
 		<? if ( !empty($this->identity) ) : ?>
-			<h3>Identity:</h3>
-			<pre><?= var_export($this->identity,true) ?>
-			</pre>
+			<dt>Identity:</dt>
+			<dd><?= Bal_Debug::render($this->identity) ?></dd>
 		<? endif; ?>
 		
 		<? if ( !empty($this->permissions) ) : ?>
-			<h3>Permissions:</h3>
-			<pre><?= var_export($this->permissions,true) ?>
-			</pre>
+			<dt>Permissions:</dt>
+			<dd><?= Bal_Debug::render($this->permissions) ?></dd>
 		<? endif; ?>
 	<? endif; ?>
+	
+	</dl>
 </div>
 
 </body>
