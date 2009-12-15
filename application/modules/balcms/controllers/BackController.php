@@ -86,7 +86,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Render
-		$this->getHelper('App')->getApp()->setAreaLayout('back', 'theme-login');
+		$this->getHelper('App')->getApp()->setAreaLayout('back', 'login');
 		$this->render('index/login');
 		
 		# Done
