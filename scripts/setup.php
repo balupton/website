@@ -16,7 +16,6 @@ $Application->bootstrap('config');
 $Application->bootstrap('doctrine');
 $Application->bootstrap('balphp');
 $Application->bootstrap('app');
-$Application->bootstrap('balcms');
 
 // Get Config
 $applicationConfig = Zend_Registry::get('applicationConfig');
@@ -35,20 +34,33 @@ $mode = !empty($_GET['mode']) ? $_GET['mode'] : null;
 switch ( $mode ) {
 	
 	case 'install':
-		$install = array('createindex', 'drop', 'reload', 'optimiseindex', 'media');
-		array_keys_ensure($_GET, $install, true);
+		$ensure = array('createindex', 'reload', 'optimiseindex', 'media');
+		array_keys_ensure($_GET, $ensure, true);
 		echo 'Setup: mode:install ['.implode(array_keys($_GET),',').']'."<br/>\n";
 		break;
 		
 	case 'update':
-		$update = array('optimiseindex');
-		array_keys_ensure($_GET, $update, true);
+		$ensure = array('optimiseindex');
+		array_keys_ensure($_GET, $ensure, true);
 		echo 'Setup: mode:update ['.implode(array_keys($_GET),',').']'."<br/>\n";
+		break;
+	
+	case 'debug':
+		$ensure = array('debug');
+		array_keys_ensure($_GET, $ensure, true);
+		echo 'Setup: mode:debug ['.implode(array_keys($_GET),',').']'."<br/>\n";
 		break;
 		
 	default:
 		echo 'Setup: mode:normal ['.implode(array_keys($_GET),',').']'."<br/>\n";
 		break;
+}
+
+
+//Debug: debug
+if ( !empty($_GET['debug'])) {
+	echo 'Debug: debug enabled'."<br/>\n";
+	setcookie('debug',DEBUG_SECRET,0,'/');
 }
 
 
@@ -104,15 +116,10 @@ if ( !empty($_GET['makedump']) ) {
 	Doctrine::dumpData($applicationConfig['data']['dump_path'].'/data.yml', false);
 }
 
-// Doctrine: drop
-if ( !empty($_GET['drop']) ) {
-	echo 'Doctrine: drop ['.$data_path_to_use.']'."<br/>\n";
-	Doctrine::dropDatabases();
-}
-
 // Doctrine: reload
 if ( !empty($_GET['reload']) ) {
 	echo 'Doctrine: reload ['.$data_path_to_use.']'."<br/>\n";
+	Doctrine::dropDatabases();
 	Doctrine::createDatabases();
 	if ( APPLICATION_ENV === 'development' ) {
 		# Importer
