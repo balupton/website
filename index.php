@@ -59,7 +59,8 @@ require_once BALPHP_PATH.'/core/functions/_params.funcs.php';
 fix_magic_quotes();
 
 // Debug Mode
-if ( !defined('DEBUG_MODE') ) define('DEBUG_MODE',
+define('DEBUG_SECRET',			md5(APPLICATION_ROOT_PATH));
+if ( !defined('DEBUG_MODE') ) 	define('DEBUG_MODE',
 	('development' === APPLICATION_ENV || 'testing' === APPLICATION_ENV ||
 		(!empty($_COOKIE['debug']) && $_COOKIE['debug'] === 'secret')
 	)
