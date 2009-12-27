@@ -25,7 +25,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') || $_SERVER['DOCUMENT_ROOT'] === '/
 	define('APPLICATION_ENV', 				'development');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
-	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
+	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/config'));
 	
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.1-lib'));
@@ -33,7 +33,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') || $_SERVER['DOCUMENT_ROOT'] === '/
 	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.6-lib'));
 	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-lib'));
 	
-	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/sites/mydance.ini'));
+	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/mydance.ini'));
 	define('ROOT_URL',						'http://localhost');
 	define('BASE_URL', 						'/projects/balcms');
 }
@@ -42,7 +42,7 @@ elseif ( strpos($_SERVER['HTTP_HOST'], 'mydance.com.au') !== false ) {
 	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
-	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
+	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/config'));
 	
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.1-lib'));
@@ -50,7 +50,7 @@ elseif ( strpos($_SERVER['HTTP_HOST'], 'mydance.com.au') !== false ) {
 	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.6-lib'));
 	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-lib'));
 	
-	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/sites/mydance.ini'));
+	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/mydance.ini'));
 	define('ROOT_URL',						'http://www.mydance.com.au');
 }
 
