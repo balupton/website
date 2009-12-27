@@ -10,19 +10,11 @@
 <head>
     <?=$this->headMeta()?>
     <?=$this->headTitle()?>
-    <?
-    // CSS
-    $this->headLink()
-		->appendStylesheet($backUrl.'/styles/theme-login.css')
-		->appendStylesheet($publicUrl.'/scripts/jquery-ui/css/cupertino/jquery-ui-1.7.2.custom.css');
-    // Output
-    echo $this->headLink();
-    ?>
-    <?=$this->headStyle()?>
+    <?= $this->app()->appendStylesheets()->appendStylesheet($jqueryUiUrl.'/css/cupertino/jquery-ui-1.7.2.custom.css') ?>
+    <?= $this->headStyle()?>
 </head>
-<body class="login">
-    <? // headScript
-    echo $this->headScript()
+<body>
+    <?= $this->app()->appendScripts()
 	    // JSON
 	    //->offsetSetFile(1,'http://www.json.org/json2.js')
 	    // jQuery

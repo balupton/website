@@ -8,7 +8,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function init ( ) {
 		# Layout
-		$this->getHelper('App')->getApp()->setAreaLayout('back');
+		$this->getHelper('App')->getApp()->setArea('back');
 		
 		# Login
 		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'back'));
@@ -82,11 +82,11 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$locale = $login['locale'];
 			$remember = $login['remember'];
 			# Login and Forward
-			return $this->getHelper('App')->login($username, $password, $locale, $remember, false, true);
+			return $this->getHelper('App')->loginForward($username, $password, $locale, $remember, false, true);
 		}
 		
 		# Render
-		$this->getHelper('App')->getApp()->setAreaLayout('back', 'login');
+		$this->getHelper('App')->getApp()->setArea('back','login');
 		$this->render('index/login');
 		
 		# Done

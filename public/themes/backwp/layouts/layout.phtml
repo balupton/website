@@ -11,21 +11,13 @@
 	$User = $this->app()->getUser();
 ?><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <?= $this->headMeta()?>
-    <?= $this->headTitle()?>
-    <?
-    // CSS
-    $this->headLink()
-		->appendStylesheet($backUrl.'/styles/theme.css')
-		->appendStylesheet($jqueryUiUrl.'/css/cupertino/jquery-ui-1.7.2.custom.css');
-    // Output
-    echo $this->headLink();
-    ?>
-    <?= $this->headStyle()?>
+    <?= $this->app()->headMeta() ?>
+    <?= $this->app()->headTitle() ?>
+    <?= $this->app()->headLink()->appendStylesheet($jqueryUiUrl.'/css/cupertino/jquery-ui-1.7.2.custom.css') ?>
+    <?= $this->app()->headStyle() ?>
 </head>
-<body class="">
-    <? // headScript
-    echo $this->headScript()
+<body>
+    <?= $this->app()->headScript()
 	    // JSON
 	    //->offsetSetFile(1,'http://www.json.org/json2.js')
 	    // jQuery
@@ -43,7 +35,6 @@
 	    // Application
 	    ->offsetSetFile(5,$publicUrl.'/scripts/jquery.autogrow.js')
 	    ->offsetSetFile(6,$jquerySparkleUrl.'/scripts/jquery.sparkle.js')
-	    ->offsetSetFile(7,$publicUrl.'/scripts/balcms/back.js')
 	    ->offsetSetScript(101,'$.Help.applyConfig("default",{icon: \'<img src="'.$backUrl.'/images/help.png" alt="help" class="help-icon" />\'});')
     ?>
         <div id="wpwrap">
@@ -97,40 +88,5 @@
             <div class="clear">
             </div>
         </div>
-		<!-- GetSatisfaction -->
-		<script type="text/javascript" charset="utf-8">
-			// Insert Widget
-			(function(){
-				var is_ssl = ("https:" == document.location.protocol);
-				var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
-				document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
-			})();
-		</script>
-		<script type="text/javascript" charset="utf-8">
-			var feedback_widget = false;
-			// Load Widget
-			(function(){
-				var feedback_widget_options = {
-					display: 'overlay',
-					company: 'balupton',
-					placement: 'hidden',
-					color: '#222',
-					style: 'question'
-				};
-				feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
-			})();
-			// Apply Action
-			$(function(){
-				$('.feedback-action').click(function(event){
-					if ( typeof feedback_widget === 'object' ) {
-						feedback_widget.show();
-						// Prevent
-						//event.stopPropagation();
-						event.preventDefault();
-						return false;
-					}
-				});
-			});
-		</script>
 	</body>
 </html>

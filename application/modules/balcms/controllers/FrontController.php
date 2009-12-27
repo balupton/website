@@ -8,7 +8,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 
 	public function init ( ) {
 		# Layout
-		$this->getHelper('App')->getApp()->setAreaLayout('front');
+		$this->getHelper('App')->getApp()->setArea('front');
 		
 		# Login
 		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'back'));

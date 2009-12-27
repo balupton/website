@@ -124,15 +124,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 		# Layout
 		$FrontController = Zend_Controller_Front::getInstance();
 		$App = $FrontController->getPlugin('Bal_Controller_Plugin_App');
-		$App->startLayout();
+		$App->startMvc();
 		
 		# View Helpers
 		$View->addHelperPath(BALPHP_PATH . '/Bal/View/Helper', 'Bal_View_Helper');
-		
-		# Meta
-		$View->headMeta()->appendName('author', 'Benjamin \'balupton\' Lupton - http://www.balupton.com');
-		$View->headMeta()->appendName('generator', 'balCMS - http://www.balupton.com/balcms');
-		$View->headLink(array('rel' => 'icon', 'href' => $App->getAreaUrl('front') . '/favicon.ico', 'type' => 'image/x-icon'), 'PREPEND');
 		
 		# Done
 		return true;

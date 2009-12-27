@@ -9,21 +9,13 @@
 	$User = $this->app()->getUser();
 ?><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <?= $this->headMeta()?>
-    <?= $this->headTitle()?>
-    <?
-    // CSS
-    $this->headLink()
-		->appendStylesheet($frontUrl.'/styles/theme.css')
-		;
-    // Output
-    echo $this->headLink();
-    ?>
-    <?= $this->headStyle()?>
+    <?= $this->app()->headMeta() ?>
+    <?= $this->app()->headTitle() ?>
+    <?= $this->app()->headLink() ?>
+    <?= $this->app()->headStyle() ?>
 </head>
-<body class="">
-    <? // headScript
-    echo $this->headScript()
+<body>
+    <?= $this->app()->headScript()
 	    // JSON
 	    //->offsetSetFile(1,'http://www.json.org/json2.js')
 	    // jQuery
