@@ -18,6 +18,8 @@ if ( empty($_SERVER['DOCUMENT_ROOT']) ) {
 	$_SERVER['DOCUMENT_ROOT'] = realpath(dirname(__FILE__).'/../../');
 }
 
+// Debug Secret
+define('DEBUG_SECRET',						md5(APPLICATION_ROOT_PATH));
 
 // Include paths
 if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') || $_SERVER['DOCUMENT_ROOT'] === '/usr/local/zend/apache2/htdocs' ) {
@@ -33,13 +35,13 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') || $_SERVER['DOCUMENT_ROOT'] === '/
 	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.6-lib'));
 	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-lib'));
 	
-	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/mydance.ini'));
+	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/balcms.ini'));
 	define('ROOT_URL',						'http://localhost');
 	define('BASE_URL', 						'/projects/balcms');
 }
-elseif ( strpos($_SERVER['HTTP_HOST'], 'mydance.com.au') !== false ) {
-	// MyDance Production Server
-	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']==='secret' ? 'staging' : 'production');
+elseif ( strpos($_SERVER['HTTP_HOST'], 'balcms.com.au') !== false ) {
+	// Production Server
+	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']===DEBUG_SECRET ? 'staging' : 'production');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/config'));
@@ -50,8 +52,8 @@ elseif ( strpos($_SERVER['HTTP_HOST'], 'mydance.com.au') !== false ) {
 	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.6-lib'));
 	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-lib'));
 	
-	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/mydance.ini'));
-	define('ROOT_URL',						'http://www.mydance.com.au');
+	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/balcms.ini'));
+	define('ROOT_URL',						'http://www.balcms.com.au');
 }
 
 // Fix magic quotes
@@ -59,10 +61,9 @@ require_once BALPHP_PATH.'/core/functions/_params.funcs.php';
 fix_magic_quotes();
 
 // Debug Mode
-define('DEBUG_SECRET',			md5(APPLICATION_ROOT_PATH));
 if ( !defined('DEBUG_MODE') ) 	define('DEBUG_MODE',
 	('development' === APPLICATION_ENV || 'testing' === APPLICATION_ENV ||
-		(!empty($_COOKIE['debug']) && $_COOKIE['debug'] === 'secret')
+		(!empty($_COOKIE['debug']) && $_COOKIE['debug'] === DEBUG_SECRET)
 	)
 	? 1
 	: 0
