@@ -1,1 +1,0 @@
-RewriteCond %{REQUEST_FILENAME} !-f
