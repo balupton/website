@@ -84,6 +84,9 @@ if ( !defined('CONFIG_APP_PATH') ) {
 if ( !defined('LIBRARY_PATH') ) {
 	define('LIBRARY_PATH', 					realpath(APPLICATION_ROOT_PATH.'/library'));
 }
+if ( !defined('IL8N_PATH') ) {
+	define('IL8N_PATH', 					realpath(APPLICATION_ROOT_PATH.'/il8n'));
+}
 
 if ( !defined('BASE_URL') ) {
 	define('BASE_URL', 						'');
