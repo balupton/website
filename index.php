@@ -76,7 +76,7 @@ if ( !defined('APPLICATION_ROOT_PATH') ) {
 	define('APPLICATION_ROOT_PATH', 		realpath(APPLICATION_PATH.'/..'));
 }
 if ( !defined('CONFIG_PATH') ) {
-	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/configs'));
+	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/config'));
 }
 if ( !defined('CONFIG_APP_PATH') ) {
 	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/application.ini'));
