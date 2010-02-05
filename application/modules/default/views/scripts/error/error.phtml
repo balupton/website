@@ -1,60 +1,60 @@
 <?php
 	echo $this->doctype();
-	$publicUrl = $this->app()->getPublicUrl();
-	$frontUrl = $this->app()->getAreaUrl('front');
+	$messages = $this->app()->get('messages',array());
 ?>
 <html>
 <head>
-    <?= $this->headTitle() ?>
-    <?= $this->headLink()
-		->setStylesheet($publicUrl.'/styles/error.css') ?>
-    <?= $this->headStyle() ?>
-    <?= $this->headScript() ?>
-<style type="text/css">
-dt {
-	margin-top:1em;
-}
-</style>
+    <?php echo $this->headTitle() ?>
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headStyle() ?>
+    <?php echo $this->headScript() ?>
 </head>
 <body>
 
 <div style="margin:10px;" id="error">
 	<h1>An error occurred</h1>
-	<h2><?= $this->locale()->translate($this->error) ?></h2>
+	<h2><?= $this->locale()->translate($this->title) ?></h2>
+	
+	<h3>Exception information:</h3>
+	<p class="message">
+		<? if ( empty($messages) ): ?>
+			For some reason there are no error messages.
+		<? else: ?>
+			<? foreach ( $messages as $message ): ?>
+				<?= $this->locale()->translate($message[0], $message[1]) ?><br />
+			<? endforeach; ?>
+		<? endif; ?>
+	</p>
 
-<dl>
-	<dt>Exception information:</dt>
-	<dd>
-		<span class="message">
-			<? if ( empty($this->messages) ): ?>
-				<pre><?= $this->locale()->translate($this->exception->getMessage()) ?></pre>
-			<? else: ?>
-				<? foreach ( $this->messages as $message ): ?>
-					<?
-						$message['field'] = $this->locale()->translate($message['table'].'-field-'.$message['field']);
-						$message['plural'] = $this->locale()->translate($message['table'].'-title-plural');
-						$message['singular'] = $this->locale()->translate($message['table'].'-title-singular');
-						$message['ownership'] = $this->locale()->translate($message['table'].'-title-ownership');
-					?>
-					<?= $this->locale()->translate($message['code'], $message) ?><br />
-				<? endforeach; ?>
-			<? endif; ?>
-		</span>
-	</dd>
-
+	<h3>Log:</h3>
+	<p><?=$this->log()->render()?></p>
+	
 	<? if ( DEBUG_MODE ): ?>
-		<dt>Stack trace:</dt>
-		<dd><?= Bal_Debug::render($this->exception->getTraceAsString()) ?></dd>
+		<h3>Stack trace:</h3>
+		<pre><?= $this->exception->getTraceAsString() ?>
+		</pre>
 		
-		<dt>Request Parameters (raw):</dt>
-		<dd><?= Bal_Debug::render($_REQUEST) ?></dd>
+		<h3>Request Parameters (raw):</h3>
+		<pre><? var_dump($_REQUEST) ?>
+		</pre>
 		
-		<dt>Server Parameters (raw):</dt>
-		<dd><?= Bal_Debug::render($_SERVER) ?></dd>
+		<h3>File Parameters (raw):</h3>
+		<pre><? var_dump($_FILES) ?>
+		</pre>
+		
+		<h3>Server Parameters (raw):</h3>
+		<pre><? var_dump($_SERVER) ?>
+		</pre>
+		
+		<? if ( !empty($this->exceptor) ) : ?>
+			<h3>Exceptor (raw):</h3>
+			<pre><? var_dump($this->exceptor) ?>
+			</pre>
+		<? endif; ?>
 		
 		<? if ( !empty($this->profiler) ) : ?>
 			<h3>Profiler:</h3>
-			<dd><?
+			<pre><?
 				$time = 0;
 				foreach ( $this->profiler as $event) {
 				    $time += $event->getElapsedSecs();
@@ -66,21 +66,25 @@ dt {
 				    }
 				}
 				echo "Total time: " . $time  . "\n";
-			?></dd>
+			?></pre>
 		<? endif; ?>
 		
 		<? if ( !empty($this->identity) ) : ?>
-			<dt>Identity:</dt>
-			<dd><?= Bal_Debug::render($this->identity) ?></dd>
+			<h3>Identity:</h3>
+			<pre><?= var_export($this->identity,true) ?>
+			</pre>
 		<? endif; ?>
 		
 		<? if ( !empty($this->permissions) ) : ?>
-			<dt>Permissions:</dt>
-			<dd><?= Bal_Debug::render($this->permissions) ?></dd>
+			<h3>Permissions:</h3>
+			<pre><?= var_export($this->permissions,true) ?>
+			</pre>
 		<? endif; ?>
+		
 	<? endif; ?>
 	
-	</dl>
+	<h3>The End.</h3>
+	
 </div>
 
 </body>
