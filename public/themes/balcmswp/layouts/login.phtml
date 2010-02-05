@@ -10,11 +10,11 @@
 <head>
     <?=$this->app()->headMeta()?>
     <?=$this->app()->headTitle()?>
-    <?=$this->app()->appendStylesheets()->appendStylesheet($jqueryUiUrl.'/css/cupertino/jquery-ui-1.7.2.custom.css') ?>
+    <?=$this->app()->headLink()->appendStylesheet($jqueryUiUrl.'/css/cupertino/jquery-ui-1.7.2.custom.css') ?>
     <?=$this->app()->headStyle()?>
 </head>
 <body>
-    <?= $this->app()->appendScripts()
+    <?= $this->app()->headScript()
 	    // JSON
 	    //->offsetSetFile(1,'http://www.json.org/json2.js')
 		// jQuery
@@ -24,7 +24,6 @@
 	    // Application
 	    ->offsetSetFile(50,$publicUrl.'/scripts/jquery.autogrow.js')
 	    ->offsetSetFile(60,$jquerySparkleUrl.'/scripts/jquery.sparkle.js')
-	    ->offsetSetFile(70,$publicUrl.'/scripts/balcms/back.js')
 	    // GSFN
 	    ->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
 	    ->offsetSetScript(81,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
