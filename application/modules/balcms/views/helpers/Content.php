@@ -56,13 +56,13 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	
 	public function getMediaUrl ( $Media, $prefix = false ) {
 		# Prepare
-		$name = $this->getMedia($Media, 'name');
+		$url = $this->getMedia($Media, 'url');
 		
 		# Prefix
 		$prefix = $prefix ? $this->getApp()->getRootUrl() : '';
 		
 		# Apply
-		$mediaUrl = $prefix.UPLOADS_URL.'/'.rawurlencode($name);
+		$mediaUrl = $prefix.$url;
 		
 		# Done
 		return $mediaUrl;

@@ -25,6 +25,10 @@ Route:
 Content:
     actAs:
         SoftDelete:
+        Sluggable:
+            name: code
+            canUpdate: true
+            fields: [title]
         Bal_Doctrine_Template_Auditable:
             status:
                 disabled: false
@@ -49,10 +53,6 @@ Content:
             type: integer(2)
             unsigned: true
             autoincrement: true
-        code:
-            type: string(30)
-            notblank: true
-            unique: true
         title:
             type: string(50)
             notblank: true
@@ -213,6 +213,10 @@ Subscriber:
 
 Media:
     actAs:
+        Sluggable:
+            name: code
+            canUpdate: true
+            fields: [name]
         Bal_Doctrine_Template_Auditable:
             status:
                 disabled: true
@@ -236,10 +240,6 @@ Media:
             type: integer(2)
             unsigned: true
             autoincrement: true
-        code:
-            type: string(255)
-            notblank: true
-            unique: true
         name:
             type: string(255)
             notblank: true

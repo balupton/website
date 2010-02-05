@@ -1,24 +1,21 @@
 #!/usr/bin/env php
 <?php
-error_reporting(E_ALL);
+# Prepare Reporting
+error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
-$dir = dirname(__FILE__);
-chdir($dir);
+# Load
+if ( empty($Application) ) {
+	# Bootstrap
+	$run = $bootstrap = false;
+	require_once(dirname(__FILE__).'/../index.php');
+}
 
-$boostrap = $run = false;
-require_once($dir.'/../index.php');
-$Application->getBootstrap()->bootstrap('doctrine');
-		
-// Load Config
-$config = array();
-$config['data'] = $Application->getOption('data');
+# Bootstrap
+$Application->bootstrap('balphp');
+$Application->bootstrap('balcms'); // required for messages
 
-// Apply Changes
-$config['doctrine'] = $config['data'];
-$config['doctrine']['data_dump_path'] = $config['doctrine']['dump_path'];
-$config['doctrine']['data_fixtures_path'] = $config['doctrine']['fixtures_path'];
-
-// Load Cli
-$Cli = new Doctrine_Cli($config['doctrine']);
-$Cli->run($_SERVER['argv']);
+# App
+Bal_App::getInstance($Application)->doctrineCli();
+die;

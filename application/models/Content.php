@@ -21,12 +21,13 @@ class Content extends Base_Content {
 	public function setUp ( ) {
 		$this->hasMutator('position', 'setPosition');
 		$this->hasMutator('path', 'setPath');
-		$this->hasMutator('code', 'setCode');
 		$this->hasMutator('content', 'setContent');
 		$this->hasMutator('description', 'setDescription');
+		$this->hasMutator('tagstr', 'setTagstr');
+		$this->hasAccessor('tagarray', 'getTagArray');
 		parent::setUp();
 	}
-
+	
 	/**
 	 * Get's the View object
 	 * @return Zend_View
@@ -70,18 +71,18 @@ class Content extends Base_Content {
 	 * @return bool
 	 */
 	public function setPosition ( $position = null ) {
-		// Default
+		# Default
 		if ( !$this->position && is_null($position) && $this->id ) {
 			$position = $this->id;
 		}
 		
-		// Is Change?
+		# Is Change?
 		if ( $this->position != $position && $position ) {
 			$this->_set('position', $position);
 			return true;
 		}
 		
-		// No Change
+		# No Change
 		return false;
 	}
 
@@ -107,35 +108,20 @@ class Content extends Base_Content {
 	 * @return bool
 	 */
 	public function setTagstr ( $value = null ) {
-		/// Default
+		/# Default
 		if ( is_null($value) ) {
 			$tags = $this->getTagArray();
 			$value = implode($tags, ', ');
 		}
-		// Is Change?
+		# Is Change?
 		if ( $this->tagstr != $value ) {
 			$this->_set('tagstr', $value);
 			return true;
 		}
-		// No Change
+		# No Change
 		return false;
 	}
-
-	/**
-	 * Sets the code field
-	 * @param int $code
-	 * @return bool
-	 */
-	public function setCode ( $code ) {
-		$code = strtolower($code);
-		$code = preg_replace('/[\s_]/', '-', $code);
-		$code = preg_replace('/[^-a-z0-9]/', '', $code);
-		$code = preg_replace('/--+/', '-', $code);
-		$this->_set('code', $code);
-		$this->setPath();
-		return true;
-	}
-
+	
 	/**
 	 * Sets the content field
 	 * @param int $code
@@ -166,9 +152,9 @@ class Content extends Base_Content {
 	 * @return bool
 	 */
 	public function setPath ( $path = null ) {
-		// Prepare
+		# Prepare
 		$save = false;
-		// Default
+		# Default
 		if ( is_null($path) ) {
 			$path = $this->code;
 			if ( $this->parent_id )
@@ -178,7 +164,7 @@ class Content extends Base_Content {
 		if ( empty($path) ) {
 			return false;
 		}
-		// Update
+		# Update
 		if ( $this->route_id ) {
 			$Route = $this->Route;
 		} else {
@@ -188,17 +174,17 @@ class Content extends Base_Content {
 			$this->Route = $Route;
 			$save = true;
 		}
-		// Apply
+		# Apply
 		if ( $Route->path != $path ) {
 			$Route->path = $path;
 			$Route->save();
-			// Update Children
+			# Update Children
 			$Children = $this->Children;
 			foreach ( $Children as $Child ) {
 				$Child->setPath($path.'/'.$Child->code);
 			}
 		}
-		// Done
+		# Done
 		return $save;
 	}
 	
@@ -207,30 +193,30 @@ class Content extends Base_Content {
 	 * @return bool
 	 */
 	public function ensureConsistency(){
-		// Prepare
+		# Prepare
 		$save = false;
 		
-		// Tags
+		# Tags
 		if ( $this->setTagstr() ) {
 			$save = true;
 		}
 		
-		// Position
+		# Position
 		if ( $this->setPosition() ) {
 			$save = true;
 		}
 		
-		// Route
+		# Route
 		if ( $this->setPath() ) {
 			$save = true;
 		}
 		
-		// Send
+		# Send
 		if ( $this->send() ) {
 			$save = true;
 		}
 		
-		// Done
+		# Done
 		return $save;
 	}
 
@@ -256,38 +242,38 @@ class Content extends Base_Content {
 	 * Send out to subscribers
 	 */
 	public function send ( ) {
-		// Check if we can
+		# Check if we can
 		$tags = $this->getTagArray();
 		if ( empty($tags) )
 			return false;
-			// We can
+			# We can
 		$SubscribersArray = $this->getSubscribers(Doctrine::HYDRATE_ARRAY);
 		if ( !empty($SubscribersArray) ) {
-			// Get View
+			# Get View
 			$View = $this->getView();
-			// Update
+			# Update
 			if ( empty($this->send_at) ) {
 				$this->send_at = date('Y-m-d H:i:s', time());
 			}
-			// We would like to send out
+			# We would like to send out
 			$View = clone $View;
 			$View->ContentArray = $this->toArray();
 			$View->headTitle()->append($this->title);
-			// Configure
+			# Configure
 			global $Application;
 			$applicationConfig = Zend_Registry::get('applicationConfig');
 			$Application->getBootstrap()->bootstrap('mail');
-			// Mail
+			# Mail
 			$mail = $applicationConfig['mail'];
 			$mail['subject'] = $this->title;
 			$mail['html'] = $View->render('email/subscription.phtml');
 			$mail['text'] = strip_tags($mail['html']);
 			$Mail = new Zend_Mail();
 			$Mail->setFrom($mail['from']['address'], $mail['from']['name']);
-			// $Mail->addTo($mail['from']['address'], $mail['from']['name']);
+			# $Mail->addTo($mail['from']['address'], $mail['from']['name']);
 			foreach ( $SubscribersArray as $SubscriberArray ) {
 				$Mail->addBcc($SubscriberArray['email']);
-				// Save send
+				# Save send
 				$ContentAndSubscriber = new ContentAndSubscriber();
 				$ContentAndSubscriber->content_id = $this->id;
 				$ContentAndSubscriber->subscriber_id = $SubscriberArray['id'];
@@ -298,7 +284,7 @@ class Content extends Base_Content {
 			$Mail->setBodyText($mail['text']);
 			$Mail->setBodyHtml($mail['html']);
 			$Mail->send();
-			// Update
+			# Update
 			$this->send_finished_at = date('Y-m-d H:i:s', time());
 			$this->send_status = 'completed';
 			$this->send_all += count($SubscribersArray);
@@ -313,16 +299,16 @@ class Content extends Base_Content {
 	 * @param Doctrine_Event $Event
 	 */
 	public function preSave ( $Event ) {
-		// Prepare
+		# Prepare
 		$Invoker = $Event->getInvoker();
 		$save = false;
 		
-		// Ensure
+		# Ensure
 		if ( $Invoker->ensureConsistency() ) {
 			$save = true;
 		}
 		
-		// Done
+		# Done
 		return true;
 	}
 	
@@ -332,21 +318,21 @@ class Content extends Base_Content {
 	 * @return string
 	 */
 	public function postSave ( $Event ) {
-		// Prepare
+		# Prepare
 		$Invoker = $Event->getInvoker();
 		$save = false;
 	
-		// Ensure
+		# Ensure
 		if ( $Invoker->ensureConsistency() ) {
 			$save = true;
 		}
 		
-		// Apply
+		# Apply
 		if ( $save ) {
 			$Invoker->save();
 		}
 		
-		// Done
+		# Done
 		return true;
 	}
 
@@ -356,11 +342,11 @@ class Content extends Base_Content {
 	 * @return string
 	 */
 	public function postInsert ( $Event ) {
-		// Prepare
+		# Prepare
 		$Invoker = $Event->getInvoker();
 		$Route = $Invoker->Route;
 		
-		// Ensure
+		# Ensure
 		if ( !$Route->data['id'] ) {
 			$data = $Route->data;
 			$data['id'] = $Invoker->id;
@@ -368,7 +354,7 @@ class Content extends Base_Content {
 			$Route->save();
 		}
 		
-		// Done
+		# Done
 		return true;
 	}
 	
