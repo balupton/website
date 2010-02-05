@@ -66,3 +66,58 @@
 .debug .null .value {
 	color:blue;
 }
+
+
+
+
+.log {
+	list-style: none;
+}
+.log .event {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding:15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+
+	font-size:100%;
+  color: #00529B;
+  background-color: #BDE5F8;
+  background-image: url('../images/icons/notification.png');
+}
+.log .event .timestamp {
+	float:right;
+	display:block;
+}
+.log .event .details {
+	display:none;
+}
+.log .info {
+  color: #00529B;
+  background-color: #BDE5F8;
+  background-image: url('../images/icons/info.png');
+}
+.log .success {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  background-image:url('../images/icons/success.png');
+}
+.log .warn {
+  color: #9F6000;
+  background-color: #FEEFB3;
+  background-image: url('../images/icons/warn.png');
+}
+.log .err, .log .crit, .log .alert, .log .emerg {
+  color: #D8000C;
+  background-color: #FFBABA;
+  background-image: url('../images/icons/error.png');
+}
+.log .crit {
+	font-size:110%;
+}
+.log .alert {
+	font-size:120%;
+}
+.log .emerg {
+	font-size:130%;
+}
