@@ -158,10 +158,17 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$email = $this->_getParam('email');
 		
 		# Subscribe
-		$Subscriber = new Subscriber();
-		$Subscriber->email = $email;
-		$Subscriber->setTags('newsletter');
-		$Subscriber->save();
+		try {
+			$Subscriber = new Subscriber();
+			$Subscriber->email = $email;
+			$Subscriber->setTags('newsletter');
+			$Subscriber->save();
+		}
+		catch ( Exception $Exception ) {
+			# Log the Event
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+		}
 		
 		# Done
 		return $this->_forward('index');
