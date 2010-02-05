@@ -20,21 +20,21 @@
     <?= $this->app()->headScript()
 	    // JSON
 	    //->offsetSetFile(1,'http://www.json.org/json2.js')
-	    // jQuery
-	    ->offsetSetFile(2,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js' : $publicUrl.'/scripts/jquery-1.3.2.min.js')
-	    // UI
-	    ->offsetSetFile(3,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' : $jqueryUiUrl.'/js/jquery-ui-1.7.2.custom.min.js')
+		// jQuery
+		->offsetSetFile(20,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js' : $publicUrl.'/scripts/jquery-1.4.1.min.js')
+		// UI
+		->offsetSetFile(30,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' : $jqueryUiUrl.'/js/jquery-ui-1.7.2.custom.min.js')
 	    // Ajaxy
 		//->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.history.js')->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.ajaxy.js')
 		// TinyMCE
-		->offsetSetFile(4,$tinyMceUrl.'/jquery.tinymce.js')
+		->offsetSetFile(40,$tinyMceUrl.'/jquery.tinymce.js')
 		->offsetSetScript(100,'$.Editor.applyConfig("default",{script_url: "'.$tinyMceUrl.'/tiny_mce.js", content_css: "'.$frontUrl.'/styles/content.css"});')
 	    // GSFN
 	    ->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
 	    ->offsetSetScript(81,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
 	    // Application
-	    ->offsetSetFile(5,$publicUrl.'/scripts/jquery.autogrow.js')
-	    ->offsetSetFile(6,$jquerySparkleUrl.'/scripts/jquery.sparkle.js')
+	    ->offsetSetFile(50,$publicUrl.'/scripts/jquery.autogrow.js')
+	    ->offsetSetFile(60,$jquerySparkleUrl.'/scripts/jquery.sparkle.js')
 	    ->offsetSetScript(101,'$.Help.applyConfig("default",{icon: \'<img src="'.$backUrl.'/images/help.png" alt="help" class="help-icon" />\'});')
     ?>
         <div id="wpwrap">
