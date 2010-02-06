@@ -1,0 +1,48 @@
+<?
+	# Doctype
+	echo $this->doctype();
+	
+	# Prepare
+	$View = $this;
+	$Message = delve($View,'Message');
+	$Sender = delve($Message,'Sender');
+	$Receiver = delve($Message,'Receiver');
+	
+	# Apply Params
+	$params = array();
+	$params['Message'] = is_array($Message) ? $Message : $Message->toArray();
+	$params['sender'] = delve($Sender,'fullname','System');
+	
+	# Prepare Urls
+	$rootUrl = $View->app()->getRootUrl();
+	$baseUrl = $View->app()->getBaseUrl(true);
+	
+	# Apply Urls
+	$params['rootUrl'] = $rootUrl;
+	$params['baseUrl'] = $baseUrl;
+	$params['senderUrl'] = $rootUrl.$View->app()->getProfileUrl($Sender);
+	$params['receiverUrl'] = $rootUrl.$View->app()->getProfileUrl($Receiver);
+	$params['messageUrl'] = $rootUrl.$View->app()->getMessageUrl($Message);
+?>
+<html>
+<head>
+	<?php echo $this->headTitle() ?>
+	<?php echo $this->headLink() ?>
+	<?php echo $this->headStyle() ?>
+</head>
+<body class="email">
+	<div class="email-wrapper">
+		<div class="email-header">
+			<?=$this->locale()->translate('message-header',$params)?>
+		</div>
+		<div class="email-body">
+			<div class="email-from"><?=$this->locale()->translate('message-from',$params)?></div>
+			<div class="email-title"><?=$this->locale()->translate('message-title',$params)?></div>
+			<div class="email-description"><?=$this->locale()->translate('message-description',$params)?></div>
+		</div>
+		<div class="email-footer">
+			<?=$this->locale()->translate('message-footer',$params)?>
+		</div>
+	</div>
+</body>
+</html><?
