@@ -286,9 +286,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Handle
 		try {
-			# Start
-			$Connection->beginTransaction();
-			
 			# Fetch
 			$Request = $this->_request;
 			$post = $Request->getPost($param, array());
@@ -298,7 +295,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 			if ( (empty($post) && (empty($file) || empty($file['name']))) || is_string($post) ) {
 				return $Media;
 			}
-		
+			
+			# Start
+			$Connection->beginTransaction();
+			
 			# Prepare
 			array_keys_keep($post, array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'));
 		
@@ -310,15 +310,15 @@ class Balcms_BackController extends Zend_Controller_Action {
 			# Stop Duplicates
 			$Request->setPost($param, $Media->code);
 			
+			# Finish
+			$Connection->commit();
+			
 			# Log
 			$log_details = array(
 				'Media'		=> $Media->toArray(),
 				'mediaUrl'	=> $this->view->getHelper('content')->getMediaUrl($Media)
 			);
 			$Log->log(array('log-media-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
-			
-			# Finish
-			$Connection->commit();
 		}
 		catch ( Exception $Exception ) {
 			# Revert
@@ -550,24 +550,24 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Log = Bal_App::getLog();
 		
 		try {
-			# Start
-			$Connection->beginTransaction();
-			
 			# Fetch
 			$Request = $this->_request;
-			$content = $Request->getPost('content');
-			$subscription = $Request->getPost('subscription', array());
+			$content = fetch_param('content');
+			$subscription = fetch_param('subscription');
 		
 			# Check
 			if ( empty($content) || is_string($content) ) {
 				return $Content;
 			}
 		
+			# Start
+			$Connection->beginTransaction();
+			
 			# Ensure
 			array_key_ensure($subscription, 'tags', '');
 		
 			# Prepare
-			array_keys_keep($content, array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type'));
+			array_keys_keep_ensure($content, array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type'));
 			$content['tags'] .= ', ' . $subscription['tags'];
 		
 			# Tags
@@ -616,7 +616,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 			# Stop Duplicates
 			$Request->setPost('content', $Content->code);
-		
+			
+			# Finish
+			$Connection->commit();
+			
 			# Log
 			$log_details = array(
 				'Content'		=> $Content->toArray(),
@@ -625,6 +628,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Log->log(array('log-content-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
 		}
 		catch ( Exception $Exception ) {
+			$Connection->rollback();
 			# Log the Event and Continue
 			$Exceptor = new Bal_Exceptor($Exception);
 			$Exceptor->log();
@@ -639,8 +643,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$content = $this->_getParam('content', false);
 		
 		# Load
-		if ( is_string($content) ) {
-			$Content = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.code = ?', $content)->fetchOne();
+		$Query = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm');
+		if ( is_string($content) || is_numeric($content) ) {
+			$Content = $Query->where('c.code = ? OR c.id = ?', array($content,$content))->fetchOne();
 		}
 		
 		# Check

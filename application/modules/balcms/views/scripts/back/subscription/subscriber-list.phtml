@@ -64,12 +64,13 @@
             <tbody id="subscriber-list">
             	<? foreach ( $SubscriberList as $_Subscriber ) :
 					$_Subscriber_id = delve($_Subscriber,'id');
+					$_Subscriber_email = delve($_Subscriber,'email');
 					$_Subscriber_Tags = delve($_Subscriber,'Tags');
 					$_Subscriber_ContentList = delve($_Subscriber,'ContentList');
 					?>
                 <tr id="subscriber-<?=$_Subscriber_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
                     <td class="title column-title">
-                        <?=$Subscriber['email']?>
+                        <?=$_Subscriber_email?>
                     </td>
                     <td class="author column-author"><?
                         echo count($_Subscriber_ContentList);
