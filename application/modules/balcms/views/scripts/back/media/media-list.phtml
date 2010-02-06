@@ -2,6 +2,8 @@
 	// URLs
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
+	//
+	$MediaList = delve($this,'MediaList');
 	// Title
 	$this->headTitle()->append('Media');
 ?>
@@ -87,20 +89,28 @@
             </tfoot>
 			<!-- Content Table: Content -->
             <tbody id="subscriber-list">
-            	<? foreach ( $this->MediaListArray as $Media ): ?>
-            	<? $mediaUrl = $this->content()->getMediaUrl($Media); ?>
-            	<tr id="media-<?=$Media['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
+            	<? foreach ( $MediaList as $_Media ):
+					$_Media_id = delve($_Media,'id');
+					$_Media_title = delve($_Media,'title');
+					$_Media_type = delve($_Media,'type');
+					$_Media_code = delve($_Media,'code');
+					$_Media_size = delve($_Media,'size');
+					$_Media_Author = delve($_Media,'Author');
+					$_Media_Author_displayname = delve($_Media_Author,'displayname');
+					$mediaUrl = $this->content()->getMediaUrl($Media);
+					?>
+            	<tr id="media-<?=$_Media_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
 					<td class="column-icon media-icon">
-						<a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
+						<a title="View <?=$_Media_title?>" href="<?=$mediaUrl?>">
 							<? if ( $Media['type'] === 'image' ) : ?>
-								<img height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
+								<img height="60" title="<?=$_Media_title?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
 							<? else: ?>
-								<img width="46" height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/<?=$Media['type']?>.png"/>
+								<img width="46" height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/<?=$_Media_type?>.png"/>
 							<? endif; ?>
 						</a>
 					</td>
 					<td class="media column-media">
-						<strong><a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
+						<strong><a title="View <?=$_Media_title?>" href="<?=$mediaUrl?>">
 							<?=$Media['title']?>
 						</a></strong>
 						<br/>
@@ -108,13 +118,13 @@
 						<p></p>
 						<div class="row-actions">
 							<span class="edit hide">
-								<a href="<?=$this->url(array('action'=>'media-edit','media'=>$Media['code']),'back',true)?>">Edit</a> |
+								<a href="<?=$this->url(array('action'=>'media-edit','media'=>$_Media_code),'back',true)?>">Edit</a> |
 							</span>
 							<span class="delete">
-								<a href="<?=$this->url(array('action'=>'media-delete','media'=>$Media['code']),'back',true)?>" class="delete-action">Delete</a> |
+								<a href="<?=$this->url(array('action'=>'media-delete','media'=>$_Media_code),'back',true)?>" class="delete-action">Delete</a> |
 							</span>
 							<span class="view">
-								<a rel="permalink" title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">View</a>
+								<a rel="permalink" title="View <?=$_Media_title?>" href="<?=$mediaUrl?>">View</a>
 							</span>
 						</div>
 					</td>
@@ -122,13 +132,13 @@
                     	<?=$Media['code']?>
                     </td>
                     <td class="tags column-tags">
-                    	<?=filesize_human($Media['size'])?>
+                    	<?=filesize_human($_Media_size)?>
                     </td>
                     <td class="author column-author"><?
-                        if ( empty($Media['Author']) ) :
+                        if ( empty($_Media_Author) ) :
                         	echo 'Unkown';
                         else:
-                        	$author = $Media['Author']['displayname'];
+                        	$author = $_Media_Author_displayname;
                         	$author_url = $this->url(array(
                         		'action'=>'media-list',
                         		'search'=>$author

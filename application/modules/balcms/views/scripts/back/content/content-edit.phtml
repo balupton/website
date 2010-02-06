@@ -3,15 +3,26 @@
 	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
+	//
+	$Content = delve($this,'Content');
+	$ContentCrumb = delve($this,'ContentCrumb');
+	$Content_Author = delve($Content,'Author');
+	$Content_Avatar = delve($Content,'Avatar');
+	$Content_Parent = delve($Content,'Parent');
+	$Content_Route = delve($Content,'Route');
+	$ContentList = delve($this,'ContentList');
+	
 	// Mode
-	$mode = empty($this->ContentArray) || empty($this->ContentArray['id']) ? 'new' : 'edit';
+	$mode = delve($Content,'id') ? 'edit' : 'new';
 	$mode_edit = $mode === 'edit';
+	
 	// Type
-	$type = $this->type;
+	$type = delve($this,'type');
 	$Type = ucfirst($type);
+	
 	// Title
 	$this->headTitle()->append($Type);
-	$this->headTitle()->append(empty($this->ContentArray['title'])?'New':$this->ContentArray['title']);
+	$this->headTitle()->append(delve($Content,'title','New'));
 ?>
 <div class="wrap">
 	<? if ( $type === 'event' ): ?>
@@ -21,8 +32,8 @@
 	<? endif; ?>
 	<h2>
 		<?=$mode_edit?'Editing':'Create New '.$Type?>
-		<? if ( $mode_edit ) foreach ( $this->ContentCrumbArray as $Content ): ?>
-			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>$Content['code']),'back')?>"><?=$Content['title']?></a>
+		<? if ( $mode_edit ) foreach ( $ContentCrumb as $Content ): ?>
+			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>delve($Content,'code')),'back')?>"><?=$Content['title']?></a>
 		<? endforeach; ?>
 	</h2>
 	<?=$this->log()->render()?>
@@ -39,7 +50,7 @@
 								<div id="minor-publishing-actions">
 									<?if($mode_edit):?>
 									<!-- Open Action -->
-									<a class="button button-action right" id="action-open" tabindex="4" href="<?=$this->content()->getContentUrl($this->ContentArray)?>" >Open</a>
+									<a class="button button-action right" id="action-open" tabindex="4" href="<?=$this->content()->getContentUrl($Content)?>" >Open</a>
 									<?endif;?>
 									<!-- Preview Action -->
 									<!-- <a class="button button-action right" id="action-preview" tabindex="4">Preview</a>  -->
@@ -48,12 +59,12 @@
 								<div id="misc-publishing-actions">
 									<div class="misc-pub-section field">
 										<label for="content-status">Status:</label>
-										<span id="content-status-view" class="field-value"><?=ucfirst($this->ContentArray['status'])?></span>
+										<span id="content-status-view" class="field-value"><?=ucfirst(delve($Content,'status'))?></span>
 										<span id="content-status-edit" class="hide">
 											<br/>
 											<select name="content[status]" id="content-status" tabindex="4">
 												<? foreach ( Doctrine::getTable('Content')->getEnumValues('status') as $value ):
-													echo '<option '.($this->ContentArray['status']==$value?'selected="selected" ':'').' value="'.$value.'">'.ucfirst($value).'</option>';
+													echo '<option '.(delve($Content,'status')==$value?'selected="selected" ':'').' value="'.$value.'">'.ucfirst($value).'</option>';
 												endforeach; ?>
 											</select>
 										</span>
@@ -63,9 +74,8 @@
 											});
 										</script>
 									</div>
-									<? if ( !empty($this->ContentArray['Author']) ) :
-										$Author = $this->ContentArray['Author'];
-			                        	$author = $Content['Author']['displayname'];
+									<? if ( $Content_Author ) :
+			                        	$author = delve($Content_Author, 'displayname');
 			                        	$author_url = $this->url(array(
 			                        		'action'=>'content-list',
 			                        		'search'=>$author
@@ -79,10 +89,10 @@
 									<? endif; ?>
 									<div class="misc-pub-section misc-pub-section-last field" id="content-published_at-field">
 										<label for="content-published_at">Publish<?=$mode_edit?'<span class="weak">ed</span>':''?> on:</label>
-										<span class="field-value" id="content-published_at-view"><?=$this->locale()->datetime($this->ContentArray['published_at'])?></span>
+										<span class="field-value" id="content-published_at-view"><?=$this->locale()->datetime(delve($Content,'published_at'))?></span>
 										<span id="content-published_at-edit" class="hide">
 											<br/>
-											<input type="text" name="content[published_at]" id="content-published_at" value="<?=$this->ContentArray['published_at']?>" class="sparkle-datetime"></input>
+											<input type="text" name="content[published_at]" id="content-published_at" value="<?=delve($Content,'published_at')?>" class="sparkle-datetime"></input>
 										</span>
 										<script type="text/javascript">
 											//$("#content-published_at-view").inlineEdit({
@@ -97,7 +107,7 @@
 							<div id="major-publishing-actions">
 								<!-- Delete Action -->
 								<div id="delete-action">
-									<a class="delete delete-action" id="action-delete" title="Are you sure you want to delete <?=$this->ContentArray['title']?>" href="<?=$this->url(array('action'=>'content-delete','content'=>$this->ContentArray['code']),'back',true)?>" ><?=$mode_edit?'Delete':'Discard'?></a>
+									<a class="delete delete-action" id="action-delete" title="Are you sure you want to delete <?=delve($Content,'title')?>" href="<?=$this->url(array('action'=>'content-delete','content'=>delve($Content,'code')),'back',true)?>" ><?=$mode_edit?'Delete':'Discard'?></a>
 								</div>
 								<!-- Save Action -->
 								<div id="publishing-action">
@@ -113,7 +123,7 @@
 						<h3>Tags</h3>
 						<div class="inside">
 							<label class="screen-reader-text" for="content-tags">Post Tags</label>
-							<textarea id="content-tags" name="content[tags]" class="form-input-tip autosize" title="Add tags"><?=$this->ContentArray['tagstr']?></textarea>
+							<textarea id="content-tags" name="content[tags]" class="form-input-tip autosize" title="Add tags"><?=delve($Content,'tagstr')?></textarea>
 							<p class="description">
 								Add your tags to the post above, separating them with commas.
 							</p>
@@ -168,7 +178,7 @@
 					<div id="sidebar-subscription-box" class="postbox sidebar-box">
 						<h3>Subscriptions</h3>
 						<div class="inside">
-							<? if ( $this->ContentArray['send_status'] === 'none' ): ?>
+							<? if ( delve($Content,'send_status') === 'none' ): ?>
 								<div class="field">
 									<input type="checkbox" id="subscription-tags" name="subscription[tags]" value="newsletter" />
 									<label for="subscription-tags">
@@ -181,7 +191,7 @@
 							<? else: ?>
 								<div class="field">
 									<span class="label">Sent to:</span>
-									<span class="value"><?=$this->ContentArray['send_all']-$this->ContentArray['send_remaining']?> of <?=$this->ContentArray['send_all']?> <a href="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'back',true)?>" title="go to Subscriber List">subscribers</a></span>
+									<span class="value"><?=delve($Content,'send_all',0)-delve($Content,'send_remaining',0)?> of <?=delve($Content,'send_all',0)?> <a href="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'back',true)?>" title="go to Subscriber List">subscribers</a></span>
 								</div>
 							<? endif; ?>
 						</div>
@@ -198,30 +208,30 @@
 						<label class="screen-reader-text" for="content-title">
 							Title
 						</label>
-						<input type="text" name="content[title]" id="content-title" tabindex="1" value="<?=$this->ContentArray['title']?>" autocomplete="off" class="form-input-tip" title="Title" />
+						<input type="text" name="content[title]" id="content-title" tabindex="1" value="<?=delve($Content,'title')?>" autocomplete="off" class="form-input-tip" title="Title" />
 					</div>
 					<div id="content-parent-field" class="field field-little">
 						<label for="content-parent">
 							File under:
 						</label>
 						<select name="content[parent]" id="content-parent">
-							<option <?=($this->ContentArray['Parent']['id']==0?'selected="selected" ':'')?> value="0">- Top Level</option>
+							<option <?=($Content_Parent ? 'selected="selected" ':'')?> value="0">- Top Level</option>
 							<?
 							$skip = $skip_factor = false;
-							foreach($this->ContentListArray as $Content ):
+							foreach( $ContentList as $_Content ):
 								if ( $skip ) {
-									if ( $Content['parent_id'] <= $skip_factor ) {
+									if ( delve($_Content,'parent_id') <= $skip_factor ) {
 										$skip = $skip_factor = false;
 									} else {
 										continue;
 									}
-								} elseif ( $Content['id'] == $this->ContentArray['id'] ) {
+								} elseif ( delve($_Content,'id') == delve($Content,'id') ) {
 									$skip = true;
-									$skip_factor = $Content['id'];
+									$skip_factor = delve($_Content,'id');
 									continue;
 								}
-								echo '<option '.($this->ContentArray['Parent']['id']==$Content['id']?'selected="selected" ':'').' value="'.$Content['id'].'" title="'.$Content['Route']['path'].'">'.
-									str_repeat('&nbsp;', ((int)$Content['level'])*2+2).'-&nbsp;'.$Content['title'].
+								echo '<option '.(delve($Content_Parent,'id')==delve($_Content,'id')?'selected="selected" ':'').' value="'.delve($_Content,'id').'" title="'.delve($_Content,'Route.path').'">'.
+									str_repeat('&nbsp;', ((int)delve($_Content,'level'))*2+2).'-&nbsp;'.delve($_Content,'title').
 								'</option';
 							endforeach; ?>
 						</select>
@@ -230,7 +240,7 @@
 						<label for="content-code">
 							Location:
 						</label>
-						<span class="inline-edit-clickable"><?=$baseFullUrl?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=$this->ContentArray['code']?></span><input type="text" name="content[code]" id="content-code" value="<?=$this->ContentArray['code']?>" />/
+						<span class="inline-edit-clickable"><?=$baseFullUrl?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=delve($Content,'code')?></span><input type="text" name="content[code]" id="content-code" value="<?=delve($Content,'code')?>" />/
 						<span class="inline-edit-panel" id="content-code-panel"></span>
 					</div>
 					<script type="text/javascript">
@@ -271,14 +281,14 @@
 					</script>
 					
 					<div id="content-content-field" class="field field-rich ">
-						<textarea name="content[content]" tabindex="2" id="content-content"><?=$this->ContentArray['content']?></textarea>
+						<textarea name="content[content]" tabindex="2" id="content-content"><?=delve($Content,'content')?></textarea>
 						<script type="text/javascript">$(function(){$('#content-content').editor('rich');});</script>
 					</div>
 					
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Excerpt</h3>
 						<div class="inside">
-							<textarea rows="3" cols="40" name="content[description]" tabindex="4" id="content-description"><?=$this->ContentArray['description']?></textarea>
+							<textarea rows="3" cols="40" name="content[description]" tabindex="4" id="content-description"><?=delve($Content,'description')?></textarea>
 						</div>
 						<script type="text/javascript">
 							$('#content-description-field h3').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');
@@ -292,11 +302,11 @@
 						<div class="inside">
 							<p>
 								<label for="content-event-start-at">Start time:</label>
-								<input type="text" class="jquery-datetime" name="content[event_start_at]" id="content-event-start-at" value="<?=$this->ContentArray['event_start_at']?>" />
+								<input type="text" class="jquery-datetime" name="content[event_start_at]" id="content-event-start-at" value="<?=delve($Content,'event_start_at')?>" />
 							</p>
 							<p>
 								<label for="content-event-finish-at">Finish time:</label>
-								<input type="text" class="jquery-datetime" name="content[event_finish_at]" id="content-event-finish-at" value="<?=$this->ContentArray['event_finish_at']?>" />
+								<input type="text" class="jquery-datetime" name="content[event_finish_at]" id="content-event-finish-at" value="<?=delve($Content,'event_finish_at')?>" />
 							</p>
 						</div>
 					</div>

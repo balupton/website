@@ -1,6 +1,8 @@
 <?
 	// Title
 	$this->headTitle()->append('Subscribers');
+	//
+	$SubscriberList = delve($this,'SubscriberList');
 ?>
 <div class="wrap">
 	<!-- Edit Button -->
@@ -60,21 +62,25 @@
             </tfoot>
 			<!-- Content Table: Content -->
             <tbody id="subscriber-list">
-            	<? foreach ( $this->SubscriberListArray as $Subscriber ): ?>
-                <tr id="subscriber-<?=$Subscriber['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
+            	<? foreach ( $SubscriberList as $_Subscriber ) :
+					$_Subscriber_id = delve($_Subscriber,'id');
+					$_Subscriber_Tags = delve($_Subscriber,'Tags');
+					$_Subscriber_ContentList = delve($_Subscriber,'ContentList');
+					?>
+                <tr id="subscriber-<?=$_Subscriber_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
                     <td class="title column-title">
                         <?=$Subscriber['email']?>
                     </td>
                     <td class="author column-author"><?
-                        echo count($Subscriber['ContentList']);
+                        echo count($_Subscriber_ContentList);
                     ?></td>
                     <td class="author column-tags"> <?
-                        if ( empty($Subscriber['Tags']) ) :
+                        if ( !$_Subscriber_Tags ) :
                         	// nothing
                         else:
                         	$tags = array();
-                        	foreach ( $Subscriber['Tags'] as $Tag ) {
-                        		$tag = ucfirst($Tag['name']);
+                        	foreach ( $_Subscriber_Tags as $_Tag ) {
+                        		$tag = ucfirst(delve($_Tag,'name'));
 	                        	$tag_url = $this->url(array(
 	                        		'action'=>'subscriber-list',
 	                        		'search'=>$tag

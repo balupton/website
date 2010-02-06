@@ -2,6 +2,9 @@
 	// URLs
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
+	//
+	$ContentCrumb = delve($this,'ContentCrumb');
+	$ContentList = delve($this,'ContentList');
 	// Type
 	$type = $this->type;
 	$Type = ucfirst($type);
@@ -15,8 +18,8 @@
 	<!-- Header -->
     <h2>
 		<a href="<?=$this->url(array('action'=>'content-list'),'back',true)?>"><?=$Type?> List</a>
-		<? foreach ( $this->ContentCrumbArray as $Content ): ?>
-			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>$Content['code']),'back')?>"><?=$Content['title']?></a>
+		<? foreach ( $ContentCrumb as $_Content ): ?>
+			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>delve($_Content,'code')),'back')?>"><?=delve($_Content,'title')?></a>
 		<? endforeach; ?>
 	</h2>
     <!-- Filters -->
@@ -92,42 +95,46 @@
             </tfoot>
 			<!-- Content Table: Content -->
             <tbody id="content-list">
-            	<? foreach ( $this->ContentListArray as $Content ): ?>
+            	<? foreach ( $ContentList as $_Content ): ?>
             	<?
-            		$contentUrl = $this->content()->getContentUrl($Content);
-            		$contentOpenUrl = $this->url(array('action'=>'content-list','content'=>$Content['code']),'back',true);
-            		$contentEditUrl = $this->url(array('action'=>'content-edit','content'=>$Content['code']),'back',true);
+					$_Content_code = delve($_Content,'code');
+					$_Content_Avatar = delve($_Content,'Avatar');
+					$_Content_Tags = delve($_Content,'Tags');
+					$_Content_Author = delve($_Content,'Author');
+            		$contentUrl = $this->content()->getContentUrl($_Content);
+            		$contentOpenUrl = $this->url(array('action'=>'content-list','content'=>$_Content_code),'back',true);
+            		$contentEditUrl = $this->url(array('action'=>'content-edit','content'=>$_Content_code),'back',true);
             	?>
-                <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
+                <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTree')->next()?>">
                 	<td class="column-icon media-icon">
 						<a title="View <?=$Content['title']?>" href="<?=$contentUrl?>">
-							<? if ( !empty($Content['Avatar']) && $Content['Avatar']['type'] === 'image' ) : ?>
-            					<? $mediaUrl = $this->content()->getMediaUrl($Content['Avatar']); ?>
+							<? if ( $_Content_Avatar && delve($_Content_Avatar,'type') === 'image' ) : ?>
+            					<? $mediaUrl = $this->content()->getMediaUrl($_Content_Avatar); ?>
 								<img height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
 							<? else: ?>
-								<img width="46" height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>
+								<img width="46" height="60" title="<?=delve($_Content,'title')?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>
 							<? endif; ?>
 						</a>
 					</td>
                     <td class="post-title page-title column-title">
-                    	<input type="hidden" name="content[id]" class="content-id" value="<?=$Content['id']?>" />
+                    	<input type="hidden" name="content[id]" class="content-id" value="<?=delve($_Content,'id')?>" />
                         <strong><a class="row-title" href="<?=$contentOpenUrl?>" title="Open this">
-                        	<?=/*str_repeat('&nbsp;',$Content['level']).' '.*/$Content['title']?>
+                        	<?=/*str_repeat('&nbsp;',$Content['level']).' '.*/delve($_Content,'title')?>
 						</a></strong>
 						<div class="row-actions">
 							<span class="edit"><a title="Edit this" href="<?=$contentEditUrl?>">Edit</a> | </span>
-							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$Content['title']?>" href="<?=$this->url(array('action'=>'content-delete','content'=>$Content['code']),'back',true)?>">Delete</a> | </span>
+							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=delve($_Content,'title')?>" href="<?=$this->url(array('action'=>'content-delete','content'=>delve($_Content,'code')),'back',true)?>">Delete</a> | </span>
 							<span class="view"><a rel="permalink" title="View" href="<?=$contentUrl?>">View</a></span>
 						</div>
                     </td>
                     <td class="author column-author">
-                        <?=$Content['description']?>
+                        <?=delve($_Content,'description')?>
                     </td>
                     <td class="author column-author"><?
-                        if ( empty($Content['Author']) ) :
+                        if ( !$_Content_Author ) :
                         	echo 'Unkown';
                         else:
-                        	$author = $Content['Author']['displayname'];
+                        	$author = delve($_Content_Author,'displayname');
                         	$author_url = $this->url(array(
                         		'action'=>'content-list',
                         		'search'=>$author
@@ -136,12 +143,12 @@
                     	endif;
                     ?></td>
                     <td class="author column-tags"> <?
-                        if ( empty($Content['Tags']) ) :
+                        if ( !$_Content_Tags ) :
                         	// nothing
                         else:
                         	$tags = array();
-                        	foreach ( $Content['Tags'] as $Tag ) {
-                        		$tag = ucfirst($Tag['name']);
+                        	foreach ( $_Content_Tags as $_Tag ) {
+                        		$tag = ucfirst(delve($_Tag,'name'));
 	                        	$tag_url = $this->url(array(
 	                        		
 	                        		'action'=>'content-list',
@@ -158,11 +165,11 @@
                         </div>
                     </td>-->
                     <td class="date column-date">
-                        <abbr title="<?=$this->locale()->datetime($Content['updated_at'])?>">
-                            <?=$this->locale()->timeago($Content['updated_at'])?>
+                        <abbr title="<?=$this->locale()->datetime(delve($_Content,'updated_at'))?>">
+                            <?=$this->locale()->timeago(delve($_Content,'updated_at'))?>
                         </abbr>
                         <br/>
-                        <?=$Content['status']?>
+                        <?=delve($_Content,'status')?>
                     </td>
                 </tr>
 				<? endforeach; ?>

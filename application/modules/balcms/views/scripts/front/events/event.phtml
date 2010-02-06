@@ -1,5 +1,11 @@
+<?
+	//
+	$Event = delve($this,'Event');
+	$Event_title = delve($Event,'title');
+	$Event_content = delve($Event,'content');
+?>
 <div class="event">
 	<h3>Event:</h3>
-	<label>Title: </label><span><?=$this->Event['title']?></span></br>
-	<label>Content: </label><span><?=$this->Event['content']?></span></br>
+	<label>Title: </label><span><?=$Event_title?></span></br>
+	<label>Content: </label><span><?=$Event_content?></span></br>
 </div>
