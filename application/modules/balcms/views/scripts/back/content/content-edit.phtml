@@ -25,7 +25,7 @@
 			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>$Content['code']),'back')?>"><?=$Content['title']?></a>
 		<? endforeach; ?>
 	</h2>
-	<?=$this->message()->render()?>
+	<?=$this->log()->render()?>
 	<form action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="content[type]" value="<?=$type?>" />
 		<div class="metabox-holder has-right-sidebar">

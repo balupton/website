@@ -69,20 +69,30 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function loginAction ( ) {
 		# Prepare
 		$Request = $this->getRequest();
+		$Log = Bal_App::getLog();
 		
 		# Load
 		$login = $Request->getParam('login', array());
-		array_key_ensure($login, array('username', 'password', 'locale'));
+		array_keys_keep_ensure($login, array('username','password','locale','remember'));
 		
 		# Check
 		if ( !empty($login['username']) && !empty($login['password']) ) {
 			# Login
-			$username = $login['username'];
-			$password = $login['password'];
-			$locale = $login['locale'];
-			$remember = $login['remember'];
-			# Login and Forward
-			return $this->getHelper('App')->loginForward($username, $password, $locale, $remember, false, true);
+			try {
+				# Prepare Login
+				$username = $login['username'];
+				$password = $login['password'];
+				$locale = $login['locale'];
+				$remember = $login['remember'];
+				
+				# Login and Forward
+				return $this->getHelper('App')->loginForward($username, $password, $locale, $remember, false, true);
+			}
+			catch ( Exception $Exception ) {
+				# Log the Event and Continue
+				$Exceptor = new Bal_Exceptor($Exception);
+				$Exceptor->log();
+			}
 		}
 		
 		# Render
@@ -166,13 +176,23 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function mediaEditAction ( ) {
 		# Prepare
+		$Log = Bal_App::getLog();
 		$Media = $MediaArray = array();
 		
 		# Save
-		$Media = $this->_saveMedia();
-		if ( !$Media->id ) {
-			return $this->_forward('media-new');
+		try {
+			$Media = $this->_saveMedia();
+			if ( !$Media->id ) {
+				return $this->_forward('media-new');
+			}
 		}
+		catch ( Exception $Exception ) {
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+		}
+	
+		# Menu
 		$this->activateNavigationMenuItem('back-media-list');
 		
 		# Fetch
@@ -190,14 +210,24 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function mediaNewAction ( ) {
 		# Prepare
-		$this->activateNavigationMenuItem('back-media-edit');
+		$Log = Bal_App::getLog();
 		$Media = $MediaArray = array();
 		
 		# Save
-		$Media = $this->_saveMedia();
-		if ( $Media->id ) {
-			return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-edit', 'media' => $Media->code), 'back', true);
+		try {
+			$Media = $this->_saveMedia();
+			if ( $Media->id ) {
+				return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-edit', 'media' => $Media->code), 'back', true);
+			}
 		}
+		catch ( Exception $Exception ) {
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+		}
+		
+		# Menu
+		$this->activateNavigationMenuItem('back-media-edit');
 		
 		# Fetch
 		$MediaArray = $Media->toArray();
@@ -219,9 +249,16 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$search = $this->_getParam('search', false);
 		
 		# Save
-		$Media = $MediaArray = array();
-		$Media = $this->_saveMedia();
-		$MediaArray = $Media->toArray();
+		try {
+			$Media = $MediaArray = array();
+			$Media = $this->_saveMedia();
+			$MediaArray = $Media->toArray();
+		}
+		catch ( Exception $Exception ) {
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+		}
 		
 		# Prepare
 		$ListQuery = Doctrine_Query::create()->select('m.*, ma.*')->from('Media m, m.Author')->orderBy('m.code ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
@@ -253,32 +290,53 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	protected function _saveMedia ( $param = 'media' ) {
 		# Prepare
+		$Connection = Bal_App::getDataConnection();
 		$Media = $this->_getMedia();
 		
-		# Fetch
-		$Request = $this->_request;
-		$post = $Request->getPost($param, array());
-		$file = !empty($_FILES[$param]) ? $_FILES[$param] : array();
+		# Handle
+		try {
+			# Start
+			$Connection->beginTransaction();
+			
+			# Fetch
+			$Request = $this->_request;
+			$post = $Request->getPost($param, array());
+			$file = !empty($_FILES[$param]) ? $_FILES[$param] : array();
 		
-		# Check
-		if ( (empty($post) && (empty($file) || empty($file['name']))) || is_string($post) ) {
-			return $Media;
+			# Check
+			if ( (empty($post) && (empty($file) || empty($file['name']))) || is_string($post) ) {
+				return $Media;
+			}
+		
+			# Prepare
+			array_keys_keep($post, array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'));
+		
+			# Apply
+			$Media->merge($post);
+			$Media->file = $file;
+			$Media->save();
+		
+			# Stop Duplicates
+			$Request->setPost($param, $Media->code);
+			
+			# Log
+			$log_details = array(
+				'Media'		=> $Media->toArray(),
+				'mediaUrl'	=> $this->view->getHelper('content')->getMediaUrl($Media)
+			);
+			$Log->log(array('log-media-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
+			
+			# Finish
+			$Connection->commit();
 		}
-		
-		# Prepare
-		array_keep($post, array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'));
-		
-		# Apply
-		$Media->merge($post);
-		$Media->file = $file;
-		$Media->save();
-		
-		# Stop Duplicates
-		$Request->setPost($param, $Media->code);
-		
-		# Add the saved message
-		$url = $this->view->getHelper('content')->getMediaUrl($Media);
-		$this->view->getHelper('message')->addMessage('<p>Updated the media <a href="' . $url . '">' . $Media->title . '</a></p>', 'updated');
+		catch ( Exception $Exception ) {
+			# Revert
+			$Connection->rollback();
+			
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+		}
 		
 		# Done
 		return $Media;
@@ -298,7 +356,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	# ========================
 	# CONTENT
 	
-
+	
 	public function contentAction ( ) {
 		# Redirect
 		return $this->_forward('content-list');
@@ -307,6 +365,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function contentDeleteAction ( ) {
 		# Prepare
 		$Content = $this->_getContent();
+		
 		# Handle
 		if ( $Content && $Content->exists() ) {
 			if ( isset($Content->Parent) && $Content->Parent->exists() ) {
@@ -314,6 +373,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			}
 			$Content->delete();
 		}
+		
 		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list'), 'back', true);
 	}
@@ -506,7 +566,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		array_key_ensure($subscription, 'tags', '');
 		
 		# Prepare
-		array_keep($content, array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type'));
+		array_keys_keep($content, array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type'));
 		$content['tags'] .= ', ' . $subscription['tags'];
 		
 		# Tags
@@ -556,9 +616,12 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Stop Duplicates
 		$Request->setPost('content', $Content->code);
 		
-		# Add the saved message
-		$contentUrl = $this->view->getHelper('content')->getContentUrl($Content);
-		$this->view->getHelper('message')->addMessage('<p>Updated the content <a href="' . $contentUrl . '">' . $Content->title . '</a></p>', 'updated');
+		# Log
+		$log_details = array(
+			'Content'		=> $Content->toArray(),
+			'contentUrl'	=> $this->view->getHelper('content')->getContentUrl($Content)
+		);
+		$Log->log(array('log-content-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
 		
 		# Done
 		return $Content;

@@ -6,6 +6,8 @@
 <div id="login">
 	<h1><a title="Powered by balCMS" href="<?=$this->url(array(),'balcmshome',true)?>">balCMS</a></h1>
 	
+	<?=$this->log()->render()?>
+	
 	<form method="post" action="<?=$this->url(array('action'=>'login'),'back',true)?>" id="login-form">
 		<p>
 			<label>
