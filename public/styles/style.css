@@ -1,5 +1,14 @@
 @CHARSET "UTF-8";
 
+.sparkle-highlight-values-notempty {
+	font-weight:bold;
+	color:black;
+}
+.sparkle-highlight-values-empty {
+	font-weight:normal;
+	color:#555;
+}
+
 .debug .link:hover {
 	text-decoration:underline;
 }
