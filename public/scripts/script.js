@@ -31,17 +31,6 @@
 
 (function($){
 	
-	Array.prototype.has = Array.prototype.has||function(value){
-		var has = false;
-		for ( var i=0, n=this.length; i<n; ++i ) {
-			if ( value == this[i] ) {
-				has = true;
-				break;
-			}
-		}
-		return has;
-	};
-	
 	
 	// Log
 	$(function(){
