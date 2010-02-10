@@ -2,7 +2,9 @@
 
 // Prepare
 error_reporting(E_ALL | E_STRICT);
+ini_set('error_reporting', E_ALL | E_STRICT);
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 	
 // Prepare
 if ( !empty($_SERVER['REDIRECT_URL']) ) {
@@ -22,8 +24,8 @@ if ( empty($_SERVER['DOCUMENT_ROOT']) ) {
 define('DEBUG_SECRET',						md5(APPLICATION_ROOT_PATH));
 
 // Include paths
-if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') || $_SERVER['DOCUMENT_ROOT'] === '/usr/local/zend/apache2/htdocs' ) {
-	// Windows Development Environment
+if ( in_array($_SERVER['DOCUMENT_ROOT'], array('/Users/balupton/Server/htdocs','/usr/local/zend/apache2/htdocs')) ) {
+	// Development Environment
 	define('APPLICATION_ENV', 				'development');
 	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
 	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
@@ -32,7 +34,7 @@ if ( strstr($_SERVER['DOCUMENT_ROOT'], 'C:') || $_SERVER['DOCUMENT_ROOT'] === '/
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.1-lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
-	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.6-lib'));
+	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.10.0-lib'));
 	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-lib'));
 	
 	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/balcms.ini'));
@@ -49,11 +51,14 @@ elseif ( strpos($_SERVER['HTTP_HOST'], 'balcms.com.au') !== false ) {
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.1-lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
-	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.9.6-lib'));
+	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.10.0-lib'));
 	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-lib'));
 	
 	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/balcms.ini'));
 	define('ROOT_URL',						'http://www.balcms.com.au');
+}
+else {
+	throw new Exception('Unkown Project Location');
 }
 
 // Fix magic quotes
@@ -68,6 +73,8 @@ if ( !defined('DEBUG_MODE') ) 	define('DEBUG_MODE',
 	? 1
 	: 0
 );
+
+# --------------------------
 
 // Defines
 if ( !defined('APPLICATION_ENV') ) {
@@ -88,17 +95,24 @@ if ( !defined('LIBRARY_PATH') ) {
 if ( !defined('IL8N_PATH') ) {
 	define('IL8N_PATH', 					realpath(APPLICATION_ROOT_PATH.'/il8n'));
 }
+if ( !defined('HTMLPURIFIER_PATH') ) {
+	define('HTMLPURIFIER_PATH', 			realpath(COMMON_PATH . '/htmlpurifier-4.0.0-lib'));
+}
 
+# --------------------------
+		
 if ( !defined('BASE_URL') ) {
 	define('BASE_URL', 						'');
 }
-
+	
 if ( !defined('PUBLIC_PATH') ) {
 	define('PUBLIC_PATH', 					realpath(APPLICATION_ROOT_PATH.'/public'));
 }
 if ( !defined('PUBLIC_URL') ) {
 	define('PUBLIC_URL', 					BASE_URL.'/public');
 }
+
+# --------------------------
 
 if ( !defined('MEDIA_URL') ) {
 	define('MEDIA_URL', 					PUBLIC_URL . '/media');
@@ -107,11 +121,11 @@ if ( !defined('MEDIA_PATH') ) {
 	define('MEDIA_PATH', 					realpath(PUBLIC_PATH . '/media'));
 }
 
-if ( !defined('UPLOADS_URL') ) {
-	define('UPLOADS_URL', 					MEDIA_URL . '/uploads');
+if ( !defined('DELETED_URL') ) {
+	define('DELETED_URL', 					MEDIA_URL . '/deleted');
 }
-if ( !defined('UPLOADS_PATH') ) {
-	define('UPLOADS_PATH', 					realpath(MEDIA_PATH . '/uploads'));
+if ( !defined('DELETED_PATH') ) {
+	define('DELETED_PATH', 					realpath(MEDIA_PATH . '/deleted'));
 }
 
 if ( !defined('IMAGES_URL') ) {
@@ -121,6 +135,27 @@ if ( !defined('IMAGES_PATH') ) {
 	define('IMAGES_PATH', 					realpath(MEDIA_PATH . '/images'));
 }
 
+if ( !defined('INVOICES_URL') ) {
+	define('INVOICES_URL', 					MEDIA_URL . '/invoices');
+}
+if ( !defined('INVOICES_PATH') ) {
+	define('INVOICES_PATH', 					realpath(MEDIA_PATH . '/invoices'));
+}
+
+if ( !defined('TEMPLATES_URL') ) {
+	define('TEMPLATES_URL', 					MEDIA_URL . '/templates');
+}
+if ( !defined('TEMPLATES_PATH') ) {
+	define('TEMPLATES_PATH', 					realpath(MEDIA_PATH . '/templates'));
+}
+
+if ( !defined('UPLOADS_URL') ) {
+	define('UPLOADS_URL', 					MEDIA_URL . '/uploads');
+}
+if ( !defined('UPLOADS_PATH') ) {
+	define('UPLOADS_PATH', 					realpath(MEDIA_PATH . '/uploads'));
+}
+
 if ( !defined('THEMES_URL') ) {
 	define('THEMES_URL', 					PUBLIC_URL . '/themes');
 }
@@ -128,11 +163,9 @@ if ( !defined('THEMES_PATH') ) {
 	define('THEMES_PATH', 					realpath(PUBLIC_PATH . '/themes'));
 }
 
-if ( !defined('HTMLPURIFIER_PATH') ) {
-	define('HTMLPURIFIER_PATH', 			realpath(COMMON_PATH . '/htmlpurifier-4.0.0-lib'));
-}
+# --------------------------
 
-// Ensure library/ is on include_path
+# Ensure library/ is on include_path
 $include_paths = $include_paths_original = array();
 if ( defined('ZEND_PATH') )
 	$include_paths[] = ZEND_PATH;
