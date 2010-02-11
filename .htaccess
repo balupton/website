@@ -3,13 +3,13 @@ RewriteEngine On
 
 RewriteCond %{HTTP_HOST} mydance.com.au$ [NC]
 RewriteCond %{HTTP_HOST} !.mydance.com.au$ [NC]
-RewriteRule ^/?(.*)$ http://www.mydance.com.au/$1 [R=301,QSA,L]
+RewriteRule ^/?(.*)$ http://www.mydance.com.au/$1 [R=301,QSA,PT,L]
 
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^.*$ - [L]
+RewriteRule ^.*$ - [PT,L]
 
 RewriteCond %{REQUEST_FILENAME} !(jpe?g|bmp|tiff|png|gif|js|css)$
-RewriteRule ^.*$ index.php [QSA,L]
+RewriteRule ^.*$ index.php [QSA,PT,L]

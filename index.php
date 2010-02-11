@@ -19,6 +19,11 @@ if ( !isset($_SERVER) ) {
 if ( empty($_SERVER['DOCUMENT_ROOT']) ) {
 	$_SERVER['DOCUMENT_ROOT'] = realpath(dirname(__FILE__).'/../../');
 }
+if ( empty($_SERVER['SCRIPT_FILENAME']) ) {
+	$_SERVER['SCRIPT_FILENAME'] = realpath(__FILE__);
+} else {
+	$_SERVER['SCRIPT_FILENAME'] = realpath($_SERVER['SCRIPT_FILENAME']);
+}
 
 // Debug Secret
 define('DEBUG_SECRET',						md5(APPLICATION_ROOT_PATH));
@@ -27,19 +32,22 @@ define('DEBUG_SECRET',						md5(APPLICATION_ROOT_PATH));
 if ( in_array($_SERVER['DOCUMENT_ROOT'], array('/Users/balupton/Server/htdocs','/usr/local/zend/apache2/htdocs')) ) {
 	// Development Environment
 	define('APPLICATION_ENV', 				'development');
-	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
+	if ( substr($_SERVER['SCRIPT_FILENAME'],0,strlen($_SERVER['DOCUMENT_ROOT'])) === $_SERVER['DOCUMENT_ROOT'] )
+		define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
+	else // we are located in a apache alias'd directory
+		define('ROOT_PATH', 					substr($_SERVER['SCRIPT_FILENAME'],0,strrpos($_SERVER['SCRIPT_FILENAME'],'/htdocs')).'/htdocs');
 	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
 	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/config'));
 	
 	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
 	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.1-lib'));
 	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
-	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.10.0-lib'));
+	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.10.1-lib'));
 	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-lib'));
 	
 	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/balcms.ini'));
 	define('ROOT_URL',						'http://localhost');
-	define('BASE_URL', 						'/projects/balcms');
+	define('BASE_URL', 						'/~balupton/projects/balcms');
 }
 elseif ( strpos($_SERVER['HTTP_HOST'], 'balcms.com.au') !== false ) {
 	// Production Server
