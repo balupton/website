@@ -17,9 +17,7 @@
 	    <h2>
 			Media Library
 			<a class="button add-new-h2" id="media-add">Add New</a>
-			<input type="file" id="media-file" name="media" class="hide" />
-			<input type="hidden" name="MAX_FILE_SIZE" value="<?=filesize_from_human(ini_get('upload_max_filesize').'B')?>" />
-			<span class="little"><?=$this->locale()->translate('file-upload-size',$this->locale()->filesize(filesize_from_human(ini_get('upload_max_filesize').'B')))?></span>
+			<?=$this->formFile('media[file]')?>
 			<input type="submit" id="media-submit" class="hide" />
 			<script type="text/javascript">
 				$(function(){
