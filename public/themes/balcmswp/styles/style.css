@@ -269,28 +269,44 @@ label {
 	background: transparent url("../images/menu.png") no-repeat scroll -272px -1px;
 }
 
-#adminmenu #menu-back-media div.wp-menu-image {
+#adminmenu #menu-back-main-media div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -121px -33px;
 }
-#adminmenu #menu-back-media:hover div.wp-menu-image,
-#adminmenu #menu-back-media.wp-has-current-submenu div.wp-menu-image {
+#adminmenu #menu-back-main-media:hover div.wp-menu-image,
+#adminmenu #menu-back-main-media.wp-has-current-submenu div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -121px -1px;
 }
 
-#adminmenu #menu-back-subscription div.wp-menu-image {
+#adminmenu #menu-back-main-subscription div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -91px -33px;
 }
-#adminmenu #menu-back-subscription:hover div.wp-menu-image,
-#adminmenu #menu-back-subscription.wp-has-current-submenu div.wp-menu-image {
+#adminmenu #menu-back-main-subscription:hover div.wp-menu-image,
+#adminmenu #menu-back-main-subscription.wp-has-current-submenu div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -91px -1px;
 }
 
-#adminmenu #menu-back-content div.wp-menu-image {
+#adminmenu #menu-back-main-content div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -151px -33px;
 }
-#adminmenu #menu-back-content:hover div.wp-menu-image,
-#adminmenu #menu-back-content.wp-has-current-submenu div.wp-menu-image {
+#adminmenu #menu-back-main-content:hover div.wp-menu-image,
+#adminmenu #menu-back-main-content.wp-has-current-submenu div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -151px -1px;
+}
+
+#adminmenu #menu-back-main-user div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -301px -33px;
+}
+#adminmenu #menu-back-main-user:hover div.wp-menu-image,
+#adminmenu #menu-back-main-user.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -301px -1px;
+}
+
+#adminmenu #menu-back-main-event div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -1px -33px;
+}
+#adminmenu #menu-back-main-event:hover div.wp-menu-image,
+#adminmenu #menu-back-main-event.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -1px -1px;
 }
 
 #adminmenu #menu-comments div.wp-menu-image {
@@ -302,14 +318,6 @@ label {
 	background: transparent url("../images/menu.png") no-repeat scroll -31px -1px;
 }
 
-#adminmenu #menu-back-event div.wp-menu-image {
-	background: transparent url("../images/menu.png") no-repeat scroll -1px -33px;
-}
-#adminmenu #menu-back-event:hover div.wp-menu-image,
-#adminmenu #menu-back-event.wp-has-current-submenu div.wp-menu-image {
-	background: transparent url("../images/menu.png") no-repeat scroll -1px -1px;
-}
-
 #adminmenu #menu-plugins div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -181px -33px;
 }
@@ -318,13 +326,6 @@ label {
 	background: transparent url("../images/menu.png") no-repeat scroll -181px -1px;
 }
 
-#adminmenu #menu-user div.wp-menu-image {
-	background: transparent url("../images/menu.png") no-repeat scroll -301px -33px;
-}
-#adminmenu #menu-user:hover div.wp-menu-image,
-#adminmenu #menu-user.wp-has-current-submenu div.wp-menu-image {
-	background: transparent url("../images/menu.png") no-repeat scroll -301px -1px;
-}
 
 #adminmenu #menu-tools div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -211px -33px;

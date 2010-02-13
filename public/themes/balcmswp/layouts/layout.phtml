@@ -53,11 +53,11 @@
                                 | <a href="<?=$this->url(array('action'=>'logout'),'back',true)?>" title="Log Out">Log Out</a>
                             </p>
                         </div>
-	                    <?=true?'':$this->navigation()->menu()->setPartial(array('navigation/favorites.phtml', 'default'))->setContainer($this->NavigationFavorites)->render()?>
+	                    <?=true?'':$this->app()->getNavigationMenu('back.fav')->setPartial(array('navigation/favorites.phtml', 'default'))->render()?>
                     </div>
                 </div>
                 <div id="wpbody">
-					<?=$this->navigation()->menu()->setPartial(array('navigation/menu.phtml', 'default'))->setContainer($this->NavigationMenu)->render()?>
+					<?=$this->app()->getNavigationMenu('back.main')->setPartial(array('navigation/menu.phtml', 'default'))->render()?>
 					<div id="wpbody-content">
                         <?= $this->layout()->content?>
                         <div class="clear">
