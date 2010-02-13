@@ -3,9 +3,9 @@
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
 	// Users
-	$UserList = delve($this,'Users');
+	$UserList = delve($this,'UserList');
 	// Type
-	$type = $this->type;
+	$type = delve($this,'type','user');
 	$Type = ucfirst($type);
 	// Title
 	$this->headTitle()->append($Type);
@@ -90,9 +90,9 @@
 					$_User_email = delve($_User,'email');
 					$_User_type = delve($_User,'type');
 					$_User_status = delve($_User,'status');
-					$_User_created_at = delve($_Content,'created_at');
+					$_User_created_at = delve($_User,'created_at');
 					$_User_Avatar = delve($_User,'Avatar');
-            		$_User_url = $this->content()->getUserUrl($_User);
+            		$_User_url = $this->app()->getUserUrl($_User);
             		$_User_url_edit = $this->url(array('action'=>'user-edit','username'=>$_User_username),'back',true);
             		$_User_url_delete = $this->url(array('action'=>'user-delete','username'=>$_User_username),'back',true);
             		$_User_url_messages = $this->url(array('action'=>'user-messages','username'=>$_User_username),'back',true);
@@ -102,15 +102,15 @@
                 	<td class="column-icon media-icon">
 						<a title="View <?=$_User_username?>" href="<?=$_User_url_edit?>">
 							<? if ( $_User_Avatar ) : ?>
-            					<? $_User_Avatar_url = $this->content()->getMediaUrl($_User_Avatar); ?>
+            					<? $_User_Avatar_url = $this->app()->getMediaUrl($_User_Avatar); ?>
 								<img height="60" title="<?=$_User_username?>" alt="" class="attachment-80x60" src="<?=$_User_Avatar_url?>?h=60"/>
-							<? else: ?>
+							<? elseif ( false ): ?>
 								<img width="46" height="60" title="<?=$_User_username?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>
 							<? endif; ?>
 						</a>
 					</td>
                     <td class="post-title page-title column-title">
-						<?=$this->formHidden('user[id]', $_User_id))?>
+						<?=$this->formHidden('user[id]', $_User_id)?>
                         <strong><a class="row-title" href="<?=$_User_url_edit?>" title="Open this">
                         	<?=$_User_username?>
 						</a></strong>

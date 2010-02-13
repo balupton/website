@@ -117,6 +117,47 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return true;
 	}
 
+
+	# ========================
+	# USER
+	
+
+	public function userAction ( ) {
+		# Redirect
+		return $this->_forward('user-list');
+	}
+
+	public function userListAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$App->activateNavigationItem('back.main', 'user-list', true);
+		$UserList = array();
+		$search = $this->_getParam('search', false);
+		
+		# Prepare
+		$ListQuery = Doctrine_Query::create()->select('u.id, u.displayname, u.username, u.created_at, u.email, u.type')->from('User u')->orderBy('u.username ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		
+		# Handle
+		if ( $search ) {
+			// Search
+			$Query = Doctrine::getTable('User')->search($search, $ListQuery);
+			$UserList = $Query->execute();
+		} else {
+			// No Search
+			$UserList = $ListQuery->execute();
+		}
+		
+		# Apply
+		$this->view->UserList = $UserList;
+		
+		# Render
+		$this->render('user/user-list');
+		
+		# Done
+		return true;
+	}
+	
+	
 	# ========================
 	# SUBSCRIPTION
 	
