@@ -1,5 +1,15 @@
 @CHARSET "UTF-8";
 
+.max_file_size_text {
+	display:block;
+	color:#666666;
+	font-size:11px;
+	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+	font-size:12px;
+	font-style:italic;
+	margin:2px 0 5px;
+}
+
 .sparkle-highlight-values-notempty {
 	font-weight:bold;
 	color:black;
