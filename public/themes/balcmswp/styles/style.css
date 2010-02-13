@@ -19,6 +19,10 @@
 	padding:0 0 0.5em;
 }
 
+.field .max_file_size_text {
+	display:block;
+	margin:2px 0 5px;
+}
 .field .label {
 	font-weight: normal;
 }
