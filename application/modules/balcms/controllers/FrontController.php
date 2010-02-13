@@ -7,14 +7,17 @@ class Balcms_FrontController extends Zend_Controller_Action {
 	
 
 	public function init ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		
 		# Layout
-		$this->getHelper('App')->getApp()->setArea('front');
+		$App->setArea('front');
 		
 		# Login
-		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'back'));
+		$App->setOption('logged_in_forward', array('index', 'back'));
 		
 		# Authenticate
-		$this->getHelper('App')->authenticate(false, false);
+		$App->authenticate(false, false);
 		
 		# Navigation
 		$this->applyNavigation();
@@ -24,6 +27,10 @@ class Balcms_FrontController extends Zend_Controller_Action {
 	}
 
 	public function applyNavigation ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$App->applyNavigation();
+		
 		# Content
 		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.code, c.id, c.parent_id, c.position, cr.*')->from('Content c, c.Route cr')->where('c.enabled = ? AND c.status = ? AND NOT EXISTS (SELECT cp.id FROM Content cp WHERE cp.id = c.parent_id)', array(true, 'published'))->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
@@ -36,40 +43,32 @@ class Balcms_FrontController extends Zend_Controller_Action {
 			$Content['route'] = 'map';
 		}
 		
-		# Navigation Menu
-		$NavTree = array_tree_round($ContentListArray, 'id', 'parent_id', 'level', 'position', 'pages', array('id', 'route', 'order', 'uri', 'label', 'title', 'children', 'map', 'params'));
-		$this->view->NavigationMenu = new Zend_Navigation($NavTree);
-		
-		# Module Config
-		$module_path = Zend_Controller_Front::getInstance()->getModuleDirectory('balcms');
-		$module_config_path = $module_path . '/config';
-		
 		# Navigation
-		$NavFront = file_get_contents($module_config_path . '/nav-front.json');
-		$NavFront = Zend_Json::decode($NavFront, Zend_Json::TYPE_ARRAY);
-		$this->view->NavigationActions = new Zend_Navigation($NavFront['actions']);
-		$this->view->NavigationFooter = new Zend_Navigation($NavFront['footer']);
+		$NavTree = array_tree_round($ContentListArray, 'id', 'parent_id', 'level', 'position', 'pages', array('id', 'route', 'order', 'uri', 'label', 'title', 'children', 'map', 'params'));
+		$App->applyNavigationMenu('front.menu', new Zend_Navigation($NavTree));
 		
 		# Done
 		return true;
 	}
-
-	public function activateNavigationActionItem ( $code ) {
-		return $this->getHelper('App')->getApp()->activateNavigationItem($this->view->NavigationActions, 'action-' . $code);
-	}
-
-	public function activateNavigationMenuItem ( $Content ) {
-		$result = false;
-		while ( $result === false ) {
-			$code = $Content->code;
-			$result = $this->getHelper('App')->getApp()->activateNavigationItem($this->view->NavigationMenu, 'content-' . $code);
-			if ( empty($Content->parent_id) )
-				break;
-			$Content = $Content->Parent;
-		}
+	
+	public function activateNavigationContentItem ( $Content ) { 
+		# Prepare
+		$App = $this->getHelper('App');
+		$result = false; 
+		
+		# Handle
+		while ( $result === false ) { 
+			$code = $Content->code; 
+			$result = $App->activateNavigationItem('front.menu', 'content-'.$Content->code, false, false);
+			if ( empty($Content->parent_id) ) 
+				break; 
+			$Content = $Content->Parent; 
+		} 
+		
+		# Done
 		return $result;
-	}
-
+	} 
+	
 	# ========================
 	# INDEX
 	
@@ -88,6 +87,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		# Forward
 		return $this->_forward('content-page', null, null, array('id' => $content));
 	}
+	
 
 	# ========================
 	# CONTENT
@@ -95,6 +95,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 
 	public function searchAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
 		$search = $this->_getParam('search');
 		
 		# Check
@@ -113,7 +114,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$this->view->search = $search;
 		$this->view->ContentList = $ContentList;
 		$this->view->headTitle()->append('Search');
-		$this->activateNavigationActionItem('search');
+		//$App->activateNavigationActionItem('front.actions','search',true);
 		
 		# Render
 		$this->render('content/search');
@@ -124,6 +125,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 
 	public function unsubscribeAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
 		$Request = $this->getRequest();
 		$Response = $this->getResponse();
 		
@@ -151,6 +153,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 
 	public function subscribeAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
 		$Request = $this->getRequest();
 		$Response = $this->getResponse();
 		$Log = Bal_App::getLog();
@@ -182,6 +185,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 
 	public function contentPageAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
 		$Request = $this->getRequest();
 		$Response = $this->getResponse();
 		
@@ -207,7 +211,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$this->view->headTitle()->append($Content->title);
 		$this->view->headMeta()->appendName('description', strip_tags($Content->description_rendered));
 		$this->view->headMeta()->appendName('keywords', $keywordstr);
-		$this->activateNavigationMenuItem($Content);
+		$this->activateNavigationContentItem($Content);
 		
 		# Render
 		$this->render('content/content-' . $Content->type);
@@ -215,5 +219,6 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		# Done
 		return true;
 	}
+	
 
 }

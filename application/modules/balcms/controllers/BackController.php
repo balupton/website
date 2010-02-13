@@ -108,7 +108,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function dashboardAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back', 'dashboard');
+		$App->activateNavigationItem('back.main', 'dashboard', true);
 		
 		# Render
 		$this->render('index/dashboard');
@@ -129,7 +129,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function subscriberListAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back', 'subscriber-list');
+		$App->activateNavigationItem('back.main', 'subscriber-list', true);
 		$SubscriberList = array();
 		$search = $this->_getParam('search', false);
 		
@@ -181,7 +181,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function mediaEditAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back', 'media-list');
+		$App->activateNavigationItem('back.main', 'media-list', true);
 		
 		# Prepare
 		$Media = array();
@@ -212,7 +212,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function mediaNewAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back', 'media-edit');
+		$App->activateNavigationItem('back.main', 'media-edit', true);
 		$Media = array();
 		
 		# Save
@@ -241,7 +241,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function mediaListAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back', 'media-list');
+		$App->activateNavigationItem('back.main', 'media-list', true);
 		$MediaList = array();
 		$search = $this->_getParam('search', false);
 		
@@ -387,7 +387,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$type = $Content->type;
 		
 		# Menu
-		$App->activateNavigationItem('back', $type.'-list');
+		$App->activateNavigationItem('back.main', $type.'-list', true);
 		
 		# Fetch
 		$ContentArray = $Content->toArray();
@@ -415,7 +415,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		$type = $this->_getParam('type', 'content');
-		$App->activateNavigationItem('back', $type.'-edit');
+		$App->activateNavigationItem('back.main', $type.'-edit');
 		$Content = $ContentCrumb = array();
 		
 		# Save
@@ -464,7 +464,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		$type = $this->_getParam('type', 'content');
-		$App->activateNavigationMenuItem('back', $type.'-list');
+		$App->activateNavigationItem('back.main', $type.'-list', true);
 		$content = $this->_getParam('content', false);
 		$search = $this->_getParam('search', false);
 		$Content = $ContentCrumb = $ContentList = $ContentArray = array();

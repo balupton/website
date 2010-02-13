@@ -1,0 +1,146 @@
+{
+	"front": {
+		"actions": [{
+			"id": "front-action-home",
+			"label": "Home",
+			"route": "app"
+		},{
+			"id": "front-action-contact",
+			"label": "Contact Us",
+			"uri": "mailto:contact@mydance.com.au",
+			"class": "gsfn"
+		}],
+		"footer": [{
+			"id": "front-action-contact",
+			"label": "Contact Us",
+			"uri": "mailto:contact@mydance.com.au",
+			"class": "gsfn"
+		}]
+	},
+	"back": {
+		"fav": [{
+			"id": "back-fav-content-new",
+			"resource": "content",
+			"label": "New Content",
+			"action": "content-new",
+			"route": "back"
+		},{
+			"id": "back-fav-event-new",
+			"resource": "event",
+			"label": "New Event",
+			"action": "event-new",
+			"route": "back"
+		},{
+			"id": "back-fav-media-new",
+			"resource": "media",
+			"label": "New Media",
+			"action": "media-new",
+			"route": "back"
+		},{
+			"id": "back-fav-user-new",
+			"resource": "user",
+			"label": "New User",
+			"action": "user-new",
+			"route": "back"
+		}],
+		"main": [{
+			"label": "---",
+			"uri": "#"
+		},{
+			"id": "back-main-content",
+			"resource": "content",
+			"label": "Content",
+			"action": "content",
+			"route": "back",
+			"pages": [{
+				"id": "back-main-content-list",
+				"resource": "content",
+				"label": "Content",
+				"action": "content-list",
+				"route": "back",
+				"class": "parent"
+			},{
+				"id": "back-main-content-edit",
+				"resource": "content",
+				"label": "&mdash; New Content",
+				"action": "content-new",
+				"route": "back",
+				"class": "child"
+			}]
+		},{
+			"id": "back-main-event",
+			"resource": "event",
+			"label": "Events",
+			"action": "event",
+			"route": "back",
+			"pages": [{
+				"id": "back-main-event-list",
+				"resource": "event",
+				"label": "Events",
+				"action": "event-list",
+				"route": "back",
+				"class": "parent"
+			},{
+				"id": "back-main-event-edit",
+				"resource": "event",
+				"label": "&mdash; New Event",
+				"action": "event-new",
+				"route": "back",
+				"class": "child"
+			}]
+		},{
+			"id": "back-main-user",
+			"resource": "user",
+			"label": "Users",
+			"action": "user",
+			"route": "back",
+			"pages": [{
+				"id": "back-main-user-list",
+				"resource": "user",
+				"label": "Users",
+				"action": "user-list",
+				"route": "back",
+				"class": "parent"
+			},{
+				"id": "back-main-user-edit",
+				"resource": "user",
+				"label": "&mdash; New User",
+				"action": "user-new",
+				"route": "back",
+				"class": "child"
+			}]
+		},{
+			"id": "back-main-subscription",
+			"resource": "subscription",
+			"label": "Subscriptions",
+			"action": "subscription",
+			"route": "back",
+			"pages": [{
+				"id": "back-main-subscriber-list",
+				"resource": "subscription",
+				"label": "Subscribers",
+				"action": "subscriber-list",
+				"route": "back",
+				"class": "parent"
+			}]
+		},{
+			"id": "back-main-media",
+			"resource": "media",
+			"label": "Media",
+			"action": "media",
+			"route": "back",
+			"class": "menu-top-last",
+			"pages": [{
+				"id": "back-main-media-list",
+				"resource": "media",
+				"label": "Media",
+				"action": "media-list",
+				"route": "back",
+				"class": "parent"
+			}]
+		},{
+			"label": "---",
+			"uri": "#"
+		}]
+	}
+}
