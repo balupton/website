@@ -460,7 +460,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Content = $ContentCrumb = $ContentList = $ContentArray = array();
 		
 		# Prepare
-		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.enabled = ? AND c.type = ?', array(true, $type))->orderBy('c.position ASC, c.id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.enabled = ?', true)->orderBy('c.position ASC, c.id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		if ( $type !== 'content' ) {
+			$ListQuery->andWhere('c.type = ?', $type);
+		}
 		
 		# Handle
 		if ( $search ) {

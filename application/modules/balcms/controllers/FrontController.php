@@ -153,6 +153,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		# Prepare
 		$Request = $this->getRequest();
 		$Response = $this->getResponse();
+		$Log = Bal_App::getLog();
 		
 		# Fetch
 		$email = $this->_getParam('email');
@@ -163,6 +164,11 @@ class Balcms_FrontController extends Zend_Controller_Action {
 			$Subscriber->email = $email;
 			$Subscriber->setTags('newsletter');
 			$Subscriber->save();
+			# Log
+			$log_details = array(
+				'Subscriber'		=> $Subscriber->toArray(),
+			);
+			$Log->log(array('log-subscriber-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
 		}
 		catch ( Exception $Exception ) {
 			# Log the Event

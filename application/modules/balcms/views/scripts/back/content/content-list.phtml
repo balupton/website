@@ -117,7 +117,7 @@
 						</a>
 					</td>
                     <td class="post-title page-title column-title">
-                    	<input type="hidden" name="content[id]" class="content-id" value="<?=delve($_Content,'id')?>" />
+						<?=$this->formHidden('content[id]', delve($_Content,'id'))?>
                         <strong><a class="row-title" href="<?=$contentOpenUrl?>" title="Open this">
                         	<?=/*str_repeat('&nbsp;',$Content['level']).' '.*/delve($_Content,'title')?>
 						</a></strong>

@@ -38,7 +38,7 @@
 	</h2>
 	<?=$this->log()->render()?>
 	<form action="" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="content[type]" value="<?=$type?>" />
+		<?=$this->formHidden('content[type]', $type)?>
 		<div class="metabox-holder has-right-sidebar">
 			<div id="side-info-column" class="inner-sidebar">
 				<div id='side-sortables' class='meta-box-sortables sidebar-boxes'>
@@ -49,8 +49,8 @@
 							<div id="minor-publishing">
 								<div id="minor-publishing-actions">
 									<?if($mode_edit):?>
-									<!-- Open Action -->
-									<a class="button button-action right" id="action-open" tabindex="4" href="<?=$this->content()->getContentUrl($Content)?>" >Open</a>
+										<!-- Open Action -->
+										<a class="button button-action right" id="action-open" tabindex="4" href="<?=$this->content()->getContentUrl($Content)?>" >Open</a>
 									<?endif;?>
 									<!-- Preview Action -->
 									<!-- <a class="button button-action right" id="action-preview" tabindex="4">Preview</a>  -->
@@ -62,17 +62,8 @@
 										<span id="content-status-view" class="field-value"><?=ucfirst(delve($Content,'status'))?></span>
 										<span id="content-status-edit" class="hide">
 											<br/>
-											<select name="content[status]" id="content-status" tabindex="4">
-												<? foreach ( Doctrine::getTable('Content')->getEnumValues('status') as $value ):
-													echo '<option '.(delve($Content,'status')==$value?'selected="selected" ':'').' value="'.$value.'">'.ucfirst($value).'</option>';
-												endforeach; ?>
-											</select>
+											<?=$this->formDoctrine('content[status]', delve($Content,'status'), array(), 'Content','status')?>
 										</span>
-										<script type="text/javascript">
-											$("#content-status-view").inlineEdit({
-												edit: "#content-status-edit"
-											});
-										</script>
 									</div>
 									<? if ( $Content_Author ) :
 			                        	$author = delve($Content_Author, 'displayname');
@@ -83,7 +74,7 @@
 			                        	$author_link = '<a href="'.$author_url.'" title="View all content by '.$author.'">'.$author.'</a>';
 										?>
 										<div class="misc-pub-section field" id="content-author-field">
-											<label for="content-author">Author:</label>
+											<label>Author:</label>
 											<span class="field-value" id="content-author-view"><?=$author_link?></span>
 										</div>
 									<? endif; ?>
@@ -92,13 +83,8 @@
 										<span class="field-value" id="content-published_at-view"><?=$this->locale()->datetime(delve($Content,'published_at'))?></span>
 										<span id="content-published_at-edit" class="hide">
 											<br/>
-											<input type="text" name="content[published_at]" id="content-published_at" value="<?=delve($Content,'published_at')?>" class="sparkle-datetime"></input>
+											<?=$this->formDatetime('content[published_at]', delve($Content,'published_at'))?>
 										</span>
-										<script type="text/javascript">
-											//$("#content-published_at-view").inlineEdit({
-											//	edit: "#content-published_at-edit"
-											//});
-										</script>
 									</div>
 								</div>
 								<div class="clear">
@@ -123,14 +109,11 @@
 						<h3>Tags</h3>
 						<div class="inside">
 							<label class="screen-reader-text" for="content-tags">Post Tags</label>
-							<textarea id="content-tags" name="content[tags]" class="form-input-tip autosize" title="Add tags"><?=delve($Content,'tagstr')?></textarea>
+							<?=$this->formTextarea('content[tags]',delve($Content,'tagstr'),array('class'=>'form-input-tip autosize','title'=>'Add tags'))?>
 							<p class="description">
 								Add your tags to the post above, separating them with commas.
 							</p>
 						</div>
-						<script type="text/javascript">
-							$('#sidebar-tags-box h3').help('Tags are the keywords used to find your content during a search.');
-						</script>
 					</div>
 					
 					<div id="sidebar-avatar-box" class="postbox sidebar-box">
@@ -146,33 +129,19 @@
 									</a>
 								</div>
 								<div class="avatar field">
-									<input type="checkbox" id="content-avatar-delete" name="content_avatar_delete" value="true" />
+									<?=$this->formCheckbox('content[avatar][delete]', 'true')?>
 									<label for="content-avatar-delete">
 										Delete?
 									</label>
 								</div>
 							<? endif; ?>
 							<div class="field">
-								<label for="content-avatar">
+								<label for="content-avatar-file">
 									Want to upload a different image?
 								</label>
-								<input type="file" id="content-avatar"  name="avatar"" />
-								<input type="hidden" name="MAX_FILE_SIZE" value="<?=filesize_from_human(ini_get('upload_max_filesize').'B')?>" />
-								<p class="description"><span class="little"><?
-									echo $this->locale()->translate(
-										'file-upload-size',
-										$this->locale()->filesize(
-											filesize_from_human(
-												ini_get('upload_max_filesize').'B'
-											)
-										)
-									)
-								?></span></p>
+								<?=$this->formFile('content[avatar][file]')?>
 							</div>
 						</div>
-						<script type="text/javascript">
-							$('#sidebar-avatar-box h3').help('Avatars display side by side your content. They are a nice visual addition and will be uploaded to your media directory.');
-						</script>
 					</div>
 					
 					<div id="sidebar-subscription-box" class="postbox sidebar-box">
@@ -180,7 +149,7 @@
 						<div class="inside">
 							<? if ( delve($Content,'send_status') === 'none' ): ?>
 								<div class="field">
-									<input type="checkbox" id="subscription-tags" name="subscription[tags]" value="newsletter" />
+									<?=$this->formCheckbox('subscription[tags][]', 'newsletter')?>
 									<label for="subscription-tags">
 										Send out as a
 										<a href="<?=$this->url(array('controller'=>'subscription','action'=>'content-list'),'back',true)?>" title="go to Sent Content List">newsletter</a>
@@ -195,9 +164,6 @@
 								</div>
 							<? endif; ?>
 						</div>
-						<script type="text/javascript">
-							$('#sidebar-subscription-box h3').help('Subscribers are visitors of the website which have marked themselves down to receive email notificationsom from the website.');
-						</script>
 					</div>
 					
 				</div>
@@ -208,7 +174,7 @@
 						<label class="screen-reader-text" for="content-title">
 							Title
 						</label>
-						<input type="text" name="content[title]" id="content-title" tabindex="1" value="<?=delve($Content,'title')?>" autocomplete="off" class="form-input-tip" title="Title" />
+						<?=$this->formText('content[title]', delve($Content,'title'), array('tabindex'=>1,'autocomplete'=>'off','class'=>'form-input-tip','title'=>'Title'))?>
 					</div>
 					<div id="content-parent-field" class="field field-little">
 						<label for="content-parent">
@@ -217,6 +183,7 @@
 						<select name="content[parent]" id="content-parent">
 							<option <?=($Content_Parent ? 'selected="selected" ':'')?> value="0">- Top Level</option>
 							<?
+							$current = delve($Content_Parent,'id');
 							$skip = $skip_factor = false;
 							foreach( $ContentList as $_Content ):
 								if ( $skip ) {
@@ -230,70 +197,35 @@
 									$skip_factor = delve($_Content,'id');
 									continue;
 								}
-								echo '<option '.(delve($Content_Parent,'id')==delve($_Content,'id')?'selected="selected" ':'').' value="'.delve($_Content,'id').'" title="'.delve($_Content,'Route.path').'">'.
-									str_repeat('&nbsp;', ((int)delve($_Content,'level'))*2+2).'-&nbsp;'.delve($_Content,'title').
-								'</option';
-							endforeach; ?>
+								$option = array(
+									'value' => delve($_Content,'id'),
+									'title' => delve($_Content,'Route.path'),
+									'label' => str_repeat('&nbsp;', ((int)delve($_Content,'level'))*2+2).'-&nbsp;'.delve($_Content,'title')
+								);
+								echo '<option '.($current==$option['value']?'selected="selected" ':'').' value="'.$option['value'].'" title="'.$option['title'].'">'.
+									$option['label'].
+								'</option>';
+							endforeach;
+							?>
 						</select>
 					</div>
 					<div id="content-code-field" class="field field-little">
 						<label for="content-code">
 							Location:
 						</label>
-						<span class="inline-edit-clickable"><?=$baseFullUrl?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=delve($Content,'code')?></span><input type="text" name="content[code]" id="content-code" value="<?=delve($Content,'code')?>" />/
+						<span class="inline-edit-clickable"><?=$baseFullUrl?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=delve($Content,'code')?></span><?=$this->formText('content[code]', delve($Content,'code'))?>/
 						<span class="inline-edit-panel" id="content-code-panel"></span>
 					</div>
-					<script type="text/javascript">
-						$(function(){
-							var update_slug = true;
-							var $edit = $('#content-code');
-							var $view = $('#content-code-view');
-							var $title = $('#content-title');
-							var $parent_path = $('#content-parent-path');
-							var $parent = $('#content-parent');
-							$parent.change(function(){
-								$parent_path.text($parent.val().toInt() ? $parent.find('option:selected').attr('title').strip('/')+'/' : '');
-								return true;
-							}).trigger('change');
-							$view.inlineEdit('editbutton', {
-								edit: $edit,
-								panel: '#content-code-panel',
-								update: function(e,els,config) {
-									update_slug = false;
-									els.$view.html(els.$edit.value().toSlug());
-									els.$views.show();
-									els.$edits.hide();
-									return true;
-								}
-							});
-							if ( update_slug && (!$edit.val() || $edit.val() === $title.text().toSlug()) ) {
-								// We are not already a custom slug
-								$title.change(function(){
-									if ( !update_slug ) return true;
-									var val = $(this).val();
-									var slug = val.toSlug();
-									$edit.val(slug);
-									$view.text(slug);
-									return true;
-								});
-							}
-						});
-					</script>
 					
 					<div id="content-content-field" class="field field-rich ">
-						<textarea name="content[content]" tabindex="2" id="content-content"><?=delve($Content,'content')?></textarea>
-						<script type="text/javascript">$(function(){$('#content-content').editor('rich');});</script>
+						<?=$this->formTextarea('content[content]', delve($Content,'content'), array('rows'=>5,'tabindex'=>2))?>
 					</div>
 					
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Excerpt</h3>
 						<div class="inside">
-							<textarea rows="3" cols="40" name="content[description]" tabindex="4" id="content-description"><?=delve($Content,'description')?></textarea>
+							<?=$this->formTextarea('content[description]', delve($Content,'description'), array('rows'=>3,'tabindex'=>4))?>
 						</div>
-						<script type="text/javascript">
-							$('#content-description-field h3').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');
-							$('#content-description').editor('simple');
-						</script>
 					</div>
 					
 					<? if ( $type === 'event' ): ?>
@@ -302,11 +234,11 @@
 						<div class="inside">
 							<p>
 								<label for="content-event-start-at">Start time:</label>
-								<input type="text" class="jquery-datetime" name="content[event_start_at]" id="content-event-start-at" value="<?=delve($Content,'event_start_at')?>" />
+								<?=$this->formDatetime('content[event_start_at]', delve($Content,'event_start_at'))?>
 							</p>
 							<p>
 								<label for="content-event-finish-at">Finish time:</label>
-								<input type="text" class="jquery-datetime" name="content[event_finish_at]" id="content-event-finish-at" value="<?=delve($Content,'event_finish_at')?>" />
+								<?=$this->formDatetime('content[event_finish_at]', delve($Content,'event_finish_at'))?>
 							</p>
 						</div>
 					</div>
@@ -320,3 +252,56 @@
 </div>
 <div class="clear">
 </div>
+<script type="text/javascript">
+$(function(){
+	$("#content-status-view").inlineEdit({
+		edit: "#content-status-edit"
+	});
+	//
+	//$("#content-published_at-view").inlineEdit({
+	//	edit: "#content-published_at-edit"
+	//});
+	//
+	$('#sidebar-tags-box h3').help('Tags are the keywords used to find your content during a search.');
+	$('#sidebar-avatar-box h3').help('Avatars display side by side your content. They are a nice visual addition and will be uploaded to your media directory.');
+	$('#sidebar-subscription-box h3').help('Subscribers are visitors of the website which have marked themselves down to receive email notifications from the website.');
+	//
+	var update_slug = true;
+	var $edit = $('#content-code');
+	var $view = $('#content-code-view');
+	var $title = $('#content-title');
+	var $parent_path = $('#content-parent-path');
+	var $parent = $('#content-parent');
+	$parent.change(function(){
+		$parent_path.text($parent.val().toInt() ? $parent.find('option:selected').attr('title').strip('\\/')+'/' : '');
+		return true;
+	}).trigger('change');
+	$view.inlineEdit('editbutton', {
+		edit: $edit,
+		panel: '#content-code-panel',
+		update: function(e,els,config) {
+			update_slug = false;
+			els.$view.html(els.$edit.value().toSlug());
+			els.$views.show();
+			els.$edits.hide();
+			return true;
+		}
+	});
+	if ( update_slug && (!$edit.val() || $edit.val() === $title.text().toSlug()) ) {
+		// We are not already a custom slug
+		$title.change(function(){
+			if ( !update_slug ) return true;
+			var val = $(this).val();
+			var slug = val.toSlug();
+			$edit.val(slug);
+			$view.text(slug);
+			return true;
+		});
+	}
+	//
+	$('#content-content').editor('rich');
+	//
+	$('#content-description-field h3').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');
+	$('#content-description').editor('simple');
+});
+</script>

@@ -40,8 +40,14 @@ foreach ($this->container as $Page ) :
 	}
 
 	// Display
-	echo '<li id="'.($Page->id?$id_prefix.$Page->id:'').'" class="'.implode(' ',$class).'" >';
-
+	$li = $this->HtmlElement(
+		'li',
+		true,
+		array('id'=>($Page->id?$id_prefix.$Page->id:''),'class'=>implode(' ',$class)),
+		true,
+		false
+	);
+	echo $li;
 	// Handle
 	if ( $sep ) {
 		// Sep
@@ -59,7 +65,9 @@ foreach ($this->container as $Page ) :
 			<br/>
 		</div><?
 		$Page->class = 'menu-title';
-		echo html_entity_decode($this->navigation()->menu()->htmlify($Page)), PHP_EOL;
+		$Page->id = null;
+		$page = html_entity_decode($this->navigation()->menu()->htmlify($Page)).PHP_EOL;
+		echo $page;
 		// Submenu
 		if ( $children ) : ?>
 			<div class="wp-submenu">
@@ -80,12 +88,17 @@ foreach ($this->container as $Page ) :
 							$class[] = 'wp-first-item';
 							$first_ = false;
 						}
+						// Prepare
+						$SubPage->id = null;
+						$subpage = html_entity_decode($this->navigation()->menu()->htmlify($SubPage)).PHP_EOL;
+						// Wrap
+						$li = $this->HtmlElement(
+							'li',
+							$subpage,
+							array('id'=>($SubPage->id?$id_prefix.$SubPage->id:''),'class'=>implode(' ',$class))
+						);
 						// Display
-						echo '<li id="'.($SubPage->id?$id_prefix.$SubPage->id:'').'" class="'.implode(' ',$class).'" >';
-						// Handle
-						echo html_entity_decode($this->navigation()->menu()->htmlify($SubPage)), PHP_EOL;
-						// Display
-						echo '</li>', PHP_EOL;
+						echo $li.PHP_EOL;
 					endforeach;?>
 				</ul>
 			</div><?
