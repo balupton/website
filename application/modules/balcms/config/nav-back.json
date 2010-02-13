@@ -70,6 +70,27 @@
 			"class": "child"
 		}]
 	},{
+		"id": "back-user",
+		"resource": "user",
+		"label": "Users",
+		"action": "user",
+		"route": "back",
+		"pages": [{
+			"id": "back-user-list",
+			"resource": "user",
+			"label": "Users",
+			"action": "user-list",
+			"route": "back",
+			"class": "parent"
+		},{
+			"id": "back-user-edit",
+			"resource": "user",
+			"label": "&mdash; New User",
+			"action": "user-new",
+			"route": "back",
+			"class": "child"
+		}]
+	},{
 		"id": "back-subscription",
 		"resource": "subscription",
 		"label": "Subscriptions",

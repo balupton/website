@@ -1,0 +1,146 @@
+<?
+	// URLs
+	$backUrl = $this->app()->getAreaUrl('back');
+	$frontUrl = $this->app()->getAreaUrl('front');
+	// Users
+	$UserList = delve($this,'Users');
+	// Type
+	$type = $this->type;
+	$Type = ucfirst($type);
+	// Title
+	$this->headTitle()->append($Type);
+?><div class="wrap">
+	<!-- Edit Button -->
+    <div id="icon-edit-pages" class="icon32">
+        <br/>
+    </div>
+	<!-- Header -->
+    <h2>
+		<a href="<?=$this->url(array('action'=>'content-list'),'back',true)?>"><?=$Type?> List</a>
+		<a class="button add-new-h2" href="<?=$this->url(array('action'=>'user-new'),'back',true)?>">Create New</a>
+	</h2>
+    <!-- Filters -->
+    <form id="posts-filter" action="<?=$this->url(array('action'=>'user-list'),'back',true)?>" method="get">
+		<!-- Search -->
+        <p class="search-box">
+            <label class="screen-reader-text" for="search-query">
+                Search:
+            </label>
+			<?=$this->formText('search[query]','',array())?>
+			<?=$this->formSubmit('search[submit]','Submit',array('class'=>'button'))?>
+        </p>
+        <div class="clear">
+        </div>
+		<!-- Content Table -->
+        <table class="widefat page fixed" cellspacing="0">
+        	<!-- Content Table: Heading -->
+            <thead>
+                <tr>
+                    <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <input type="checkbox">
+                    </th>-->
+                    <th scope="col" class="manage-column column-icon"></th>
+                    <th scope="col" id="title" class="manage-column column-title" style="">
+                        Username
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        Name
+                    </th>
+                    <th scope="col" id="author" class="manage-column column-author" style="">
+                        Email
+                    </th>
+                    <th scope="col" id="author" class="manage-column column-tags" style="">
+                        Type
+                    </th>
+                    <th scope="col" id="date" class="manage-column column-date" style="">
+                        Joined
+                    </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <input type="checkbox">
+                    </th>-->
+                    <th scope="col" class="manage-column column-icon"></th>
+                    <th scope="col" id="title" class="manage-column column-title" style="">
+                        Username
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        Name
+                    </th>
+                    <th scope="col" id="author" class="manage-column column-author" style="">
+                        Email
+                    </th>
+                    <th scope="col" id="author" class="manage-column column-tags" style="">
+                        Type
+                    </th>
+                    <th scope="col" id="date" class="manage-column column-date" style="">
+                        Joined
+                    </th>
+                </tr>
+            </tfoot>
+			<!-- Content Table: Content -->
+            <tbody id="content-list">
+            	<? foreach ( $UserList as $_User ): ?>
+            	<?
+					$_User_id = delve($_User,'id');
+					$_User_username = delve($_User,'username');
+					$_User_displayname = delve($_User,'displayname');
+					$_User_email = delve($_User,'email');
+					$_User_type = delve($_User,'type');
+					$_User_status = delve($_User,'status');
+					$_User_created_at = delve($_Content,'created_at');
+					$_User_Avatar = delve($_User,'Avatar');
+            		$_User_url = $this->content()->getUserUrl($_User);
+            		$_User_url_edit = $this->url(array('action'=>'user-edit','username'=>$_User_username),'back',true);
+            		$_User_url_delete = $this->url(array('action'=>'user-delete','username'=>$_User_username),'back',true);
+            		$_User_url_messages = $this->url(array('action'=>'user-messages','username'=>$_User_username),'back',true);
+            		$_User_url_login = $this->url(array('action'=>'user-login','username'=>$_User_username),'back',true);
+            	?>
+                <tr id="content-<?=$_User_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTree')->next()?>">
+                	<td class="column-icon media-icon">
+						<a title="View <?=$_User_username?>" href="<?=$_User_url_edit?>">
+							<? if ( $_User_Avatar ) : ?>
+            					<? $_User_Avatar_url = $this->content()->getMediaUrl($_User_Avatar); ?>
+								<img height="60" title="<?=$_User_username?>" alt="" class="attachment-80x60" src="<?=$_User_Avatar_url?>?h=60"/>
+							<? else: ?>
+								<img width="46" height="60" title="<?=$_User_username?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>
+							<? endif; ?>
+						</a>
+					</td>
+                    <td class="post-title page-title column-title">
+						<?=$this->formHidden('user[id]', $_User_id))?>
+                        <strong><a class="row-title" href="<?=$_User_url_edit?>" title="Open this">
+                        	<?=$_User_username?>
+						</a></strong>
+						<div class="row-actions">
+							<span class="edit"><a title="Edit" href="<?=$_User_url_edit?>">Edit</a> | </span>
+							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$_User_username?>" href="<?=$_User_url_delete?>">Delete</a> | </span>
+							<span class="view"><a rel="permalink" title="View <?=$Type?>" href="<?=$_User_url?>">View</a> | </span>
+							<span class="messages"><a title="View Messages" href="<?=$_User_url_messages?>">Messages</a> | </span>
+							<span class="login"><a title="Login as <?=$_User_username?>" href="<?=$_User_url_login?>">Login as</a></span>
+						</div>
+                    </td>
+                    <td class="author column-author">
+                        <?=$_User_displayname?>
+                    </td>
+                    <td class="author column-author">
+                        <?=$_User_email?>
+                    </td>
+                    <td class="author column-tags">
+                        <?=$this->locale()->translate_default('user-type-'.$_User_type, array(), $_User_type)?>
+					</td>
+                    <td class="date column-date">
+                        <abbr title="<?=$this->locale()->datetime($_User_created_at)?>">
+                            <?=$this->locale()->timeago($_User_created_at)?>
+                        </abbr>
+                        <br/>
+                        <?=$this->locale()->translate_default('user-status-'.$_User_status, array(), $_User_status)?>
+                    </td>
+                </tr>
+				<? endforeach; ?>
+            </tbody>
+        </table>
+    </form>
+</div>

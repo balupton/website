@@ -17,11 +17,11 @@
     <form id="posts-filter" action="<?=$this->url(array('action'=>'subscriber-list'),'back',true)?>" method="get">
 		<!-- Search -->
         <p class="search-box">
-            <label class="screen-reader-text" for="page-search-input">
+            <label class="screen-reader-text" for="search-query">
                 Search:
             </label>
-            <input id="page-search-input" name="search" type="text" />
-            <input value="Search" class="button" type="submit" />
+			<?=$this->formText('search[query]','',array())?>
+			<?=$this->formSubmit('search[submit]','Submit',array('class'=>'button'))?>
         </p>
         <div class="clear">
         </div>

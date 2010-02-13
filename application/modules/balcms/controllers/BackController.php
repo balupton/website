@@ -3,45 +3,42 @@ require_once 'Zend/Controller/Action.php';
 class Balcms_BackController extends Zend_Controller_Action {
 
 	# ========================
+	# VARIABLES
+	
+	const MODULE = 'Burn';
+	
+	
+	# ========================
 	# CONSTRUCTORS
 	
-
+	/**
+	 * Initialise
+	 * @return
+	 */
 	public function init ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		
 		# Layout
-		$this->getHelper('App')->getApp()->setArea('back');
+		$App->setArea('back');
 		
 		# Login
-		$this->getHelper('App')->setOption('logged_in_forward', array('index', 'back'));
+		$App->setOption('logged_in_forward', array('index', 'back'));
 		
 		# Authenticate / redirect to login if need be
 		if ( !in_array($this->getRequest()->getActionName(), array(false, 'login', 'index')) ) {
 			# Within unsafe area, must authenticate
-			$this->getHelper('App')->authenticate(true, false);
+			$App->authenticate(true, false);
 		}
 		
 		# Navigation
-		$this->applyNavigation();
+		$App->applyNavigation();
 		
 		# Done
 		return true;
 	}
 	
-	public function applyNavigation ( ) {
-		# Module Config
-		$module_path = Zend_Controller_Front::getInstance()->getModuleDirectory('balcms');
-		$module_config_path = $module_path . '/config';
-		
-		# Navigation
-		$NavBack = file_get_contents($module_config_path . '/nav-back.json');
-		$NavBack = Zend_Json::decode($NavBack, Zend_Json::TYPE_ARRAY);
-		$this->view->NavigationFavorites = new Zend_Navigation($NavBack['favorites']);
-		$this->view->NavigationMenu = new Zend_Navigation($NavBack['menu']);
-	}
-
-	public function activateNavigationMenuItem ( $id ) {
-		return $this->getHelper('App')->getApp()->activateNavigationItem($this->view->NavigationMenu, $id);
-	}
-
+	
 	# ========================
 	# INDEX
 	
@@ -56,8 +53,12 @@ class Balcms_BackController extends Zend_Controller_Action {
 	 * @return bool
 	 */
 	public function logoutAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		
 		# Logout
-		$this->getHelper('App')->logout(true);
+		$App->logout(true);
+		
 		# Done
 		return true;
 	}
@@ -68,6 +69,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	 */
 	public function loginAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
 		$Request = $this->getRequest();
 		$Log = Bal_App::getLog();
 		
@@ -86,7 +88,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 				$remember = $login['remember'];
 				
 				# Login and Forward
-				return $this->getHelper('App')->loginForward($username, $password, $locale, $remember, false, true);
+				return $App->loginForward($username, $password, $locale, $remember, false, true);
 			}
 			catch ( Exception $Exception ) {
 				# Log the Event and Continue
@@ -96,7 +98,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Render
-		$this->getHelper('App')->getApp()->setArea('back')->setLayout('login');
+		$App->setArea('back')->setLayout('login');
 		$this->render('index/login');
 		
 		# Done
@@ -105,7 +107,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function dashboardAction ( ) {
 		# Prepare
-		$this->activateNavigationMenuItem('back-dashboard');
+		$App = $this->getHelper('App');
+		$App->activateNavigationItem('back', 'dashboard');
 		
 		# Render
 		$this->render('index/dashboard');
@@ -125,7 +128,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function subscriberListAction ( ) {
 		# Prepare
-		$this->activateNavigationMenuItem('back-subscriber-list');
+		$App = $this->getHelper('App');
+		$App->activateNavigationItem('back', 'subscriber-list');
 		$SubscriberList = array();
 		$search = $this->_getParam('search', false);
 		
@@ -176,6 +180,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function mediaEditAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
+		$App->activateNavigationItem('back', 'media-list');
+		
+		# Prepare
 		$Media = array();
 		
 		# Save
@@ -190,9 +198,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Exceptor = new Bal_Exceptor($Exception);
 			$Exceptor->log();
 		}
-	
-		# Menu
-		$this->activateNavigationMenuItem('back-media-list');
 		
 		# Apply
 		$this->view->Media = $Media->toArray();
@@ -206,6 +211,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function mediaNewAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
+		$App->activateNavigationItem('back', 'media-edit');
 		$Media = array();
 		
 		# Save
@@ -221,9 +228,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Exceptor->log();
 		}
 		
-		# Menu
-		$this->activateNavigationMenuItem('back-media-edit');
-		
 		# Apply
 		$this->view->Media = $Media->toArray();
 		
@@ -236,7 +240,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function mediaListAction ( ) {
 		# Prepare
-		$this->activateNavigationMenuItem('back-media-list');
+		$App = $this->getHelper('App');
+		$App->activateNavigationItem('back', 'media-list');
 		$MediaList = array();
 		$search = $this->_getParam('search', false);
 		
@@ -371,6 +376,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function contentEditAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
 		$Content = $ContentCrumb = array();
 		
 		# Save
@@ -379,7 +385,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 			return $this->_forward('content-new');
 		}
 		$type = $Content->type;
-		$this->activateNavigationMenuItem('back-' . $type . '-list');
+		
+		# Menu
+		$App->activateNavigationItem('back', $type.'-list');
 		
 		# Fetch
 		$ContentArray = $Content->toArray();
@@ -405,8 +413,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function contentNewAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
 		$type = $this->_getParam('type', 'content');
-		$this->activateNavigationMenuItem('back-' . $type . '-edit');
+		$App->activateNavigationItem('back', $type.'-edit');
 		$Content = $ContentCrumb = array();
 		
 		# Save
@@ -453,8 +462,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function contentListAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
 		$type = $this->_getParam('type', 'content');
-		$this->activateNavigationMenuItem('back-' . $type . '-list');
+		$App->activateNavigationMenuItem('back', $type.'-list');
 		$content = $this->_getParam('content', false);
 		$search = $this->_getParam('search', false);
 		$Content = $ContentCrumb = $ContentList = $ContentArray = array();

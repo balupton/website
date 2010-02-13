@@ -21,16 +21,17 @@
 		<? foreach ( $ContentCrumb as $_Content ): ?>
 			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>delve($_Content,'code')),'back')?>"><?=delve($_Content,'title')?></a>
 		<? endforeach; ?>
+		<a class="button add-new-h2" href="<?=$this->url(array('action'=>'content-new'),'back',true)?>">Create New</a>
 	</h2>
     <!-- Filters -->
     <form id="posts-filter" action="<?=$this->url(array('action'=>'content-list'),'back',true)?>" method="get">
 		<!-- Search -->
         <p class="search-box">
-            <label class="screen-reader-text" for="page-search-input">
+            <label class="screen-reader-text" for="search-query">
                 Search:
             </label>
-            <input id="page-search-input" name="search" type="text" />
-            <input value="Search" class="button" type="submit" />
+			<?=$this->formText('search[query]','',array())?>
+			<?=$this->formSubmit('search[submit]','Submit',array('class'=>'button'))?>
         </p>
         <div class="clear">
         </div>
@@ -108,7 +109,7 @@
                 <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTree')->next()?>">
                 	<td class="column-icon media-icon">
 						<a title="View <?=$Content['title']?>" href="<?=$contentUrl?>">
-							<? if ( $_Content_Avatar && delve($_Content_Avatar,'type') === 'image' ) : ?>
+							<? if ( $_Content_Avatar ) : ?>
             					<? $mediaUrl = $this->content()->getMediaUrl($_Content_Avatar); ?>
 								<img height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
 							<? else: ?>

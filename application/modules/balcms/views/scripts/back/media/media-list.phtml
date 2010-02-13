@@ -16,7 +16,7 @@
 		<!-- Header -->
 	    <h2>
 			Media Library
-			<a class="button add-new-h2" id="media-add">Add New</a>
+			<a class="button add-new-h2" id="media-add">Add New Media</a>
 			<?=$this->formFile('media[file]')?>
 			<input type="submit" id="media-submit" class="hide" />
 			<script type="text/javascript">
@@ -34,11 +34,11 @@
 		</h2>
 		<!-- Search -->
         <p class="search-box">
-            <label class="screen-reader-text" for="page-search-input">
+            <label class="screen-reader-text" for="search-query">
                 Search:
             </label>
-            <input id="page-search-input" name="search" type="text" />
-            <input value="Search" class="button" type="submit" />
+			<?=$this->formText('search[query]','',array())?>
+			<?=$this->formSubmit('search[submit]','Submit',array('class'=>'button'))?>
         </p>
         <div class="clear">
         </div>
@@ -100,7 +100,7 @@
             	<tr id="media-<?=$_Media_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
 					<td class="column-icon media-icon">
 						<a title="View <?=$_Media_title?>" href="<?=$mediaUrl?>">
-							<? if ( $Media['type'] === 'image' ) : ?>
+							<? if ( $_Media_type === 'image' ) : ?>
 								<img height="60" title="<?=$_Media_title?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
 							<? else: ?>
 								<img width="46" height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/<?=$_Media_type?>.png"/>
