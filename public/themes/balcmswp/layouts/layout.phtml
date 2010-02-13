@@ -1,5 +1,5 @@
 <?php
-	echo $this->doctype();
+	echo $this->doctype('HTML5');
 	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$baseUrl = $this->app()->getBaseUrl();
 	$publicUrl = $this->app()->getPublicUrl();
@@ -9,7 +9,7 @@
 	$jquerySparkleUrl = $publicUrl.'/scripts/jquery-sparkle';
 	$tinyMceUrl = $publicUrl.'/scripts/tiny_mce-3.2.7';
 	$User = $this->app()->getUser();
-?><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+?><html>
 <head>
     <?= $this->app()->headMeta() ?>
     <?= $this->app()->headTitle() ?>
@@ -80,7 +80,6 @@
                 | <a href="<?=$this->url(array(),'balcmsdocs',true)?>">Documentation</a>
                 | <a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Feedback</a>
                 | <a href="<?=$this->url(array(),'balcmshelp',true)?>">Support</a>
-                <!-- | <a href="<?=$this->url(array('action'=>'about'),'back',true)?>">About</a> -->
             </p>
             <p id="footer-upgrade" class="alignright">
                 Version <?=$this->app()->getConfig('bal.site.version')?>

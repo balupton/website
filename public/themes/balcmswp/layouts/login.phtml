@@ -1,12 +1,12 @@
 <?php
-	echo $this->doctype();
+	echo $this->doctype('HTML5');
 	$baseUrl = $this->app()->getBaseUrl();
 	$publicUrl = $this->app()->getPublicUrl();
 	$jqueryUiUrl = $publicUrl.'/scripts/jquery-ui-1.7.2';
 	$jquerySparkleUrl = $publicUrl.'/scripts/jquery-sparkle';
 	$backUrl = $this->app()->getAreaUrl('back');
 ?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html>
 <head>
     <?=$this->app()->headMeta()?>
     <?=$this->app()->headTitle()?>
