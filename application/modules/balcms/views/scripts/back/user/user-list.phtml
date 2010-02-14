@@ -16,11 +16,11 @@
     </div>
 	<!-- Header -->
     <h2>
-		<a href="<?=$this->url(array('action'=>'content-list'),'back',true)?>"><?=$Type?> List</a>
-		<a class="button add-new-h2" href="<?=$this->url(array('action'=>'user-new'),'back',true)?>">Create New</a>
+		<a href="<?=$this->url()->action('user-list')?>"><?=$Type?> List</a>
+		<a class="button add-new-h2" href="<?=$this->url()->action('user-new')?>">Create New</a>
 	</h2>
     <!-- Filters -->
-    <form id="posts-filter" action="<?=$this->url(array('action'=>'user-list'),'back',true)?>" method="get">
+    <form id="posts-filter" action="<?=$this->url()->action('user-list')->search()?>" method="get">
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="search-query">
@@ -92,11 +92,11 @@
 					$_User_status = delve($_User,'status');
 					$_User_created_at = delve($_User,'created_at');
 					$_User_Avatar = delve($_User,'Avatar');
-            		$_User_url = $this->app()->getUserUrl($_User);
-            		$_User_url_edit = $this->url(array('action'=>'user-edit','username'=>$_User_username),'back',true);
-            		$_User_url_delete = $this->url(array('action'=>'user-delete','username'=>$_User_username),'back',true);
-            		$_User_url_messages = $this->url(array('action'=>'user-messages','username'=>$_User_username),'back',true);
-            		$_User_url_login = $this->url(array('action'=>'user-login','username'=>$_User_username),'back',true);
+            		$_User_url = $this->url()->user($_User)->toString();
+            		$_User_url_edit = $this->url()->action('user-edit')->item($_User)->toString();
+            		$_User_url_delete = $this->url()->action('user-delete')->item($_User)->toString();
+            		$_User_url_messages = $this->url()->action('user-messages')->item($_User)->toString();
+            		$_User_url_login = $this->url()->action('user-login')->item($_User)->toString();
             	?>
                 <tr id="content-<?=$_User_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTree')->next()?>">
                 	<td class="column-icon media-icon">

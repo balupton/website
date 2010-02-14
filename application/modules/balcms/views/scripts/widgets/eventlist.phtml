@@ -17,7 +17,7 @@
 					<? if ( count($EventList) ) : ?>
 						<div class="eventlist-title"><h3><?=$title?>:</h3></div>
 						<? foreach ( $EventList as $Content ) :
-							$contentUrl = $this->content()->getContentUrl($Content);
+							$contentUrl = $this->url()->content($Content)->toString();
 							?>
 							<div class="eventlist-content">
 								<h3>

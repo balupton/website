@@ -66,14 +66,7 @@
 				"action": "content-new",
 				"route": "back",
 				"class": "child"
-			}]
-		},{
-			"id": "back-main-event",
-			"resource": "event",
-			"label": "Events",
-			"action": "event",
-			"route": "back",
-			"pages": [{
+			},{
 				"id": "back-main-event-list",
 				"resource": "event",
 				"label": "Events",
@@ -108,14 +101,7 @@
 				"action": "user-new",
 				"route": "back",
 				"class": "child"
-			}]
-		},{
-			"id": "back-main-subscription",
-			"resource": "subscription",
-			"label": "Subscriptions",
-			"action": "subscription",
-			"route": "back",
-			"pages": [{
+			},{
 				"id": "back-main-subscriber-list",
 				"resource": "subscription",
 				"label": "Subscribers",

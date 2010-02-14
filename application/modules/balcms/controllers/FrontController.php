@@ -32,7 +32,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$App->applyNavigation();
 		
 		# Content
-		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.code, c.id, c.parent_id, c.position, cr.*')->from('Content c, c.Route cr')->where('c.enabled = ? AND c.status = ? AND NOT EXISTS (SELECT cp.id FROM Content cp WHERE cp.id = c.parent_id)', array(true, 'published'))->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.code, c.id, c.parent_id, c.position, cr.*')->from('Content c, c.Route cr')->where('c.status = ? AND NOT EXISTS (SELECT cp.id FROM Content cp WHERE cp.id = c.parent_id)', 'published')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
 		foreach ( $ContentListArray as &$Content ) {
 			$Content['id'] = 'content-' . $Content['code'];
@@ -75,7 +75,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 
 	public function indexAction ( ) {
 		# Home Page
-		$ContentArray = Doctrine::getTable('Content')->createQuery()->where('enabled = ? AND status = ?', array(true, 'published'))->orderBy('position ASC, id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY)->fetchOne();
+		$ContentArray = Doctrine::getTable('Content')->createQuery()->where('status = ?', 'published')->orderBy('position ASC, id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY)->fetchOne();
 		$content = $ContentArray['id'];
 		
 		# Popular Tags (as we are the home page)
@@ -96,7 +96,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 	public function searchAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$search = $this->_getParam('search');
+		$search = $App->fetchSearchQuery();
 		
 		# Check
 		if ( !$search ) {
@@ -104,7 +104,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		}
 		
 		# Query
-		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.enabled = ? AND c.status = ?', array(true, 'published'))->orderBy('c.position ASC, c.id ASC');
+		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.status = ?', 'published')->orderBy('c.position ASC, c.id ASC');
 		
 		# Search
 		$ContentQuery = Doctrine::getTable('Content')->search($search, $ListQuery);
@@ -130,7 +130,9 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$Response = $this->getResponse();
 		
 		# Fetch
-		$email = $this->_getParam('email');
+		$email = fetch_param('subscribe.email', $Request->getParam('email'));
+		
+		# Handle
 		if ( empty($email) ) {
 			# Apply
 			$this->view->headTitle()->append('Unsubscribe');
@@ -140,11 +142,11 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		}
 		
 		# Subscribe
-		$Subscriber = Doctrine::getTable('Subscriber')->findOneByEmail($email);
+		$Subscriber = Doctrine::getTable('User')->findOneByEmail($email);
 		if ( count($Subscriber) && $Subscriber->exists() ) {
 			$Subscriber->removeAllTags();
 			$Subscriber->save();
-			$Subscriber->delete();
+			// $Subscriber->delete(); // no longer delete the subscribers as they are now users
 		}
 		
 		# Done
@@ -159,17 +161,17 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$Log = Bal_App::getLog();
 		
 		# Fetch
-		$email = $this->_getParam('email');
+		$email = fetch_param('subscribe.email', $Request->getParam('email'));
 		
 		# Subscribe
 		try {
-			$Subscriber = new Subscriber();
+			$Subscriber = new User();
 			$Subscriber->email = $email;
 			$Subscriber->setTags('newsletter');
 			$Subscriber->save();
 			# Log
 			$log_details = array(
-				'Subscriber'		=> $Subscriber->toArray(),
+				'Subscriber' => $Subscriber->toArray(),
 			);
 			$Log->log(array('log-subscriber-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
 		}

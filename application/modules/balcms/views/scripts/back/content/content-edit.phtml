@@ -3,6 +3,7 @@
 	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
+	$this->url()->renege('route','back');
 	//
 	$Content = delve($this,'Content');
 	$ContentCrumb = delve($this,'ContentCrumb');
@@ -33,7 +34,7 @@
 	<h2>
 		<?=$mode_edit?'Editing':'Create New '.$Type?>
 		<? if ( $mode_edit ) foreach ( $ContentCrumb as $Content ): ?>
-			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>delve($Content,'code')),'back')?>"><?=$Content['title']?></a>
+			&raquo; <a href="<?=$this->url()->action('content-list')->item($Content)?>"><?=$Content['title']?></a>
 		<? endforeach; ?>
 	</h2>
 	<?=$this->log()->render()?>
@@ -50,7 +51,7 @@
 								<div id="minor-publishing-actions">
 									<?if($mode_edit):?>
 										<!-- Open Action -->
-										<a class="button button-action right" id="action-open" tabindex="4" href="<?=$this->content()->getContentUrl($Content)?>" >Open</a>
+										<a class="button button-action right" id="action-open" tabindex="4" href="<?=$this->url()->content($Content)?>" >Open</a>
 									<?endif;?>
 									<!-- Preview Action -->
 									<!-- <a class="button button-action right" id="action-preview" tabindex="4">Preview</a>  -->
@@ -67,10 +68,7 @@
 									</div>
 									<? if ( $Content_Author ) :
 			                        	$author = delve($Content_Author, 'displayname');
-			                        	$author_url = $this->url(array(
-			                        		'action'=>'content-list',
-			                        		'search'=>$author
-			                        	), 'back', true);
+			                        	$author_url = $this->url()->action('content-list')->search($author)->toString();
 			                        	$author_link = '<a href="'.$author_url.'" title="View all content by '.$author.'">'.$author.'</a>';
 										?>
 										<div class="misc-pub-section field" id="content-author-field">
@@ -121,7 +119,7 @@
 						<div class="inside">
             				<? if ( !empty($Content['Avatar']) && !empty($Content['Avatar']['id']) ) :
            						$Media = $Content['Avatar'];
-           						$mediaUrl = $this->content()->getMediaUrl($Media);
+           						$mediaUrl = $this->url()->media($Media)->toString();
            						?>
 								<div class="avatar">
 									<a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
@@ -152,9 +150,9 @@
 									<?=$this->formCheckbox('subscription[tags][]', 'newsletter')?>
 									<label for="subscription-tags">
 										Send out as a
-										<a href="<?=$this->url(array('controller'=>'subscription','action'=>'content-list'),'back',true)?>" title="go to Sent Content List">newsletter</a>
+										<a href="<?=$this->url()->action('content-list')->search('newsletter')?>" title="Sent Content List">newsletter</a>
 										to
-										<a href="<?=$this->url(array('controller'=>'subscription','action'=>'subscriber-list'),'back',true)?>" title="go to Subscriber List">subscribers</a>?
+										<a href="<?=$this->url()->action('subscriber-list')->search('newsletter')?>" title="Subscriber List">subscribers</a>?
 									</label>
 								</div>
 							<? else: ?>

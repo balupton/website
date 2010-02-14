@@ -54,96 +54,6 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		return $this;
 	}
 	
-	public function getMediaUrl ( $Media, $prefix = false ) {
-		# Prepare
-		$url = $this->getMedia($Media, 'url');
-		
-		# Prefix
-		$prefix = $prefix ? $this->getApp()->getRootUrl() : '';
-		
-		# Apply
-		$mediaUrl = $prefix.$url;
-		
-		# Done
-		return $mediaUrl;
-	}
-	
-	public function getMedia ( $in, $key = null ) {
-		# Prepare
-		$Media = null;
-		$type = 'object';
-		
-		# Handle
-		if ( is_object($in) ) {
-			# Is Object
-			if ( $in instanceOf Media ) {
-				$Media = $in;
-			} elseif ( $in instanceOf Content ) {
-				$Media = $in->Avatar;
-			}
-		} elseif ( is_array($in) ) {
-			if ( array_key_exists('name', $in) ) {
-				# Is Array
-				$Media = $in;
-				$type = 'array';
-			} elseif ( array_key_exists('id', $in) ) {
-				# Is Content Array with Id
-				$Media = Doctrine::getTable('Media')->find($in['id']);
-			}
-		}
-		
-		# Done
-		if ( $key ) {
-			return $type === 'object' ? $Media->$key : $Media[$key];
-		} else {
-			return $Media;
-		}
-	}
-	
-	public function getRoute ( $in ) {
-		# Prepare
-		$Route = null;
-		
-		# Handle
-		if ( is_object($in) ) {
-			# Is Content Object
-			if ( $in instanceOf Route ) {
-				$Route = $in;
-			}
-			elseif ( $in instanceOf Content ) {
-				$Route = $in->Route;
-			}
-		} elseif ( is_array($in) ) {
-			if ( array_key_exists('path', $in) ) {
-				# Is Route
-				$Route = $in;
-			} elseif ( array_key_exists('Route', $in) ) {
-				# Is Content Array
-				$Route = $in['Route'];
-			} elseif ( array_key_exists('id', $in) ) {
-				# Is Content Array with Id
-				$Route = Doctrine::getTable('Content')->find($in['id'])->Route;
-			}
-		}
-		
-		# Done
-		return $Route;
-	}
-	
-	public function getContentUrl ( $Content, $prefix = false ) {
-		# Prepare
-		$Route = $this->getRoute($Content);
-		
-		# Prefix
-		$prefix = $prefix ? $this->getApp()->getRootUrl() : ''; // map will return base url inclusive
-		
-		# Apply
-		$contentUrl = $prefix.$this->view->url(array('Map'=>$Route),'map',true);
-		
-		# Done
-		return $contentUrl;
-	}
-	
 	/**
 	 * Render the Content content
 	 * @param mixed $Content
@@ -196,7 +106,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$ContentList = Doctrine_Query::create()->select('*')->from('Content c')->where('c.enabled = ? AND c.status = ?', array(true, 'published'))->andWhereIn('c.code',$codes)->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
+		$ContentList = Doctrine_Query::create()->select('*')->from('Content c')->where('c.status = ?', 'published')->andWhereIn('c.code',$codes)->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
 		
 		# Apply
 		$model = compact('Content','ContentList');
@@ -267,7 +177,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	public function renderRecentlistWidget ( array $params = array() ) {
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$ContentList = Doctrine_Query::create()->select('*')->from('Content c')->where('c.enabled = ? AND c.status = ?', array(true, 'published'))->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
+		$ContentList = Doctrine_Query::create()->select('*')->from('Content c')->where('c.status = ?', 'published')->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
 		
 		# Apply
 		$model = compact('Content','ContentList');
@@ -287,7 +197,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$ContentList = Doctrine_Query::create()->select('*')->from('Content c, c.Parent cp')->where('c.enabled = ? AND c.status = ? AND cp.id = ?', array(true, 'published', $Content->id))->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
+		$ContentList = Doctrine_Query::create()->select('*')->from('Content c, c.Parent cp')->where('c.status = ? AND cp.id = ?', array('published', $Content->id))->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
 		
 		// need to fetch in the order of most recent first
 		// should add paging
@@ -310,7 +220,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$ContentList = Doctrine_Query::create()->select('*')->from('Content c, c.Parent cp')->where('c.enabled = ? AND c.status = ? AND cp.id = ?', array(true, 'published', $Content->id))->orderBy('c.position ASC, c.id ASC')->limit(20)->execute();
+		$ContentList = Doctrine_Query::create()->select('*')->from('Content c, c.Parent cp')->where('c.status = ? AND cp.id = ?', array('published', $Content->id))->orderBy('c.position ASC, c.id ASC')->limit(20)->execute();
 		
 		# Apply
 		$model = compact('Content','ContentList');
@@ -331,8 +241,8 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$EventsPast = Doctrine_Query::create()->select('*')->from('Event c, c.Parent cp')->where('c.enabled = ? AND c.status = ? AND cp.id = ?', array(true, 'published', $Content->id))->orderBy('c.event_start_at ASC, c.id ASC')->limit(20)->andWhere('c.event_start_at < ?', $timestamp)->execute();
-		$EventsFuture = Doctrine_Query::create()->select('*')->from('Event c, c.Parent cp')->where('c.enabled = ? AND c.status = ? AND cp.id = ?', array(true, 'published', $Content->id))->orderBy('c.event_start_at ASC, c.id ASC')->limit(20)->andWhere('c.event_start_at >= ?', $timestamp)->execute();
+		$EventsPast = Doctrine_Query::create()->select('*')->from('Event c, c.Parent cp')->where('c.status = ? AND cp.id = ?', array('published', $Content->id))->orderBy('c.event_start_at ASC, c.id ASC')->limit(20)->andWhere('c.event_start_at < ?', $timestamp)->execute();
+		$EventsFuture = Doctrine_Query::create()->select('*')->from('Event c, c.Parent cp')->where('c.status = ? AND cp.id = ?', array('published', $Content->id))->orderBy('c.event_start_at ASC, c.id ASC')->limit(20)->andWhere('c.event_start_at >= ?', $timestamp)->execute();
 		
 		# Apply
 		$model = compact('Content','EventsPast','EventsFuture');

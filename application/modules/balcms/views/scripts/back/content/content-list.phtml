@@ -2,6 +2,7 @@
 	// URLs
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
+	$this->url()->renege('route','back');
 	//
 	$ContentCrumb = delve($this,'ContentCrumb');
 	$ContentList = delve($this,'ContentList');
@@ -17,14 +18,14 @@
     </div>
 	<!-- Header -->
     <h2>
-		<a href="<?=$this->url(array('action'=>'content-list'),'back',true)?>"><?=$Type?> List</a>
+		<a href="<?=$this->url()->action('content-list')?>"><?=$Type?> List</a>
 		<? foreach ( $ContentCrumb as $_Content ): ?>
-			&raquo; <a href="<?=$this->url(array('action'=>'content-list','content'=>delve($_Content,'code')),'back')?>"><?=delve($_Content,'title')?></a>
+			&raquo; <a href="<?=$this->url()->action('content-list')->item($_Content)?>"><?=delve($_Content,'title')?></a>
 		<? endforeach; ?>
-		<a class="button add-new-h2" href="<?=$this->url(array('action'=>'content-new'),'back',true)?>">Create New</a>
+		<a class="button add-new-h2" href="<?=$this->url()->action('content-new')?>">Create New</a>
 	</h2>
     <!-- Filters -->
-    <form id="posts-filter" action="<?=$this->url(array('action'=>'content-list'),'back',true)?>" method="get">
+    <form id="posts-filter" action="<?=$this->url()->action('content-list')->search()?>" method="post">
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="search-query">
@@ -33,6 +34,9 @@
 			<?=$this->formText('search[query]','',array())?>
 			<?=$this->formSubmit('search[submit]','Submit',array('class'=>'button'))?>
         </p>
+	</form>
+    <!-- Listing -->
+    <form action="<?=$this->url()->action('content-list')?>" method="get">
         <div class="clear">
         </div>
 		<!-- Content Table -->
@@ -98,33 +102,37 @@
             <tbody id="content-list">
             	<? foreach ( $ContentList as $_Content ): ?>
             	<?
+					$_Content_id = delve($_Content,'id');
+					$_Content_title = delve($_Content,'title');
 					$_Content_code = delve($_Content,'code');
+					$_Content_updated_at = delve($_Content,'updated_at');
 					$_Content_Avatar = delve($_Content,'Avatar');
 					$_Content_Tags = delve($_Content,'Tags');
 					$_Content_Author = delve($_Content,'Author');
-            		$contentUrl = $this->content()->getContentUrl($_Content);
-            		$contentOpenUrl = $this->url(array('action'=>'content-list','content'=>$_Content_code),'back',true);
-            		$contentEditUrl = $this->url(array('action'=>'content-edit','content'=>$_Content_code),'back',true);
+            		$contentUrl = $this->url()->content($_Content)->toString();
+            		$contentOpenUrl = $this->url()->action('content-list')->item($_Content)->toString();
+            		$contentEditUrl = $this->url()->action('content-edit')->item($_Content)->toString();
+            		$contentDeleteUrl = $this->url()->action('content-delete')->item($_Content)->toString();
             	?>
-                <tr id="content-<?=$Content['id']?>" class="<?=$this->cycle(array('alternate',''), 'ContentTree')->next()?>">
+                <tr id="content-<?=$_Content_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTree')->next()?>">
                 	<td class="column-icon media-icon">
-						<a title="View <?=$Content['title']?>" href="<?=$contentUrl?>">
+						<a title="View <?=$_Content_title?>" href="<?=$contentUrl?>">
 							<? if ( $_Content_Avatar ) : ?>
-            					<? $mediaUrl = $this->content()->getMediaUrl($_Content_Avatar); ?>
+            					<? $mediaUrl = $this->url()->media($_Content_Avatar); ?>
 								<img height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
 							<? else: ?>
-								<img width="46" height="60" title="<?=delve($_Content,'title')?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>
+								<img width="46" height="60" title="<?=$_Content_title?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>
 							<? endif; ?>
 						</a>
 					</td>
                     <td class="post-title page-title column-title">
-						<?=$this->formHidden('content[id]', delve($_Content,'id'))?>
+						<?=$this->formHidden('content[id]', $_Content_id)?>
                         <strong><a class="row-title" href="<?=$contentOpenUrl?>" title="Open this">
-                        	<?=/*str_repeat('&nbsp;',$Content['level']).' '.*/delve($_Content,'title')?>
+                        	<?=$_Content_title?>
 						</a></strong>
 						<div class="row-actions">
 							<span class="edit"><a title="Edit this" href="<?=$contentEditUrl?>">Edit</a> | </span>
-							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=delve($_Content,'title')?>" href="<?=$this->url(array('action'=>'content-delete','content'=>delve($_Content,'code')),'back',true)?>">Delete</a> | </span>
+							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$_Content_title?>" href="<?=$contentDeleteUrl?>">Delete</a> | </span>
 							<span class="view"><a rel="permalink" title="View" href="<?=$contentUrl?>">View</a></span>
 						</div>
                     </td>
@@ -150,11 +158,7 @@
                         	$tags = array();
                         	foreach ( $_Content_Tags as $_Tag ) {
                         		$tag = ucfirst(delve($_Tag,'name'));
-	                        	$tag_url = $this->url(array(
-	                        		
-	                        		'action'=>'content-list',
-	                        		'search'=>$tag
-	                        	), 'back', true);
+	                        	$tag_url = $this->url()->action('content-list')->search($tag)->param('type',$type);
 	                        	$tags[] = '<a href="'.$tag_url.'" title="View all content by '.$tag.'">'.$tag.'</a>';
                         	}
                         	echo implode($tags, ', ');
@@ -166,8 +170,8 @@
                         </div>
                     </td>-->
                     <td class="date column-date">
-                        <abbr title="<?=$this->locale()->datetime(delve($_Content,'updated_at'))?>">
-                            <?=$this->locale()->timeago(delve($_Content,'updated_at'))?>
+                        <abbr title="<?=$this->locale()->datetime($_Content_updated_at)?>">
+                            <?=$this->locale()->timeago($_Content_updated_at)?>
                         </abbr>
                         <br/>
                         <?=delve($_Content,'status')?>
@@ -192,7 +196,7 @@
 					// Ajax Request
 					var data = {json:JSON.stringify({positions:conpos})};
 					$.ajax({
-						url: '<?=$this->url(array('action'=>'content-position'),'back',true)?>',
+						url: "<?=$this->url()->action('content-position')?>",
 						type: 'post',
 						data: data,
 						dataType: 'json',

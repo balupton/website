@@ -2,13 +2,15 @@
 	// URLs
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
+	$this->url()->renege('route','back');
 	//
 	$MediaList = delve($this,'MediaList');
 	// Title
 	$this->headTitle()->append('Media');
 ?>
 <div class="wrap">
-	<form action="<?=$this->url(array('action'=>'media-list'),'back',true)?>" method="post" enctype="multipart/form-data">
+    <!-- Actions -->
+	<form action="<?=$this->url()->action('media-list')?>" method="post" enctype="multipart/form-data">
 		<!-- Edit Button -->
 	    <div id="icon-upload" class="icon32">
 	        <br/>
@@ -32,6 +34,9 @@
 				});
 			</script>
 		</h2>
+	</form>
+    <!-- Filters -->
+    <form id="posts-filter" action="<?=$this->url()->action('media-list')->search()?>" method="post">
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="search-query">
@@ -40,6 +45,9 @@
 			<?=$this->formText('search[query]','',array())?>
 			<?=$this->formSubmit('search[submit]','Submit',array('class'=>'button'))?>
         </p>
+	</form>
+    <!-- Listing -->
+    <form action="<?=$this->url()->action('media-list')?>" method="get">
         <div class="clear">
         </div>
 		<!-- Content Table -->
@@ -95,7 +103,7 @@
 					$_Media_size = delve($_Media,'size');
 					$_Media_Author = delve($_Media,'Author');
 					$_Media_Author_displayname = delve($_Media_Author,'displayname');
-					$mediaUrl = $this->content()->getMediaUrl($Media);
+					$mediaUrl = $this->url()->media($Media)->toString();
 					?>
             	<tr id="media-<?=$_Media_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
 					<td class="column-icon media-icon">
@@ -137,10 +145,7 @@
                         	echo 'Unkown';
                         else:
                         	$author = $_Media_Author_displayname;
-                        	$author_url = $this->url(array(
-                        		'action'=>'media-list',
-                        		'search'=>$author
-                        	), 'back', true);
+                        	$author_url = $this->url()->action('media-list')->search($author)->toString();
                         	echo '<a href="'.$author_url.'" title="View all media by '.$author.'">'.$author.'</a>';
                     	endif;
                     ?></td>

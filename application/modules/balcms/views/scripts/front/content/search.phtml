@@ -2,8 +2,7 @@
 	//
 	$search = delve($this,'search');
 	//
-	$Content = delve($this,'Content');
-	$Content_title = delve($Content,'title');
+	$ContentList = delve($this,'ContentList');
 	//
 ?>
 <div id="content-search" class="content">
@@ -13,9 +12,11 @@
 	<div id="content-content" class="content-content">
 	
 		<div class="contentlist">
-			<? foreach ( $this->ContentList as $Content ) : ?>
+			<? foreach ( $ContentList as $Content ) :
+				$Content_title = delve($Content,'title');
+				?>
 				<div class="contentlist-content">
-					<h3><a href="<?=$this->content()->getContentUrl($Content)?>" title="<?=$Content_title?>"><?=$Content_title?></a></h3>
+					<h3><a href="<?=$this->url()->content($Content)?>" title="<?=$Content_title?>"><?=$Content_title?></a></h3>
 					<div class="contentlist-content-content">
 						<?=$this->content()->renderDescription($Content)?>
 					</div>

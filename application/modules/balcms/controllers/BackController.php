@@ -132,10 +132,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$App->activateNavigationItem('back.main', 'user-list', true);
 		$UserList = array();
-		$search = $this->_getParam('search', false);
+		$search = $App->fetchSearchQuery();
 		
 		# Prepare
-		$ListQuery = Doctrine_Query::create()->select('u.id, u.displayname, u.username, u.created_at, u.email, u.type')->from('User u')->orderBy('u.username ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ListQuery = Doctrine_Query::create()->select('u.id, u.displayname, u.username, u.created_at, u.email, u.type, s.status, s.created_at')->from('User u')->orderBy('u.username ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle
 		if ( $search ) {
@@ -172,10 +172,18 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$App->activateNavigationItem('back.main', 'subscriber-list', true);
 		$SubscriberList = array();
-		$search = $this->_getParam('search', false);
+		$search = $App->fetchSearchQuery();
 		
 		# Prepare
-		$ListQuery = Doctrine_Query::create()->select('s.id, s.email, st.name, sc.id')->from('Subscriber s, s.Tags st, s.ContentList sc')->where('s.enabled = ?', true)->orderBy('s.email ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ListQuery = Doctrine_Query::create()
+			->select('s.id, s.email, s.displayname, s.subscriptions, st.name, s.status, s.created_at, COUNT(sMessagePublished.id) as subscription_published_count')
+			->from('User s, s.SubscriptionTags st')
+			->where('s.status = ?', 'published')
+			->andWhere('s.subscriptions != ?', '')
+			->orderBy('s.email ASC')
+			->leftJoin('s.ReceivedMessages sMessagePublished WITH sMessagePublished.code = ? AND sMessagePublished.status = ?', array('content-subscription','published'))
+			->groupBy('s.id')
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle
 		if ( $search ) {
@@ -284,7 +292,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$App->activateNavigationItem('back.main', 'media-list', true);
 		$MediaList = array();
-		$search = $this->_getParam('search', false);
+		$search = $App->fetchSearchQuery();
 		
 		# Save
 		try {
@@ -435,7 +443,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$ContentCrumb[] = $ContentArray;
 		
 		# Fetch content for use in dropdown
-		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->where('c.enabled = ? AND c.type = ?', array(true, 'content'))->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentList = $ContentListQuery->execute();
 		$ContentList = array_tree_flat($ContentList, 'id', 'parent_id', 'level', 'position');
 		
@@ -456,7 +464,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		$type = $this->_getParam('type', 'content');
-		$App->activateNavigationItem('back.main', $type.'-edit');
+		$App->activateNavigationItem('back.main', $type.'-edit', true);
 		$Content = $ContentCrumb = array();
 		
 		# Save
@@ -484,7 +492,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$ContentCrumb[] = $ContentArray;
 		
 		# Fetch content for use in dropdown
-		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->where('c.enabled = ? AND c.type = ?', array(true, 'content'))->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentList = $ContentListQuery->execute();
 		$ContentList = array_tree_flat($ContentList, 'id', 'parent_id', 'level', 'position');
 		
@@ -506,12 +514,19 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$type = $this->_getParam('type', 'content');
 		$App->activateNavigationItem('back.main', $type.'-list', true);
-		$content = $this->_getParam('content', false);
-		$search = $this->_getParam('search', false);
 		$Content = $ContentCrumb = $ContentList = $ContentArray = array();
 		
+		# Fetch Params
+		$search = $App->fetchSearchQuery();
+		$content = fetch_param('content');
+		
 		# Prepare
-		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.enabled = ?', true)->orderBy('c.position ASC, c.id ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ListQuery = Doctrine_Query::create()
+			->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')
+			->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')
+			->where('c.status = ?', 'published')
+			->orderBy('c.position ASC, c.id ASC')
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		if ( $type !== 'content' ) {
 			$ListQuery->andWhere('c.type = ?', $type);
 		}
@@ -524,11 +539,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 		} else {
 			// No Search
 			
-
 			# Fetch Crumbs
-			if ( $content ) {
+			$Content = $this->_getContent(false);
+			if ( $Content ) {
 				// We have a content as a root
-				$Content = $this->_getContent($content);
 				$ContentArray = $Content->toArray();
 				$ContentCrumb = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, true);
 			}
@@ -692,18 +706,21 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return $Content;
 	}
 
-	protected function _getContent ( ) {
+	protected function _getContent ( $create = true ) {
 		# Fetch
-		$content = $this->_getParam('content', false);
+		$content = $this->_getParam('code', false);
+		$Content = false;
 		
 		# Load
-		$Query = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm');
-		if ( is_string($content) || is_numeric($content) ) {
-			$Content = $Query->where('c.code = ? OR c.id = ?', array($content,$content))->fetchOne();
+		if ( $content ) {
+			$Query = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm');
+			if ( is_string($content) || is_numeric($content) ) {
+				$Content = $Query->where('c.code = ? OR c.id = ?', array($content,$content))->fetchOne();
+			}
 		}
 		
 		# Check
-		if ( empty($Content) ) {
+		if ( empty($Content) && $create ) {
 			return new Content();
 		}
 		

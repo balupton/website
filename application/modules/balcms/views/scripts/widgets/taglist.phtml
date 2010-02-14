@@ -7,7 +7,7 @@
 	</div>
 	<? foreach ( $this->TagList as $Tag ) :
 		$tag = $Tag->name;
-		$tagUrl = $this->url(array('action'=>'search','search'=>$tag),'app',true);
+		$tagUrl = $this->url()->search($tag)->toString();
 		?>
 		<div class="taglist-content widget-content">
 			<h4 class="taglist-content-header widget-content-header"><a rel="nofollow" href="<?=$tagUrl?>" title="<?=$tag?>"><?=$tag?></a></h4>

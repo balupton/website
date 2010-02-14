@@ -4,11 +4,11 @@
 	$baseUrl = $this->app()->getBaseUrl();
 ?>
 <div id="login">
-	<h1><a title="Powered by balCMS" href="<?=$this->url(array(),'balcmshome',true)?>">balCMS</a></h1>
+	<h1><a title="Powered by balCMS" href="<?=$this->url()->route('balcmshome')?>">balCMS</a></h1>
 	
 	<?=$this->log()->render()?>
 	
-	<form method="post" action="<?=$this->url(array('action'=>'login'),'back',true)?>" id="login-form">
+	<form method="post" action="<?=$this->url()->action('login')?>" id="login-form">
 		<p>
 			<label>
 				Username<br/>
@@ -31,8 +31,8 @@
 	</form>
 	
 	<p id="nav">
-		<a href="<?=$this->url(array(),'balcmshome',true)?>">Learn More</a> |
-		<a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Provide Feedback</a>
+		<a href="<?=$this->url()->route('balcmshome')?>">Learn More</a> |
+		<a href="<?=$this->url()->route('balcmshelp')?>" class="gsfn">Provide Feedback</a>
 	</p>
 	
 	<p id="backtoblog"><a title="Are you lost?" href="<?=$baseFullUrl?>">&larr; Back to <?=$this->app()->getConfig('bal.site.name')?></a></p>

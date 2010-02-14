@@ -20,9 +20,9 @@
 	# Apply Urls
 	$params['rootUrl'] = $rootUrl;
 	$params['baseUrl'] = $baseUrl;
-	$params['senderUrl'] = $rootUrl.$View->app()->getUserUrl($Sender);
-	$params['receiverUrl'] = $rootUrl.$View->app()->getUserUrl($Receiver);
-	$params['messageUrl'] = $rootUrl.$View->app()->getMessageUrl($Message);
+	$params['senderUrl'] = $rootUrl.$View->url()->user($Sender)->toString();
+	$params['receiverUrl'] = $rootUrl.$View->url()->user($Receiver)->toString();
+	$params['messageUrl'] = $rootUrl.$View->url()->message($Message)->toString();
 ?>
 <html>
 <head>

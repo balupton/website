@@ -1,6 +1,6 @@
 <div class="articlelist">
 	<? foreach ( $this->ContentList as $Content ) :
-		$contentUrl = $this->content()->getContentUrl($Content);
+		$contentUrl = $this->url()->content($Content)->toString();
 		?>
 		<div class="articlelist-content">
 			<h3>

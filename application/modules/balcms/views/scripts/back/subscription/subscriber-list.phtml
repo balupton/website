@@ -14,7 +14,7 @@
 		Subscriber List
 	</h2>
     <!-- Filters -->
-    <form id="posts-filter" action="<?=$this->url(array('action'=>'subscriber-list'),'back',true)?>" method="get">
+    <form id="posts-filter" action="<?=$this->url()->action('subscriber-list')->search()?>" method="post">
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="search-query">
@@ -23,6 +23,9 @@
 			<?=$this->formText('search[query]','',array())?>
 			<?=$this->formSubmit('search[submit]','Submit',array('class'=>'button'))?>
         </p>
+	</form>
+    <!-- Listing -->
+    <form action="<?=$this->url()->action('subscriber-list')?>" method="get">
         <div class="clear">
         </div>
 		<!-- Content Table -->
@@ -37,10 +40,16 @@
                         Email
                     </th>
                     <th scope="col" class="manage-column column-author" style="">
-                        Received
+                        Name
                     </th>
                     <th scope="col" id="author" class="manage-column column-tags" style="">
-                        Tags
+                        Subscribed To
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        # Received
+                    </th>
+                    <th scope="col" id="date" class="manage-column column-date" style="">
+                        Joined
                     </th>
                 </tr>
             </thead>
@@ -53,10 +62,16 @@
                         Email
                     </th>
                     <th scope="col" class="manage-column column-author" style="">
-                        Received
+                        Name
                     </th>
                     <th scope="col" id="author" class="manage-column column-tags" style="">
-                        Tags
+                        Subscribed To
+                    </th>
+                    <th scope="col" class="manage-column column-author" style="">
+                        # Received
+                    </th>
+                    <th scope="col" id="date" class="manage-column column-date" style="">
+                        Joined
                     </th>
                 </tr>
             </tfoot>
@@ -65,32 +80,43 @@
             	<? foreach ( $SubscriberList as $_Subscriber ) :
 					$_Subscriber_id = delve($_Subscriber,'id');
 					$_Subscriber_email = delve($_Subscriber,'email');
-					$_Subscriber_Tags = delve($_Subscriber,'Tags');
-					$_Subscriber_ContentList = delve($_Subscriber,'ContentList');
+					$_Subscriber_displayname = delve($_Subscriber,'displayname');
+					$_Subscriber_subscriptions = delve($_Subscriber,'subscriptions');
+					$_Subscriber_created_at = delve($_Subscriber,'created_at');
+					$_Subscriber_status = delve($_Subscriber,'status');
+					$_Subscriber_subscription_published_count = delve($_Subscriber,'subscription_published_count', 0);
+					//$_Subscriber_ContentList = delve($_Subscriber,'ContentMessages');
 					?>
                 <tr id="subscriber-<?=$_Subscriber_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
                     <td class="title column-title">
                         <?=$_Subscriber_email?>
                     </td>
-                    <td class="author column-author"><?
-                        echo count($_Subscriber_ContentList);
-                    ?></td>
+                    <td class="author column-author">
+                    	<?=$_Subscriber_displayname?>
+                    </td>
                     <td class="author column-tags"> <?
-                        if ( !$_Subscriber_Tags ) :
-                        	// nothing
+                       	echo $_Subscriber_subscriptions;
+                        if ( true  ) :
                         else:
                         	$tags = array();
                         	foreach ( $_Subscriber_Tags as $_Tag ) {
                         		$tag = ucfirst(delve($_Tag,'name'));
-	                        	$tag_url = $this->url(array(
-	                        		'action'=>'subscriber-list',
-	                        		'search'=>$tag
-	                        	), 'back', true);
+	                        	$tag_url = $this->url()->action('subscriber-list')->search($tag);
 	                        	$tags[] = '<a href="'.$tag_url.'" title="View all by '.$tag.'">'.$tag.'</a>';
                         	}
                         	echo implode($tags, ', ');
                     	endif;
                     ?></td>
+                    <td class="author column-author">
+                    	<?=$_Subscriber_subscription_published_count?>
+                    </td>
+                    <td class="date column-date">
+                        <abbr title="<?=$this->locale()->datetime($_Subscriber_created_at)?>">
+                            <?=$this->locale()->timeago($_Subscriber_created_at)?>
+                        </abbr>
+                        <br/>
+                        <?=$this->locale()->translate_default('user-status-'.$_Subscriber_status, array(), $_Subscriber_status)?>
+                    </td>
                 </tr>
 				<? endforeach; ?>
             </tbody>

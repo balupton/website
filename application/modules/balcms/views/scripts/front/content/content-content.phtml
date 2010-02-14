@@ -4,7 +4,7 @@
 	$Content_title = delve($Content,'title');
 	$Content_Avatar = delve($Content,'Avatar');
 	//
-	$contentUrl = $this->content()->getContentUrl($Content);
+	$contentUrl = $this->url()->content($Content)->toString();
 ?>
 <div id="content-<?=$Content->code?>" class="content">
 	<div id="content-header" class="content-header">
@@ -17,7 +17,7 @@
 	
 	<? if ( $Content_Avatar ) :
 		$Media = $Content_Avatar;
-		$mediaUrl = $this->content()->getMediaUrl($Content);
+		$mediaUrl = $this->url()->media($Media)->toString();
 		?>
 		<div id="content-avatar" class="content-avatar">
 			<a href="<?=$mediaUrl?>" title="View Image">
