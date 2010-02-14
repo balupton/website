@@ -87,7 +87,7 @@
 					$_Subscriber_subscription_published_count = delve($_Subscriber,'subscription_published_count', 0);
 					//$_Subscriber_ContentList = delve($_Subscriber,'ContentMessages');
 					?>
-                <tr id="subscriber-<?=$_Subscriber_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
+                <tr id="subscriber-<?=$_Subscriber_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTreeArray')->next()?>">
                     <td class="title column-title">
                         <?=$_Subscriber_email?>
                     </td>

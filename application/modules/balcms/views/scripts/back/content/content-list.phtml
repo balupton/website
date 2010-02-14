@@ -114,7 +114,7 @@
             		$contentEditUrl = $this->url()->action('content-edit')->item($_Content)->toString();
             		$contentDeleteUrl = $this->url()->action('content-delete')->item($_Content)->toString();
             	?>
-                <tr id="content-<?=$_Content_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTree')->next()?>">
+                <tr id="content-<?=$_Content_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTree')->next()?>">
                 	<td class="column-icon media-icon">
 						<a title="View <?=$_Content_title?>" href="<?=$contentUrl?>">
 							<? if ( $_Content_Avatar ) : ?>

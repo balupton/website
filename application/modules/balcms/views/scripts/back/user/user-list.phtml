@@ -98,7 +98,7 @@
             		$_User_url_messages = $this->url()->action('user-messages')->item($_User)->toString();
             		$_User_url_login = $this->url()->action('user-login')->item($_User)->toString();
             	?>
-                <tr id="content-<?=$_User_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTree')->next()?>">
+                <tr id="content-<?=$_User_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTree')->next()?>">
                 	<td class="column-icon media-icon">
 						<a title="View <?=$_User_username?>" href="<?=$_User_url_edit?>">
 							<? if ( $_User_Avatar ) : ?>

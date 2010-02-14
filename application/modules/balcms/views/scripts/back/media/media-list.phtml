@@ -105,7 +105,7 @@
 					$_Media_Author_displayname = delve($_Media_Author,'displayname');
 					$mediaUrl = $this->url()->media($Media)->toString();
 					?>
-            	<tr id="media-<?=$_Media_id?>" class="<?=$this->cycle(array('alternate',''), 'ContentTreeArray')->next()?>">
+            	<tr id="media-<?=$_Media_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTreeArray')->next()?>">
 					<td class="column-icon media-icon">
 						<a title="View <?=$_Media_title?>" href="<?=$mediaUrl?>">
 							<? if ( $_Media_type === 'image' ) : ?>

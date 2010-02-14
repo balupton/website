@@ -199,7 +199,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$this->view->SubscriberList = $SubscriberList;
 		
 		# Render
-		$this->render('subscription/subscriber-list');
+		$this->render('user/subscriber-list');
 		
 		# Done
 		return true;
