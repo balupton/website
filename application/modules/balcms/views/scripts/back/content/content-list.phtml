@@ -7,7 +7,7 @@
 	$ContentCrumb = delve($this,'ContentCrumb');
 	$ContentList = delve($this,'ContentList');
 	// Type
-	$type = $this->type;
+	$type = delve($this,'type','content');
 	$Type = ucfirst($type);
 	// Title
 	$this->headTitle()->append($Type);
@@ -31,7 +31,7 @@
             <label class="screen-reader-text" for="search-query">
                 Search:
             </label>
-			<?=$this->formText('search[query]','',array())?>
+			<?=$this->formText('search[query]',delve($this,'search.query'),array())?>
 			<?=$this->formSubmit('search[submit]','Search',array('class'=>'button'))?>
         </p>
 	</form>
@@ -181,6 +181,7 @@
             </tbody>
         </table>
     </form>
+	<? if ( $type === 'content' && !delve($this,'search.query') ) : // We only want to enable sorting on proper standard browsing ?>
     <script type="text/javascript">
     	$(function(){
 			$content_list = $('#content-list');
@@ -208,4 +209,5 @@
     		});
     	});
     </script>
+	<? endif; ?>
 </div>

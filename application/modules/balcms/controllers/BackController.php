@@ -132,15 +132,19 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$App->activateNavigationItem('back.main', 'user-list', true);
 		$UserList = array();
-		$search = $App->fetchSearchQuery();
+		
+		# Search
+		$search = $App->fetchSearch();
+		$searchQuery = delve($search,'query');
+		$this->view->search = $search;
 		
 		# Prepare
-		$ListQuery = Doctrine_Query::create()->select('u.id, u.displayname, u.username, u.created_at, u.email, u.type, s.status, s.created_at')->from('User u')->orderBy('u.username ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ListQuery = Doctrine_Query::create()->select('u.id, u.displayname, u.username, u.created_at, u.email, u.type, u.status, u.created_at')->from('User u')->orderBy('u.username ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle
-		if ( $search ) {
+		if ( $searchQuery ) {
 			// Search
-			$Query = Doctrine::getTable('User')->search($search, $ListQuery);
+			$Query = Doctrine::getTable('User')->search($searchQuery, $ListQuery);
 			$UserList = $Query->execute();
 		} else {
 			// No Search
@@ -157,6 +161,28 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return true;
 	}
 	
+	public function userEditAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$App->activateNavigationItem('back.main', 'user-edit', true);
+		$User = array();
+		$type = 'user';
+		
+		# Apply
+		$this->view->User = $User;
+		$this->view->type = $type;
+		
+		# Render
+		$this->render('user/user-edit');
+		
+		# Done
+		return true;
+	}
+	
+	public function userNewAction ( ) {
+		# Redirect
+		return $this->_forward('user-edit');
+	}
 	
 	# ========================
 	# SUBSCRIPTION
@@ -172,7 +198,11 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$App->activateNavigationItem('back.main', 'subscriber-list', true);
 		$SubscriberList = array();
-		$search = $App->fetchSearchQuery();
+		
+		# Search
+		$search = $App->fetchSearch();
+		$searchQuery = delve($search,'query');
+		$this->view->search = $search;
 		
 		# Prepare
 		$ListQuery = Doctrine_Query::create()
@@ -186,9 +216,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle
-		if ( $search ) {
+		if ( $searchQuery ) {
 			// Search
-			$Query = Doctrine::getTable('Subscriber')->search($search, $ListQuery);
+			$Query = Doctrine::getTable('Subscriber')->search($searchQuery, $ListQuery);
 			$SubscriberList = $Query->execute();
 		} else {
 			// No Search
@@ -239,35 +269,11 @@ class Balcms_BackController extends Zend_Controller_Action {
 		try {
 			$Media = $this->_saveMedia();
 			if ( !$Media->id ) {
-				return $this->_forward('media-new');
+				# No Media
+				return $this->_redirect('media-new');
 			}
-		}
-		catch ( Exception $Exception ) {
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
-		}
-		
-		# Apply
-		$this->view->Media = $Media->toArray();
-		
-		# Render
-		$this->render('media/media-edit');
-		
-		# Done
-		return true;
-	}
-
-	public function mediaNewAction ( ) {
-		# Prepare
-		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back.main', 'media-edit', true);
-		$Media = array();
-		
-		# Save
-		try {
-			$Media = $this->_saveMedia();
-			if ( $Media->id ) {
+			elseif ( !delve('media.id') && $Media->id ) {
+				# New Media
 				return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-edit', 'media' => $Media->code), 'back', true);
 			}
 		}
@@ -286,13 +292,17 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Done
 		return true;
 	}
-
+	
 	public function mediaListAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		$App->activateNavigationItem('back.main', 'media-list', true);
 		$MediaList = array();
-		$search = $App->fetchSearchQuery();
+		
+		# Search
+		$search = $App->fetchSearch();
+		$searchQuery = delve($search,'query');
+		$this->view->search = $search;
 		
 		# Save
 		try {
@@ -308,9 +318,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$ListQuery = Doctrine_Query::create()->select('m.*, ma.*')->from('Media m, m.Author')->orderBy('m.code ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle
-		if ( $search ) {
+		if ( $searchQuery ) {
 			// Search
-			$Query = Doctrine::getTable('Media')->search($search, $ListQuery);
+			$Query = Doctrine::getTable('Media')->search($searchQuery, $ListQuery);
 			$MediaList = $Query->execute();
 		} else {
 			// No Search
@@ -342,11 +352,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 		try {
 			# Fetch
 			$Request = $this->_request;
-			$post = $Request->getPost($param, array());
-			$file = !empty($_FILES[$param]) ? $_FILES[$param] : array();
+			$file = fetch_param($param);
 		
 			# Check
-			if ( (empty($post) && (empty($file) || empty($file['name']))) || is_string($post) ) {
+			if ( empty($file) || empty($file['name']) ) {
 				return $Media;
 			}
 			
@@ -370,7 +379,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			# Log
 			$log_details = array(
 				'Media'		=> $Media->toArray(),
-				'mediaUrl'	=> $this->view->getHelper('content')->getMediaUrl($Media)
+				'mediaUrl'	=> $this->view->url()->media($Media)->toString()
 			);
 			$Log->log(array('log-media-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
 		}
@@ -422,6 +431,19 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list'), 'back', true);
 	}
+	
+	public function getContentCrumbs ( ) {
+		
+	}
+	public function getContentList ( ) {
+		# Fetch
+		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ContentList = $ContentListQuery->execute();
+		$ContentList = array_tree_flat($ContentList, 'id', 'parent_id', 'level', 'position');
+		
+		# Done
+		return $ContentList;
+	}
 
 	public function contentEditAction ( ) {
 		# Prepare
@@ -443,9 +465,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$ContentCrumb[] = $ContentArray;
 		
 		# Fetch content for use in dropdown
-		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
-		$ContentList = $ContentListQuery->execute();
-		$ContentList = array_tree_flat($ContentList, 'id', 'parent_id', 'level', 'position');
+		$ContentList = $this->getContentList();
 		
 		# Apply
 		$this->view->type = $type;
@@ -467,7 +487,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App->activateNavigationItem('back.main', $type.'-edit', true);
 		$Content = $ContentCrumb = array();
 		
-		# Save
+		# Save/Load
 		try {
 			$Content = $this->_saveContent();
 			if ( $Content->id ) {
@@ -480,7 +500,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Exceptor->log();
 		}
 		
-		# Prepare
+		# Prepare New Content
 		$Content->published_at = doctrine_timestamp();
 		if ( $type === 'event' ) {
 			$Content->event_start_at = doctrine_timestamp();
@@ -492,9 +512,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$ContentCrumb[] = $ContentArray;
 		
 		# Fetch content for use in dropdown
-		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
-		$ContentList = $ContentListQuery->execute();
-		$ContentList = array_tree_flat($ContentList, 'id', 'parent_id', 'level', 'position');
+		$ContentList = $this->getContentList();
 		
 		# Apply
 		$this->view->type = $type;
@@ -516,8 +534,12 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App->activateNavigationItem('back.main', $type.'-list', true);
 		$Content = $ContentCrumb = $ContentList = $ContentArray = array();
 		
-		# Fetch Params
-		$search = $App->fetchSearchQuery();
+		# Search
+		$search = $App->fetchSearch();
+		$searchQuery = delve($search,'query');
+		$this->view->search = $search;
+		
+		# Param
 		$content = fetch_param('content');
 		
 		# Prepare
@@ -532,9 +554,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Handle
-		if ( $search ) {
+		if ( $searchQuery ) {
 			// Search
-			$Query = Doctrine::getTable('Content')->search($search, $ListQuery);
+			$Query = Doctrine::getTable('Content')->search($searchQuery, $ListQuery);
 			$ContentList = $Query->execute();
 		} else {
 			// No Search
@@ -615,19 +637,20 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$Content = $this->_getContent();
 		$Connection = Bal_App::getDataConnection();
+		$Request = $this->getRequest();
 		$Log = Bal_App::getLog();
 		
 		try {
 			# Fetch
-			$Request = $this->_request;
 			$content = fetch_param('content');
 			$subscription = fetch_param('subscription');
-		
-			# Check
+			
+			# Check Existance of Save
 			if ( empty($content) || is_string($content) ) {
+				# Return Found/New Content
 				return $Content;
 			}
-		
+			
 			# Start
 			$Connection->beginTransaction();
 			
@@ -651,30 +674,18 @@ class Balcms_BackController extends Zend_Controller_Action {
 			} else {
 				$Content->Parent = null;
 			}
-		
+			
 			# Apply
 			$Content->merge($content);
-		
-			# Avatar
-			if ( $Request->getPost('content_avatar_delete') && !empty($Content->Avatar) ) {
-				$Content->Avatar->delete(); // delete by user request
-				$Content->Avatar = null;
-			}
-			$Avatar = $this->_saveMedia('avatar');
-			if ( $Avatar->id ) {
-				if ( $Avatar->type !== 'image' ) {
-					$Avatar->delete();
-				} else {
-					if ( $Content->avatar_id ) {
-						$Content->Avatar->delete(); // delete the old avatar
-					}
-					$Content->Avatar = $Avatar;
-				}
-			}
-		
+			
 			# Pre Save
 			if ( !$Content->id )
 				$Content->save();
+			
+			# Avatar
+			$Avatar = fetch_param('content.avatar');
+			if ( $Avatar )
+				$Content->avatar = $Avatar;
 			
 			# Relations
 			$Content->setTags($tags);
@@ -691,7 +702,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			# Log
 			$log_details = array(
 				'Content'		=> $Content->toArray(),
-				'contentUrl'	=> $this->view->getHelper('content')->getContentUrl($Content)
+				'contentUrl'	=> $this->view->url()->content($Content)->toString()
 			);
 			$Log->log(array('log-content-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
 		}

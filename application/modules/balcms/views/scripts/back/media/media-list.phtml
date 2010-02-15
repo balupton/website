@@ -42,7 +42,7 @@
             <label class="screen-reader-text" for="search-query">
                 Search:
             </label>
-			<?=$this->formText('search[query]','',array())?>
+			<?=$this->formText('search[query]',delve($this,'search.query'),array())?>
 			<?=$this->formSubmit('search[submit]','Search',array('class'=>'button'))?>
         </p>
 	</form>
@@ -99,28 +99,29 @@
 					$_Media_id = delve($_Media,'id');
 					$_Media_title = delve($_Media,'title');
 					$_Media_type = delve($_Media,'type');
+					$_Media_humantype = delve($_Media,'humantype');
 					$_Media_code = delve($_Media,'code');
 					$_Media_size = delve($_Media,'size');
 					$_Media_Author = delve($_Media,'Author');
 					$_Media_Author_displayname = delve($_Media_Author,'displayname');
-					$mediaUrl = $this->url()->media($Media)->toString();
+					$_Media_url = $this->url()->media($_Media)->toString();
 					?>
             	<tr id="media-<?=$_Media_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTreeArray')->next()?>">
 					<td class="column-icon media-icon">
-						<a title="View <?=$_Media_title?>" href="<?=$mediaUrl?>">
+						<a title="View <?=$_Media_title?>" href="<?=$_Media_url?>">
 							<? if ( $_Media_type === 'image' ) : ?>
-								<img height="60" title="<?=$_Media_title?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
+								<img height="60" title="<?=$_Media_title?>" alt="" class="attachment-80x60" src="<?=$_Media_url?>?h=60"/>
 							<? else: ?>
-								<img width="46" height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/<?=$_Media_type?>.png"/>
+								<img width="46" height="60" title="<?=$_Media_title?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/<?=$_Media_type?>.png"/>
 							<? endif; ?>
 						</a>
 					</td>
 					<td class="media column-media">
-						<strong><a title="View <?=$_Media_title?>" href="<?=$mediaUrl?>">
-							<?=$Media['title']?>
+						<strong><a title="View <?=$_Media_title?>" href="<?=$_Media_url?>">
+							<?=$_Media_title?>
 						</a></strong>
 						<br/>
-						<?=$Media['humantype']?>
+						<?=$_Media_humantype?>
 						<p></p>
 						<div class="row-actions">
 							<span class="edit hide">
@@ -130,12 +131,12 @@
 								<a href="<?=$this->url(array('action'=>'media-delete','media'=>$_Media_code),'back',true)?>" class="delete-action">Delete</a> |
 							</span>
 							<span class="view">
-								<a rel="permalink" title="View <?=$_Media_title?>" href="<?=$mediaUrl?>">View</a>
+								<a rel="permalink" title="View <?=$_Media_title?>" href="<?=$_Media_url?>">View</a>
 							</span>
 						</div>
 					</td>
                     <td class="tags column-author hide">
-                    	<?=$Media['code']?>
+                    	<?=$_Media_code?>
                     </td>
                     <td class="tags column-tags">
                     	<?=filesize_human($_Media_size)?>

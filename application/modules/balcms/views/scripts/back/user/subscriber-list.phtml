@@ -1,4 +1,8 @@
 <?
+	// URLs
+	$backUrl = $this->app()->getAreaUrl('back');
+	$frontUrl = $this->app()->getAreaUrl('front');
+	$this->url()->renege('route','back');
 	// Title
 	$this->headTitle()->append('Subscribers');
 	//
@@ -20,7 +24,7 @@
             <label class="screen-reader-text" for="search-query">
                 Search:
             </label>
-			<?=$this->formText('search[query]','',array())?>
+			<?=$this->formText('search[query]',delve($this,'search.query'),array())?>
 			<?=$this->formSubmit('search[submit]','Search',array('class'=>'button'))?>
         </p>
 	</form>

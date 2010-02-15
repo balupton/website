@@ -4,11 +4,15 @@
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
-	//
+	
+	// Content
 	$Content = delve($this,'Content');
 	$ContentCrumb = delve($this,'ContentCrumb');
 	$Content_Author = delve($Content,'Author');
 	$Content_Avatar = delve($Content,'Avatar');
+	$Content_Avatar_id = delve($Content_Avatar,'id');
+	$Content_Avatar_title = delve($Content_Avatar,'title');
+	$Content_Avatar_url = $this->url()->media($Content_Avatar)->toString();
 	$Content_Parent = delve($Content,'Parent');
 	$Content_Route = delve($Content,'Route');
 	$ContentList = delve($this,'ContentList');
@@ -117,13 +121,11 @@
 					<div id="sidebar-avatar-box" class="postbox sidebar-box">
 						<h3>Avatar</h3>
 						<div class="inside">
-            				<? if ( !empty($Content['Avatar']) && !empty($Content['Avatar']['id']) ) :
-           						$Media = $Content['Avatar'];
-           						$mediaUrl = $this->url()->media($Media)->toString();
+            				<? if ( $Content_Avatar_id ) :
            						?>
 								<div class="avatar">
-									<a title="View <?=$Media['title']?>" href="<?=$mediaUrl?>">
-										<img height="60" title="<?=$Media['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
+									<a title="View <?=$Content_Avatar_url?>" href="<?=$Content_Avatar_url?>">
+										<img height="60" title="<?=$Content_Avatar_title?>" alt="" class="attachment-80x60" src="<?=$Content_Avatar_url?>?h=60"/>
 									</a>
 								</div>
 								<div class="avatar field">

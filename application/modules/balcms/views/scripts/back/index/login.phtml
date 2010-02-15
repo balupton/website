@@ -2,6 +2,7 @@
 	// Url
 	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$baseUrl = $this->app()->getBaseUrl();
+	$this->url()->renege('route','back');
 ?>
 <div id="login">
 	<h1><a title="Powered by balCMS" href="<?=$this->url()->route('balcmshome')?>">balCMS</a></h1>
