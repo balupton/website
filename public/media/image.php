@@ -2,16 +2,17 @@
 # Init
 $bootstrap = $run = false;
 require_once (dirname(__FILE__) . '/../../index.php');
+$Application->bootstrap('balphp');
 
 # Requires
 require_once (BALPHP_PATH . '/core/functions/_image.funcs.php');
 require_once (BALPHP_PATH . '/core/functions/_files.funcs.php');
 
 # Fetch Paths
-$media_path = Bal_App::getConfig('media_path');
-$media_url = Bal_App::getConfig('media_url');
-$images_path = Bal_App::getConfig('images_path');
-$images_url = Bal_App::getConfig('images_url');
+$media_path		= Bal_App::getConfig('media_path');
+$media_url		= Bal_App::getConfig('media_url');
+$images_path	= Bal_App::getConfig('images_path');
+$images_url		= Bal_App::getConfig('images_url');
 
 # Fetch
 $image_location = ltrim($_GET['image'], '/');
