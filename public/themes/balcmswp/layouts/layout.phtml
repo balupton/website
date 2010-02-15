@@ -1,5 +1,7 @@
 <?php
+	// Doctype
 	echo $this->doctype('HTML5');
+	// URL
 	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$baseUrl = $this->app()->getBaseUrl();
 	$publicUrl = $this->app()->getPublicUrl();
@@ -8,7 +10,9 @@
 	$jqueryUiUrl = $publicUrl.'/scripts/jquery-ui-1.7.2';
 	$jquerySparkleUrl = $publicUrl.'/scripts/jquery-sparkle';
 	$tinyMceUrl = $publicUrl.'/scripts/tiny_mce-3.2.7';
-	$User = $this->app()->getUser();
+	$this->url()->renege('route','back');
+	// Identity
+	$Identity = $this->app()->getUser();
 ?><html>
 <head>
     <?= $this->app()->headMeta() ?>
@@ -21,7 +25,7 @@
 	    // JSON
 	    //->offsetSetFile(1,'http://www.json.org/json2.js')
 		// jQuery
-		->offsetSetFile(20,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js' : $publicUrl.'/scripts/jquery-1.4.1.min.js')
+		->offsetSetFile(20,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js' : $publicUrl.'/scripts/jquery-1.4.1.js')
 		// UI
 		->offsetSetFile(30,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' : $jqueryUiUrl.'/js/jquery-ui-1.7.2.custom.min.js')
 	    // Ajaxy
@@ -48,7 +52,7 @@
                     <div id="wphead-info">
                         <div id="user_info">
                             <p>
-                                User: <?=$User['displayname']?>
+                                User: <?=delve($Identity,'displayname')?>
                                 | <a href="<?=$this->url(array(),'balcmshelp',true)?>" class="gsfn">Feedback</a>
                                 | <a href="<?=$this->url(array('action'=>'logout'),'back',true)?>" title="Log Out">Log Out</a>
                             </p>

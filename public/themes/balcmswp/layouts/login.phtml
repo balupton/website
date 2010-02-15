@@ -1,10 +1,13 @@
 <?php
+	// Doctype
 	echo $this->doctype('HTML5');
+	// URL
 	$baseUrl = $this->app()->getBaseUrl();
 	$publicUrl = $this->app()->getPublicUrl();
 	$jqueryUiUrl = $publicUrl.'/scripts/jquery-ui-1.7.2';
 	$jquerySparkleUrl = $publicUrl.'/scripts/jquery-sparkle';
 	$backUrl = $this->app()->getAreaUrl('back');
+	$this->url()->renege('route','back');
 ?>
 <html>
 <head>
