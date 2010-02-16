@@ -16,7 +16,7 @@
 	$User_username = delve($User,'username');
 	$User_displayname = delve($User,'code');
 	$self = $User_id === $Identity_id;
-	$selfstr = $self ? 'Your' : 'Their';
+	$selfstr = $self ? 'your' : 'their';
 	
 	// Mode
 	$mode = delve($User,'id') ? 'edit' : 'new';
@@ -34,9 +34,10 @@
 	<div id="icon-users" class="icon32">
 		<br>
 	</div>
-	<h2>Profile: <?=$User_username?></h2>
+	<h2>
+		<?=($self ? ucfirst($selfstr).' Profile' : 'Profile: '.$User_username)?></h2>
 	<p>
-		<?=$User_displayname?> WordPress.com API key is: <code><?=$User_code?></code>. Don't share your API key, it's like a password.
+		<?=ucfirst($selfstr)?> API key is: <code><?=$User_code?></code>. Don't share <?=$selfstr?> API key, it's like a password.
 	</p>
 	
 	<form id="your-profile" action="" method="post" enctype="multipart/form-data">
@@ -57,7 +58,8 @@
 						<label for="user_login">Username</label>
 					</th>
 					<td>
-						<input type="text" name="user_login" id="user_login" value="balupton" disabled="disabled" class="regular-text"><span class="description">Your username cannot be changed.</span>
+						<?=$this->formText('user[username]', delve($User,'username'), array('autocomplete'=>'off'))?>
+						<span class="description">Your username cannot be changed.</span>
 					</td>
 				</tr>
 				<tr>
@@ -65,7 +67,7 @@
 						<label for="first_name">First name</label>
 					</th>
 					<td>
-						<input type="text" name="first_name" id="first_name" value="" class="regular-text">
+						<?=$this->formText('user[firstname]', delve($User,'firstname'))?>
 					</td>
 				</tr>
 				<tr>
@@ -73,7 +75,7 @@
 						<label for="last_name">Last name</label>
 					</th>
 					<td>
-						<input type="text" name="last_name" id="last_name" value="" class="regular-text">
+						<?=$this->formText('user[lastname]', delve($User,'lastname'))?>
 					</td>
 				</tr>
 				<tr>
@@ -192,4 +194,7 @@
 		</div>
 		<br class="clear">
 	</form>
+	
+	<?=$this->Form->render()?>
+	
 </div>

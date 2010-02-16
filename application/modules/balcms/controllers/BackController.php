@@ -164,13 +164,16 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function userEditAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back.main', 'user-edit', true);
-		$User = array();
+		
+		# Fetch
 		$type = 'user';
+		$User = $this->_saveUser();
+		$App->activateNavigationItem('back.main', 'user-'.($User->id ? 'list' : 'new'), true);
 		
 		# Apply
 		$this->view->User = $User;
 		$this->view->type = $type;
+		$this->view->Form = Bal_Form_Doctrine::fetchForm('User',$User);
 		
 		# Render
 		$this->render('user/user-edit');
@@ -337,76 +340,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Done
 		return true;
 	}
-
-	# ========================
-	# MEDIA: GENERIC
 	
-
-	protected function _saveMedia ( $param = 'media' ) {
-		# Prepare
-		$Connection = Bal_App::getDataConnection();
-		$Media = $this->_getMedia();
-		$Log = Bal_App::getLog();
-		
-		# Handle
-		try {
-			# Fetch
-			$Request = $this->_request;
-			$file = fetch_param($param);
-		
-			# Check
-			if ( empty($file) || empty($file['name']) ) {
-				return $Media;
-			}
-			
-			# Start
-			$Connection->beginTransaction();
-			
-			# Prepare
-			array_keys_keep($post, array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'));
-		
-			# Apply
-			$Media->merge($post);
-			$Media->file = $file;
-			$Media->save();
-		
-			# Stop Duplicates
-			$Request->setPost($param, $Media->code);
-			
-			# Finish
-			$Connection->commit();
-			
-			# Log
-			$log_details = array(
-				'Media'		=> $Media->toArray(),
-				'mediaUrl'	=> $this->view->url()->media($Media)->toString()
-			);
-			$Log->log(array('log-media-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
-		}
-		catch ( Exception $Exception ) {
-			# Revert
-			$Connection->rollback();
-			
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
-		}
-		
-		# Done
-		return $Media;
-	}
-
-	protected function _getMedia ( ) {
-		$media = $this->_getParam('media', false);
-		if ( is_string($media) ) {
-			$Media = Doctrine_Query::create()->select('m.*, ma.*')->from('Media m, m.Author ma')->where('m.code = ?', $media)->fetchOne();
-		}
-		if ( empty($Media) ) {
-			return new Media();
-		}
-		return $Media;
-	}
-
 	# ========================
 	# CONTENT
 	
@@ -484,7 +418,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		$type = $this->_getParam('type', 'content');
-		$App->activateNavigationItem('back.main', $type.'-edit', true);
+		$App->activateNavigationItem('back.main', $type.'-new', true);
 		$Content = $ContentCrumb = array();
 		
 		# Save/Load
@@ -632,7 +566,18 @@ class Balcms_BackController extends Zend_Controller_Action {
 	# ========================
 	# CONTENT: GENERIC
 	
-
+	protected function _getContent ( $create = true ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$Query = Doctrine_Query::create()->select('i.*, ir.*, it.*, ia.*, ip.*, im.*')->from('Content i, i.Route ir, i.Tags it, i.Author ia, i.Parent ip, i.Avatar im');
+		
+		# Fetch
+		$Content = $App->fetchItem('Content', $Query, $create);
+		
+		# Return Content
+		return $Content;
+	}
+	
 	protected function _saveContent ( ) {
 		# Prepare
 		$Content = $this->_getContent();
@@ -643,7 +588,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 		try {
 			# Fetch
 			$content = fetch_param('content');
-			$subscription = fetch_param('subscription');
 			
 			# Check Existance of Save
 			if ( empty($content) || is_string($content) ) {
@@ -654,18 +598,13 @@ class Balcms_BackController extends Zend_Controller_Action {
 			# Start
 			$Connection->beginTransaction();
 			
-			# Ensure
-			array_key_ensure($subscription, 'tags', '');
-		
 			# Prepare
 			array_keys_keep_ensure($content, array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type'));
-			$content['tags'] .= ', ' . $subscription['tags'];
-		
+			
 			# Tags
-			$tags = explode(',', $content['tags']);
-			$tags = implode(', ', array_clean($tags));
+			$tags = prepare_csv_str($content['tags']);
 			unset($content['tags']);
-		
+			
 			# Parent
 			$parent = $content['parent'];
 			unset($content['parent']);
@@ -683,12 +622,12 @@ class Balcms_BackController extends Zend_Controller_Action {
 				$Content->save();
 			
 			# Avatar
-			$Avatar = fetch_param('content.avatar');
+			$Avatar = delve($content,'avatar');
 			if ( $Avatar )
 				$Content->avatar = $Avatar;
 			
-			# Relations
-			$Content->setTags($tags);
+			# Tags
+			$Content->Tags = $tags;
 		
 			# Post Save
 			$Content->save();
@@ -716,29 +655,160 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Done
 		return $Content;
 	}
-
-	protected function _getContent ( $create = true ) {
+	
+	# ========================
+	# MEDIA: GENERIC
+	
+	protected function _getMedia ( $create = true ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$Query = Doctrine_Query::create()->select('i.*, ia.*')->from('Media i, i.Author ma');
+		
 		# Fetch
-		$content = $this->_getParam('code', false);
-		$Content = false;
+		$Media = $this->fetchItem('Media', $Query, $create);
 		
-		# Load
-		if ( $content ) {
-			$Query = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm');
-			if ( is_string($content) || is_numeric($content) ) {
-				$Content = $Query->where('c.code = ? OR c.id = ?', array($content,$content))->fetchOne();
+		# Return Media
+		return $Media;
+	}
+	
+	protected function _saveMedia ( $param = 'media' ) {
+		# Prepare
+		$Connection = Bal_App::getDataConnection();
+		$Media = $this->_getMedia();
+		$Log = Bal_App::getLog();
+		
+		# Handle
+		try {
+			# Fetch
+			$Request = $this->_request;
+			$file = fetch_param($param);
+		
+			# Check
+			if ( empty($file) || empty($file['name']) ) {
+				return $Media;
 			}
-		}
+			
+			# Start
+			$Connection->beginTransaction();
+			
+			# Prepare
+			array_keys_keep($post, array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'));
 		
-		# Check
-		if ( empty($Content) && $create ) {
-			return new Content();
+			# Apply
+			$Media->merge($post);
+			$Media->file = $file;
+			$Media->save();
+		
+			# Stop Duplicates
+			$Request->setPost($param, $Media->code);
+			
+			# Finish
+			$Connection->commit();
+			
+			# Log
+			$log_details = array(
+				'Media'		=> $Media->toArray(),
+				'mediaUrl'	=> $this->view->url()->media($Media)->toString()
+			);
+			$Log->log(array('log-media-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
+		}
+		catch ( Exception $Exception ) {
+			# Revert
+			$Connection->rollback();
+			
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
 		}
 		
 		# Done
-		return $Content;
+		return $Media;
 	}
-
+	
+	# ========================
+	# USER: GENERIC
+	
+	protected function _getUser ( $create = true ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$Query = null;
+		
+		# Fetch
+		$User = $App->fetchItem('User', $Query, $create);
+		
+		# Return User
+		return $User;
+	}
+	
+	protected function _saveUser ( ) {
+		# Prepare
+		$User = $this->_getUser();
+		$Connection = Bal_App::getDataConnection();
+		$Request = $this->getRequest();
+		$Log = Bal_App::getLog();
+		
+		try {
+			# Fetch
+			$user = fetch_param('user');
+			
+			# Check Existance of Save
+			if ( empty($user) || is_string($user) ) {
+				# Return Found/New Content
+				return $User;
+			}
+			
+			# Start
+			$Connection->beginTransaction();
+			
+			# Prepare
+			// array_keys_keep_ensure($user, array('username', 'firstname', 'lastname', 'parent', 'status', 'tags', 'title', 'type'));
+			
+			# Tags
+			$tags = prepare_csv_str($user['tags']);
+			unset($user['tags']);
+			
+			# Apply
+			$User->merge($user);
+			
+			# Pre Save
+			if ( !$User->id )
+				$User->save();
+			
+			# Avatar
+			$Avatar = delve($user,'avatar');
+			if ( $Avatar )
+				$User->avatar = $Avatar;
+			
+			# Tags
+			$User->SubscriptionTags = $tags;
+		
+			# Post Save
+			$User->save();
+			
+			# Stop Duplicates
+			$Request->setPost('user', $User->code);
+			
+			# Finish
+			$Connection->commit();
+			
+			# Log
+			$log_details = array(
+				'User'			=> $User->toArray(),
+				'userUrl'		=> $this->view->url()->user($User)->toString()
+			);
+			$Log->log(array('log-user-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
+		}
+		catch ( Exception $Exception ) {
+			$Connection->rollback();
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+		}
+		
+		# Done
+		return $User;
+	}
+	
 	# ========================
 	# EVENT
 	

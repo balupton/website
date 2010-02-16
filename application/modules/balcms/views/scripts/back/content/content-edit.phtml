@@ -111,7 +111,7 @@
 						<h3>Tags</h3>
 						<div class="inside">
 							<label class="screen-reader-text" for="content-tags">Post Tags</label>
-							<?=$this->formTextarea('content[tags]',delve($Content,'tagstr'),array('class'=>'form-input-tip autosize','title'=>'Add tags'))?>
+							<?=$this->formTextarea('content[tags][]',delve($Content,'tagstr'),array('class'=>'form-input-tip autosize','title'=>'Add tags'))?>
 							<p class="description">
 								Add your tags to the post above, separating them with commas.
 							</p>
@@ -149,7 +149,7 @@
 						<div class="inside">
 							<? if ( delve($Content,'send_status') === 'none' ): ?>
 								<div class="field">
-									<?=$this->formCheckbox('subscription[tags][]', 'newsletter')?>
+									<?=$this->formCheckbox('content[tags][]', 'newsletter')?>
 									<label for="subscription-tags">
 										Send out as a
 										<a href="<?=$this->url()->action('content-list')->search('newsletter')?>" title="Sent Content List">newsletter</a>

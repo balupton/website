@@ -60,7 +60,7 @@
 				"route": "back",
 				"class": "parent"
 			},{
-				"id": "back-main-content-edit",
+				"id": "back-main-content-new",
 				"resource": "content",
 				"label": "&mdash; New Content",
 				"action": "content-new",
@@ -74,7 +74,7 @@
 				"route": "back",
 				"class": "parent"
 			},{
-				"id": "back-main-event-edit",
+				"id": "back-main-event-new",
 				"resource": "event",
 				"label": "&mdash; New Event",
 				"action": "event-new",
@@ -95,7 +95,7 @@
 				"route": "back",
 				"class": "parent"
 			},{
-				"id": "back-main-user-edit",
+				"id": "back-main-user-new",
 				"resource": "user",
 				"label": "&mdash; New User",
 				"action": "user-new",
