@@ -1,5 +1,90 @@
 @CHARSET "UTF-8";
 
+/* Zend Form Styling */
+dl.zend_form
+	fieldset
+		legend {
+			font-size:1.17em;
+			font-weight:bold;
+			margin:1em 0;
+			padding:0 0 10px 0;
+		}
+
+dl.zend_form
+	label.required:after {
+		content: "(required)";
+		font-style: italic;
+		color: #666;
+		font-family: 'Lucida Grande', Verdana, Arial, 'Bitstream Vera Sans', sans-serif;
+		font-size: 12px;
+		margin: 0px 0px 6px 8px;
+	}
+dl.zend_form
+	label.required {
+	}
+
+dl.zend_form
+	dl dt,
+dl.zend_form
+	dl dd {
+		/*line-height: 140%;*/
+		margin: 5px 10px;
+	}
+
+dl.zend_form
+	dl dt {
+		float:left;
+		clear:left;
+		text-align:left;
+		width:200px;
+	}
+
+dl.zend_form
+	dl dd {
+		float:left;
+		clear:right;
+		width:30%;
+		margin-left: 5px;
+	}
+
+dl.zend_form
+	dd ul.errors {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+dl.zend_form
+	dd ul.errors li {
+		float: left;
+		margin: 0 0.15em;
+		font-size: 12px;
+		color: #666666;
+	}
+
+dl.zend_form
+	input,
+dl.zend_form
+	textarea,
+dl.zend_form
+ 	#pass-strength-result {
+		width: 25em;
+	}
+
+dl.zend_form
+	textarea {
+		height: 5em;
+	}
+
+dl.zend_form
+	input[type="submit"] {
+		width:auto;
+		text-transform:capitalize;
+	}
+
+	
+
+/* Misc */
 .max_file_size_text {
 	color:#666666;
 	font-size:11px;
