@@ -921,6 +921,16 @@ a.button-secondary {
 	font-size: 11px;
 }
 
+#wpcontent select[multiple], #wpcontent select[multiple="multiple"], #wpcontent select.multiple  {
+	height: auto;
+	max-height: 10em;
+}
+
+select[multiple], select[multiple="multiple"], select.multiple  {
+	height: auto;
+	max-height: 10em;
+}
+
 #wpcontent option {
 	padding: 2px;
 }
