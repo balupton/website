@@ -32,6 +32,7 @@
         </p>
         <div class="clear">
         </div>
+		<?=$this->log()->render()?>
 		<!-- Content Table -->
         <table class="widefat page fixed" cellspacing="0">
         	<!-- Content Table: Heading -->
@@ -103,7 +104,7 @@
                 	<td class="column-icon media-icon">
 						<a title="View <?=$_User_username?>" href="<?=$_User_url_edit?>">
 							<? if ( $_User_Avatar ) : ?>
-            					<? $_User_Avatar_url = $this->app()->getMediaUrl($_User_Avatar); ?>
+            					<? $_User_Avatar_url = $this->url()->media($_User_Avatar)->toString(); ?>
 								<img height="60" title="<?=$_User_username?>" alt="" class="attachment-80x60" src="<?=$_User_Avatar_url?>?h=60"/>
 							<? elseif ( false ): ?>
 								<img width="46" height="60" title="<?=$_User_username?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>

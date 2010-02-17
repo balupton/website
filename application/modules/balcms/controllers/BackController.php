@@ -139,7 +139,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$this->view->search = $search;
 		
 		# Prepare
-		$ListQuery = Doctrine_Query::create()->select('u.id, u.displayname, u.username, u.created_at, u.email, u.type, u.status, u.created_at')->from('User u')->orderBy('u.username ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ListQuery = Doctrine_Query::create()->select('u.id, u.displayname, u.username, u.created_at, u.email, u.type, u.status, u.created_at, ua.*')->from('User u, u.Avatar ua')->orderBy('u.username ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle
 		if ( $searchQuery ) {
@@ -317,6 +317,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Save
 		try {
 			$Media = $this->_saveMedia();
+			if ( is_object($Media) )
+			$this->view->Media = $Media->toArray();
 		}
 		catch ( Exception $Exception ) {
 			# Log the Event and Continue
@@ -339,7 +341,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Apply
 		$this->view->MediaList = $MediaList;
-		$this->view->Media = $Media->toArray();
 		
 		# Render
 		$this->render('media/media-list');
@@ -605,6 +606,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 			# Start
 			$Connection->beginTransaction();
 			
+			# Fetch
+			$Avatar = delve($content,'Avatar');
+			
 			# Prepare
 			array_keys_keep_ensure($content, array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type'));
 			
@@ -629,9 +633,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 				$Content->save();
 			
 			# Avatar
-			$Avatar = delve($content,'avatar');
 			if ( $Avatar )
-				$Content->avatar = $Avatar;
+				$Content->Avatar = $Avatar;
 			
 			# Tags
 			$Content->Tags = $tags;
@@ -672,7 +675,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Query = Doctrine_Query::create()->select('i.*, ia.*')->from('Media i, i.Author ma');
 		
 		# Fetch
-		$Media = $this->fetchItem('Media', $Query, $create);
+		$Media = $App->fetchItem('Media', $Query, $create);
 		
 		# Return Media
 		return $Media;
@@ -688,7 +691,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		try {
 			# Fetch
 			$Request = $this->_request;
-			$file = fetch_param($param);
+			$media = fetch_param($param);
+			$file = delve($media,'file');
 		
 			# Check
 			if ( empty($file) || empty($file['name']) ) {
@@ -699,10 +703,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Connection->beginTransaction();
 			
 			# Prepare
-			array_keys_keep($post, array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'));
+			array_keys_keep($media, array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'));
 		
 			# Apply
-			$Media->merge($post);
+			$Media->merge($media);
 			$Media->file = $file;
 			$Media->save();
 		
@@ -767,8 +771,12 @@ class Balcms_BackController extends Zend_Controller_Action {
 			# Start
 			$Connection->beginTransaction();
 			
+			# Fetch
+			$Avatar = delve($user,'Avatar');
+			
 			# Prepare
 			// array_keys_keep_ensure($user, array('username', 'firstname', 'lastname', 'parent', 'status', 'tags', 'title', 'type'));
+			array_keys_unset($user, array('Avatar'));
 			
 			# Tags
 			$tags = prepare_csv_str($user['subscriptions']);
@@ -782,9 +790,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 				$User->save();
 			
 			# Avatar
-			$Avatar = delve($user,'avatar');
-			if ( $Avatar )
-				$User->avatar = $Avatar;
+			if ( $Avatar !== null )
+				$User->Avatar = $Avatar;
 			
 			# Tags
 			$User->SubscriptionTags = $tags;

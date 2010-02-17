@@ -36,10 +36,13 @@
 		<br>
 	</div>
 	<h2>
-		<?=($self ? ucfirst($selfstr).' Profile' : 'Profile: '.$User_username)?></h2>
+		<?=($self ? ucfirst($selfstr).' Profile' : 'User: '.$User_username)?>
+	</h2>
+	<? if ( $mode_edit ) : ?>
 	<p>
 		<?=ucfirst($selfstr)?> API key is: <code><?=$User_uid?></code>. Don't share <?=$selfstr?> API key, it's like a password.
 	</p>
+	<? endif; ?>
 	
 	<?=$this->log()->render()?>
 	
