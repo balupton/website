@@ -67,6 +67,8 @@ dl.zend_form
 dl.zend_form
 	textarea,
 dl.zend_form
+	select,
+dl.zend_form
  	#pass-strength-result {
 		width: 25em;
 	}
