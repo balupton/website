@@ -170,10 +170,17 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$User = $this->_saveUser();
 		$App->activateNavigationItem('back.main', 'user-'.($User->id ? 'list' : 'new'), true);
 		
+		# Form
+		$Form = Bal_Form_Doctrine::fetchForm('User',$User);
+		$Form
+			->setAction('')
+			->setMethod('post')
+			->addElement('submit', 'submit',array('class'=>'button-primary','label'=>'Save Changes'));
+		
 		# Apply
 		$this->view->User = $User;
 		$this->view->type = $type;
-		$this->view->Form = Bal_Form_Doctrine::fetchForm('User',$User);
+		$this->view->Form = $Form;
 		
 		# Render
 		$this->render('user/user-edit');
@@ -214,7 +221,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			->where('s.status = ?', 'published')
 			->andWhere('s.subscriptions != ?', '')
 			->orderBy('s.email ASC')
-			->leftJoin('s.ReceivedMessages sMessagePublished WITH sMessagePublished.code = ? AND sMessagePublished.status = ?', array('content-subscription','published'))
+			->leftJoin('s.ReceivedMessages sMessagePublished WITH sMessagePublished.template = ? AND sMessagePublished.status = ?', array('content-subscription','published'))
 			->groupBy('s.id')
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
@@ -764,8 +771,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 			// array_keys_keep_ensure($user, array('username', 'firstname', 'lastname', 'parent', 'status', 'tags', 'title', 'type'));
 			
 			# Tags
-			$tags = prepare_csv_str($user['tags']);
-			unset($user['tags']);
+			$tags = prepare_csv_str($user['subscriptions']);
+			unset($user['subscriptions']);
 			
 			# Apply
 			$User->merge($user);

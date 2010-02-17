@@ -13,6 +13,7 @@
 	$User = delve($this,'User');
 	$User_id = delve($User,'id');
 	$User_code = delve($User,'code');
+	$User_uid = delve($User,'uid');
 	$User_username = delve($User,'username');
 	$User_displayname = delve($User,'code');
 	$self = $User_id === $Identity_id;
@@ -37,164 +38,26 @@
 	<h2>
 		<?=($self ? ucfirst($selfstr).' Profile' : 'Profile: '.$User_username)?></h2>
 	<p>
-		<?=ucfirst($selfstr)?> API key is: <code><?=$User_code?></code>. Don't share <?=$selfstr?> API key, it's like a password.
+		<?=ucfirst($selfstr)?> API key is: <code><?=$User_uid?></code>. Don't share <?=$selfstr?> API key, it's like a password.
 	</p>
 	
-	<form id="your-profile" action="" method="post" enctype="multipart/form-data">
-		
-		<div class="liquid-container-315">
-			<div class="liquid-content-315">
-				<input type="hidden" id="_wpnonce" name="_wpnonce" value="d0f2f403e8"><input type="hidden" name="_wp_http_referer" value="/wp-admin/profile.php">
-				<p>
-					<input type="hidden" name="from" value="profile">
-					<input type="hidden" name="checkuser_id" value="2212518">
-				</p>
-				
-				<h3>Name</h3>
-				<table class="form-table">
-				<tbody>
-				<tr>
-					<th>
-						<label for="user_login">Username</label>
-					</th>
-					<td>
-						<?=$this->formText('user[username]', delve($User,'username'), array('autocomplete'=>'off'))?>
-						<span class="description">Your username cannot be changed.</span>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="first_name">First name</label>
-					</th>
-					<td>
-						<?=$this->formText('user[firstname]', delve($User,'firstname'))?>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="last_name">Last name</label>
-					</th>
-					<td>
-						<?=$this->formText('user[lastname]', delve($User,'lastname'))?>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="nickname">Nickname <span class="description">(required)</span></label>
-					</th>
-					<td>
-						<input type="text" name="nickname" id="nickname" value="balupton" class="regular-text">
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="display_name">Display name publicly as</label>
-					</th>
-					<td>
-						<select name="display_name" id="display_name">
-							<option id="display_nickname" value="balupton" selected="selected">balupton</option>
-							<option id="display_username" value="balupton" selected="selected">balupton</option>
-						</select>
-					</td>
-				</tr>
-				</tbody>
-				</table>
-				
-				<h3>Contact Info</h3>
-				<table class="form-table">
-				<tbody>
-				<tr>
-					<th>
-						<label for="email">E-mail <span class="description">(required)</span></label>
-					</th>
-					<td>
-						<input type="text" name="email" id="email" value="balupton@gmail.com" class="regular-text">
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="url">Website</label>
-					</th>
-					<td>
-						<input type="text" name="url" id="url" value="" class="regular-text code">
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="aim">AIM</label>
-					</th>
-					<td>
-						<input type="text" name="aim" id="aim" value="" class="regular-text">
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="yim">Yahoo IM</label>
-					</th>
-					<td>
-						<input type="text" name="yim" id="yim" value="" class="regular-text">
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="jabber">Jabber / Google Talk</label>
-					</th>
-					<td>
-						<input type="text" name="jabber" id="jabber" value="" class="regular-text">
-					</td>
-				</tr>
-				</tbody>
-				</table>
-				
-				<h3>About Yourself</h3>
-				<table class="form-table">
-				<tbody>
-				<tr>
-					<th>
-						<label for="description">Biographical Info</label>
-					</th>
-					<td>
-						<textarea name="description" id="description" rows="5" cols="30"></textarea><br>
-						<span class="description">Share a little biographical information to fill out your profile. This may be shown publicly.</span>
-					</td>
-				</tr>
-				<tr id="password">
-					<th>
-						<label for="pass1">New Password</label>
-					</th>
-					<td>
-						<?=$this->formPassword('user[password]', '', array('autocomplete'=>'off'))?>
-						<span class="description">If you would like to change the password type a new one. Otherwise leave this blank.</span><br>
-						
-						<?=$this->formPassword('user[password-confirm]', '', array('autocomplete'=>'off'))?>
-						<span class="description">Type your new password again.</span><br>
-						
-						<div id="user-password-strength"></div>
-						
-						<script type="text/javascript">
-							$(function(){
-								var $passwordStrength = $('#user-password-strength');
-								$passwordStrength.passwordStrength({
-									'password': '#user-password',
-									'confirm':  '#user-password-confirm',
-									'username': '#user-username'
-								});
-							});
-						</script>
-					</td>
-				</tr>
-				</tbody>
-				</table>
-				<p class="submit">
-					<input type="hidden" name="action" value="update">
-					<input type="hidden" name="user_id" id="user_id" value="2212518">
-					<input type="submit" class="button-primary" value="Update Profile" name="submit">
-				</p>
-			</div>
-		</div>
-		<br class="clear">
-	</form>
+	<?=$this->log()->render()?>
 	
 	<?=$this->Form->render()?>
 	
+	<script type="text/javascript">
+		$(function(){
+			var $password = $('#user-password');
+			var $passwordStrength = $('<div id="user-password-strength"></div>');
+			$passwordStrength.appendTo($password.parent());
+			$passwordStrength.passwordStrength({
+				'password': $password,
+				//'confirm':  '#user-password-confirm',
+				'username': '#user-username',
+				il8n: {
+					hint: ''
+				}
+			});
+		});
+	</script>
 </div>
