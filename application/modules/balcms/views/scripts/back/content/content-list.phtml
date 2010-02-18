@@ -4,7 +4,7 @@
 	$frontUrl = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
 	//
-	$ContentCrumb = delve($this,'ContentCrumb');
+	$ContentCrumbs = delve($this,'ContentCrumbs');
 	$ContentList = delve($this,'ContentList');
 	// Type
 	$type = delve($this,'type','content');
@@ -19,7 +19,7 @@
 	<!-- Header -->
     <h2>
 		<a href="<?=$this->url()->action('content-list')?>"><?=$Type?> List</a>
-		<? foreach ( $ContentCrumb as $_Content ): ?>
+		<? foreach ( $ContentCrumbs as $_Content ): ?>
 			&raquo; <a href="<?=$this->url()->action('content-list')->item($_Content)?>"><?=delve($_Content,'title')?></a>
 		<? endforeach; ?>
 		<a class="button add-new-h2" href="<?=$this->url()->action('content-new')?>">Create New</a>

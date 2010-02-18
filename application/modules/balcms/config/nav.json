@@ -20,25 +20,25 @@
 	"back": {
 		"fav": [{
 			"id": "back-fav-content-new",
-			"resource": "content",
+			"privilege": "permission-content",
 			"label": "New Content",
 			"action": "content-new",
 			"route": "back"
 		},{
 			"id": "back-fav-event-new",
-			"resource": "event",
+			"privilege": "permission-content_event",
 			"label": "New Event",
 			"action": "event-new",
 			"route": "back"
 		},{
 			"id": "back-fav-media-new",
-			"resource": "media",
+			"privilege": "permission-media",
 			"label": "New Media",
 			"action": "media-new",
 			"route": "back"
 		},{
 			"id": "back-fav-user-new",
-			"resource": "user",
+			"privilege": "permission-user",
 			"label": "New User",
 			"action": "user-new",
 			"route": "back"
@@ -48,34 +48,34 @@
 			"uri": "#"
 		},{
 			"id": "back-main-content",
-			"resource": "content",
+			"privilege": "permission-content",
 			"label": "Content",
 			"action": "content",
 			"route": "back",
 			"pages": [{
 				"id": "back-main-content-list",
-				"resource": "content",
+				"privilege": "permission-content",
 				"label": "Content",
 				"action": "content-list",
 				"route": "back",
 				"class": "parent"
 			},{
 				"id": "back-main-content-new",
-				"resource": "content",
+				"privilege": "permission-content",
 				"label": "&mdash; New Content",
 				"action": "content-new",
 				"route": "back",
 				"class": "child"
 			},{
 				"id": "back-main-event-list",
-				"resource": "event",
+				"privilege": "permission-content_event",
 				"label": "Events",
 				"action": "event-list",
 				"route": "back",
 				"class": "parent"
 			},{
 				"id": "back-main-event-new",
-				"resource": "event",
+				"privilege": "permission-content_event",
 				"label": "&mdash; New Event",
 				"action": "event-new",
 				"route": "back",
@@ -83,27 +83,27 @@
 			}]
 		},{
 			"id": "back-main-user",
-			"resource": "user",
+			"privilege": "permission-user",
 			"label": "Users",
 			"action": "user",
 			"route": "back",
 			"pages": [{
 				"id": "back-main-user-list",
-				"resource": "user",
+				"privilege": "permission-user",
 				"label": "Users",
 				"action": "user-list",
 				"route": "back",
 				"class": "parent"
 			},{
 				"id": "back-main-user-new",
-				"resource": "user",
+				"privilege": "permission-user",
 				"label": "&mdash; New User",
 				"action": "user-new",
 				"route": "back",
 				"class": "child"
 			},{
 				"id": "back-main-subscriber-list",
-				"resource": "subscription",
+				"privilege": "permission-user_subscriber",
 				"label": "Subscribers",
 				"action": "subscriber-list",
 				"route": "back",
@@ -111,14 +111,14 @@
 			}]
 		},{
 			"id": "back-main-media",
-			"resource": "media",
+			"privilege": "permission-media",
 			"label": "Media",
 			"action": "media",
 			"route": "back",
 			"class": "menu-top-last",
 			"pages": [{
 				"id": "back-main-media-list",
-				"resource": "media",
+				"privilege": "permission-media",
 				"label": "Media",
 				"action": "media-list",
 				"route": "back",
@@ -127,6 +127,41 @@
 		},{
 			"label": "---",
 			"uri": "#"
+		},{
+			"id": "back-main-crud",
+			"label": "CRUD",
+			"privilege": "permission-crud",
+			"action": "crud-list",
+			"route": "back",
+			"params": {
+				"type": "message"
+			},
+			"class": "menu-top-last",
+			"pages": [{
+				"id": "back-main-crud-list-message",
+				"label": "Messages",
+				"privilege": "permission-crud",
+				"action": "crud-list",
+				"route": "back",
+				"class": "parent",
+				"params": {
+					"type": "message"
+				}
+			},{
+				"id": "back-main-crud-new-message",
+				"label": "&mdash; New Message",
+				"privilege": "permission-crud",
+				"action": "crud-new",
+				"route": "back",
+				"class": "child",
+				"params": {
+					"type": "message"
+				}
+			}]
+		},{
+			"label": "---",
+			"uri": "#",
+			"privilege": "permission-crud"
 		}]
 	}
 }

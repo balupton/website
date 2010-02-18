@@ -6,6 +6,8 @@ foreach ($this->container as $Page ) :
 	$label = $Page->label;
 	// Checks
 	$active = false;
+	if ( !$this->navigation()->accept($Page) )
+		continue;
 	$class = array($Page->class);
 	// Position
 	if ( $first ) {

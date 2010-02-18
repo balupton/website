@@ -5,7 +5,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	# ========================
 	# VARIABLES
 	
-	const MODULE = 'Burn';
+	const MODULE = 'Balcms';
 	
 	
 	# ========================
@@ -119,6 +119,116 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 
 	# ========================
+	# CRUD
+	
+
+	public function crudAction ( ) {
+		# Redirect
+		return $this->_forward('crud-list');
+	}
+
+	public function crudListAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$Request = $this->getRequest();
+		$ItemList = array();
+		
+		# Prepare Type
+		$type = $Request->getParam('type');
+		$typeLower = strtolower($type);
+		$Table = Bal_Form_Doctrine::getTable($type);
+		$tableName = Bal_Form_Doctrine::getTableName($type);
+		$labelColumnName = Bal_Form_Doctrine::getTableLabelColumnName($tableName);
+		
+		# Menu
+		$App->activateNavigationItem('back.main', 'crud-list-'.$typeLower, true);
+		
+		
+		# Search
+		$search = $App->fetchSearch();
+		$searchQuery = delve($search,'query');
+		$this->view->search = $search;
+		
+		# Prepare
+		$ListQuery = $Table->createQuery()
+			->select('*')
+			->orderBy($labelColumnName.' ASC')
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		
+		# Handle
+		if ( $searchQuery ) {
+			// Search
+			if ( method_exists($Table,'search') ) {
+				$Query = $Table->search($searchQuery, $ListQuery);
+			} else {
+				$Query = $ListQuery->andWhere($labelColumnName.' LIKE ?', '%'.$searchQuery.'%');
+			}
+			$ItemList = $Query->execute();
+		} else {
+			// No Search
+			$ItemList = $ListQuery->execute();
+		}
+		
+		# Apply
+		$this->view->ItemList = $ItemList;
+		$this->view->type = $type;
+		
+		
+		# Render
+		$this->render('crud/crud-list');
+		
+		# Done
+		return true;
+	}
+	
+	public function crudEditAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$Request = $this->getRequest();
+		$Item = array();
+		
+		# Prepare Type
+		$type = $Request->getParam('type');
+		$typeLower = strtolower($type);
+		$Table = Bal_Form_Doctrine::getTable($type);
+		$tableName = Bal_Form_Doctrine::getTableName($type);
+		$labelColumnName = Bal_Form_Doctrine::getTableLabelColumnName($tableName);
+		
+		# Fetch
+		$Item = $this->_saveItem($type);
+		
+		# Menu
+		$App->activateNavigationItem('back.main', 'crud-'.($Item->id?'list':'new').'-'.$typeLower, true);
+		
+		
+		# Form
+		$Form = Bal_Form_Doctrine::fetchForm($tableName,$Item);
+		$Form
+			->setAction('')
+			->setMethod('post')
+			->addElement('submit', 'submit',array('class'=>'button-primary','label'=>'Save Changes'));
+		
+		# Apply
+		$this->view->Item = $Item;
+		$this->view->type = $type;
+		$this->view->Form = $Form;
+		
+		
+		# Render
+		$this->render('crud/crud-edit');
+		
+		# Done
+		return true;
+	}
+	
+	public function crudNewAction ( ) {
+		# Redirect
+		return $this->_forward('crud-edit');
+	}
+	
+	
+	
+	# ========================
 	# USER
 	
 
@@ -193,6 +303,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Redirect
 		return $this->_forward('user-edit');
 	}
+	
 	
 	# ========================
 	# SUBSCRIPTION
@@ -390,7 +501,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function contentEditAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$Content = $ContentCrumb = array();
+		$Content = $ContentCrumbs = array();
 		
 		# Save
 		$Content = $this->_saveContent();
@@ -404,14 +515,14 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Fetch
 		$ContentArray = $Content->toArray();
-		$ContentCrumb[] = $ContentArray;
+		$ContentCrumbs[] = $ContentArray;
 		
 		# Fetch content for use in dropdown
 		$ContentList = $this->getContentList();
 		
 		# Apply
 		$this->view->type = $type;
-		$this->view->ContentCrumb = $ContentCrumb;
+		$this->view->ContentCrumbs = $ContentCrumbs;
 		$this->view->ContentList = $ContentList;
 		$this->view->Content = $ContentArray;
 		
@@ -427,7 +538,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$type = $this->_getParam('type', 'content');
 		$App->activateNavigationItem('back.main', $type.'-new', true);
-		$Content = $ContentCrumb = array();
+		$Content = $ContentCrumbs = array();
 		
 		# Save/Load
 		try {
@@ -451,14 +562,14 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Fetch
 		$ContentArray = $Content->toArray();
-		$ContentCrumb[] = $ContentArray;
+		$ContentCrumbs[] = $ContentArray;
 		
 		# Fetch content for use in dropdown
 		$ContentList = $this->getContentList();
 		
 		# Apply
 		$this->view->type = $type;
-		$this->view->ContentCrumb = $ContentCrumb;
+		$this->view->ContentCrumbs = $ContentCrumbs;
 		$this->view->ContentList = $ContentList;
 		$this->view->Content = $ContentArray;
 		
@@ -474,7 +585,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$type = $this->_getParam('type', 'content');
 		$App->activateNavigationItem('back.main', $type.'-list', true);
-		$Content = $ContentCrumb = $ContentList = $ContentArray = array();
+		$Content = $ContentCrumbs = $ContentList = $ContentArray = array();
 		
 		# Search
 		$search = $App->fetchSearch();
@@ -508,7 +619,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			if ( $Content ) {
 				// We have a content as a root
 				$ContentArray = $Content->toArray();
-				$ContentCrumb = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, true);
+				$ContentCrumbs = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, true);
 			}
 			
 			# Fetch list
@@ -532,7 +643,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Apply
 		$this->view->type = $type;
-		$this->view->ContentCrumb = $ContentCrumb;
+		$this->view->ContentCrumbs = $ContentCrumbs;
 		$this->view->ContentList = $ContentList;
 		$this->view->Content = $ContentArray;
 		
@@ -775,12 +886,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Avatar = delve($user,'Avatar');
 			
 			# Prepare
-			// array_keys_keep_ensure($user, array('username', 'firstname', 'lastname', 'parent', 'status', 'tags', 'title', 'type'));
 			array_keys_unset($user, array('Avatar'));
-			
-			# Tags
-			$tags = prepare_csv_str($user['subscriptions']);
-			unset($user['subscriptions']);
 			
 			# Apply
 			$User->merge($user);
@@ -793,9 +899,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 			if ( $Avatar !== null )
 				$User->Avatar = $Avatar;
 			
-			# Tags
-			$User->SubscriptionTags = $tags;
-		
 			# Post Save
 			$User->save();
 			
@@ -822,6 +925,79 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Done
 		return $User;
 	}
+	
+	
+	# ========================
+	# ITEM: GENERIC
+	
+	protected function _getItem ( $type, $create = true ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$Query = null;
+		
+		# Fetch
+		$Item = $App->fetchItem($type, $Query, $create);
+		
+		# Return Item
+		return $Item;
+	}
+	
+	protected function _saveItem ( $type ) {
+		# Prepare
+		$Connection = Bal_App::getDataConnection();
+		$Request = $this->getRequest();
+		$Log = Bal_App::getLog();
+		
+		# Fetch
+		$Item = $this->_getItem($type);
+		
+		# Handle
+		try {
+			# Fetch
+			$item = fetch_param($type);
+			
+			# Check Existance of Save
+			if ( empty($item) || is_string($item) ) {
+				# Return Found/New Content
+				return $Item;
+			}
+			
+			# Start
+			$Connection->beginTransaction();
+			
+			# Prepare
+			// array_keys_keep_ensure($user, array('username', 'firstname', 'lastname', 'parent', 'status', 'tags', 'title', 'type'));
+			
+			# Apply
+			$Item->merge($item);
+			
+			# Save
+			$Item->save();
+			
+			# Stop Duplicates
+			$Request->setPost('item', $Item->id);
+			
+			# Finish
+			$Connection->commit();
+			
+			# Log
+			$log_details = array(
+				'Item'			=> $Item->toArray(),
+				'itemUrl'		=> $this->view->url()->item($Item)->toString()
+			);
+			$Log->log(array('log-item-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
+		}
+		catch ( Exception $Exception ) {
+			$Connection->rollback();
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+		}
+		
+		# Done
+		return $Item;
+	}
+	
 	
 	# ========================
 	# EVENT

@@ -1,0 +1,99 @@
+<?
+	// URLs
+	$backUrl = $this->app()->getAreaUrl('back');
+	$frontUrl = $this->app()->getAreaUrl('front');
+	$this->url()->renege('route','back');
+	
+	// Users
+	$ItemList = delve($this,'ItemList');
+	
+	// Type
+	$type = delve($this,'type','user');
+	$Type = ucfirst($type);
+	
+	// Title
+	$this->headTitle()->append($Type);
+	
+?><div class="wrap">
+	<!-- Edit Button -->
+    <div id="icon-edit-pages" class="icon32">
+        <br/>
+    </div>
+	<!-- Header -->
+    <h2>
+		<a href="<?=$this->url()->action('crud-list')->param('type',$type)?>"><?=$Type?> List</a>
+		<a class="button add-new-h2" href="<?=$this->url()->action('crud-new')->param('type',$type)?>">Create New</a>
+	</h2>
+    <!-- Filters -->
+    <form id="posts-filter" action="<?=$this->url()->action('crud-list')->param('type',$type)->search()?>" method="get">
+		<!-- Search -->
+        <p class="search-box">
+            <label class="screen-reader-text" for="search-query">
+                Search:
+            </label>
+			<?=$this->formText('search[query]',delve($this,'search.query'),array())?>
+			<?=$this->formSubmit('search[submit]','Search',array('class'=>'button'))?>
+        </p>
+        <div class="clear">
+        </div>
+		<?=$this->log()->render()?>
+		<!-- Content Table -->
+        <table class="widefat page fixed" cellspacing="0">
+        	<!-- Content Table: Heading -->
+            <thead>
+                <tr>
+                    <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <input type="checkbox">
+                    </th>-->
+                    <th scope="col" class="manage-column column-icon"></th>
+                    <th scope="col" id="title" class="manage-column column-title" style="">
+                        <?=$Type?>
+                    </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <!--<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <input type="checkbox">
+                    </th>-->
+                    <th scope="col" class="manage-column column-icon"></th>
+                    <th scope="col" id="title" class="manage-column column-title" style="">
+                        <?=$Type?>
+                    </th>
+                </tr>
+            </tfoot>
+			<!-- Content Table: Content -->
+            <tbody id="content-list">
+            	<? foreach ( $ItemList as $_Item ): ?>
+            	<?
+					$_Item_id = delve($_Item,'id');
+					$_Item_label = $this->app()->getItemLabel($_Item);
+            		$_Item_url = $this->url()->action('crud-view')->param('type',$type)->item($_Item)->toString();
+            		$_Item_url_edit = $this->url()->action('crud-edit')->param('type',$type)->item($_Item)->toString();
+            		$_Item_url_delete = $this->url()->action('crud-delete')->param('type',$type)->item($_Item)->toString();
+            	?>
+                <tr id="content-<?=$_Item_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTree')->next()?>">
+                	<td class="column-icon media-icon">
+						<a title="View <?=$_Item_label?>" href="<?=$_Item_url?>">
+							<? if ( false ): ?>
+								<img width="46" height="60" title="<?=$_Item_label?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>
+							<? endif; ?>
+						</a>
+					</td>
+                    <td class="post-title page-title column-title">
+						<?=$this->formHidden('item[id]', $_Item_id)?>
+                        <strong><a class="row-title" href="<?=$_Item_url_edit?>" title="Open this">
+                        	<?=$_Item_label?>
+						</a></strong>
+						<div class="row-actions">
+							<span class="edit"><a title="Edit" href="<?=$_Item_url_edit?>">Edit</a> | </span>
+							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$_Item_label?>" href="<?=$_Item_url_delete?>">Delete</a> | </span>
+							<span class="view"><a rel="permalink" title="View <?=$Type?>" href="<?=$_Item_url?>">View</a></span>
+						</div>
+                    </td>
+                </tr>
+				<? endforeach; ?>
+            </tbody>
+        </table>
+    </form>
+</div>

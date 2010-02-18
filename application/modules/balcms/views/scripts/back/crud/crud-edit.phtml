@@ -1,0 +1,59 @@
+<?
+	// URLs
+	$baseFullUrl = $this->app()->getBaseUrl(true);
+	$backUrl = $this->app()->getAreaUrl('back');
+	$frontUrl = $this->app()->getAreaUrl('front');
+	$this->url()->renege('route','back');
+	
+	// Identity
+	$Identity = $this->app()->getUser();
+	$Identity_id = delve($Identity,'id');
+	
+	// Item
+	$Item = delve($this,'Item');
+	$Item_id = delve($Item,'id');
+	$Item_label = $this->app()->getItemLabel($Item);
+	
+	// Crumbs
+	$ItemCrumbs = delve($this,'ItemCrumbs',array($Item));
+	
+	// Mode
+	$mode = $Item_id ? 'edit' : 'new';
+	$mode_edit = $mode === 'edit';
+	
+	// Type
+	$type = delve($this,'type');
+	$Type = ucfirst($type);
+	
+	// Form
+	$Form = delve($this,'Form');
+	$Form_description = $Form->getDescription();
+	
+	// Title
+	$this->headTitle()->append($Type);
+	$this->headTitle()->append(cycle($Item_label,'New'));
+?>
+<div class="wrap" id="profile-page">
+	
+	<div id="icon-page" class="icon32">
+		<br>
+	</div>
+	
+	<h2>
+		<?=$mode_edit?'Editing':'Create New '.$Type?>
+		<? if ( $mode_edit ) foreach ( $ItemCrumbs as $_Item ): ?>
+			&raquo; <a href="<?=$this->url()->action('crud-view')->item($_Item)?>"><?=$this->app()->getItemLabel($_Item)?></a>
+		<? endforeach; ?>
+	</h2>
+	
+	<? if ( $Form_description ) : ?>
+	<p>
+		<?=$Form_description?>
+	</p>
+	<? endif; ?>
+	
+	<?=$this->log()->render()?>
+	
+	<?=$Form->render()?>
+	
+</div>

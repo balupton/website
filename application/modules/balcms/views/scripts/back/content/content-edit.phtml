@@ -7,7 +7,6 @@
 	
 	// Content
 	$Content = delve($this,'Content');
-	$ContentCrumb = delve($this,'ContentCrumb');
 	$Content_Author = delve($Content,'Author');
 	$Content_Avatar = delve($Content,'Avatar');
 	$Content_Avatar_id = delve($Content_Avatar,'id');
@@ -15,6 +14,9 @@
 	$Content_Avatar_url = $this->url()->media($Content_Avatar)->toString();
 	$Content_Parent = delve($Content,'Parent');
 	$Content_Route = delve($Content,'Route');
+	
+	// Crumbs
+	$ContentCrumbs = delve($this,'ContentCrumbs',array($Content));
 	$ContentList = delve($this,'ContentList');
 	
 	// Mode
@@ -37,8 +39,8 @@
 	<? endif; ?>
 	<h2>
 		<?=$mode_edit?'Editing':'Create New '.$Type?>
-		<? if ( $mode_edit ) foreach ( $ContentCrumb as $Content ): ?>
-			&raquo; <a href="<?=$this->url()->action('content-list')->item($Content)?>"><?=$Content['title']?></a>
+		<? if ( $mode_edit ) foreach ( $ContentCrumbs as $_Content ): ?>
+			&raquo; <a href="<?=$this->url()->action('content-list')->item($_Content)?>"><?=$this->app()->getItemLabel($_Content)?></a>
 		<? endforeach; ?>
 	</h2>
 	<?=$this->log()->render()?>

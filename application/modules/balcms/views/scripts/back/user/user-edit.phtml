@@ -19,6 +19,9 @@
 	$self = $User_id === $Identity_id;
 	$selfstr = $self ? 'your' : 'their';
 	
+	// Crumbs
+	$ItemCrumbs = delve($this,'ItemCrumbs',array($User));
+	
 	// Mode
 	$mode = delve($User,'id') ? 'edit' : 'new';
 	$mode_edit = $mode === 'edit';
@@ -27,17 +30,39 @@
 	$type = delve($this,'type');
 	$Type = ucfirst($type);
 	
+	// Form
+	$Form = delve($this,'Form');
+	$Form_title = $Form->getLegend(); if ( !$Form_title ) $Form_title = $Type;
+	$Form_title = ($mode_edit ? 'Editing' : 'New').' '.$Form_title.($mode_edit ? ': '.$User_username : '');
+	$Form_description = $Form->getDescription();
+	
 	// Title
 	$this->headTitle()->append($Type);
 	$this->headTitle()->append(delve($User,'username','New'));
 ?>
 <div class="wrap" id="profile-page">
+	
 	<div id="icon-users" class="icon32">
 		<br>
 	</div>
+	
 	<h2>
-		<?=($self ? ucfirst($selfstr).' Profile' : 'User: '.$User_username)?>
+		<? if ( $self ): ?>
+			<?= (ucfirst($selfstr) . ' Profile') ?>
+		<? else: ?>
+			<?=$mode_edit?'Editing':'Create New '.$Type?>
+			<? if ( $mode_edit ) foreach ( $ItemCrumbs as $_Item ): ?>
+				&raquo; <a href="<?=$this->url()->user($_Item)?>"><?=$this->app()->getItemLabel($_Item)?></a>
+			<? endforeach; ?>
+		<? endif; ?>
 	</h2>
+	
+	<? if ( $Form_description ) : ?>
+	<p>
+		<?=$Form_description?>
+	</p>
+	<? endif; ?>
+	
 	<? if ( $mode_edit ) : ?>
 	<p>
 		<?=ucfirst($selfstr)?> API key is: <code><?=$User_uid?></code>. Don't share <?=$selfstr?> API key, it's like a password.
@@ -46,7 +71,7 @@
 	
 	<?=$this->log()->render()?>
 	
-	<?=$this->Form->render()?>
+	<?=$Form->render()?>
 	
 	<script type="text/javascript">
 		$(function(){
