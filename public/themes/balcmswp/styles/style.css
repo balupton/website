@@ -252,23 +252,8 @@ label {
 }
 
 /* menu icons */
-#adminmenu #menu-index div.wp-menu-image {
-	background: transparent url("../images/menu.png") no-repeat scroll -61px -33px;
-}
-#adminmenu #menu-index:hover div.wp-menu-image,
-#adminmenu #menu-index.wp-has-current-submenu div.wp-menu-image,
-#adminmenu #menu-index.current div.wp-menu-image {
-	background: transparent url("../images/menu.png") no-repeat scroll -61px -1px;
-}
 
-#adminmenu #menu-posts div.wp-menu-image {
-	background: transparent url("../images/menu.png") no-repeat scroll -272px -33px;
-}
-#adminmenu #menu-posts:hover div.wp-menu-image,
-#adminmenu #menu-posts.wp-has-current-submenu div.wp-menu-image {
-	background: transparent url("../images/menu.png") no-repeat scroll -272px -1px;
-}
-
+/* MEDIA */
 #adminmenu #menu-back-main-media div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -121px -33px;
 }
@@ -277,6 +262,7 @@ label {
 	background: transparent url("../images/menu.png") no-repeat scroll -121px -1px;
 }
 
+/* SUBSCRIPTION */
 #adminmenu #menu-back-main-subscription div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -91px -33px;
 }
@@ -285,6 +271,7 @@ label {
 	background: transparent url("../images/menu.png") no-repeat scroll -91px -1px;
 }
 
+/* CONTENT */
 #adminmenu #menu-back-main-content div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -151px -33px;
 }
@@ -293,6 +280,16 @@ label {
 	background: transparent url("../images/menu.png") no-repeat scroll -151px -1px;
 }
 
+/* CRUD */
+#adminmenu #menu-back-main-crud div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -151px -33px;
+}
+#adminmenu #menu-back-main-crud:hover div.wp-menu-image,
+#adminmenu #menu-back-main-crud.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -151px -1px;
+}
+
+/* USER */
 #adminmenu #menu-back-main-user div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -301px -33px;
 }
@@ -301,6 +298,7 @@ label {
 	background: transparent url("../images/menu.png") no-repeat scroll -301px -1px;
 }
 
+/* EVENT */
 #adminmenu #menu-back-main-event div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -1px -33px;
 }
@@ -309,6 +307,7 @@ label {
 	background: transparent url("../images/menu.png") no-repeat scroll -1px -1px;
 }
 
+/* OTHERS */
 #adminmenu #menu-comments div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -31px -33px;
 }
