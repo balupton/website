@@ -23,12 +23,32 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App->setArea('back');
 		
 		# Login
-		$App->setOption('logged_in_forward', array('index', 'back'));
+		$App->setOption('logged_in_forward',  array(array('action'=>'dashboard'),'back',true))
+			->setOption('logged_out_forward', array(array('action'=>'login'),'back',true))
+			;
 		
 		# Authenticate / redirect to login if need be
 		if ( !in_array($this->getRequest()->getActionName(), array(false, 'login', 'index')) ) {
 			# Within unsafe area, must authenticate
 			$App->authenticate(true, false);
+		}
+		
+		# Check Permission
+		try {
+			if ( $App->hasIdentity() && !$App->hasPermission('permission-admin') ) {
+				# Log
+				$Log = Bal_App::getLog();
+				$log_details = array();
+				$Log->log(array('log-admin-permission',$log_details),Bal_Log::ERR,array('friendly'=>true,'details'=>$log_details));
+				
+				# Logout
+				//$App->logout(true);
+			}
+		}
+		catch ( Exception $Exception ) {
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
 		}
 		
 		# Navigation
@@ -44,8 +64,11 @@ class Balcms_BackController extends Zend_Controller_Action {
 	
 
 	public function indexAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		
 		# Redirect
-		return $this->_forward('content');
+		return $App->authenticate(true, true);
 	}
 
 	/**
@@ -71,7 +94,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		$Request = $this->getRequest();
-		$Log = Bal_App::getLog();
 		
 		# Load
 		$login = $Request->getParam('login', array());

@@ -47,6 +47,16 @@
 			"label": "---",
 			"uri": "#"
 		},{
+			"id": "back-main-dashboard",
+			"privilege": "permission-admin",
+			"label": "Dashboard",
+			"action": "dashboard",
+			"route": "back",
+			"class": "menu-top-last"
+		},{
+			"label": "---",
+			"uri": "#"
+		},{
 			"id": "back-main-content",
 			"privilege": "permission-content",
 			"label": "Content",
