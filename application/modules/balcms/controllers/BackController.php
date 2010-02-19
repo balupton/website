@@ -130,7 +130,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function dashboardAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back.main', 'dashboard', true);
+		$App->activateNavigationItem('back.main', 'dashboard-dashboard', true);
 		
 		# Render
 		$this->render('index/dashboard');
