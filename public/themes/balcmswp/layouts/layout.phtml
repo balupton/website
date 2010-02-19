@@ -39,7 +39,7 @@
 		    ->offsetSetFile(60,$jquerySparkleUrl.'/scripts/jquery.sparkle.js')
 		    ->offsetSetScript(201,'$.Help.applyConfig("default",{icon: \'<img src="'.$backUrl.'/images/help.png" alt="help" class="help-icon" />\'});')
 			;
-		if ( APPLICATION_ENV === 'production' )
+		if ( APPLICATION_ENV !== 'development' )
 			$headScript
 				// GSFN
 		    	->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
