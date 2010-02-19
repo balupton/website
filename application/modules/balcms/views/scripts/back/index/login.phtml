@@ -5,37 +5,41 @@
 	$this->url()->renege('route','back');
 ?>
 <div id="login">
-	<h1><a title="Powered by balCMS" href="<?=$this->url()->route('balcmshome')?>">balCMS</a></h1>
+	<h1 id="login-heading"><a title="Powered by balCMS" href="<?=$this->url()->route('balcmshome')?>">balCMS</a></h1>
 	
 	<?=$this->log()->render()?>
 	
-	<form method="post" action="<?=$this->url()->action('login')?>" id="login-form">
-		<p>
-			<label>
-				Username<br/>
-				<input type="text" tabindex="10" size="20" value="" class="input text" id="login-username" name="login[username]"/>
-			</label>
-		</p>
-		<p>
-			<label>
-				Password<br/>
-				<input type="password" tabindex="20" size="20" value="" class="input text" id="login-password" name="login[password]"/>
-			</label>
-		</p>
-		<p id="forgetmenot">
-			<label><input type="checkbox" tabindex="90" value="forever" id="login-remember" name="login[remember]"/> Remember Me</label>
-		</p>
-		<p id="loginsubmit">
-			<input type="submit" tabindex="100" value="Log In" class="button-primary" id="wp-submit"/>
-		</p>
-		<div class="clear"></div>
-	</form>
+	<div id="login-box">
+		<form method="post" action="<?=$this->url()->action('login')?>" id="login-form">
+			<p>
+				<label>
+					Username<br/>
+					<?=$this->formText('login[username]')?>
+				</label>
+			</p>
+			<p>
+				<label>
+					Password<br/>
+					<?=$this->formPassword('login[password]')?>
+				</label>
+			</p>
+			<p id="login-remember-wrap">
+				<label for="login-remember"><?=$this->formBoolean('login[remember]')?> Remember Me</label>
+			</p>
+			<p id="login-submit-wrap">
+				<?=$this->formSubmit('login[submit]', 'Log In', array('class'=>'button-primary'))?>
+			</p>
+			<div class="clear"></div>
+		</form>
+	</div>
 	
-	<p id="nav">
+	<div id="login-nav">
 		<a href="<?=$this->url()->route('balcmshome')?>">Learn More</a> |
 		<a href="<?=$this->url()->route('balcmshelp')?>" class="gsfn">Provide Feedback</a>
-	</p>
+	</div>
 	
-	<p id="backtoblog"><a title="Are you lost?" href="<?=$baseFullUrl?>">&larr; Back to <?=$this->app()->getConfig('bal.site.name')?></a></p>
+	<div id="login-back">
+		<a title="Are you lost?" href="<?=$baseFullUrl?>">&larr; Back to <?=$this->app()->getConfig('bal.site.name')?></a>
+	</div>
 	
 </div>

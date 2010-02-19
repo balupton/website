@@ -18,6 +18,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function init ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
+		$actionName = $this->getRequest()->getActionName();
 		
 		# Layout
 		$App->setArea('back');
@@ -28,27 +29,38 @@ class Balcms_BackController extends Zend_Controller_Action {
 			;
 		
 		# Authenticate / redirect to login if need be
-		if ( !in_array($this->getRequest()->getActionName(), array(false, 'login', 'index')) ) {
-			# Within unsafe area, must authenticate
+		if ( in_array($actionName, array(false, 'login', 'index')) ) {
+			# Within Safe Area, Authenticate WITHOUT Redirects
+			$App->authenticate(false, false);
+		} else {
+			# Outside Safe Area, Authenticate WITH Redirects
 			$App->authenticate(true, false);
-		}
-		
-		# Check Permission
-		try {
-			if ( $App->hasIdentity() && !$App->hasPermission('permission-admin') ) {
-				# Log
-				$Log = Bal_App::getLog();
-				$log_details = array();
-				$Log->log(array('log-admin-permission',$log_details),Bal_Log::ERR,array('friendly'=>true,'details'=>$log_details));
-				
-				# Logout
-				$App->logout(true);
+			
+			# Check Permission Access For Admin Area
+			try {
+				$User = $App->getUser();
+				if ( delve($User,'id') && !$App->hasPermission('permission-admin') ) {
+					# Log
+					$Log = Bal_App::getLog();
+					$log_details = array(
+						'User' => $User->toArray(false),
+						'baseUrl' => $App->getBaseUrl(),
+						'frontUrl' => $App->getAreaUrl('front'),
+						'backUrl' => $App->getAreaUrl('back')
+					);
+					$Log->log(array('log-admin-permission',$log_details),Bal_Log::ERR,array('friendly'=>true,'details'=>$log_details));
+					
+					# Logout
+					$this->getHelper('redirector')->goToRoute(array('action'=>'login'),'back',true);
+					//$App->logout(true);
+					// ^ Don't log them out, just redirect them back to the login page
+				}
 			}
-		}
-		catch ( Exception $Exception ) {
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
+			catch ( Exception $Exception ) {
+				# Log the Event and Continue
+				$Exceptor = new Bal_Exceptor($Exception);
+				$Exceptor->log();
+			}
 		}
 		
 		# Navigation
@@ -345,6 +357,32 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return $this->getHelper('redirector')->gotoRoute(array('action'=>'user-list'), 'back', true);
 	}
 	
+	/**
+	 * Login the User and redirect
+	 * @return bool
+	 */
+	public function userLoginAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		
+		# Login
+		try {
+			# Fetch
+			$User = $this->_getItem('user');
+		
+			# Login
+			$App->loginUser($User);
+			$App->authenticate(true,true);
+		}
+		catch ( Exception $Exception ) {
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+		}
+		
+		# Done
+		return true;
+	}
 	
 	# ========================
 	# SUBSCRIPTION
