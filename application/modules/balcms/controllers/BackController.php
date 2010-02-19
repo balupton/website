@@ -42,7 +42,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 				$Log->log(array('log-admin-permission',$log_details),Bal_Log::ERR,array('friendly'=>true,'details'=>$log_details));
 				
 				# Logout
-				//$App->logout(true);
+				$App->logout(true);
 			}
 		}
 		catch ( Exception $Exception ) {
