@@ -1,11 +1,13 @@
 <?
-	// URLs
+	# URLs
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
-	//
+	
+	# Extract
 	$MediaList = delve($this,'MediaList');
-	// Title
+	
+	# Title
 	$this->headTitle()->append('Media');
 ?>
 <div class="wrap">

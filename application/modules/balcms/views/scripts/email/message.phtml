@@ -16,6 +16,7 @@
 	# Prepare Urls
 	$rootUrl = $View->app()->getRootUrl();
 	$baseUrl = $View->app()->getBaseUrl(true);
+	$this->url()->renege('route','app');
 	
 	# Apply Urls
 	$params['rootUrl'] = $rootUrl;

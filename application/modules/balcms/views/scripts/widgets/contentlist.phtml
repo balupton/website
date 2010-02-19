@@ -1,4 +1,8 @@
-<div class="contentlist">
+<?
+	# Prepare
+	$this->url()->renege('route','front');
+	# Extract
+?><div class="contentlist">
 	<? foreach ( $this->ContentList as $Content ) :
 		$contentUrl = $this->url()->content($Content)->toString();
 		?>

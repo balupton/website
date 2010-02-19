@@ -1,9 +1,11 @@
 <?
-	//
+	# Prepare
+	$this->url()->renege('route','front');
+	# Extract
 	$Content = delve($this,'Content');
 	$Content_title = delve($Content,'title');
 	$Content_Avatar = delve($Content,'Avatar');
-	//
+	# Url
 	$contentUrl = $this->url()->content($Content)->toString();
 ?>
 <div id="content-<?=$Content->code?>" class="content event">

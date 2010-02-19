@@ -1,11 +1,13 @@
 <?
-	// URLs
+	# URLs
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
-	// Title
+	
+	# Title
 	$this->headTitle()->append('Subscribers');
-	//
+	
+	# Extract
 	$SubscriberList = delve($this,'SubscriberList');
 ?>
 <div class="wrap">

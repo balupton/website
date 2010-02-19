@@ -1,15 +1,15 @@
 <?
-	// URLs
+	# URLs
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
-	//
+	# Extract
 	$ContentCrumbs = delve($this,'ContentCrumbs');
 	$ContentList = delve($this,'ContentList');
-	// Type
+	# Type
 	$type = delve($this,'type','content');
 	$Type = ucfirst($type);
-	// Title
+	# Title
 	$this->headTitle()->append($Type);
 ?><div class="wrap">
 	<!-- Edit Button -->

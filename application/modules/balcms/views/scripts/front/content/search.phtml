@@ -1,13 +1,13 @@
 <?
-	//
+	# Prepare
+	$this->url()->renege('route','front');
+	# Extract
 	$search = delve($this,'search');
-	//
 	$ContentList = delve($this,'ContentList');
-	//
 ?>
 <div id="content-search" class="content">
 	<h2>
-		Search: <?=$search?>
+		Search: <?=delve($search,'query')?>
 	</h2>
 	<div id="content-content" class="content-content">
 	

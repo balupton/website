@@ -1,11 +1,11 @@
 <?
-	// URLs
+	# URLs
 	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
 	
-	// Content
+	# Content
 	$Content = delve($this,'Content');
 	$Content_Author = delve($Content,'Author');
 	$Content_Avatar = delve($Content,'Avatar');
@@ -15,19 +15,19 @@
 	$Content_Parent = delve($Content,'Parent');
 	$Content_Route = delve($Content,'Route');
 	
-	// Crumbs
+	# Crumbs
 	$ContentCrumbs = delve($this,'ContentCrumbs',array($Content));
 	$ContentList = delve($this,'ContentList');
 	
-	// Mode
+	# Mode
 	$mode = delve($Content,'id') ? 'edit' : 'new';
 	$mode_edit = $mode === 'edit';
 	
-	// Type
+	# Type
 	$type = delve($this,'type');
 	$Type = ucfirst($type);
 	
-	// Title
+	# Title
 	$this->headTitle()->append($Type);
 	$this->headTitle()->append(delve($Content,'title','New'));
 ?>

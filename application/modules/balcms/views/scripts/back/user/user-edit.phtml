@@ -1,15 +1,15 @@
 <?
-	// URLs
+	# URLs
 	$baseFullUrl = $this->app()->getBaseUrl(true);
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
 	
-	// Identity
+	# Identity
 	$Identity = $this->app()->getUser();
 	$Identity_id = delve($Identity,'id');
 	
-	// User
+	# User
 	$User = delve($this,'User');
 	$User_id = delve($User,'id');
 	$User_code = delve($User,'code');
@@ -19,24 +19,24 @@
 	$self = $User_id === $Identity_id;
 	$selfstr = $self ? 'your' : 'their';
 	
-	// Crumbs
+	# Crumbs
 	$ItemCrumbs = delve($this,'ItemCrumbs',array($User));
 	
-	// Mode
+	# Mode
 	$mode = delve($User,'id') ? 'edit' : 'new';
 	$mode_edit = $mode === 'edit';
 	
-	// Type
+	# Type
 	$type = delve($this,'type');
 	$Type = ucfirst($type);
 	
-	// Form
+	# Form
 	$Form = delve($this,'Form');
 	$Form_title = $Form->getLegend(); if ( !$Form_title ) $Form_title = $Type;
 	$Form_title = ($mode_edit ? 'Editing' : 'New').' '.$Form_title.($mode_edit ? ': '.$User_username : '');
 	$Form_description = $Form->getDescription();
 	
-	// Title
+	# Title
 	$this->headTitle()->append($Type);
 	$this->headTitle()->append(delve($User,'username','New'));
 ?>

@@ -1,4 +1,8 @@
-<form action="<?=$this->url()->action('unsubscribe')?>" method="post" >
+<?
+	# Prepare
+	$this->url()->renege('route','front');
+	# Extract
+?><form action="<?=$this->url()->action('unsubscribe')?>" method="post" >
 	<label for="unsubscribe-email">Unsubscribe</label>
 	<input type="text" name="email" id="unsubscribe-email" title="Your email" class="sparkle-hint"  />
 </form>

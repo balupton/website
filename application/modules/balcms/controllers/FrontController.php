@@ -96,10 +96,11 @@ class Balcms_FrontController extends Zend_Controller_Action {
 	public function searchAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$search = $App->fetchSearchQuery();
+		$search = $App->fetchSearch();
+		$searchQuery = delve($search,'query');
 		
 		# Check
-		if ( !$search ) {
+		if ( !$searchQuery ) {
 			return $this->_forward('index');
 		}
 		
@@ -107,7 +108,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.status = ?', 'published')->orderBy('c.position ASC, c.id ASC');
 		
 		# Search
-		$ContentQuery = Doctrine::getTable('Content')->search($search, $ListQuery);
+		$ContentQuery = Doctrine::getTable('Content')->search($searchQuery, $ListQuery);
 		$ContentList = $ContentQuery->execute();
 		
 		# Apply
