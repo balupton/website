@@ -226,6 +226,16 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return $this->_forward('crud-edit');
 	}
 	
+	public function crudDeleteAction ( ) {
+		# Prepare
+		$type = $Request->getParam('type');
+		
+		# Delete
+		$this->_deleteItem($type);
+		
+		# Redirect
+		return $this->getHelper('redirector')->gotoRoute(array('action'=>'item-list','type'=>$type), 'back', true);
+	}
 	
 	
 	# ========================
@@ -305,6 +315,15 @@ class Balcms_BackController extends Zend_Controller_Action {
 	}
 	
 	
+	public function userDeleteAction ( ) {
+		# Delete
+		$this->_deleteItem('user');
+		
+		# Redirect
+		return $this->getHelper('redirector')->gotoRoute(array('action'=>'user-list'), 'back', true);
+	}
+	
+	
 	# ========================
 	# SUBSCRIPTION
 	
@@ -364,20 +383,15 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Redirect
 		return $this->_forward('media-list');
 	}
-
+	
 	public function mediaDeleteAction ( ) {
-		# Prepare
-		$Media = $this->_getMedia();
-		
-		# Handle
-		if ( $Media && $Media->exists() ) {
-			$Media->delete();
-		}
+		# Delete
+		$this->_deleteItem('media');
 		
 		# Redirect
-		return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-list'), 'back', true);
+		return $this->getHelper('redirector')->gotoRoute(array('action'=>'media-list'), 'back', true);
 	}
-
+	
 	public function mediaEditAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
@@ -470,24 +484,14 @@ class Balcms_BackController extends Zend_Controller_Action {
 	}
 
 	public function contentDeleteAction ( ) {
-		# Prepare
-		$Content = $this->_getContent();
-		
-		# Handle
-		if ( $Content && $Content->exists() ) {
-			if ( isset($Content->Parent) && $Content->Parent->exists() ) {
-				$code = $Content->Parent->code;
-			}
-			$Content->delete();
-		}
+		# Delete
+		$Content = $this->_deleteItem('content');
+		$content = delve($Content,'Parent.code');
 		
 		# Redirect
-		return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-list'), 'back', true);
+		return $this->getHelper('redirector')->gotoRoute(array('action'=>'content-list','content'=>$content), 'back', true);
 	}
 	
-	public function getContentCrumbs ( ) {
-		
-	}
 	public function getContentList ( ) {
 		# Fetch
 		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
@@ -996,6 +1000,57 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Done
 		return $Item;
+	}
+	
+	protected function _deleteItem ( $type ) {
+		# Prepare
+		$Connection = Bal_App::getDataConnection();
+		$Log = Bal_App::getLog();
+		$result = true;
+		
+		# Handle
+		try {
+			# Start
+			$Connection->beginTransaction();
+			
+			# Fetch
+			$Item = $this->_getItem($type);
+		
+			# Handle
+			if ( $Item && $Item->exists() ) {
+				# Extract
+				$ItemArray = $Item->toArray(true);
+		
+				# Delete
+				$Item->delete();
+			
+				# Commit
+				$Connection->commit();
+		
+				# Log
+				$log_details = array(
+					'Item'			=> $ItemArray
+				);
+				$Log->log(array('log-'.$type.'-delete',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
+			}
+			else {
+				throw new Zend_Exception('error-'.$type.'-missing');
+			}
+		}
+		catch ( Exception $Exception ) {
+			# Rollback
+			$Connection->rollback();
+			
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+			
+			# Error
+			$result = false;
+		}
+		
+		# Return result
+		return $result;
 	}
 	
 	
