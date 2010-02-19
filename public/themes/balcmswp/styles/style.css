@@ -253,6 +253,15 @@ label {
 
 /* menu icons */
 
+/* DASHBOARD */
+#adminmenu #menu-back-main-dashboard div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -61px -1px;
+}
+#adminmenu #menu-back-main-dashboard:hover div.wp-menu-image,
+#adminmenu #menu-back-main-dashboard.wp-has-current-submenu div.wp-menu-image {
+	background: transparent url("../images/menu.png") no-repeat scroll -61px -33px;
+}
+
 /* MEDIA */
 #adminmenu #menu-back-main-media div.wp-menu-image {
 	background: transparent url("../images/menu.png") no-repeat scroll -121px -33px;
