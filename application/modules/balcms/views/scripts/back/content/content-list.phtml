@@ -18,7 +18,7 @@
     </div>
 	<!-- Header -->
     <h2>
-		<a href="<?=$this->url()->action('content-list')?>"><?=$Type?> List</a>
+		<a href="<?=$this->url()->action('content-list')->param('type',$type)?>"><?=$Type?> List</a>
 		<? foreach ( $ContentCrumbs as $_Content ): ?>
 			&raquo; <a href="<?=$this->url()->action('content-list')->item($_Content)?>"><?=delve($_Content,'title')?></a>
 		<? endforeach; ?>
