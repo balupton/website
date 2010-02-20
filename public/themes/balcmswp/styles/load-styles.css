@@ -1317,16 +1317,6 @@ td.media-icon img {
 	font-weight: bold;
 }
 
-#pass-strength-result {
-	border-style: solid;
-	border-width: 1px;
-	float: left;
-	margin: 12px 5px 5px 1px;
-	padding: 3px 5px;
-	text-align: center;
-	width: 200px;
-}
-
 .row-actions {
 	visibility: hidden;
 	padding: 2px 0 0;

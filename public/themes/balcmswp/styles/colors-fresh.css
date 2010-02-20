@@ -728,31 +728,6 @@ abbr.required,
 	color: #f00;
 }
 
-#pass-strength-result {
-	background-color: #eee;
-	border-color: #ddd !important;
-}
-
-#pass-strength-result.low {
-	background-color: #ffb78c;
-	border-color: #ff853c !important;
-}
-
-#pass-strength-result.medium {
-	background-color: #ffec8b;
-	border-color: #fc0 !important;
-}
-
-#pass-strength-result.invalid {
-	background-color: #ffa0a0;
-	border-color: #f04040 !important;
-}
-
-#pass-strength-result.high {
-	background-color: #c3ff88;
-	border-color: #8dff1c !important;
-}
-
 /* editors */
 #quicktags {
 	border-color: #dfdfdf;
