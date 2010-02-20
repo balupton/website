@@ -75,15 +75,15 @@
 	
 	<script type="text/javascript">
 		$(function(){
-			var $password = $('#user-password');
-			var $passwordStrength = $('<div id="user-password-strength"></div>');
+			var $password = $('#User-password');
+			var $passwordStrength = $('<div id="sparkle-passwordstrength"></div>');
 			$passwordStrength.appendTo($password.parent());
 			$passwordStrength.passwordStrength({
 				'password': $password,
 				//'confirm':  '#user-password-confirm',
 				'username': '#user-username',
 				il8n: {
-					hint: ''
+					description: ''
 				}
 			});
 		});
