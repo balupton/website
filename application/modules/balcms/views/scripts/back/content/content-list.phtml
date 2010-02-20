@@ -118,7 +118,7 @@
                 <tr id="content-<?=$_Content_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTree')->next()?>">
                 	<td class="column-icon media-icon">
 						<a title="View <?=$_Content_title?>" href="<?=$contentUrl?>">
-							<? if ( $_Content_Avatar ) : ?>
+							<? if ( delve($_Content_Avatar,'id') ) : ?>
             					<? $mediaUrl = $this->url()->media($_Content_Avatar)->toString(); ?>
 								<img height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
 							<? else: ?>

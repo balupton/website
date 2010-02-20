@@ -263,13 +263,14 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function crudDeleteAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
+		$Request = $this->getRequest();
 		$type = $Request->getParam('type');
 		
 		# Delete
 		$App->deleteItem($type, $type);
 		
 		# Redirect
-		return $this->getHelper('redirector')->gotoRoute(array('action'=>'item-list','type'=>$type), 'back', true);
+		return $this->getHelper('redirector')->gotoRoute(array('action'=>'crud-list','type'=>$type), 'back', true);
 	}
 	
 	
@@ -608,7 +609,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App->activateNavigationItem('back.main', $type.'-list', true);
 		
 		# Fetch
-		$ContentArray = $Content->toArray();
+		$ContentArray = $Content->toArray(true);
 		$ContentCrumbs[] = $ContentArray;
 		
 		# Fetch content for use in dropdown
@@ -630,7 +631,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function contentNewAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$type = $this->_getParam('type', 'content');
+		$Request = $this->getRequest();
+		$type = $Request->getParam('type', 'content');
 		$App->activateNavigationItem('back.main', $type.'-new', true);
 		$Content = $ContentCrumbs = array();
 		
@@ -677,7 +679,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function contentListAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$type = $this->_getParam('type', 'content');
+		$Request = $this->getRequest();
+		$type = $Request->getParam('type', 'content');
 		$App->activateNavigationItem('back.main', $type.'-list', true);
 		$Content = $ContentCrumbs = $ContentList = $ContentArray = array();
 		
@@ -709,7 +712,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			// No Search
 			
 			# Fetch Crumbs
-			$Content = $this->_getContent(false);
+			$Content = $this->_getContent(null, null, false);
 			if ( $Content ) {
 				// We have a content as a root
 				$ContentArray = $Content->toArray();
@@ -780,12 +783,20 @@ class Balcms_BackController extends Zend_Controller_Action {
 	# ========================
 	# CONTENT: GENERIC
 	
+	protected function _getContentQuery ( ) {
+		# Prepare
+		$Query = Doctrine_Query::create()->select('i.*, ir.*, it.*, ia.*, ip.*, im.*')->from('Content i, i.Route ir, i.Tags it, i.Author ia, i.Parent ip, i.Avatar im');
+		
+		# Return Query
+		return $Query;
+	}
+	
 	protected function _getContent ( $record = null, $Query = null, $create = true ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
 		# Prepare Fetch
-		if ( !$Query ) $Query = Doctrine_Query::create()->select('i.*, ir.*, it.*, ia.*, ip.*, im.*')->from('Content i, i.Route ir, i.Tags it, i.Author ia, i.Parent ip, i.Avatar im');
+		if ( !$Query ) $Query = $this->_getContentQuery();
 		
 		# Fetch
 		$Content = $App->fetchItem('Content', $record, $Query, $create);
@@ -794,13 +805,16 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return $Content;
 	}
 	
-	protected function _saveContent ( $record = null, $keep = null, $remove = null, $empty = null ) {
+	protected function _saveContent ( $record = null, $Query = null, $keep = null, $remove = null, $empty = null ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
 		# Prepare Fetch
+		if ( !$Query ) $Query = $this->_getContentQuery();
+		
+		# Prepare Fetch
 		if ( !$keep ) $keep = array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type');
-		$Content = $App->saveItem('Content', $record, $keep, $remove, $empty);
+		$Content = $App->saveItem('Content', $record, $Query, $keep, $remove, $empty);
 		
 		# Return Content
 		return $Content;
@@ -810,12 +824,20 @@ class Balcms_BackController extends Zend_Controller_Action {
 	# ========================
 	# MEDIA: GENERIC
 	
+	protected function _getMediaQuery ( ) {
+		# Prepare
+		$Query = Doctrine_Query::create()->select('i.*, ia.*')->from('Media i, i.Author ma');
+		
+		# Return Query
+		return $Query;
+	}
+	
 	protected function _getMedia ( $record = null, $Query = null, $create = true ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
 		# Prepare Fetch
-		if ( !$Query ) $Query = Doctrine_Query::create()->select('i.*, ia.*')->from('Media i, i.Author ma');
+		if ( !$Query ) $Query = $this->_getMediaQuery();
 		
 		# Fetch
 		$Media = $App->fetchItem('Media', $record, $Query, $create);
@@ -824,13 +846,16 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return $Media;
 	}
 	
-	protected function _saveMedia ( $record = null, $keep = null, $remove = null, $empty = null ) {
+	protected function _saveMedia ( $record = null, $Query = null, $keep = null, $remove = null, $empty = null ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
 		# Prepare Fetch
+		if ( !$Query ) $Query = $this->_getMediaQuery();
 		if ( !$keep ) $keep = array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height');
-		$Media = $App->saveItem('Media', $record, $keep, $remove, $empty);
+		
+		# Fetch
+		$Media = $App->saveItem('Media', $record, $Query, $keep, $remove, $empty);
 		
 		# Return Media
 		return $Media;
@@ -850,13 +875,16 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return $Media;
 	}
 	
-	protected function _saveUser ( $record = null, $keep = null, $remove = null, $empty = null ) {
+	protected function _saveUser ( $record = null, $Query = null, $keep = null, $remove = null, $empty = null ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
 		# Prepare Fetch
+		if ( !$Query ) $Query = $this->_getMediaQuery();
 		if ( !$remove ) $remove = array('permissions', 'roles', 'Permissions', 'Roles');
-		$User = $App->saveItem('User', $record, $keep, $remove, $empty);
+		
+		# Fetch
+		$User = $App->saveItem('User', $record, $Query, $keep, $remove, $empty);
 		
 		# Return User
 		return $User;

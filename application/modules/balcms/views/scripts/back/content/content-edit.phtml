@@ -69,7 +69,7 @@
 										<span id="content-status-view" class="field-value"><?=ucfirst(delve($Content,'status'))?></span>
 										<span id="content-status-edit" class="hide">
 											<br/>
-											<?=$this->formDoctrine('Content[status]', delve($Content,'status'), array(), 'Content','status')?>
+											<?=$this->formDoctrine('Content[status]', delve($Content,'status'), array('tabindex'=>50), 'Content','status')?>
 										</span>
 									</div>
 									<? if ( $Content_Author ) :
@@ -87,7 +87,7 @@
 										<span class="field-value" id="content-published_at-view"><?=$this->locale()->datetime(delve($Content,'published_at'))?></span>
 										<span id="content-published_at-edit" class="hide">
 											<br/>
-											<?=$this->formDatetime('Content[published_at]', delve($Content,'published_at'))?>
+											<?=$this->formDatetime('Content[published_at]', delve($Content,'published_at'), array('tabindex'=>55))?>
 										</span>
 									</div>
 								</div>
@@ -101,7 +101,7 @@
 								</div>
 								<!-- Save Action -->
 								<div id="publishing-action">
-									<input name="save" type="submit" class="button-primary" id="action-save" tabindex="5" accesskey="p" value="Save" />
+									<input name="save" type="submit" class="button-primary" id="action-save" tabindex="100" accesskey="p" value="Save" />
 								</div>
 								<div class="clear">
 								</div>
@@ -113,7 +113,7 @@
 						<h3>Tags</h3>
 						<div class="inside">
 							<label class="screen-reader-text" for="content-tags">Post Tags</label>
-							<?=$this->formTextarea('Content[tags][]',delve($Content,'tagstr'),array('class'=>'form-input-tip autosize','title'=>'Add tags'))?>
+							<?=$this->formTextarea('Content[tags][]',delve($Content,'tagstr'),array('tabindex'=>60, 'class'=>'form-input-tip autosize','title'=>'Add tags'))?>
 							<p class="description">
 								Add your tags to the post above, separating them with commas.
 							</p>
@@ -131,7 +131,7 @@
 									</a>
 								</div>
 								<div class="avatar field">
-									<?=$this->formCheckbox('Content[Avatar][delete]', 'true')?>
+									<?=$this->formCheckbox('Content[Avatar][delete]', 'true', array('tabindex'=>70))?>
 									<label for="content-avatar-delete">
 										Delete?
 									</label>
@@ -141,7 +141,7 @@
 								<label for="content-avatar-file">
 									Want to upload a different image?
 								</label>
-								<?=$this->formFile('Content[Avatar][file]')?>
+								<?=$this->formFile('Content[Avatar][file]', array('tabindex'=>75))?>
 							</div>
 						</div>
 					</div>
@@ -151,7 +151,7 @@
 						<div class="inside">
 							<? if ( delve($Content,'send_status') === 'none' ): ?>
 								<div class="field">
-									<?=$this->formCheckbox('Content[tags][]', 'newsletter')?>
+									<?=$this->formCheckbox('Content[tags][]', 'newsletter', array('tabindex'=>80))?>
 									<label for="subscription-tags">
 										Send out as a
 										<a href="<?=$this->url()->action('content-list')->search('newsletter')?>" title="Sent Content List">newsletter</a>
@@ -176,13 +176,13 @@
 						<label class="screen-reader-text" for="content-title">
 							Title
 						</label>
-						<?=$this->formText('Content[title]', delve($Content,'title'), array('tabindex'=>1,'autocomplete'=>'off','class'=>'form-input-tip','title'=>'Title'))?>
+						<?=$this->formText('Content[title]', delve($Content,'title'), array('tabindex'=>10,'autocomplete'=>'off','class'=>'form-input-tip','title'=>'Title'))?>
 					</div>
 					<div id="content-parent-field" class="field field-little">
 						<label for="content-parent">
 							File under:
 						</label>
-						<select name="Content[parent]" id="content-parent">
+						<select name="Content[parent]" id="Content-parent" tabindex="20">
 							<option <?=($Content_Parent ? 'selected="selected" ':'')?> value="0">- Top Level</option>
 							<?
 							$current = delve($Content_Parent,'id');
@@ -220,13 +220,13 @@
 					</div>
 					
 					<div id="content-content-field" class="field field-rich ">
-						<?=$this->formTextarea('Content[content]', delve($Content,'content'), array('rows'=>5,'tabindex'=>2))?>
+						<?=$this->formTextarea('Content[content]', delve($Content,'content'), array('tabindex'=>30, 'rows'=>5))?>
 					</div>
 					
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Excerpt</h3>
 						<div class="inside">
-							<?=$this->formTextarea('Content[description]', delve($Content,'description'), array('rows'=>3,'tabindex'=>4))?>
+							<?=$this->formTextarea('Content[description]', delve($Content,'description'), array('tabindex'=>40, 'rows'=>3))?>
 						</div>
 					</div>
 					
@@ -236,11 +236,11 @@
 						<div class="inside">
 							<p>
 								<label for="content-event-start-at">Start time:</label>
-								<?=$this->formDatetime('Content[event_start_at]', delve($Content,'event_start_at'))?>
+								<?=$this->formDatetime('Content[event_start_at]', delve($Content,'event_start_at',array('tabindex'=>45)))?>
 							</p>
 							<p>
 								<label for="content-event-finish-at">Finish time:</label>
-								<?=$this->formDatetime('Content[event_finish_at]', delve($Content,'event_finish_at'))?>
+								<?=$this->formDatetime('Content[event_finish_at]', delve($Content,'event_finish_at',array('tabindex'=>46)))?>
 							</p>
 						</div>
 					</div>
@@ -269,11 +269,11 @@ $(function(){
 	$('#sidebar-subscription-box h3').help('Subscribers are visitors of the website which have marked themselves down to receive email notifications from the website.');
 	//
 	var update_slug = true;
-	var $edit = $('#content-code');
+	var $edit = $('#Content-code');
 	var $view = $('#content-code-view');
-	var $title = $('#content-title');
+	var $title = $('#Content-title');
 	var $parent_path = $('#content-parent-path');
-	var $parent = $('#content-parent');
+	var $parent = $('#Content-parent');
 	$parent.change(function(){
 		$parent_path.text($parent.val().toInt() ? $parent.find('option:selected').attr('title').strip('\\/')+'/' : '');
 		return true;
@@ -301,9 +301,9 @@ $(function(){
 		});
 	}
 	//
-	$('#content-content').editor('rich');
+	$('#Content-content').editor('rich');
 	//
 	$('#content-description-field h3').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');
-	$('#content-description').editor('simple');
+	$('#Content-description').editor('simple');
 });
 </script>
