@@ -25,7 +25,7 @@
 			<input type="submit" id="media-submit" class="hide" /><!-- not formSubmit due to difficulty porting limited params -->
 			<script type="text/javascript">
 				$(function(){
-					var $file = $('#media-file'),
+					var $file = $('#Media-file'),
 						$submit = $('#media-submit'),
 						$add = $('#media-add');
 					$file.change(function(){
@@ -108,6 +108,7 @@
 					$_Media_Author = delve($_Media,'Author');
 					$_Media_Author_displayname = delve($_Media_Author,'displayname');
 					$_Media_url = $this->url()->media($_Media)->toString();
+					$_Media_url_delete = $this->url()->action('media-delete')->item($_Media)->toString();
 					?>
             	<tr id="media-<?=$_Media_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTreeArray')->next()?>">
 					<td class="column-icon media-icon">
@@ -127,11 +128,8 @@
 						<?=$_Media_humantype?>
 						<p></p>
 						<div class="row-actions">
-							<span class="edit hide">
-								<a href="<?=$this->url(array('action'=>'media-edit','media'=>$_Media_code),'back',true)?>">Edit</a> |
-							</span>
 							<span class="delete">
-								<a href="<?=$this->url(array('action'=>'media-delete','media'=>$_Media_code),'back',true)?>" class="delete-action">Delete</a> |
+								<a href="<?=$_Media_url_delete?>" class="delete-action">Delete</a> |
 							</span>
 							<span class="view">
 								<a rel="permalink" title="View <?=$_Media_title?>" href="<?=$_Media_url?>">View</a>

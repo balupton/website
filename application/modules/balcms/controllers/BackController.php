@@ -267,7 +267,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$type = $Request->getParam('type');
 		
 		# Delete
-		$App->deleteItem($type, $type);
+		$App->deleteItem($type);
 		
 		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action'=>'crud-list','type'=>$type), 'back', true);
@@ -376,7 +376,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Delete
-		$App->deleteItem($User);
+		$App->deleteItem('User', $User);
 		
 		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action'=>'user-list'), 'back', true);
@@ -575,6 +575,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 	}
 
 	public function contentDeleteAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		
 		# Delete
 		$Content = $App->deleteItem('Content');
 		$content = delve($Content,'Parent.code');
