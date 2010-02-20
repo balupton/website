@@ -229,7 +229,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$labelColumnName = Bal_Form_Doctrine::getTableLabelColumnName($tableName);
 		
 		# Fetch
-		$Item = $this->_saveItem($type);
+		$Item = $App->saveItem($type);
 		
 		# Menu
 		$App->activateNavigationItem('back.main', 'crud-'.($Item->id?'list':'new').'-'.$typeLower, true);
@@ -240,7 +240,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Form
 			->setAction('')
 			->setMethod('post')
-			->addElement('submit', 'submit',array('class'=>'button-primary','label'=>'Save Changes'));
+			->addElement('submit', '__submit__', array('class'=>'button-primary','label'=>'Save Changes'));
 		
 		# Apply
 		$this->view->Item = $Item;
@@ -262,10 +262,11 @@ class Balcms_BackController extends Zend_Controller_Action {
 	
 	public function crudDeleteAction ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
 		$type = $Request->getParam('type');
 		
 		# Delete
-		$this->_deleteItem($type);
+		$App->deleteItem($type);
 		
 		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action'=>'item-list','type'=>$type), 'back', true);
@@ -285,6 +286,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		$App->activateNavigationItem('back.main', 'user-list', true);
+		$Identity = $App->getUser();
 		$UserList = array();
 		
 		# Search
@@ -293,7 +295,12 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$this->view->search = $search;
 		
 		# Prepare
-		$ListQuery = Doctrine_Query::create()->select('u.id, u.displayname, u.username, u.created_at, u.email, u.type, u.status, u.created_at, ua.*')->from('User u, u.Avatar ua')->orderBy('u.username ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ListQuery = Doctrine_Query::create()
+			->select('u.id, u.displayname, u.username, u.created_at, u.email, u.type, u.status, u.created_at, ua.*')
+			->from('User u, u.Avatar ua')
+			->where('u.level <= ?', $Identity->level)
+			->orderBy('u.username ASC')
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle
 		if ( $searchQuery ) {
@@ -318,10 +325,18 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function userEditAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
+		$Identity = $App->getUser();
+		$type = 'user';
 		
 		# Fetch
-		$type = 'user';
-		$User = $this->_saveUser();
+		$User = $this->_getUser();
+		if ( $User->level > $Identity->level ) {
+			throw new Zend_Exception('error-user-level');
+		}
+		
+		
+		# Apply
+		$User = $this->_saveUser($User);
 		$App->activateNavigationItem('back.main', 'user-'.($User->id ? 'list' : 'new'), true);
 		
 		# Form
@@ -329,7 +344,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Form
 			->setAction('')
 			->setMethod('post')
-			->addElement('submit', 'submit',array('class'=>'button-primary','label'=>'Save Changes'));
+			->addElement('submit', '__submit__', array('class'=>'button-primary','label'=>'Save Changes'));
 		
 		# Apply
 		$this->view->User = $User;
@@ -350,8 +365,18 @@ class Balcms_BackController extends Zend_Controller_Action {
 	
 	
 	public function userDeleteAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$Identity = $App->getUser();
+		
+		# Fetch
+		$User = $this->_getUser();
+		if ( $User->level > $Identity->level ) {
+			throw new Zend_Exception('error-user-level');
+		}
+		
 		# Delete
-		$this->_deleteItem('user');
+		$this->_deleteItem($User);
 		
 		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action'=>'user-list'), 'back', true);
@@ -368,8 +393,11 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Login
 		try {
 			# Fetch
-			$User = $this->_getItem('user');
-		
+			$User = $this->_getUser();
+			if ( $User->level > $Identity->level ) {
+				throw new Zend_Exception('error-user-level');
+			}
+			
 			# Login
 			$App->loginUser($User);
 			$App->authenticate(true,true);
@@ -746,371 +774,95 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$this->getHelper('json')->sendJson($data);
 	}
 
+	
 	# ========================
 	# CONTENT: GENERIC
 	
-	protected function _getContent ( $create = true ) {
+	protected function _getContent ( $input = null, $Query = null, $create = true ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$Query = Doctrine_Query::create()->select('i.*, ir.*, it.*, ia.*, ip.*, im.*')->from('Content i, i.Route ir, i.Tags it, i.Author ia, i.Parent ip, i.Avatar im');
+		
+		# Prepare Fetch
+		if ( !$input ) $input = 'Content';
+		if ( !$Query ) $Query = Doctrine_Query::create()->select('i.*, ir.*, it.*, ia.*, ip.*, im.*')->from('Content i, i.Route ir, i.Tags it, i.Author ia, i.Parent ip, i.Avatar im');
 		
 		# Fetch
-		$Content = $App->fetchItem('Content', $Query, $create);
+		$Content = $App->fetchItem($input,$Query,$create);
+		
+		# Return Media
+		return $Content;
+	}
+	
+	protected function _saveContent ( $input = null ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		
+		# Prepare Fetch
+		if ( !$input ) $input = 'Content';
+		$Content = $App->saveItem($input, array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type'));
 		
 		# Return Content
 		return $Content;
 	}
 	
-	protected function _saveContent ( ) {
-		# Prepare
-		$Content = $this->_getContent();
-		$Connection = Bal_App::getDataConnection();
-		$Request = $this->getRequest();
-		$Log = Bal_App::getLog();
-		
-		try {
-			# Fetch
-			$content = fetch_param('content');
-			
-			# Check Existance of Save
-			if ( empty($content) || is_string($content) ) {
-				# Return Found/New Content
-				return $Content;
-			}
-			
-			# Start
-			$Connection->beginTransaction();
-			
-			# Fetch
-			$Avatar = delve($content,'Avatar');
-			
-			# Prepare
-			array_keys_keep_ensure($content, array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type'));
-			
-			# Tags
-			$tags = prepare_csv_str($content['tags']);
-			unset($content['tags']);
-			
-			# Parent
-			$parent = $content['parent'];
-			unset($content['parent']);
-			if ( $parent ) {
-				$Content->Parent = Doctrine::getTable('Content')->find($parent);
-			} else {
-				$Content->Parent = null;
-			}
-			
-			# Apply
-			$Content->merge($content);
-			
-			# Pre Save
-			if ( !$Content->id )
-				$Content->save();
-			
-			# Avatar
-			if ( $Avatar )
-				$Content->Avatar = $Avatar;
-			
-			# Tags
-			$Content->Tags = $tags;
-		
-			# Post Save
-			$Content->save();
-		
-			# Stop Duplicates
-			$Request->setPost('content', $Content->code);
-			
-			# Finish
-			$Connection->commit();
-			
-			# Log
-			$log_details = array(
-				'Content'		=> $Content->toArray(),
-				'contentUrl'	=> $this->view->url()->content($Content)->toString()
-			);
-			$Log->log(array('log-content-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
-		}
-		catch ( Exception $Exception ) {
-			$Connection->rollback();
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
-		}
-		
-		# Done
-		return $Content;
-	}
 	
 	# ========================
 	# MEDIA: GENERIC
 	
-	protected function _getMedia ( $create = true ) {
+	protected function _getMedia ( $input = null, $Query = null, $create = true ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$Query = Doctrine_Query::create()->select('i.*, ia.*')->from('Media i, i.Author ma');
+		
+		# Prepare Fetch
+		if ( !$input ) $input = 'Media';
+		if ( !$Query ) $Query = Doctrine_Query::create()->select('i.*, ia.*')->from('Media i, i.Author ma');
 		
 		# Fetch
-		$Media = $App->fetchItem('Media', $Query, $create);
+		$Media = $App->fetchItem($input,$Query,$create);
 		
 		# Return Media
 		return $Media;
 	}
 	
-	protected function _saveMedia ( $param = 'media' ) {
+	protected function _saveMedia ( $input = null ) {
 		# Prepare
-		$Connection = Bal_App::getDataConnection();
-		$Media = $this->_getMedia();
-		$Log = Bal_App::getLog();
+		$App = $this->getHelper('App');
 		
-		# Handle
-		try {
-			# Fetch
-			$Request = $this->_request;
-			$media = fetch_param($param);
-			$file = delve($media,'file');
+		# Prepare Fetch
+		if ( !$input ) $input = 'Media';
+		$Media = $App->saveItem($input, array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'));
 		
-			# Check
-			if ( empty($file) || empty($file['name']) ) {
-				return $Media;
-			}
-			
-			# Start
-			$Connection->beginTransaction();
-			
-			# Prepare
-			array_keys_keep($media, array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'));
-		
-			# Apply
-			$Media->merge($media);
-			$Media->file = $file;
-			$Media->save();
-		
-			# Stop Duplicates
-			$Request->setPost($param, $Media->code);
-			
-			# Finish
-			$Connection->commit();
-			
-			# Log
-			$log_details = array(
-				'Media'		=> $Media->toArray(),
-				'mediaUrl'	=> $this->view->url()->media($Media)->toString()
-			);
-			$Log->log(array('log-media-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
-		}
-		catch ( Exception $Exception ) {
-			# Revert
-			$Connection->rollback();
-			
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
-		}
-		
-		# Done
+		# Return Media
 		return $Media;
 	}
 	
 	# ========================
 	# USER: GENERIC
 	
-	protected function _getUser ( $create = true ) {
+	protected function _getUser ( $input = null, $Query = null, $create = true ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$Query = null;
+		
+		# Prepare Fetch
+		if ( !$input ) $input = 'User';
 		
 		# Fetch
-		$User = $App->fetchItem('User', $Query, $create);
+		$Media = $App->fetchItem($input,$Query,$create);
+		
+		# Return Media
+		return $Media;
+	}
+	
+	protected function _saveUser ( $input = null ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		
+		# Prepare Fetch
+		if ( !$input ) $input = 'User';
+		$User = $App->saveItem($input, null, array('permissions', 'roles', 'Permissions', 'Roles'));
 		
 		# Return User
 		return $User;
-	}
-	
-	protected function _saveUser ( ) {
-		# Prepare
-		$User = $this->_getUser();
-		$Connection = Bal_App::getDataConnection();
-		$Request = $this->getRequest();
-		$Log = Bal_App::getLog();
-		
-		try {
-			# Fetch
-			$user = fetch_param('user');
-			
-			# Check Existance of Save
-			if ( empty($user) || is_string($user) ) {
-				# Return Found/New Content
-				return $User;
-			}
-			
-			# Start
-			$Connection->beginTransaction();
-			
-			# Fetch
-			$Avatar = delve($user,'Avatar');
-			
-			# Prepare
-			array_keys_unset($user, array('Avatar'));
-			
-			# Apply
-			$User->merge($user);
-			
-			# Pre Save
-			if ( !$User->id )
-				$User->save();
-			
-			# Avatar
-			if ( $Avatar !== null )
-				$User->Avatar = $Avatar;
-			
-			# Post Save
-			$User->save();
-			
-			# Stop Duplicates
-			$Request->setPost('user', $User->code);
-			
-			# Finish
-			$Connection->commit();
-			
-			# Log
-			$log_details = array(
-				'User'			=> $User->toArray(),
-				'userUrl'		=> $this->view->url()->user($User)->toString()
-			);
-			$Log->log(array('log-user-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
-		}
-		catch ( Exception $Exception ) {
-			$Connection->rollback();
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
-		}
-		
-		# Done
-		return $User;
-	}
-	
-	
-	# ========================
-	# ITEM: GENERIC
-	
-	protected function _getItem ( $type, $create = true ) {
-		# Prepare
-		$App = $this->getHelper('App');
-		$Query = null;
-		
-		# Fetch
-		$Item = $App->fetchItem($type, $Query, $create);
-		
-		# Return Item
-		return $Item;
-	}
-	
-	protected function _saveItem ( $type ) {
-		# Prepare
-		$Connection = Bal_App::getDataConnection();
-		$Request = $this->getRequest();
-		$Log = Bal_App::getLog();
-		
-		# Fetch
-		$Item = $this->_getItem($type);
-		
-		# Handle
-		try {
-			# Fetch
-			$item = fetch_param($type);
-			
-			# Check Existance of Save
-			if ( empty($item) || is_string($item) ) {
-				# Return Found/New Content
-				return $Item;
-			}
-			
-			# Start
-			$Connection->beginTransaction();
-			
-			# Prepare
-			// array_keys_keep_ensure($user, array('username', 'firstname', 'lastname', 'parent', 'status', 'tags', 'title', 'type'));
-			
-			# Apply
-			$Item->merge($item);
-			
-			# Save
-			$Item->save();
-			
-			# Stop Duplicates
-			$Request->setPost('item', $Item->id);
-			
-			# Finish
-			$Connection->commit();
-			
-			# Log
-			$log_details = array(
-				'Item'			=> $Item->toArray(),
-				'itemUrl'		=> $this->view->url()->item($Item)->toString()
-			);
-			$Log->log(array('log-item-save',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
-		}
-		catch ( Exception $Exception ) {
-			$Connection->rollback();
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
-		}
-		
-		# Done
-		return $Item;
-	}
-	
-	protected function _deleteItem ( $type ) {
-		# Prepare
-		$Connection = Bal_App::getDataConnection();
-		$Log = Bal_App::getLog();
-		$result = true;
-		
-		# Handle
-		try {
-			# Start
-			$Connection->beginTransaction();
-			
-			# Fetch
-			$Item = $this->_getItem($type);
-		
-			# Handle
-			if ( $Item && $Item->exists() ) {
-				# Extract
-				$ItemArray = $Item->toArray(true);
-		
-				# Delete
-				$Item->delete();
-			
-				# Commit
-				$Connection->commit();
-		
-				# Log
-				$log_details = array(
-					'Item'			=> $ItemArray
-				);
-				$Log->log(array('log-'.$type.'-delete',$log_details),Bal_Log::NOTICE,array('friendly'=>true,'class'=>'success','details'=>$log_details));
-			}
-			else {
-				throw new Zend_Exception('error-'.$type.'-missing');
-			}
-		}
-		catch ( Exception $Exception ) {
-			# Rollback
-			$Connection->rollback();
-			
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
-			
-			# Error
-			$result = false;
-		}
-		
-		# Return result
-		return $result;
 	}
 	
 	
