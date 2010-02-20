@@ -1,226 +1,285 @@
 @CHARSET "UTF-8";
 
-/* Zend Form Styling */
-dl.zend_form
-	fieldset
-		legend {
-			font-size:1.17em;
-			font-weight:bold;
-			margin:1em 0;
-			padding:0 0 10px 0;
-		}
+/* Misc */
 
-dl.zend_form
-	label.required:after {
-		content: "(required)";
-		font-style: italic;
-		color: #666;
+	.max_file_size_text {
+		color:#666666;
+		font-size:11px;
+		font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+		font-style:italic;
+	}
+
+
+/* Sparkle */
+
+	.sparkle-highlight-values-notempty {
+		font-weight:bold;
+		color:black;
+	}
+	.sparkle-highlight-values-empty {
+		font-weight:normal;
+		color:#555;
+	}
+
+
+/* Sparkle Password Strength */
+
+	.sparkle-passwordstrength {
+		width:100%;
+	}
+	.sparkle-passwordstrength-result {
+		width:100%;
+	
+		border-style: solid;
+		border-width: 1px;
+		float: left;
+		margin: 12px 5px 5px 1px;
+		padding: 3px 5px;
+		text-align: center;
+	
+		background-color: #eee;
+		border-color: #ddd !important;
+	}
+
+	.sparkle-passwordstrength-result.low {
+		background-color: #ffb78c;
+		border-color: #ff853c !important;
+	}
+
+	.sparkle-passwordstrength-result.medium {
+		background-color: #ffec8b;
+		border-color: #fc0 !important;
+	}
+
+	.sparkle-passwordstrength-result.invalid {
+		background-color: #ffa0a0;
+		border-color: #f04040 !important;
+	}
+
+	.sparkle-passwordstrength-result.high {
+		background-color: #c3ff88;
+		border-color: #8dff1c !important;
+	}
+
+	.sparkle-passwordstrength-description {
+		width:100%;
+	
 		font-family: 'Lucida Grande', Verdana, Arial, 'Bitstream Vera Sans', sans-serif;
 		font-size: 12px;
-		margin: 0px 0px 6px 8px;
-	}
-dl.zend_form
-	label.required {
-	}
-
-dl.zend_form
-	dl dt,
-dl.zend_form
-	dl dd {
-		/*line-height: 140%;*/
-		margin: 5px 10px;
+		font-style: italic;
+		margin: 2px 0px 5px;
+		padding-top: 8px;
+		line-height: 140%;
 	}
 
-dl.zend_form
-	dl dt {
-		float:left;
-		clear:left;
-		text-align:left;
-		width:200px;
+
+/* Debug Styling */
+
+	.debug .link:hover {
+		text-decoration:underline;
+	}
+	.debug .link {
+		cursor:pointer;
+	}
+	.debug .help {
+		font-style: italic;
+		cursor:help;
 	}
 
-dl.zend_form
-	dl dd {
-		float:left;
-		clear:right;
-		width:30%;
-		margin-left: 5px;
-	}
-
-dl.zend_form
-	dd ul.errors {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-
-dl.zend_form
-	dd ul.errors li {
-		float: left;
-		margin: 0 0.15em;
+	.debug {
+		font-family: Consolas, "Courier New";
 		font-size: 12px;
-		color: #666666;
+		background: white;
+		border:1px solid #CCC;
+		padding:1em 0em;
+	}
+	.debug * {
+		margin:0px;
+		padding:0px;
+	}
+	.debug pre,
+	.debug .array .var,
+	.debug .object .var {
+		margin-left: 2em;
+	}
+	.debug .var {
+		display:block;
+		position:relative;
+	}
+	.debug .name {
+		font-weight:bold;
+		display:block;
+		float:left;
+		min-width:2em;
+	}
+	.debug .type {
+		color:gray;
+	}
+	.debug .type,
+	.debug .value,
+	.debug .help,
+	.debug .help-link {
+		margin-left: 1em;
+	}
+	.debug .array .value,
+	.debug .object .value {
+		color:black;
+	}
+	.debug .string .value {
+		color:green;
+	}
+	.debug .double .value,
+	.debug .integer .value {
+		color:pink;
+	}
+	.debug .resource .value {
+		color:black;
+	}
+	.debug .method .value {
+		color:black;
+	}
+	.debug .null .value {
+		color:blue;
 	}
 
-dl.zend_form
-	input,
-dl.zend_form
-	textarea,
-dl.zend_form
-	select,
-dl.zend_form
- 	#pass-strength-result {
-		width: 25em;
+
+/* Log Styling */
+
+	.log {
+		list-style: none;
+	}
+	.log .event {
+	  border: 1px solid;
+	  margin: 10px 0px;
+	  padding:15px 10px 15px 50px;
+	  background-repeat: no-repeat;
+	  background-position: 10px center;
+
+		font-size:100%;
+	  color: #00529B;
+	  background-color: #BDE5F8;
+	  background-image: url('../images/icons/notification.png');
+	}
+	.log .event .timestamp {
+		float:right;
+		display:block;
+	}
+	.log .event .details {
+		display:none;
+	}
+	.log .info {
+	  color: #00529B;
+	  background-color: #BDE5F8;
+	  background-image: url('../images/icons/info.png');
+	}
+	.log .success {
+	  color: #4F8A10;
+	  background-color: #DFF2BF;
+	  background-image:url('../images/icons/success.png');
+	}
+	.log .warn {
+	  color: #9F6000;
+	  background-color: #FEEFB3;
+	  background-image: url('../images/icons/warn.png');
+	}
+	.log .err, .log .crit, .log .alert, .log .emerg {
+	  color: #D8000C;
+	  background-color: #FFBABA;
+	  background-image: url('../images/icons/error.png');
+	}
+	.log .crit {
+		font-size:110%;
+	}
+	.log .alert {
+		font-size:120%;
+	}
+	.log .emerg {
+		font-size:130%;
 	}
 
-dl.zend_form
-	textarea {
-		height: 5em;
-	}
-
-dl.zend_form
-	input[type="submit"] {
-		width:auto;
-		text-transform:capitalize;
-	}
-
-	
-
-/* Misc */
-.max_file_size_text {
-	color:#666666;
-	font-size:11px;
-	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
-	font-style:italic;
-}
-
-.sparkle-highlight-values-notempty {
-	font-weight:bold;
-	color:black;
-}
-.sparkle-highlight-values-empty {
-	font-weight:normal;
-	color:#555;
-}
-
-.debug .link:hover {
-	text-decoration:underline;
-}
-.debug .link {
-	cursor:pointer;
-}
-.debug .help {
-	font-style: italic;
-	cursor:help;
-}
-
-.debug {
-	font-family: Consolas, "Courier New";
-	font-size: 12px;
-	background: white;
-	border:1px solid #CCC;
-	padding:1em 0em;
-}
-.debug * {
-	margin:0px;
-	padding:0px;
-}
-.debug pre,
-.debug .array .var,
-.debug .object .var {
-	margin-left: 2em;
-}
-.debug .var {
-	display:block;
-	position:relative;
-}
-.debug .name {
-	font-weight:bold;
-	display:block;
-	float:left;
-	min-width:2em;
-}
-.debug .type {
-	color:gray;
-}
-.debug .type,
-.debug .value,
-.debug .help,
-.debug .help-link {
-	margin-left: 1em;
-}
-.debug .array .value,
-.debug .object .value {
-	color:black;
-}
-.debug .string .value {
-	color:green;
-}
-.debug .double .value,
-.debug .integer .value {
-	color:pink;
-}
-.debug .resource .value {
-	color:black;
-}
-.debug .method .value {
-	color:black;
-}
-.debug .null .value {
-	color:blue;
-}
 
 
+/* Zend Form Styling */
 
+	dl.zend_form
+		fieldset
+			legend {
+				font-size:1.17em;
+				font-weight:bold;
+				margin:1em 0;
+				padding:0 0 10px 0;
+			}
 
-.log {
-	list-style: none;
-}
-.log .event {
-  border: 1px solid;
-  margin: 10px 0px;
-  padding:15px 10px 15px 50px;
-  background-repeat: no-repeat;
-  background-position: 10px center;
+	dl.zend_form
+		label.required:after {
+			content: "(required)";
+			font-style: italic;
+			color: #666;
+			font-family: 'Lucida Grande', Verdana, Arial, 'Bitstream Vera Sans', sans-serif;
+			font-size: 12px;
+			margin: 0px 0px 6px 8px;
+		}
+	dl.zend_form
+		label.required {
+		}
 
-	font-size:100%;
-  color: #00529B;
-  background-color: #BDE5F8;
-  background-image: url('../images/icons/notification.png');
-}
-.log .event .timestamp {
-	float:right;
-	display:block;
-}
-.log .event .details {
-	display:none;
-}
-.log .info {
-  color: #00529B;
-  background-color: #BDE5F8;
-  background-image: url('../images/icons/info.png');
-}
-.log .success {
-  color: #4F8A10;
-  background-color: #DFF2BF;
-  background-image:url('../images/icons/success.png');
-}
-.log .warn {
-  color: #9F6000;
-  background-color: #FEEFB3;
-  background-image: url('../images/icons/warn.png');
-}
-.log .err, .log .crit, .log .alert, .log .emerg {
-  color: #D8000C;
-  background-color: #FFBABA;
-  background-image: url('../images/icons/error.png');
-}
-.log .crit {
-	font-size:110%;
-}
-.log .alert {
-	font-size:120%;
-}
-.log .emerg {
-	font-size:130%;
-}
+	dl.zend_form
+		dl dt,
+	dl.zend_form
+		dl dd {
+			/*line-height: 140%;*/
+			margin: 5px 10px;
+		}
+
+	dl.zend_form
+		dl dt {
+			float:left;
+			clear:left;
+			text-align:left;
+			width:200px;
+		}
+
+	dl.zend_form
+		dl dd {
+			float:left;
+			clear:right;
+			width:30%;
+			margin-left: 5px;
+		}
+
+	dl.zend_form
+		dd ul.errors {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+	dl.zend_form
+		dd ul.errors li {
+			float: left;
+			margin: 0 0.15em;
+			font-size: 12px;
+			color: #666666;
+		}
+
+	dl.zend_form
+		.sparkle-passwordstrength,
+	dl.zend_form
+		input,
+	dl.zend_form
+		textarea,
+	dl.zend_form
+		select {
+			width: 25em;
+		}
+
+	dl.zend_form
+		textarea {
+			height: 5em;
+		}
+
+	dl.zend_form
+		input[type="submit"] {
+			width:auto;
+			text-transform:capitalize;
+		}
