@@ -21,8 +21,8 @@
 	    <h2>
 			Media Library
 			<a class="button add-new-h2" id="media-add">Add New Media</a>
-			<?=$this->formFile('media[file]')?>
-			<input type="submit" id="media-submit" class="hide" />
+			<?=$this->formFile('Media[file]')?>
+			<input type="submit" id="media-submit" class="hide" /><!-- not formSubmit due to difficulty porting limited params -->
 			<script type="text/javascript">
 				$(function(){
 					var $file = $('#media-file'),

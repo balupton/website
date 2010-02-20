@@ -45,7 +45,7 @@
 	</h2>
 	<?=$this->log()->render()?>
 	<form action="" method="post" enctype="multipart/form-data">
-		<?=$this->formHidden('content[type]', $type)?>
+		<?=$this->formHidden('Content[type]', $type)?>
 		<div class="metabox-holder has-right-sidebar">
 			<div id="side-info-column" class="inner-sidebar">
 				<div id='side-sortables' class='meta-box-sortables sidebar-boxes'>
@@ -69,7 +69,7 @@
 										<span id="content-status-view" class="field-value"><?=ucfirst(delve($Content,'status'))?></span>
 										<span id="content-status-edit" class="hide">
 											<br/>
-											<?=$this->formDoctrine('content[status]', delve($Content,'status'), array(), 'Content','status')?>
+											<?=$this->formDoctrine('Content[status]', delve($Content,'status'), array(), 'Content','status')?>
 										</span>
 									</div>
 									<? if ( $Content_Author ) :
@@ -87,7 +87,7 @@
 										<span class="field-value" id="content-published_at-view"><?=$this->locale()->datetime(delve($Content,'published_at'))?></span>
 										<span id="content-published_at-edit" class="hide">
 											<br/>
-											<?=$this->formDatetime('content[published_at]', delve($Content,'published_at'))?>
+											<?=$this->formDatetime('Content[published_at]', delve($Content,'published_at'))?>
 										</span>
 									</div>
 								</div>
@@ -113,7 +113,7 @@
 						<h3>Tags</h3>
 						<div class="inside">
 							<label class="screen-reader-text" for="content-tags">Post Tags</label>
-							<?=$this->formTextarea('content[tags][]',delve($Content,'tagstr'),array('class'=>'form-input-tip autosize','title'=>'Add tags'))?>
+							<?=$this->formTextarea('Content[tags][]',delve($Content,'tagstr'),array('class'=>'form-input-tip autosize','title'=>'Add tags'))?>
 							<p class="description">
 								Add your tags to the post above, separating them with commas.
 							</p>
@@ -131,7 +131,7 @@
 									</a>
 								</div>
 								<div class="avatar field">
-									<?=$this->formCheckbox('content[Avatar][delete]', 'true')?>
+									<?=$this->formCheckbox('Content[Avatar][delete]', 'true')?>
 									<label for="content-avatar-delete">
 										Delete?
 									</label>
@@ -141,7 +141,7 @@
 								<label for="content-avatar-file">
 									Want to upload a different image?
 								</label>
-								<?=$this->formFile('content[Avatar][file]')?>
+								<?=$this->formFile('Content[Avatar][file]')?>
 							</div>
 						</div>
 					</div>
@@ -151,7 +151,7 @@
 						<div class="inside">
 							<? if ( delve($Content,'send_status') === 'none' ): ?>
 								<div class="field">
-									<?=$this->formCheckbox('content[tags][]', 'newsletter')?>
+									<?=$this->formCheckbox('Content[tags][]', 'newsletter')?>
 									<label for="subscription-tags">
 										Send out as a
 										<a href="<?=$this->url()->action('content-list')->search('newsletter')?>" title="Sent Content List">newsletter</a>
@@ -176,13 +176,13 @@
 						<label class="screen-reader-text" for="content-title">
 							Title
 						</label>
-						<?=$this->formText('content[title]', delve($Content,'title'), array('tabindex'=>1,'autocomplete'=>'off','class'=>'form-input-tip','title'=>'Title'))?>
+						<?=$this->formText('Content[title]', delve($Content,'title'), array('tabindex'=>1,'autocomplete'=>'off','class'=>'form-input-tip','title'=>'Title'))?>
 					</div>
 					<div id="content-parent-field" class="field field-little">
 						<label for="content-parent">
 							File under:
 						</label>
-						<select name="content[parent]" id="content-parent">
+						<select name="Content[parent]" id="content-parent">
 							<option <?=($Content_Parent ? 'selected="selected" ':'')?> value="0">- Top Level</option>
 							<?
 							$current = delve($Content_Parent,'id');
@@ -215,18 +215,18 @@
 						<label for="content-code">
 							Location:
 						</label>
-						<span class="inline-edit-clickable"><?=$baseFullUrl?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=delve($Content,'code')?></span><?=$this->formText('content[code]', delve($Content,'code'))?>/
+						<span class="inline-edit-clickable"><?=$baseFullUrl?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=delve($Content,'code')?></span><?=$this->formText('Content[code]', delve($Content,'code'))?>/
 						<span class="inline-edit-panel" id="content-code-panel"></span>
 					</div>
 					
 					<div id="content-content-field" class="field field-rich ">
-						<?=$this->formTextarea('content[content]', delve($Content,'content'), array('rows'=>5,'tabindex'=>2))?>
+						<?=$this->formTextarea('Content[content]', delve($Content,'content'), array('rows'=>5,'tabindex'=>2))?>
 					</div>
 					
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Excerpt</h3>
 						<div class="inside">
-							<?=$this->formTextarea('content[description]', delve($Content,'description'), array('rows'=>3,'tabindex'=>4))?>
+							<?=$this->formTextarea('Content[description]', delve($Content,'description'), array('rows'=>3,'tabindex'=>4))?>
 						</div>
 					</div>
 					
@@ -236,11 +236,11 @@
 						<div class="inside">
 							<p>
 								<label for="content-event-start-at">Start time:</label>
-								<?=$this->formDatetime('content[event_start_at]', delve($Content,'event_start_at'))?>
+								<?=$this->formDatetime('Content[event_start_at]', delve($Content,'event_start_at'))?>
 							</p>
 							<p>
 								<label for="content-event-finish-at">Finish time:</label>
-								<?=$this->formDatetime('content[event_finish_at]', delve($Content,'event_finish_at'))?>
+								<?=$this->formDatetime('Content[event_finish_at]', delve($Content,'event_finish_at'))?>
 							</p>
 						</div>
 					</div>
