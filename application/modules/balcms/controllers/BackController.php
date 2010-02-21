@@ -386,6 +386,34 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return $this->_forward('user-edit');
 	}
 	
+	public function userDownloadAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		$Identity = $App->getUser();
+		
+		# Prepare Fetch
+		$Table = Doctrine::getTable('User');
+		$columns = $Table->getColumnNames();
+		
+		# Query
+		$ListQuery = Doctrine_Query::create()
+			->select('u.*')
+			->from('User u')
+			->where('u.level <= ?', $Identity->level)
+			->orderBy('u.username ASC')
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+			
+		# Fetch
+		$Users = $ListQuery->execute();
+		
+		# Create csv
+		$csv = prepare_csv_content($columns, $Users);
+		$filename = 'users.csv';
+		
+		# Download file
+		become_file_download($csv, null, null, $filename);
+		die;
+	}
 	
 	public function userDeleteAction ( ) {
 		# Prepare

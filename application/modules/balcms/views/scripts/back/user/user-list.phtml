@@ -22,6 +22,7 @@
     <h2>
 		<a href="<?=$this->url()->action('user-list')?>"><?=$Type?> List</a>
 		<a class="button add-new-h2" href="<?=$this->url()->action('user-new')?>">Create New</a>
+		<a class="button add-new-h2" href="<?=$this->url()->action('user-download')?>">Download Users as CSV File</a>
 	</h2>
     <!-- Filters -->
     <form id="posts-filter" action="<?=$this->url()->action('user-list')->search()?>" method="get">
