@@ -46,12 +46,22 @@
 		// Events
 		var events = {
 			change: function(event){
-				var data = {}; data[name] = $(this).val();
-				$.ajax({
-					url:  url,
-					method: 'post',
-					dataType: 'json',
-					data: data,
+				// Prepare
+				var $this = $(this);
+				
+				// Prepare Data
+				var data = {};
+				data[name] = [];
+				
+				// Add Data
+				var values = $this.values();
+				for ( var values_key in values ) {
+					data[name] = values[values_key];
+					break;
+				}
+				
+				// Define Events
+				var events = {
 					success: function(data, status){
 						for ( var code in items ) {
 							var item = items[code];
@@ -69,14 +79,15 @@
 								callback_before(data);
 							}
 							//
-							if ( typeof data[code].length === 'undefined' ) {
+							if ( typeof data[code] === 'undefined' || data === null ) return; // only run if we have data
+							if ( typeof data[code].length === 'undefined' ) { // why?
 								for ( var key in data[code] ) {
 									var title = data[code][key];
 									var value = keys ? key : title;
 									switch ( type ) {
 										case 'option':
 											var $option = $('<option>').val(value).text(title).appendTo($el);
-											if ( current.has(key) || current.has(value) ) $option.choose();
+											if ( current.has(value) ) $option.choose(value);
 											break;
 										case 'checkbox':
 											if ( !name ) {
@@ -84,7 +95,7 @@
 											}
 											var $label = $('<label>').text(title).appendTo($el);
 											var $checkbox = $('<input>').attr('type','checkbox').val(value).attr('name',name).prependTo($label);
-											if ( current.has(key) || current.has(value) ) $checkbox.choose();
+											if ( current.has(value) ) $checkbox.choose(value);
 											break;
 									}
 								}
@@ -95,7 +106,31 @@
 						}
 						return true;
 					}
-				});
+				};
+				
+				// Check our cache
+				$.fn.changePopulate.cache = $.fn.changePopulate.cache||{};
+				var code = url+JSON.stringify(data);
+				if ( $.fn.changePopulate.cache[code]||false ) {
+					// Use Cache
+					console.debug('using cache: ', code);
+					events.success($.fn.changePopulate.cache[code], true);
+				}
+				else {
+					// Perform Request
+					$.ajax({
+						url:  url,
+						method: 'post',
+						dataType: 'json',
+						data: data,
+						success: function(data,success) {
+							if ( !(data||false) ) return;
+							$.fn.changePopulate.cache[code] = data;
+							return events.success(data,success);
+						}
+					});
+				}
+				
 			}
 		}
 		$find.unbind('change',events.change).change(events.change).trigger('change');
