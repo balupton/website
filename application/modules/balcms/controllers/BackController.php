@@ -18,6 +18,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function init ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
+		$App->prepareLog();
 		$actionName = $this->getRequest()->getActionName();
 		
 		# Layout
