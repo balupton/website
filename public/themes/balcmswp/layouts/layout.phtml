@@ -7,9 +7,10 @@
 	$publicUrl = $this->app()->getPublicUrl();
 	$backUrl = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
-	$jqueryUiUrl = $publicUrl.'/scripts/jquery-ui-1.7.2';
-	$jquerySparkleUrl = $publicUrl.'/scripts/jquery-sparkle';
-	$tinyMceUrl = $publicUrl.'/scripts/tiny_mce-3.2.7';
+	$scriptUrl = $publicUrl.'/scripts';
+	$jqueryUiUrl = $scriptUrl.'/jquery-ui-1.7.2';
+	$jquerySparkleUrl = $scriptUrl.'/jquery-sparkle';
+	$tinyMceUrl = $scriptUrl.'/tiny_mce-3.2.7';
 	$this->url()->renege('route','back');
 	// Identity
 	$Identity = $this->app()->getUser();

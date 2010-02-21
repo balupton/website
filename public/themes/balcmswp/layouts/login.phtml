@@ -4,8 +4,9 @@
 	// URL
 	$baseUrl = $this->app()->getBaseUrl();
 	$publicUrl = $this->app()->getPublicUrl();
-	$jqueryUiUrl = $publicUrl.'/scripts/jquery-ui-1.7.2';
-	$jquerySparkleUrl = $publicUrl.'/scripts/jquery-sparkle';
+	$scriptUrl = $publicUrl.'/scripts';
+	$jqueryUiUrl = $scriptUrl.'/jquery-ui-1.7.2';
+	$jquerySparkleUrl = $scriptUrl.'/jquery-sparkle';
 	$backUrl = $this->app()->getAreaUrl('back');
 	$this->url()->renege('route','back');
 ?>
