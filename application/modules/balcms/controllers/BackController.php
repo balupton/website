@@ -173,7 +173,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$typeLower = strtolower($type);
 		$Table = Bal_Form_Doctrine::getTable($type);
 		$tableName = Bal_Form_Doctrine::getTableName($type);
-		$labelColumnName = Bal_Form_Doctrine::getTableLabelColumnName($tableName);
 		
 		# Menu
 		$App->activateNavigationItem('back.main', 'crud-list-'.$typeLower, true);
@@ -184,11 +183,26 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$searchQuery = delve($search,'query');
 		$this->view->search = $search;
 		
+		# Columns
+		$columns = Bal_Form_Doctrine::fetchListingColumns($tableName);
+		$labelColumnName = $columns[0];
+		
 		# Prepare
 		$ListQuery = $Table->createQuery()
 			->select('*')
 			->orderBy($labelColumnName.' ASC')
-			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY)
+			;
+		
+		# Add Column Relations to Query
+		foreach ( $columns as $column ) {
+			if ( $Table->hasRelation($column) ) {
+				$ListQuery
+					->addSelect('c'.$column.'.*')
+					->addFrom($tableName.'.'.$column.' c'.$column)
+					;
+			}
+		}
 		
 		# Handle
 		if ( $searchQuery ) {
@@ -204,7 +218,15 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$ItemList = $ListQuery->execute();
 		}
 		
+		# Permissions
+		$ItemListEditable = $App->hasNavigationItem('back.main', 'crud-new-'.$typeLower, true);
+		$ItemListDeletable = true;
+		
+		
 		# Apply
+		$this->view->ItemListEditable = $ItemListEditable;
+		$this->view->ItemListDeletable = $ItemListDeletable;
+		$this->view->ItemListColumns = $columns;
 		$this->view->ItemList = $ItemList;
 		$this->view->type = $type;
 		
@@ -390,6 +412,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function userLoginAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
+		$Identity = $App->getUser();
 		
 		# Login
 		try {
@@ -409,8 +432,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Exceptor->log();
 		}
 		
-		# Done
-		return true;
+		# Redirect
+		return $this->_forward('user-list');
 	}
 	
 	# ========================
