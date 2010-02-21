@@ -42,19 +42,17 @@
 	// changePopulate
 	$.fn.changePopulate = $.fn.changePopulate || function(url, name, items, callback_before, callback_after) {
 		// Prepare
-		var $find = $(this);
+		var $input = $(this),
+			$inputs = $input.findAndSelf(':input');
 		// Events
 		var events = {
 			change: function(event){
-				// Prepare
-				var $this = $(this);
-				
 				// Prepare Data
 				var data = {};
 				data[name] = [];
 				
 				// Add Data
-				var values = $this.values();
+				var values = $input.values();
 				for ( var values_key in values ) {
 					data[name] = values[values_key];
 					break;
@@ -72,15 +70,17 @@
 							}
 							var $el = item.el||item;
 							var keys = typeof item.keys !== 'undefined' ? item.keys : true;
-							//
+							// Empty whatever it is
 							$el.empty();
-							//
+							// Fire our Before Handler
 							if ( callback_before||false ) {
 								callback_before(data);
 							}
-							//
-							if ( typeof data[code] === 'undefined' || data === null ) return; // only run if we have data
-							if ( typeof data[code].length === 'undefined' ) { // why?
+							// Handle Data
+							if ( typeof data[code] === 'undefined' || data === null || typeof data[code].length !== 'undefined' /* is array */ ) {
+								// For some reason we don't have data
+							} else {
+								// Cycle through our object
 								for ( var key in data[code] ) {
 									var title = data[code][key];
 									var value = keys ? key : title;
@@ -101,6 +101,7 @@
 								}
 							}
 						}
+						// Fire our after callback
 						if ( callback_after||false ) {
 							callback_after(data);
 						}
@@ -108,34 +109,76 @@
 					}
 				};
 				
-				// Check our cache
+				// Prepare variables
 				$.fn.changePopulate.cache = $.fn.changePopulate.cache||{};
-				var code = url+JSON.stringify(data);
-				if ( $.fn.changePopulate.cache[code]||false ) {
+				$.fn.changePopulate.xhr = $.fn.changePopulate.xhr||{};
+				$.fn.changePopulate.timeout = $.fn.changePopulate.timeout||{};
+				
+				// Prepare our codes
+				var cacheCode = url+JSON.stringify(data);
+				var xhrCode = url+$input.attr('id');
+				
+				// Prepare our checks
+				var checkXhr = function(){
+					if ( typeof $.fn.changePopulate.xhr[xhrCode] !== 'undefined' && $.fn.changePopulate.xhr[xhrCode] ) {
+						// XHR Still Running
+						$.fn.changePopulate.xhr[xhrCode].abort(); // abort old
+					}
+				};
+				var checkTimeout = function(){
+					if ( typeof $.fn.changePopulate.timeout[xhrCode] !== 'undefined' && $.fn.changePopulate.timeout[xhrCode] ) {
+						// Timeout Still Running
+						clearTimeout($.fn.changePopulate.timeout[xhrCode]);
+						$.fn.changePopulate.timeout[xhrCode] = false;
+					}
+				};
+				
+				// Check our cache
+				if ( $.fn.changePopulate.cache[cacheCode]||false ) {
 					// Use Cache
-					console.debug('using cache: ', code);
-					events.success($.fn.changePopulate.cache[code], true);
+					checkXhr();
+					checkTimeout();
+					events.success($.fn.changePopulate.cache[cacheCode], true);
 				}
 				else {
 					// Perform Request
-					$.ajax({
-						url:  url,
-						method: 'post',
-						dataType: 'json',
-						data: data,
-						success: function(data,success) {
-							if ( !(data||false) ) return;
-							$.fn.changePopulate.cache[code] = data;
-							return events.success(data,success);
-						}
-					});
+					var fireRequest = function(){
+						$inputs.attr('disabled',true); // Disable anything else for the mean time until this ajax request succeeds
+						checkXhr();
+						$.fn.changePopulate.xhr[xhrCode] = $.ajax({
+							url:  url,
+							type: 'POST',
+							dataType: 'json',
+							data: data,
+							success: function(data,success) {
+								// XHR Validity
+								$.fn.changePopulate.xhr[xhrCode] = false; // completed
+								$inputs.attr('disabled',false); // renable
+								// Check validity
+								if ( !(data||false) || data === null ) return;
+								// Add to cache
+								$.fn.changePopulate.cache[cacheCode] = data;
+								return events.success(data,success);
+							},
+							error: function(){
+								// XHR Validity
+								$.fn.changePopulate.xhr[xhrCode] = false; // completed
+								$inputs.attr('disabled',false); // renable
+							}
+						});
+					};
+					// Check Tmeout
+					checkTimeout();
+					// Fire timeout
+					$.fn.changePopulate.timeout[xhrCode] = setTimeout(fireRequest,2000);
 				}
 				
 			}
-		}
-		$find.unbind('change',events.change).change(events.change).trigger('change');
+		};
+		// Bind
+		$inputs.unbind('change',events.change).change(events.change).filter(':first').trigger('change');
 		// Done
-		return true;
+		return $input;
 	}
 	
 	// Sparkle: delete warning
