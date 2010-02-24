@@ -106,7 +106,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		}
 		
 		# Query
-		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.status = ?', 'published')->orderBy('c.position ASC, c.id ASC');
+		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.ContentTags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.status = ?', 'published')->orderBy('c.position ASC, c.id ASC');
 		
 		# Search
 		$ContentQuery = Doctrine::getTable('Content')->search($searchQuery, $ListQuery);
@@ -198,17 +198,17 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$Content = Doctrine::getTable('Content')->find($content_id);
 		
 		# Keywords
-		$keywords = explode(', ', $Content->tagstr);
+		$keywords = array($Content->tags);
 		
 		# Crumbs
 		$ContentCrumbsArray = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, false);
 		foreach ( $ContentCrumbsArray as $Crumb ) {
-			$keywords += explode(', ', $Crumb['tagstr']);
+			$keywords[] = $Crumb['tags'];
 			$this->view->headTitle()->append($Crumb['title']);
 		}
 		
 		# Keywords
-		$keywordstr = implode(', ', $keywords);
+		$keywordstr = prepare_csv_str($keywords);
 		
 		# Apply
 		$this->view->Content = $Content;
