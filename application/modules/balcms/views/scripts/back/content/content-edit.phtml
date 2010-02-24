@@ -15,6 +15,9 @@
 	$Content_Parent = delve($Content,'Parent');
 	$Content_Route = delve($Content,'Route');
 	
+	# Content URLs
+	$Content_url = $this->url()->content($Content)->toString();
+	
 	# Crumbs
 	$ContentCrumbs = delve($this,'ContentCrumbs',array($Content));
 	$ContentList = delve($this,'ContentList');
@@ -57,7 +60,7 @@
 								<div id="minor-publishing-actions">
 									<?if($mode_edit):?>
 										<!-- Open Action -->
-										<a class="button button-action right" id="action-open" tabindex="4" href="<?=$this->url()->content($Content)?>" >Open</a>
+										<a class="button button-action right" id="action-open" tabindex="4" href="<?=$Content_url?>" >Open</a>
 									<?endif;?>
 									<!-- Preview Action -->
 									<!-- <a class="button button-action right" id="action-preview" tabindex="4">Preview</a>  -->
@@ -113,7 +116,7 @@
 						<h3>Tags</h3>
 						<div class="inside">
 							<label class="screen-reader-text" for="content-tags">Post Tags</label>
-							<?=$this->formTextarea('Content[tags][]',delve($Content,'tagstr'),array('tabindex'=>60, 'class'=>'form-input-tip autosize','title'=>'Add tags'))?>
+							<?=$this->formTextarea('Content[tags][]',delve($Content,'tags'),array('tabindex'=>60, 'class'=>'form-input-tip autosize','title'=>'Add tags'))?>
 							<p class="description">
 								Add your tags to the post above, separating them with commas.
 							</p>
@@ -131,7 +134,7 @@
 									</a>
 								</div>
 								<div class="avatar field">
-									<?=$this->formCheckbox('Content[Avatar][delete]', 'true', array('tabindex'=>70))?>
+									<?=$this->formCheckbox('Content[Avatar][_delete_]', 'true', array('tabindex'=>70))?>
 									<label for="content-avatar-delete">
 										Delete?
 									</label>
@@ -182,7 +185,7 @@
 						<label for="content-parent">
 							File under:
 						</label>
-						<select name="Content[parent]" id="Content-parent" tabindex="20">
+						<select name="Content[Parent]" id="Content-parent" tabindex="20">
 							<option <?=($Content_Parent ? 'selected="selected" ':'')?> value="0">- Top Level</option>
 							<?
 							$current = delve($Content_Parent,'id');

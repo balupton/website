@@ -108,7 +108,7 @@
 					$_Content_code = delve($_Content,'code');
 					$_Content_updated_at = delve($_Content,'updated_at');
 					$_Content_Avatar = delve($_Content,'Avatar');
-					$_Content_Tags = delve($_Content,'Tags');
+					$_Content_Tags = delve($_Content,'ContentTags');
 					$_Content_Author = delve($_Content,'Author');
             		$contentUrl = $this->url()->content($_Content)->toString();
             		$contentOpenUrl = $this->url()->action('content-list')->item($_Content)->toString();

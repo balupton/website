@@ -562,7 +562,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Apply
-		$this->view->Media = $Media->toArray();
+		$this->view->Media = $Media;
 		
 		# Render
 		$this->render('media/media-edit');
@@ -674,7 +674,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$this->view->type = $type;
 		$this->view->ContentCrumbs = $ContentCrumbs;
 		$this->view->ContentList = $ContentList;
-		$this->view->Content = $ContentArray;
+		$this->view->Content = $Content;
 		
 		# Render
 		$this->render('content/content-edit');
@@ -750,7 +750,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$ListQuery = Doctrine_Query::create()
 			->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')
-			->from('Content c, c.Route cr, c.Tags ct, c.Author ca, c.Parent cp, c.Avatar cm')
+			->from('Content c, c.Route cr, c.ContentTags ct, c.Author ca, c.Parent cp, c.Avatar cm')
 			->where('c.status = ?', 'published')
 			->orderBy('c.position ASC, c.id ASC')
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
@@ -840,7 +840,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	
 	protected function _getContentQuery ( ) {
 		# Prepare
-		$Query = Doctrine_Query::create()->select('i.*, ir.*, it.*, ia.*, ip.*, im.*')->from('Content i, i.Route ir, i.Tags it, i.Author ia, i.Parent ip, i.Avatar im');
+		$Query = Doctrine_Query::create()->select('i.*, ir.*, it.*, ia.*, ip.*, im.*')->from('Content i, i.Route ir, i.ContentTags it, i.Author ia, i.Parent ip, i.Avatar im');
 		
 		# Return Query
 		return $Query;
@@ -865,10 +865,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		
 		# Prepare Fetch
-		if ( !$Query ) $Query = $this->_getContentQuery();
-		
-		# Prepare Fetch
-		if ( !$keep ) $keep = array('code', 'content', 'description', 'parent', 'status', 'tags', 'title', 'type');
+		if ( !$keep ) $keep = array('code', 'content', 'description', 'Parent', 'status', 'tags', 'title', 'type', 'Avatar');
 		$Content = $App->saveItem('Content', $record, $Query, $keep, $remove, $empty);
 		
 		# Return Content
@@ -906,7 +903,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		
 		# Prepare Fetch
-		if ( !$Query ) $Query = $this->_getMediaQuery();
 		if ( !$keep ) $keep = array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height');
 		
 		# Fetch
@@ -935,7 +931,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		
 		# Prepare Fetch
-		if ( !$Query ) $Query = $this->_getMediaQuery();
 		if ( !$remove ) $remove = array('permissions', 'roles', 'Permissions', 'Roles');
 		
 		# Fetch
