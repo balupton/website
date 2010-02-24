@@ -22,6 +22,15 @@
 	}
 
 
+	.sparkle-hint-has {
+	
+	}
+	.sparkle-hint-hinted {
+		font-size:11px;
+		color:#BBB;
+	}
+
+
 /* Sparkle Password Strength */
 
 	.sparkle-passwordstrength {
