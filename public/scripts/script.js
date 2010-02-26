@@ -182,7 +182,7 @@
 	}
 	
 	// Sparkle: delete warning
-	$.Sparkle.add('deletewarn', function(){
+	$.Sparkle.addExtension('deletewarn', function(){
 		var $this = $(this); var Sparkle = $.Sparkle;
 		// Fetch
 		var $inputs = $this.findAndSelf('.delete-action').click(function(event){
