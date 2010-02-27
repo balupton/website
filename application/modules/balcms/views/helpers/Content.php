@@ -241,8 +241,8 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$EventsPast = Doctrine_Query::create()->select('*')->from('Event c, c.Parent cp')->where('c.status = ? AND cp.id = ?', array('published', $Content->id))->orderBy('c.event_start_at ASC, c.id ASC')->limit(20)->andWhere('c.event_start_at < ?', $timestamp)->execute();
-		$EventsFuture = Doctrine_Query::create()->select('*')->from('Event c, c.Parent cp')->where('c.status = ? AND cp.id = ?', array('published', $Content->id))->orderBy('c.event_start_at ASC, c.id ASC')->limit(20)->andWhere('c.event_start_at >= ?', $timestamp)->execute();
+		$EventsPast = Doctrine_Query::create()->select('*')->from('ContentEvent c, c.Parent cp')->where('c.status = ? AND cp.id = ?', array('published', $Content->id))->orderBy('c.event_start_at ASC, c.id ASC')->limit(20)->andWhere('c.event_start_at < ?', $timestamp)->execute();
+		$EventsFuture = Doctrine_Query::create()->select('*')->from('ContentEvent c, c.Parent cp')->where('c.status = ? AND cp.id = ?', array('published', $Content->id))->orderBy('c.event_start_at ASC, c.id ASC')->limit(20)->andWhere('c.event_start_at >= ?', $timestamp)->execute();
 		
 		# Apply
 		$model = compact('Content','EventsPast','EventsFuture');
