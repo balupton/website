@@ -1,0 +1,150 @@
+
+# ==============================================
+# BALCMS CONTENT
+
+Balcms_Content:
+    actAs:
+        SoftDelete:
+        Bal_Doctrine_Template_Auditable:
+            status:
+                disabled: false
+            Author:
+                disabled: false
+            authorstr:
+                disabled: false
+            created_at:
+                disabled: false
+            updated_at:
+                disabled: false
+            published_at:
+                disabled: false
+        Searchable:
+            fields: [code, tags, authorstr, title, description]
+        Taggable:
+            tagAlias: "ContentTags"
+    columns:
+        id:
+            primary: true
+            type: integer(2)
+            unsigned: true
+            autoincrement: true
+        code:
+            type: string(30)
+            notblank: true
+            unique: true
+        title:
+            type: string(50)
+            notblank: true
+        description:
+            type: string
+            notblank: true
+            extra:
+                html: rich
+        description_rendered:
+            type: string
+            notblank: true
+            extra:
+                html: rich
+        tags:
+            type: string(255)
+            notnull: true
+            default: ""
+        content:
+            type: string
+            notblank: true
+            extra:
+                html: rich
+        content_rendered:
+            type: string
+            notblank: true
+            extra:
+                html: rich
+            
+        avatar_id:
+            type: integer(2)
+            unsigned: true
+        route_id:
+            type: integer(2)
+            unsigned: true
+            unique: true
+        parent_id:
+            type: integer(2)
+            unsigned: true
+        position:
+            type: integer(2)
+            unsigned: true
+            notnull: true
+            default: 0
+            
+        type:
+            type: enum
+            values: [content,event]
+            default: content
+            notblank: true
+    relations:
+        Avatar:
+            class: Media
+            local: avatar_id
+            foreign: id
+            foreignAlias: ContentList
+            onDelete: "SET NULL"
+        Route:
+            local: route_id
+            foreign: id
+            foreignAlias: ContentList
+            onDelete: CASCADE
+        Parent:
+            class: Content
+            local: parent_id
+            foreign: id
+            foreignAlias: Children
+            onDelete: CASCADE
+
+Balcms_ContentEvent:
+    inheritance:
+        extends: Content
+        type: column_aggregation
+        keyField: type
+        keyValue: event
+    columns:
+        event_start_at:
+            type: timestamp
+        event_finish_at:
+            type: timestamp
+
+# ==============================================
+# BALCMS MESSAGE
+
+Balcms_Message:
+    inheritance:
+        extends: Bal_Message
+        type: simple
+    columns:
+        content_id:
+            type: integer(2)
+            unsigned: true
+    relations:
+        Content:
+            class: Content
+            local: content_id
+            foreign: id
+            foreignAlias: Messages
+
+
+# ==============================================
+# BALCMS USER
+
+Balcms_User:
+    inheritance:
+        extends: Bal_User
+        type: simple
+    actAs:
+        Searchable:
+            fields: [username,email,fullname,suburb,state,country]
+            # This can only be listed once due to bug in doctrine
+    columns:
+        type:
+            type: enum
+            values: [user]
+            notblank: true
+            default: "user"
