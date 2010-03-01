@@ -249,10 +249,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$typeLower = strtolower($type);
 		$Table = Bal_Form_Doctrine::getTable($type);
 		$tableName = Bal_Form_Doctrine::getTableName($type);
-		$labelColumnName = Bal_Form_Doctrine::getTableLabelColumnName($tableName);
 		
 		# Fetch
-		$Item = $App->saveItem($type, $type);
+		$Item = $App->saveItem($type);
 		
 		# Menu
 		$App->activateNavigationItem('back.main', 'crud-'.($Item->id?'list':'new').'-'.$typeLower, true);
