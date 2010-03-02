@@ -4,12 +4,20 @@
 	
 	# Prepare
 	$View = $this;
-	$Message = delve($View,'Message');
 	$this->url()->renege('route','app');
-
+	$Message = delve($View,'Message');
+	
+	# Prepare Message
+	$params				= array();
+	$params['Message']	= is_array($Message) ? $Message : $Message->toArray(true);
+	
 	# Prepare Relations
 	$By		= delve($Message,'By');
 	$For	= delve($Message,'For');
+	
+	# Apply Relations
+	$params['by'] 		= delve($By,'fullname','System');
+	$params['for'] 		= delve($For,'fullname','System');
 	
 	# Prepare Urls
 	$rootUrl		= $View->app()->getRootUrl();
@@ -17,12 +25,6 @@
 	$Message_url	= $rootUrl.$View->url()->message($Message)->toString();
 	$By_url			= delve($By,'id') ? $rootUrl.$View->url()->user($By)->toString() : $rootUrl;
 	$For_url		= delve($For,'id') ? $rootUrl.$View->url()->user($For)->toString() : $rootUrl;
-	
-	# Prepare Params
-	$params				= array();
-	$params['Message']	= is_array($Message) ? $Message : $Message->toArray();
-	$params['by'] 		= delve($By,'fullname','System');
-	$params['for'] 		= delve($For,'fullname','System');
 	
 	# Apply URLs
 	$params['rootUrl'] 		= $rootUrl;
