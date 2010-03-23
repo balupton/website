@@ -100,6 +100,56 @@ Balcms_Content:
             foreignAlias: Children
             onDelete: CASCADE
 
+Balcms_ContentProduct:
+    inheritance:
+        extends: Content
+        type: column_aggregation
+        keyField: type
+        keyValue: product
+    columns:
+        product_cost:
+            type: decimal(8)
+            scale: 2
+            #notblank: true
+            extra:
+                currency: true
+        product_taxable:
+            type: boolean
+            default: true
+        product_stock:
+            type: integer(2)
+            unsigned: true
+            #notnull: true
+
+Balcms_ContentBook:
+    inheritance:
+        extends: ContentProduct
+        type: column_aggregation
+        keyField: type
+        keyValue: book
+    columns:
+        book_isbn:
+            # Unique Identifier
+            type: string(13)
+        book_isn:
+            # Before ISBN
+            type: string(8)
+        book_author:
+            type: string(50)
+            #notblank: true
+        book_published:
+            type: timestamp
+        book_publisher:
+            type: string(50)
+        book_binding:
+            type: enum
+            values: [hardcover,softcover]
+        book_edition:
+            type: string(10)
+        book_quality:
+            type: enum
+            values: [used,new,good]
+
 Balcms_ContentEvent:
     inheritance:
         extends: Content

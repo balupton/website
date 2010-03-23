@@ -1,237 +1,227 @@
 ---
 detect_relations: false
 
+# ==============================================
+# ROUTE
+
 Route:
-    actAs:
-        SoftDelete:
-        Searchable:
-            fields: [path]
-    columns:
-        id:
-            primary: true
-            type: integer(2)
-            unsigned: true
-            autoincrement: true
-        path:
-            type: string(150)
-            notblank: true
-            unique: true
-        type:
-            type: string(15)
-            notblank: true
-        data:
-            type: array
+    inheritance:
+        extends: Bal_Route
+        type: simple
+
+# ==============================================
+# CONTENT
 
 Content:
+    inheritance:
+        extends: Balcms_Content
+        type: simple
+
+ContentEvent:
+    inheritance:
+        extends: Balcms_ContentEvent
+        type: simple
+
+ContentProduct:
+    inheritance:
+        extends: Balcms_ContentProduct
+        type: simple
+
+ContentBook:
+    inheritance:
+        extends: Balcms_ContentBook
+        type: simple
+
+# ==============================================
+# MEDIA
+
+Media:
+    inheritance:
+        extends: Bal_Media
+        type: simple
+
+
+# ==============================================
+# MESSAGES
+
+Message:
+    inheritance:
+        extends: Balcms_Message
+        type: simple
+
+
+# ==============================================
+# INVOICES
+
+Invoice:
+    inheritance:
+        extends: Bal_Invoice
+        type: simple
+
+
+# ==============================================
+# USERS
+
+User:
+    inheritance:
+        extends: Balcms_User
+        type: simple
+
+# ==============================================
+# PERMISSIONS
+
+Role:
+    inheritance:
+        extends: Bal_Role
+        type: simple
+        
+PermissionAndRole:
+    inheritance:
+        extends: Bal_PermissionAndRole
+        type: simple
+        
+Permission:
+    inheritance:
+        extends: Bal_Permission
+        type: simple
+
+RoleAndUser:
+    inheritance:
+        extends: Bal_RoleAndUser
+        type: simple
+
+PermissionAndUser:
+    inheritance:
+        extends: Bal_PermissionAndUser
+        type: simple
+        
+
+# ^ /Users/balupton/Server/htdocs/projects/balcms/application/data/schema/_schema.yml
+
+
+# ==============================================
+# BAL INVOICE
+
+Bal_InvoiceItem:
     actAs:
         SoftDelete:
-        Sluggable:
-            name: code
-            canUpdate: true
-            fields: [title]
-        Bal_Doctrine_Template_Auditable:
-            status:
-                disabled: false
-            enabled:
-                disabled: false
-            author:
-                disabled: false
-            authorstr:
-                disabled: false
-            created_at:
-                disabled: false
-            updated_at:
-                disabled: false
-            published_at:
-                disabled: false
-        Searchable:
-            fields: [code, tagstr, authorstr, title, description]
-        Taggable:
     columns:
         id:
-            primary: true
             type: integer(2)
+            primary: true
             unsigned: true
             autoincrement: true
         title:
             type: string(50)
             notblank: true
-        description:
-            type: string
+        cost:
+            type: decimal(8)
+            scale: 2
             notblank: true
             extra:
-                html: rich
-        description_rendered:
-            type: string
+                currency: true
+        template:
+            type: string(50)
             notblank: true
+            default: "user_invoiceitem"
             extra:
-                html: rich
-        tagstr:
-            type: string(255)
-            notnull: true
-            default: ""
-        content:
-            type: string
-            notblank: true
-            extra:
-                html: rich
-        content_rendered:
-            type: string
-            notblank: true
-            extra:
-                html: rich
-            
-        avatar_id:
+                auto: true
+                
+        invoice_id:
             type: integer(2)
             unsigned: true
-        route_id:
-            type: integer(2)
-            unsigned: true
-            unique: true
-        parent_id:
-            type: integer(2)
-            unsigned: true
-        position:
-            type: integer(2)
-            unsigned: true
-            notnull: true
-            default: 0
-            
-        send_at:
-            type: timestamp
-        send_finished_at:
-            type: timestamp
-        send_all:
-            type: integer(2)
-            unsigned: true
-            notnull: true
-            default: 0
-        send_remaining:
-            type: integer(2)
-            unsigned: true
-            notnull: true
-            default: 0
-        send_status:
-            type: enum
-            values: [none,pending,completed]
-            default: none
-            notblank: true
-            
-        type:
-            type: enum
-            values: [content,event]
-            default: content
             notblank: true
     relations:
-        Avatar:
-            class: Media
-            local: avatar_id
+        Invoice:
+            class: Invoice
+            local: invoice_id
             foreign: id
-            foreignAlias: ContentList
-            onDelete: "SET NULL"
-        Route:
-            local: route_id
-            foreign: id
-            foreignAlias: ContentList
-            onDelete: CASCADE
-        Parent:
-            class: Content
-            local: parent_id
-            foreign: id
-            foreignAlias: Children
-            onDelete: CASCADE
-        Subscribers:
-            class: Subscriber
-            local: content_id
-            foreign: subscriber_id
-            foreignAlias: ContentList
-            refClass: ContentAndSubscriber
-            onDelete: CASCADE
+            foreignAlias: InvoiceItems
+            foreignType: many
+            onDelete: "CASCADE"
 
-Event:
-    inheritance:
-        extends: Content
-        type: column_aggregation
-        keyField: type
-        keyValue: event
-    columns:
-        event_start_at:
-            type: timestamp
-        event_finish_at:
-            type: timestamp
-
-ContentAndSubscriber:
-    columns:
-        id:
-            primary: true
-            type: integer(2)
-            unsigned: true
-            autoincrement: true
-        content_id:
-            type: integer(2)
-            unsigned: true
-        subscriber_id:
-            type: integer(2)
-            unsigned: true
-        status:
-            type: enum
-            values: [pending,sending,delivered,failed]
-            default: pending
-            notnull: true
-    relations:
-        Content:
-            local: content_id
-            foreign: id
-        Subscriber:
-            local: subscriber_id
-            foreign: id
-
-Subscriber:
+Bal_Invoice:
     actAs:
-        Taggable:
-        Searchable:
-            fields: [email,tagstr]
+        SoftDelete:
+        Timestampable:
     columns:
         id:
-            primary: true
             type: integer(2)
+            primary: true
             unsigned: true
             autoincrement: true
-        email:
-            type: string(255)
+        title:
+            type: string(50)
+            notblank: true
+        template:
+            type: string(50)
+            notblank: true
+            default: "user_invoice"
+            extra:
+                auto: true
+        cost:
+            type: decimal(8)
+            scale: 2
             notnull: true
-            unique: true
-            email: true
-        enabled:
-            type: boolean
+            extra:
+                currency: true
+        subtotal:
+            type: decimal(8)
+            scale: 2
             notnull: true
-            default: true
-        tagstr:
-            type: string(255)
+            extra:
+                currency: true
+        tax:
+            type: decimal(8)
+            scale: 2
             notnull: true
-            default: ""
+            extra:
+                currency: true
+        config:
+            type: array
+            notnull: true
+        cache:
+            # Cache of any information that may change externally
+            type: array
+            notnull: true
 
-Media:
+        for_id:
+            type: integer(2)
+            unsigned: true
+        by_id:
+            type: integer(2)
+            unsigned: true
+    relations:
+        For:
+            class: User
+            local: for_id
+            foreign: id
+            foreignAlias: InvoicesFor
+        By:
+            class: User
+            local: by_id
+            foreign: id
+            foreignAlias: InvoicesBy
+
+# ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Bal/Schema/Invoice.yaml
+
+
+# ==============================================
+# BAL MEDIA
+
+Bal_Media:
     actAs:
         Sluggable:
             name: code
             canUpdate: true
             fields: [name]
         Bal_Doctrine_Template_Auditable:
-            status:
-                disabled: true
-            enabled:
-                disabled: true
-            author:
+            Author:
                 disabled: false
-            authorstr:
-                disabled: true
             created_at:
                 disabled: false
             updated_at:
                 disabled: false
-            published_at:
-                disabled: true
         Searchable:
             fields: [code,title,path,type]
     columns:
@@ -260,12 +250,12 @@ Media:
             type: enum
             values: [file,document,image,video,audio,web,application,archive]
             default: unknown
-            notnull: true
+            notblank: true
         mimetype:
-            type: string(20)
+            type: string(40)
             notnull: true
         humantype:
-            type: string(20)
+            type: string(50)
             notnull: true
         width:
             type: integer(2)
@@ -273,40 +263,222 @@ Media:
         height:
             type: integer(2)
             unsigned: true
+        url: #auto
+            type: string(255)
 
-User:
+
+# ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Bal/Schema/Media.yaml
+
+
+# ==============================================
+# BAL MESSAGE
+
+Bal_Message:
+    columns:
+        id:
+            type: integer(3)
+            unsigned: true
+            primary: true
+            autoincrement: true
+        send_on:
+            type: timestamp
+            notblank: true
+        sent_on:
+            type: timestamp
+            extra:
+                auto: true
+        title:
+            type: string(255)
+            notblank: true
+        description:
+            type: string
+            notblank: true
+            extra:
+                html: true
+        unread:
+            type: boolean
+            default: true
+            notnull: true
+            extra:
+                auto: true
+        hash:
+            type: string(33)
+            unique: true
+            notblank: true
+            extra:
+                auto: true
+        
+        status:
+            type: enum
+            notblank: true
+            values: [pending,published]
+            default: pending
+            extra:
+                auto: true
+        template:
+            type: string(30)
+            notblank: true
+            default: "user_message"
+            extra:
+                auto: true
+        for_id:
+            type: integer(2)
+            unsigned: true
+        by_id:
+            type: integer(2)
+            unsigned: true
+    relations:
+        For:
+            class: User
+            local: for_id
+            foreign: id
+            foreignAlias: MessagesFor
+        By:
+            class: User
+            local: by_id
+            foreign: id
+            foreignAlias: MessagesBy
+    
+
+# ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Bal/Schema/Message.yaml
+
+
+# ==============================================
+# BAL ROUTE
+
+Bal_Route:
     actAs:
         SoftDelete:
         Searchable:
-            fields: [username,displayname,fullname,email]
+            fields: [path]
+    columns:
+        id:
+            primary: true
+            type: integer(2)
+            unsigned: true
+            autoincrement: true
+        path:
+            type: string(150)
+            notblank: true
+            unique: true
+        type:
+            type: string(15)
+            notblank: true
+        data:
+            type: array
+
+
+# ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Bal/Schema/Route.yaml
+
+
+# ==============================================
+# BAL USER
+
+Bal_User:
+    actAs:
+        Taggable:
+            tagAlias: "SubscriptionTags"
+        SoftDelete:
+        Timestampable:
+        Bal_Doctrine_Template_Addressable:
+            # This can only be listed once due to bug in doctrine
     columns:
         id:
             type: integer(2)
-            primary: true
-            autoincrement: true
             unsigned: true
+            primary: true
             autoincrement: true
         username:
             type: string(16)
             notblank: true
             unique: true
         password:
-            type: string(16)
+            # md5 hash
+            type: string(33)
             notblank: true
-        enabled:
-            type: boolean
-            notnull: true
-            default: true
+            extra:
+                password: true
         displayname:
-            type: string(50)
+            # The Name to Display the User As
+            type: string(85)
             notblank: true
+            
+        title:
+            type: string(15)
+        firstname:
+            type: string(35)
+        lastname:
+            type: string(35)
         fullname:
-            type: string(255)
-            notblank: true
+            type: string(85)
+            extra:
+                auto: true
+            
         email:
             type: string(255)
             notblank: true
+            #email: true
+        phone:
+            type: string(255)
+            extra:
+                formOrder: 320
+                formGroup: "other"
+            
+        description:
+            type: string
+        
+        level:
+            # Permission Level - Calculated by highest role
+            type: integer(1)
+            unsigned: true
+            notnull: true
+            default: 0
+            extra:
+                auto: true
+        subscriptions:
+            # CSV generated from SubscriptionTags. Used for searchable.
+            type: string(255)
+            notnull: true
+            default: ""
+            extra:
+                csv: true
+        code:
+            # Alias for Username
+            type: string(33)
+            notblank: true
+            unique: true
+            extra:
+                auto: true
+        uid:
+            # Unique Identifier for the User
+            type: string(33)
+            notblank: true
+            unique: true
+            extra:
+                auto: true
+        type:
+            type: enum
+            values: [user]
+            notblank: true
+        status:
+            type: enum
+            values: [pending,published,disabled]
+                # pending - Awaiting activation
+                # published - Activated
+                # disabled - Disabled for whatever reason
+            notblank: true
+            default: pending
+            
+        avatar_id:
+            type: integer(2)
+            unsigned: true
     relations:
+        Avatar:
+            class: Media
+            local: avatar_id
+            foreign: id
+            foreignAlias: UserList
+            onDelete: "SET NULL"
         Permissions:
             class: Permission
             local: user_id
@@ -320,7 +492,10 @@ User:
             foreignAlias: Users
             refClass: RoleAndUser
 
-Role:
+# ==============================================
+# BAL PERMISSIONS
+
+Bal_Role:
     columns:
         id:
             type: integer(2)
@@ -332,6 +507,11 @@ Role:
             type: string(15)
             notblank: true
             unique: true
+        level:
+            type: integer(1)
+            notblank: true
+            unsigned: true
+            default: 1
     relations:
         Permissions:
             class: Permission
@@ -340,7 +520,7 @@ Role:
             foreignAlias: Roles
             refClass: PermissionAndRole
 
-PermissionAndRole:
+Bal_PermissionAndRole:
     columns:
         id:
             type: integer(2)
@@ -363,7 +543,7 @@ PermissionAndRole:
             local: permission_id
             foreign: id
         
-Permission:
+Bal_Permission:
     columns:
         id:
             type: integer(2)
@@ -375,7 +555,7 @@ Permission:
             notblank: true
             unique: true
 
-RoleAndUser:
+Bal_RoleAndUser:
     columns:
         id:
             type: integer(2)
@@ -409,7 +589,7 @@ RoleAndUser:
             local: role_id
             foreign: id
 
-PermissionAndUser:
+Bal_PermissionAndUser:
     columns:
         id:
             type: integer(3)
@@ -442,3 +622,211 @@ PermissionAndUser:
         Permission:
             local: permission_id
             foreign: id
+
+
+# ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Bal/Schema/User.yaml
+
+
+# ==============================================
+# BALCMS CONTENT
+
+Balcms_Content:
+    actAs:
+        SoftDelete:
+        Bal_Doctrine_Template_Auditable:
+            status:
+                disabled: false
+            Author:
+                disabled: false
+            authorstr:
+                disabled: false
+            created_at:
+                disabled: false
+            updated_at:
+                disabled: false
+            published_at:
+                disabled: false
+        Searchable:
+            fields: [code, tags, authorstr, title, description]
+        Taggable:
+            tagAlias: "ContentTags"
+    columns:
+        id:
+            primary: true
+            type: integer(2)
+            unsigned: true
+            autoincrement: true
+        code:
+            type: string(30)
+            notblank: true
+            unique: true
+        title:
+            type: string(50)
+            notblank: true
+        description:
+            type: string
+            notblank: true
+            extra:
+                html: rich
+        description_rendered:
+            type: string
+            notblank: true
+            extra:
+                html: rich
+        tags:
+            type: string(255)
+            notnull: true
+            default: ""
+        content:
+            type: string
+            notblank: true
+            extra:
+                html: rich
+        content_rendered:
+            type: string
+            notblank: true
+            extra:
+                html: rich
+            
+        avatar_id:
+            type: integer(2)
+            unsigned: true
+        route_id:
+            type: integer(2)
+            unsigned: true
+            unique: true
+        parent_id:
+            type: integer(2)
+            unsigned: true
+        position:
+            type: integer(2)
+            unsigned: true
+            notnull: true
+            default: 0
+            
+        type:
+            type: enum
+            values: [content,event]
+            default: content
+            notblank: true
+    relations:
+        Avatar:
+            class: Media
+            local: avatar_id
+            foreign: id
+            foreignAlias: ContentList
+            onDelete: "SET NULL"
+        Route:
+            local: route_id
+            foreign: id
+            foreignAlias: ContentList
+            onDelete: CASCADE
+        Parent:
+            class: Content
+            local: parent_id
+            foreign: id
+            foreignAlias: Children
+            onDelete: CASCADE
+
+Balcms_ContentProduct:
+    inheritance:
+        extends: Content
+        type: column_aggregation
+        keyField: type
+        keyValue: product
+    columns:
+        product_cost:
+            type: decimal(8)
+            scale: 2
+            #notblank: true
+            extra:
+                currency: true
+        product_taxable:
+            type: boolean
+            default: true
+        product_stock:
+            type: integer(2)
+            unsigned: true
+            #notnull: true
+
+Balcms_ContentBook:
+    inheritance:
+        extends: ContentProduct
+        type: column_aggregation
+        keyField: type
+        keyValue: book
+    columns:
+        book_isbn:
+            # Unique Identifier
+            type: string(13)
+        book_isn:
+            # Before ISBN
+            type: string(8)
+        book_author:
+            type: string(50)
+            #notblank: true
+        book_published:
+            type: timestamp
+        book_publisher:
+            type: string(50)
+        book_binding:
+            type: enum
+            values: [hardcover,softcover]
+        book_edition:
+            type: string(10)
+        book_quality:
+            type: enum
+            values: [used,new,good]
+
+Balcms_ContentEvent:
+    inheritance:
+        extends: Content
+        type: column_aggregation
+        keyField: type
+        keyValue: event
+    columns:
+        event_start_at:
+            type: timestamp
+        event_finish_at:
+            type: timestamp
+
+# ==============================================
+# BALCMS MESSAGE
+
+Balcms_Message:
+    inheritance:
+        extends: Bal_Message
+        type: simple
+    columns:
+        content_id:
+            type: integer(2)
+            unsigned: true
+    relations:
+        Content:
+            class: Content
+            local: content_id
+            foreign: id
+            foreignAlias: Messages
+
+
+# ==============================================
+# BALCMS USER
+
+Balcms_User:
+    inheritance:
+        extends: Bal_User
+        type: simple
+    actAs:
+        Searchable:
+            fields: [username,email,fullname,suburb,state,country]
+            # This can only be listed once due to bug in doctrine
+    columns:
+        type:
+            type: enum
+            values: [user]
+            notblank: true
+            default: "user"
+
+
+# ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Balcms/Schema/Schema.yaml
+

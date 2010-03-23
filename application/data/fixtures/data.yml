@@ -1,11 +1,5 @@
 ---
 
-Subscriber:
-    Subscriber_Balupton:
-        email: "balupton@gmail.com"
-        enabled: true
-        tags: [newsletter]
-
 Content:
     Content_Welcome:
         code: "welcome"
@@ -102,22 +96,32 @@ User:
         id: 1
         username: "balcms"
         password: "random"
-        enabled: true
+        status: "published"
         displayname: "Administrator"
         fullname: "Benajmin Lupton"
         email: "balcms@balupton.com"
         Roles:
             - Role_SuperAdmin
+        subscriptions: [newsletter]
+        title: "Mr"
+        firstname: "Benjamin"
+        lastname: "Lupton"
+        phone: "+61430208061"
+        type: "user"
     User_Mydance:
         id: 2
         username: "mydance"
         password: "benlupton123"
-        enabled: true
+        status: "published"
         displayname: "MyDance"
-        fullname: "MyDance"
         email: "contact@mydance.com.au"
         Roles:
             - Role_MyDanceAdmin
+        title: "Ms"
+        firstname: "Premala"
+        lastname: "Sangarananda"
+        phone: "Private"
+        type: "user"
 
 Permission:
     Permission_Admin:
@@ -126,37 +130,43 @@ Permission:
     Permission_Content:
         id: 2
         code: content
-    Permission_Event:
+    Permission_ContentEvent:
         id: 3
-        code: event
+        code: content_event
     Permission_Media:
         id: 4
         code: media
-    Permission_Subscription:
-        id: 5
-        code: subscription
     Permission_User:
-        id: 6
+        id: 5
         code: user
+    Permission_UserSubscriber:
+        id: 6
+        code: user_subscriber
+    Permission_Crud:
+        id: 7
+        code: crud
 
 Role:
     Role_SuperAdmin:
         id: 1
         code: superadmin
+        level: 10
         Permissions:
             - Permission_Admin
             - Permission_Content
-            - Permission_Event
+            - Permission_ContentEvent
             - Permission_Media
-            - Permission_Subscription
             - Permission_User
+            - Permission_UserSubscriber
+            - Permission_Crud
     Role_MyDanceAdmin:
         id: 2
         code: mydanceadmin
+        level: 7
         Permissions:
             - Permission_Admin
             - Permission_Content
-            - Permission_Event
+            - Permission_ContentEvent
             - Permission_Media
-            - Permission_Subscription
+            - Permission_UserSubscriber
             

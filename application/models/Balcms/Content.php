@@ -256,7 +256,7 @@ class Balcms_Content extends Base_Balcms_Content
 	 */
 	public function getSubscribersQuery ( $hydrateMode = null ) {
 		$tags = $this->ContentTagsNames;
-		$SubscribersQuery = Doctrine_Query::create()->select('u.*')->from('User u, u.SubscriptionTags uSubscription')->where('u.status = ?', 'published')->andWhereIn('uSubscription.name', $tags);
+		$SubscribersQuery = Doctrine_Query::create()->select('u.*')->from('User u, u.SubscriptionTags uSubscription')->where('u.status = ?', 'published')->andWhereIn('uSubscription.name', $tags)->orderBy('u.id ASC');
 		if ( empty($tags) ) {
 			$SubscribersQuery->andWhere('true = false');
 		}

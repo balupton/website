@@ -12,6 +12,18 @@
  */
 class Balcms_Message extends Base_Balcms_Message
 {
+	
+	/**
+	 * Fetch Message Query
+	 * @return string
+	 */
+	static public function fetchQuery ( $Query = null ) {
+		if ( !(is_object($Query) && $Query instanceOf Doctrine_Query) ) {
+			$Query = Doctrine_Query::create()
+				->from('Message m');
+		}
+		return $Query->orderBy('m.send_on DESC');
+	}
 
 	/**
 	 * Set Message Code: content-subscription

@@ -16,7 +16,7 @@
 	$Content_Route = delve($Content,'Route');
 	
 	# Content URLs
-	$Content_url = $this->url()->content($Content)->toString();
+	$Content_url = delve($Content,'id') ? $this->url()->content($Content)->toString() : '';
 	
 	# Crumbs
 	$ContentCrumbs = delve($this,'ContentCrumbs',array($Content));
