@@ -1,0 +1,115 @@
+<?php
+	// DOCTYPE
+	echo $this->doctype('HTML5');
+	// URL
+	$baseUrl = $this->app()->getBaseUrl();
+	$baseFullUrl = $this->app()->getBaseUrl(true);
+	$publicUrl = $this->app()->getPublicUrl();
+	$frontUrl = $this->app()->getAreaUrl('front');
+	$jqueryUiUrl = $publicUrl.'/scripts/jquery-ui-1.7.2';
+	$jquerySparkleUrl = $publicUrl.'/scripts/jquery-sparkle';
+	$this->url()->renege('route','front');
+	// USER
+	$User = $this->app()->getUser();
+?><html>
+<head>
+    <?= $this->app()->headMeta() ?>
+    <?= $this->app()->headTitle() ?>
+    <?= $this->app()->headLink() ?>
+    <?= $this->app()->headStyle() ?>
+</head>
+<body class="home blog">
+    <?
+		$headScript = $this->app()->headScript()
+			// jQuery
+			->offsetSetFile(20,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' : $publicUrl.'/scripts/jquery-1.4.2.min.js')
+			// UI
+			->offsetSetFile(30,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' : $jqueryUiUrl.'/js/jquery-ui-1.7.2.custom.min.js')
+		    // Application
+		    ->offsetSetFile(60,$jquerySparkleUrl.'/scripts/jquery.sparkle.js')
+			;
+		if ( APPLICATION_ENV !== 'development' )
+			$headScript
+				// GSFN
+		    	->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
+		    	->offsetSetScript(81,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
+				;
+	    echo $headScript;
+    ?>
+	
+	<div id="header" class="clear">
+		<div id="follow">
+			<div id="nav-top" class="nav-action">
+				<?=$this->app()->getNavigationMenu('front.actions')->setUlClass('ul-unstyled-horizontal')->render()?>
+			</div>
+			<div id="nav-search" class="nav-action">
+				<form action="<?=$this->url()->action('search')->search()?>" method="post" >
+					<label for="search-query">Search</label>
+					<?=$this->formText('search[query]', delve($this,'search.query'), array('title'=>'Search query','class'=>'sparkle-hint'))?>
+				</form>
+			</div>
+			<div id="nav-subscribe" class="nav-action">
+				<form action="<?=$this->url()->action('subscribe')?>" method="post" >
+					<label for="subscribe-email">Newsletter</label>
+					<?=$this->formText('subscribe[email]', delve($this,'subscribe.email'), array('title'=>'Your email','class'=>'sparkle-hint'))?>
+				</form>
+			</div>
+		</div>
+		<div id="wrapper">
+			<h1 id="title">
+				<a id="logo" href="<?=$baseFullUrl?>"><?=$this->app()->getConfig('bal.site.name')?></a>
+			</h1>
+			<div id="description">
+				<?=$this->app()->getConfig('bal.site.name')?>
+			</div>
+			<div id="navigation">
+				<div id="nav-main">
+					<?=$this->app()->getNavigationMenu('front.menu')->setUlClass('ul-unstyled-horizontal')->render()?>
+				</div>
+			</div>
+		</div>
+	</div><!--end header-->
+	
+	<div class="content-background">
+		<div class="wrapper">
+			<?=$this->log()->render()?>
+			<?=$this->layout()->content?>
+		</div>
+	</div>
+	
+	<div id="footer">
+		<div class="wrapper">
+			<div id="footer-about" class="footer-column">
+				<div id="footer-links">
+					<?=$this->app()->getNavigationMenu('front.footer')->setUlClass('ul-unstyled-horizontal')->render()?>
+				</div>
+			</div>
+			<div id="copyright">
+				<div id="footer-text">
+					<p><?=$this->app()->getConfig('bal.site.name')?> &copy; 2009
+				</div>
+			</div>
+		</div>
+	</div>
+		
+	<?
+		$analyticsCode = $this->app()->getConfig('bal.analytics.code');
+		if ( $analyticsCode ) : ?>
+			<script type="text/javascript">
+			//<![CDATA[
+			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+			document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+			//]]>
+			</script><script type="text/javascript">
+			//<![CDATA[
+			var pageTracker = _gat._getTracker("<?=$analyticsCode?>");
+			pageTracker._initData();
+			pageTracker._trackPageview();
+			//]]>
+			</script>
+			<?
+		endif;
+	?>
+	
+</body>
+</html>

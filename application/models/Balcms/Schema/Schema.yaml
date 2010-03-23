@@ -35,6 +35,8 @@ Balcms_Content:
         title:
             type: string(50)
             notblank: true
+        tagline:
+            type: string(50)
         description:
             type: string
             notblank: true
