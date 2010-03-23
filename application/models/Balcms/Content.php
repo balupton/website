@@ -78,27 +78,6 @@ class Balcms_Content extends Base_Balcms_Content
 	}
 
 	/**
-	 * Sets the position
-	 * @param int $position [optional] defaults to id
-	 * @return bool
-	 */
-	public function setPosition ( $position = null, $load = true ) {
-		# Default
-		if ( !$this->position && is_null($position) && $this->id ) {
-			$position = $this->id;
-		}
-		
-		# Is Change?
-		if ( $this->position != $position && $position ) {
-			$this->_set('position', $position, $load);
-			return true;
-		}
-		
-		# No Change
-		return false;
-	}
-
-	/**
 	 * Sets the code field
 	 * @param int $code
 	 * @return bool
@@ -109,24 +88,34 @@ class Balcms_Content extends Base_Balcms_Content
 		$code = preg_replace('/[^-a-z0-9]/', '', $code);
 		$code = preg_replace('/--+/', '-', $code);
 		$this->_set('code', $code, $load);
-		$this->setPath();
 		return true;
 	}
 	
+	/**
+	 * Sets the position
+	 * @param int $position [optional] defaults to id
+	 * @return bool
+	 */
+	public function setPosition ( $position, $load = true ) {
+		# Has Changed?
+		if ( $this->position != $position && $position > 0 ) {
+			$this->_set('position', $position, $load);
+			return true;
+		}
+		
+		# No Change
+		return false;
+	}
+
 	/**
 	 * Sets the Route's path field
 	 * @param int $path [optional]
 	 * @return bool
 	 */
-	public function setPath ( $path = null, $load = true ) {
+	public function setPath ( $path, $load = true ) {
 		# Prepare
 		$save = false;
-		# Default
-		if ( is_null($path) ) {
-			$path = $this->code;
-			if ( $this->parent_id )
-				$path = trim($this->Parent->Route->path,'/') . '/' . trim($path,'/');
-		}
+		# Prepare
 		$path = trim($path, '/');
 		if ( empty($path) ) {
 			return false;
@@ -155,99 +144,6 @@ class Balcms_Content extends Base_Balcms_Content
 		return $save;
 	}
 	
-	/**
-	 * Ensure the Render of the Content and Description
-	 * @param Doctrine_Event $Event
-	 * @return bool
-	 */
-	public function ensureRender ( $Event ) {
-		# Prepare
-		$View = Bal_App::getView();
-		$Content = $Event->getInvoker();
-		$modified = $Content->getModified();
-		$save = false;
-		
-		# Content
-		if ( array_key_exists('content', $modified) ) {
-			$this->content_rendered = $View->content()->renderContent($Content->content, array('Content'=>$Content));
-			$save = true;
-		}
-		
-		# Description
-		if ( array_key_exists('description', $modified) ) {
-			$this->description_rendered = $View->content()->renderDescription($Content->description, array('Content'=>$Content));
-			$save = true;
-		}
-		
-		return $save;
-	}
-	
-	/**
-	 * Ensure Tags
-	 * @param Doctrine_Event $Event
-	 * @return bool
-	 */
-	public function ensureContentTags ( $Event ) {
-		# Prepare
-		$Invoker = $Event->getInvoker();
-		$modified = $Invoker->getModified();
-		$modifiedLast = $Invoker->getLastModified();
-		$save = false;
-		$tagField = 'tags';
-		$tagRelation = 'ContentTags';
-		$tagRelationNames = $tagRelation.'Names';
-		
-		# Fetch
-		$tagsSystemOrig = $Invoker->$tagRelationNames;
-		$tagsUserOrig = $Invoker->_get($tagField);
-		$tagsSystem = prepare_csv_str($tagsSystemOrig);
-		$tagsUser = prepare_csv_str($tagsUserOrig);
-		$tagsUserNewer = array_key_exists($tagField, $modified);
-		$tagsSystemNewer = !array_key_exists($tagField, $modified) && !array_key_exists($tagField, $modifiedLast);
-		$tagsDiffer = $tagsUser != $tagsSystem;
-		
-		# TagField > TagField
-		if ( ($tagsDiffer || $tagsUserOrig != $tagsUser) && $tagsUserNewer ) {
-			# TagField is newer than TagRelation
-			//var_dump('TagField > TagField');
-			
-			# Save TagField
-			$Invoker->_set($tagField, $tagsUser, false); // false at end to prevent comparison
-			
-			# Save
-			$save = true;
-		}
-		
-		# TagField > TagRelation
-		if ( $tagsDiffer && !$tagsSystemNewer ) {
-			# TagField is newer than TagRelation
-			//var_dump('TagField > TagRelation');
-			
-			# Check whether we can save
-			if ( $Invoker->id ) {
-				# Save TagRelation
-				$Invoker->$tagRelation = $tagsUser;
-				
-				# Save
-				$save = true;
-			}
-		}
-		
-		# TagRelation > $TagField
-		if ( $tagsDiffer && $tagsSystemNewer ) {
-			# TagRelation is newer than TagField
-			//var_dump('TagRelation > TagField');
-			
-			# Save TagField
-			$Invoker->_set($tagField, $tagsSystem, false); // false at end to prevent comparison
-			
-			# Save
-			$save = true;
-		}
-		
-		# Return
-		return $save;
-	}
 	
 	/**
 	 * Get Subscribers Query
@@ -306,18 +202,127 @@ class Balcms_Content extends Base_Balcms_Content
 	}
 	
 	/**
+	 * Ensure Properties
+	 * @param Doctrine_Event $Event
+	 * @return boolean	wheter or not to save
+	 */
+	public function ensureProperties ( $Event, $Event_type ) {
+		# Check
+		if ( !in_array($Event_type,array('preSave')) ) {
+			# Not designed for these events
+			return null;
+		}
+		
+		# Prepare
+		$save = false;
+		
+		# Fetch
+		$Content = $Event->getInvoker();
+		$modified = $Content->getModified();
+		
+		# Ensure Position
+		if ( !$this->position && $this->id ) {
+			$Content->set('position',$this->id,false);
+			$save = true;
+		}
+		
+		# Ensure Path
+		if ( array_key_exists('code', $modified) && $this->code ) {
+			$path = $this->code;
+			if ( $this->parent_id )
+				$path = trim($this->Parent->Route->path,'/') . '/' . trim($path,'/');
+			$Content->set('path',$path,false);
+			$save = true;
+		}
+		
+		# Return
+		return $save;
+	}
+	
+	/**
+	 * Ensure the Render of the Content and Description
+	 * @param Doctrine_Event $Event
+	 * @return bool
+	 */
+	public function ensureRender ( $Event, $Event_type ) {
+		# Check
+		if ( !in_array($Event_type,array('preSave','postSave')) ) {
+			# Not designed for these events
+			return null;
+		}
+		
+		# Prepare
+		$save = false;
+		$View = Bal_App::getView();
+		
+		# Fetch
+		$Content = $Event->getInvoker();
+		$modified = $Content->getModified();
+		
+		# Content
+		if ( array_key_exists('content', $modified) ) {
+			$Content->set(
+				'content_rendered',
+				$View->content()->renderContent($Content->content, array('Content'=>$Content)),
+				false
+			);
+			$save = true;
+		}
+		
+		# Description
+		if ( !$Content->description && (!$Content->description_rendered || array_key_exists('content', $modified)) ) {
+			$this->description_rendered = substr(strip_tags($this->content_rendered), 0, 1000);
+			$save = true;
+		}
+		elseif ( array_key_exists('description', $modified) ) {
+			$Content->set(
+				'description_rendered',
+				$View->content()->renderDescription($Content->description, array('Content'=>$Content)),
+				false
+			);
+			$save = true;
+		}
+		
+		return $save;
+	}
+	
+	/**
+	 * Ensure Tags
+	 * @param Doctrine_Event $Event
+	 * @return bool
+	 */
+	public function ensureContentTags ( $Event, $Event_type ) {
+		# Check
+		if ( !in_array($Event_type,array('preSave')) ) {
+			# Not designed for these events
+			return null;
+		}
+		
+		# Handle
+		return Bal_Doctrine_Core::ensureTags($Event,'ContentTags','tags');
+	}
+	
+	/**
 	 * Ensure Send out to Subscribers
 	 * @param Doctrine_Event $Event
 	 * @return boolean	wheter or not to save
 	 */
-	public function ensureSend ( $Event ) {
+	public function ensureSend ( $Event, $Event_type ) {
+		# Check
+		if ( !in_array($Event_type,array('postSave')) ) {
+			# Not designed for these events
+			return null;
+		}
+		
 		# Prepare
-		$Invoker = $Event->getInvoker();
-		$modified = $Invoker->getLastModified();
 		$save = false;
 		
+		# Fetch
+		$Content = $Event->getInvoker();
+		$modified = $Content->getLastModified();
+		
 		# Subscription Message
-		if ( $this->status === 'published' && array_key_exists('content_rendered', $modified) ) {
+		if ( $Content->status === 'published' && array_key_exists('content_rendered', $modified) ) {
 			# Update Message
 			$Receivers = $this->getUnsentSubscribers();
 			foreach ( $Receivers as $Receiver ) {
@@ -333,21 +338,18 @@ class Balcms_Content extends Base_Balcms_Content
 		return $save;
 	}
 	
-	
 	/**
 	 * Ensure Consistency
 	 * @param Doctrine_Event $Event
 	 * @return boolean	wheter or not to save
 	 */
-	public function ensure ( $Event ) {
-		$ensure = array(
-			$this->setPosition(),
-			$this->setPath(),
-			$this->ensureContentTags($Event),
-			$this->ensureRender($Event),
-			$this->ensureSend($Event),
-		);
-		return in_array(true,$ensure);
+	public function ensure ( $Event, $Event_type ){
+		return Bal_Doctrine_Core::ensure($Event,$Event_type,array(
+			'ensureProperties',
+			'ensureContentTags',
+			'ensureRender',
+			'ensureSend'
+		));
 	}
 	
 	/**
@@ -357,12 +359,11 @@ class Balcms_Content extends Base_Balcms_Content
 	public function preSave ( $Event ) {
 		# Prepare
 		$Invoker = $Event->getInvoker();
-		$save = false;
 		$result = true;
 		
 		# Ensure
-		if ( $Invoker->ensure($Event) ) {
-			$save = true;
+		if ( self::ensure($Event, __FUNCTION__) ) {
+			// no need
 		}
 		
 		# Done
@@ -377,16 +378,10 @@ class Balcms_Content extends Base_Balcms_Content
 	public function postSave ( $Event ) {
 		# Prepare
 		$Invoker = $Event->getInvoker();
-		$save = false;
 		$result = true;
 	
 		# Ensure
-		if ( $Invoker->ensure($Event) ) {
-			$save = true;
-		}
-		
-		# Apply
-		if ( $save ) {
+		if ( self::ensure($Event, __FUNCTION__) ) {
 			$Invoker->save();
 		}
 		

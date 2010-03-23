@@ -39,7 +39,7 @@ Balcms_Content:
             type: string(50)
         description:
             type: string
-            notblank: true
+            #notblank: true
             extra:
                 html: rich
         description_rendered:
