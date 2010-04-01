@@ -60,14 +60,24 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	 * @param array $params
 	 * @return string rendered content
 	 */
-	public function renderContent ( $Content, array $params = array() ) {
-		if ( is_object($Content) ) {
-			return $this->_cache ? $Content->content_rendered : $this->renderWidgets($Content->content, $params+=array('Content'=>$Content));
-		} elseif ( is_array($Content) ) {
-			return $this->_cache ? $Content['content_rendered'] : $this->renderWidgets($Content['content'], $params+=array('ContentArray'=>$Content));
-		} else {
-			return $this->_cache ? $Content : $this->renderWidgets($Content, $params);
-		}
+	public function renderContent ( Content $Content, array $params = array() ) {
+		# Fetch
+		$content = delve($Content,'content');
+		$content_rendered = delve($Content,'content_rendered');
+		
+		# Prepare Params
+		$params['Content'] = $Content;
+		
+		# Render Content
+		$render = $this->_cache
+			? $content_rendered
+			: $this->renderWidgets(
+				$content,
+				$params += array('Content'=>$Content)
+			);
+			
+		# Return render
+		return $render;
 	}
 
 	/**
@@ -76,14 +86,24 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	 * @param array $params
 	 * @return string rendered content
 	 */
-	public function renderDescription ( $Content, array $params = array() ) {
-		if ( is_object($Content) ) {
-			return $this->_cache ? $Content->description_rendered : $this->renderWidgets($Content->description, $params+=array('Content'=>$Content));
-		} elseif ( is_array($Content) ) {
-			return $this->_cache ? $Content['description_rendered'] : $this->renderWidgets($Content['description'], $params+=array('ContentArray'=>$Content));
-		} else {
-			return $this->_cache ? $Content : $this->renderWidgets($Content, $params);
-		}
+	public function renderDescription ( Content $Content, array $params = array() ) {
+		# Fetch
+		$description = delve($Content,'description');
+		$description_rendered = delve($Content,'description_rendered');
+		
+		# Prepare Params
+		$params['Content'] = $Content;
+		
+		# Render Description
+		$render = $this->_cache
+			? $description_rendered
+			: $this->renderWidgets(
+				$description,
+				$params += array('Content'=>$Content)
+			);
+		
+		# Return render
+		return $render;
 	}
 	
 	/**
@@ -95,22 +115,54 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		return $this->view->getHelper('widget')->renderAll($content, $params);
 	}
 	
+	protected function _generateModel ( array $params ) {
+		# Prepare
+		$content = delve($params,'content');
+		$parent = delve($params,'parent');
+		$codes = prepare_csv_array($content);
+		$Content = $this->getContentObjectFromParams($params);
+		
+		# Create Query
+		$ContentListQuery = Doctrine_Query::create()
+			->select('*')
+			->from('Content c')
+			->where('c.status = ?', 'published')
+			->orderBy('c.published_at DESC, c.id ASC')
+			->limit(20);
+		
+		# Adjust Query
+		if ( empty($codes) ) {
+			$ContentListQuery->addFrom('c.Parent cParent');
+			if ( is_numeric($parent) ) {
+				$ContentListQuery->andWhere('cParent.id = ?', $parent);
+			} elseif ( is_string($parent) ) {
+				$ContentListQuery->andWhere('cParent.code = ?', $parent);
+			} else {
+				$ContentListQuery->andWhere('cParent.id = ?', $Content->id);
+			}
+		} else {
+			$ContentListQuery->andWhereIn('c.code',$codes);
+		}
+		
+		# Fetch
+		$ContentList = $ContentListQuery->execute();
+		
+		# Apply
+		$model = compact('Content','ContentList');
+		$model = array_merge($params, $model);
+		
+		# Return model
+		return $model;
+	}
+	
 	/**
 	 * Render a carousel
 	 * @param $params
 	 * @return string
 	 */
 	public function renderCarouselWidget ( array $params = array() ) {
-		# Prepare
-		$codes = explode(',', str_replace(' ', '', $params['content']));
-		
-		# Fetch
-		$Content = $this->getContentObjectFromParams($params);
-		$ContentList = Doctrine_Query::create()->select('*')->from('Content c')->where('c.status = ?', 'published')->andWhereIn('c.code',$codes)->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
-		
-		# Apply
-		$model = compact('Content','ContentList');
-		$model = array_merge($params, $model);
+		# Fetch Model
+		$model = $this->_generateModel($params);
 		
 		# Render
 		return $this->renderWidgetView('carousel', $model);
@@ -175,13 +227,8 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	 * @return string
 	 */
 	public function renderRecentlistWidget ( array $params = array() ) {
-		# Fetch
-		$Content = $this->getContentObjectFromParams($params);
-		$ContentList = Doctrine_Query::create()->select('*')->from('Content c')->where('c.status = ?', 'published')->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
-		
-		# Apply
-		$model = compact('Content','ContentList');
-		$model = array_merge($params, $model);
+		# Fetch Model
+		$model = $this->_generateModel($params);
 		
 		# Render
 		return $this->renderWidgetView('recentlist', $model);
@@ -216,15 +263,8 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	 * @return string
 	 */
 	public function renderContentlistWidget ( array $params = array() ) {
-		# Prepare
-		
-		# Fetch
-		$Content = $this->getContentObjectFromParams($params);
-		$ContentList = Doctrine_Query::create()->select('*')->from('Content c, c.Parent cp')->where('c.status = ? AND cp.id = ?', array('published', $Content->id))->orderBy('c.position ASC, c.id ASC')->limit(20)->execute();
-		
-		# Apply
-		$model = compact('Content','ContentList');
-		$model = array_merge($params, $model);
+		# Fetch Model
+		$model = $this->_generateModel($params);
 		
 		# Render
 		return $this->renderWidgetView('contentlist', $model);

@@ -2,15 +2,50 @@
 	# Prepare
 	$this->url()->renege('route','front');
 	# Extract
-?><div class="contentlist">
-	<? foreach ( $this->ContentList as $Content ) :
-		$contentUrl = $this->url()->content($Content)->toString();
-		?>
-		<div class="contentlist-content">
-			<h3><a href="<?=$contentUrl?>" title="<?=$Content->title?>"><?=$Content->title?></a></h3>
-			<div class="contentlist-content-content">
-				<?=$this->content()->renderDescription($Content)?>
-			</div>
-		</div>
-	<? endforeach; ?>
-</div>
+	$id = delve($this,'id');
+	$class = delve($this,'class');
+	$title = delve($this,'title','ContentList');
+	$ContentList = delve($this,'ContentList',array());
+?>
+<section id="<?=$id?>" class="bal-widget-contentlist <?=$class?>">
+    <header>
+        <h1><?=$title?></h1>
+    </header>
+    <div class="articles">
+		<? foreach ( $ContentList as $Content ) :
+			$Content_url = $this->url()->content($Content)->toString();
+			$Content_title = delve($Content,'title');
+			$Content_tagline = delve($Content,'tagline');
+			?>
+    	    <article>
+	            <header class="article-header">
+	                <h1 class="article-title">
+	                    <a href="<?=$Content_url?>">
+	                        <span class="title"><?=$Content_title?></span>
+							<? if ( $Content_tagline ) : ?>
+	                        	<span class="description"><?=$Content_tagline?></span>
+							<? endif; ?>
+	                    </a>
+	                </h1>
+	            </header>
+	            <div class="article-content">
+					<div class="article-description">
+						<?=$this->content()->renderDescription($Content)?>
+					</div>
+	                <nav class="nav-links">
+	                    <ul>
+	                        <li><a href="#">Homepage</a></li>
+	                        <li><a href="#">Documentation</a></li>
+	                    </ul>
+	                </nav>
+	                <nav class="nav-tags">
+	                    <ul>
+	                        <li><a href="#">Homepage</a></li>
+	                        <li><a href="#">Documentation</a></li>
+	                    </ul>
+	                </nav>
+	            </div>
+	        </article>
+		<? endforeach; ?>
+    </div>
+</section>

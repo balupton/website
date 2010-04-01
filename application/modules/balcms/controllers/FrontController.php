@@ -36,17 +36,11 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.tagline, c.code, c.id, c.parent_id, c.position, cr.*')->from('Content c, c.Route cr')->where('c.status = ? AND NOT EXISTS (SELECT cp.id FROM Content cp WHERE cp.id = c.parent_id)', 'published')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
 		foreach ( $ContentListArray as &$Content ) {
-			$Content['id'] = 'content-' . $Content['code'];
-			$Content['route'] = 'map';
-			$Content['label'] = $Content['title'];
-			$Content['title'] = delve($Content,'tagline',$Content['title']);
-			$Content['order'] = $Content['position'];
-			$Content['params'] = array('Map' => $Content['Route']);
-			$Content['route'] = 'map';
+			$Content = Content::toNavItem($Content);
 		}
 		
 		# Navigation
-		$NavTree = array_tree_round($ContentListArray, 'id', 'parent_id', 'level', 'position', 'pages', array('id', 'route', 'order', 'uri', 'label', 'title', 'children', 'map', 'params'));
+		$NavTree = array_tree_round($ContentListArray, 'id', 'parent_id', 'level', 'position', 'pages', array('id', 'route', 'order', 'uri', 'label', 'title', 'children', 'map', 'params')); // turn into tree from a flat list
 		$App->applyNavigationMenu('front.menu', new Zend_Navigation($NavTree));
 		
 		# Done
@@ -202,19 +196,27 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$keywords = array($Content->tags);
 		
 		# Crumbs
-		$ContentCrumbsArray = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, false);
-		foreach ( $ContentCrumbsArray as $Crumb ) {
-			$keywords[] = $Crumb['tags'];
-			$this->view->headTitle()->append($Crumb['title']);
+		$ContentCrumbs = $Content->getCrumbs(false);
+		foreach ( $ContentCrumbs as $Crumb ) {
+			$keywords[] = delve($Crumb,'tags');
+			$this->view->headTitle()->append(delve($Crumb,'title'));
 		}
+		
+		# Crumbs Navigation
+		//$ContentCrumbsNavigation = $Content->getCrumbsNavigation(false);
+		//$App->applyNavigationMenu('Content.Crumbs', new Zend_Navigation($ContentCrumbsNavigation));
 		
 		# Keywords
 		$keywordstr = prepare_csv_str($keywords);
 		
+		# Meta
+		$meta = preg_replace('/\s\s+/', ' ', strip_tags($Content->description_rendered));
+		
 		# Apply
 		$this->view->Content = $Content;
+		$this->view->ContentCrumbs = $ContentCrumbs;
 		$this->view->headTitle()->append($Content->title);
-		$this->view->headMeta()->appendName('description', strip_tags($Content->description_rendered));
+		$this->view->headMeta()->appendName('description', $meta);
 		$this->view->headMeta()->appendName('keywords', $keywordstr);
 		$this->activateNavigationContentItem($Content);
 		
