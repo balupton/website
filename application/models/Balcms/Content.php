@@ -59,13 +59,13 @@ class Balcms_Content extends Base_Balcms_Content
 	 * @param bool $includeSelf [optional]
 	 * @return mixed
 	 */
-	public function getCrumbs ( $hydrateMode = null, $includeSelf = true ) {
+	public function getCrumbs ( $includeSelf = true, $hydrateMode = null ) {
 		# Prepare
 		$Crumbs = array();
 		$Crumb = $this;
 		while ( $Crumb->parent_id ) {
 			$Crumb = $Crumb->Parent;
-			$Crumbs[] = Doctrine::HYDRATE_ARRAY ? $Crumb->toArray() : $Crumb;
+			$Crumbs[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $Crumb->toArray() : $Crumb;
 		}
 		
 		# Include?
@@ -76,7 +76,53 @@ class Balcms_Content extends Base_Balcms_Content
 		# Done
 		return $Crumbs;
 	}
-
+	
+	/**
+	 * Convert the content to a navigation item
+	 * @param mixed $Content
+	 * @return array
+	 */
+	public static function toNavItem ( $Content ) {
+		# Prepare
+		$Content = $Content;
+		$Content_Route = delve($Content,'Route');
+		if ( is_object($Content_Route) ) $Content_Route = $Content_Route->toArray();
+		
+		# Convert
+		$content = array(
+			'id' => 'content-'.delve($Content,'code'),
+			'route' => 'map',
+			'label' => delve($Content,'title'),
+			'title' => delve($Content,'tagline',delve($Content,'title')),
+			'order' => delve($Content,'position'),
+			'params' => array(
+				'Map' => $Content_Route
+			),
+			'route' => 'map'
+		);
+		
+		# Return content
+		return $content;
+	}
+	
+	/**
+	 * Fetched the crumbs as navigation items
+	 * @param bool $includeSelf [optional] defaults to true
+	 * @return array
+	 */
+	public function getCrumbsNavigation ( $includeSelf = true ) {
+		# Fetch
+		$Crumbs = $this->getCrumbs($includeSelf);
+		
+		# To Navigation
+		foreach ( $Crumbs as &$Crumb ) {
+			$Crumb = Content::toNavItem($Crumb);
+		}
+		
+		# Return Crumbs
+		return $Crumbs;
+	}
+	
 	/**
 	 * Sets the code field
 	 * @param int $code
@@ -246,7 +292,7 @@ class Balcms_Content extends Base_Balcms_Content
 	 */
 	public function ensureRender ( $Event, $Event_type ) {
 		# Check
-		if ( !in_array($Event_type,array('preSave','postSave')) ) {
+		if ( !in_array($Event_type,array('preSave')) ) {
 			# Not designed for these events
 			return null;
 		}
@@ -261,28 +307,36 @@ class Balcms_Content extends Base_Balcms_Content
 		
 		# Content
 		if ( array_key_exists('content', $modified) ) {
-			$Content->set(
-				'content_rendered',
-				$View->content()->renderContent($Content->content, array('Content'=>$Content)),
-				false
-			);
+			# Render Content
+			$content_rendered = $View->content()->renderContent($Content);
+			$Content->set('content_rendered', $content_rendered, false);
+			# Save
 			$save = true;
 		}
 		
 		# Description
-		if ( !$Content->description && (!$Content->description_rendered || array_key_exists('content', $modified)) ) {
-			$this->description_rendered = substr(strip_tags($this->content_rendered), 0, 1000);
+		if ( array_key_exists('description', $modified) ) {
+			# Auto
+			$Content->set('description_auto',false,false);
+			# Render Description
+			$description_rendered = $View->content()->renderDescription($Content);
+			$Content->set('description_rendered', $description_rendered, false);
+			# Save
 			$save = true;
 		}
-		elseif ( array_key_exists('description', $modified) ) {
-			$Content->set(
-				'description_rendered',
-				$View->content()->renderDescription($Content->description, array('Content'=>$Content)),
-				false
-			);
+		elseif ( $Content->description_auto || !$Content->description ) {
+			# Auto
+			$Content->set('description_auto',true,false);
+			# Render Description
+			$description_rendered = substr(strip_tags($Content->content_rendered), 0, 1000);
+			if ( reallyempty($description_rendered) ) $description_rendered = '<!--[empty/]-->';
+			$Content->set('description', $description_rendered, false);
+			$Content->set('description_rendered', $description_rendered, false);
+			# Save
 			$save = true;
 		}
 		
+		# Return save
 		return $save;
 	}
 	

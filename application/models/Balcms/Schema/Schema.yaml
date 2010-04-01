@@ -36,10 +36,10 @@ Balcms_Content:
             type: string(50)
             notblank: true
         tagline:
-            type: string(50)
+            type: string(100)
         description:
             type: string
-            #notblank: true
+            notblank: true
             extra:
                 html: rich
         description_rendered:
@@ -47,6 +47,9 @@ Balcms_Content:
             notblank: true
             extra:
                 html: rich
+        description_auto:
+            type: bool
+            notnull: true
         tags:
             type: string(255)
             notnull: true
