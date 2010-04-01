@@ -328,7 +328,7 @@ class Balcms_Content extends Base_Balcms_Content
 			# Auto
 			$Content->set('description_auto',true,false);
 			# Render Description
-			$description_rendered = substr(strip_tags($Content->content_rendered), 0, 1000);
+			$description_rendered = substr(preg_replace('/\s\s+/',' ',strip_tags($Content->content_rendered)), 0, 1000);
 			if ( reallyempty($description_rendered) ) $description_rendered = '<!--[empty/]-->';
 			$Content->set('description', $description_rendered, false);
 			$Content->set('description_rendered', $description_rendered, false);

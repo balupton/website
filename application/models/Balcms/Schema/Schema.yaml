@@ -52,8 +52,6 @@ Balcms_Content:
             notnull: true
         tags:
             type: string(255)
-            notnull: true
-            default: ""
         content:
             type: string
             notblank: true
