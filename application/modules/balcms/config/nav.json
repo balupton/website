@@ -1,21 +1,6 @@
 {
 	"front": {
-		"actions": [{
-			"id": "front-action-home",
-			"label": "Home",
-			"route": "app"
-		},{
-			"id": "front-action-contact",
-			"label": "Contact Us",
-			"uri": "mailto:contact@mydance.com.au",
-			"class": "gsfn"
-		}],
-		"footer": [{
-			"id": "front-action-contact",
-			"label": "Contact Us",
-			"uri": "mailto:contact@mydance.com.au",
-			"class": "gsfn"
-		}]
+		"actions": []
 	},
 	"back": {
 		"fav": [{
