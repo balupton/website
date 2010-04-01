@@ -347,7 +347,7 @@ class Balcms_Content extends Base_Balcms_Content
 	 */
 	public function ensureContentTags ( $Event, $Event_type ) {
 		# Check
-		if ( !in_array($Event_type,array('preSave')) ) {
+		if ( !in_array($Event_type,array('preSave','postSave')) ) {
 			# Not designed for these events
 			return null;
 		}
