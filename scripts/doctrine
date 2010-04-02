@@ -13,7 +13,7 @@ if ( empty($Application) ) {
 }
 
 # Bootstrap
-$Application->bootstrap('script-doctrine');
+$Application->bootstrap('ScriptDoctrine');
 
 # App
 Bal_App::getInstance($Application)->doctrineCli();

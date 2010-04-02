@@ -13,7 +13,7 @@ if ( empty($Application) ) {
 header('Content-Type: text/plain');
 
 # Load
-$Application->bootstrap('script-cron');
+$Application->bootstrap('ScriptCron');
 
 # ==========================================
 # Get to Work

@@ -12,7 +12,7 @@ if ( empty($Application) ) {
 }
 
 # Bootstrap
-$Application->bootstrap('script-setup');
+$Application->bootstrap('ScriptSetup');
 
 # App
 Bal_App::getInstance($Application)->setup();
