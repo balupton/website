@@ -13,8 +13,7 @@ if ( empty($Application) ) {
 }
 
 # Bootstrap
-$Application->bootstrap('balphp');
-$Application->bootstrap('balcms'); // required for messages
+$Application->bootstrap('script-setup');
 
 # App
 Bal_App::getInstance($Application)->setup();
