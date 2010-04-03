@@ -33,7 +33,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$App->applyNavigation();
 		
 		# Content
-		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.tagline, c.code, c.id, c.parent_id, c.position, cr.*')->from('Content c, c.Route cr')->where('c.status = ? AND NOT EXISTS (SELECT cp.id FROM Content cp WHERE cp.id = c.parent_id)', 'published')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.tagline, c.code, c.id, c.Parent_id, c.position, cr.*')->from('Content c, c.Route cr')->where('c.status = ? AND NOT EXISTS (SELECT cp.id FROM Content cp WHERE cp.id = c.Parent_id)', 'published')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentListArray = $ContentListQuery->execute();
 		foreach ( $ContentListArray as &$Content ) {
 			$Content = Content::toNavItem($Content);

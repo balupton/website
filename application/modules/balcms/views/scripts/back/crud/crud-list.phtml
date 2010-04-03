@@ -1,7 +1,7 @@
 <?
 	# URLs
-	$backUrl = $this->app()->getAreaUrl('back');
-	$frontUrl = $this->app()->getAreaUrl('front');
+	$back_url = $this->app()->getAreaUrl('back');
+	$front_url = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
 	
 	# Users
@@ -89,7 +89,7 @@
                 	<td class="column-icon media-icon">
 						<a title="View <?=$_Item_label?>" href="<?=$_Item_url?>">
 							<? if ( false ): ?>
-								<img width="46" height="60" title="<?=$_Item_label?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>
+								<img width="46" height="60" title="<?=$_Item_label?>" alt="" class="attachment-80x60" src="<?=$back_url?>/images/files/default.png"/>
 							<? endif; ?>
 						</a>
 					</td>

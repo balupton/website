@@ -1,6 +1,6 @@
 <?
 	# URLs
-	$backUrl = $this->app()->getAreaUrl('back');
+	$back_url = $this->app()->getAreaUrl('back');
 	$frontUrl = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
 	# Extract
@@ -122,7 +122,7 @@
             					<? $mediaUrl = $this->url()->media($_Content_Avatar)->toString(); ?>
 								<img height="60" title="<?=$Content['title']?>" alt="" class="attachment-80x60" src="<?=$mediaUrl?>?h=60"/>
 							<? else: ?>
-								<img width="46" height="60" title="<?=$_Content_title?>" alt="" class="attachment-80x60" src="<?=$backUrl?>/images/files/default.png"/>
+								<img width="46" height="60" title="<?=$_Content_title?>" alt="" class="attachment-80x60" src="<?=$back_url?>/images/files/default.png"/>
 							<? endif; ?>
 						</a>
 					</td>

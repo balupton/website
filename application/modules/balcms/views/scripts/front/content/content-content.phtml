@@ -1,7 +1,7 @@
 <?
 	# Prepare
 	$this->url()->renege('route','front');
-	$baseUrl = $this->app()->getBaseUrl();
+	$base_url = $this->app()->getBaseUrl();
 	# Extract
 	$Content = delve($this,'Content');
 	$Content_code = delve($Content,'code');
@@ -20,7 +20,7 @@
 			<nav id="nav-crumbs">
 				<ul>
 					<li>
-						<a href="<?=$baseUrl?>">
+						<a href="<?=$base_url?>">
 							<span class="title">Home</span>
 						</a>
 					</li>

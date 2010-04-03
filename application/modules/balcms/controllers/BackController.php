@@ -45,9 +45,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 					$Log = Bal_App::getLog();
 					$log_details = array(
 						'User' => $User->toArray(false),
-						'baseUrl' => $App->getBaseUrl(),
-						'frontUrl' => $App->getAreaUrl('front'),
-						'backUrl' => $App->getAreaUrl('back')
+						'base_url' => $App->getBaseUrl(),
+						'front_url' => $App->getAreaUrl('front'),
+						'back_url' => $App->getAreaUrl('back')
 					);
 					$Log->log(array('log-admin-permission',$log_details),Bal_Log::ERR,array('friendly'=>true,'details'=>$log_details));
 					
@@ -639,9 +639,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 	
 	public function getContentList ( ) {
 		# Fetch
-		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.parent_id, c.position, cr.path')->from('Content c, c.Route cr')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.Parent_id, c.position, cr.path')->from('Content c, c.Route cr')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		$ContentList = $ContentListQuery->execute();
-		$ContentList = array_tree_flat($ContentList, 'id', 'parent_id', 'level', 'position');
+		$ContentList = array_tree_flat($ContentList, 'id', 'Parent_id', 'level', 'position');
 		
 		# Done
 		return $ContentList;
@@ -780,7 +780,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			} else {
 				// Roots
 				if ( $type === 'content' )
-					$ContentList = $ListQuery->andWhere('NOT EXISTS (SELECT cpc.id FROM Content cpc WHERE cpc.id = c.parent_id)')->execute();
+					$ContentList = $ListQuery->andWhere('NOT EXISTS (SELECT cpc.id FROM Content cpc WHERE cpc.id = c.Parent_id)')->execute();
 				else
 					$ContentList = $ListQuery->execute();
 			}

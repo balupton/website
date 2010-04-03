@@ -1,8 +1,8 @@
 <?
 	# URLs
-	$baseFullUrl = $this->app()->getBaseUrl(true);
-	$backUrl = $this->app()->getAreaUrl('back');
-	$frontUrl = $this->app()->getAreaUrl('front');
+	$base_url_full = $this->app()->getBaseUrl(true);
+	$back_url = $this->app()->getAreaUrl('back');
+	$front_url = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
 	
 	# Content
@@ -218,7 +218,7 @@
 						<label for="content-code">
 							Location:
 						</label>
-						<span class="inline-edit-clickable"><?=$baseFullUrl?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=delve($Content,'code')?></span><?=$this->formText('Content[code]', delve($Content,'code'))?>/
+						<span class="inline-edit-clickable"><?=$base_url_full?>/</span><span id="content-parent-path" class="inline-edit-clickable"></span><span id="content-code-view" title="Click to edit this contents code" class="highlight"><?=delve($Content,'code')?></span><?=$this->formText('Content[code]', delve($Content,'code'))?>/
 						<span class="inline-edit-panel" id="content-code-panel"></span>
 					</div>
 					

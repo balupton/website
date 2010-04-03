@@ -1,7 +1,7 @@
 <?php
 	# Url
-	$baseFullUrl = $this->app()->getBaseUrl(true);
-	$baseUrl = $this->app()->getBaseUrl();
+	$base_url_full = $this->app()->getBaseUrl(true);
+	$base_url = $this->app()->getBaseUrl();
 	$this->url()->renege('route','back');
 ?>
 <div id="login">
@@ -39,7 +39,7 @@
 	</div>
 	
 	<div id="login-back">
-		<a title="Are you lost?" href="<?=$baseFullUrl?>">&larr; Back to <?=$this->app()->getConfig('bal.site.name')?></a>
+		<a title="Are you lost?" href="<?=$base_url_full?>">&larr; Back to <?=$this->app()->getConfig('bal.site.name')?></a>
 	</div>
 	
 </div>

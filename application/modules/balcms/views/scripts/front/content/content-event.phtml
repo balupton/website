@@ -6,12 +6,12 @@
 	$Content_title = delve($Content,'title');
 	$Content_Avatar = delve($Content,'Avatar');
 	# Url
-	$contentUrl = $this->url()->content($Content)->toString();
+	$Content_url = $this->url()->content($Content)->toString();
 ?>
 <div id="content-<?=$Content->code?>" class="content event">
 	<div id="content-header" class="content-header">
 		<h2>
-			<a href="<?=$contentUrl?>" title="<?=$Content_title?>">
+			<a href="<?=$Content_url?>" title="<?=$Content_title?>">
 				<?=$Content_title?>
 			</a>
 		</h2>
@@ -19,11 +19,11 @@
 	
 	<? if ( $Content_Avatar ) :
 		$Media = $Content_Avatar;
-		$mediaUrl = $this->url()->media($Media)->toString();
+		$Media_url = $this->url()->media($Media)->toString();
 		?>
 		<div id="content-avatar" class="content-avatar">
-			<a href="<?=$mediaUrl?>" title="View Image">
-				<img src="<?=$mediaUrl?>?width=200" title="<?=$Content_title?>" alt="<?=$Content_title?> Avatar" />
+			<a href="<?=$Media_url?>" title="View Image">
+				<img src="<?=$Media_url?>?width=200" title="<?=$Content_title?>" alt="<?=$Content_title?> Avatar" />
 			</a>
 		</div>
 	<? endif; ?>
