@@ -63,42 +63,42 @@ Balcms_Content:
             extra:
                 html: rich
             
-        avatar_id:
-            type: integer(2)
-            unsigned: true
-        route_id:
-            type: integer(2)
-            unsigned: true
-            unique: true
-        parent_id:
-            type: integer(2)
-            unsigned: true
         position:
             type: integer(2)
             unsigned: true
             notnull: true
             default: 0
-            
         type:
             type: enum
             values: [content,event]
             default: content
             notblank: true
+            
+        Avatar_id:
+            type: integer(2)
+            unsigned: true
+        Route_id:
+            type: integer(2)
+            unsigned: true
+            unique: true
+        Parent_id:
+            type: integer(2)
+            unsigned: true
     relations:
         Avatar:
             class: Media
-            local: avatar_id
+            local: Avatar_id
             foreign: id
-            foreignAlias: ContentList
+            foreignAlias: Contents
             onDelete: "SET NULL"
         Route:
-            local: route_id
+            local: Route_id
             foreign: id
-            foreignAlias: ContentList
+            foreignAlias: Contents
             onDelete: CASCADE
         Parent:
             class: Content
-            local: parent_id
+            local: Parent_id
             foreign: id
             foreignAlias: Children
             onDelete: CASCADE
@@ -179,7 +179,7 @@ Balcms_Message:
     relations:
         Content:
             class: Content
-            local: content_id
+            local: Content_id
             foreign: id
             foreignAlias: Messages
 

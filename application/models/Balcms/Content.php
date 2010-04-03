@@ -63,7 +63,7 @@ class Balcms_Content extends Base_Balcms_Content
 		# Prepare
 		$Crumbs = array();
 		$Crumb = $this;
-		while ( $Crumb->parent_id ) {
+		while ( $Crumb->Parent_id ) {
 			$Crumb = $Crumb->Parent;
 			$Crumbs[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $Crumb->toArray() : $Crumb;
 		}
@@ -167,7 +167,7 @@ class Balcms_Content extends Base_Balcms_Content
 			return false;
 		}
 		# Update
-		if ( $this->route_id ) {
+		if ( $this->Route_id ) {
 			$Route = $this->Route;
 		} else {
 			$Route = new Route();
@@ -215,7 +215,7 @@ class Balcms_Content extends Base_Balcms_Content
 	 */
 	public function getUnsentSubscribersQuery ( $hydrateMode = null ) {
 		$SubscribersQuery = $this->getSubscribersQuery($hydrateMode);
-		$SubscribersQuery->andWhere('NOT EXISTS (SELECT m.id FROM Message m WHERE m.For.id = u.id AND m.Content.id = ?)', $this->id);
+		$SubscribersQuery->andWhere('NOT EXISTS (SELECT m.id FROM Message m WHERE m.UserFor.id = u.id AND m.Content.id = ?)', $this->id);
 		return $SubscribersQuery;
 	}
 	
@@ -275,7 +275,7 @@ class Balcms_Content extends Base_Balcms_Content
 		# Ensure Path
 		if ( array_key_exists('code', $modified) && $this->code ) {
 			$path = $this->code;
-			if ( $this->parent_id )
+			if ( $this->Parent_id )
 				$path = trim($this->Parent->Route->path,'/') . '/' . trim($path,'/');
 			$Content->set('path',$path,false);
 			$save = true;
@@ -381,8 +381,8 @@ class Balcms_Content extends Base_Balcms_Content
 			$Receivers = $this->getUnsentSubscribers();
 			foreach ( $Receivers as $Receiver ) {
 				$Message = new Message();
-				$Message->For = $Receiver;
-				$Message->Content = $Invoker;
+				$Message->UserFor = $Receiver;
+				$Message->Content = $Content;
 				$Message->useTemplate('content-subscription');
 				$Message->save();
 			}
