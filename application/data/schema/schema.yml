@@ -438,8 +438,6 @@ Bal_User:
         subscriptions:
             # CSV generated from SubscriptionTags. Used for searchable.
             type: string(255)
-            notnull: true
-            default: ""
             extra:
                 csv: true
         code:
@@ -663,6 +661,8 @@ Balcms_Content:
         title:
             type: string(50)
             notblank: true
+        tagline:
+            type: string(100)
         description:
             type: string
             notblank: true
@@ -673,10 +673,11 @@ Balcms_Content:
             notblank: true
             extra:
                 html: rich
+        description_auto:
+            type: bool
+            notnull: true
         tags:
             type: string(255)
-            notnull: true
-            default: ""
         content:
             type: string
             notblank: true

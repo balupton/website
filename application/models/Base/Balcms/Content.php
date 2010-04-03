@@ -8,8 +8,10 @@
  * @property integer $id
  * @property string $code
  * @property string $title
+ * @property string $tagline
  * @property string $description
  * @property string $description_rendered
+ * @property bool $description_auto
  * @property string $tags
  * @property string $content
  * @property string $content_rendered
@@ -63,6 +65,10 @@ abstract class Base_Balcms_Content extends Doctrine_Record
              'notblank' => true,
              'length' => '50',
              ));
+        $this->hasColumn('tagline', 'string', 100, array(
+             'type' => 'string',
+             'length' => '100',
+             ));
         $this->hasColumn('description', 'string', null, array(
              'type' => 'string',
              'notblank' => true,
@@ -79,10 +85,12 @@ abstract class Base_Balcms_Content extends Doctrine_Record
               'html' => 'rich',
              ),
              ));
+        $this->hasColumn('description_auto', 'bool', null, array(
+             'type' => 'bool',
+             'notnull' => true,
+             ));
         $this->hasColumn('tags', 'string', 255, array(
              'type' => 'string',
-             'notnull' => true,
-             'default' => '',
              'length' => '255',
              ));
         $this->hasColumn('content', 'string', null, array(

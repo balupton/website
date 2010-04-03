@@ -114,8 +114,6 @@ abstract class Base_Bal_User extends Doctrine_Record
              ));
         $this->hasColumn('subscriptions', 'string', 255, array(
              'type' => 'string',
-             'notnull' => true,
-             'default' => '',
              'extra' => 
              array(
               'csv' => true,
