@@ -2,15 +2,15 @@
 	// Doctype
 	echo $this->doctype('HTML5');
 	// URL
-	$baseFullUrl = $this->app()->getBaseUrl(true);
-	$baseUrl = $this->app()->getBaseUrl();
-	$publicUrl = $this->app()->getPublicUrl();
-	$backUrl = $this->app()->getAreaUrl('back');
-	$frontUrl = $this->app()->getAreaUrl('front');
-	$scriptUrl = $publicUrl.'/scripts';
-	$jqueryUiUrl = $scriptUrl.'/jquery-ui-1.7.2';
-	$jquerySparkleUrl = $scriptUrl.'/jquery-sparkle';
-	$tinyMceUrl = $scriptUrl.'/tiny_mce-3.2.7';
+	$base_url_full = $this->app()->getBaseUrl(true);
+	$base_url = $this->app()->getBaseUrl();
+	$public_url = $this->app()->getPublicUrl();
+	$back_url = $this->app()->getAreaUrl('back');
+	$front_url = $this->app()->getAreaUrl('front');
+	$script_url = $public_url.'/scripts';
+	$jquery_ui_url = $script_url.'/jquery-ui-1.7.2';
+	$jquery_sparkle_url = $script_url.'/jquery-sparkle';
+	$tiny_mce_url = $script_url.'/tiny_mce-3.2.7';
 	$this->url()->renege('route','back');
 	// Identity
 	$Identity = $this->app()->getUser();
@@ -18,26 +18,26 @@
 <head>
     <?= $this->app()->headMeta() ?>
     <?= $this->app()->headTitle() ?>
-    <?= $this->app()->headLink()->appendStylesheet($jqueryUiUrl.'/css/cupertino/jquery-ui-1.7.2.custom.css') ?>
+    <?= $this->app()->headLink()->appendStylesheet($jquery_ui_url.'/css/cupertino/jquery-ui-1.7.2.custom.css') ?>
     <?= $this->app()->headStyle() ?>
 </head>
 <body>
     <?
 		$headScript = $this->app()->headScript()
 		    // jQuery
-			->offsetSetFile(20,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' : $publicUrl.'/scripts/jquery-1.4.2.js')
+			->offsetSetFile(20,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' : $public_url.'/scripts/jquery-1.4.2.js')
 			// UI
-			->offsetSetFile(30,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' : $jqueryUiUrl.'/js/jquery-ui-1.7.2.custom.min.js')
+			->offsetSetFile(30,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' : $jquery_ui_url.'/js/jquery-ui-1.7.2.custom.min.js')
 		    // TinyMCE
-			->offsetSetFile(40,$tinyMceUrl.'/jquery.tinymce.js')
-			->offsetSetScript(200,'$.Editor.applyConfig("default",{script_url: "'.$tinyMceUrl.'/tiny_mce.js", content_css: "'.$frontUrl.'/styles/content.css"});')
+			->offsetSetFile(40,$tiny_mce_url.'/jquery.tinymce.js')
+			->offsetSetScript(200,'$.Editor.applyConfig("default",{script_url: "'.$tiny_mce_url.'/tiny_mce.js", content_css: "'.$front_url.'/styles/content.css"});')
 		    // Application
-		    ->offsetSetFile(50,$publicUrl.'/scripts/jquery.autogrow.js')
-		    ->offsetSetFile(60,$jquerySparkleUrl.'/scripts/jquery.sparkle.js')
-		    ->offsetSetScript(65,'if ( typeof JSON === "undefined" ) $.appendScript("'.$scriptUrl.'/json2.js");')
-			->offsetSetScript(201,'$.Help.applyConfig("default",{icon: \'<img src="'.$backUrl.'/images/help.png" alt="help" class="help-icon" />\'});')
+		    ->offsetSetFile(50,$public_url.'/scripts/jquery.autogrow.js')
+		    ->offsetSetFile(60,$jquery_sparkle_url.'/scripts/jquery.sparkle.js')
+		    ->offsetSetScript(65,'if ( typeof JSON === "undefined" ) $.appendScript("'.$script_url.'/json2.js");')
+			->offsetSetScript(201,'$.Help.applyConfig("default",{icon: \'<img src="'.$back_url.'/images/help.png" alt="help" class="help-icon" />\'});')
 			// Ajaxy
-			//->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.history.js')->appendFile($baseUrl.'/scripts/ajaxy/js/jquery.ajaxy.js')
+			//->appendFile($base_url.'/scripts/ajaxy/js/jquery.history.js')->appendFile($base_url.'/scripts/ajaxy/js/jquery.ajaxy.js')
 			;
 		if ( APPLICATION_ENV !== 'development' )
 			$headScript
@@ -51,7 +51,7 @@
             <div id="wpcontent">
                 <div id="wphead">
                     <!--<img id="header-logo" src="edit-pages.php_files/blank.gif" alt="" height="32" width="32">-->
-                    <h1 id="site-heading"><a href="<?=$baseFullUrl?>" title="Visit Site">
+                    <h1 id="site-heading"><a href="<?=$base_url_full?>" title="Visit Site">
                     	<span id="site-title"><?=$this->app()->getConfig('bal.site.name')?></span>
                     	<em id="site-visit-button">Visit Site</em>
                     </a></h1>
