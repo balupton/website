@@ -124,8 +124,8 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Create Query
 		$ContentListQuery = Doctrine_Query::create()
-			->select('*')
-			->from('Content c')
+			->select('*, cAvatar.url')
+			->from('Content c, c.Avatar cAvatar')
 			->where('c.status = ?', 'published')
 			->orderBy('c.published_at DESC, c.id ASC')
 			->limit(20);

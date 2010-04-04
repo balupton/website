@@ -5,29 +5,30 @@
 	$this->url()->renege('route','back');
 	
 	# Extract
-	$MediaList = delve($this,'MediaList');
+	$FileList = delve($this,'FileList');
 	
 	# Title
 	$this->headTitle()->append('Media');
+	$this->headTitle()->append('Files');
 ?>
 <div class="wrap">
     <!-- Actions -->
-	<form action="<?=$this->url()->action('media-list')?>" method="post" enctype="multipart/form-data">
+	<form action="<?=$this->url()->action('media-file-list')?>" method="post" enctype="multipart/form-data">
 		<!-- Edit Button -->
 	    <div id="icon-upload" class="icon32">
 	        <br/>
 	    </div>
 		<!-- Header -->
 	    <h2>
-			Media Library
-			<a class="button add-new-h2" id="media-add">Add New Media</a>
-			<?=$this->formFile('Media[file]')?>
-			<input type="submit" id="media-submit" class="hide" /><!-- not formSubmit due to difficulty porting limited params -->
+			File Library
+			<a class="button add-new-h2" id="file-add">Add New File</a>
+			<?=$this->formFile('File[file]')?>
+			<input type="submit" id="file-submit" class="hide" /><!-- not formSubmit due to difficulty porting limited params -->
 			<script type="text/javascript">
 				$(function(){
-					var $file = $('#Media-file'),
-						$submit = $('#media-submit'),
-						$add = $('#media-add');
+					var $file = $('#File-file'),
+						$submit = $('#file-submit'),
+						$add = $('#file-add');
 					$file.change(function(){
 						if ( $file.val() ) $submit.trigger('click');
 					});
@@ -38,7 +39,7 @@
 		</h2>
 	</form>
     <!-- Filters -->
-    <form id="posts-filter" action="<?=$this->url()->action('media-list')->search()?>" method="post">
+    <form id="posts-filter" action="<?=$this->url()->action('media-file-list')->search()?>" method="post">
 		<!-- Search -->
         <p class="search-box">
             <label class="screen-reader-text" for="search-query">
@@ -49,7 +50,7 @@
         </p>
 	</form>
     <!-- Listing -->
-    <form action="<?=$this->url()->action('media-list')?>" method="get">
+    <form action="<?=$this->url()->action('media-file-list')?>" method="get">
         <div class="clear">
         </div>
 		<?=$this->log()->render()?>
@@ -98,57 +99,57 @@
             </tfoot>
 			<!-- Content Table: Content -->
             <tbody id="subscriber-list">
-            	<? foreach ( $MediaList as $_Media ):
-					$_Media_id = delve($_Media,'id');
-					$_Media_title = delve($_Media,'title');
-					$_Media_type = delve($_Media,'type');
-					$_Media_humantype = delve($_Media,'humantype');
-					$_Media_code = delve($_Media,'code');
-					$_Media_size = delve($_Media,'size');
-					$_Media_Author = delve($_Media,'Author');
-					$_Media_Author_displayname = delve($_Media_Author,'displayname');
-					$_Media_url = $this->url()->media($_Media)->toString();
-					$_Media_url_delete = $this->url()->action('media-delete')->item($_Media)->toString();
+            	<? foreach ( $FileList as $_File ):
+					$_File_id = delve($_File,'id');
+					$_File_title = delve($_File,'title');
+					$_File_type = delve($_File,'type');
+					$_File_humantype = delve($_File,'humantype');
+					$_File_code = delve($_File,'code');
+					$_File_size = delve($_File,'size');
+					$_File_Author = delve($_File,'Author');
+					$_File_Author_displayname = delve($_File_Author,'displayname');
+					$_File_url = $this->url()->file($_File)->toString();
+					$_File_url_delete = $this->url()->action('file-delete')->item($_File)->toString();
 					?>
-            	<tr id="media-<?=$_Media_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTreeArray')->next()?>">
+            	<tr id="file-<?=$_File_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTreeArray')->next()?>">
 					<td class="column-icon media-icon">
-						<a title="View <?=$_Media_title?>" href="<?=$_Media_url?>">
-							<? if ( $_Media_type === 'image' ) : ?>
-								<img height="60" title="<?=$_Media_title?>" alt="" class="attachment-80x60" src="<?=$_Media_url?>?h=60"/>
+						<a title="View <?=$_File_title?>" href="<?=$_File_url?>">
+							<? if ( $_File_type === 'image' ) : ?>
+								<img height="60" title="<?=$_File_title?>" alt="" class="attachment-80x60" src="<?=$_File_url?>?h=60"/>
 							<? else: ?>
-								<img width="46" height="60" title="<?=$_Media_title?>" alt="" class="attachment-80x60" src="<?=$back_url?>/images/files/<?=$_Media_type?>.png"/>
+								<img width="46" height="60" title="<?=$_File_title?>" alt="" class="attachment-80x60" src="<?=$back_url?>/images/files/<?=$_File_type?>.png"/>
 							<? endif; ?>
 						</a>
 					</td>
 					<td class="media column-media">
-						<strong><a title="View <?=$_Media_title?>" href="<?=$_Media_url?>">
-							<?=$_Media_title?>
+						<strong><a title="View <?=$_File_title?>" href="<?=$_File_url?>">
+							<?=$_File_title?>
 						</a></strong>
 						<br/>
-						<?=$_Media_humantype?>
+						<?=$_File_humantype?>
 						<p></p>
 						<div class="row-actions">
 							<span class="delete">
-								<a href="<?=$_Media_url_delete?>" class="delete-action">Delete</a> |
+								<a href="<?=$_File_url_delete?>" class="delete-action">Delete</a> |
 							</span>
 							<span class="view">
-								<a rel="permalink" title="View <?=$_Media_title?>" href="<?=$_Media_url?>">View</a>
+								<a rel="permalink" title="View <?=$_File_title?>" href="<?=$_File_url?>">View</a>
 							</span>
 						</div>
 					</td>
                     <td class="tags column-author hide">
-                    	<?=$_Media_code?>
+                    	<?=$_File_code?>
                     </td>
                     <td class="tags column-tags">
-                    	<?=filesize_human($_Media_size)?>
+                    	<?=filesize_human($_File_size)?>
                     </td>
                     <td class="author column-author"><?
-                        if ( empty($_Media_Author) ) :
+                        if ( empty($_File_Author) ) :
                         	echo 'Unkown';
                         else:
-                        	$author = $_Media_Author_displayname;
-                        	$author_url = $this->url()->action('media-list')->search($author)->toString();
-                        	echo '<a href="'.$author_url.'" title="View all media by '.$author.'">'.$author.'</a>';
+                        	$author = $_File_Author_displayname;
+                        	$author_url = $this->url()->action('media-file-list')->search($author)->toString();
+                        	echo '<a href="'.$author_url.'" title="View all files by '.$author.'">'.$author.'</a>';
                     	endif;
                     ?></td>
 				</tr>

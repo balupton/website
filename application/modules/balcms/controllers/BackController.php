@@ -520,38 +520,38 @@ class Balcms_BackController extends Zend_Controller_Action {
 
 	public function mediaAction ( ) {
 		# Redirect
-		return $this->_forward('media-list');
+		return $this->_forward('media-file-list');
 	}
 	
-	public function mediaDeleteAction ( ) {
+	public function mediaFileDeleteAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
 		# Delete
-		$App->deleteItem('Media');
+		$App->deleteItem('File');
 		
 		# Redirect
-		return $this->getHelper('redirector')->gotoRoute(array('action'=>'media-list'), 'back', true);
+		return $this->getHelper('redirector')->gotoRoute(array('action'=>'media-file-list'), 'back', true);
 	}
 	
-	public function mediaEditAction ( ) {
+	public function mediaFileEditAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back.main', 'media-list', true);
+		$App->activateNavigationItem('back.main', 'file-list', true);
 		
 		# Prepare
-		$Media = array();
+		$File = array();
 		
 		# Save
 		try {
-			$Media = $this->_saveMedia();
-			if ( !$Media->id ) {
-				# No Media
-				return $this->_redirect('media-new');
+			$File = $this->_saveFile();
+			if ( !$File->id ) {
+				# No File
+				return $this->_redirect('media-file-new');
 			}
-			elseif ( !delve('media.id') && $Media->id ) {
-				# New Media
-				return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-edit', 'media' => $Media->code), 'back', true);
+			elseif ( !delve('file.id') && $File->id ) {
+				# New File
+				return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-file-edit', 'file' => $File->code), 'back', true);
 			}
 		}
 		catch ( Exception $Exception ) {
@@ -561,20 +561,20 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Apply
-		$this->view->Media = $Media;
+		$this->view->File = $File;
 		
 		# Render
-		$this->render('media/media-edit');
+		$this->render('midia/file-edit');
 		
 		# Done
 		return true;
 	}
 	
-	public function mediaListAction ( ) {
+	public function mediaFileListAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back.main', 'media-list', true);
-		$MediaList = array();
+		$App->activateNavigationItem('back.main', 'media-file-list', true);
+		$FileList = array();
 		
 		# Search
 		$search = $App->fetchSearch();
@@ -583,9 +583,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Save
 		try {
-			$Media = $this->_saveMedia();
-			if ( is_object($Media) )
-			$this->view->Media = $Media->toArray();
+			$File = $this->_saveFile();
+			if ( is_object($File) )
+			$this->view->File = $File->toArray();
 		}
 		catch ( Exception $Exception ) {
 			# Log the Event and Continue
@@ -594,23 +594,23 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Prepare
-		$ListQuery = Doctrine_Query::create()->select('m.*, ma.*')->from('Media m, m.Author')->orderBy('m.code ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		$ListQuery = Doctrine_Query::create()->select('m.*, ma.*')->from('File m, m.Author')->orderBy('m.code ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 		
 		# Handle
 		if ( $searchQuery ) {
 			// Search
-			$Query = Doctrine::getTable('Media')->search($searchQuery, $ListQuery);
-			$MediaList = $Query->execute();
+			$Query = Doctrine::getTable('File')->search($searchQuery, $ListQuery);
+			$FileList = $Query->execute();
 		} else {
 			// No Search
-			$MediaList = $ListQuery->execute();
+			$FileList = $ListQuery->execute();
 		}
 		
 		# Apply
-		$this->view->MediaList = $MediaList;
+		$this->view->FileList = $FileList;
 		
 		# Render
-		$this->render('media/media-list');
+		$this->render('media/file-list');
 		
 		# Done
 		return true;
@@ -855,7 +855,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Fetch
 		$Content = $App->fetchItem('Content', $record, $Query, $create);
 		
-		# Return Media
+		# Return File
 		return $Content;
 	}
 	
@@ -875,29 +875,29 @@ class Balcms_BackController extends Zend_Controller_Action {
 	# ========================
 	# MEDIA: GENERIC
 	
-	protected function _getMediaQuery ( ) {
+	protected function _getFileQuery ( ) {
 		# Prepare
-		$Query = Doctrine_Query::create()->select('i.*, ia.*')->from('Media i, i.Author ma');
+		$Query = Doctrine_Query::create()->select('i.*, ia.*')->from('File i, i.Author ma');
 		
 		# Return Query
 		return $Query;
 	}
 	
-	protected function _getMedia ( $record = null, $Query = null, $create = true ) {
+	protected function _getFile ( $record = null, $Query = null, $create = true ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
 		# Prepare Fetch
-		if ( !$Query ) $Query = $this->_getMediaQuery();
+		if ( !$Query ) $Query = $this->_getFileQuery();
 		
 		# Fetch
-		$Media = $App->fetchItem('Media', $record, $Query, $create);
+		$File = $App->fetchItem('File', $record, $Query, $create);
 		
-		# Return Media
-		return $Media;
+		# Return File
+		return $File;
 	}
 	
-	protected function _saveMedia ( $record = null, $Query = null, $keep = null, $remove = null, $empty = null ) {
+	protected function _saveFile ( $record = null, $Query = null, $keep = null, $remove = null, $empty = null ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
@@ -905,10 +905,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 		if ( !$keep ) $keep = array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height');
 		
 		# Fetch
-		$Media = $App->saveItem('Media', $record, $Query, $keep, $remove, $empty);
+		$File = $App->saveItem('File', $record, $Query, $keep, $remove, $empty);
 		
-		# Return Media
-		return $Media;
+		# Return File
+		return $File;
 	}
 	
 	# ========================
@@ -919,10 +919,10 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		
 		# Fetch
-		$Media = $App->fetchItem('User', $record, $Query, $create);
+		$File = $App->fetchItem('User', $record, $Query, $create);
 		
-		# Return Media
-		return $Media;
+		# Return File
+		return $File;
 	}
 	
 	protected function _saveUser ( $record = null, $Query = null, $keep = null, $remove = null, $empty = null ) {
