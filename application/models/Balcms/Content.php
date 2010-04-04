@@ -26,23 +26,12 @@ class Balcms_Content extends Base_Balcms_Content
 	}
 	
 	/**
-	 * Set the User's Avatar
+	 * Set a File Attachment
 	 * @return string
 	 */
-	protected function setMediaAttachment ( $what, $value ) {
-		# Prepare
-		$Media = Media::fetch($value);
-		
-		# Apply Media
-		if ( $Media === null || $Media ) {
-			if ( isset($this->$what) ) {
-				$this->$what->delete();
-			}
-			$this->_set($what, $Media ? $Media : null, false);
-		}
-		
-		# Done
-		return true;
+	protected function setFileAttachment ( $what, $file ) {
+		$value = Bal_Doctrine_Core::presetFileAttachment($this,$what,$file);
+		return $value === false ? null : $this->_set('Avatar',$value,false);
 	}
 	
 	/**
@@ -50,7 +39,7 @@ class Balcms_Content extends Base_Balcms_Content
 	 * @return string
 	 */
 	public function setAvatar ( $value ) {
-		return $this->setMediaAttachment('Avatar', $value);
+		return $this->setFileAttachment('Avatar',$value);
 	}
 	
 	/**

@@ -86,7 +86,7 @@ Balcms_Content:
             unsigned: true
     relations:
         Avatar:
-            class: Media
+            class: File
             local: Avatar_id
             foreign: id
             foreignAlias: Contents
