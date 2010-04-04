@@ -902,7 +902,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		
 		# Prepare Fetch
-		if ( !$keep ) $keep = array('code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height');
+		if ( !$keep ) $keep = array('file', 'code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height');
 		
 		# Fetch
 		$File = $App->saveItem('File', $record, $Query, $keep, $remove, $empty);

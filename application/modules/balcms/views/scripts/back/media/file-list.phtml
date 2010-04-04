@@ -109,7 +109,7 @@
 					$_File_Author = delve($_File,'Author');
 					$_File_Author_displayname = delve($_File_Author,'displayname');
 					$_File_url = $this->url()->file($_File)->toString();
-					$_File_url_delete = $this->url()->action('file-delete')->item($_File)->toString();
+					$_File_url_delete = $this->url()->action('media-file-delete')->item($_File)->toString();
 					?>
             	<tr id="file-<?=$_File_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTreeArray')->next()?>">
 					<td class="column-icon media-icon">

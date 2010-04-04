@@ -120,10 +120,10 @@
 			"route": "back",
 			"class": "menu-top-last",
 			"pages": [{
-				"id": "back-main-media-list",
+				"id": "back-main-media-file-list",
 				"privilege": "permission-media",
-				"label": "Media",
-				"action": "media-list",
+				"label": "Files",
+				"action": "media-file-list",
 				"route": "back",
 				"class": "parent"
 			}]
