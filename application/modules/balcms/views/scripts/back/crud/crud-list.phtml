@@ -118,8 +118,18 @@
 							$_value = delve($_Item,$ItemListField);
 							if ( !$_value )
 								$_value = $this->locale()->translate('empty');
-							elseif ( is_array($_value) || is_object($_value) )
-								$_value = $this->app()->getItemLabel($_value);
+							elseif ( is_array($_value) || is_object($_value) ) {
+								$_label = $this->app()->getItemLabel($_value);
+								if ( empty($_label) && is_traversable($_value) && $this->app()->getItemLabel($_value[0]) ) {
+									$_labels = array();
+									foreach ( $_value as $__value ) {
+										$_labels[] = $this->app()->getItemLabel($__value);
+									}
+									$_value = implode(', ', $_labels);
+								} else {
+									$_value = $_label;
+								}
+							}
 							echo $_value;
 						?>
                     </th>
