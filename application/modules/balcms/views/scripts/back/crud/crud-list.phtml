@@ -6,9 +6,9 @@
 	
 	# Users
 	$ItemList = delve($this,'ItemList');
-	$ItemListColumns = delve($this,'ItemListColumns');
-	$ItemListColumnsExclusive = $ItemListColumns;
-	$ItemListLabelColumn = array_shift($ItemListColumnsExclusive);
+	$ItemListFields = delve($this,'ItemListFields');
+	$ItemListFieldsExclusive = $ItemListFields;
+	$ItemListLabelField = array_shift($ItemListFieldsExclusive);
 	
 	# Type
 	$type = delve($this,'type','user');
@@ -52,9 +52,9 @@
                     <th scope="col" id="title" class="manage-column column-title" style="">
                         <?=$Type?>
                     </th>
-					<? foreach ( $ItemListColumnsExclusive as $ItemListColumn ) : ?>
+					<? foreach ( $ItemListFieldsExclusive as $ItemListField ) : ?>
                     <th scope="col" id="title" class="manage-column" style="">
-                        <?=$ItemListColumn?>
+                        <?=$ItemListField?>
                     </th>
 					<? endforeach; ?>
                 </tr>
@@ -68,9 +68,9 @@
                     <th scope="col" id="title" class="manage-column column-title" style="">
                         <?=$Type?>
                     </th>
-					<? foreach ( $ItemListColumnsExclusive as $ItemListColumn ) : ?>
+					<? foreach ( $ItemListFieldsExclusive as $ItemListField ) : ?>
                     <th scope="col" id="title" class="manage-column" style="">
-                        <?=$ItemListColumn?>
+                        <?=$ItemListField?>
                     </th>
 					<? endforeach; ?>
                 </tr>
@@ -80,7 +80,7 @@
             	<? foreach ( $ItemList as $_Item ): ?>
             	<?
 					$_Item_id = delve($_Item,'id');
-					$_Item_label = delve($_Item,$ItemListLabelColumn);
+					$_Item_label = delve($_Item,$ItemListLabelField);
             		$_Item_url = $this->url()->action('crud-view')->param('type',$type)->item($_Item)->toString();
             		$_Item_url_edit = $this->url()->action('crud-edit')->param('type',$type)->item($_Item)->toString();
             		$_Item_url_delete = $this->url()->action('crud-delete')->param('type',$type)->item($_Item)->toString();
@@ -112,10 +112,10 @@
 							?>
 						</div>
                     </td>
-					<? foreach ( $ItemListColumnsExclusive as $ItemListColumn ) : ?>
+					<? foreach ( $ItemListFieldsExclusive as $ItemListField ) : ?>
                     <th scope="col" id="title" class="manage-column" style="">
                         <?
-							$_value = delve($_Item,$ItemListColumn);
+							$_value = delve($_Item,$ItemListField);
 							if ( !$_value )
 								$_value = $this->locale()->translate('empty');
 							elseif ( is_array($_value) || is_object($_value) )

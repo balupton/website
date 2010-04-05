@@ -183,23 +183,23 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$searchQuery = delve($search,'query');
 		$this->view->search = $search;
 		
-		# Columns
-		$columns = Bal_Form_Doctrine::fetchListingColumns($tableName);
-		$labelColumnName = $columns[0];
+		# Fields
+		$fields = Bal_Form_Doctrine::fetchListingFields($tableName);
+		$labelFieldName = $fields[0];
 		
 		# Prepare
 		$ListQuery = $Table->createQuery()
 			->select('*')
-			->orderBy($labelColumnName.' ASC')
+			->orderBy($labelFieldName.' ASC')
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY)
 			;
 		
-		# Add Column Relations to Query
-		foreach ( $columns as $column ) {
-			if ( $Table->hasRelation($column) ) {
+		# Add Field Relations to Query
+		foreach ( $fields as $field ) {
+			if ( $Table->hasRelation($field) ) {
 				$ListQuery
-					->addSelect('c'.$column.'.*')
-					->addFrom($tableName.'.'.$column.' c'.$column)
+					->addSelect('c'.$field.'.*')
+					->addFrom($tableName.'.'.$field.' c'.$field)
 					;
 			}
 		}
@@ -210,7 +210,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			if ( method_exists($Table,'search') ) {
 				$Query = $Table->search($searchQuery, $ListQuery);
 			} else {
-				$Query = $ListQuery->andWhere($labelColumnName.' LIKE ?', '%'.$searchQuery.'%');
+				$Query = $ListQuery->andWhere($labelFieldName.' LIKE ?', '%'.$searchQuery.'%');
 			}
 			$ItemList = $Query->execute();
 		} else {
@@ -226,7 +226,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Apply
 		$this->view->ItemListEditable = $ItemListEditable;
 		$this->view->ItemListDeletable = $ItemListDeletable;
-		$this->view->ItemListColumns = $columns;
+		$this->view->ItemListFields = $fields;
 		$this->view->ItemList = $ItemList;
 		$this->view->type = $type;
 		
@@ -392,7 +392,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Prepare Fetch
 		$Table = Doctrine::getTable('User');
-		$columns = $Table->getColumnNames();
+		$fields = $Table->getFieldNames();
 		
 		# Query
 		$ListQuery = Doctrine_Query::create()
@@ -406,7 +406,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Users = $ListQuery->execute();
 		
 		# Create csv
-		$csv = prepare_csv_content($columns, $Users);
+		$csv = prepare_csv_content($fields, $Users);
 		$filename = 'users.csv';
 		
 		# Download file
