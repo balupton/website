@@ -455,4 +455,68 @@ class Balcms_Content extends Base_Balcms_Content
 		return method_exists(get_parent_class($this),$parent_method = __FUNCTION__) ? parent::$parent_method($Event) : $result;
 	}
 	
+	# ========================
+	# CRUD HELPERS
+	
+	
+	/**
+	 * Fetch all the records for public access
+	 * @version 1.0, April 12, 2010
+	 * @return mixed
+	 */
+	public static function fetch ( array $params = array() ) {
+		# Prepare
+		Bal_Doctrine_Core::prepareFetchParams($params,array('fetch','Root','Parent','User','Author'));
+		extract($params);
+		
+		# Query
+		$Query = Doctrine_Query::create();
+		
+		# Handle
+		if ( $fetch === 'list' ) {
+			$Query
+				->select('Content.id, Content.title, Content.code, Content.position, Content.status, Content.updated_at, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.title, Author.id, Author.code, Author.displayname, Avatar.url')
+				->from('Content, Content.Route Route, Content.Parent Parent,  Content.ContentTags ContentTag, Content.Author Author, Content.Avatar Avatar')
+				->orderBy('Content.position ASC, Content.id ASC')
+				;
+		}
+		elseif ( $fetch === 'simplelist' ) {
+			$Query
+				->select('Content.id, Content.title, Content.code, Content.position, Content.status, Parent.id, Parent.code, Route.path')
+				->from('Content, Content.Route Route, Content.Parent Parent')
+				->orderBy('Content.position ASC, Content.id ASC')
+				;
+		}
+		else {
+			$Query
+				->select('Content.*, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.title, Author.id, Author.code, Author.displayname, Avatar.url')
+				->from('Content, Content.Route Route, Content.Parent Parent,  Content.ContentTags ContentTag, Content.Author Author, Content.Avatar Avatar')
+				->orderBy('Content.position ASC, Content.id ASC')
+				;
+		}
+		
+		# Criteria
+		if ( $User ) {
+			$User = Bal_Doctrine_Core::resolveId($User);
+			$Query->andWhere('Author.id = ?', $User);
+		}
+		if ( $Author ) {
+			$Author = Bal_Doctrine_Core::resolveId($Author);
+			$Query->andWhere('Author.id = ?', $Author);
+		}
+		if ( $Parent ) {
+			$Parent = Bal_Doctrine_Core::resolveId($Parent);
+			$Query->andWhere('Parent.id = ?', $Parent);
+		}
+		if ( $Root ) {
+			$Query->andWhere('NOT EXISTS (SELECT ContentOrphan.id FROM Content ContentOrphan WHERE ContentOrphan.id = Content.Parent_id)');
+		}
+		
+		# Fetch
+		$result = Bal_Doctrine_Core::prepareFetchResult($params,$Query);
+		
+		# Done
+		return $result;
+	}
+	
 }
