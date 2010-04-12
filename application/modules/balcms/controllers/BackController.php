@@ -143,7 +143,20 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function dashboardAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back.main', 'dashboard-dashboard', true);
+		
+		# Handle Menu
+		try {
+			# Also checks permission
+			$App->activateNavigationItem('back.main', 'dashboard-dashboard', true);
+		}
+		catch ( Exception $Exception ) {
+			# Log the Event and Continue
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+			
+			# Logout
+			$App->logout(true);
+		}
 		
 		# Render
 		$this->render('index/dashboard');
@@ -168,11 +181,12 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Request = $this->getRequest();
 		$ItemList = array();
 		
-		# Prepare Type
+		# Prepare
 		$type = $Request->getParam('type');
 		$typeLower = strtolower($type);
 		$Table = Bal_Doctrine_Core::getTable($type);
-		$tableName = Bal_Doctrine_Core::getTableName($type);
+		$tableComponentName = Bal_Doctrine_Core::getTableComponentName($type);
+		$fields = Bal_Doctrine_Core::fetchListingFields($Table);
 		
 		# Prepare Menu
 		$App->activateNavigationItem('back.main', 'crud-list-'.$typeLower, true);
@@ -191,11 +205,11 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Criteria: Search Query
 		if ( $searchQuery ) {
-			$criteria['search'] => $searchQuery;
+			$criteria['search'] = $searchQuery;
 		}
 		
 		# Fetch
-		$ItemList = $tableName::fetch($criteria);
+		$ItemList = $tableComponentName::fetch($criteria);
 		
 		# Permissions
 		$ItemListEditable = $App->hasNavigationItem('back.main', 'crud-new-'.$typeLower, true);
@@ -228,20 +242,20 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$type = $Request->getParam('type');
 		$typeLower = strtolower($type);
 		$Table = Bal_Doctrine_Core::getTable($type);
-		$tableName = Bal_Doctrine_Core::getTableName($type);
+		$tableComponentName = Bal_Doctrine_Core::getTableComponentName($type);
 		
 		# --------------------------
 		
 		# Fetch
-		$Item = Bal_Doctrine_Core::saveItem($type);
+		$Item = Bal_Doctrine_Core::saveItem($Table);
 		
 		# Menu
-		$App->activateNavigationItem('back.main', 'crud-'.($Item->id?'list':'new').'-'.$typeLower, true);
+		$App->activateNavigationItem('back.main', 'crud-'.(delve($Item,'id')?'list':'new').'-'.$typeLower, true);
 		
 		# --------------------------
 		
 		# Form
-		$Form = Bal_Form_Doctrine::fetchForm($tableName,$Item);
+		$Form = Bal_Form_Doctrine::fetchForm($tableComponentName,$Item);
 		$Form
 			->setAction('')
 			->setMethod('post')
@@ -344,7 +358,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Apply
-		$User = $this->_saveUser($User, null, null, array('password'));
+		$User = $this->_saveUser($User, null, array('remove'=>array('password')));
 		$App->activateNavigationItem('back.main', 'user-'.($User->id ? 'list' : 'new'), true);
 		
 		# Form
@@ -381,14 +395,14 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# --------------------------
 		
 		# Fields to Display in CSV
-		$fields = rstrip('User.'.implode(', User.',$Table->getFieldNames(), 'User.');
+		$fields = rstrip('User.'.implode(', User.',$Table->getFieldNames()), 'User.');
 		
 		# Prepare Criteria
 		$criteria = array(
 			'select' => $fields,
 			'Identity' => $Identity,
 			'hydrationMode' => Doctrine::HYDRATE_ARRAY
-		)
+		);
 		
 		# Fetch
 		$Users = User::fetch($criteria);
@@ -486,7 +500,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$criteria = array(
 			'fetch' => 'Subscribers',
 			'hydrationMode' => Doctrine::HYDRATE_ARRAY
-		)
+		);
 		
 		# Criteria: Search
 		if ( $searchQuery ) {
@@ -722,7 +736,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Save/Load
 		try {
 			$Content = $this->_saveContent();
-			if ( $Content->id ) {
+			if ( delve($Content,'id') ) {
 				return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-edit', 'content' => $Content->code), 'back', true);
 			}
 		}
@@ -781,7 +795,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$criteria = array(
 			'fetch' => 'listing',
 			'hydrationMode' => Doctrine::HYDRATE_ARRAY
-		)
+		);
 		
 		# Criteria
 		if ( $searchQuery ) {
@@ -791,24 +805,22 @@ class Balcms_BackController extends Zend_Controller_Action {
 			 # No Search
 			
 			# Fetch Current
-			$Content = $this->_getContent(null, null, false);
+			$Content = $this->_getContent(null, array('create'=>false));
 			
-			# Fetch Crumbs
-			if ( $Content ) {
+			# Handle Current
+			if ( delve($Content,'id') ) {
 				// We have a content as a root
 				$ContentArray = $Content->toArray();
 				$ContentCrumbs = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, true);
-			}
-			
-			# Fetch Children
-			if ( $Content ) {
+				
 				// Children
-				$criteria['Parent'] = array('Parent' => $Content);
-			} else {
+				$criteria['Parent'] = $Content;
+			}
+			else {
 				// Roots
 				if ( $type === 'content' ) {
 					$criteria['Root'] = true;
-				}
+				} // or all of type
 			}
 		}
 		
@@ -876,25 +888,22 @@ class Balcms_BackController extends Zend_Controller_Action {
 	# ========================
 	# CONTENT: GENERIC
 	
-	protected function _getContentQuery ( ) {
-		# Prepare
-		$Query = Doctrine_Query::create()->select('i.*, ir.*, it.*, ia.*, ip.*, im.*')->from('Content i, i.Route ir, i.ContentTags it, i.Author ia, i.Parent ip, i.Avatar im');
-		
-		# Return Query
-		return $Query;
-	}
-	
-	protected function _getContent ( $record = null, $Query = null, $create = true ) {
+	protected function _getContent ( $record = null, array $options = array() ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# Options
+		array_keys_ensure($options, array('create'));
+		
 		# --------------------------
 		
-		# Prepare Fetch
-		if ( !$Query ) $Query = $this->_getContentQuery();
+		# Create
+		if ( $options['create'] === null ) {
+			$options['create'] = true;
+		}
 		
 		# Fetch
-		$Content = $App->fetchItem('Content', $record, $Query, $create);
+		$Content = Bal_Doctrine_Core::fetchItem('Content', $record, $options);
 		
 		# --------------------------
 		
@@ -902,15 +911,27 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return $Content;
 	}
 	
-	protected function _saveContent ( $record = null, $Query = null, $keep = null, $remove = null, $empty = null ) {
+	protected function _saveContent ( $record = null, array $options = array() ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# Options
+		array_keys_ensure($options, array('create','keep'));
+		
 		# --------------------------
 		
-		# Prepare Fetch
-		if ( !$keep ) $keep = array('code', 'content', 'description', 'Parent', 'status', 'tags', 'title', 'type', 'Avatar');
-		$Content = $App->saveItem('Content', $record, $Query, $keep, $remove, $empty);
+		# Create
+		if ( $options['create'] === null ) {
+			$options['create'] = true;
+		}
+		
+		# Keep
+		if ( $options['keep'] === null ) {
+			$options['keep'] = array('code', 'content', 'description', 'Parent', 'status', 'tags', 'title', 'type', 'Avatar');
+		}
+		
+		# Save
+		$Content = Bal_Doctrine_Core::saveItem('Content', $record, $options);
 		
 		# --------------------------
 		
@@ -920,27 +941,24 @@ class Balcms_BackController extends Zend_Controller_Action {
 	
 	
 	# ========================
-	# MEDIA: GENERIC
+	# FILE: GENERIC
 	
-	protected function _getFileQuery ( ) {
-		# Prepare
-		$Query = Doctrine_Query::create()->select('i.*, ia.*')->from('File i, i.Author ma');
-		
-		# Return Query
-		return $Query;
-	}
-	
-	protected function _getFile ( $record = null, $Query = null, $create = true ) {
+	protected function _getFile ( $record = null, array $options = array() ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# Options
+		array_keys_ensure($options, array('create'));
+		
 		# --------------------------
 		
-		# Prepare Fetch
-		if ( !$Query ) $Query = $this->_getFileQuery();
+		# Create
+		if ( $options['create'] === null ) {
+			$options['create'] = true;
+		}
 		
 		# Fetch
-		$File = $App->fetchItem('File', $record, $Query, $create);
+		$File = Bal_Doctrine_Core::fetchItem('File', $record, $options);
 		
 		# --------------------------
 		
@@ -948,17 +966,27 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return $File;
 	}
 	
-	protected function _saveFile ( $record = null, $Query = null, $keep = null, $remove = null, $empty = null ) {
+	protected function _saveFile ( $record = null, array $options = array() ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# Options
+		array_keys_ensure($options, array('create','keep'));
+		
 		# --------------------------
 		
-		# Prepare Fetch
-		if ( !$keep ) $keep = array('file', 'code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height');
+		# Create
+		if ( $options['create'] === null ) {
+			$options['create'] = true;
+		}
 		
-		# Fetch
-		$File = $App->saveItem('File', $record, $Query, $keep, $remove, $empty);
+		# Keep
+		if ( $options['keep'] === null ) {
+			$options['keep'] = array('file', 'code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height');
+		}
+		
+		# Save
+		$File = Bal_Doctrine_Core::saveItem('File', $record, $options);
 		
 		# --------------------------
 		
@@ -969,14 +997,22 @@ class Balcms_BackController extends Zend_Controller_Action {
 	# ========================
 	# USER: GENERIC
 	
-	protected function _getUser ( $record = null, $Query = null, $create = true ) {
+	protected function _getUser ( $record = null, array $options = array() ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# Options
+		array_keys_ensure($options, array('create'));
+		
 		# --------------------------
 		
+		# Create
+		if ( $options['create'] === null ) {
+			$options['create'] = true;
+		}
+		
 		# Fetch
-		$File = $App->fetchItem('User', $record, $Query, $create);
+		$File = Bal_Doctrine_Core::fetchItem('User', $record, $options);
 		
 		# --------------------------
 		
@@ -984,17 +1020,27 @@ class Balcms_BackController extends Zend_Controller_Action {
 		return $File;
 	}
 	
-	protected function _saveUser ( $record = null, $Query = null, $keep = null, $remove = null, $empty = null ) {
+	protected function _saveUser ( $record = null, array $options = array() ) {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# Options
+		array_keys_ensure($options, array('create','remove'));
+		
 		# --------------------------
 		
-		# Prepare Fetch
-		if ( !$remove ) $remove = array('permissions', 'roles', 'Permissions', 'Roles');
+		# Create
+		if ( $options['create'] === null ) {
+			$options['create'] = true;
+		}
 		
-		# Fetch
-		$User = $App->saveItem('User', $record, $Query, $keep, $remove, $empty);
+		# Remove
+		if ( $options['remove'] === null ) {
+			$options['remove'] = array('permissions', 'roles', 'Permissions', 'Roles');
+		}
+		
+		# Save
+		$User = Bal_Doctrine_Core::saveItem('User', $record, $options);
 		
 		# --------------------------
 		
