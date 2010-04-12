@@ -171,65 +171,45 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare Type
 		$type = $Request->getParam('type');
 		$typeLower = strtolower($type);
-		$Table = Bal_Form_Doctrine::getTable($type);
-		$tableName = Bal_Form_Doctrine::getTableName($type);
+		$Table = Bal_Doctrine_Core::getTable($type);
+		$tableName = Bal_Doctrine_Core::getTableName($type);
 		
-		# Menu
+		# Prepare Menu
 		$App->activateNavigationItem('back.main', 'crud-list-'.$typeLower, true);
 		
+		# --------------------------
 		
 		# Search
 		$search = $App->fetchSearch();
 		$searchQuery = delve($search,'query');
-		$this->view->search = $search;
 		
-		# Fields
-		$fields = Bal_Form_Doctrine::fetchListingFields($tableName);
-		$labelFieldName = $fields[0];
+		# Prepare Criteria
+		$criteria = array(
+			'relations' => true,
+			'hydrationMode' => Doctrine::HYDRATE_ARRAY
+		);
 		
-		# Prepare
-		$ListQuery = $Table->createQuery()
-			->select('*')
-			->orderBy($labelFieldName.' ASC')
-			->setHydrationMode(Doctrine::HYDRATE_ARRAY)
-			;
-		
-		# Add Field Relations to Query
-		foreach ( $fields as $field ) {
-			if ( $Table->hasRelation($field) ) {
-				$ListQuery
-					->addSelect('c'.$field.'.*')
-					->addFrom($tableName.'.'.$field.' c'.$field)
-					;
-			}
-		}
-		
-		# Handle
+		# Criteria: Search Query
 		if ( $searchQuery ) {
-			// Search
-			if ( method_exists($Table,'search') ) {
-				$Query = $Table->search($searchQuery, $ListQuery);
-			} else {
-				$Query = $ListQuery->andWhere($labelFieldName.' LIKE ?', '%'.$searchQuery.'%');
-			}
-			$ItemList = $Query->execute();
-		} else {
-			// No Search
-			$ItemList = $ListQuery->execute();
+			$criteria['search'] => $searchQuery;
 		}
+		
+		# Fetch
+		$ItemList = $tableName::fetch($criteria);
 		
 		# Permissions
 		$ItemListEditable = $App->hasNavigationItem('back.main', 'crud-new-'.$typeLower, true);
 		$ItemListDeletable = true;
 		
+		# --------------------------
 		
 		# Apply
+		$this->view->search = $search;
 		$this->view->ItemListEditable = $ItemListEditable;
 		$this->view->ItemListDeletable = $ItemListDeletable;
 		$this->view->ItemListFields = $fields;
 		$this->view->ItemList = $ItemList;
 		$this->view->type = $type;
-		
 		
 		# Render
 		$this->render('crud/crud-list');
@@ -247,15 +227,18 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare Type
 		$type = $Request->getParam('type');
 		$typeLower = strtolower($type);
-		$Table = Bal_Form_Doctrine::getTable($type);
-		$tableName = Bal_Form_Doctrine::getTableName($type);
+		$Table = Bal_Doctrine_Core::getTable($type);
+		$tableName = Bal_Doctrine_Core::getTableName($type);
+		
+		# --------------------------
 		
 		# Fetch
-		$Item = $App->saveItem($type);
+		$Item = Bal_Doctrine_Core::saveItem($type);
 		
 		# Menu
 		$App->activateNavigationItem('back.main', 'crud-'.($Item->id?'list':'new').'-'.$typeLower, true);
 		
+		# --------------------------
 		
 		# Form
 		$Form = Bal_Form_Doctrine::fetchForm($tableName,$Item);
@@ -269,6 +252,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$this->view->type = $type;
 		$this->view->Form = $Form;
 		
+		# --------------------------
 		
 		# Render
 		$this->render('crud/crud-edit');
@@ -312,30 +296,30 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$Identity = $App->getUser();
 		$UserList = array();
 		
+		# --------------------------
+		
 		# Search
 		$search = $App->fetchSearch();
 		$searchQuery = delve($search,'query');
-		$this->view->search = $search;
 		
-		# Prepare
-		$ListQuery = Doctrine_Query::create()
-			->select('u.id, u.displayname, u.username, u.created_at, u.email, u.type, u.status, u.created_at, ua.*')
-			->from('User u, u.Avatar ua')
-			->where('u.level <= ?', $Identity->level)
-			->orderBy('u.username ASC')
-			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		# Prepare Criteria
+		$criteria = array(
+			'Identity' => $Identity,
+			'hydrationMode' => Doctrine::HYDRATE_ARRAY
+		);
 		
-		# Handle
+		# Criteria: SearchQuery
 		if ( $searchQuery ) {
-			// Search
-			$Query = Doctrine::getTable('User')->search($searchQuery, $ListQuery);
-			$UserList = $Query->execute();
-		} else {
-			// No Search
-			$UserList = $ListQuery->execute();
+			$criteria['search'] = $searchQuery;
 		}
 		
+		# Fetch
+		$UserList = User::fetch($criteria);
+		
+		# --------------------------
+		
 		# Apply
+		$this->view->search = $search;
 		$this->view->UserList = $UserList;
 		
 		# Render
@@ -350,6 +334,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$Identity = $App->getUser();
 		$type = 'user';
+		
+		# --------------------------
 		
 		# Fetch
 		$User = $this->_getUser();
@@ -367,6 +353,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 			->setAction('')
 			->setMethod('post')
 			->addElement('submit', '__submit__', array('class'=>'button-primary','label'=>'Save Changes'));
+		
+		# --------------------------
 		
 		# Apply
 		$this->view->User = $User;
@@ -390,26 +378,28 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$Identity = $App->getUser();
 		
-		# Prepare Fetch
-		$Table = Doctrine::getTable('User');
-		$fields = $Table->getFieldNames();
+		# --------------------------
 		
-		# Query
-		$ListQuery = Doctrine_Query::create()
-			->select('u.*')
-			->from('User u')
-			->where('u.level <= ?', $Identity->level)
-			->orderBy('u.username ASC')
-			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
-			
+		# Fields to Display in CSV
+		$fields = rstrip('User.'.implode(', User.',$Table->getFieldNames(), 'User.');
+		
+		# Prepare Criteria
+		$criteria = array(
+			'select' => $fields,
+			'Identity' => $Identity,
+			'hydrationMode' => Doctrine::HYDRATE_ARRAY
+		)
+		
 		# Fetch
-		$Users = $ListQuery->execute();
+		$Users = User::fetch($criteria);
 		
-		# Create csv
+		# Create CSV
 		$csv = prepare_csv_content($fields, $Users);
 		$filename = 'users.csv';
 		
-		# Download file
+		# --------------------------
+		
+		# Download CSV
 		become_file_download($csv, null, null, $filename);
 		die;
 	}
@@ -419,6 +409,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$Identity = $App->getUser();
 		
+		# --------------------------
+		
 		# Fetch
 		$User = $this->_getUser();
 		if ( $User->level > $Identity->level ) {
@@ -427,6 +419,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Delete
 		$App->deleteItem('User', $User);
+		
+		# --------------------------
 		
 		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action'=>'user-list'), 'back', true);
@@ -440,6 +434,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		$Identity = $App->getUser();
+		
+		# --------------------------
 		
 		# Login
 		try {
@@ -458,6 +454,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Exceptor = new Bal_Exceptor($Exception);
 			$Exceptor->log();
 		}
+		
+		# --------------------------
 		
 		# Redirect
 		return $this->_forward('user-list');
@@ -478,33 +476,30 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App->activateNavigationItem('back.main', 'subscriber-list', true);
 		$SubscriberList = array();
 		
+		# --------------------------
+		
 		# Search
 		$search = $App->fetchSearch();
 		$searchQuery = delve($search,'query');
-		$this->view->search = $search;
 		
-		# Prepare
-		$ListQuery = Doctrine_Query::create()
-			->select('s.id, s.email, s.displayname, s.subscriptions, st.name, s.status, s.created_at, COUNT(sMessagePublished.id) as subscription_published_count')
-			->from('User s, s.SubscriptionTags st')
-			->where('s.status = ?', 'published')
-			->andWhere('s.subscriptions != ?', '')
-			->orderBy('s.email ASC')
-			->leftJoin('s.ReceivedMessages sMessagePublished WITH sMessagePublished.template = ? AND sMessagePublished.status = ?', array('content-subscription','published'))
-			->groupBy('s.id')
-			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		# Prepare Criteria
+		$criteria = array(
+			'fetch' => 'Subscribers',
+			'hydrationMode' => Doctrine::HYDRATE_ARRAY
+		)
 		
-		# Handle
+		# Criteria: Search
 		if ( $searchQuery ) {
-			// Search
-			$Query = Doctrine::getTable('Subscriber')->search($searchQuery, $ListQuery);
-			$SubscriberList = $Query->execute();
-		} else {
-			// No Search
-			$SubscriberList = $ListQuery->execute();
+			$criteria['search'] = $searchQuery;
 		}
 		
+		# Fetch
+		$SubscriberList = User::fetch($criteria);
+		
+		# --------------------------
+		
 		# Apply
+		$this->view->search = $search;
 		$this->view->SubscriberList = $SubscriberList;
 		
 		# Render
@@ -539,6 +534,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$App->activateNavigationItem('back.main', 'file-list', true);
 		
+		# --------------------------
+		
 		# Prepare
 		$File = array();
 		
@@ -560,6 +557,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Exceptor->log();
 		}
 		
+		# --------------------------
+		
 		# Apply
 		$this->view->File = $File;
 		
@@ -576,10 +575,11 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App->activateNavigationItem('back.main', 'media-file-list', true);
 		$FileList = array();
 		
+		# --------------------------
+		
 		# Search
 		$search = $App->fetchSearch();
 		$searchQuery = delve($search,'query');
-		$this->view->search = $search;
 		
 		# Save
 		try {
@@ -593,20 +593,26 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Exceptor->log();
 		}
 		
-		# Prepare
-		$ListQuery = Doctrine_Query::create()->select('m.*, ma.*')->from('File m, m.Author')->orderBy('m.code ASC')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+		# --------------------------
 		
-		# Handle
+		# Criteria
+		$criteria = array(
+			'fetch' => 'list',
+			'hydrationMode' => Doctrine::HYDRATE_ARRAY
+		);
+		
+		# Criteria: Search
 		if ( $searchQuery ) {
-			// Search
-			$Query = Doctrine::getTable('File')->search($searchQuery, $ListQuery);
-			$FileList = $Query->execute();
-		} else {
-			// No Search
-			$FileList = $ListQuery->execute();
+			$criteria['search'] = $searchQuery;
 		}
 		
+		# Fetch
+		$FileList = File::fetch($criteria);
+		
+		# --------------------------
+		
 		# Apply
+		$this->view->search = $search;
 		$this->view->FileList = $FileList;
 		
 		# Render
@@ -629,21 +635,38 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# --------------------------
+		
 		# Delete
 		$Content = $App->deleteItem('Content');
 		$content = delve($Content,'Parent.code');
+		
+		# --------------------------
 		
 		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action'=>'content-list','content'=>$content), 'back', true);
 	}
 	
-	public function getContentList ( ) {
+	public function getContentSimpleList ( ) {
+		# Prepare
+		
+		# --------------------------
+		
+		# Criteria
+		$criteria = array(
+			'fetch' => 'simplelist',
+			'hydrationMode' => Doctrine::HYDRATE_ARRAY
+		);
+		
 		# Fetch
-		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.id, c.Parent_id, c.position, cr.path')->from('Content c, c.Route cr')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
-		$ContentList = $ContentListQuery->execute();
+		$ContentList = Content::fetch($criteria);
+		
+		# Format as Tree
 		$ContentList = array_tree_flat($ContentList, 'id', 'Parent_id', 'level', 'position');
 		
-		# Done
+		# --------------------------
+		
+		# Return ContentList
 		return $ContentList;
 	}
 
@@ -651,6 +674,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		$Content = $ContentCrumbs = array();
+		
+		# --------------------------
 		
 		# Save
 		$Content = $this->_saveContent();
@@ -667,7 +692,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$ContentCrumbs[] = $ContentArray;
 		
 		# Fetch content for use in dropdown
-		$ContentList = $this->getContentList();
+		$ContentList = $this->getContentSimpleList();
+		
+		# --------------------------
 		
 		# Apply
 		$this->view->type = $type;
@@ -690,6 +717,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App->activateNavigationItem('back.main', $type.'-new', true);
 		$Content = $ContentCrumbs = array();
 		
+		# --------------------------
+		
 		# Save/Load
 		try {
 			$Content = $this->_saveContent();
@@ -703,6 +732,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Exceptor->log();
 		}
 		
+		# --------------------------
+		
 		# Prepare New Content
 		$Content->published_at = doctrine_timestamp();
 		if ( $type === 'event' ) {
@@ -715,7 +746,9 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$ContentCrumbs[] = $ContentArray;
 		
 		# Fetch content for use in dropdown
-		$ContentList = $this->getContentList();
+		$ContentList = $this->getContentSimpleList();
+		
+		# --------------------------
 		
 		# Apply
 		$this->view->type = $type;
@@ -738,61 +771,63 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$App->activateNavigationItem('back.main', $type.'-list', true);
 		$Content = $ContentCrumbs = $ContentList = $ContentArray = array();
 		
+		# --------------------------
+		
 		# Search
 		$search = $App->fetchSearch();
 		$searchQuery = delve($search,'query');
-		$this->view->search = $search;
 		
-		# Param
-		$content = fetch_param('content');
+		# Prepare Criteria
+		$criteria = array(
+			'fetch' => 'listing',
+			'hydrationMode' => Doctrine::HYDRATE_ARRAY
+		)
 		
-		# Prepare
-		$ListQuery = Doctrine_Query::create()
-			->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')
-			->from('Content c, c.Route cr, c.ContentTags ct, c.Author ca, c.Parent cp, c.Avatar cm')
-			->where('c.status = ?', 'published')
-			->orderBy('c.position ASC, c.id ASC')
-			->setHydrationMode(Doctrine::HYDRATE_ARRAY);
-		if ( $type !== 'content' ) {
-			$ListQuery->andWhere('c.type = ?', $type);
-		}
-		
-		# Handle
+		# Criteria
 		if ( $searchQuery ) {
-			// Search
-			$Query = Doctrine::getTable('Content')->search($searchQuery, $ListQuery);
-			$ContentList = $Query->execute();
-		} else {
-			// No Search
+			$criteria['search'] = $searchQuery;
+		}
+		else {
+			 # No Search
+			
+			# Fetch Current
+			$Content = $this->_getContent(null, null, false);
 			
 			# Fetch Crumbs
-			$Content = $this->_getContent(null, null, false);
 			if ( $Content ) {
 				// We have a content as a root
 				$ContentArray = $Content->toArray();
 				$ContentCrumbs = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, true);
 			}
 			
-			# Fetch list
+			# Fetch Children
 			if ( $Content ) {
 				// Children
-				$ContentList = $ListQuery->andWhere('cp.id = ?', $Content->id)->execute();
+				$criteria['Parent'] = array('Parent' => $Content);
 			} else {
 				// Roots
-				if ( $type === 'content' )
-					$ContentList = $ListQuery->andWhere('NOT EXISTS (SELECT cpc.id FROM Content cpc WHERE cpc.id = c.Parent_id)')->execute();
-				else
-					$ContentList = $ListQuery->execute();
+				if ( $type === 'content' ) {
+					$criteria['Root'] = true;
+				}
 			}
-			
-			// If nothing, use us
+		}
+		
+		# Fetch
+		$ContentList = Content::fetch($criteria);
+		
+		# Postpare
+		if ( !$searchQuery ) {
+			# If nothing, use us
 			if ( !$ContentList && $Content ) {
 				$ContentList = array($Content);
 			}
 		
 		}
 		
+		# --------------------------
+		
 		# Apply
+		$this->view->search = $search;
 		$this->view->type = $type;
 		$this->view->ContentCrumbs = $ContentCrumbs;
 		$this->view->ContentList = $ContentList;
@@ -811,6 +846,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$json = json_decode($Request->getPost('json'), true);
 		$positions = $json['positions'];
 		
+		# --------------------------
+		
 		# Handle
 		try {
 			$data = array('success' => false);
@@ -828,6 +865,8 @@ class Balcms_BackController extends Zend_Controller_Action {
 			$Exceptor = new Bal_Exceptor($Exception);
 			$Exceptor->log();
 		}
+		
+		# --------------------------
 		
 		# Respond
 		$this->getHelper('json')->sendJson($data);
@@ -849,13 +888,17 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# --------------------------
+		
 		# Prepare Fetch
 		if ( !$Query ) $Query = $this->_getContentQuery();
 		
 		# Fetch
 		$Content = $App->fetchItem('Content', $record, $Query, $create);
 		
-		# Return File
+		# --------------------------
+		
+		# Return Content
 		return $Content;
 	}
 	
@@ -863,9 +906,13 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# --------------------------
+		
 		# Prepare Fetch
 		if ( !$keep ) $keep = array('code', 'content', 'description', 'Parent', 'status', 'tags', 'title', 'type', 'Avatar');
 		$Content = $App->saveItem('Content', $record, $Query, $keep, $remove, $empty);
+		
+		# --------------------------
 		
 		# Return Content
 		return $Content;
@@ -887,11 +934,15 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# --------------------------
+		
 		# Prepare Fetch
 		if ( !$Query ) $Query = $this->_getFileQuery();
 		
 		# Fetch
 		$File = $App->fetchItem('File', $record, $Query, $create);
+		
+		# --------------------------
 		
 		# Return File
 		return $File;
@@ -901,11 +952,15 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# --------------------------
+		
 		# Prepare Fetch
 		if ( !$keep ) $keep = array('file', 'code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height');
 		
 		# Fetch
 		$File = $App->saveItem('File', $record, $Query, $keep, $remove, $empty);
+		
+		# --------------------------
 		
 		# Return File
 		return $File;
@@ -918,8 +973,12 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# --------------------------
+		
 		# Fetch
 		$File = $App->fetchItem('User', $record, $Query, $create);
+		
+		# --------------------------
 		
 		# Return File
 		return $File;
@@ -929,11 +988,15 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		
+		# --------------------------
+		
 		# Prepare Fetch
 		if ( !$remove ) $remove = array('permissions', 'roles', 'Permissions', 'Roles');
 		
 		# Fetch
 		$User = $App->saveItem('User', $record, $Query, $keep, $remove, $empty);
+		
+		# --------------------------
 		
 		# Return User
 		return $User;
