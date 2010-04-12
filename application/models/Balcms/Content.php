@@ -473,26 +473,30 @@ class Balcms_Content extends Base_Balcms_Content
 		$Query = Doctrine_Query::create();
 		
 		# Handle
-		if ( $fetch === 'list' ) {
-			$Query
-				->select('Content.id, Content.title, Content.code, Content.position, Content.status, Content.updated_at, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.title, Author.id, Author.code, Author.displayname, Avatar.url')
-				->from('Content, Content.Route Route, Content.Parent Parent,  Content.ContentTags ContentTag, Content.Author Author, Content.Avatar Avatar')
-				->orderBy('Content.position ASC, Content.id ASC')
-				;
-		}
-		elseif ( $fetch === 'simplelist' ) {
-			$Query
-				->select('Content.id, Content.title, Content.code, Content.position, Content.status, Parent.id, Parent.code, Route.path')
-				->from('Content, Content.Route Route, Content.Parent Parent')
-				->orderBy('Content.position ASC, Content.id ASC')
-				;
-		}
-		else {
-			$Query
-				->select('Content.*, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.title, Author.id, Author.code, Author.displayname, Avatar.url')
-				->from('Content, Content.Route Route, Content.Parent Parent,  Content.ContentTags ContentTag, Content.Author Author, Content.Avatar Avatar')
-				->orderBy('Content.position ASC, Content.id ASC')
-				;
+		switch ( $fetch ) {
+			case 'list':
+				$Query
+					->select('Content.id, Content.title, Content.code, Content.position, Content.status, Content.updated_at, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.name, Author.id, Author.code, Author.displayname, Avatar.url')
+					->from('Content, Content.Route Route, Content.Parent Parent, Content.ContentTags ContentTag, Content.Author Author, Content.Avatar Avatar')
+					->orderBy('Content.position ASC, Content.id ASC')
+					;
+				break;
+				
+			case 'simplelist':
+				$Query
+					->select('Content.id, Content.title, Content.code, Content.position, Content.status, Parent.id, Parent.code, Route.path')
+					->from('Content, Content.Route Route, Content.Parent Parent')
+					->orderBy('Content.position ASC, Content.id ASC')
+					;
+				break;
+				
+			default:
+				$Query
+					->select('Content.*, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.name, Author.id, Author.code, Author.displayname, Avatar.url')
+					->from('Content, Content.Route Route, Content.Parent Parent, Content.ContentTags ContentTag, Content.Author Author, Content.Avatar Avatar')
+					->orderBy('Content.position ASC, Content.id ASC')
+					;
+				break;
 		}
 		
 		# Criteria
@@ -509,11 +513,12 @@ class Balcms_Content extends Base_Balcms_Content
 			$Query->andWhere('Parent.id = ?', $Parent);
 		}
 		if ( $Root ) {
-			$Query->andWhere('NOT EXISTS (SELECT ContentOrphan.id FROM Content ContentOrphan WHERE ContentOrphan.id = Content.Parent_id)');
+			$Query->andWhere('Content.Parent_id IS ?', null);
+			//NOT EXISTS (SELECT ContentOrphan.id FROM Content ContentOrphan WHERE ContentOrphan.id = Content.Parent_id)');
 		}
 		
 		# Fetch
-		$result = Bal_Doctrine_Core::prepareFetchResult($params,$Query);
+		$result = Bal_Doctrine_Core::prepareFetchResult($params,$Query,'Content');
 		
 		# Done
 		return $result;
