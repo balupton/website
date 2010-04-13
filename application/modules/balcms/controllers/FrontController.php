@@ -32,9 +32,22 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$App->applyNavigation();
 		
-		# Content
-		$ContentListQuery = Doctrine_Query::create()->select('c.title, c.tagline, c.code, c.id, c.Parent_id, c.position, cr.*')->from('Content c, c.Route cr')->where('c.status = ? AND NOT EXISTS (SELECT cp.id FROM Content cp WHERE cp.id = c.Parent_id)', 'published')->setHydrationMode(Doctrine::HYDRATE_ARRAY);
-		$ContentListArray = $ContentListQuery->execute();
+		# --------------------------
+		
+		# Criteria
+		$criteria = array(
+			'fetch' => 'simplylist',
+			'where' => array(
+				'status' => 'published'
+			),
+			'Root' => true,
+			'hydrationMode' => Doctrine::HYDRATE_ARRAY
+		);
+		
+		# Fetch
+		$ContentListArray = Content::fetch($criteria);
+		
+		# Convert
 		foreach ( $ContentListArray as &$Content ) {
 			$Content = Content::toNavItem($Content);
 		}
@@ -42,6 +55,8 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		# Navigation
 		$NavTree = array_tree_round($ContentListArray, 'id', 'parent_id', 'level', 'position', 'pages', array('id', 'route', 'order', 'uri', 'label', 'title', 'children', 'map', 'params')); // turn into tree from a flat list
 		$App->applyNavigationMenu('front.menu', new Zend_Navigation($NavTree));
+		
+		# --------------------------
 		
 		# Done
 		return true;
@@ -52,6 +67,8 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$result = false; 
 		
+		# --------------------------
+		
 		# Handle
 		while ( $result === false ) { 
 			$code = $Content->code; 
@@ -60,6 +77,8 @@ class Balcms_FrontController extends Zend_Controller_Action {
 				break; 
 			$Content = $Content->Parent; 
 		} 
+		
+		# --------------------------
 		
 		# Done
 		return $result;
@@ -92,6 +111,10 @@ class Balcms_FrontController extends Zend_Controller_Action {
 	public function searchAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
+		
+		# --------------------------
+		
+		# Search
 		$search = $App->fetchSearch();
 		$searchQuery = delve($search,'query');
 		
@@ -100,12 +123,24 @@ class Balcms_FrontController extends Zend_Controller_Action {
 			return $this->_forward('index');
 		}
 		
-		# Query
-		$ListQuery = Doctrine_Query::create()->select('c.*, cr.*, ct.*, ca.*, cp.*, cm.*')->from('Content c, c.Route cr, c.ContentTags ct, c.Author ca, c.Parent cp, c.Avatar cm')->where('c.status = ?', 'published')->orderBy('c.position ASC, c.id ASC');
+		# Criteria
+		$criteria = array(
+			'fetch' => 'list',
+			'where' => array(
+				'status' => 'published'
+			),
+			'hydrationMode' => Doctrine::HYDRATE_RECORD
+		);
 		
-		# Search
-		$ContentQuery = Doctrine::getTable('Content')->search($searchQuery, $ListQuery);
-		$ContentList = $ContentQuery->execute();
+		# Criteria: Search
+		if ( $searchQuery ) {
+			$criteria['search'] = $searchQuery;
+		}
+		
+		# Fetch
+		$ContentList = Content::fetch($criteria);
+		
+		# --------------------------
 		
 		# Apply
 		$this->view->search = $search;
@@ -125,6 +160,8 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$Request = $this->getRequest();
 		$Response = $this->getResponse();
+		
+		# --------------------------
 		
 		# Fetch
 		$email = fetch_param('subscribe.email', $Request->getParam('email'));
@@ -146,6 +183,8 @@ class Balcms_FrontController extends Zend_Controller_Action {
 			// $Subscriber->delete(); // no longer delete the subscribers as they are now users
 		}
 		
+		# --------------------------
+		
 		# Done
 		return $this->_forward('index');
 	}
@@ -156,6 +195,8 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$Request = $this->getRequest();
 		$Response = $this->getResponse();
 		$Log = Bal_App::getLog();
+		
+		# --------------------------
 		
 		# Fetch
 		$email = fetch_param('subscribe.email', $Request->getParam('email'));
@@ -178,6 +219,8 @@ class Balcms_FrontController extends Zend_Controller_Action {
 			$Exceptor->log();
 		}
 		
+		# --------------------------
+		
 		# Done
 		return $this->_forward('index');
 	}
@@ -187,6 +230,8 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$Request = $this->getRequest();
 		$Response = $this->getResponse();
+		
+		# --------------------------
 		
 		# Fetch
 		$content_id = $this->_getParam('id');
@@ -211,6 +256,8 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		
 		# Meta
 		$meta = preg_replace('/\s\s+/', ' ', strip_tags($Content->description_rendered));
+		
+		# --------------------------
 		
 		# Apply
 		$this->view->Content = $Content;
