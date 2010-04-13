@@ -476,7 +476,7 @@ class Balcms_Content extends Base_Balcms_Content
 		switch ( $fetch ) {
 			case 'list':
 				$Query
-					->select('Content.id, Content.title, Content.code, Content.position, Content.status, Content.updated_at, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.name, Author.id, Author.code, Author.displayname, Avatar.url')
+					->select('Content.id, Content.code, Content.title, Content.tagline, Content.position, Content.status, Content.updated_at, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.name, Author.id, Author.code, Author.displayname, Avatar.url')
 					->from('Content, Content.Route Route, Content.Parent Parent, Content.ContentTags ContentTag, Content.Author Author, Content.Avatar Avatar')
 					->orderBy('Content.position ASC, Content.id ASC')
 					;
@@ -484,7 +484,7 @@ class Balcms_Content extends Base_Balcms_Content
 				
 			case 'simplelist':
 				$Query
-					->select('Content.id, Content.title, Content.code, Content.position, Content.status, Parent.id, Parent.code, Route.path')
+					->select('Content.id, Content.code, Content.title, Content.tagline, Content.position, Content.status, Parent.id, Parent.code, Route.path')
 					->from('Content, Content.Route Route, Content.Parent Parent')
 					->orderBy('Content.position ASC, Content.id ASC')
 					;
