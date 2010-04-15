@@ -209,7 +209,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Fetch
-		$ItemList = $tableComponentName::fetch($criteria);
+		$ItemList = $App->fetchRecords($tableComponentName,$criteria);
 		
 		# Permissions
 		$ItemListEditable = $App->hasNavigationItem('back.main', 'crud-new-'.$typeLower, true);
@@ -328,7 +328,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Fetch
-		$UserList = User::fetch($criteria);
+		$UserList = $App->fetchRecords('User',$criteria);
 		
 		# --------------------------
 		
@@ -358,7 +358,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Apply
-		$User = $this->_saveUser($User, null, array('remove'=>array('password')));
+		$User = $this->_saveUser($User, array('remove'=>array('password')));
 		$App->activateNavigationItem('back.main', 'user-'.($User->id ? 'list' : 'new'), true);
 		
 		# Form
@@ -405,7 +405,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		);
 		
 		# Fetch
-		$Users = User::fetch($criteria);
+		$Users = $App->fetchRecords('User',$criteria);
 		
 		# Create CSV
 		$csv = prepare_csv_content($fields, $Users);
@@ -508,7 +508,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Fetch
-		$SubscriberList = User::fetch($criteria);
+		$SubscriberList = $App->fetchRecords('User',$criteria);
 		
 		# --------------------------
 		
@@ -621,7 +621,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Fetch
-		$FileList = File::fetch($criteria);
+		$FileList = $App->fetchRecords('File',$criteria);
 		
 		# --------------------------
 		
@@ -673,7 +673,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		);
 		
 		# Fetch
-		$ContentList = Content::fetch($criteria);
+		$ContentList = $App->fetchRecords('Content',$criteria);
 		
 		# Format as Tree
 		$ContentList = array_tree_flat($ContentList, 'id', 'Parent_id', 'level', 'position');
@@ -825,7 +825,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 		}
 		
 		# Fetch
-		$ContentList = Content::fetch($criteria);
+		$ContentList = $App->fetchRecords('Content',$criteria);
 		
 		# Postpare
 		if ( !$searchQuery ) {

@@ -45,7 +45,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		);
 		
 		# Fetch
-		$ContentListArray = Content::fetch($criteria);
+		$ContentListArray = $App->fetchRecords('Content',$criteria);
 		
 		# Convert
 		foreach ( $ContentListArray as &$Content ) {
@@ -138,7 +138,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		}
 		
 		# Fetch
-		$ContentList = Content::fetch($criteria);
+		$ContentList = $App->fetchRecords('Content',$criteria);
 		
 		# --------------------------
 		
