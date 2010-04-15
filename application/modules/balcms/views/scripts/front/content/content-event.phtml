@@ -1,33 +1,4 @@
 <?
-	# Prepare
-	$this->url()->renege('route','front');
-	# Extract
-	$Content = delve($this,'Content');
-	$Content_title = delve($Content,'title');
-	$Content_Avatar = delve($Content,'Avatar');
-	# Url
-	$Content_url = $this->url()->content($Content)->toString();
+	$class = array('article-event');
+	require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'_article.phtml');
 ?>
-<div id="content-<?=$Content->code?>" class="content event">
-	<div id="content-header" class="content-header">
-		<h2>
-			<a href="<?=$Content_url?>" title="<?=$Content_title?>">
-				<?=$Content_title?>
-			</a>
-		</h2>
-	</div>
-	
-	<? if ( $Content_Avatar ) :
-		$Media = $Content_Avatar;
-		$Media_url = $this->url()->media($Media)->toString();
-		?>
-		<div id="content-avatar" class="content-avatar">
-			<a href="<?=$Media_url?>" title="View Image">
-				<img src="<?=$Media_url?>?width=200" title="<?=$Content_title?>" alt="<?=$Content_title?> Avatar" />
-			</a>
-		</div>
-	<? endif; ?>
-	<div id="content-content" class="content-content">
-		<?=$this->content()->renderContent($Content)?>
-	</div>
-</div>

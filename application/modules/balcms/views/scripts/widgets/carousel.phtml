@@ -4,25 +4,29 @@
 	# Extract
 	$title = !empty($this->title) ? $this->title : 'Popular Tags';
 ?>
-<div class="carousel widget">
-	<div class="carousel-header widget-header">
+<div class="widget widget-carousel">
+	<header class="widget-header">
 		<h3><?=$title?></h3>
-	</div>
+	</header>
 	<? foreach ( $this->ContentList as $Content ) :
 		$contentUrl = $this->url()->content($Content)->toString();
 		?>
-		<div class="carousel-content widget-content">
-			<h4 class="carousel-content-header widget-content-header"><a href="<?=$contentUrl?>" title="<?=$Content->title?>"><?=$Content->title?></a></h4>
+		<div class="widget-content">
+			<h4 class="widget-content-header">
+				<a href="<?=$contentUrl?>" title="<?=$Content->title?>">
+					<?=$Content->title?>
+				</a>
+			</h4>
 			<? if ( count($Content->Avatar) && $Content->Avatar->exists() ) :
 				$Media = $Content->Avatar;
 				$mediaUrl = $this->url()->media($Media)->toString(); ?>
-				<div class="carousel-content-avatar widget-content-content">
+				<div class="widget-content-avatar">
 					<a href="<?=$contentUrl?>" title="View Image">
 						<img src="<?=$mediaUrl?>?width=200" title="<?=$Content->title?>" alt="<?=$Content->title?> Avatar" />
 					</a>
 				</div>
 			<? endif; ?>
-			<div class="carousel-content-content widget-content-content">
+			<div class="widget-content-content">
 				<?=$this->content()->renderDescription($Content)?>
 			</div>
 		</div>

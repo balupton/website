@@ -4,16 +4,20 @@
 	# Extract
 	$title = !empty($this->title) ? $this->title : 'Popular Tags';
 ?>
-<div class="taglist widget">
-	<div class="taglist-header widget-header">
+<div class="widget widget-taglist">
+	<div class="widget-header">
 		<h3><?=$title?></h3>
 	</div>
 	<? foreach ( $this->TagList as $Tag ) :
 		$tag = $Tag->name;
 		$tagUrl = $this->url()->search($tag)->toString();
 		?>
-		<div class="taglist-content widget-content">
-			<h4 class="taglist-content-header widget-content-header"><a rel="nofollow" href="<?=$tagUrl?>" title="<?=$tag?>"><?=$tag?></a></h4>
+		<div class="widget-content">
+			<h4 class="widget-content-header">
+				<a rel="nofollow" href="<?=$tagUrl?>" title="<?=$tag?>">
+					<?=$tag?>
+				</a>
+			</h4>
 		</div>
 	<? endforeach; ?>
 	<div class="clear"></div>
