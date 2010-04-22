@@ -31,7 +31,7 @@ class Balcms_Content extends Base_Balcms_Content
 	 */
 	protected function setFileAttachment ( $what, $file ) {
 		$value = Bal_Doctrine_Core::presetFileAttachment($this,$what,$file);
-		return $value === false ? null : $this->_set('Avatar',$value,false);
+		return $value === false ? null : $this->_set($what,$value,false);
 	}
 	
 	/**
