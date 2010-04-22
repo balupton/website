@@ -11,5 +11,5 @@ RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [PT,L]
 
-RewriteCond %{REQUEST_FILENAME} !(jpe?g|bmp|tiff|png|gif|js|css)$
+RewriteCond %{REQUEST_FILENAME} !(jpe?g|bmp|tiff|png|gif|js|css)$ [NC]
 RewriteRule ^.*$ index.php [QSA,PT,L]
