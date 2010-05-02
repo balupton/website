@@ -11,6 +11,11 @@ if ( empty($Application) ) {
 	require_once(dirname(__FILE__).'/../../../index.php');
 }
 
+# Boostrap
+$Application->bootstrap('autoload');
+$Application->bootstrap('balphp');
+
 # Load
-$paypal = $Application->getOption('paypal');
+$payment = $Application->getOption('payment');
+$paypal = array_merge($payment['default'], $payment['paypal']);
 $Paypal = new Bal_Payment_Gateway_Paypal($paypal);

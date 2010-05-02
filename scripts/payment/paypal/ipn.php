@@ -5,11 +5,17 @@
  * @todo this will need to be updated to be compatiable with balCMS systems, rather than just the Gates sytem.
  */
 
+header('Content-Type: text/plain');
+var_export($_POST);
+var_export($_GET);
+
 # Load
 require_once(dirname(__FILE__).'/config.php');
 
 # Load the response
-$Paypal->loadResponse();
+$Paypal->handleResponse();
+
+die;
 
 # Bootstrap Doctrine
 $Application->bootstrap('script-paypal');
