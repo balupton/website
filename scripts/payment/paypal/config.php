@@ -8,9 +8,9 @@ ini_set('display_startup_errors', 1);
 if ( empty($Application) ) {
 	# Bootstrap
 	$run = $bootstrap = false;
-	require_once(dirname(__FILE__).'/../../index.php');
+	require_once(dirname(__FILE__).'/../../../index.php');
 }
 
 # Load
 $paypal = $Application->getOption('paypal');
-$Paypal = new BAL_Payment_Paypal($paypal);
+$Paypal = new Bal_Payment_Gateway_Paypal($paypal);
