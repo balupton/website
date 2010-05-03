@@ -5,38 +5,17 @@
  * @todo this will need to be updated to be compatiable with balCMS systems, rather than just the Gates sytem.
  */
 
-header('Content-Type: text/plain');
-var_export($_POST);
-var_export($_GET);
-
 # Load
 require_once(dirname(__FILE__).'/config.php');
 
-# Load the response
-$Paypal->handleResponse();
+# Fetch the Payment Invoice
+$PaymentInvoice = $Paypal->handleResponse();
 
-die;
-
-# Bootstrap Doctrine
-$Application->bootstrap('script-paypal');
-
-# Load the Details
-$details = $Paypal->getDetails();
-$Order = $details['Order'];
-$id = $Order->id;
-$status = $Order->status;
-$modified = $Order->last_modified;
-
-# Create the Payment
-$Payment = Doctrine::getTable('Payment')->find($id); if ( empty($Payment) ) $Payment = new Payment();
-$Payment->id = $Order->id;
-$Payment->status = $status;
-if ( empty($Payment->created) ) $Payment->created = doctrine_timestamp();
-$Payment->modified =  date('Y-m-d H:i:s', $modified);
-$Payment->details = $details;
-$Payment->save();
-/**
- * @todo Payments are not currently part of the balCMS systems, will need to be at some point
- */
+# Save the Doctrine Invoice
+$Invoice = Doctrine::getTable('Invoice')->find($PaymentInvoice->id);
+$Invoice->payment_status	= $PaymentInvoice->payment_status;
+$Invoice->payment_fee		= $PaymentInvoice->payment_fee;
+$Invoice->paid_at			= doctrine_timestamp($PaymentInvoice->paid_at);
+$Invoice->save();
 
 # We may want to continue into other scripts, so don't die

@@ -8,13 +8,8 @@
 
 # Load
 require_once(dirname(__FILE__).'/ipn.php');
-
-# Routing
-$Application->bootstrap('routes');
-$baseurl = Zend_Controller_Front::getInstance()->getBaseUrl();
+// provides: PaymentInvoice, Invoice
 
 # Redirect
-// So redirect to the payment success page
-$applicant = $details['custom']['applicant'];
-header('Location: '.$baseurl.'applications/'.$applicant.'/payment/success/'.$id);
+header('Location: '.ROOT_URL.BASE_URL.'/payment/invoice/'.$Invoice->id);
 die;

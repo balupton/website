@@ -14,6 +14,7 @@ if ( empty($Application) ) {
 # Boostrap
 $Application->bootstrap('autoload');
 $Application->bootstrap('balphp');
+$Application->bootstrap('doctrine');
 
 # Load
 $payment = $Application->getOption('payment');
