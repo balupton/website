@@ -11,11 +11,8 @@ require_once(dirname(__FILE__).'/config.php');
 # Fetch the Payment Invoice
 $PaymentInvoice = $Paypal->handleResponse();
 
-# Save the Doctrine Invoice
+# Process the Payment for the Doctrine Invoice
 $Invoice = Doctrine::getTable('Invoice')->find($PaymentInvoice->id);
-$Invoice->payment_status	= $PaymentInvoice->payment_status;
-$Invoice->payment_fee		= $PaymentInvoice->payment_fee;
-$Invoice->paid_at			= doctrine_timestamp($PaymentInvoice->paid_at);
-$Invoice->save();
+$Invoice->processPaymentAndSave($PaymentInvoice);
 
 # We may want to continue into other scripts, so don't die
