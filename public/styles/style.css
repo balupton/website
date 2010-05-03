@@ -29,6 +29,10 @@
 		font-size:11px;
 		color:#BBB;
 	}
+	
+	.sparkle-hide {
+		display: none;
+	}
 
 
 /* Sparkle Password Strength */
