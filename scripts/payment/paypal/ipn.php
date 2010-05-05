@@ -12,7 +12,7 @@ require_once(dirname(__FILE__).'/config.php');
 $PaymentInvoice = $Paypal->handleResponse();
 
 # Process the Payment for the Doctrine Invoice
-$Invoice = Doctrine::getTable('Invoice')->find($PaymentInvoice->id);
+$Invoice = Bal_Doctrine_Core::fetchRecord('Invoice',array('Invoice'=>$PaymentInvoice->id));
 $Invoice->processPaymentAndSave($PaymentInvoice);
 
 # We may want to continue into other scripts, so don't die
