@@ -189,3 +189,16 @@ $Application->bootstrap();
 # Run
 if ( !isset($run) || $run )
 $Application->run();
+
+# Check for Errors
+if ( class_exists('Bal_App') ) {
+	$Response = Bal_App::getResponse();
+	if ( !$Response->getBody() ) {
+		$exceptions = $Response->getException();
+		foreach ( $exceptions as $Exception ) {
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+		}
+		echo Bal_Log::getInstance()->render();
+	}
+}
