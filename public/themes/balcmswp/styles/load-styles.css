@@ -1019,7 +1019,7 @@ textarea.all-options, input.all-options {
 	padding: 0;
 	margin-bottom: -3px;
 	border-bottom-width: 3px;
-	background-image: url("images/ed-bg.gif");
+	background-image: url(../images/ed-bg.gif);
 	background-position: left top;
 	background-repeat: repeat-x;
 }
@@ -2045,7 +2045,7 @@ span.description,
 
 #post-body .wp_themeSkin .mceStatusbar a.mceResize {
 	display: block;
-	background: transparent url(images/resize.gif) no-repeat scroll right bottom;
+	background: transparent url(../images/resize.gif) no-repeat scroll right bottom;
 	width: 12px;
 	cursor: se-resize;
 	margin: 0 2px;
@@ -2975,7 +2975,7 @@ fieldset {
 #screen-options-link-wrap,
 #contextual-help-link-wrap {
 	float: right;
-	background: transparent url( images/screen-options-left.gif ) no-repeat 0 0;
+	background: transparent url(../images/screen-options-left.gif) no-repeat 0 0;
 	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
 	height: 22px;
 	padding: 0;
@@ -2995,7 +2995,7 @@ fieldset {
 }
 
 #screen-meta a.show-settings {
-	background-image: url( images/screen-options-right.gif );
+	background-image: url(../images/screen-options-right.gif);
 }
 
 #screen-meta a.show-settings:hover {

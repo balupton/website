@@ -8,9 +8,6 @@
 	$back_url = $this->app()->getAreaUrl('back');
 	$front_url = $this->app()->getAreaUrl('front');
 	$script_url = $public_url.'/scripts';
-	$jquery_ui_url = $script_url.'/jquery-ui-1.7.2';
-	$jquery_sparkle_url = $script_url.'/jquery-sparkle';
-	$tiny_mce_url = $script_url.'/tiny_mce-3.2.7';
 	$this->url()->renege('route','back');
 	// Identity
 	$Identity = $this->app()->getUser();
@@ -18,32 +15,17 @@
 <head>
     <?= $this->app()->headMeta() ?>
     <?= $this->app()->headTitle() ?>
-    <?= $this->app()->headLink()->appendStylesheet($jquery_ui_url.'/css/cupertino/jquery-ui-1.7.2.custom.css') ?>
+    <?= $this->app()->headLink() ?>
     <?= $this->app()->headStyle() ?>
 </head>
 <body>
     <?
-		$headScript = $this->app()->headScript()
-		    // jQuery
-			->offsetSetFile(20,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' : $public_url.'/scripts/jquery-1.4.2.js')
-			// UI
-			->offsetSetFile(30,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' : $jquery_ui_url.'/js/jquery-ui-1.7.2.custom.min.js')
-		    // TinyMCE
-			->offsetSetFile(40,$tiny_mce_url.'/jquery.tinymce.js')
-			->offsetSetScript(200,'$.Editor.applyConfig("default",{script_url: "'.$tiny_mce_url.'/tiny_mce.js", content_css: "'.$front_url.'/styles/content.css"});')
-		    // Application
-		    ->offsetSetFile(50,$public_url.'/scripts/jquery.autogrow.js')
-		    ->offsetSetFile(60,$jquery_sparkle_url.'/scripts/jquery.sparkle.js')
-		    ->offsetSetScript(65,'if ( typeof JSON === "undefined" ) $.appendScript("'.$script_url.'/json2.js");')
-			->offsetSetScript(201,'$.Help.applyConfig("default",{icon: \'<img src="'.$back_url.'/images/help.png" alt="help" class="help-icon" />\'});')
-			// Ajaxy
-			//->appendFile($base_url.'/scripts/ajaxy/js/jquery.history.js')->appendFile($base_url.'/scripts/ajaxy/js/jquery.ajaxy.js')
-			;
+		$headScript = $this->app()->headScript();
 		if ( APPLICATION_ENV !== 'development' )
 			$headScript
 				// GSFN
-		    	->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
-		    	->offsetSetScript(81,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
+		    	->offsetSetFile(10,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
+		    	->offsetSetScript(11,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
 				;
 	    echo $headScript;
     ?>

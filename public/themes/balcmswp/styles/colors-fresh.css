@@ -898,7 +898,7 @@ abbr.required,
 }
 
 .wp_themeSkin tr.mceFirst td.mceToolbar {
-	background: #dfdfdf url("../images/ed-bg.gif") repeat-x scroll left top;
+	background: #dfdfdf url(../images/ed-bg.gif) repeat-x scroll left top;
 	border-color: #dfdfdf;
 }
 
