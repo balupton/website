@@ -5,6 +5,9 @@
 	$front_url = $this->app()->getAreaUrl('front');
 	$this->url()->renege('route','back');
 	
+	# Editor
+	$editor = $this->app()->getConfig('bal.editor');
+	
 	# Content
 	$Content = delve($this,'Content');
 	$Content_Author = delve($Content,'Author');
@@ -72,7 +75,7 @@
 										<span id="content-status-view" class="field-value"><?=ucfirst(delve($Content,'status'))?></span>
 										<span id="content-status-edit" class="hide">
 											<br/>
-											<?=$this->formDoctrine('Content[status]', delve($Content,'status'), array('tabindex'=>50), 'Content','status')?>
+											<?=$this->formDoctrine(array('target'=>array('Content','status'),'source'=>$this,'attribs'=>array('tabindex'=>50)))?>
 										</span>
 									</div>
 									<? if ( $Content_Author ) :
@@ -223,7 +226,11 @@
 					</div>
 					
 					<div id="content-content-field" class="field field-rich ">
-						<?=$this->formTextarea('Content[content]', delve($Content,'content'), array('tabindex'=>30, 'rows'=>5))?>
+						<? if ( $editor === 'besasdpin' ) : ?>
+							<div id="Content-content" style="height:200px; width:100%;"><?=delve($Content,'content')?></div>
+						<? else: ?>
+							<?=$this->formTextarea('Content[content]', delve($Content,'content'), array('tabindex'=>30, 'rows'=>5))?>
+						<? endif; ?>
 					</div>
 					
 					<div id="content-description-field" class="field field-wrapper postbox widget">
@@ -257,6 +264,12 @@
 </div>
 <div class="clear">
 </div>
+<style type="text/css">
+	#Content-content {
+		width:100%;
+		height:200px;
+	}
+</style>
 <script type="text/javascript">
 $(function(){
 	$("#content-status-view").inlineEdit({
@@ -303,10 +316,15 @@ $(function(){
 			return true;
 		});
 	}
-	//
-	$('#Content-content').editor('rich');
-	//
+	// Help
 	$('#content-description-field h3').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');
-	$('#Content-description').editor('simple');
+	// Editors
+	<? if ( $editor === 'tinymce' ) : ?>
+		$('#Content-content').Tinymce('rich');
+		$('#Content-description').Tinymce('simple');
+	<? elseif ( $editor === 'bespin' ): ?>
+		$('#Content-content').Bespin('rich');
+		//$('#Content-description').Bespin('simple');
+	<? endif; ?>
 });
 </script>

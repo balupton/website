@@ -1,0 +1,6 @@
+<?=$this->partial('partials/nav.phtml',array(
+	'title' => delve($this,'title','Links'),
+	'class' => pass_by_copy('array_values_ensure',delve($this,'class'),array('nav-links')),
+	'class_item' => delve($this,'class_item','link'),
+	'Items' =>delve($this,'Items',array()),
+))?>

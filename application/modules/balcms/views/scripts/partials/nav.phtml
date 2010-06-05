@@ -1,0 +1,18 @@
+<?
+	# Fetch
+	$title = delve($this,'title');
+	$class = implode(' ',pass_by_copy('array_values_ensure',delve($this,'class'),array('nav')));
+	$class_item = delve($this,'class_item','link');
+	$Items = delve($this,'Items',array());
+	if ( empty($Items) ) return;
+?>
+<nav class="<?=$class?>">
+	<header>
+		<h1><?=$title?></h1>
+	</header>
+	<ul>
+		<?=$this->app()->getNavigationMenu($Items)
+			->setTemplate('<span class="title">$label</span>')
+			->render()?>
+	</ul>
+</nav>

@@ -55,12 +55,12 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	}
 	
 	/**
-	 * Render the Content content
+	 * Render the Content's Content
 	 * @param mixed $Content
 	 * @param array $params
 	 * @return string rendered content
 	 */
-	public function renderContent ( Content $Content, array $params = array() ) {
+	public function renderContentContent ( Content $Content, array $params = array() ) {
 		# Fetch
 		$content = delve($Content,'content');
 		$content_rendered = delve($Content,'content_rendered');
@@ -86,7 +86,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	 * @param array $params
 	 * @return string rendered content
 	 */
-	public function renderDescription ( Content $Content, array $params = array() ) {
+	public function renderContentDescription ( Content $Content, array $params = array() ) {
 		# Fetch
 		$description = delve($Content,'description');
 		$description_rendered = delve($Content,'description_rendered');

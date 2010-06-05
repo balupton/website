@@ -1,0 +1,19 @@
+<?
+	$Items = delve($this,'Items',array());
+	$Tags = array();
+	foreach ( $Items as $Item ) {
+		$tag = delve($Item,'title',delve($Item,'name'));
+		$title = ucwords(delve($Item,'label',$tag));
+		$Tags[] = array(
+			'uri' => $this->url()->route('app')->search($tag)->reset(true)->toString(),
+			'label' => $title,
+			'title' => $title
+		);
+	}
+?>
+<?=$this->partial('partials/nav.phtml',array(
+	'title' => delve($this,'title','Tags'),
+	'class' => pass_by_copy('array_values_ensure',delve($this,'class'),array('nav-tags')),
+	'class_item' => delve($this,'class_item','link'),
+	'Items' => $Tags
+))?>

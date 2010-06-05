@@ -240,16 +240,15 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		# Keywords
 		$keywords = array($Content->tags);
 		
-		# Crumbs
-		$ContentCrumbs = $Content->getCrumbs(false);
-		foreach ( $ContentCrumbs as $Crumb ) {
-			$keywords[] = delve($Crumb,'tags');
-			$this->view->headTitle()->append(delve($Crumb,'title'));
+		# Ancestors
+		$Content_Ancestors = $Content->getAncestors(false);
+		foreach ( $Content_Ancestors as $Ancestor ) {
+			$keywords[] = delve($Ancestor,'tags');
+			$this->view->headTitle()->append(delve($Ancestor,'title'));
 		}
 		
-		# Crumbs Navigation
-		//$ContentCrumbsNavigation = $Content->getCrumbsNavigation(false);
-		//$App->applyNavigationMenu('Content.Crumbs', new Zend_Navigation($ContentCrumbsNavigation));
+		# Children
+		$Content_Children = $Content->getChildren(false);
 		
 		# Keywords
 		$keywordstr = prepare_csv_str($keywords);
@@ -261,14 +260,15 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		
 		# Apply
 		$this->view->Content = $Content;
-		$this->view->ContentCrumbs = $ContentCrumbs;
+		$this->view->Content_Ancestors = $Content_Ancestors;
+		$this->view->Content_Children = $Content_Children;
 		$this->view->headTitle()->append($Content->title);
 		$this->view->headMeta()->appendName('description', $meta);
 		$this->view->headMeta()->appendName('keywords', $keywordstr);
 		$this->activateNavigationContentItem($Content);
 		
 		# Render
-		$this->render('content/content-' . $Content->type);
+		$this->render('content/content');
 		
 		# Done
 		return true;

@@ -1,0 +1,50 @@
+<?
+	$Comments = delve($this,'Items',array());
+?>
+<nav class="nav-comments nav">
+	<header>
+		<h1>Comments</h1>
+	</header>
+	<ol>
+		<? foreach ( $Comments as $Comment ) :
+			# Comment
+			$Comment_url = $this->url()->comment($Comment)->toString();
+			$Comment_code = delve($Comment,'code');
+			$Comment_published_at = delve($Comment,'published_at');
+			$Comment_article_id = 'comment-'.$Comment_code;
+			# Class
+			if ( empty($class) )
+				$class = array();
+			elseif ( !is_array($class) )
+				$class = array($class);
+			$class[] = 'content-'.$Content_type;
+			$Comment_article_class = implode(' ',array_unique($class));
+			# Render
+			?>
+			<li>
+				<article
+					cite="<?=$Comment_url?>"
+					pubdate="<?=date('c',strtotime($Comment_published_at))?>"
+					id="<?=$Comment_article_id?>"
+					class="<?=$Comment_article_class?>"
+					>
+					<header>
+						<h1><?=$Comment_title?></h1>
+					</header>
+					<footer>
+						<span class="time">
+							<span class="description">
+								<a href="<?=$Comment_url?>"><time datetime="<?=date('c',strtotime($Comment_published_at))?>" pubdate>
+									<?=$this->locale()->datetime($Comment_published_at)?>
+								</time></a>
+							</span>
+						</span>
+					</footer>
+					<div class="description">
+						<?=$this->content()->renderContentDescription($Content)?>
+					</div>
+				</article>
+			</li>
+		<? endforeach; ?>
+	</ol>
+</nav>

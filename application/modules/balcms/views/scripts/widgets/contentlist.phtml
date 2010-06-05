@@ -1,4 +1,4 @@
-s<?
+<?
 	# Prepare
 	$this->url()->renege('route','front');
 	# Extract
@@ -7,50 +7,18 @@ s<?
 	$title = delve($this,'title','ContentList');
 	$ContentList = delve($this,'ContentList',array());
 ?>
-<section id="<?=$id?>" class="widget widget-contentlist <?=$class?>">
-    <header class="widget-header">
-        <h1><?=$title?></h1>
+<section id="<?=$id?>" class="widget widget-contentlist <?=$class?> section">
+    <header class="widget-header section-header header">
+        <h1><span class="title"><?=$title?></span></h1>
     </header>
     <div class="widget-content">
-		<? foreach ( $ContentList as $Content ) :
-			$Content_url = $this->url()->content($Content)->toString();
-			$Content_code = delve($Content,'code');
-			$Content_title = delve($Content,'title');
-			$Content_tagline = delve($Content,'tagline');
+		<? foreach ( $ContentList as $Content ) : ?>
+			<?
+				echo $this->partial('partials/content.phtml',array(
+					'Content' => $Content,
+					'mode' => 'list'
+				));
 			?>
-    	    <article class="content">
-				<div id="content-<?=$Content_code?>" class="content <?=$Content_class?>">
-		            <header class="content-header">
-						<div class="content-title">
-		              	  <h1 class="content-title">
-			                    <a href="<?=$Content_url?>">
-			                        <span class="title"><?=$Content_title?></span>
-									<? if ( $Content_tagline ) : ?>
-			                        	<span class="description"><?=$Content_tagline?></span>
-									<? endif; ?>
-			                    </a>
-			                </h1>
-						</div>
-		            </header>
-		            <div class="content-content">
-						<div class="content-description">
-							<?=$this->content()->renderDescription($Content)?>
-						</div>
-		                <nav class="nav-links">
-		                    <ul>
-		                        <li><a href="#">Homepage</a></li>
-		                        <li><a href="#">Documentation</a></li>
-		                    </ul>
-		                </nav>
-		                <nav class="nav-tags">
-		                    <ul>
-		                        <li><a href="#">Homepage</a></li>
-		                        <li><a href="#">Documentation</a></li>
-		                    </ul>
-		                </nav>
-		            </div>
-				</div>
-	        </article>
 		<? endforeach; ?>
     </div>
 </section>

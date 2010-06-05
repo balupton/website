@@ -663,6 +663,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	
 	public function getContentSimpleList ( ) {
 		# Prepare
+		$App = $this->getHelper('App');
 		
 		# --------------------------
 		
@@ -688,12 +689,23 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Prepare
 		$App = $this->getHelper('App');
 		$Content = $ContentCrumbs = array();
+		$Identity = $App->getUser();
 		
 		# --------------------------
 		
-		# Save
-		$Content = $this->_saveContent();
-		if ( !$Content->id ) {
+		# Fetch and Save Item (if applicable)
+		$Content = Bal_Doctrine_Core::fetchAndSaveItem('Content',null,array(
+			'create' => false,
+			'keep' => array('code', 'content', 'description', 'Parent', 'status', 'tags', 'title', 'type', 'Avatar'),
+			'clean' => array('Avatar'),
+			'verify' => array(
+				'verifyAccess' => array(
+					'action' => 'edit',
+					'Identity' => $Identity
+				)
+			)
+		));
+		if ( !delve($Content,'id') ) {
 			return $this->_forward('content-new');
 		}
 		$type = $Content->type;
@@ -730,20 +742,27 @@ class Balcms_BackController extends Zend_Controller_Action {
 		$type = $Request->getParam('type', 'content');
 		$App->activateNavigationItem('back.main', $type.'-new', true);
 		$Content = $ContentCrumbs = array();
+		$Identity = $App->getUser();
 		
 		# --------------------------
 		
-		# Save/Load
-		try {
-			$Content = $this->_saveContent();
-			if ( delve($Content,'id') ) {
-				return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-edit', 'content' => $Content->code), 'back', true);
-			}
-		}
-		catch ( Exception $Exception ) {
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
+		# Fetch and Save Item (if applicable)
+		$Content = Bal_Doctrine_Core::fetchAndSaveItem('Content',null,array(
+			'create' => true,
+			'apply' => array(
+				'Author' => $Identity
+			),
+			'keep' => array('code', 'content', 'description', 'Parent', 'status', 'tags', 'title', 'type', 'Avatar'),
+			'clean' => array('Avatar'),
+			'verify' => array(
+				'verifyAccess' => array(
+					'action' => 'edit',
+					'Identity' => $Identity
+				)
+			)
+		));
+		if ( delve($Content,'id') ) {
+			return $this->getHelper('redirector')->gotoRoute(array('action' => 'content-edit', 'content' => $Content->code), 'back', true);
 		}
 		
 		# --------------------------
@@ -811,7 +830,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			if ( delve($Content,'id') ) {
 				// We have a content as a root
 				$ContentArray = $Content->toArray();
-				$ContentCrumbs = $Content->getCrumbs(Doctrine::HYDRATE_ARRAY, true);
+				$ContentCrumbs = $Content->getAncestors(Doctrine::HYDRATE_ARRAY, true);
 				
 				// Children
 				$criteria['Parent'] = $Content;
@@ -904,34 +923,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Fetch
 		$Content = Bal_Doctrine_Core::fetchItem('Content', $record, $options);
-		
-		# --------------------------
-		
-		# Return Content
-		return $Content;
-	}
-	
-	protected function _saveContent ( $record = null, array $options = array() ) {
-		# Prepare
-		$App = $this->getHelper('App');
-		
-		# Options
-		array_keys_ensure($options, array('create','keep'));
-		
-		# --------------------------
-		
-		# Create
-		if ( $options['create'] === null ) {
-			$options['create'] = true;
-		}
-		
-		# Keep
-		if ( $options['keep'] === null ) {
-			$options['keep'] = array('code', 'content', 'description', 'Parent', 'status', 'tags', 'title', 'type', 'Avatar');
-		}
-		
-		# Save
-		$Content = Bal_Doctrine_Core::saveItem('Content', $record, $options);
 		
 		# --------------------------
 		
