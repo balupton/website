@@ -47,9 +47,12 @@ Balcms_Content:
             notblank: true
             extra:
                 html: rich
+                auto: true
         description_auto:
             type: bool
             notnull: true
+            extra:
+                auto: true
         tags:
             type: string(255)
         content:
@@ -62,6 +65,7 @@ Balcms_Content:
             notblank: true
             extra:
                 html: rich
+                auto: true
             
         position:
             type: integer(2)
@@ -73,6 +77,8 @@ Balcms_Content:
             values: [content,event]
             default: content
             notblank: true
+            extra:
+                auto: true
             
         Avatar_id:
             type: integer(2)

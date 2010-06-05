@@ -43,30 +43,6 @@ class Balcms_Content extends Base_Balcms_Content
 	}
 	
 	/**
-	 * Get's the content's crumbs
-	 * @param const $hydrateMode [optional]
-	 * @param bool $includeSelf [optional]
-	 * @return mixed
-	 */
-	public function getCrumbs ( $includeSelf = true, $hydrateMode = null ) {
-		# Prepare
-		$Crumbs = array();
-		$Crumb = $this;
-		while ( $Crumb->Parent_id ) {
-			$Crumb = $Crumb->Parent;
-			$Crumbs[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $Crumb->toArray() : $Crumb;
-		}
-		
-		# Include?
-		if ( $includeSelf ) {
-			$Crumbs[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $this->toArray() : $this;
-		}
-		
-		# Done
-		return $Crumbs;
-	}
-	
-	/**
 	 * Convert the content to a navigation item
 	 * @param mixed $Content
 	 * @return array
@@ -99,17 +75,128 @@ class Balcms_Content extends Base_Balcms_Content
 	 * @param bool $includeSelf [optional] defaults to true
 	 * @return array
 	 */
-	public function getCrumbsNavigation ( $includeSelf = true ) {
-		# Fetch
-		$Crumbs = $this->getCrumbs($includeSelf);
+	public function toNavItems ( $Items ) {
+		# Prepare
+		$NavItems = array();
 		
 		# To Navigation
-		foreach ( $Crumbs as &$Crumb ) {
-			$Crumb = Content::toNavItem($Crumb);
+		foreach ( $Items as $Item ) {
+			$NavItems[] = Content::toNavItem($Item);
 		}
 		
-		# Return Crumbs
-		return $Crumbs;
+		# Return NavItems
+		return $NavItems;
+	}
+	
+	
+	/**
+	 * Get's the content's crumbs
+	 * @param const $hydrateMode [optional]
+	 * @param bool $includeSelf [optional]
+	 * @return mixed
+	 */
+	public function getAncestors ( $includeSelf = true, $hydrateMode = null ) {
+		# Prepare
+		$Ancestors = array();
+		$Ancestor = $this;
+		while ( $Ancestor->Parent_id ) {
+			$Ancestor = $Ancestor->Parent;
+			$Ancestors[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $Ancestor->toArray() : $Ancestor;
+		}
+		
+		# Include?
+		if ( $includeSelf ) {
+			$Ancestors[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $this->toArray() : $this;
+		}
+		
+		# Return Ancestors
+		return $Ancestors;
+	}
+	
+	/**
+	 * Get's the content's children
+	 * @param const $hydrateMode [optional]
+	 * @param bool $includeSelf [optional]
+	 * @return mixed
+	 */
+	public function getChildren ( $includeSelf = true, $hydrateMode = null ) {
+		# Prepare
+		$Children = $this->Children;
+		if ( $hydrateMode === Doctrine::HYDRATE_ARRAY && !is_array($Children) ) {
+			$Children = $Children->toArray();
+		}
+		if ( !count($Children) ) {
+			$Children = array();
+		}
+		
+		# Include?
+		if ( $includeSelf ) {
+			$Children[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $this->toArray() : $this;
+		}
+		
+		# Return Children
+		return $Children;
+	}
+	
+	public function getUrl ( ) {
+		# Prepare
+		$View = Bal_App::getView();
+		
+		# Url
+		$url = $View->url()->content($this)->toString();
+		
+		# Return url
+		return $url;
+	}
+	
+	/**
+	 * Get's the section links
+	 */
+	public function getSectionLinks ( ) {
+		# Prepare
+		$Links = array();
+		$url = $this->getUrl();
+		$content = $this->content;
+		$content = str_replace(array('<section','section>'),array('<i','i>'),$content);
+		$Document = new DOMDocument();
+		$Document->loadHTML('<html><head></head><body>'.$content.'</body></html>');
+		
+		# Generate
+		$Sections = $Document->getElementsByTagName('i');
+		for ( $i = 0; $i < $Sections->length; ++$i ) {
+			$Section = $Sections->item($i);
+			
+			# Id
+			$id = $Section->getAttribute('id');
+			if ( !$id ) continue;
+			
+			# Class
+			$class = $Section->getAttribute('class');
+			if ( in_array('noindex', explode(' ', $class)) ) continue;
+		
+			# Title
+			$label = $title = ucfirst($id);
+			$H1s = $Section->getElementsByTagName('h1');
+			foreach ( $H1s as $H1 ) {
+				$label = $H1->getAttribute('title');
+				$title = strip_tags($Document->saveXML($H1));
+				if ( !$label ) $label = $title;
+				break;
+			}
+		
+			# Apply
+			$Links[] = array(
+				'id' => $this->code.'-'.$id,
+				'route' => null,
+				'uri' => $url.'#'.$id,
+				'label' => $label,
+				'title' => $this->title.' > '.$title,
+				'order' => $i
+			);
+		}
+		
+		# Return Links
+		return $Links;
 	}
 	
 	/**
@@ -297,7 +384,7 @@ class Balcms_Content extends Base_Balcms_Content
 		# Content
 		if ( array_key_exists('content', $modified) ) {
 			# Render Content
-			$content_rendered = $View->content()->renderContent($Content);
+			$content_rendered = $View->content()->renderContentContent($Content);
 			$Content->set('content_rendered', $content_rendered, false);
 			# Save
 			$save = true;
@@ -308,7 +395,7 @@ class Balcms_Content extends Base_Balcms_Content
 			# Auto
 			$Content->set('description_auto',false,false);
 			# Render Description
-			$description_rendered = $View->content()->renderDescription($Content);
+			$description_rendered = $View->content()->renderContentDescription($Content);
 			$Content->set('description_rendered', $description_rendered, false);
 			# Save
 			$save = true;
