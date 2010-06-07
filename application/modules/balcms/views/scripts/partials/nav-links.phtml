@@ -1,6 +1,11 @@
+<?
+	# Class
+	$class = delve($this,'class');
+	if ( empty($class) ) $class = array('nav-links');
+?>
 <?=$this->partial('partials/nav.phtml',array(
 	'title' => delve($this,'title','Links'),
-	'class' => pass_by_copy('array_values_ensure',delve($this,'class'),array('nav-links')),
+	'class' => $class,
 	'class_item' => delve($this,'class_item','link'),
 	'Items' =>delve($this,'Items',array()),
 ))?>

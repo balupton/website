@@ -61,7 +61,7 @@
 			'class' => 'simple nav-ancestors',
 			'Items' => $Content_Ancestors
 		))?>
-		<a class="article-title" href="<?=$Content_url?>" title="<?=$Content_title?>">
+		<a class="article-title" href="<?=$Content_url?>" title="<?=$Content_title.' > '.$Content_tagline?>">
 			<h1>
 				<span class="title"><?=$Content_title?></span>
 				<span class="description"><?=$Content_tagline?></span>
@@ -120,7 +120,7 @@
 	<? if ( in_array($mode,array('list')) ) : ?>
 		<div class="article-description">
 			<?=$this->content()->renderContentDescription($Content)?>
-			<a class="more" href="<?=$Content_url?>">Continue Reading</a>
+			<a class="more" href="<?=$Content_url?>" title="View the entire article">Continue Reading</a>
 		</div>
 	<? endif; ?>
 	<!-- [/more] -->
