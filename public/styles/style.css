@@ -15,9 +15,11 @@
 	
 	.help {
 		cursor:help;
+		padding-bottom: 1px;
 	}
 	.help:hover {
 		border-bottom: 1px dotted #666;
+		padding-bottom: 0px;
 	}
 	
 
