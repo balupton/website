@@ -75,7 +75,7 @@ class Balcms_Content extends Base_Balcms_Content
 	 * @param bool $includeSelf [optional] defaults to true
 	 * @return array
 	 */
-	public function toNavItems ( $Items ) {
+	public static function toNavItems ( $Items ) {
 		# Prepare
 		$NavItems = array();
 		
@@ -154,9 +154,10 @@ class Balcms_Content extends Base_Balcms_Content
 	 */
 	public function getSectionLinks ( ) {
 		# Prepare
+		$Content = $this;
 		$Links = array();
-		$url = $this->getUrl();
-		$content = $this->content_rendered;
+		$url = $Content->getUrl();
+		$content = $Content->content_rendered;//content_rendered;
 		$content = preg_replace('/(<\\/?)(article|aside|audio|canvas|command|datalist|details|embed|figcaption|figure|footer|header|hgroup|keygen|mark|meter|nav|output|progress|rp|rt|ruby|source|summary|time|video)(>?)/i', '$1div$3', $content);
 		// ^ convert to HTML4 from HTML5
 		$content = str_replace(array('<section','section>'),array('<i','i>'),$content);
@@ -196,6 +197,12 @@ class Balcms_Content extends Base_Balcms_Content
 				'order' => $i
 			);
 		}
+		
+		# Add Us
+		//$us = Content::toNavItem($Content);
+		//$us['label'] = 'Open';
+		//$us['order'] = -1;
+		//array_unshift($Links, $us);
 		
 		# Return Links
 		return $Links;
@@ -555,7 +562,7 @@ class Balcms_Content extends Base_Balcms_Content
 	 */
 	public static function fetch ( array $params = array() ) {
 		# Prepare
-		Bal_Doctrine_Core::prepareFetchParams($params,array('fetch','Root','Parent','User','Author'));
+		Bal_Doctrine_Core::prepareFetchParams($params,array('fetch','Root','Parent','User','Author','ContentTags','codes','featured','recent'));
 		extract($params);
 		
 		# Query
@@ -565,7 +572,7 @@ class Balcms_Content extends Base_Balcms_Content
 		switch ( $fetch ) {
 			case 'list':
 				$Query
-					->select('Content.id, Content.code, Content.title, Content.tagline, Content.position, Content.status, Content.updated_at, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.name, Author.id, Author.code, Author.displayname, Avatar.url')
+					->select('Content.id, Content.code, Content.title, Content.tagline, Content.position, Content.status, Content.updated_at, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.name, Author.id, Author.code, Author.displayname, Avatar.id, Avatar.url')
 					->from('Content, Content.Route Route, Content.Parent Parent, Content.ContentTags ContentTag, Content.Author Author, Content.Avatar Avatar')
 					->orderBy('Content.position ASC, Content.id ASC')
 					;
@@ -573,15 +580,15 @@ class Balcms_Content extends Base_Balcms_Content
 				
 			case 'simplelist':
 				$Query
-					->select('Content.id, Content.code, Content.title, Content.tagline, Content.position, Content.status, Parent.id, Parent.code, Route.path')
-					->from('Content, Content.Route Route, Content.Parent Parent')
+					->select('Content.id, Content.code, Content.title, Content.tagline, Content.position, Content.status, Parent.id, Parent.code, Route.*')
+					->from('Content, Content.Route Route, Content.Parent Parent, Content.ContentTags ContentTag')
 					->orderBy('Content.position ASC, Content.id ASC')
 					;
 				break;
 				
 			default:
 				$Query
-					->select('Content.*, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.name, Author.id, Author.code, Author.displayname, Avatar.url')
+					->select('Content.*, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.name, Author.id, Author.code, Author.displayname, Avatar.id, Avatar.url')
 					->from('Content, Content.Route Route, Content.Parent Parent, Content.ContentTags ContentTag, Content.Author Author, Content.Avatar Avatar')
 					->orderBy('Content.position ASC, Content.id ASC')
 					;
@@ -590,16 +597,41 @@ class Balcms_Content extends Base_Balcms_Content
 		
 		# Criteria
 		if ( $User ) {
-			$User = Bal_Doctrine_Core::resolveId($User);
-			$Query->andWhere('Author.id = ?', $User);
+			$identifier = Bal_Doctrine_Core::resolveIdentifier('Content',$User);
+			$Query->andWhere(
+				'Content.Author.'.$identifier['column'].' = ?',
+				$identifier['value']
+			);
 		}
 		if ( $Author ) {
-			$Author = Bal_Doctrine_Core::resolveId($Author);
-			$Query->andWhere('Author.id = ?', $Author);
+			$identifier = Bal_Doctrine_Core::resolveIdentifier('Content',$Author);
+			$Query->andWhere(
+				'Content.Author.'.$identifier['column'].' = ?',
+				$identifier['value']
+			);
 		}
 		if ( $Parent ) {
-			$Parent = Bal_Doctrine_Core::resolveId($Parent);
-			$Query->andWhere('Parent.id = ?', $Parent);
+			$identifier = Bal_Doctrine_Core::resolveIdentifier('Content',$Parent);
+			$Query->andWhere(
+				'Content.Parent.'.$identifier['column'].' = ?',
+				$identifier['value']
+			);
+		}
+		if ( $codes ) {
+			$Query->andWhereIn('Content.code', $codes);
+		}
+		if ( $featured ) {
+			$tags = array('featured');
+			$Query->andWhere('Content.tags LIKE "%featured%"');
+			//$Query->andWhere('EXISTS (SELECT Content.ContentTags.name FROM Content.ContentTags WHERE Content.ContentTags.name IN ("'.implode($tags,'","').'"))');
+		}
+		if ( $recent ) {
+			$Query->orderBy('Content.published_at DESC, Content.position ASC, Content.id ASC');
+		}
+		if ( $ContentTags ) {
+			$tags = $ContentTags;
+			//$Query->andWhere('EXISTS (SELECT c.id FROM Content c, c.ContentTags ct WHERE c.id = Content.id AND cc.name IN ("'.implode($tags,'","').'"))');
+			//$Query->andWhereIn('ContentTag.name', $ContentTags);
 		}
 		if ( $Root ) {
 			$Query->andWhere('Content.Parent_id IS ?', null);
