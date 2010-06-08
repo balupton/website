@@ -3,9 +3,9 @@
 	$Tags = array();
 	foreach ( $Items as $Item ) {
 		$tag = delve($Item,'title',delve($Item,'name'));
-		$title = ucwords(delve($Item,'label',$tag));
+		$title = delve($Item,'label',$tag);
 		$Tags[] = array(
-			'uri' => $this->url()->route('app')->search($tag)->reset(true)->toString(),
+			'uri' => $this->url()->route('app')->action('search')->search($tag)->reset(true)->toString(),
 			'label' => $title,
 			'title' => $title
 		);

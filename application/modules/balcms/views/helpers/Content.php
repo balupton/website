@@ -116,36 +116,40 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	}
 	
 	protected function _generateModel ( array $params ) {
-		# Prepare
-		$content = delve($params,'content');
-		$parent = delve($params,'parent');
-		$codes = prepare_csv_array($content);
+		# Check
 		$Content = $this->getContentObjectFromParams($params);
+		$ContentList = delve($params,'ContentList',array());
+		if ( empty($ContentList) ) {
+			# Prepare
+			$content = delve($params,'content');
+			$codes = prepare_csv_array($content);
 		
-		# Create Query
-		$ContentListQuery = Doctrine_Query::create()
-			->select('*, cAvatar.url')
-			->from('Content c, c.Avatar cAvatar')
-			->where('c.status = ?', 'published')
-			->orderBy('c.published_at DESC, c.id ASC')
-			->limit(20);
-		
-		# Adjust Query
-		if ( empty($codes) ) {
-			$ContentListQuery->addFrom('c.Parent cParent');
-			if ( is_numeric($parent) ) {
-				$ContentListQuery->andWhere('cParent.id = ?', $parent);
-			} elseif ( is_string($parent) ) {
-				$ContentListQuery->andWhere('cParent.code = ?', $parent);
-			} else {
-				$ContentListQuery->andWhere('cParent.id = ?', $Content->id);
+			# Prepare Fetch
+			$fetch = array_merge(
+				array(
+					'limit' => 20
+				),
+				$params
+			);
+			//$fetch = array_keys_unset($fetch, array('id','class','title','Content'));
+			$fetch = array_keys_keep($fetch, array('featured','codes','limit','recent','Parent'));
+			
+			# Fetch: Parent
+			if ( !isset($fetch['Parent']) ) {
+				$fetch['Parent'] = $Content;
 			}
-		} else {
-			$ContentListQuery->andWhereIn('c.code',$codes);
-		}
+			if ( empty($fetch['Parent']) ) {
+				unset($fetch['Parent']);
+			}
+			
+			# Fetch: Codes
+			if ( !empty($codes) ) {
+				$fetch['codes'] = $codes;
+			}
 		
-		# Fetch
-		$ContentList = $ContentListQuery->execute();
+			# Execute Fetch
+			$ContentList = Content::fetch($fetch);
+		}
 		
 		# Apply
 		$model = compact('Content','ContentList');
@@ -156,45 +160,25 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	}
 	
 	/**
-	 * Render a carousel
-	 * @param $params
-	 * @return string
-	 */
-	public function renderCarouselWidget ( array $params = array() ) {
-		# Fetch Model
-		$model = $this->_generateModel($params);
-		
-		# Render
-		return $this->renderWidgetView('carousel', $model);
-	}
-	
-	/**
-	 * Renders the popular tags
-	 * @param $params
-	 * @return string
-	 */
-	public function renderPopulartaglistWidget ( array $params = array() ) {
-		# Fetch
-		$Content = $this->getContentObjectFromParams($params);
-		$TagList = Doctrine::getTable('TaggableTag')->getPopularTags('Content');
-		
-		# Apply
-		$model = compact('Content','TagList');
-		$model = array_merge($params, $model);
-		
-		# Render
-		return $this->renderWidgetView('taglist', $model);
-	}
-	
-	/**
-	 * Render a taglist
-	 * @param $params
-	 * @return string
+	 * Renders the Taglist Widget
+	 * 
+	 * @param array 			$params [optional]
+	 * 							The following options are provided:
+	 * 								popular:		If specified to true, will only return the popular tags
+	 * 
+	 * @return string 			The following params are sent back to partial:
+	 * 								Content:		The Content object which is rendering this widget
+	 * 								TagList:		Doctrine_Collection of TaggableTags
 	 */
 	public function renderTaglistWidget ( array $params = array() ) {
 		# Fetch
 		$Content = $this->getContentObjectFromParams($params);
-		$TagList = Doctrine_Query::create()->select('t.*')->from('TaggableTag t')->orderBy('t.name ASC')->execute();
+		if ( delve($params,'popular',false) ) {
+			$TagList = Doctrine::getTable('TaggableTag')->getPopularTags('Content');
+		}
+		else {
+			$TagList = Doctrine_Query::create()->select('t.*')->from('TaggableTag t')->orderBy('t.name ASC')->execute();
+		}
 		
 		# Apply
 		$model = compact('Content','TagList');
@@ -220,60 +204,38 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		# Render
 		return $this->renderWidgetView('subscribe', $model);
 	}
-
-	/**
-	 * Render a recentlist
-	 * @param $params
-	 * @return string
-	 */
-	public function renderRecentlistWidget ( array $params = array() ) {
-		# Fetch Model
-		$model = $this->_generateModel($params);
-		
-		# Render
-		return $this->renderWidgetView('recentlist', $model);
-	}
-
-	/**
-	 * Render a articlelist
-	 * @param $params
-	 * @return string
-	 */
-	public function renderArticlelistWidget ( array $params = array() ) {
-		# Prepare
-		
-		# Fetch
-		$Content = $this->getContentObjectFromParams($params);
-		$ContentList = Doctrine_Query::create()->select('*')->from('Content c, c.Parent cp')->where('c.status = ? AND cp.id = ?', array('published', $Content->id))->orderBy('c.published_at DESC, c.id ASC')->limit(20)->execute();
-		
-		// need to fetch in the order of most recent first
-		// should add paging
-		
-		# Apply
-		$model = compact('Content','ContentList');
-		$model = array_merge($params, $model);
-		
-		# Render
-		return $this->renderWidgetView('articlelist', $model);
-	}
 	
 	/**
-	 * Render a contentlist
-	 * @param $params
-	 * @return string
+	 * Renders the Contentlist Widget
+	 * 
+	 * @param array 			$params [optional]
+	 * 							The following options are provided:
+	 * 								featured:		If specified to true, will only return featured content
+	 * 								recent:			If specified to true, will order by most recent
+	 * 								partial:		If specified, will use this partial to render instead
+	 * 
+	 * @return string 			The following params are sent back to partial:
+	 * 								Content:		The Content object which is rendering this widget
+	 * 								ContentList:	A Doctrine_Collection of found Content
 	 */
 	public function renderContentlistWidget ( array $params = array() ) {
 		# Fetch Model
 		$model = $this->_generateModel($params);
 		
 		# Render
-		return $this->renderWidgetView('contentlist', $model);
+		return $this->renderWidgetView(delve($params,'partial','contentlist'), $model);
 	}
 	
 	/**
-	 * Render a eventlist
-	 * @param $params
-	 * @return string
+	 * Renders the Eventlist Widget
+	 * 
+	 * @param array 			$params [optional]
+	 * 							The following options are provided:
+	 * 
+	 * @return string 			The following params are sent back to partial:
+	 * 								Content:		The Content object which is rendering this widget
+	 * 								EventsPast:		A Doctrine_Collection of Event objects which occurred in the past
+	 * 								EventsFuture:	A Doctrine_Collection of Event objects which will occur in the future
 	 */
 	public function renderEventlistWidget ( array $params = array() ) {
 		# Prepare
@@ -313,7 +275,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		} elseif ( array_key_exists('ContentArray', $params) ) {
 			return $params['ContentArray']['id'];
 		} else {
-			throw new Zend_Exception('No Content Object or Array passed to the Widget');
+			//throw new Zend_Exception('No Content Object or Array passed to the Widget');
 			return false;
 		}
 	}
@@ -328,7 +290,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		} elseif ( array_key_exists('ContentArray', $params) ) {
 			return Doctrine::getTable('Content')->find($params['ContentArray']['id']);
 		} else {
-			throw new Zend_Exception('No Content Object or Array passed to the Widget');
+			//throw new Zend_Exception('No Content Object or Array passed to the Widget');
 			return false;
 		}
 	}

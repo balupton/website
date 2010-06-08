@@ -1,0 +1,15 @@
+<?
+	# Class
+	$class = delve($this,'class');
+	if ( empty($class) ) $class = array('nav-content');
+	# Check Items
+	$Items = delve($this,'Items',array());
+	if ( delve($this,'convert',true) ) 
+		$Items = Content::toNavItems($Items);
+?>
+<?=$this->partial('partials/nav.phtml',array(
+	'title' => delve($this,'title','Content'),
+	'class' => $class,
+	'class_item' => delve($this,'class_item','content'),
+	'Items' => $Items,
+))?>

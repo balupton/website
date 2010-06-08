@@ -256,15 +256,9 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		# Meta
 		$meta = preg_replace('/\s\s+/', ' ', strip_tags($Content->description_rendered));
 		
-		# Tags
-		$Tags = $App->fetchRecords('TaggableTag',array(
-			'hydrationMode' => Doctrine::HYDRATE_ARRAY
-		));
-		
 		# --------------------------
 		
 		# Apply
-		$this->view->Tags = $Tags;
 		$this->view->Content = $Content;
 		$this->view->Content_Ancestors = $Content_Ancestors;
 		$this->view->Content_Children = $Content_Children;

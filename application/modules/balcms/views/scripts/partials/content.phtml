@@ -16,7 +16,7 @@
 	$Content_Author_displayname = delve($Content_Author,'displayname');
 	$Content_Author_url = $this->url()->user($Content_Author)->toString();
 	# Avatar
-	$Content_Avatar = delve($Content,'Avatar');
+	$Content_Avatar = delve($Content,'Avatar',array());
 	# Ancestors
 	$Content_Ancestors = delve($this,'Content_Ancestors',$Content->getAncestors(false));
 	$Content_Ancestors = $Content->toNavItems($Content_Ancestors);
@@ -77,7 +77,7 @@
 		))?>
 	</header>
 	
-	<? if ( delve($Content_Avatar,'id') ) :
+	<? if ( !reallyempty($Content_Avatar) ) :
 		$Content_Avatar_url = $this->url()->media($Content_Avatar)->toString();
 		?>
 		<div class="article-avatar avatar">
