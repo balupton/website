@@ -56,7 +56,7 @@ if ( !defined('PUBLIC_URL') ) {
 # --------------------------
 
 if ( !defined('HTMLPURIFIER_PATH') ) {
-	define('HTMLPURIFIER_PATH', 			realpath(COMMON_PATH . '/htmlpurifier-4.0.0-lib'));
+	define('HTMLPURIFIER_PATH', 			realpath(COMMON_PATH . '/htmlpurifier-4.1.1-lib'));
 }
 
 # --------------------------
@@ -159,10 +159,16 @@ if ( !isset($include_paths) ) {
 	unset($include_paths, $include_paths_original);
 }
 
-# Load
+# HTMLPurifier
+if ( HTMLPURIFIER_PATH ) {
+	require_once(HTMLPURIFIER_PATH.'/HTMLPurifier.auto.php');
+	require_once(HTMLPURIFIER_PATH.'/HTMLPurifier/Lexer/PH5P.php');
+}
+
+# Zend Application
 require_once implode(DIRECTORY_SEPARATOR, array(ZEND_PATH,'Zend','Application.php'));
 
-# Check
+# Check Permissions
 if ( defined('CONFIG_APP_PATHS') ) {
 	system('sudo chmod -R 777 '.CONFIG_APP_PATH);
 	$configs = explode(PATH_SEPARATOR,CONFIG_APP_PATHS);
@@ -174,7 +180,7 @@ if ( defined('CONFIG_APP_PATHS') ) {
 	unset($configs, $conf);
 }
 
-# Create
+# Create Application
 if ( !isset($Application) ) {
 	$Application = new Zend_Application(
 	    APPLICATION_ENV,
