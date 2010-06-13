@@ -226,8 +226,8 @@
 					</div>
 					
 					<div id="content-content-field" class="field field-rich ">
-						<? if ( $editor === 'besasdpin' ) : ?>
-							<div id="Content-content" style="height:200px; width:100%;"><?=delve($Content,'content')?></div>
+						<? if ( $editor === 'bespin' ) : ?>
+							<?=$this->formTextarea('Content[content]', '', array('tabindex'=>30, 'rows'=>5))?>
 						<? else: ?>
 							<?=$this->formTextarea('Content[content]', delve($Content,'content'), array('tabindex'=>30, 'rows'=>5))?>
 						<? endif; ?>
@@ -267,7 +267,7 @@
 <style type="text/css">
 	#Content-content {
 		width:100%;
-		height:200px;
+		height:400px;
 	}
 </style>
 <script type="text/javascript">
@@ -323,7 +323,7 @@ $(function(){
 		$('#Content-content').Tinymce('rich');
 		$('#Content-description').Tinymce('simple');
 	<? elseif ( $editor === 'bespin' ): ?>
-		$('#Content-content').Bespin('rich');
+		$('#Content-content').Bespin('rich', {content:"<?=format_to_output(delve($Content,'content',''),'jsattr')?>"});
 		//$('#Content-description').Bespin('simple');
 	<? endif; ?>
 });

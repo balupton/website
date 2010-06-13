@@ -72,9 +72,10 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$render = $this->_cache
 			? $content_rendered
 			: $this->renderWidgets(
-				$content,
+				format_to_output($content,'rich'),
 				$params += array('Content'=>$Content)
-			);
+			)
+		;
 			
 		# Return render
 		return $render;
@@ -98,9 +99,10 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$render = $this->_cache
 			? $description_rendered
 			: $this->renderWidgets(
-				$description,
+				format_to_output($description,'rich'),
 				$params += array('Content'=>$Content)
-			);
+			)
+		;
 		
 		# Return render
 		return $render;

@@ -799,6 +799,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function contentListAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
+		$Identity = $App->getUser();
 		$Request = $this->getRequest();
 		$type = $Request->getParam('type', 'content');
 		$App->activateNavigationItem('back.main', $type.'-list', true);
@@ -824,7 +825,15 @@ class Balcms_BackController extends Zend_Controller_Action {
 			 # No Search
 			
 			# Fetch Current
-			$Content = $this->_getContent(null, array('create'=>false));
+			$Content = Bal_Doctrine_Core::getItem('Content',null,array(
+				'create' => false,
+				'verify' => array(
+					'verifyAccess' => array(
+						'action' => 'view',
+						'Identity' => $Identity
+					)
+				)
+			));
 			
 			# Handle Current
 			if ( delve($Content,'id') ) {
