@@ -157,10 +157,11 @@ class Balcms_Content extends Base_Balcms_Content
 		$Content = $this;
 		$Links = array();
 		$url = $Content->getUrl();
-		$content = $Content->content_rendered;//content_rendered;
-		$content = preg_replace('/(<\\/?)(article|aside|audio|canvas|command|datalist|details|embed|figcaption|figure|footer|header|hgroup|keygen|mark|meter|nav|output|progress|rp|rt|ruby|source|summary|time|video)(>?)/i', '$1div$3', $content);
-		// ^ convert to HTML4 from HTML5
+		$content = $Content->content_rendered;
 		$content = str_replace(array('<section','section>'),array('<i','i>'),$content);
+		// ^ convert what we are looking for
+		$content = preg_replace('/(<\\/?)(article|aside|audio|canvas|command|datalist|details|embed|figcaption|figure|footer|header|hgroup|keygen|mark|meter|nav|output|progress|rp|rt|ruby|section|source|summary|time|video)(>?)/i', '$1div$3', $content);
+		// ^ convert to HTML4 from HTML5
 		$Document = new DOMDocument();
 		$Document->loadHTML('<html><head></head><body>'.$content.'</body></html>');
 		
