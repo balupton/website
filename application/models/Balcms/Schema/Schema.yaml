@@ -41,12 +41,12 @@ Balcms_Content:
             type: string
             notblank: true
             extra:
-                html: rich
+                html: raw
         description_rendered:
             type: string
             notblank: true
             extra:
-                html: rich
+                html: raw #handled explicity inside now
                 auto: true
         description_auto:
             type: bool
@@ -59,12 +59,12 @@ Balcms_Content:
             type: string
             notblank: true
             extra:
-                html: rich
+                html: raw
         content_rendered:
             type: string
             notblank: true
             extra:
-                html: rich
+                html: raw #handled explicity inside now
                 auto: true
             
         position:

@@ -562,7 +562,7 @@ class Balcms_Content extends Base_Balcms_Content
 	 */
 	public static function fetch ( array $params = array() ) {
 		# Prepare
-		Bal_Doctrine_Core::prepareFetchParams($params,array('fetch','Root','Parent','User','Author','ContentTags','codes','featured','recent'));
+		Bal_Doctrine_Core::prepareFetchParams($params,array('fetch','Content','Root','Parent','User','Author','ContentTags','codes','featured','recent'));
 		extract($params);
 		
 		# Query
@@ -596,15 +596,22 @@ class Balcms_Content extends Base_Balcms_Content
 		}
 		
 		# Criteria
+		if ( $Content ) {
+			$identifier = Bal_Doctrine_Core::resolveIdentifier('Content',$Content);
+			$Query->andWhere(
+				'Content.'.$identifier['column'].' = ?',
+				$identifier['value']
+			);
+		}
 		if ( $User ) {
-			$identifier = Bal_Doctrine_Core::resolveIdentifier('Content',$User);
+			$identifier = Bal_Doctrine_Core::resolveIdentifier('User',$User);
 			$Query->andWhere(
 				'Content.Author.'.$identifier['column'].' = ?',
 				$identifier['value']
 			);
 		}
 		if ( $Author ) {
-			$identifier = Bal_Doctrine_Core::resolveIdentifier('Content',$Author);
+			$identifier = Bal_Doctrine_Core::resolveIdentifier('User',$Author);
 			$Query->andWhere(
 				'Content.Author.'.$identifier['column'].' = ?',
 				$identifier['value']
