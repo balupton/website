@@ -14,6 +14,8 @@
 	# Author
 	$Content_Author = delve($Content,'Author');
 	$Content_Author_displayname = delve($Content_Author,'displayname');
+	$Content_Author_description = delve($Content_Author,'description');
+	$Content_Author_Avatar = delve($Content_Author,'Avatar',array());
 	$Content_Author_url = $this->url()->user($Content_Author)->toString();
 	# Avatar
 	$Content_Avatar = delve($Content,'Avatar',array());
@@ -82,7 +84,7 @@
 		?>
 		<div class="article-avatar avatar">
 			<a href="<?=$Content_Avatar_url?>" title="View Image">
-				<img src="<?=$Content_Avatar_url?>?width=200" title="<?=$Content_title?>" alt="<?=$Content_title?> Avatar" />
+				<img src="<?=$Content_Avatar_url?>?width=200" title="<?=$Content_title?>" alt="<?=$Content_title?>'s Avatar" />
 			</a>
 		</div>
 	<? endif; ?>
@@ -90,27 +92,67 @@
 	<!-- [more] -->
 	<? if ( in_array($mode,array('article')) ) : ?>
 		<div class="article-content">
-			<?=$this->content()->renderContentContent($Content)?>
+			<?=Content::renderContent($Content)?>
 		</div>
 
 		<footer class="article-footer footer">
-			<ul class="article-details details">
-				<li class="article-published published">
-					<span class="title">Published At</span>
-					<a class="description" href="<?=$Content_url?>"><time datetime="<?=date('c',strtotime($Content_published_at))?>" pubdate>
-						<?=$this->locale()->datetime($Content_published_at)?>
-					</time></a>
-				</li>
+			
+			<section class="section details">
+				<header class="header"><h1><span class="title">The End.</span></h1></header>
+
+				<ul class="article-details details">
+					<li class="article-published published">
+						<span class="title">Published At</span>
+						<a class="description" href="<?=$Content_url?>"><time datetime="<?=date('c',strtotime($Content_published_at))?>" pubdate>
+							<?=$this->locale()->datetime($Content_published_at)?>
+						</time></a>
+					</li>
 	
-				<li class="article-author author">
-					<span class="title">Author</span>
-					<a class="description" href="<?=$Content_Author_url?>">
-						<?=$Content_Author_displayname?>
-					</a>
-				</li>
-			</ul>
-		
-			<?=$this->partial('partials/comments.phtml',array(
+					<li class="article-author author">
+						<span class="title">Author</span>
+						<a class="description" href="<?=$Content_Author_url?>">
+							<?=$Content_Author_displayname?>
+						</a>
+					</li>
+				</ul>
+			</section>
+			
+			<? if ( $Content_Author_description ) : ?>
+			<section class="section author">
+				<header class="header"><h1><span class="title">About the Author</span></h1></header>
+				
+				<p><?=$Content_Author_description?></p>
+				
+				<? if ( !reallyempty($Content_Author_Avatar) ) :
+					$Content_Author_Avatar_url = $this->url()->media($Content_Author_Avatar)->toString();
+					?>
+					<div class="article-avatar avatar">
+						<a href="<?=$Content_Author_Avatar_url?>" title="View Image">
+							<img src="<?=$Content_Author_Avatar_url?>?width=200" title="<?=$Content_Author_displayname?>" alt="<?=$Content_Author_displayname?>'s Avatar" />
+						</a>
+					</div>
+				<? endif; ?>
+			</section>
+			<? endif; ?>
+
+			<section class="section comments">
+				<header class="header"><h1><span class="title">Comments</span></h1></header>
+
+				<div id="disqus_thread"></div>
+				<script type="text/javascript">
+					var disqus_identifier = "<?=format_to_output(delve($Content,'code'),'jsattr')?>";
+					var disqus_developer = 1;
+					var disqus_url = "<?=format_to_output($Content_url,'jsattr')?>";
+					(function() {
+						var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+						dsq.src = 'http://balupton.disqus.com/embed.js';
+						(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+					})();
+				</script>
+				<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=balupton">comments powered by Disqus.</a></noscript>
+			</section>
+			
+			<?=true?'':$this->partial('partials/comments.phtml',array(
 				'class' => 'article-comments',
 				'Items' => $Content_Comments
 			))?>
@@ -119,7 +161,7 @@
 	
 	<? if ( in_array($mode,array('list')) ) : ?>
 		<div class="article-description">
-			<?=$this->content()->renderContentDescription($Content)?>
+			<?=Content::renderDescription($Content)?>
 			<a class="more" href="<?=$Content_url?>" title="View the entire article">Continue Reading</a>
 		</div>
 	<? endif; ?>

@@ -31,7 +31,7 @@
             <label class="screen-reader-text" for="search-query">
                 Search:
             </label>
-			<?=$this->formText('search[query]',delve($this,'search.query'),array())?>
+			<?=$this->formText('search[query]',delve($this,'search.query'),array('placeholder'=>''))?>
 			<?=$this->formSubmit('search[submit]','Search',array('class'=>'button'))?>
         </p>
 	</form>
@@ -51,9 +51,6 @@
                     <th scope="col" class="manage-column column-icon"></th>
                     <th scope="col" id="title" class="manage-column column-title" style="">
                         Title
-                    </th>
-                    <th scope="col" class="manage-column column-author" style="">
-                        Description
                     </th>
                     <th scope="col" id="author" class="manage-column column-author" style="">
                         Author
@@ -80,9 +77,6 @@
                     <th scope="col" id="title" class="manage-column column-title" style="">
                         Title
                     </th>
-                    <th scope="col" class="manage-column column-author" style="">
-                        Description
-                    </th>
                     <th scope="col" id="author" class="manage-column column-author" style="">
                         Author
                     </th>
@@ -105,6 +99,7 @@
             	<?
 					$_Content_id = delve($_Content,'id');
 					$_Content_title = delve($_Content,'title');
+					$_Content_description = delve($_Content,'description');
 					$_Content_code = delve($_Content,'code');
 					$_Content_updated_at = delve($_Content,'updated_at');
 					$_Content_Avatar = delve($_Content,'Avatar');
@@ -114,8 +109,10 @@
             		$contentOpenUrl = $this->url()->action('content-list')->item($_Content)->toString();
             		$contentEditUrl = $this->url()->action('content-edit')->item($_Content)->toString();
             		$contentDeleteUrl = $this->url()->action('content-delete')->item($_Content)->toString();
+					//
+					$css_class = $this->cycle(array('','alternate'), 'ContentTree')->next();
             	?>
-                <tr id="content-<?=$_Content_id?>" class="<?=$this->cycle(array('','alternate'), 'ContentTree')->next()?>">
+                <tr id="content-<?=$_Content_id?>" class="<?=$css_class?>">
                 	<td class="column-icon media-icon">
 						<a title="View <?=$_Content_title?>" href="<?=$contentUrl?>">
 							<? if ( delve($_Content_Avatar,'id') ) : ?>
@@ -128,17 +125,14 @@
 					</td>
                     <td class="post-title page-title column-title">
 						<?=$this->formHidden('content[id]', $_Content_id)?>
-                        <strong><a class="row-title" href="<?=$contentOpenUrl?>" title="Open this">
+                        <strong><a class="row-title" href="<?=$contentOpenUrl?>" title="Browse <?=$_Content_title?>">
                         	<?=$_Content_title?>
 						</a></strong>
 						<div class="row-actions">
-							<span class="edit"><a title="Edit this" href="<?=$contentEditUrl?>">Edit</a> | </span>
+							<span class="edit"><a title="Edit <?=$_Content_title?>" href="<?=$contentEditUrl?>">Edit</a> | </span>
 							<span class="delete"><a class="delete-action"  title="Are you sure you want to delete <?=$_Content_title?>" href="<?=$contentDeleteUrl?>">Delete</a> | </span>
-							<span class="view"><a rel="permalink" title="View" href="<?=$contentUrl?>">View</a></span>
+							<span class="view"><a rel="permalink" title="View <?=$_Content_title?>" href="<?=$contentUrl?>">View</a></span>
 						</div>
-                    </td>
-                    <td class="author column-author">
-                        <?=delve($_Content,'description')?>
                     </td>
                     <td class="author column-author"><?
                         if ( !$_Content_Author ) :

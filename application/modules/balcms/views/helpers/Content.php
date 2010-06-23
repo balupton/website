@@ -2,12 +2,6 @@
 require_once 'Zend/View/Helper/Abstract.php';
 class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	
-    /**
-     * Whether or not to cache content
-     * @var bool
-     */
-	protected $_cache = null;
-	
 	/**
 	 * The App Plugin
 	 * @var Bal_Controller_Plugin_App
@@ -26,8 +20,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	 */
 	public function setView (Zend_View_Interface $view) {
 		# Apply
-		$this->_App = Zend_Controller_Front::getInstance()->getPlugin('Bal_Controller_Plugin_App');
-		$this->_cache = $this->_App->getConfig('bal.widgets.cache');
+		$this->_App = Bal_App::getPlugin('Bal_Controller_Plugin_App');
 		
 		# Set
 		$this->view = $view;
@@ -52,69 +45,6 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	public function content ( ) {
 		# Chain
 		return $this;
-	}
-	
-	/**
-	 * Render the Content's Content
-	 * @param mixed $Content
-	 * @param array $params
-	 * @return string rendered content
-	 */
-	public function renderContentContent ( Content $Content, array $params = array() ) {
-		# Fetch
-		$content = delve($Content,'content');
-		$content_rendered = delve($Content,'content_rendered');
-		
-		# Prepare Params
-		$params['Content'] = $Content;
-		
-		# Render Content
-		$render = $this->_cache
-			? $content_rendered
-			: $this->renderWidgets(
-				format_to_output($content,'html'),
-				$params += array('Content'=>$Content)
-			)
-		;
-			
-		# Return render
-		return $render;
-	}
-
-	/**
-	 * Render the Content description
-	 * @param mixed $Content
-	 * @param array $params
-	 * @return string rendered content
-	 */
-	public function renderContentDescription ( Content $Content, array $params = array() ) {
-		# Fetch
-		$description = delve($Content,'description');
-		$description_rendered = delve($Content,'description_rendered');
-		
-		# Prepare Params
-		$params['Content'] = $Content;
-		
-		# Render Description
-		$render = $this->_cache
-			? $description_rendered
-			: $this->renderWidgets(
-				format_to_output($description,'rich'),
-				$params += array('Content'=>$Content)
-			)
-		;
-		
-		# Return render
-		return $render;
-	}
-	
-	/**
-	 * Render all the widgets for a piece of content
-	 * @param string $content
-	 * @param array $params
-	 */
-	public function renderWidgets ( $content, array $params = array() ) {
-		return $this->view->getHelper('widget')->renderAll($content, $params);
 	}
 	
 	protected function _generateModel ( array $params ) {

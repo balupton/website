@@ -323,7 +323,7 @@ $(function(){
 		$('#Content-content').Tinymce('rich');
 		$('#Content-description').Tinymce('simple');
 	<? elseif ( $editor === 'bespin' ): ?>
-		$('#Content-content').Bespin('rich', {content:"<?=format_to_output(delve($Content,'content',''),'jsattr')?>"});
+		$('#Content-content').Bespin('rich', {"content":"<?=format_to_output(delve($Content,'content',''),'jsattr')?>"});
 		//$('#Content-description').Bespin('simple');
 	<? endif; ?>
 });
