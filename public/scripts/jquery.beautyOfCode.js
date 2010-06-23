@@ -17,7 +17,7 @@ jQuery.beautyOfCode = {
         autoLoad: true,
         // the base url to alex' hosted sources
         // http://alexgorbatchev.com/wiki/SyntaxHighlighter:Hosting
-        baseUrl: 'http://alexgorbatchev.com/pub/sh/2.1.364/',
+        baseUrl: 'http://alexgorbatchev.com.s3.amazonaws.com/pub/sh/2.1.364/',
         // the baseurl for the hosted scripts
         scripts: 'scripts/',
         // the baseurl for the hosted styles
@@ -75,7 +75,7 @@ jQuery.beautyOfCode = {
     },
 
     beautifyAll: function() {
-        jQuery("pre.code:has(code[class])").beautifyCode();
+        jQuery("pre.code:has(code[class]),code.code").beautifyCode();
     },
     utils: {
         loadScript: function(url, complete) {
@@ -206,9 +206,9 @@ jQuery.fn.beautifyCode = function(brush, params) {
 
         // for now, only supports <pre><code>...</code></pre>
         // support for only pre, or only code could be added
-        var $code = $item.children("code");
+        var $code = $item.is('code') ? $item : $item.children("code");
         var code = $code[0];
-        var classItems = code.className.replace('language-','').split(" ");
+        var classItems = code.className.replace(/.+?(brush:|language-)/,'$1').replace('language-','').split(" ");
 
         var brush = saveBrush ? saveBrush: classItems[0];
         var elementParams = jQuery.beautyOfCode.utils.parseParams(classItems);
