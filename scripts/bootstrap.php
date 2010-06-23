@@ -144,12 +144,13 @@ if ( !isset($fix_magic_quotes) || $fix_magic_quotes ) {
 # Ensure library/ is on include_path
 if ( !isset($include_paths) ) {
 	$include_paths = $include_paths_original = array();
+	$include_paths[] = BALPHP_PATH;
 	if ( defined('ZEND_PATH') )
 		$include_paths[] = ZEND_PATH;
 	//if ( defined('DOCTRINE_PATH') )
 	//	$include_paths[] = DOCTRINE_PATH;
 	$include_paths[] = LIBRARY_PATH;
-	$include_paths[] = BALPHP_PATH;
+	//$include_paths[] = BALPHP_PATH;
 	$include_paths[] = MODELS_PATH;
 	$include_paths_original = str_replace('.:/usr/local/zend/share/ZendFramework/library:', '', get_include_path());
 	$include_paths_original = array_diff(explode(':',$include_paths_original),$include_paths);
