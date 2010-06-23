@@ -160,7 +160,7 @@ class Balcms_Content extends Base_Balcms_Content
 		$content = $Content->content_rendered;
 		$content = str_replace(array('<section','section>'),array('<i','i>'),$content);
 		// ^ convert what we are looking for
-		$content = preg_replace('/(<\\/?)(article|aside|audio|canvas|command|datalist|details|embed|figcaption|figure|footer|header|hgroup|keygen|mark|meter|nav|output|progress|rp|rt|ruby|section|source|summary|time|video)(>?)/i', '$1div$3', $content);
+		$content = html4ize($content);
 		// ^ convert to HTML4 from HTML5
 		$Document = new DOMDocument();
 		$Document->loadHTML('<html><head></head><body>'.$content.'</body></html>');
@@ -372,6 +372,68 @@ class Balcms_Content extends Base_Balcms_Content
 	}
 	
 	/**
+	 * Render the Content's Content
+	 * @param mixed $Content
+	 * @param array $params
+	 * @return string rendered content
+	 */
+	public static function renderContent ( Content $Content, array $params = array() ) {
+		# Prepare
+		$WidgetHelper = Bal_App::getViewHelper('widget');
+		$cache = delve($params,'cache',Bal_App::getConfig('bal.content.cache', false));
+		
+		# Fetch
+		$content = delve($Content,'content');
+		$content_rendered = delve($Content,'content_rendered');
+		
+		# Prepare Params
+		$params['Content'] = $Content;
+		
+		# Render Content
+		$render = $cache
+			? $content_rendered
+			: $WidgetHelper->renderAll(
+				format_to_output($content,'raw'),
+				$params += array('Content'=>$Content)
+			)
+		;
+			
+		# Return render
+		return $render;
+	}
+
+	/**
+	 * Render the Content description
+	 * @param mixed $Content
+	 * @param array $params
+	 * @return string rendered content
+	 */
+	public static function renderDescription ( Content $Content, array $params = array() ) {
+		# Prepare
+		$WidgetHelper = Bal_App::getViewHelper('widget');
+		$cache = delve($params,'cache',Bal_App::getConfig('bal.content.cache', false));
+		
+		# Fetch
+		$description = delve($Content,'description');
+		$description_rendered = delve($Content,'description_rendered');
+		
+		# Prepare Params
+		$params['Content'] = $Content;
+		
+		# Render Description
+		$render = $cache
+			? $description_rendered
+			: $WidgetHelper->renderAll(
+				format_to_output($description,'rich'),
+				$params += array('Content'=>$Content)
+			)
+		;
+		
+		# Return render
+		return $render;
+	}
+	
+	/**
 	 * Ensure the Render of the Content and Description
 	 * @param Doctrine_Event $Event
 	 * @return bool
@@ -385,7 +447,6 @@ class Balcms_Content extends Base_Balcms_Content
 		
 		# Prepare
 		$save = false;
-		$View = Bal_App::getView();
 		
 		# Fetch
 		$Content = $Event->getInvoker();
@@ -394,7 +455,7 @@ class Balcms_Content extends Base_Balcms_Content
 		# Content
 		if ( array_key_exists('content', $modified) ) {
 			# Render Content
-			$content_rendered = $View->content()->renderContentContent($Content);
+			$content_rendered = Content::renderContent($Content, array('cache'=>false));
 			$Content->set('content_rendered', $content_rendered, false);
 			# Save
 			$save = true;
@@ -405,7 +466,7 @@ class Balcms_Content extends Base_Balcms_Content
 			# Auto
 			$Content->set('description_auto',false,false);
 			# Render Description
-			$description_rendered = $View->content()->renderContentDescription($Content);
+			$description_rendered = Content::renderDescription($Content, array('cache'=>false));
 			$Content->set('description_rendered', $description_rendered, false);
 			# Save
 			$save = true;
