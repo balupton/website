@@ -1,0 +1,18 @@
+<?
+	# Prepare
+	$this->url()->renege('route','front');
+	# Extract
+	$Oembed = delve($this,'Oembed');
+	$title = $Oembed->title;
+	$author = $Oembed->author_name;
+	$video = html_entity_decode($Oembed->html);
+?>
+<section id="<?=$id?>" class="widget widget-vimeo <?=$class?> section">
+    <header class="widget-header section-header header">
+        <h1><span class="title"><?=$title?></span></h1>
+		<h1><span class="author"><?=$author?></span></h1>
+    </header>
+    <div class="widget-content">
+		<?=$video?>
+    </div>
+</section>
