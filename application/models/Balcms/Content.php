@@ -163,7 +163,7 @@ class Balcms_Content extends Base_Balcms_Content
 		$content = html4ize($content);
 		// ^ convert to HTML4 from HTML5
 		$Document = new DOMDocument();
-		$Document->loadHTML('<html><head></head><body>'.$content.'</body></html>');
+		@$Document->loadHTML('<html><head></head><body>'.$content.'</body></html>'); // suppress malformed errors
 		
 		# Generate
 		$Sections = $Document->getElementsByTagName('i');
@@ -462,7 +462,7 @@ class Balcms_Content extends Base_Balcms_Content
 		}
 		
 		# Description
-		if ( array_key_exists('description', $modified) ) {
+		if ( array_key_exists('description', $modified) && (!$Content->description_auto || $Content->description) ) {
 			# Auto
 			$Content->set('description_auto',false,false);
 			# Render Description
@@ -471,7 +471,7 @@ class Balcms_Content extends Base_Balcms_Content
 			# Save
 			$save = true;
 		}
-		elseif ( $Content->description_auto || !$Content->description ) {
+		elseif ( $Content->description_auto ) {
 			# Auto
 			$Content->set('description_auto',true,false);
 			# Render Description
