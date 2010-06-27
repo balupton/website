@@ -1,0 +1,16 @@
+<?
+	# Prepare
+	$this->url()->renege('route','front');
+	# Extract
+	$youtube = delve($this,'youtube');
+?>
+<section class="widget widget-youtube section">
+    <header class="widget-header section-header header">
+        <h1><span class="title">Youtube Video</span></h1>
+    </header>
+    <div class="widget-content">
+		<object type="application/x-shockwave-flash" class="youtube-embed" data="<?=$url?>">
+			<param name="movie" value="<?=$url?>" />
+		</object>
+    </div>
+</section>

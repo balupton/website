@@ -7,10 +7,10 @@
 	$author = $Oembed->author_name;
 	$video = html_entity_decode($Oembed->html);
 ?>
-<section id="<?=$id?>" class="widget widget-vimeo <?=$class?> section">
+<section class="widget widget-vimeo section">
     <header class="widget-header section-header header">
         <h1><span class="title"><?=$title?></span></h1>
-		<h1><span class="author"><?=$author?></span></h1>
+		<h2><span class="author"><?=$author?></span></h2>
     </header>
     <div class="widget-content">
 		<?=$video?>

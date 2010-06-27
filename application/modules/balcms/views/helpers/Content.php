@@ -117,7 +117,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$model = array_merge($params, $model);
 		
 		# Render
-		return $this->renderWidgetView('taglist', $model);
+		return $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/taglist/taglist'), $model);
 	}
 	
 	/**
@@ -134,7 +134,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$model = array_merge($params, $model);
 		
 		# Render
-		return $this->renderWidgetView('subscribe', $model);
+		return $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/subscribe/subscribe'), $model);
 	}
 	
 	/**
@@ -155,7 +155,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$model = $this->_generateModel($params);
 		
 		# Render
-		return $this->renderWidgetView(delve($params,'partial','contentlist'), $model);
+		return $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/contentlist/contentlist'), $model);
 	}
 	
 	/**
@@ -183,19 +183,8 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$model = array_merge($params, $model);
 		
 		# Render
-		return $this->renderWidgetView('eventlist', $model);
+		return $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/eventlist/eventlist'), $model);
 	}
-	
-	/**
-	 * Render a Widget's View Script
-	 * @param string $widget
-	 * @param array $model [optional]
-	 * @return string
-	 */
-	public function renderWidgetView ( $widget, array $model = array() ) {
-		return $this->view->getHelper('widget')->renderWidgetView($widget, $model);
-	}
-	
 	
 	/**
 	 * Fetch the Content Id from the params

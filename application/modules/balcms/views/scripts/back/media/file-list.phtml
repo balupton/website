@@ -13,7 +13,7 @@
 ?>
 <div class="wrap">
     <!-- Actions -->
-	<form action="<?=$this->url()->action('media-file-list')?>" method="post" enctype="multipart/form-data">
+	<form action="<?=$this->url()->action('media-file-new')?>" method="post" enctype="multipart/form-data">
 		<!-- Edit Button -->
 	    <div id="icon-upload" class="icon32">
 	        <br/>
@@ -145,7 +145,7 @@
                     </td>
                     <td class="author column-author"><?
                         if ( empty($_File_Author) ) :
-                        	echo 'Unkown';
+                        	echo 'Unknown';
                         else:
                         	$author = $_File_Author_displayname;
                         	$author_url = $this->url()->action('media-file-list')->search($author)->toString();

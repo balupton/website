@@ -351,14 +351,24 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# --------------------------
 		
-		# Fetch
-		$User = $this->_getUser();
-		if ( $User->level > $Identity->level ) {
-			throw new Zend_Exception('error-user-level');
+		# Fetch and Save Item (if applicable)
+		$User = Bal_Doctrine_Core::fetchAndSaveItem('User',null,array(
+			'create' => true,
+			'clean' => array('Avatar'),
+			'remove' => array('password'),
+			'verify' => array(
+				'verifyAccess' => array(
+					'action' => 'edit',
+					'Identity' => $Identity
+				)
+			)
+		));
+		if ( !$User ) {
+			// access denied
+			return $this->_forward('content-list');
 		}
 		
 		# Apply
-		$User = $this->_saveUser($User, array('remove'=>array('password')));
 		$App->activateNavigationItem('back.main', 'user-'.($User->id ? 'list' : 'new'), true);
 		
 		# Form
@@ -535,9 +545,23 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function mediaFileDeleteAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
+		$Identity = $App->getUser();
+				
+		# --------------------------
 		
-		# Delete
-		$App->deleteItem('File');
+		# Fetch and Delete Item (if applicable)
+		Bal_Doctrine_Core::fetchAndDeleteItem('File',null,array(
+			'force' => true,
+			'create' => false,
+			'verify' => array(
+				'verifyAccess' => array(
+					'action' => 'delete',
+					'Identity' => $Identity
+				)
+			)
+		));
+				
+		# --------------------------
 		
 		# Redirect
 		return $this->getHelper('redirector')->gotoRoute(array('action'=>'media-file-list'), 'back', true);
@@ -546,41 +570,57 @@ class Balcms_BackController extends Zend_Controller_Action {
 	public function mediaFileEditAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');
-		$App->activateNavigationItem('back.main', 'file-list', true);
+		$Identity = $App->getUser();
 		
 		# --------------------------
 		
+		# Fetch and Save Item (if applicable)
+		$File = Bal_Doctrine_Core::fetchAndSaveItem('File',null,array(
+			'create' => false,
+			'keep' => array('file', 'code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'),
+			'apply' => array(
+				'Author' => $Identity
+			),
+			'verify' => array(
+				'verifyAccess' => array(
+					'action' => 'edit',
+					'Identity' => $Identity
+				)
+			)
+		));
+		
+		# --------------------------
+		
+		# Redirect
+		return $this->getHelper('redirector')->gotoRoute(array('action'=>'media-file-list'), 'back', true);
+	}
+	
+	public function mediaFileNewAction ( ) {
 		# Prepare
-		$File = array();
+		$App = $this->getHelper('App');
+		$Identity = $App->getUser();
 		
-		# Save
-		try {
-			$File = $this->_saveFile();
-			if ( !$File->id ) {
-				# No File
-				return $this->_redirect('media-file-new');
-			}
-			elseif ( !delve('file.id') && $File->id ) {
-				# New File
-				return $this->getHelper('redirector')->gotoRoute(array('action' => 'media-file-edit', 'file' => $File->code), 'back', true);
-			}
-		}
-		catch ( Exception $Exception ) {
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
-		}
+		# --------------------------
+	
+		# Fetch and Save Item (if applicable)
+		$File = Bal_Doctrine_Core::fetchAndSaveItem('File',null,array(
+			'create' => true,
+			'keep' => array('file', 'code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height'),
+			'apply' => array(
+				'Author' => $Identity
+			),
+			'verify' => array(
+				'verifyAccess' => array(
+					'action' => 'edit',
+					'Identity' => $Identity
+				)
+			)
+		));
 		
 		# --------------------------
 		
-		# Apply
-		$this->view->File = $File;
-		
-		# Render
-		$this->render('midia/file-edit');
-		
-		# Done
-		return true;
+		# Redirect
+		return $this->getHelper('redirector')->gotoRoute(array('action'=>'media-file-list'), 'back', true);
 	}
 	
 	public function mediaFileListAction ( ) {
@@ -594,18 +634,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 		# Search
 		$search = $App->fetchSearch();
 		$searchQuery = delve($search,'query');
-		
-		# Save
-		try {
-			$File = $this->_saveFile();
-			if ( is_object($File) )
-			$this->view->File = $File->toArray();
-		}
-		catch ( Exception $Exception ) {
-			# Log the Event and Continue
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
-		}
 		
 		# --------------------------
 		
@@ -910,142 +938,6 @@ class Balcms_BackController extends Zend_Controller_Action {
 		
 		# Respond
 		$this->getHelper('json')->sendJson($data);
-	}
-
-	
-	# ========================
-	# CONTENT: GENERIC
-	
-	protected function _getContent ( $record = null, array $options = array() ) {
-		# Prepare
-		$App = $this->getHelper('App');
-		
-		# Options
-		array_keys_ensure($options, array('create'));
-		
-		# --------------------------
-		
-		# Create
-		if ( $options['create'] === null ) {
-			$options['create'] = true;
-		}
-		
-		# Fetch
-		$Content = Bal_Doctrine_Core::fetchItem('Content', $record, $options);
-		
-		# --------------------------
-		
-		# Return Content
-		return $Content;
-	}
-	
-	
-	# ========================
-	# FILE: GENERIC
-	
-	protected function _getFile ( $record = null, array $options = array() ) {
-		# Prepare
-		$App = $this->getHelper('App');
-		
-		# Options
-		array_keys_ensure($options, array('create'));
-		
-		# --------------------------
-		
-		# Create
-		if ( $options['create'] === null ) {
-			$options['create'] = true;
-		}
-		
-		# Fetch
-		$File = Bal_Doctrine_Core::fetchItem('File', $record, $options);
-		
-		# --------------------------
-		
-		# Return File
-		return $File;
-	}
-	
-	protected function _saveFile ( $record = null, array $options = array() ) {
-		# Prepare
-		$App = $this->getHelper('App');
-		
-		# Options
-		array_keys_ensure($options, array('create','keep'));
-		
-		# --------------------------
-		
-		# Create
-		if ( $options['create'] === null ) {
-			$options['create'] = true;
-		}
-		
-		# Keep
-		if ( $options['keep'] === null ) {
-			$options['keep'] = array('file', 'code', 'title', 'path', 'size', 'type', 'mimetype', 'width', 'height');
-		}
-		
-		# Save
-		$File = Bal_Doctrine_Core::saveItem('File', $record, $options);
-		
-		# --------------------------
-		
-		# Return File
-		return $File;
-	}
-	
-	# ========================
-	# USER: GENERIC
-	
-	protected function _getUser ( $record = null, array $options = array() ) {
-		# Prepare
-		$App = $this->getHelper('App');
-		
-		# Options
-		array_keys_ensure($options, array('create'));
-		
-		# --------------------------
-		
-		# Create
-		if ( $options['create'] === null ) {
-			$options['create'] = true;
-		}
-		
-		# Fetch
-		$File = Bal_Doctrine_Core::fetchItem('User', $record, $options);
-		
-		# --------------------------
-		
-		# Return File
-		return $File;
-	}
-	
-	protected function _saveUser ( $record = null, array $options = array() ) {
-		# Prepare
-		$App = $this->getHelper('App');
-		
-		# Options
-		array_keys_ensure($options, array('create','remove'));
-		
-		# --------------------------
-		
-		# Create
-		if ( $options['create'] === null ) {
-			$options['create'] = true;
-		}
-		
-		# Remove
-		if ( $options['remove'] === null ) {
-			$options['remove'] = array('permissions', 'roles', 'Permissions', 'Roles');
-		}
-		
-		# Save
-		$User = Bal_Doctrine_Core::saveItem('User', $record, $options);
-		
-		# --------------------------
-		
-		# Return User
-		return $User;
 	}
 	
 	

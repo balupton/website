@@ -1,0 +1,23 @@
+<?
+	# Prepare
+	$this->url()->renege('route','front');
+	# Extract
+	$username = delve($this,'flickr.person.username._content','');
+	$realname = delve($this,'flickr.person.realname._content',$username);
+	$profile_url =  delve($this,'flickr.person.profileurl._content','');
+	$photos = delve($this,'flickr.photos.photo',array());
+?>
+<section class="widget widget-gallery section">
+    <header class="widget-header section-header header">
+        <h1><span class="title">Flickr Favorites: <a href="<?=$profile_url?>" title="<?=$realname?>"><?=$username?></a></span></h1>
+    </header>
+    <div class="widget-content">
+		<div class="gallery flickr flickr-gallery">
+			<ul class="images">
+				<? foreach ( $photos as $photo ) :
+					echo populate('<li class="image"><a href="$url_m" title="$title"><img src="$url_sq" title="$title" height="$height_sq" width="width_sq" /></a></li>', $photo);
+				endforeach; ?>
+			</ul>
+		</div>
+    </div>
+</section>
