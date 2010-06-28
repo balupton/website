@@ -112,7 +112,7 @@ class Balcms_View_Helper_Gallery extends Zend_View_Helper_Abstract {
 			
 			case strstr($input,'/galleries/'):
 				# Photoset
-				$gallery = substr($input, strrpos($input,'/')+1);
+				$gallery = $input;
 				$xhtml = $this->_handleFlickr_Gallery($gallery);
 				break;
 			
@@ -156,6 +156,17 @@ class Balcms_View_Helper_Gallery extends Zend_View_Helper_Abstract {
 			));
 		}
 		
+		# Postpare
+		if ( is_array(delve($response_object,'photos.photo')) ) {
+			# Add Extra Information
+			foreach ( $response_object['photos']['photo'] as &$photo ) {
+				# Owner Url
+				$photo['owner_url'] = 'http://www.flickr.com/photos/'.delve($photo,'pathalias',delve($photo,'owner'));
+				# Photo Url
+				$photo['url'] = $photo['owner_url'].'/'.delve($photo,'id');
+			}
+		}
+		
 		# Return response_object
 		return $response_object;
 	}
@@ -177,7 +188,7 @@ class Balcms_View_Helper_Gallery extends Zend_View_Helper_Abstract {
 		# flickr.photosets.getPhotos
 		$params = array_merge($params,array(
 			'method' => 'flickr.photosets.getPhotos',
-			'extras' => 'url_sq, url_t, url_s, url_m, url_o',
+			'extras' => 'owner_name, path_alias, description, url_sq, url_t, url_s, url_m, url_o',
 			'privacy_filter' => 1
 		));
 		$response = array_merge($response,$this->_requestFlickr($params));
@@ -193,26 +204,49 @@ class Balcms_View_Helper_Gallery extends Zend_View_Helper_Abstract {
 		return $xhtml;
 	}
 	
-	protected function _handleFlickr_Gallery ( $id ) {
+	protected function _handleFlickr_Gallery ( $input ) {
 		# Prepare
 		$xhtml = '';
 		$model = array();
 		
-		# flickr.galleries.getInfo
-		$params = array(
-			'api_key' => $this->_flickr_key,
-			'method' => 'flickr.galleries.getInfo',
-			'format' => 'php_serial',
-			'gallery_id' => $id
-		);
-		$response = $this->_requestFlickr($params);
+		# Handle Input
+		if ( strstr($input, '/galleries/') ) {
+			# We have a url, so lookup id - http://code.flickr.com/blog/2010/04/08/galleries-apis/
+			# flickr.galleries.getInfo
+			$params = array(
+				'api_key' => $this->_flickr_key,
+				'method' => 'flickr.urls.lookupGallery',
+				'format' => 'php_serial',
+				'url' => $input
+			);
+			$response = $this->_requestFlickr($params);
+			
+			# Extract gallery_id
+			$gallery_id = $response['gallery']['id'];
+		}
+		else {
+			# Extract gallery_id
+			$gallery_id = $input;
+			
+			# flickr.galleries.getInfo
+			$params = array(
+				'api_key' => $this->_flickr_key,
+				'method' => 'flickr.galleries.getInfo',
+				'format' => 'php_serial',
+				'gallery_id' => $gallery_id
+			);
+			$response = $this->_requestFlickr($params);
+		}
 		
 		# flickr.galleries.getPhotos
-		$params = array_merge($params,array(
+		$params = array(
+			'api_key' => $this->_flickr_key,
 			'method' => 'flickr.galleries.getPhotos',
-			'extras' => 'url_sq, url_t, url_s, url_m, url_o',
+			'format' => 'php_serial',
+			'gallery_id' => $gallery_id,
+			'extras' => 'owner_name, path_alias, description, url_sq, url_t, url_s, url_m, url_o',
 			'privacy_filter' => 1
-		));
+		);
 		$response = array_merge($response,$this->_requestFlickr($params));
 		
 		# Apply the Model
@@ -243,7 +277,7 @@ class Balcms_View_Helper_Gallery extends Zend_View_Helper_Abstract {
 		# flickr.favorites.getPublicList
 		$params = array_merge($params,array(
 			'method' => 'flickr.favorites.getPublicList',
-			'extras' => 'url_sq, url_t, url_s, url_m, url_o',
+			'extras' => 'owner_name, path_alias, description, url_sq, url_t, url_s, url_m, url_o',
 			'privacy_filter' => 1
 		));
 		$response = array_merge($response,$this->_requestFlickr($params));
@@ -270,7 +304,7 @@ class Balcms_View_Helper_Gallery extends Zend_View_Helper_Abstract {
 			'method' => 'flickr.photos.search',
 			'format' => 'php_serial',
 			'text' => $search,
-			'extras' => 'url_sq, url_t, url_s, url_m, url_o',
+			'extras' => 'owner_name, path_alias, description, url_sq, url_t, url_s, url_m, url_o',
 			'privacy_filter' => 1,
 			'sort' => 'interestingness-desc'
 		);

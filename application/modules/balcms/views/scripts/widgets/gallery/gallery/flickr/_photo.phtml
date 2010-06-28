@@ -1,0 +1,16 @@
+<?
+// Imported: $photo
+
+# Fetch
+$image_title = delve($photo,'title');
+$image_description = delve($photo,'description._content');
+$image_author = delve($photo,'ownername');
+$image_author_url = delve($photo,'owner_url');
+$image_url = delve($photo,'url');
+$image_url_large = delve($photo,'url_o',delve($photo,'url_m'));
+$image_url_thumbnail = delve($photo,'url_sq');
+$image_thumbnail_height = delve($photo,'height_sq','');
+$image_thumbnail_width = delve($photo,'width_sq','');
+
+# Render
+require(dirname(__FILE__).'/../_image.phtml');

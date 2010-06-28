@@ -14,8 +14,8 @@
     <div class="widget-content">
 		<div class="gallery flickr flickr-gallery">
 			<ul class="images">
-				<? foreach ( $photos as $photo ) :
-					echo populate('<li class="image"><a href="$url_m" title="$title"><img src="$url_sq" title="$title" height="$height_sq" width="width_sq" /></a></li>', $photo);
+				<? foreach ( $photos as $photo ) : 
+					require(dirname(__FILE__).'/_photo.phtml');
 				endforeach; ?>
 			</ul>
 		</div>

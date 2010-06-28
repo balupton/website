@@ -1,0 +1,26 @@
+<?
+/* Imported:
+	$image_title
+	$image_description
+	$image_author
+	$image_author_url
+	$image_url
+	$image_url_large
+	$image_url_thumbnail
+	$image_thumbnail_height
+	$image_thumbnail_width
+*/
+
+# Render
+?>
+<li class="image">
+	<a href="<?=$image_url?>" class="image-thumbnail image-link" title="View Image">
+		<img title="<?=format_to_output($image_title,'htmlattr')?>" src="<?=$image_url_thumbnail?>" height="<?=$image_thumbnail_height?>" width="<?=$image_thumbnail_width?>" />
+		<span class="image-title"><?=$image_title?></span>
+	</a>
+	<a href="<?=$image_url_large?>" class="image-large image-link" title="View Large" />
+	<a href="<?=$image_author_url?>" class="image-link" title="View Author">
+		<div class="image-author"><?=$image_author?></div>
+	</a>
+	<div class="image-description"><?=$image_description?></div>
+</li>
