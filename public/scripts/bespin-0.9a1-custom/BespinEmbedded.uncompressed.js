@@ -3300,23 +3300,9 @@ tiki.replay(); // replay queue
 bespin.tiki = tiki;
 })();
 
-;bespin.tiki.register("::jquery", {
-    name: "jquery",
-    dependencies: {  }
-});
-bespin.tiki.module("jquery:index",function(require,exports,module) {
-// This module exports the global jQuery.
-
-"define metadata";
-({});
-"end";
-
-exports.$ = window.$;
-
-});
 ;bespin.tiki.register("::bespin", {
     name: "bespin",
-    dependencies: { "jquery": "0.0.0" }
+    dependencies: {  }
 });bespin.bootLoaded = true;
 bespin.tiki.module("bespin:builtins",function(require,exports,module) {
 /* ***** BEGIN LICENSE BLOCK *****
@@ -3365,6 +3351,9 @@ exports.metadata =
             {
                 "ep": "extensionpoint",
                 "name": "extensionpoint",
+                "indexOx": "name",
+                "register": "plugins#registerExtensionPoint",
+                "unregister": "plugins#unregisterExtensionPoint",
                 "description": "Defines a new extension point",
                 "params": [
                     {
@@ -3403,6 +3392,8 @@ exports.metadata =
             {
                 "ep": "extensionpoint",
                 "name": "extensionhandler",
+                "register": "plugins#registerExtensionHandler",
+                "unregister": "plugins#unregisterExtensionHandler",
                 "description": "Used to attach listeners ",
                 "params": [
                     {
@@ -3791,11 +3782,15 @@ var builtins = require("builtins");
 var console = require("console").console;
 var util = require("util/util");
 var Trace = require("util/stacktrace").Trace;
+var proxy = require('proxy');
 
 var r = require;
 
 var loader = require.loader;
 var browser = loader.sources[0];
+
+var USER_DEACTIVATED    = 'USER';
+var DEPENDS_DEACTIVATED = 'DEPENDS';
 
 /**
  * Split an extension pointer from module/path#objectName into an object of the
@@ -3856,7 +3851,8 @@ exports.Extension.prototype = {
      * @returns A promise to be fulfilled on completion. Preferred over using the
      * <tt>callback</tt> parameter.
      */
-    load: function(callback, property) {
+    load: function(callback, property, catalog) {
+        catalog = catalog || exports.catalog;
         var promise = new Promise();
 
         var onComplete = function(func) {
@@ -3881,8 +3877,9 @@ exports.Extension.prototype = {
             promise.reject(new Error('Extension has no \'pointer\' to call'));
             return promise;
         }
-        
-        exports.catalog.loadPlugin(this.pluginName).then(function() {
+
+        var pluginName = this.pluginName;
+        catalog.loadPlugin(pluginName).then(function() {
             require.ensure(pointerObj.modName, function() {
                 var func = _retrieveObject(pointerObj);
                 onComplete(func);
@@ -3890,6 +3887,8 @@ exports.Extension.prototype = {
                 // TODO: consider caching 'func' to save looking it up again
                 // Something like: this._setPointer(property, data);
             });
+        }, function(err) {
+            console.error('Failed to load plugin ', pluginName, err);
         });
 
         return promise;
@@ -3989,6 +3988,7 @@ exports.ExtensionPoint.prototype = {
     },
 
     register: function(extension) {
+        var catalog = this.catalog;
         this.extensions.push(extension);
         this.handlers.forEach(function(handler) {
             if (handler.register) {
@@ -3996,14 +3996,15 @@ exports.ExtensionPoint.prototype = {
                     if (!register) {
                         console.error('missing register function for pluginName=', extension.pluginName, ", extension=", extension.name);
                     } else {
-                         register(extension);
+                         register(extension, catalog);
                     }
-                }, "register");
+                }, "register", catalog);
             }
         });
     },
 
     unregister: function(extension) {
+        var catalog = this.catalog;
         this.extensions.splice(this.extensions.indexOf(extension), 1);
         this.handlers.forEach(function(handler) {
             if (handler.unregister) {
@@ -4011,9 +4012,9 @@ exports.ExtensionPoint.prototype = {
                     if (!unregister) {
                         console.error('missing unregister function for pluginName=', extension.pluginName, ", extension=", extension.name);
                     } else {
-                         unregister(extension);
+                         unregister(extension, catalog);
                     }
-                }, "unregister");
+                }, "unregister", catalog);
             }
         });
     },
@@ -4092,8 +4093,9 @@ exports.Plugin.prototype = {
      * Figure out which plugins depend on a given plugin. This
      * will allow the reload behavior to unregister/reregister
      * all of the plugins that depend on the one being reloaded.
+     * If firstLevelOnly is true, only direct dependent plugins are listed.
      */
-    _findDependents: function(pluginList, dependents) {
+    _findDependents: function(pluginList, dependents, firstLevelOnly) {
         var pluginName = this.name;
         var self = this;
         pluginList.forEach(function(testPluginName) {
@@ -4107,7 +4109,9 @@ exports.Plugin.prototype = {
                         dependents[testPluginName] = {
                             keepModule: false
                         };
-                        plugin._findDependents(pluginList, dependents);
+                        if (!firstLevelOnly) {
+                            plugin._findDependents(pluginList, dependents);
+                        }
                     }
                 }
             }
@@ -4115,9 +4119,10 @@ exports.Plugin.prototype = {
     },
 
     /**
-     * removes the plugin from Tiki's registries.
+     * Removes the plugin from Tiki's registries.
+     * As with the new multiple Bespins, this only clears the current sandbox.
      */
-    _cleanup: function() {
+    _cleanup: function(leaveLoader) {
         // Remove the css files.
         this.stylesheets.forEach(function(stylesheet) {
             var links = document.getElementsByTagName('link');
@@ -4140,26 +4145,28 @@ exports.Plugin.prototype = {
         var loader = require.loader;
         var source = browser;
 
-        // Clear the loader.
-        _removeFromObject(moduleMatch, loader.factories);
-        _removeFromObject(packageMatch, loader.canonicalIds);
-        _removeFromObject(packageMatch, loader.canonicalPackageIds);
-        _removeFromObject(packageMatch, loader.packageSources);
-        _removeFromObject(packageMatch, loader.packages);
+        if (!leaveLoader) {
+            // Clear the loader.
+            _removeFromObject(moduleMatch, loader.factories);
+            _removeFromObject(packageMatch, loader.canonicalIds);
+            _removeFromObject(packageMatch, loader.canonicalPackageIds);
+            _removeFromObject(packageMatch, loader.packageSources);
+            _removeFromObject(packageMatch, loader.packages);
+
+            // Clear the source.
+            _removeFromObject(nameMatch, source.packageInfoByName);
+            _removeFromObject(moduleMatch, source.factories);
+            _removeFromObject(moduleMatch, source.scriptActions);
+            _removeFromObject(moduleMatch, source.stylesheetActions);
+            _removeFromObject(packageMatch, source.packages);
+            _removeFromObject(packageMatch, source.ensureActions);
+            _removeFromObject(packageMatch, source.packageInfoById);
+        }
 
         // Clear the sandbox.
         _removeFromObject(moduleMatch, sandbox.exports);
         _removeFromObject(moduleMatch, sandbox.modules);
         _removeFromObject(moduleMatch, sandbox.usedExports);
-
-        // Clear the source.
-        _removeFromObject(nameMatch, source.packageInfoByName);
-        _removeFromObject(moduleMatch, source.factories);
-        _removeFromObject(moduleMatch, source.scriptActions);
-        _removeFromObject(moduleMatch, source.stylesheetActions);
-        _removeFromObject(packageMatch, source.packages);
-        _removeFromObject(packageMatch, source.ensureActions);
-        _removeFromObject(packageMatch, source.packageInfoById);
     },
 
     /**
@@ -4314,20 +4321,51 @@ var _setPath = function(root, path, value) {
 exports.Catalog = function() {
     this.points = {};
     this.plugins = {};
+    this.metadata = {};
+
+    this.USER_DEACTIVATED = USER_DEACTIVATED;
+    this.DEPENDS_DEACTIVATED = DEPENDS_DEACTIVATED;
+
+    // Stores the deactivated plugins. Plugins deactivated by the user have the
+    // value USER_DEACTIVATED. If a plugin is deactivated because a required
+    // plugin is deactivated, then the value is a DEPENDS_DEACTIVATED.
     this.deactivatedPlugins = {};
     this._extensionsOrdering = [];
     this.instances = {};
     this.instancesLoadPromises = {};
     this._objectDescriptors = {};
 
+    // Stores the child catalogs.
+    this.children = [];
+
     // set up the "extensionpoint" extension point.
     // it indexes on name.
     var ep = this.getExtensionPoint("extensionpoint", true);
     ep.indexOn = "name";
-    this.loadMetadata(builtins.metadata);
+    this.registerMetadata(builtins.metadata);
 };
 
 exports.Catalog.prototype = {
+
+    /**
+     * Returns true if the extension is shared.
+     */
+    shareExtension: function(ext) {
+        return this.plugins[ext.pluginName].share;
+    },
+
+    /**
+     * Returns true, if the plugin is loaded (checks if there is a module in the
+     * current sandbox).
+     */
+    isPluginLoaded: function(pluginName) {
+        var usedExports = Object.keys(require.sandbox.usedExports);
+
+        return usedExports.some(function(item) {
+            return item.indexOf('::' + pluginName + ':') == 0;
+        });
+    },
+
     /**
      * Registers information about an instance that will be tracked
      * by the catalog. The first parameter is the name used for looking up
@@ -4397,9 +4435,6 @@ exports.Catalog.prototype = {
             // console.log("Already have one (it's very nice)");
             return this.instancesLoadPromises[name];
         }
-        // Otherwise create a new loading promise (which is returned at the
-        // end of the function) and create the instance.
-        var pr = this.instancesLoadPromises[name] = new Promise();
 
         var descriptor = this._objectDescriptors[name];
         if (descriptor === undefined) {
@@ -4414,6 +4449,17 @@ exports.Catalog.prototype = {
                 '", there is no factory called "' + factoryName +
                 '" available."');
         }
+
+        // If this is a child catalog and the extension is shared, then
+        // as the master/parent catalog to create the object.
+        if (this.parent && this.shareExtension(ext)) {
+            return this.instancesLoadPromises[name] = this.parent.createObject(name);
+        }
+
+        // Otherwise create a new loading promise (which is returned at the
+        // end of the function) and create the instance.
+        var pr = this.instancesLoadPromises[name] = new Promise();
+
         var factoryArguments = descriptor.arguments || [];
         var argumentPromises = [];
         if (descriptor.objects) {
@@ -4466,7 +4512,7 @@ exports.Catalog.prototype = {
      * if the instance has not been created.
      */
     getObject: function(name) {
-        return this.instances[name];
+        return this.instances[name] || (this.parent ? this.parent.getObject(name) : undefined);
     },
 
     /** Retrieve an extension point object by name, optionally creating it if it
@@ -4524,46 +4570,6 @@ exports.Catalog.prototype = {
         return ep.getByKey(key);
     },
 
-    _registerExtensionPoint: function(extension) {
-        var ep = this.getExtensionPoint(extension.name, true);
-        ep.description = extension.description;
-        ep.pluginName = extension.pluginName;
-        ep.params = extension.params;
-        if (extension.indexOn) {
-            ep.indexOn = extension.indexOn;
-        }
-
-        if (extension.register || extension.unregister) {
-            this._registerExtensionHandler(extension);
-        }
-    },
-
-    _registerExtensionHandler: function(extension) {
-        var ep = this.getExtensionPoint(extension.name, true);
-        ep.handlers.push(extension);
-        if (extension.register) {
-            // Store the current extensions to this extension point. We can't
-            // use the ep.extensions array within the load-callback-function, as
-            // the array at that point in time also contains extensions that got
-            // registered by calling the handler.register function directly.
-            // As such, using the ep.extensions in the load-callback-function
-            // would result in calling the handler's register function on a few
-            // extensions twice.
-            var extensions = util.clone(ep.extensions);
-
-            extension.load(function(register) {
-                if (!register) {
-                    throw extension.name + " is not ready";
-                }
-                extensions.forEach(function(ext) {
-                    // console.log('call register on:', ext)
-                    register(ext);
-                });
-            }, "register");
-        }
-
-    },
-
     // Topological sort algorithm from Wikipedia, credited to Tarjan 1976.
     //     http://en.wikipedia.org/wiki/Topological_sort
     _toposort: function(metadata) {
@@ -4592,66 +4598,136 @@ exports.Catalog.prototype = {
         return sorted;
     },
 
-    loadMetadata: function(metadata) {
-        var plugins = this.plugins;
-        
-        var pluginName;
+    /**
+     * Register new metadata. If the current catalog is not the master catalog,
+     * then the master catalog registerMetadata function is called. The master
+     * catalog then makes some basic operations on the metadata and calls the
+     * _registerMetadata function on all the child catalogs and for itself as
+     * well.
+     */
+    registerMetadata: function(metadata) {
+        // If we are the master catalog, then store the metadata.
+        if (this.parent) {
+            this.parent.registerMetadata(metadata);
+        } else {
+            for (var pluginName in metadata) {
+                var md = metadata[pluginName];
+                if (md.errors) {
+                    console.error("Plugin ", pluginName, " has errors:");
+                    md.errors.forEach(function(error) {
+                        console.error(error);
+                    });
+                    delete metadata[pluginName];
+                    continue;
+                }
 
-        for (pluginName in metadata) {
-            // Skip if the plugin is not activated.
-            if (this.deactivatedPlugins[pluginName]) {
-                continue;
+                if (md.dependencies) {
+                    md.depends = Object.keys(md.dependencies);
+                }
+
+                md.name = pluginName;
+                md.version = null;
+
+                var packageId = browser.canonicalPackageId(pluginName);
+                if (packageId === null) {
+                    browser.register('::' + pluginName, md);
+                    continue;
+                }
             }
 
-            var md = metadata[pluginName];
-            if (md.errors) {
-                console.error("Plugin ", pluginName, " has errors:");
-                md.errors.forEach(function(error) {
-                    console.error(error);
-                });
-                delete metadata[pluginName];
-                continue;
-            }
+            // Save the new metadata.
+            util.mixin(this.metadata, util.clone(metadata, true));
 
-            if (md.dependencies) {
-                md.depends = Object.keys(md.dependencies);
-            }
-
-            md.name = pluginName;
-            md.version = null;
-            // console.log("loading metadata for", pluginName, " -> ", md);
-
-            var packageId = browser.canonicalPackageId(pluginName);
-            if (packageId === null) {
-                browser.register('::' + pluginName, md);
-                continue;
-            }
+            // Tell every child about the new metadata.
+            this.children.forEach(function(child) {
+                child._registerMetadata(util.clone(metadata, true));
+            });
+            // Register the metadata in the master catalog as well.
+            this._registerMetadata(util.clone(metadata, true));
         }
+    },
+
+    /**
+     * Registers plugin metadata. See comments inside of the function.
+     */
+    _registerMetadata: function(metadata) {
+        var pluginName, plugin;
+        var plugins = this.plugins;
 
         this._toposort(metadata).forEach(function(name) {
+            // If the plugin is already registered.
+            if (this.plugins[name]) {
+                // Check if the plugin is loaded.
+                if (this.isPluginLoaded(name)) {
+                    // If the plugin is loaded, then the metadata/plugin/extensions
+                    // have to stay the way they are at the moment.
+                    return;
+                } else {
+                    // If the plugin is not loaded and the plugin is already
+                    // registerd, then remove the plugin.
+                    //
+                    // Reason: As new metadata arrives, this might also mean,
+                    // that the factory in the tiki.loader has changed. If the
+                    // old plugins/extensions would stay, they might not fit to
+                    // the new factory. As such, the plugin has to be updated,
+                    // which is achieved by unregister the plugin and then add it
+                    // later in this function again.
+                    var plugin = this.plugins[name];
+                    plugin.unregister();
+                }
+            }
+
             var md = metadata[name];
             var activated = !(this.deactivatedPlugins[name]);
 
+            // Check if all plugins this one depends on are activated as well.
+            if (activated && md.depends && md.depends.length != 0) {
+                var works = md.depends.some(function(name) {
+                    return !(this.deactivatedPlugins[name]);
+                }, this);
+                // At least one depending plugin is not activated -> this plugin
+                // can't be activated. Mark this plugin as deactivated.
+                if (!works) {
+                    this.deactivatedPlugins[name] = DEPENDS_DEACTIVATED;
+                    activated = false;
+                }
+            }
+
             md.catalog = this;
             md.name = name;
-            var plugin = new exports.Plugin(md);
+            plugin = new exports.Plugin(md);
             plugins[name] = plugin;
 
             // Skip if the plugin is not activated.
-            if (md.provides && activated) {
+            if (md.provides) {
                 var provides = md.provides;
                 for (var i = 0; i < provides.length; i++) {
                     var extension = new exports.Extension(provides[i]);
                     extension.pluginName = name;
                     provides[i] = extension;
+
                     var epname = extension.ep;
-                    if (epname == "extensionpoint") {
-                        this._registerExtensionPoint(extension);
-                    } else if (epname == "extensionhandler") {
-                        this._registerExtensionHandler(extension);
+                    // This special treatment is required for the extension point
+                    // definition. TODO: Refactor the code so that this is no
+                    // longer necessary.
+                    if (epname == "extensionpoint" && extension.name == 'extensionpoint') {
+                        exports.registerExtensionPoint(extension, this, false);
+                    } else {
+                        // Only register the extension if the plugin is activated.
+                        // TODO: This should handle extension points and
+                        if (activated) {
+                            var ep = this.getExtensionPoint(extension.ep, true);
+                            ep.register(extension);
+
+                        // Even if the plugin is deactivated, the ep need to
+                        // be registered. Call the registerExtensionPoint
+                        // function manually, but pass as third argument 'true'
+                        // which indicates, that the plugin is deactivated and
+                        // prevents the handlers on the ep to get registered.
+                        } else if (epname == "extensionpoint") {
+                            exports.registerExtensionPoint(extension, this, true);
+                        }
                     }
-                    var ep = this.getExtensionPoint(extension.ep, true);
-                    ep.register(extension);
                 }
             } else {
                 md.provides = [];
@@ -4686,8 +4762,12 @@ exports.Catalog.prototype = {
                 });
             });
         } else {
-            require.ensurePackage(pluginName, function() {
-                pr.resolve();
+            require.ensurePackage(pluginName, function(err) {
+                if (err) {
+                    pr.reject(err);
+                } else {
+                    pr.resolve();
+                }
             });
         }
         return pr;
@@ -4699,36 +4779,138 @@ exports.Catalog.prototype = {
      */
     loadMetadataFromURL: function(url, type) {
         var pr = new Promise();
-        var req = new XMLHttpRequest();
-        req.onreadystatechange = function() {
-            if (req.readyState !== 4) {
-                return;
-            }
-
-            var status = req.status;
-            if (status !== 0 && status !== 200) {
-                pr.reject("XHR error: " + req.statusText);
-                return;
-            }
-
-            this.loadMetadata(JSON.parse(req.responseText));
+        proxy.xhr('GET', url, true).then(function(response) {
+            this.registerMetadata(JSON.parse(response));
             pr.resolve();
-        }.bind(this);
-
-        req.open("GET", url, true);
-        req.send();
+        }.bind(this), function(err) {
+            pr.reject(err);
+        });
 
         return pr;
     },
 
-    deactivatePlugin: function(pluginName) {
+    /**
+     * Dactivates a plugin. If no plugin was deactivated, then a string is
+     * returned which contains the reason why deactivating was not possible.
+     * Otherwise the plugin is deactivated as well as all plugins that depend on
+     * this plugin and a array is returned holding all depending plugins that were
+     * deactivated.
+     *
+     * @param pluginName string Name of the plugin to deactivate
+     * @param recursion boolean True if the funciton is called recursive.
+     */
+    deactivatePlugin: function(pluginName, recursion) {
         var plugin = this.plugins[pluginName];
-        if (plugin !== undefined) {
-            plugin.unregister();
-            plugin._cleanup();
+        if (!plugin) {
+            // Deactivate the plugin only if the user called the function.
+            if (!recursion) {
+                this.deactivatedPlugins[pluginName] = USER_DEACTIVATED;
+            }
+            return 'There is no plugin named "' + pluginName + '" in this catalog.';
         }
 
-        this.deactivatedPlugins[pluginName] = true;
+        if (this.deactivatedPlugins[pluginName]) {
+            // If the plugin is already deactivated but the user explicip wants
+            // to deactivate the plugin, then store true as deactivation reason.
+            if (!recursion) {
+                this.deactivatedPlugins[pluginName] = USER_DEACTIVATED;
+            }
+            return 'The plugin "' + pluginName + '" is already deactivated';
+        }
+
+        // If the function is called within a recursion, then mark the plugin
+        // as DEPENDS_DEACTIVATED otherwise as USER_DEACTIVATED.
+        this.deactivatedPlugins[pluginName] = (recursion ? DEPENDS_DEACTIVATED
+                                                          : USER_DEACTIVATED);
+
+        // Get all plugins that depend on this plugin.
+        var dependents = {};
+        var deactivated = [];
+        plugin._findDependents(Object.keys(this.plugins), dependents, true);
+
+        // Deactivate all dependent plugins.
+        Object.keys(dependents).forEach(function(plugin) {
+            var ret = this.deactivatePlugin(plugin, true);
+            if (Array.isArray(ret)) {
+                deactivated = deactivated.concat(ret);
+            }
+        }, this);
+
+        // Deactivate this plugin.
+        plugin.unregister();
+
+        if (recursion) {
+            deactivated.push(pluginName);
+        }
+
+        return deactivated;
+    },
+
+    /**
+     * Activates a plugin. If the plugin can't be activated a string is returned
+     * explaining why. Otherwise the plugin is activated, all plugins that depend
+     * on this plugin are tried to activated and an array with all the activated
+     * depending plugins is returned.
+     * Note: Depending plugins are not activated if they user called
+     * deactivatePlugin on them to deactivate them explicit.
+     *
+     * @param pluginName string Name of the plugin to activate.
+     * @param recursion boolean True if the funciton is called recursive.
+     */
+    activatePlugin: function(pluginName, recursion) {
+        var plugin = this.plugins[pluginName];
+        if (!plugin) {
+            return 'There is no plugin named "' + pluginName + '" in this catalog.';
+        }
+
+        if (!this.deactivatedPlugins[pluginName]) {
+            return 'The plugin "' + pluginName + '" is already activated';
+        }
+
+        // Don't activate this plugin if the user explicip deactivated this one
+        // and the plugin activation call is called beacuse another plugin
+        // this one depended on was activated.
+        if (recursion && this.deactivatedPlugins[pluginName] === USER_DEACTIVATED) {
+            return;
+        }
+
+        // Check if all dependent plugins are activated.
+        if (plugin.depends && plugin.depends.length != 0) {
+            var works = plugin.depends.some(function(plugin) {
+                return !this.deactivatedPlugins[plugin];
+            }, this);
+
+            if (!works) {
+                // The user activated the plugin but some of the dependent
+                // plugins are still deactivated. Change the deactivation reason
+                // to DEPENDS_DEACTIVATED.
+                this.deactivatedPlugins[pluginName] = DEPENDS_DEACTIVATED;
+                return 'Can not activate plugin "' + pluginName +
+                        '" as some of its dependent plugins are not activated';
+            }
+        }
+
+        // Activate this plugin.
+        plugin.register();
+        this.orderExtensions();
+        delete this.deactivatedPlugins[pluginName];
+
+        // Try to activate all the plugins that depend on this one.
+        var activated = [];
+        var dependents = {};
+        plugin._findDependents(Object.keys(this.plugins), dependents, true);
+        Object.keys(dependents).forEach(function(pluginName) {
+            var ret = this.activatePlugin(pluginName, true);
+            if (Array.isArray(ret)) {
+                activated = activated.concat(ret);
+            }
+        }, this);
+
+        if (recursion) {
+            activated.push(pluginName);
+        }
+
+        return activated;
     },
 
     /**
@@ -4742,7 +4924,8 @@ exports.Catalog.prototype = {
         }
 
         plugin.unregister();
-        plugin._cleanup();
+        plugin._cleanup(true /* leaveLoader */);
+        delete this.metadata[pluginName];
         delete this.plugins[pluginName];
     },
 
@@ -4919,14 +5102,31 @@ exports.Catalog.prototype = {
      * Publish <tt>value</tt> to all plugins that match both <tt>ep</tt> and
      * <tt>key</tt>.
      * @param source {object} The source calling the publish function.
-     * @param ep {string} An extension point (indexed by the catalog) to which
+     * @param epName {string} An extension point (indexed by the catalog) to which
      * we publish the information.
      * @param key {string} A key to which we publish (linearly searched, allowing
      * for regex matching).
      * @param value {object} The data to be passed to the subscribing function.
      */
-    publish: function(source, ep, key, value) {
-        var subscriptions = this.getExtensions(ep);
+    publish: function(source, epName, key, value) {
+        var ep = this.getExtensionPoint(epName);
+
+        if (this.shareExtension(ep)) {
+            if (this.parent) {
+                this.parent.publish(source, epName, key, value);
+            } else {
+                this.children.forEach(function(child) {
+                    child._publish(source, epName, key, value);
+                });
+                this._publish(source, epName, key, value);
+            }
+        } else {
+            this._publish(source, epName, key, value);
+        }
+    },
+
+    _publish: function(source, epName, key, value) {
+        var subscriptions = this.getExtensions(epName);
         subscriptions.forEach(function(sub) {
             // compile regexes only once
             if (sub.match && !sub.regexp) {
@@ -4960,6 +5160,112 @@ exports.Catalog.prototype = {
         var extension = new exports.Extension(metadata);
         extension.pluginName = '__dynamic';
         this.getExtensionPoint(ep).register(extension);
+    }
+};
+
+/**
+ * Register handler for extension points.
+ * The argument `deactivated` is set to true or false when this method is called
+ * by the _registerMetadata function.
+ */
+exports.registerExtensionPoint = function(extension, catalog, deactivated) {
+    var ep = catalog.getExtensionPoint(extension.name, true);
+    ep.description = extension.description;
+    ep.pluginName = extension.pluginName;
+    ep.params = extension.params;
+    if (extension.indexOn) {
+        ep.indexOn = extension.indexOn;
+    }
+
+    if (!deactivated && (extension.register || extension.unregister)) {
+        exports.registerExtensionHandler(extension, catalog);
+    }
+};
+
+/**
+ * Register handler for extension handler.
+ */
+exports.registerExtensionHandler = function(extension, catalog) {
+    // Don't add the extension handler if there is a master/partent catalog
+    // and this plugin is shared. The extension handlers are only added
+    // inside of the master catalog.
+    if (catalog.parent && catalog.shareExtension(extension)) {
+        return;
+    }
+
+    var ep = catalog.getExtensionPoint(extension.name, true);
+    ep.handlers.push(extension);
+    if (extension.register) {
+        // Store the current extensions to this extension point. We can't
+        // use the ep.extensions array within the load-callback-function, as
+        // the array at that point in time also contains extensions that got
+        // registered by calling the handler.register function directly.
+        // As such, using the ep.extensions in the load-callback-function
+        // would result in calling the handler's register function on a few
+        // extensions twice.
+        var extensions = util.clone(ep.extensions);
+
+        extension.load(function(register) {
+            if (!register) {
+                throw extension.name + " is not ready";
+            }
+            extensions.forEach(function(ext) {
+                // console.log('call register on:', ext)
+                register(ext, catalog);
+            });
+        }, "register", catalog);
+    }
+};
+
+/**
+ * Unregister handler for extension point.
+ */
+exports.unregisterExtensionPoint = function(extension, catalog) {
+    // Note: When an extensionPoint is unregistered, the extension point itself
+    // stays but the handler goes away.
+    // DISCUSS: Is this alright? The other option is to remove the ep completly.
+    // The downside of this is, that when the ep arrives later again, it has
+    // to look for extension handlers bound to this ep and add them all again.
+    if (extension.register || extension.unregister) {
+        exports.unregisterExtensionHandler(extension);
+    }
+};
+
+/**
+ * Unregister handler for extension handler.
+ */
+exports.unregisterExtensionHandler = function(extension, catalog) {
+    // Don't remove the extension handler if there is a master/partent catalog
+    // and this plugin is shared. The extension handlers are only added
+    // inside of the master catalog.
+    if (catalog.parent && catalog.shareExtension(extension)) {
+        return;
+    }
+
+    var ep = catalog.getExtensionPoint(extension.name, true);
+    if (ep.handlers.indexOf(extension) == -1) {
+        return;
+    }
+    ep.handlers.splice(ep.handlers.indexOf(extension), 1);
+    if (extension.unregister) {
+        // Store the current extensions to this extension point. We can't
+        // use the ep.extensions array within the load-callback-function, as
+        // the array at that point in time also contains extensions that got
+        // registered by calling the handler.register function directly.
+        // As such, using the ep.extensions in the load-callback-function
+        // would result in calling the handler's register function on a few
+        // extensions twice.
+        var extensions = util.clone(ep.extensions);
+
+        extension.load(function(unregister) {
+            if (!unregister) {
+                throw extension.name + " is not ready";
+            }
+            extensions.forEach(function(ext) {
+                // console.log('call register on:', ext)
+                unregister(ext);
+            });
+        }, "unregister");
     }
 };
 
@@ -5113,18 +5419,20 @@ exports.Promise.prototype.isRejected = function() {
  * a different action on promise rejection.
  */
 exports.Promise.prototype.then = function(onSuccess, onError) {
-    if (onSuccess !== null && onSuccess !== undefined) {
-        this._onSuccessHandlers.push(onSuccess);
-    }
-    if (onError !== null && onError !== undefined) {
-        this._onErrorHandlers.push(onError);
+    if (typeof onSuccess === 'function') {
+        if (this._status === SUCCESS) {
+            onSuccess.call(null, this._value);
+        } else if (this._status === PENDING) {
+            this._onSuccessHandlers.push(onSuccess);
+        }
     }
 
-    if (this._status === SUCCESS) {
-        onSuccess.call(null, this._value);
-    }
-    if (this._status === ERROR) {
-        onError.call(null, this._value);
+    if (typeof onError === 'function') {
+        if (this._status === ERROR) {
+            onError.call(null, this._value);
+        } else if (this._status === PENDING) {
+            this._onErrorHandlers.push(onError);
+        }
     }
 
     return this;
@@ -5251,6 +5559,194 @@ exports.group = function(promiseList) {
 
     return groupPromise;
 };
+
+});
+
+bespin.tiki.module("bespin:proxy",function(require,exports,module) {
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is Bespin.
+ *
+ * The Initial Developer of the Original Code is
+ * Mozilla.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Bespin Team (bespin@mozilla.com)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+var util = require("util/util");
+var Promise = require("promise").Promise;
+
+exports.xhr = function(method, url, async, beforeSendCallback) {
+    var pr = new Promise();
+
+    if (!bespin.proxy || !bespin.proxy.xhr) {
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+            if (req.readyState !== 4) {
+                return;
+            }
+
+            var status = req.status;
+            if (status !== 0 && status !== 200) {
+                var error = new Error(req.responseText + ' (Status ' + req.status + ")");
+                error.xhr = req;
+                pr.reject(error);
+                return;
+            }
+
+            pr.resolve(req.responseText);
+        }.bind(this);
+
+        req.open("GET", url, async);
+        if (beforeSendCallback) {
+            beforeSendCallback(req);
+        }
+        req.send();
+    } else {
+        bespin.proxy.xhr.call(this, method, url, async, beforeSendCallback, pr);
+    }
+
+    return pr;
+};
+
+exports.Worker = function(url) {
+    if (!bespin.proxy || !bespin.proxy.worker) {
+        return new Worker(url);
+    } else {
+        return new bespin.proxy.worker(url);
+    }
+};
+
+});
+
+bespin.tiki.module("bespin:sandbox",function(require,exports,module) {
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is Bespin.
+ *
+ * The Initial Developer of the Original Code is
+ * Mozilla.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Bespin Team (bespin@mozilla.com)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+var tiki = require('tiki');
+var util = require('bespin:util/util');
+var catalog = require('bespin:plugins').catalog;
+
+/**
+ * A sandbox can only be used from inside of the `master` catalog.
+ */
+if (catalog.parent) {
+    throw new Error('The sandbox module can\'t be used inside of a slave catalog!');
+}
+
+/**
+ * A special Bespin subclass of the tiki sandbox class. When the sandbox is
+ * created, the catalog for the new sandbox is setup based on the catalog
+ * data that is already in the so called `master` catalog.
+ */
+var Sandbox = function() {
+    // Call the default constructor. This creates a new tiki sandbox.
+    tiki.Sandbox.call(this, bespin.tiki.require.loader, {}, []);
+
+    // Register the plugins from the main catalog in the sandbox catalog.
+    var sandboxCatalog = this.require('bespin:plugins').catalog;
+
+    // Set the parent catalog for the sandbox catalog. This makes the sandbox
+    // be a slave catalog of the master catalog.
+    sandboxCatalog.parent = catalog;
+    catalog.children.push(sandboxCatalog);
+
+    // Copy over a few things from the master catalog.
+    sandboxCatalog.deactivatePlugin = util.clone(catalog.deactivatePlugin);
+    sandboxCatalog._extensionsOrdering = util.clone(catalog._extensionsOrdering);
+
+    // Register the metadata from the master catalog.
+    sandboxCatalog._registerMetadata(util.clone(catalog.metadata, true));
+};
+
+Sandbox.prototype = new tiki.Sandbox();
+
+/**
+ * Overrides the standard tiki.Sandbox.require function. If the requested
+ * module/plugin is shared between the sandboxes, then the require function
+ * on the `master` sandbox is called. Otherwise it calls the overridden require
+ * function.
+ */
+Sandbox.prototype.require = function(moduleId, curModuleId, workingPackage) {
+    // assume canonical() will normalize params
+    var canonicalId = this.loader.canonical(moduleId, curModuleId, workingPackage);
+    // Get the plugin name.
+    var pluginName = canonicalId.substring(2).split(':')[0];
+
+    // Check if this module should be shared.
+    if (catalog.plugins[pluginName].share) {
+        // The module is shared, so require it from the main sandbox.
+        return bespin.tiki.sandbox.require(moduleId, curModuleId, workingPackage);
+    } else {
+        // This module is not shared, so use the normal require function.
+        return tiki.Sandbox.prototype.require.call(this, moduleId,
+                                                    curModuleId, workingPackage);
+    }
+}
+
+// Expose the sandbox.
+exports.Sandbox = Sandbox;
 
 });
 
@@ -6367,19 +6863,24 @@ exports.none = function(obj) {
  * @param object {Object} the object to clone
  * @returns {Object} the cloned object
  */
-exports.clone = function(object) {
-    if (Array.isArray(object)) {
+exports.clone = function(object, deep) {
+    if (Array.isArray(object) && !deep) {
         return object.slice();
     }
 
-    if (typeof object === 'object') {
+    if (typeof object === 'object' || Array.isArray(object)) {
         if (object === null) {
             return null;
         }
 
-        var reply = {};
+        var reply = (Array.isArray(object) ? [] : {});
         for (var key in object) {
-            reply[key] = object[key];
+            if (deep && (typeof object[key] === 'object'
+                            || Array.isArray(object[key]))) {
+                reply[key] = exports.clone(object[key], true);
+            } else {
+                 reply[key] = object[key];
+            }
         }
         return reply;
     }
@@ -7280,7 +7781,7 @@ bespin.tiki.module("underscore:index",function(require,exports,module) {
 exports._.noConflict();
 });
 
-bespin.tiki.require("bespin:plugins").catalog.loadMetadata({"jquery": {"testmodules": [], "resourceURL": "resources/jquery/", "name": "globaljquery", "type": "thirdparty"}, "bespin": {"resourceURL": "resources/bespin/", "name": "bespin", "environments": {"main": true, "worker": true}, "dependencies": {"jquery": "1.4.0"}, "testmodules": [], "type": "plugins/boot"}, "syntax_directory": {"resourceURL": "resources/syntax_directory/", "name": "syntax_directory", "environments": {"main": true, "worker": true}, "dependencies": {}, "testmodules": [], "provides": [{"register": "#discoveredNewSyntax", "ep": "extensionhandler", "name": "syntax"}], "type": "plugins/supported", "description": "Catalogs the available syntax engines"}, "underscore": {"testmodules": [], "type": "plugins/thirdparty", "resourceURL": "resources/underscore/", "description": "Functional Programming Aid for Javascript. Works well with jQuery.", "name": "underscore"}});
+bespin.tiki.require("bespin:plugins").catalog.registerMetadata({"bespin": {"testmodules": [], "resourceURL": "resources/bespin/", "name": "bespin", "environments": {"main": true, "worker": true}, "type": "plugins/boot"}, "syntax_directory": {"resourceURL": "resources/syntax_directory/", "name": "syntax_directory", "environments": {"main": true, "worker": true}, "dependencies": {}, "testmodules": [], "provides": [{"register": "#discoveredNewSyntax", "ep": "extensionhandler", "name": "syntax"}], "type": "plugins/supported", "description": "Catalogs the available syntax engines"}, "underscore": {"testmodules": [], "type": "plugins/thirdparty", "resourceURL": "resources/underscore/", "description": "Functional Programming Aid for Javascript. Works well with jQuery.", "name": "underscore"}});
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
