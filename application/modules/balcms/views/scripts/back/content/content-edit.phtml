@@ -227,7 +227,7 @@
 					
 					<div id="content-content-field" class="field field-rich ">
 						<? if ( $editor === 'bespin' ) : ?>
-							<?=$this->formTextarea('Content[content]', '', array('tabindex'=>30, 'rows'=>5))?>
+							<?=$this->formTextarea('Content[content]', '', array('tabindex'=>30, 'rows'=>15))?>
 						<? else: ?>
 							<?=$this->formTextarea('Content[content]', delve($Content,'content'), array('tabindex'=>30, 'rows'=>5))?>
 						<? endif; ?>
@@ -236,7 +236,11 @@
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Excerpt</h3>
 						<div class="inside">
-							<?=$this->formTextarea('Content[description]', delve($Content,'description'), array('tabindex'=>40, 'rows'=>3))?>
+							<? if ( $editor === 'bespin' ) : ?>
+								<?=$this->formTextarea('Content[description]', '', array('tabindex'=>40, 'rows'=>7))?>
+							<? else: ?>
+								<?=$this->formTextarea('Content[description]', delve($Content,'description'), array('tabindex'=>40, 'rows'=>3))?>
+							<? endif; ?>
 						</div>
 					</div>
 					
@@ -324,7 +328,7 @@ $(function(){
 		$('#Content-description').Tinymce('simple');
 	<? elseif ( $editor === 'bespin' ): ?>
 		$('#Content-content').Bespin('rich', {"content":"<?=format_to_output(delve($Content,'content',''),'jsattr')?>"});
-		//$('#Content-description').Bespin('simple');
+		$('#Content-description').Bespin('simple', {"content":"<?=format_to_output(delve($Content,'description',''),'jsattr')?>"});
 	<? endif; ?>
 });
 </script>
