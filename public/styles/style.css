@@ -9,19 +9,6 @@
 		font-style:italic;
 	}
 	
-	.hide {
-		display:none;
-	}
-	
-	.help {
-		cursor:help;
-		padding-bottom: 1px;
-	}
-	.help:hover {
-		border-bottom: 1px dotted #666;
-		padding-bottom: 0px;
-	}
-	
 
 /* Debug Styling */
 
