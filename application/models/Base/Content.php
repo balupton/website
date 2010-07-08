@@ -11,7 +11,7 @@
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
+ * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class Base_Content extends Balcms_Content
 {
@@ -20,10 +20,10 @@ abstract class Base_Content extends Balcms_Content
         parent::setUp();
         $this->hasMany('Balcms_Content as Children', array(
              'local' => 'id',
-             'foreign' => 'parent_id'));
+             'foreign' => 'Parent_id'));
 
         $this->hasMany('Balcms_Message as Messages', array(
              'local' => 'id',
-             'foreign' => 'content_id'));
+             'foreign' => 'Content_id'));
     }
 }

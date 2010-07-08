@@ -207,6 +207,11 @@ add:
 revert:
 	svn revert * ;
 
+permissions:
+	sudo php ./scripts/setup.php permissions ;
+
+setup:
+	sudo php ./scripts/setup.php install ;
 
 install:
 	$(MAKE) clear ;
@@ -224,7 +229,7 @@ install:
 	$(MAKE) externals ;
 	$(MAKE) update ;
 
-	svn commit -m "BalCMS Externals Imported. Setup Completed." ;
+	svn commit -m "BalCMS Externals Imported." ;
 	
-	"Setup Completed" ;
+	"Installation Completed" ;
 

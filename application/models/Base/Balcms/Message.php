@@ -10,7 +10,7 @@
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
+ * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class Base_Balcms_Message extends Bal_Message
 {
@@ -18,7 +18,7 @@ abstract class Base_Balcms_Message extends Bal_Message
     {
         parent::setUp();
         $this->hasOne('Content', array(
-             'local' => 'content_id',
+             'local' => 'Content_id',
              'foreign' => 'id'));
     }
 }

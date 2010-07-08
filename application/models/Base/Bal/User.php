@@ -13,6 +13,8 @@
  * @property string $firstname
  * @property string $lastname
  * @property string $fullname
+ * @property string $website
+ * @property string $paypal
  * @property string $email
  * @property string $phone
  * @property string $description
@@ -22,15 +24,20 @@
  * @property string $uid
  * @property enum $type
  * @property enum $status
- * @property integer $avatar_id
- * @property Media $Avatar
+ * @property string $locale
+ * @property string $language
+ * @property string $charset
+ * @property string $timezone
+ * @property string $currency
+ * @property integer $Avatar_id
+ * @property File $Avatar
  * @property Doctrine_Collection $Permissions
  * @property Doctrine_Collection $Roles
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
+ * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class Base_Bal_User extends Doctrine_Record
 {
@@ -84,22 +91,45 @@ abstract class Base_Bal_User extends Doctrine_Record
              ),
              'length' => '85',
              ));
+        $this->hasColumn('website', 'string', 255, array(
+             'type' => 'string',
+             'extra' => 
+             array(
+              'website' => true,
+             ),
+             'length' => '255',
+             ));
+        $this->hasColumn('paypal', 'string', 255, array(
+             'type' => 'string',
+             'extra' => 
+             array(
+              'email' => true,
+             ),
+             'length' => '255',
+             ));
         $this->hasColumn('email', 'string', 255, array(
              'type' => 'string',
              'notblank' => true,
+             'extra' => 
+             array(
+              'email' => true,
+             ),
              'length' => '255',
              ));
         $this->hasColumn('phone', 'string', 255, array(
              'type' => 'string',
              'extra' => 
              array(
-              'formOrder' => 320,
-              'formGroup' => 'other',
+              'phone' => true,
              ),
              'length' => '255',
              ));
         $this->hasColumn('description', 'string', null, array(
              'type' => 'string',
+             'extra' => 
+             array(
+              'html' => 'html',
+             ),
              ));
         $this->hasColumn('level', 'integer', 1, array(
              'type' => 'integer',
@@ -160,7 +190,27 @@ abstract class Base_Bal_User extends Doctrine_Record
              'notblank' => true,
              'default' => 'pending',
              ));
-        $this->hasColumn('avatar_id', 'integer', 2, array(
+        $this->hasColumn('locale', 'string', 6, array(
+             'type' => 'string',
+             'length' => '6',
+             ));
+        $this->hasColumn('language', 'string', 6, array(
+             'type' => 'string',
+             'length' => '6',
+             ));
+        $this->hasColumn('charset', 'string', 30, array(
+             'type' => 'string',
+             'length' => '30',
+             ));
+        $this->hasColumn('timezone', 'string', 30, array(
+             'type' => 'string',
+             'length' => '30',
+             ));
+        $this->hasColumn('currency', 'string', 6, array(
+             'type' => 'string',
+             'length' => '6',
+             ));
+        $this->hasColumn('Avatar_id', 'integer', 2, array(
              'type' => 'integer',
              'unsigned' => true,
              'length' => '2',
@@ -170,29 +220,38 @@ abstract class Base_Bal_User extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Media as Avatar', array(
-             'local' => 'avatar_id',
+        $this->hasOne('File as Avatar', array(
+             'local' => 'Avatar_id',
              'foreign' => 'id',
              'onDelete' => 'SET NULL'));
 
         $this->hasMany('Permission as Permissions', array(
              'refClass' => 'PermissionAndUser',
-             'local' => 'user_id',
-             'foreign' => 'permission_id'));
+             'local' => 'User_id',
+             'foreign' => 'Permission_id',
+             'onDelete' => 'NO ACTION'));
 
         $this->hasMany('Role as Roles', array(
              'refClass' => 'RoleAndUser',
-             'local' => 'user_id',
-             'foreign' => 'role_id'));
+             'local' => 'User_id',
+             'foreign' => 'Role_id',
+             'onDelete' => 'NO ACTION'));
 
+        $sluggable0 = new Doctrine_Template_Sluggable(array(
+             'name' => 'code',
+             'canUpdate' => true,
+             'fields' => 
+             array(
+              0 => 'username',
+             ),
+             ));
         $taggable0 = new Doctrine_Template_Taggable(array(
              'tagAlias' => 'SubscriptionTags',
              ));
-        $softdelete0 = new Doctrine_Template_SoftDelete();
         $timestampable0 = new Doctrine_Template_Timestampable();
         $bal_doctrine_template_addressable0 = new Bal_Doctrine_Template_Addressable();
+        $this->actAs($sluggable0);
         $this->actAs($taggable0);
-        $this->actAs($softdelete0);
         $this->actAs($timestampable0);
         $this->actAs($bal_doctrine_template_addressable0);
     }

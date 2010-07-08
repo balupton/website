@@ -15,11 +15,11 @@
  * @property string $tags
  * @property string $content
  * @property string $content_rendered
- * @property integer $avatar_id
- * @property integer $route_id
- * @property integer $parent_id
  * @property integer $position
  * @property enum $type
+ * @property integer $Avatar_id
+ * @property integer $Route_id
+ * @property integer $Parent_id
  * @property decimal $product_cost
  * @property boolean $product_taxable
  * @property integer $product_stock
@@ -33,14 +33,14 @@
  * @property enum $book_quality
  * @property timestamp $event_start_at
  * @property timestamp $event_finish_at
- * @property Media $Avatar
+ * @property File $Avatar
  * @property Route $Route
  * @property Content $Parent
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
+ * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class Base_Balcms_Content extends Doctrine_Record
 {
@@ -74,7 +74,7 @@ abstract class Base_Balcms_Content extends Doctrine_Record
              'notblank' => true,
              'extra' => 
              array(
-              'html' => 'rich',
+              'html' => 'raw',
              ),
              ));
         $this->hasColumn('description_rendered', 'string', null, array(
@@ -82,12 +82,17 @@ abstract class Base_Balcms_Content extends Doctrine_Record
              'notblank' => true,
              'extra' => 
              array(
-              'html' => 'rich',
+              'html' => 'raw',
+              'auto' => true,
              ),
              ));
         $this->hasColumn('description_auto', 'bool', null, array(
              'type' => 'bool',
              'notnull' => true,
+             'extra' => 
+             array(
+              'auto' => true,
+             ),
              ));
         $this->hasColumn('tags', 'string', 255, array(
              'type' => 'string',
@@ -98,7 +103,7 @@ abstract class Base_Balcms_Content extends Doctrine_Record
              'notblank' => true,
              'extra' => 
              array(
-              'html' => 'rich',
+              'html' => 'raw',
              ),
              ));
         $this->hasColumn('content_rendered', 'string', null, array(
@@ -106,24 +111,9 @@ abstract class Base_Balcms_Content extends Doctrine_Record
              'notblank' => true,
              'extra' => 
              array(
-              'html' => 'rich',
+              'html' => 'raw',
+              'auto' => true,
              ),
-             ));
-        $this->hasColumn('avatar_id', 'integer', 2, array(
-             'type' => 'integer',
-             'unsigned' => true,
-             'length' => '2',
-             ));
-        $this->hasColumn('route_id', 'integer', 2, array(
-             'type' => 'integer',
-             'unsigned' => true,
-             'unique' => true,
-             'length' => '2',
-             ));
-        $this->hasColumn('parent_id', 'integer', 2, array(
-             'type' => 'integer',
-             'unsigned' => true,
-             'length' => '2',
              ));
         $this->hasColumn('position', 'integer', 2, array(
              'type' => 'integer',
@@ -141,6 +131,26 @@ abstract class Base_Balcms_Content extends Doctrine_Record
              ),
              'default' => 'content',
              'notblank' => true,
+             'extra' => 
+             array(
+              'auto' => true,
+             ),
+             ));
+        $this->hasColumn('Avatar_id', 'integer', 2, array(
+             'type' => 'integer',
+             'unsigned' => true,
+             'length' => '2',
+             ));
+        $this->hasColumn('Route_id', 'integer', 2, array(
+             'type' => 'integer',
+             'unsigned' => true,
+             'unique' => true,
+             'length' => '2',
+             ));
+        $this->hasColumn('Parent_id', 'integer', 2, array(
+             'type' => 'integer',
+             'unsigned' => true,
+             'length' => '2',
              ));
         $this->hasColumn('product_cost', 'decimal', 8, array(
              'type' => 'decimal',
@@ -226,18 +236,18 @@ abstract class Base_Balcms_Content extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Media as Avatar', array(
-             'local' => 'avatar_id',
+        $this->hasOne('File as Avatar', array(
+             'local' => 'Avatar_id',
              'foreign' => 'id',
              'onDelete' => 'SET NULL'));
 
         $this->hasOne('Route', array(
-             'local' => 'route_id',
+             'local' => 'Route_id',
              'foreign' => 'id',
              'onDelete' => 'CASCADE'));
 
         $this->hasOne('Content as Parent', array(
-             'local' => 'parent_id',
+             'local' => 'Parent_id',
              'foreign' => 'id',
              'onDelete' => 'CASCADE'));
 

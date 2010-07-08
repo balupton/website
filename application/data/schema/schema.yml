@@ -33,11 +33,11 @@ ContentBook:
         type: simple
 
 # ==============================================
-# MEDIA
+# FILE
 
-Media:
+File:
     inheritance:
-        extends: Bal_Media
+        extends: Bal_File
         type: simple
 
 
@@ -103,8 +103,6 @@ PermissionAndUser:
 # BAL INVOICE
 
 Bal_InvoiceItem:
-    actAs:
-        SoftDelete:
     columns:
         id:
             type: integer(2)
@@ -114,12 +112,6 @@ Bal_InvoiceItem:
         title:
             type: string(50)
             notblank: true
-        cost:
-            type: decimal(8)
-            scale: 2
-            notblank: true
-            extra:
-                currency: true
         template:
             type: string(50)
             notblank: true
@@ -127,22 +119,197 @@ Bal_InvoiceItem:
             extra:
                 auto: true
                 
-        invoice_id:
+        quantity:
+            # the amount of items to have
+            type: int(2)
+            notblank: true
+        payment_fee:
+            # returned payment fee from gateway
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            default: 0.00
+            extra:
+                currency: true
+        weight_unit:
+            # weight unit to use
+            type: enum
+            values: [kgs,lbs]
+            default: kgs
+            notblank: true
+        
+        
+        price_each:
+            # the price for each item		- Discount, Handling, Shipping, Tax
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        price_each_d:
+            # the price for each item 	+ Discount
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        price_all_total:
+            # the price for all  items	- Discount, Handling, Shipping, Tax
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        price_all_total_d:
+            # the price for all  items	+ Discount
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        price_all_total_dhs:
+            # the price for all  items	+ Discount, Handling, Shipping
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        price_total:
+            # the price for all  items	+ Discount, Handling, Shipping, Tax
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        
+        handling_each:
+            # handling for each item
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            default: 0.00
+            extra:
+                currency: true
+        handling_all_total:
+            # total handling for all items
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+                
+        tax_each:
+            # tax for each item
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            default: 0.00
+            extra:
+                currency: true
+        tax_each_rate:
+            # tax rate for each item
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            default: 0.00
+            extra:
+                percentage: true
+        tax_each_total:
+            # total tax for each item
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        tax_all_total:
+            # total tax for all items
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+                
+        weight_each:
+            # weight for each item
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            default: 0.00
+        weight_all_total:
+            # total weight for all times
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            
+        discount_each:
+            # discount for each item
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            default: 0.00
+            extra:
+                currency: true
+        discount_each_rate:
+            # discount rate for each item
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            default: 0.00
+            extra:
+                percentage: true
+        discount_each_total:
+            # total discount for each item
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        discount_all_total:
+            # total discount for all items
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+                
+        shipping_first:
+            # shipping for first item
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            default: 0.00
+            extra:
+                percentage: true
+        shipping_additional:
+            # shipping for each additional item
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        shipping_all_total:
+            # total shipping for all items
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        
+        Invoice_id:
             type: integer(2)
             unsigned: true
             notblank: true
     relations:
         Invoice:
             class: Invoice
-            local: invoice_id
+            local: Invoice_id
             foreign: id
             foreignAlias: InvoiceItems
             foreignType: many
-            onDelete: "CASCADE"
+            onDelete: "CASCADE" # If Invoice is deleted, delete InvoiceItem
 
 Bal_Invoice:
     actAs:
-        SoftDelete:
         Timestampable:
     columns:
         id:
@@ -150,6 +317,10 @@ Bal_Invoice:
             primary: true
             unsigned: true
             autoincrement: true
+        code:
+            type: string(30)
+            notblank: true
+            unique: true
         title:
             type: string(50)
             notblank: true
@@ -159,49 +330,165 @@ Bal_Invoice:
             default: "user_invoice"
             extra:
                 auto: true
-        cost:
-            type: decimal(8)
-            scale: 2
-            notnull: true
-            extra:
-                currency: true
-        subtotal:
-            type: decimal(8)
-            scale: 2
-            notnull: true
-            extra:
-                currency: true
-        tax:
-            type: decimal(8)
-            scale: 2
-            notnull: true
-            extra:
-                currency: true
+        status:
+            type: enum
+            values: [pending,published,completed]
+            notblank: true
+            default: published
         config:
+            # Cache of any invoice configuration that may change externally
+            # For example company name, tax amounts, commission rates etc
             type: array
+        
+        currency_code:
+            type: string(3)
+        paid_at:
+            type: timestamp
+        payment_status:
+            # returned payment status from paypal
+            type: enum
+            values: [awaiting,created,pending,refunded,processed,completed,canceled_reversal,denied,expired,failed,voided,reversed]
+            notblank: true
+            default: awaiting
+        payment_fee:
+            # returned payment fee from gateway
+            type: decimal(8)
+            scale: 2
             notnull: true
-        cache:
-            # Cache of any information that may change externally
-            type: array
+            default: 0.00
+            extra:
+                currency: true
+        payment_error:
+            # returned payment error from gateway
+            type: string(255)
+        weight_unit:
+            # weight unit to use
+            type: enum
+            values: [kgs,lbs]
+            default: kgs
+            notblank: true
+        
+        price_all_total:
+            # the price for all  items	- Discount, Handling, Shipping, Tax
+            type: decimal(8)
+            scale: 2
             notnull: true
-
-        for_id:
+            extra:
+                currency: true
+        price_all_total_d:
+            # the price for all  items	+ Discount
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        price_all_total_dhs:
+            # the price for all  items	+ Discount, Handling, Shipping
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        price_total:
+            # the price for all  items	+ Discount, Handling, Shipping, Tax
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        
+        handling_all_total:
+            # total handling for all items
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        tax_all_total:
+            # total tax for all items
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        weight_all_total:
+            # total weight for all times
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        discount_all_total:
+            # total discount for all items
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        shipping_all_total:
+            # total shipping for all items
+            type: decimal(8)
+            scale: 2
+            notnull: true
+            extra:
+                currency: true
+        
+        File_id:
             type: integer(2)
             unsigned: true
-        by_id:
+        UserFor_id:
+            type: integer(2)
+            unsigned: true
+        UserFrom_id:
             type: integer(2)
             unsigned: true
     relations:
-        For:
+        File:
+            class: File
+            local: File_id
+            foreign: id
+            foreignAlias: Invoices
+            foreignType: many
+            onDelete: "SET NULL" # If File is deleted, set null
+        UserFor:
             class: User
-            local: for_id
+            local: UserFor_id
             foreign: id
             foreignAlias: InvoicesFor
-        By:
+            onDelete: "SET NULL" # If UserFor is deleted, set null
+        UserFrom:
             class: User
-            local: by_id
+            local: UserFrom_id
             foreign: id
-            foreignAlias: InvoicesBy
+            foreignAlias: InvoicesFrom
+            onDelete: "SET NULL" # If UserFrom is deleted, set null
+
+
+InvoiceDataBackup:
+    actAs:
+        Timestampable:
+    columns:
+        id:
+            type: integer(2)
+            primary: true
+            unsigned: true
+            autoincrement: true
+        data:
+            type: array
+            notnull: true
+        Invoice_id:
+            type: integer(2)
+            unsigned: true
+    relations:
+        Invoice:
+            class: Invoice
+            local: Invoice_id
+            foreign: id
+            #foreignAlias: InvoiceDataBackups
+            foreignType: many
+            onDelete: "CASCADE" # If Invoice is deleted, delete InvoiceDataBackup
+
+
 
 # ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Bal/Schema/Invoice.yaml
 
@@ -209,7 +496,7 @@ Bal_Invoice:
 # ==============================================
 # BAL MEDIA
 
-Bal_Media:
+Bal_File:
     actAs:
         Sluggable:
             name: code
@@ -267,7 +554,7 @@ Bal_Media:
             type: string(255)
 
 
-# ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Bal/Schema/Media.yaml
+# ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Bal/Schema/File.yaml
 
 
 # ==============================================
@@ -321,23 +608,35 @@ Bal_Message:
             default: "user_message"
             extra:
                 auto: true
-        for_id:
+        MessageParent_id:
+            type: integer(3)
+            unsigned: true
+        UserFor_id:
             type: integer(2)
             unsigned: true
-        by_id:
+        UserFrom_id:
             type: integer(2)
             unsigned: true
     relations:
-        For:
+        MessageParent:
+            # Which Message is this Message for?
+            class: Message
+            local: MessageParent_id
+            foreign: id
+            foreignAlias: MessagesChild
+            onDelete: "CASCADE" # If MessageParent is deleted, cascade
+        UserFor:
             class: User
-            local: for_id
+            local: UserFor_id
             foreign: id
             foreignAlias: MessagesFor
-        By:
+            onDelete: "CASCADE" # If UserFor is deleted, cascade
+        UserFrom:
             class: User
-            local: by_id
+            local: UserFrom_id
             foreign: id
-            foreignAlias: MessagesBy
+            foreignAlias: MessagesFrom
+            onDelete: "CASCADE" # If UserFrom is deleted, cascade
     
 
 # ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Bal/Schema/Message.yaml
@@ -376,9 +675,12 @@ Bal_Route:
 
 Bal_User:
     actAs:
+        Sluggable:
+            name: code
+            canUpdate: true
+            fields: [username]
         Taggable:
             tagAlias: "SubscriptionTags"
-        SoftDelete:
         Timestampable:
         Bal_Doctrine_Template_Addressable:
             # This can only be listed once due to bug in doctrine
@@ -413,19 +715,31 @@ Bal_User:
             type: string(85)
             extra:
                 auto: true
+        website:
+            type: string(255)
+            extra:
+                website: true
+        paypal:
+            type: string(255)
+            extra:
+                email: true
             
         email:
             type: string(255)
             notblank: true
             #email: true
+            extra:
+                email: true
         phone:
             type: string(255)
             extra:
-                formOrder: 320
-                formGroup: "other"
+                phone: true
             
         description:
+            # Bio
             type: string
+            extra:
+                html: html
         
         level:
             # Permission Level - Calculated by highest role
@@ -466,29 +780,42 @@ Bal_User:
                 # disabled - Disabled for whatever reason
             notblank: true
             default: pending
-            
-        avatar_id:
+        
+        locale:
+            type: string(6)
+        language:
+            type: string(6)
+        charset:
+            type: string(30)
+        timezone:
+            type: string(30)
+        currency:
+            type: string(6)
+        
+        Avatar_id:
             type: integer(2)
             unsigned: true
     relations:
         Avatar:
-            class: Media
-            local: avatar_id
+            class: File
+            local: Avatar_id
             foreign: id
             foreignAlias: UserList
-            onDelete: "SET NULL"
+            onDelete: "SET NULL" # If Avatar is deleted, set to null
         Permissions:
             class: Permission
-            local: user_id
-            foreign: permission_id
+            local: User_id
+            foreign: Permission_id
             foreignAlias: Users
             refClass: PermissionAndUser
+            onDelete: "NO ACTION" # If User is deleted, don't do anything to the Permissions
         Roles:
             class: Role
-            local: user_id
-            foreign: role_id
+            local: User_id
+            foreign: Role_id
             foreignAlias: Users
             refClass: RoleAndUser
+            onDelete: "NO ACTION" # If User is deleted, don't do anything to the Roles
 
 # ==============================================
 # BAL PERMISSIONS
@@ -513,10 +840,11 @@ Bal_Role:
     relations:
         Permissions:
             class: Permission
-            local: role_id
-            foreign: permission_id
+            local: Role_id
+            foreign: Permission_id
             foreignAlias: Roles
             refClass: PermissionAndRole
+            onDelete: "NO ACTION" # If Role is deleted, don't do anything to the Permissions
 
 Bal_PermissionAndRole:
     columns:
@@ -525,21 +853,23 @@ Bal_PermissionAndRole:
             primary: true
             unsigned: true
             autoincrement: true
-        role_id:
+        Role_id:
             type: integer(2)
             unsigned: true
             notnull: true
-        permission_id:
+        Permission_id:
             type: integer(2)
             unsigned: true
             notnull: true
     relations:
         Role:
-            local: role_id
+            local: Role_id
             foreign: id
+            onDelete: "CASCADE" # If Role is deleted, delete reference
         Permission:
-            local: permission_id
+            local: Permission_id
             foreign: id
+            onDelete: "CASCADE" # If Permission is deleted, delete reference
         
 Bal_Permission:
     columns:
@@ -563,29 +893,32 @@ Bal_RoleAndUser:
         assigned_date:
             type: timestamp
             notnull: false
-        assignee_user_id:
+            
+        UserFrom_id:
             type: integer(2)
-            notnull: false
             unsigned: true
-        user_id:
+        User_id:
             type: integer(2)
             notnull: true
             unsigned: true
-        role_id:
+        Role_id:
             type: integer(2)
             notnull: true
             unsigned: true
     relations:
-        Assignee:
+        UserFrom:
             class: User
-            local: assignee_user_id
+            local: UserFrom_id
             foreign: id
+            onDelete: "SET NULL" # If UserFrom is deleted, set to null
         User:
-            local: user_id
+            local: User_id
             foreign: id
+            onDelete: "CASCADE" # If User is deleted, delete reference
         Role:
-            local: role_id
+            local: Role_id
             foreign: id
+            onDelete: "CASCADE" # If Role is deleted, delete reference
 
 Bal_PermissionAndUser:
     columns:
@@ -597,29 +930,33 @@ Bal_PermissionAndUser:
         assigned_date:
             type: timestamp
             notnull: false
-        assignee_user_id:
+            
+        UserFrom_id:
             type: integer(2)
             notnull: false
             unsigned: true
-        user_id:
+        User_id:
             type: integer(2)
             notnull: true
             unsigned: true
-        permission_id:
+        Permission_id:
             type: integer(2)
             notnull: true
             unsigned: true
     relations:
-        Assignee:
+        UserFrom:
             class: User
-            local: assignee_user_id
+            local: UserFrom_id
             foreign: id
+            onDelete: "SET NULL" # If UserFrom is deleted, set to null
         User:
-            local: user_id
+            local: User_id
             foreign: id
+            onDelete: "CASCADE" # If User is deleted, delete reference
         Permission:
-            local: permission_id
+            local: Permission_id
             foreign: id
+            onDelete: "CASCADE" # If Permission is deleted, delete reference
 
 
 # ^ /Users/balupton/Server/htdocs/projects/balcms/application/models/Bal/Schema/User.yaml
@@ -667,64 +1004,70 @@ Balcms_Content:
             type: string
             notblank: true
             extra:
-                html: rich
+                html: raw
         description_rendered:
             type: string
             notblank: true
             extra:
-                html: rich
+                html: raw #handled explicity inside now
+                auto: true
         description_auto:
             type: bool
             notnull: true
+            extra:
+                auto: true
         tags:
             type: string(255)
         content:
             type: string
             notblank: true
             extra:
-                html: rich
+                html: raw
         content_rendered:
             type: string
             notblank: true
             extra:
-                html: rich
+                html: raw #handled explicity inside now
+                auto: true
             
-        avatar_id:
-            type: integer(2)
-            unsigned: true
-        route_id:
-            type: integer(2)
-            unsigned: true
-            unique: true
-        parent_id:
-            type: integer(2)
-            unsigned: true
         position:
             type: integer(2)
             unsigned: true
             notnull: true
             default: 0
-            
         type:
             type: enum
             values: [content,event]
             default: content
             notblank: true
+            extra:
+                auto: true
+            
+        Avatar_id:
+            type: integer(2)
+            unsigned: true
+        Route_id:
+            type: integer(2)
+            unsigned: true
+            unique: true
+        Parent_id:
+            type: integer(2)
+            unsigned: true
     relations:
         Avatar:
-            class: Media
-            local: avatar_id
+            class: File
+            local: Avatar_id
             foreign: id
-            foreignAlias: ContentList
+            foreignAlias: Contents
             onDelete: "SET NULL"
         Route:
-            local: route_id
+            local: Route_id
             foreign: id
-            foreignAlias: ContentList
+            foreignAlias: Contents
             onDelete: CASCADE
         Parent:
             class: Content
-            local: parent_id
+            local: Parent_id
             foreign: id
             foreignAlias: Children
             onDelete: CASCADE
@@ -805,7 +1148,7 @@ Balcms_Message:
     relations:
         Content:
             class: Content
-            local: content_id
+            local: Content_id
             foreign: id
             foreignAlias: Messages
 

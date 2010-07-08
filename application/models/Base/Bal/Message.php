@@ -14,16 +14,18 @@
  * @property string $hash
  * @property enum $status
  * @property string $template
- * @property integer $for_id
- * @property integer $by_id
+ * @property integer $MessageParent_id
+ * @property integer $UserFor_id
+ * @property integer $UserFrom_id
  * @property integer $content_id
- * @property User $For
- * @property User $By
+ * @property Message $MessageParent
+ * @property User $UserFor
+ * @property User $UserFrom
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
+ * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class Base_Bal_Message extends Doctrine_Record
 {
@@ -104,12 +106,17 @@ abstract class Base_Bal_Message extends Doctrine_Record
              ),
              'length' => '30',
              ));
-        $this->hasColumn('for_id', 'integer', 2, array(
+        $this->hasColumn('MessageParent_id', 'integer', 3, array(
+             'type' => 'integer',
+             'unsigned' => true,
+             'length' => '3',
+             ));
+        $this->hasColumn('UserFor_id', 'integer', 2, array(
              'type' => 'integer',
              'unsigned' => true,
              'length' => '2',
              ));
-        $this->hasColumn('by_id', 'integer', 2, array(
+        $this->hasColumn('UserFrom_id', 'integer', 2, array(
              'type' => 'integer',
              'unsigned' => true,
              'length' => '2',
@@ -124,12 +131,19 @@ abstract class Base_Bal_Message extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('User as For', array(
-             'local' => 'for_id',
-             'foreign' => 'id'));
+        $this->hasOne('Message as MessageParent', array(
+             'local' => 'MessageParent_id',
+             'foreign' => 'id',
+             'onDelete' => 'CASCADE'));
 
-        $this->hasOne('User as By', array(
-             'local' => 'by_id',
-             'foreign' => 'id'));
+        $this->hasOne('User as UserFor', array(
+             'local' => 'UserFor_id',
+             'foreign' => 'id',
+             'onDelete' => 'CASCADE'));
+
+        $this->hasOne('User as UserFrom', array(
+             'local' => 'UserFrom_id',
+             'foreign' => 'id',
+             'onDelete' => 'CASCADE'));
     }
 }

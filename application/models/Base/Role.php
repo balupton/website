@@ -12,7 +12,7 @@
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
+ * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class Base_Role extends Bal_Role
 {
@@ -21,15 +21,15 @@ abstract class Base_Role extends Bal_Role
         parent::setUp();
         $this->hasMany('Bal_User as Users', array(
              'refClass' => 'RoleAndUser',
-             'local' => 'role_id',
-             'foreign' => 'user_id'));
+             'local' => 'Role_id',
+             'foreign' => 'User_id'));
 
         $this->hasMany('Bal_PermissionAndRole', array(
              'local' => 'id',
-             'foreign' => 'role_id'));
+             'foreign' => 'Role_id'));
 
         $this->hasMany('Bal_RoleAndUser', array(
              'local' => 'id',
-             'foreign' => 'role_id'));
+             'foreign' => 'Role_id'));
     }
 }

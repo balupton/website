@@ -33,11 +33,11 @@ ContentBook:
         type: simple
 
 # ==============================================
-# MEDIA
+# FILE
 
-Media:
+File:
     inheritance:
-        extends: Bal_Media
+        extends: Bal_File
         type: simple
 
 
