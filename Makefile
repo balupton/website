@@ -180,13 +180,6 @@ externals:
 	svn propset svn:externals -F svn.externals \
 		./public ;
 	
-	# ./library/csscaffold
-	echo "\
-		csscaffold		https://balupton.springloops.com/source/balcms/trunk/public/library/csscaffold \
-		" > svn.externals ;
-	svn propset svn:externals -F svn.externals \
-		./library ;
-	
 	# ./public/themes/balcmswp
 	echo "\
 		balcmswp 	https://balupton@balupton.springloops.com/source/balcms/trunk/public/themes/balcmswp \
