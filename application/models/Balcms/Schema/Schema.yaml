@@ -48,7 +48,7 @@ Balcms_Content:
             extra:
                 html: raw #handled explicity inside now
                 auto: true
-        description_auto:
+        description_useauto:
             type: bool
             notnull: true
             extra:

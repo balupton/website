@@ -462,21 +462,27 @@ class Balcms_Content extends Base_Balcms_Content
 		}
 		
 		# Description
-		if ( array_key_exists('description', $modified) && (!$Content->description_auto || $Content->description) ) {
-			# Auto
-			$Content->set('description_auto',false,false);
+		$description = $Content->description;
+		$description_modified = array_key_exists('description', $modified);
+		$description_empty = !$description || $description === '<!--[empty/]-->';
+		$description_useauto = $Content->description_useauto;
+		if ( $description_modified && !$description_empty ) {
+			# Disable Auto
+			$Content->set('description_useauto',false,false);
 			# Render Description
 			$description_rendered = Content::renderDescription($Content, array('cache'=>false));
+			# Set Description
 			$Content->set('description_rendered', $description_rendered, false);
 			# Save
 			$save = true;
 		}
-		elseif ( $Content->description_auto ) {
-			# Auto
-			$Content->set('description_auto',true,false);
-			# Render Description
+		elseif ( $Content->description_useauto || $description_empty ) {
+			# Use Auto
+			$Content->set('description_useauto',true,false);
+			# Render Auto Description
 			$description_rendered = substr(preg_replace('/\s\s+/',' ',strip_tags($Content->content_rendered)), 0, 1000);
 			if ( reallyempty($description_rendered) ) $description_rendered = '<!--[empty/]-->';
+			# Set Description
 			$Content->set('description', $description_rendered, false);
 			$Content->set('description_rendered', $description_rendered, false);
 			# Save
