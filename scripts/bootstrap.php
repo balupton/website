@@ -171,7 +171,7 @@ require_once implode(DIRECTORY_SEPARATOR, array(ZEND_PATH,'Zend','Application.ph
 
 # Check Permissions
 if ( defined('CONFIG_APP_PATHS') ) {
-	system('sudo chmod -R 777 '.CONFIG_APP_PATH);
+	system('chmod -R 755 '.CONFIG_APP_PATH);
 	$configs = explode(PATH_SEPARATOR,CONFIG_APP_PATHS);
 	$conf = '';
 	foreach ( $configs as $config ) {

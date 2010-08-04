@@ -8,7 +8,13 @@ ini_set('display_startup_errors', 1);
 if ( empty($Application) ) {
 	# Bootstrap
 	$run = $bootstrap = false;
-	require_once(dirname(__FILE__).'/../index.php');
+	$root_dir = '';
+	if ( !empty($_SERVER['PWD']) ) {
+		$root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['PWD']);
+	} else {
+		$root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['SCRIPT_FILENAME']);
+	}
+	require_once ($root_dir.DIRECTORY_SEPARATOR.'index.php');
 }
 
 # Bootstrap
