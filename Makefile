@@ -14,6 +14,17 @@ MAKE = make $(MAKEFLAGS)
 clear:
 	rm -Rf svn.externals application il8n library public scripts tests .htaccess robots.txt index.php ;
 	
+clear-common:
+	rm -Rf common ;
+	
+clear-all:
+	$(MAKE) clear ;
+	$(MAKE) clear-common ;
+
+refresh-make:
+	svn export \
+		https://balupton.springloops.com/source/balcms/trunk/Makefile \
+		Makefile ;
 	
 refresh:
 	svn export \
@@ -146,7 +157,8 @@ structure:
 	$(MAKE) dirs ;
 	$(MAKE) files ;
 	$(MAKE) refresh ;
-	
+
+
 externals:
 	# ./application/config/balcms
 	echo "\
@@ -189,10 +201,22 @@ externals:
 	
 	# clear
 	rm svn.externals ;
-	
+
+
+ingore:
+	svn propset svn:ignore "common" .
+
 
 update:
 	svn update * --depth infinity;
+
+update-common:
+	svn update ./common --depth infinity;
+
+update-all:
+	$(MAKE) update;
+	$(MAKE) update-common;
+
 
 add:
 	svn add * -q --depth infinity;
@@ -200,11 +224,14 @@ add:
 revert:
 	svn revert * ;
 
+
 permissions:
-	sudo php ./scripts/setup.php permissions ;
+	php ./scripts/setup.php permissions ;
+
 
 setup:
-	sudo php ./scripts/setup.php install ;
+	php ./scripts/setup.php install ;
+
 
 install:
 	$(MAKE) clear ;
@@ -225,4 +252,13 @@ install:
 	svn commit -m "BalCMS Externals Imported." ;
 	
 	"Installation Completed" ;
+
+install-common:
+	$(MAKE) clear-common ;
+	
+	svn checkout https://balupton@balupton.springloops.com/source/htdocs/trunk/common ./common
+
+install-all:
+	$(MAKE) install;
+	$(MAKE) install-common;
 
