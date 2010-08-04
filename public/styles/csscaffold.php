@@ -1,7 +1,10 @@
 <?php
 # Init
 $bootstrap = $run = false;
-require_once (dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'index.php');
+$indexphp = str_replace('public/styles/csscaffold.php','',$_SERVER['SCRIPT_FILENAME']).'index.php';
+
+# Bootstrap
+require_once($indexphp);
 $Application->bootstrap('balphp');
 
 # CSSScaffold
