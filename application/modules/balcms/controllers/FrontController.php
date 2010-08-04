@@ -11,6 +11,9 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$App = $this->getHelper('App');
 		$App->prepareLog();
 		
+		# Ajaxy
+		$this->getHelper('Ajaxy');
+		
 		# Layout
 		$App->setArea('front');
 		
@@ -149,9 +152,18 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		//$App->activateNavigationActionItem('front.actions','search',true);
 		
 		# Render
-		$this->render('content/search');
+		$this->getHelper('Ajaxy')->render(
+			// Normal Template
+			'content/search',
+			// Ajaxy Template => Controllers
+			array(
+				'content/search' => 'page'
+			),
+			// Ajaxy Data for Routes
+			'search'
+		);
 		
-		# Done
+		# Return true
 		return true;
 	}
 
@@ -268,9 +280,21 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$this->activateNavigationContentItem($Content);
 		
 		# Render
-		$this->render('content/content');
+		$this->view->content = $content_id;
+		$this->getHelper('Ajaxy')->render(array(
+			'template' => 'content/content',
+			'controller' => 'page',
+			'routes' => array(
+				'page-content-:content' => array(
+					'template' => 'content/content',
+					'controller' => 'page'
+				)
+			),
+			'data' => 'content'
+		));
 		
-		# Done
+		
+		# Return true
 		return true;
 	}
 	
