@@ -148,8 +148,9 @@
 				
 				<? endif; ?>
 			</section>
-
+			
 			<!-- Comments -->
+			<? if ( delve($Content,'comments_enabled') ) : ?>
 			<section class="article-comments section" id="article-comments">
 				<header class="header">
 					<h1><span class="title">Comments</span></h1>
@@ -170,6 +171,7 @@
 					<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=balupton">comments powered by Disqus.</a></noscript>
 				</div>
 			</section>
+			<? endif; ?>
 			
 		</footer>
 	<? endif; ?>
