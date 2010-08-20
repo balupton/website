@@ -79,6 +79,10 @@ Balcms_Content:
             notblank: true
             extra:
                 auto: true
+        comments_enabled:
+            type: bool
+            notnull: true
+            default: true
             
         Avatar_id:
             type: integer(2)
