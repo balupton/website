@@ -9,6 +9,10 @@
 
 MAKEFLAGS = --no-print-directory --always-make
 MAKE = make $(MAKEFLAGS)
+COMMON_ROOT = /home/balupton/common
+BALCMS_ROOT = $(COMMON_ROOT)/balcms-trunk
+BALPHP_ROOT = $(COMMON_ROOT)/balphp-trunk
+BALPHPLIB_ROOT = $(BALPHP_ROOT)/lib
 
 	
 clear:
@@ -173,7 +177,15 @@ externals:
 		default		https://balupton.springloops.com/source/balcms/trunk/application/modules/default \
 		" > svn.externals ;
 	svn propset svn:externals -F svn.externals \
-		./application ;
+		./application/modules ;
+	
+	# ./application/models
+	echo "\
+		Bal 		https://balupton.springloops.com/source/balphp/trunk/lib/models \n \
+		Balcms		https://balupton.springloops.com/source/balcms/trunk/application/models/Balcms \
+		" > svn.externals ;
+	svn propset svn:externals -F svn.externals \
+		./application/models ;
 	
 	# ./scripts
 	echo "\
@@ -201,6 +213,38 @@ externals:
 	
 	# clear
 	rm svn.externals ;
+	
+externals-symlink:
+	rm -Rf ./common ;
+	ln -s $(COMMON_ROOT) ./common ;
+	
+	rm -Rf ./application/config/balcms ;
+	ln -s $(BALCMS_ROOT)/application/config/balcms ./application/config/balcms ;
+	
+	rm -Rf ./application/modules/balcms ;
+	rm -Rf ./application/modules/default ;
+	ln -s $(BALCMS_ROOT)/application/modules/balcms ./application/modules/balcms ;
+	ln -s $(BALCMS_ROOT)/application/modules/default ./application/modules/default ;
+	
+	rm -Rf ./application/models/Bal ;
+	rm -Rf ./application/models/Balcms ;
+	ln -s $(BALCMS_ROOT)/application/models/Bal ./application/models/Bal ;
+	ln -s $(BALCMS_ROOT)/application/models/Balcms ./application/models/Balcms ;
+
+	rm -Rf ./scripts ;
+	ln -s $(BALCMS_ROOT)/scripts ./scripts ;
+
+	rm -Rf ./public/images ;
+	rm -Rf ./public/scripts ;
+	rm -Rf ./public/styles ;
+	rm -Rf ./public/media ;
+	ln -s $(BALCMS_ROOT)/public/images ./public/images ;
+	ln -s $(BALCMS_ROOT)/public/scripts ./public/scripts ;
+	ln -s $(BALCMS_ROOT)/public/styles ./public/styles ;
+	ln -s $(BALCMS_ROOT)/public/media ./public/media ;
+
+	rm -Rf ./public/themes/balcms ;
+	ln -s $(BALCMS_ROOT)/public/themes/balcms ./public/themes/balcms ;
 
 
 ingore:
@@ -261,4 +305,3 @@ install-common:
 install-all:
 	$(MAKE) install;
 	$(MAKE) install-common;
-
