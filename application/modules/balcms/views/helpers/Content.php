@@ -121,6 +121,15 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	}
 	
 	/**
+	 * Renders the url of the file
+	 * @param $params
+	 * @return string
+	 */
+	public function renderUrlWidget ( array $params = array() ) {
+		return $this->view->app()->getFileUrl($params['file']);
+	}
+	
+	/**
 	 * Render a subscription form
 	 * @param $params
 	 * @return string
