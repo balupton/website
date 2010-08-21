@@ -129,6 +129,41 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		return $this->view->app()->getFileUrl($params['file']);
 	}
 	
+	
+	/**
+	 * Renders a code block
+	 * @param $params
+	 * @return string
+	 */
+	public function renderCodeWidget ( array $params = array() ) {
+		# Extract
+		$content = delve($params,'content','');
+		$language = delve($params,'language','');
+		$encoded = delve($params,'encoded',true);
+		if ( $language ) $language = 'language-'.$language;
+		
+		# Encode
+		$encodedContent = $encoded ? $content : $content.str_replace(
+			array(
+				'&',
+				'<',
+				'>',
+				'[',
+				']'
+			),
+			array(
+				'&amp;',
+				'&lt;',
+				'&gt;',
+				'&#91;',
+				'&#93;'
+			)
+		);
+		
+		# Return
+		return '<pre class="code '.$language.'">'.$encodedContent.'</pre>';
+	}
+	
 	/**
 	 * Render a subscription form
 	 * @param $params
