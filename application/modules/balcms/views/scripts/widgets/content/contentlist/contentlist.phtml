@@ -4,11 +4,16 @@
 	# Extract
 	$id = delve($this,'id');
 	$class = delve($this,'class');
-	$title = delve($this,'title','ContentList');
+	$title = delve($this,'title');
+	$displayTitle = true;
+	if ( !$title ) {
+		if ( $title !== null ) $displayTitle = false;
+		$title = 'ContentList';
+	}
 	$ContentList = delve($this,'ContentList',array());
 ?>
-<section id="<?=$id?>" class="widget widget-contentlist <?=$class?> section">
-    <header class="widget-header section-header header">
+<section id="<?=$id?>" class="widget widget-contentlist section <?=$class?>">
+    <header class="widget-header section-header header <?=$displayTitle ? '' : 'hide'?>">
         <h1><span class="title"><?=$title?></span></h1>
     </header>
     <div class="widget-content">
