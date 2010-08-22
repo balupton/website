@@ -630,7 +630,7 @@ class Balcms_Content extends Base_Balcms_Content
 	 */
 	public static function fetch ( array $params = array() ) {
 		# Prepare
-		Bal_Doctrine_Core::prepareFetchParams($params,array('fetch','Content','Root','Parent','User','Author','ContentTags','codes','featured','recent'));
+		Bal_Doctrine_Core::prepareFetchParams($params,array('fetch','Content','Root','Parent','User','Author','ContentTags','codes','featured','recent','status'));
 		extract($params);
 		
 		# Query
@@ -691,6 +691,9 @@ class Balcms_Content extends Base_Balcms_Content
 				'Content.Parent.'.$identifier['column'].' = ?',
 				$identifier['value']
 			);
+		}
+		if ( $status ) {
+			$Query->andWhereIn('Content.status', $status);
 		}
 		if ( $codes ) {
 			$Query->andWhereIn('Content.code', $codes);
