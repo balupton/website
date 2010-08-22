@@ -59,12 +59,13 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 			# Prepare Fetch
 			$fetch = array_merge(
 				array(
+					'status' => 'published',
 					'limit' => 20
 				),
 				$params
 			);
 			//$fetch = array_keys_unset($fetch, array('id','class','title','Content'));
-			$fetch = array_keys_keep($fetch, array('featured','codes','limit','recent','Parent'));
+			$fetch = array_keys_keep($fetch, array('featured','codes','limit','recent','Parent','status'));
 			
 			# Fetch: Parent
 			if ( !isset($fetch['Parent']) ) {

@@ -43,10 +43,8 @@
 	elseif ( !is_array($class) )
 		$class = array($class);
 	$class[] = 'article';
-	if ( $mode === 'article' ) {
-		$class[] = 'main';
-	}
 	$class[] = 'content-'.$Content_type;
+	$class[] = 'mode-'.$mode;
 	$Comment_article_class = implode(' ',array_unique($class));
 	# Id
 	$Content_article_id = 'content-'.$Content_code;
@@ -59,10 +57,12 @@
 	>
 	
 	<header class="article-header header">
-		<?=$this->partial('partials/nav-links.phtml',array(
-			'class' => 'simple nav-ancestors',
-			'Items' => $Content_Ancestors
-		))?>
+		<? if ( in_array($mode,array('article')) ) : ?>
+			<?=$this->partial('partials/nav-links.phtml',array(
+				'class' => 'simple nav-ancestors',
+				'Items' => $Content_Ancestors
+			))?>
+		<? endif; ?>
 		<h1 class="article-title">
 			<a href="<?=$Content_url?>" title="<?=$Content_title.' > '.$Content_tagline?>">
 				<span class="title"><?=$Content_title?></span>
@@ -150,29 +150,28 @@
 			</section>
 			
 			<!-- Comments -->
-			<? if ( delve($Content,'comments_enabled') ) : ?>
-			<section class="article-comments section" id="article-comments">
-				<header class="header">
-					<h1><span class="title">Comments</span></h1>
-				</header>
-				
-				<div class="article-comments-content">
-					<div id="disqus_thread"></div>
-					<script type="text/javascript">
-						var disqus_identifier = "<?=format_to_output(delve($Content,'code'),'jsattr')?>";
-						var disqus_developer = 1;
-						var disqus_url = "<?=format_to_output($Content_url,'jsattr')?>";
-						(function() {
-							var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-							dsq.src = 'http://balupton.disqus.com/embed.js';
-							(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-						})();
-					</script>
-					<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=balupton">comments powered by Disqus.</a></noscript>
-				</div>
-			</section>
-			<? endif; ?>
+			<? if ( delve($Content,'comments_enabled',false) ) : ?>
+				<section class="article-comments section" id="article-comments">
+					<header class="header">
+						<h1><span class="title">Comments</span></h1>
+					</header>
 			
+					<div class="article-comments-content">
+						<div id="disqus_thread"></div>
+						<script type="text/javascript">
+							var disqus_identifier = "<?=format_to_output(delve($Content,'code'),'jsattr')?>";
+							var disqus_developer = 1;
+							var disqus_url = "<?=format_to_output($Content_url,'jsattr')?>";
+							(function() {
+								var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+								dsq.src = 'http://balupton.disqus.com/embed.js';
+								(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+							})();
+						</script>
+						<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=balupton">comments powered by Disqus.</a></noscript>
+					</div>
+				</section>
+			<? endif; ?>
 		</footer>
 	<? endif; ?>
 	
@@ -181,7 +180,9 @@
 			<div class="article-description-content">
 				<?=Content::renderDescription($Content)?>
 			</div>
-			<a class="more" href="<?=$Content_url?>" title="View the entire article">Continue Reading</a>
+			<div class="article-description-more">
+				<a href="<?=$Content_url?>" title="View the entire article">Continue Reading</a>
+			</div>
 		</div>
 	<? endif; ?>
 	<!-- [/more] -->

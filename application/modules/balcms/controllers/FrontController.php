@@ -39,7 +39,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		
 		# Criteria
 		$criteria = array(
-			'fetch' => 'simplylist',
+			'fetch' => 'simplelist',
 			'where' => array(
 				'status' => 'published'
 			),
@@ -129,9 +129,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		# Criteria
 		$criteria = array(
 			'fetch' => 'list',
-			'where' => array(
-				'status' => 'published'
-			),
+			'status' => 'published',
 			'hydrationMode' => Doctrine::HYDRATE_RECORD
 		);
 		
@@ -147,21 +145,23 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		
 		# Apply
 		$this->view->search = $search;
+		$this->view->searchCode = $search['code'];
 		$this->view->ContentList = $ContentList;
 		$this->view->headTitle()->append('Search');
 		//$App->activateNavigationActionItem('front.actions','search',true);
 		
 		# Render
-		$this->getHelper('Ajaxy')->render(
-			// Normal Template
-			'content/search',
-			// Ajaxy Template => Controllers
-			array(
-				'content/search' => 'page'
+		$this->getHelper('Ajaxy')->render(array(
+			'template' => 'content/search',
+			'controller' => 'page',
+			'routes' => array(
+				'page-search-:searchCode' => array(
+					'template' => 'content/search',
+					'controller' => 'page'
+				)
 			),
-			// Ajaxy Data for Routes
-			'search'
-		);
+			'data' => 'search, searchCode'
+		));
 		
 		# Return true
 		return true;
@@ -248,6 +248,9 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		# Fetch
 		$content_id = $this->_getParam('id');
 		$Content = Doctrine::getTable('Content')->find($content_id);
+		if ( $Content->status !== 'published' ) {
+			throw new Zend_Controller_Action_Exception('This content does not exist',404);
+		}
 		
 		# Keywords
 		$keywords = array($Content->tags);
