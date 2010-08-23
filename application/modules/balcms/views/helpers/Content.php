@@ -92,6 +92,13 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		return $model;
 	}
 	
+	public function getAncestors ( $Content ) {
+		return $Content->getAncestors(false,null,true);
+	}
+	public function getChildren ( $Content ) {
+		return $Content->getChildren(false,null,true);
+	}
+	
 	/**
 	 * Renders the Taglist Widget
 	 * 
@@ -127,7 +134,51 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 	 * @return string
 	 */
 	public function renderUrlWidget ( array $params = array() ) {
-		return $this->view->app()->getFileUrl($params['file']);
+		# Extract
+		$link = delve($params,'link',false);
+		$file = delve($params,'file',null);
+		$content = delve($params,'content',null);
+		$innerContent = delve($params,'innerContent',null);
+		if ( $content === $innerContent ) $content = null;
+		$result = $text = $url = '';
+		
+		# Handle
+		switch ( true ) {
+			case $file:
+				if ( strstr($file,'/') ) {
+					$text = basename($file);
+				}
+				else {
+					$file = Bal_Doctrine_Core::getItem('File',$file);
+					if ( !$file || !$file->id ) break;
+					$text = $file->title;
+				}
+				$url = $this->view->url()->file($file)->toString();
+				break;
+				
+			case $content:
+				$content = Bal_Doctrine_Core::getItem('Content',$content);
+				if ( !$content || !$content->id ) break;
+				$text = $content->title;
+				$url = $this->view->url()->content($content)->toString();
+				break;
+		}
+		
+		# Prepare
+		if ( $url ) {
+			if ( $link ) {
+				if ( !$text ) $text = $innerContent;
+				$result = '<a href="'.$url.'">'.$text.'</a>';
+			}
+			else {
+				$result = $url;
+			}
+		} else {
+			$result = '(link is dead)';
+		}
+		
+		# Return result
+		return $result;
 	}
 	
 	

@@ -256,14 +256,14 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$keywords = array($Content->tags);
 		
 		# Ancestors
-		$Content_Ancestors = $Content->getAncestors(false);
+		$Content_Ancestors = $this->view->content()->getAncestors($Content);
 		foreach ( $Content_Ancestors as $Ancestor ) {
 			$keywords[] = delve($Ancestor,'tags');
 			$this->view->headTitle()->append(delve($Ancestor,'title'));
 		}
 		
 		# Children
-		$Content_Children = $Content->getChildren(false);
+		$Content_Children = $this->view->content()->getChildren($Content);
 		
 		# Keywords
 		$keywordstr = prepare_csv_str($keywords);

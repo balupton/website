@@ -20,7 +20,7 @@
 	# Avatar
 	$Content_Avatar = delve($Content,'Avatar',array());
 	# Ancestors
-	$Content_Ancestors = delve($this,'Content_Ancestors',$Content->getAncestors(false));
+	$Content_Ancestors = delve($this,'Content_Ancestors',$this->content()->getAncestors($Content));
 	$Content_Ancestors = $Content->toNavItems($Content_Ancestors);
 	array_unshift($Content_Ancestors,array(
 		'label' => 'Home',
