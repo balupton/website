@@ -137,6 +137,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		# Extract
 		$link = delve($params,'link',false);
 		$file = delve($params,'file',null);
+		$user = delve($params,'user',null);
 		$content = delve($params,'content',null);
 		$innerContent = delve($params,'innerContent',null);
 		if ( $content === $innerContent ) $content = null;
@@ -161,6 +162,13 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 				if ( !$content || !$content->id ) break;
 				$text = $content->title;
 				$url = $this->view->url()->content($content)->toString();
+				break;
+				
+			case $user:
+				$user = Bal_Doctrine_Core::getItem('User',$user);
+				if ( !$user || !$user->id ) break;
+				$text = $user->displayname;
+				$url = $this->view->url()->user($user)->toString();
 				break;
 		}
 		
