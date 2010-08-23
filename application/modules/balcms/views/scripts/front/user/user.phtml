@@ -1,0 +1,34 @@
+<?
+	# Prepare
+	$this->url()->renege('route','front');
+	# Extract
+	$User = delve($this,'User');
+	$User_code = delve($User,'code');
+	$User_displayname = delve($User,'displayname');
+	$User_description = delve($User,'description');
+	# Adjust
+	$Content_url = $this->url()->user($User)->toString();
+	$Content_article_class = 'user article mode-article';
+	$Content_article_id = 'user-'.$User_code;
+	$Content_title = 'User: ';
+	$Content_tagline = $User_displayname;
+	$Content_content = $User_description;
+?>
+<article
+	id="<?=$Content_article_id?>"
+	class="<?=$Content_article_class?>"
+	>
+	
+	<header class="article-header header">
+		<h1 class="article-title">
+			<a href="<?=$Content_url?>" title="<?=$Content_title.' > '.$Content_tagline?>">
+				<span class="title"><?=$Content_title?></span>
+				<span class="description"><?=$Content_tagline?></span>
+			</a>
+		</h1>
+	</header>
+	
+	<div class="article-content">
+		<?=$Content_content?>
+	</div>
+</article>

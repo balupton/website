@@ -12,7 +12,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$App->prepareLog();
 		
 		# Ajaxy
-		$this->getHelper('Ajaxy');
+		$this->getHelper('Ajaxy'); // initialise
 		
 		# Layout
 		$App->setArea('front');
@@ -119,6 +119,11 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		
 		# Search
 		$search = $App->fetchSearch();
+		if ( $search['oldCode'] !== $search['code'] ) {
+			return $this->getHelper('redirector')->gotoRoute(array('action'=>'search','code'=>$search['code']), 'front', true);
+		}
+		
+		# Extract
 		$searchQuery = delve($search,'query');
 		
 		# Check
@@ -148,7 +153,7 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		$this->view->searchCode = $search['code'];
 		$this->view->ContentList = $ContentList;
 		$this->view->headTitle()->append('Search');
-		//$App->activateNavigationActionItem('front.actions','search',true);
+		$this->view->headTitle()->append($search['query']);
 		
 		# Render
 		$this->getHelper('Ajaxy')->render(array(
@@ -237,6 +242,47 @@ class Balcms_FrontController extends Zend_Controller_Action {
 		return $this->_forward('index');
 	}
 
+	public function userAction ( ) {
+		# Prepare
+		$App = $this->getHelper('App');
+		
+		# --------------------------
+		
+		# Fetch
+		$User = Bal_Doctrine_Core::fetchItem('User');
+		if ( !delve($User,'id') ) {
+			throw new Zend_Controller_Action_Exception('This user does not exist',404);
+		}
+		
+		# Meta
+		$meta = preg_replace('/\s\s+/', ' ', strip_tags($User->description));
+		
+		# --------------------------
+		
+		# Apply
+		$this->view->User = $User;
+		$this->view->headTitle()->append('User');
+		$this->view->headTitle()->append($User->displayname);
+		$this->view->headMeta()->appendName('description', $meta);
+		
+		# Render
+		$this->view->user = $User->id;
+		$this->getHelper('Ajaxy')->render(array(
+			'template' => 'user/user',
+			'controller' => 'page',
+			'routes' => array(
+				'page-user-:user' => array(
+					'template' => 'user/user',
+					'controller' => 'page'
+				)
+			),
+			'data' => 'user'
+		));
+		
+		# Return true
+		return true;
+	}
+	
 	public function contentPageAction ( ) {
 		# Prepare
 		$App = $this->getHelper('App');

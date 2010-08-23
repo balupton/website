@@ -5,6 +5,7 @@
 	$search = delve($this,'search');
 	$ContentList = delve($this,'ContentList',array());
 	# Adjust
+	$Content_url = $this->url()->action('search')->search($search)->toString();
 	$Content_article_class = 'search article mode-article';
 	$Content_article_id = 'search-'.$search['code'];
 	$Content_title = 'Search: ';

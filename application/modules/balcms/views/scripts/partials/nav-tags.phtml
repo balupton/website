@@ -1,11 +1,14 @@
 <?
+	# Prepare
+	$this->url()->renege('route','front');
+	# Handle
 	$Items = delve($this,'Items',array());
 	$Tags = array();
 	foreach ( $Items as $Item ) {
 		$tag = delve($Item,'title',delve($Item,'name'));
 		$title = delve($Item,'label',$tag);
 		$Tags[] = array(
-			'uri' => $this->url()->route('app')->action('search')->search($tag)->reset(true)->toString(),
+			'uri' => $this->url()->action('search')->search($tag)->reset(true)->toString(),
 			'label' => $title,
 			'title' => $title
 		);
