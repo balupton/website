@@ -95,22 +95,25 @@ class Balcms_Content extends Base_Balcms_Content
 	 * @param bool $includeSelf [optional]
 	 * @return mixed
 	 */
-	public function getAncestors ( $includeSelf = true, $hydrateMode = null ) {
+	public function getAncestors ( $includeSelf = true, $hydrateMode = null, $publishedOnly = false ) {
 		# Prepare
-		$Ancestors = array();
+		$AncestorsArray = array();
 		$Ancestor = $this;
+		
+		# Handle
 		while ( $Ancestor->Parent_id ) {
 			$Ancestor = $Ancestor->Parent;
-			$Ancestors[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $Ancestor->toArray() : $Ancestor;
+			if ( $publishedOnly && $Ancestor->status !== 'published' ) continue;
+			$AncestorsArray[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $Ancestor->toArray() : $Ancestor;
 		}
 		
 		# Include?
 		if ( $includeSelf ) {
-			$Ancestors[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $this->toArray() : $this;
+			$AncestorsArray[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $this->toArray() : $this;
 		}
 		
-		# Return Ancestors
-		return $Ancestors;
+		# Return AncestorsArray
+		return $AncestorsArray;
 	}
 	
 	/**
@@ -119,23 +122,24 @@ class Balcms_Content extends Base_Balcms_Content
 	 * @param bool $includeSelf [optional]
 	 * @return mixed
 	 */
-	public function getChildren ( $includeSelf = true, $hydrateMode = null ) {
+	public function getChildren ( $includeSelf = true, $hydrateMode = null, $publishedOnly = false ) {
 		# Prepare
+		$ChildrenArray = array();
 		$Children = $this->Children;
-		if ( $hydrateMode === Doctrine::HYDRATE_ARRAY && !is_array($Children) ) {
-			$Children = $Children->toArray();
-		}
-		if ( !count($Children) ) {
-			$Children = array();
+		
+		# Handle
+		foreach ( $Children as $Child ) {
+			if ( $publishedOnly && $Child->status !== 'published' ) continue;
+			$ChildrenArray[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $Child->toArray() : $Child;
 		}
 		
 		# Include?
 		if ( $includeSelf ) {
-			$Children[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $this->toArray() : $this;
+			$ChildrenArray[] = $hydrateMode === Doctrine::HYDRATE_ARRAY ? $this->toArray() : $this;
 		}
 		
-		# Return Children
-		return $Children;
+		# Return ChildrenArray
+		return $ChildrenArray;
 	}
 	
 	public function getUrl ( ) {
