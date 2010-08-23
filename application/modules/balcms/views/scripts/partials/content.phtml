@@ -45,7 +45,7 @@
 	$class[] = 'article';
 	$class[] = 'content-'.$Content_type;
 	$class[] = 'mode-'.$mode;
-	$Comment_article_class = implode(' ',array_unique($class));
+	$Content_article_class = implode(' ',array_unique($class));
 	# Id
 	$Content_article_id = 'content-'.$Content_code;
 ?>
@@ -53,16 +53,14 @@
 	cite="<?=$Content_url?>"
 	pubdate="<?=date('c',strtotime($Content_published_at))?>"
 	id="<?=$Content_article_id?>"
-	class="<?=$Comment_article_class?>"
+	class="<?=$Content_article_class?>"
 	>
 	
 	<header class="article-header header">
-		<? if ( in_array($mode,array('article')) ) : ?>
-			<?=$this->partial('partials/nav-links.phtml',array(
-				'class' => 'simple nav-ancestors',
-				'Items' => $Content_Ancestors
-			))?>
-		<? endif; ?>
+		<?=$this->partial('partials/nav-links.phtml',array(
+			'class' => 'simple nav-ancestors',
+			'Items' => $Content_Ancestors
+		))?>
 		<h1 class="article-title">
 			<a href="<?=$Content_url?>" title="<?=$Content_title.' > '.$Content_tagline?>">
 				<span class="title"><?=$Content_title?></span>
