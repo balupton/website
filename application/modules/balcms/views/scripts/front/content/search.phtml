@@ -5,6 +5,26 @@
 	$search = delve($this,'search');
 	$ContentList = delve($this,'ContentList',array());
 	# Adjust
-	$title = 'Search: '.delve($search,'query','N/A');
+	$Content_article_class = 'search article mode-article';
+	$Content_article_id = 'search-'.$search['code'];
+	$Content_title = 'Search: ';
+	$Content_tagline = delve($search,'query','N/A');
 ?>
-<?= $this->content()->renderContentlistWidget(array('title'=>$title,'ContentList'=>$ContentList)) ?>
+<article
+	id="<?=$Content_article_id?>"
+	class="<?=$Content_article_class?>"
+	>
+	
+	<header class="article-header header">
+		<h1 class="article-title">
+			<a href="<?=$Content_url?>" title="<?=$Content_title.' > '.$Content_tagline?>">
+				<span class="title"><?=$Content_title?></span>
+				<span class="description"><?=$Content_tagline?></span>
+			</a>
+		</h1>
+	</header>
+	
+	<div class="article-content">
+		<?= $this->content()->renderContentlistWidget(array('title'=>'','ContentList'=>$ContentList)) ?>
+	</div>
+</article>
