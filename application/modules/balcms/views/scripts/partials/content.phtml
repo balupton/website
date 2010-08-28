@@ -11,6 +11,7 @@
 	$Content_type = delve($Content,'type');
 	$Content_published_at = delve($Content,'published_at');
 	$Content_url = $this->url()->content($Content)->toString();
+	$Content_url_full = $this->url()->content($Content)->full()->toString();
 	# Author
 	$Content_Author = delve($Content,'Author');
 	$Content_Author_displayname = delve($Content_Author,'displayname');
@@ -158,8 +159,8 @@
 						<div id="disqus_thread"></div>
 						<script type="text/javascript">
 							var disqus_identifier = "<?=format_to_output(delve($Content,'code'),'jsattr')?>";
-							var disqus_developer = 1;
-							var disqus_url = "<?=format_to_output($Content_url,'jsattr')?>";
+							var disqus_developer = <?=$this->app()->getApplicationEnvironment('production') ? '0' : '1'?>;
+							var disqus_url = "<?=format_to_output($Content_url_full,'jsattr')?>";
 							(function() {
 								var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 								dsq.src = 'http://balupton.disqus.com/embed.js';
