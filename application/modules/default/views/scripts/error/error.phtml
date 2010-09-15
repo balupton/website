@@ -1,6 +1,9 @@
 <?php
 	echo $this->doctype();
 	$messages = $this->app()->get('messages',array());
+	# Fetch
+	$Request = $this->request;
+	$env = $this->env;
 ?>
 <html>
 <head>
@@ -34,8 +37,24 @@
 		<pre><?= $this->exception->getTraceAsString() ?>
 		</pre>
 		
-		<h3>Request Parameters (raw):</h3>
-		<pre><? var_dump($_REQUEST) ?>
+		<h3>Dispatch Information:</h3>
+		<pre><? var_dump(array(
+			'module' => $Request->getModuleName(),
+			'controller' => $Request->getControllerName(),
+			'action' => $Request->getActionName()
+		)) ?>
+		</pre>
+		
+		<h3>ENV Parameters (raw):</h3>
+		<pre><? var_dump($env) ?>
+		</pre>
+		
+		<h3>GET Parameters (raw):</h3>
+		<pre><? var_dump($_GET) ?>
+		</pre>
+		
+		<h3>POST Parameters (raw):</h3>
+		<pre><? var_dump($_POST) ?>
 		</pre>
 		
 		<h3>File Parameters (raw):</h3>
