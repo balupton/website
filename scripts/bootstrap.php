@@ -206,6 +206,25 @@ if ( class_exists('Bal_App') ) {
 			$Exceptor = new Bal_Exceptor($Exception);
 			$Exceptor->log();
 		}
-		echo Bal_Log::getInstance()->render();
+		echo
+			'<!DOCTYPE html><html><head><title>An error has occurred.</title></head><body>'.
+				'<h1>An error has occurred.</h1>'.
+				
+				'<h2>Error Log</h2>'.
+				Bal_Log::getInstance()->render().
+				
+				'<h2>Error Details</h2>'.
+				'<pre>'.
+					'$_GET = '."\n"
+					var_export($_GET,true)."\n\n".
+					
+					'$_POST = '."\n"
+					var_export($_POST,true)."\n\n".
+					
+					'$_SERVER = '."\n"
+					var_export($_SERVER,true)."\n\n".
+				'</pre>'.
+				
+			'</body></html>';
 	}
 }
