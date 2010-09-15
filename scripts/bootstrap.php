@@ -56,7 +56,7 @@ if ( !defined('PUBLIC_URL') ) {
 # --------------------------
 
 if ( !defined('HTMLPURIFIER_PATH') ) {
-	define('HTMLPURIFIER_PATH', 			realpath(COMMON_PATH . '/htmlpurifier-4.1.1-lib'));
+	define('HTMLPURIFIER_PATH', 			realpath(COMMON_PATH . '/htmlpurifier-4.2.0-lib'));
 }
 
 # --------------------------
@@ -201,36 +201,53 @@ $Application->run();
 if ( class_exists('Bal_App') ) {
 	$Response = Bal_App::getResponse();
 	if ( !$Response->getBody() ) {
-		$exceptions = $Response->getException();
-		foreach ( $exceptions as $Exception ) {
+		# There was an Exception
+		$Exceptions = $Response->getException();
+		foreach ( $Exceptions as $Exception ) {
+			# Log Exceptions
 			$Exceptor = new Bal_Exceptor($Exception);
 			$Exceptor->log();
 		}
-		echo
-			'<!DOCTYPE html><html><head><title>An error has occurred.</title></head><body>'.
-				'<h1>An error has occurred.</h1>'.
+		
+		# Try to Dispatch the Error Controller
+		try {
+			$Request = Bal_App::getRequest();
+			$ErrorHandler = Bal_App::getPlugin('Zend_Controller_Plugin_ErrorHandler');
+			$ErrorHandler->postDispatch($Request);
+		}
+		# Dispatching the Error Controller Failed
+		catch ( Exception $Exception ) {
+			# Log Exception
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+			
+			# Display a Error Page
+			echo
+				'<!DOCTYPE html><html><head><title>An error has occurred.</title></head><body>'.
+					'<h1>An error has occurred.</h1>'.
 				
-				'<h2>Error Log</h2>'.
-				Bal_Log::getInstance()->render().
+					'<h2>Error Log</h2>'.
+					Bal_Log::getInstance()->render().
 				
-				'<h2>Error Details</h2>'.
-				'<pre>'.
-					'$_GET = '."\n".
-					var_export($_GET,true)."\n\n".
+					'<h2>Error Details</h2>'.
+					'<pre>'.
+						'$_GET = '."\n".
+						var_export($_GET,true)."\n\n".
 					
-					'$_POST = '."\n".
-					var_export($_POST,true)."\n\n".
+						'$_POST = '."\n".
+						var_export($_POST,true)."\n\n".
 					
-					'$_SERVER = '."\n".
-					var_export($_SERVER,true)."\n\n".
+						'$_SERVER = '."\n".
+						var_export($_SERVER,true)."\n\n".
 					
-					'$_ENV = '."\n".
-					var_export($_SERVER,true)."\n\n".
+						'$_ENV = '."\n".
+						var_export($_SERVER,true)."\n\n".
 					
-					'php.include_path = '."\n".
-					var_export(get_include_path(),true)."\n\n".
-				'</pre>'.
+						'php.include_path = '."\n".
+						var_export(get_include_path(),true)."\n\n".
+					'</pre>'.
 				
-			'</body></html>';
+				'</body></html>';
+		}
 	}
 }
