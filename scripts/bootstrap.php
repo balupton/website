@@ -223,6 +223,12 @@ if ( class_exists('Bal_App') ) {
 					
 					'$_SERVER = '."\n".
 					var_export($_SERVER,true)."\n\n".
+					
+					'$_ENV = '."\n".
+					var_export($_SERVER,true)."\n\n".
+					
+					'php.include_path = '."\n".
+					var_export(get_include_path(),true)."\n\n".
 				'</pre>'.
 				
 			'</body></html>';
