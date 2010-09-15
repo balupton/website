@@ -28,10 +28,14 @@ if ( !defined('IL8N_PATH') ) {
 if ( !defined('MODULES_PATH') ) {
 	define('MODULES_PATH', 					realpath(APPLICATION_PATH.'/modules'));
 }
+if ( !defined('DEBUG_SECRET') ) {
+	define('DEBUG_SECRET',					md5(APPLICATION_ROOT_PATH));
+}
 if ( !defined('DEBUG_MODE') ) {
 	define('DEBUG_MODE',					(
-			'development' === APPLICATION_ENV || 'testing' === APPLICATION_ENV ||
-			(!empty($_COOKIE['debug']) && $_COOKIE['debug'] === DEBUG_SECRET)
+			'development' === APPLICATION_ENV || 'testing' === APPLICATION_ENV
+			|| (!empty($_REQUEST['debug']) && $_REQUEST['debug'] === DEBUG_SECRET && DEBUG_SECRET)
+			|| (!empty($_COOKIE['debug']) && $_COOKIE['debug'] === DEBUG_SECRET && DEBUG_SECRET)
 		)	? 1
 			: 0
 	);
@@ -195,77 +199,92 @@ $Application->bootstrap();
 
 # Run Zend Framework
 if ( !isset($run) || $run ) {
-	# Run Zend Framework
-	$Application->run();
+	try {
+		# Run Zend Framework
+		$Application->run();
+		
+		# Check for Errors
+		$FrontController = Zend_Controller_Front::getInstance();
+		$Response = $FrontController->getResponse();
+		if ( $Response && !$Response->getBody() && $Response->isException() ) {
+			$Exceptions = true;
+		}
+		unset($Response);
+		unset($FrontController);
+	}
+	catch ( Exception $Exception ) {
+		# An Error Occured
+		$Exceptions = array($Exception);
+	}
 
-	# Check for Errors
-	$FrontController = Zend_Controller_Front::getInstance();
-	$Response = $FrontController->getResponse();
-	if ( $Response && !$Response->getBody() ) {
-		# There was an Exception
-		if ( class_exists('Bal_Exceptor') && class_exists('Bal_Log') ) {
-			# Log Exceptions
-			$Exceptions = $Response->getException();
+}
+
+# Check for Errors
+if ( !empty($Exceptions) ) {
+	# An Error Occured
+	if ( class_exists('Bal_Exceptor') && class_exists('Bal_Log') ) {
+		# Log Exceptions
+		if ( is_traversable($Exceptions) ) {
 			foreach ( $Exceptions as $Exception ) {
 				# Log Exceptions
 				$Exceptor = new Bal_Exceptor($Exception);
 				$Exceptor->log();
 			}
-	
-			# Try to Dispatch the Error Controller
-			try {
-				# Fetch
-				$Request = $FrontController->getRequest();
-				$Dispatcher = $FrontController->getDispatchter();
-			
-				# Apply
-				$ErrorHandler = Bal_App::getPlugin('Zend_Controller_Plugin_ErrorHandler');
-				$ErrorHandler->postDispatch($Request);
-				$FrontController->throwExceptions(true);
-			
-				# Dispatch
-				$Dispatcher->dispatch();
-			}
-			# Dispatching the Error Controller Failed
-			catch ( Exception $Exception ) {
-				# Log Exception
-				$Exceptor = new Bal_Exceptor($Exception);
-				$Exceptor->log();
-		
-				# Display a Error Page
-				echo
-					'<!DOCTYPE html><html><head><title>An error has occurred.</title></head><body>'.
-						'<h1>An error has occurred.</h1>'.
-			
-						'<h2>Error Log</h2>'.
-						Bal_Log::getInstance()->render().
-			
-						'<h2>Error Details</h2>'.
-						'<pre>'.
-							'$_GET = '."\n".
-							var_export($_GET,true)."\n\n".
-				
-							'$_POST = '."\n".
-							var_export($_POST,true)."\n\n".
-				
-							'$_SERVER = '."\n".
-							var_export($_SERVER,true)."\n\n".
-				
-							'$_ENV = '."\n".
-							var_export($_SERVER,true)."\n\n".
-				
-							'php.include_path = '."\n".
-							var_export(get_include_path(),true)."\n\n".
-						'</pre>'.
-			
-					'</body></html>';
-			}
 		}
-		else {
+		
+		# Try to Dispatch the Error Controller
+		try {
+			# Fetch
+			$FrontController = Zend_Controller_Front::getInstance();
+			//$Response = $FrontController->getResponse();
+			//$Request = $FrontController->getRequest();
+			
+			# Apply
+			//$Request->setDispatched(false);
+			//$Response->setException(new Exception('An uncaught error has occurred'));
+			
+			# Dispatch
+			$FrontController->dispatch($Request, $Response);
+		}
+		# Dispatching the Error Controller Failed
+		catch ( Exception $Exception ) {
+			# Log Exception
+			$Exceptor = new Bal_Exceptor($Exception);
+			$Exceptor->log();
+	
+			# Display a Error Page
 			echo
 				'<!DOCTYPE html><html><head><title>An error has occurred.</title></head><body>'.
 					'<h1>An error has occurred.</h1>'.
+	
+					'<h2>Error Log</h2>'.
+					Bal_Log::getInstance()->render().
+	
+					'<h2>Error Details</h2>'.
+					'<pre>'.
+						'$_GET = '."\n".
+						var_export($_GET,true)."\n\n".
+		
+						'$_POST = '."\n".
+						var_export($_POST,true)."\n\n".
+		
+						'$_SERVER = '."\n".
+						var_export($_SERVER,true)."\n\n".
+		
+						'$_ENV = '."\n".
+						var_export($_SERVER,true)."\n\n".
+		
+						'php.include_path = '."\n".
+						var_export(get_include_path(),true)."\n\n".
+					'</pre>'.
+	
 				'</body></html>';
 		}
+	}
+	else {
+		echo
+			'<!DOCTYPE html><html><head><title>An error has occurred.</title></head><body>'.
+				'<h1>An error has occurred.</h1>'.
+			'</body></html>';
 	}
 }
