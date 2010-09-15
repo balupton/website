@@ -215,13 +215,13 @@ if ( class_exists('Bal_App') ) {
 				
 				'<h2>Error Details</h2>'.
 				'<pre>'.
-					'$_GET = '."\n"
+					'$_GET = '."\n".
 					var_export($_GET,true)."\n\n".
 					
-					'$_POST = '."\n"
+					'$_POST = '."\n".
 					var_export($_POST,true)."\n\n".
 					
-					'$_SERVER = '."\n"
+					'$_SERVER = '."\n".
 					var_export($_SERVER,true)."\n\n".
 				'</pre>'.
 				
