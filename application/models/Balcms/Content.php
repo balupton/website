@@ -377,11 +377,11 @@ class Balcms_Content extends Base_Balcms_Content
 	
 	/**
 	 * Render the Content's Content
-	 * @param mixed $Content
+	 * @param {array|Content} $Content
 	 * @param array $params
 	 * @return string rendered content
 	 */
-	public static function renderContent ( Content $Content, array $params = array() ) {
+	public static function renderContent ( $Content, array $params = array() ) {
 		# Prepare
 		$WidgetHelper = Bal_App::getViewHelper('widget');
 		$cache = delve($params,'cache',Bal_App::getConfig('bal.content.cache', false));
@@ -394,7 +394,7 @@ class Balcms_Content extends Base_Balcms_Content
 		$params['Content'] = $Content;
 		
 		# Render Content
-		$render = $cache
+		$render = ($cache && $content_rendered)
 			? $content_rendered
 			: $WidgetHelper->renderAll(
 				format_to_output($content,'raw'),
@@ -408,11 +408,11 @@ class Balcms_Content extends Base_Balcms_Content
 
 	/**
 	 * Render the Content description
-	 * @param mixed $Content
+	 * @param {array|Content} $Content
 	 * @param array $params
 	 * @return string rendered content
 	 */
-	public static function renderDescription ( Content $Content, array $params = array() ) {
+	public static function renderDescription ( $Content, array $params = array() ) {
 		# Prepare
 		$WidgetHelper = Bal_App::getViewHelper('widget');
 		$cache = delve($params,'cache',Bal_App::getConfig('bal.content.cache', false));
@@ -425,7 +425,7 @@ class Balcms_Content extends Base_Balcms_Content
 		$params['Content'] = $Content;
 		
 		# Render Description
-		$render = $cache
+		$render = ($cache && $description_rendered)
 			? $description_rendered
 			: $WidgetHelper->renderAll(
 				format_to_output($description,'rich'),
@@ -644,7 +644,7 @@ class Balcms_Content extends Base_Balcms_Content
 		switch ( $fetch ) {
 			case 'list':
 				$Query
-					->select('Content.id, Content.code, Content.title, Content.tagline, Content.position, Content.status, Content.updated_at, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.name, Author.id, Author.code, Author.displayname, Avatar.id, Avatar.url')
+					->select('Content.id, Content.code, Content.title, Content.tagline, Content.content_rendered, Content.description_rendered, Content.position, Content.status, Content.created_at, Content.updated_at, Route.*, Parent.id, Parent.code, Parent.title, ContentTag.name, Author.id, Author.code, Author.displayname, Avatar.id, Avatar.url')
 					->from('Content, Content.Route Route, Content.Parent Parent, Content.ContentTags ContentTag, Content.Author Author, Content.Avatar Avatar')
 					->orderBy('Content.position ASC, Content.id ASC')
 					;
