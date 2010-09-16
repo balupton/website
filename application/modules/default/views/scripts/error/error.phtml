@@ -45,7 +45,7 @@
 		)) ?>
 		</pre>
 		
-		<h3>ENV Parameters (raw):</h3>
+		<h3>ENV Information (raw):</h3>
 		<pre><? var_dump($env) ?>
 		</pre>
 		
@@ -57,12 +57,16 @@
 		<pre><? var_dump($_POST) ?>
 		</pre>
 		
-		<h3>File Parameters (raw):</h3>
+		<h3>FILES Parameters (raw):</h3>
 		<pre><? var_dump($_FILES) ?>
 		</pre>
 		
-		<h3>Server Parameters (raw):</h3>
+		<h3>SERVER Parameters (raw):</h3>
 		<pre><? var_dump($_SERVER) ?>
+		</pre>
+		
+		<h3>ENV Information (raw):</h3>
+		<pre><? var_dump($_ENV) ?>
 		</pre>
 		
 		<? if ( !empty($this->exceptor) ) : ?>
