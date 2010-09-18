@@ -14,7 +14,7 @@ class Balcms_FeedController extends Zend_Controller_Action {
 	/**
 	 * Generate our Feed
 	 */
-	protected function getFeed() {
+	protected function getFeed($type=null) {
 		# Prepare
 		$App = $this->getHelper('App');
 		$Identity = $App->getUser();
@@ -50,8 +50,10 @@ class Balcms_FeedController extends Zend_Controller_Action {
 		$feed = array(
 			'title' => $App->getConfig('bal.site.title'),
 			'link' => $App->getBaseUrl(true),
+			'author' => $App->getConfig('bal.site.author'),
 			'dateModified' => empty($Content[0]) ? time() : strtotime($Content->updated_at),
-			'description' => $App->getConfig('bal.site.description', 'News Feed for '.$App->getConfig('bal.site.title'))
+			'description' => $App->getConfig('bal.site.description', 'News Feed for '.$App->getConfig('bal.site.title')),
+			'categories' => prepare_csv_array($App->getConfig('bal.site.keywords'))
 		);
 		
 		# Create Feed
@@ -60,9 +62,18 @@ class Balcms_FeedController extends Zend_Controller_Action {
 		$Feed->setLink($feed['link']);
 		$Feed->setDateModified($feed['dateModified']);
 		$Feed->setDescription($feed['description']);
+		$Feed->addAuthor($feed['author']['title'], $feed['author']['email'], $feed['author']['url']);
+		$Feed->addHub('http://pubsubhubbub.appspot.com/');
+		
+		# Apply Categories
+		$categories = array();
+		foreach ( $feed['categories'] as $tag ) {
+			$categories[] = array('term'=>str_replace(' ','-',$tag),'label'=>$tag);
+		}
+		$Feed->addCategories($categories);
 		
 		# Content Map
-		$map = array(
+		$contentMap = array(
 			'title' => 'title',
 			'url' => 'link',
 			'updated_at' => 'dateModified',
@@ -82,12 +93,25 @@ class Balcms_FeedController extends Zend_Controller_Action {
 			$Content['created_at'] = strtotime($Content['created_at']);
 			
 			# Apply Content
-            foreach ( $map as $from => $to ) {
+            foreach ( $contentMap as $from => $to ) {
                 $method = 'set'.ucfirst($to);
 				$value = delve($Content,$from);
                 $Entry->$method($value);
             }
 
+			# Apply Author
+			if ( empty($Content['Author']['website']) ) {
+				$Content['Author']['website'] = $App->getUrl()->user($Content['Author'])->full()->toString();
+			}
+			$Entry->addAuthor($Content['Author']['displayname'], $Content['Author']['email'], $Content['Author']['website']);
+			
+			# Apply Categories
+			$categories = array();
+			foreach ( $Content['ContentTags'] as $Tag ) {
+				$categories[] = array('term'=>str_replace(' ','-',$Tag['name']),'label'=>$Tag['name']);
+			}
+			$Entry->addCategories($categories);
+			
 			# Add Entry
             $Feed->addEntry($Entry);
 		}
@@ -110,7 +134,7 @@ class Balcms_FeedController extends Zend_Controller_Action {
 		# Fetch Content
 		
 		# Prepare
-		$Feed = $this->getFeed();
+		$Feed = $this->getFeed('rss');
 		$Feed->setFeedLink($App->getUrl()->route('feed')->controller('feed')->action('rss')->full()->toString(), 'rss');
 		
 		# Output
@@ -127,12 +151,8 @@ class Balcms_FeedController extends Zend_Controller_Action {
 		# --------------------------
 		# Fetch Content
 		
-		# Fetch Author
-		$author = $App->getConfig('bal.site.author');
-		
 		# Prepare
-		$Feed = $this->getFeed();
-		$Feed->addAuthor($author['title'], $author['email'], $author['url']);
+		$Feed = $this->getFeed('atom');
 		$Feed->setFeedLink($App->getUrl()->route('feed')->controller('feed')->action('atom')->full()->toString(), 'atom');
 		
 		# Output
