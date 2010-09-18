@@ -1,0 +1,51 @@
+BalCMS
+Copyright (C) 2008-2010 Benjamin Arthur Lupton
+
+BalCMS is free software; You can redistribute it and/or modify it under the terms of either:
+- the GNU Affero General Public License version 3 as published by the Free Software Foundation.
+- the GNU General Public License version 2 as published by the Free Software Foundation.
+You don't have to do anything special to accept either license and you don’t have to notify
+anyone which that you have made that decision.
+
+BalCMS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See your chosen license for more details.
+
+You should have received along with BalCMS:
+- A copy of the licenses used.
+  If not, see <http://www.gnu.org/licenses/agpl-3.0.html> and <http://www.gnu.org/licenses/gpl-2.0.html>
+- A copy of our interpretation of the licenses used.
+  If not, see <http://github.com/balupton/balcms/blob/master/COPYING.txt>.
+
+There is a strong belief within us that the licenses we have chosen provides not only the best solution for providing you with the essential freedom necessary to use BalCMS within your projects, but also for maintaining enough copyleft strength for us to feel confident and secure with releasing our hard work to the public. For your convenience we've included our own interpretation of the licenses we selected, which can be seen below.
+
+This is our interpretation of both the GNU Affero General Public License version 3 and the GNU General Public License 2:
+(Quoted words are words in which there exists a definition within the license to avoid ambiguity.)
+  1. You must always provide the source code, copyright and license information of BalCMS whenever you "convey"/"distribute" any part of BalCMS;
+       be it a verbatim copy or a modified copy.
+  2. BalCMS was developed and has been provided for the purpose of functioning as a software library.
+     As such it has been developed without any sufficient knowledge about the inner workings of the works which it will be "aggregated" or "used" with.
+     As such it can not be considered a work which is "based on" or "derived" from the works which it will be "aggregated" or "used with", i.e. your work.
+     This provides the following implications:
+       a) You are free to use BalCMS in a work covered by the following licenses:
+            - GNU General Public License version 2
+            - GNU Lesser General Public License version 2.1
+          This is due to those licenses acknowledging that work which is not "based on" their work to fall under the a special "aggregate" use case.
+          This allows for BalCMS to act as an "aggregated" work and be covered by it's own licensing decisions
+            regardless of the license of the work BalCMS would be "aggregating" with.
+          You may find the relevant passages of those licenses which document this starting at:
+            - Line 129 of the GNU General Public License version 2
+            - Line 206 of the GNU Lesser General Public License version 2.1
+      b) If you have developed works which "aggregate" the BalCMS codebase (such as additional modules, plugins, helpers, etc) then
+           those works are not bound by this license; as they are considered "aggregate" works.
+      b) If you have developed works which do not "modify", "adapt" or "extend" the BalCMS codebase (such as independent programs) then
+           those works are not bound by this license; as they are considered "aggregate" works.
+      c) If you have developed works which "modify", "adapt" or "extend" the BalCMS codebase then
+           those works are indeed bound by this license; as they are considered performed under the definition of a "based on" work.
+
+Our dearest hopes are that your own interpretation, values and goals for using our work freely and yet securely align with the licenses selected as well as our interpretation of them. If you have any questions about the licenses selected for BalCMS you can always email us directly at contact@balupton.com or you can get in contact with the license authors (the Free Software Foundation) at licensing@fsf.org to gain their opinion too.
+
+Alternatively you can provide feedback and acquire the support you need at our support forum. We'll definitely try and help you as soon as possible and to the best of our ability; we understand that user experience is everything, so we want to make you as happy as possible! So feel free to get in touch via our support forum and chat with other users of BalCMS here at:
+http://getsatisfaction.com/balupton/products/balupton_balcms
+
+Thanks, and we hope you enjoy using BalCMS and that it's everything you ever hoped it could be.
