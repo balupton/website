@@ -1,0 +1,132 @@
+#!/usr/bin/env php
+<?php
+
+class Cli {
+	
+	function __construct ( ) {
+		# Prepare
+		$load = false;
+		require(dirname(__FILE__).'/bootstrap.php');
+		
+		# Install
+		$this->configure();
+	}
+	
+	function escape ( $input ) {
+		return preg_replace('/([\\\\\\/$])/','\\\\${1}',$input);
+	}
+	
+	function configure ( ) {
+		# Prepare
+		echo "Welcome to the BalCMS Installer.\n\n";
+		
+		# --------------------------
+		
+		# Common Path
+		echo "Where would you like to place your common directory? Default is ./common\n".
+			 "This contains resources which BalCMS uses such as Zend Framework, Doctrine ORM etc.\n";
+		$common_path = readline('> ');
+		if ( !$common_path ) {
+			$common_path = APPLICATION_ROOT_PATH.'/common';
+		}
+		if ( !is_dir($common_path) && !mkdir($common_path) ) {
+			echo "Error: Could not find the location specified: [${common_path}]";
+			exit;
+		}
+		$common_path = realpath($common_path);
+		
+		# Prepare Config
+		$balcms_path = APPLICATION_ROOT_PATH;
+		
+		# --------------------------
+		
+		# Grab Resources
+		echo "\nDownloading the resources into [${common_path}].\n\n";
+	
+		# BalPHP v1.0
+		$path = $common_path.'/balphp-v1.0';
+		if ( !is_dir($path) ) {
+			echo "Installing BalPHP to [$path].\n\n";
+			`git clone git@github.com:balupton/balphp.git $path`;
+			`cd $path; git checkout v1.0; cd ${balcms_path};`;
+		}
+		else {
+			echo "BalPHP is already installed at [${path}].\n\n";
+		}
+		
+		# CSScaffold
+		$path = $common_path.'/csscaffold';
+		if ( !is_dir($path) ) {
+			echo "Installing CSScaffold to [$path].\n\n";
+			`git svn clone https://balupton.springloops.com/source/devenv/trunk/common/csscaffold ${path}`;
+		}
+		else {
+			echo "CSScaffold is already installed at [${path}].\n\n";
+		}
+		
+		# Doctrine Extensions
+		$path = $common_path.'/doctrine-extensions';
+		if ( !is_dir($path) ) {
+			echo "Installing Doctrine Extensions to [$path].\n\n";
+			`git svn clone https://balupton.springloops.com/source/devenv/trunk/common/doctrine-extensions ${path}`;
+		}
+		else {
+			echo "Doctrine Extensions is already installed at [${path}].\n\n";
+		}
+		
+		# Doctrine ORM v1.2.3 Library
+		$path = $common_path.'/doctrine-v1.2.3-lib';
+		if ( !is_dir($path) ) {
+			echo "Installing Doctrine ORM to [$path].\n\n";
+			`svn export http://svn.doctrine-project.org/tags/1.2.3/lib ${path}`;
+		}
+		else {
+			echo "Doctrine ORM is already installed at [${path}].\n\n";
+		}
+		
+		# HTML Purifier v4.2.0 Library
+		$path = $common_path.'/htmlpurifier-v4.2.0-lib';
+		if ( !is_dir($path) ) {
+			echo "Installing HTML Purifier to [$path].\n\n";
+			`svn export https://balupton.springloops.com/source/devenv/trunk/common/htmlpurifier-v4.2.0-lib ${path}`;
+		}
+		else {
+			echo "HTML Purifier is already installed at [${path}].\n\n";
+		}
+		
+		# YAML Extensions
+		$path = $common_path.'/SymfonyComponents/YAML';
+		if ( !is_dir($path) ) {
+			echo "Installing YAML to [$path].\n\n";
+			`svn export http://svn.symfony-project.com/components/yaml/tags/RELEASE_1_0_3/lib ${path}`;
+		}
+		else {
+			echo "YAML is already installed at [${path}].\n\n";
+		}
+		
+		# Zend Framework v1.10.7 Library
+		$path = $common_path.'/zend-v1.10.7-lib';
+		if ( !is_dir($path) ) {
+			echo "Installing Zend Framework to [$path].\n\n";
+			`svn export http://framework.zend.com/svn/framework/standard/tags/release-1.10.7/library ${path}`;
+		}
+		else {
+			echo "Zend Framework is already installed at [${path}].\n\n";
+		}
+		
+		# --------------------------
+		
+		# Open Url
+		echo "We are now ready to open the web installer.\n".
+			 "So open in your web browser the location of where you installed BalCMS. Eg. http://localhost/balcms\n".
+			 "Press the enter key to exit.\n";
+		readline('>');
+		// system("open ${root_url}${base_url}");
+		
+		# Return true
+		return true;
+	}
+	
+}
+
+$Cli = new Cli();

@@ -1,0 +1,91 @@
+balcms: &balcms
+    <<: *standard
+    
+    routing:
+        defaults:
+            routeTable: Route
+            pathColumn: path
+            typeColumn: type
+            dataColumn: data
+            routeKey: Route
+            firstAsHome: false
+        routeTypes:
+            default:
+                module: balcms
+            content:
+                controller: front
+                action: content-page
+            events:
+                controller: front
+                action: events-page
+            event:
+                controller: front
+                action: event-page
+                
+    widgets:
+        viewpath: widgets
+        widget:
+            vimeo:
+                helper: social
+            youtube:
+                helper: social
+            url:
+                helper: content
+            code:
+                helper: content
+            comments:
+                helper: content
+            subscribe:
+                helper: content
+            eventlist:
+                helper: content
+            taglist:
+                helper: content
+            contentlist:
+                helper: content
+            gallery:
+                helper: gallery
+    
+    content:
+        cache: true # should we use the rendered content cache?
+    
+    paging:
+        items: 15 # how many items should be displayed on a page
+        chunk: 5 # how many page numbers should be displayed
+    
+    data:
+        models:
+            generate: false
+            yaml_schema_includes:  
+                - "{APPLICATION_PATH}/data/schema/_schema.yml"
+                - "{MODELS_PATH}/Bal/Schema/Invoice.yaml"
+                - "{MODELS_PATH}/Bal/Schema/File.yaml"
+                - "{MODELS_PATH}/Bal/Schema/Message.yaml"
+                - "{MODELS_PATH}/Bal/Schema/Route.yaml"
+                - "{MODELS_PATH}/Bal/Schema/User.yaml"
+                - "{MODELS_PATH}/Balcms/Schema/Schema.yaml"
+        compile:
+            generate: false
+    
+    site:
+        version: "0.10.0-dev Sydney"
+    
+    areaThemes:
+        back: balcms
+        front: titan
+    
+    editor:
+        code: tinymce
+    
+    hours_in_work_day: 8
+    invoice:
+        tax_rate: 0.10
+        commission: 0
+        company:
+            name: "Your Company's Name"
+            address1: "Your Company's Address"
+            address2: ""
+            suburb: "Your Company's Suburb"
+            state: "Your Company's State"
+            country: "Your Company's Country"
+            postcode: "Your Company's Postcode"

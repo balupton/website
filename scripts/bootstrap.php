@@ -1,290 +1,253 @@
 <?php
 
-
 # --------------------------
+# Prepare Core
 
-# Defines
-if ( !defined('APPLICATION_ENV') ) {
-	define('APPLICATION_ENV', 				(getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
-}
-if ( !defined('APPLICATION_ROOT_PATH') ) {
-	define('APPLICATION_ROOT_PATH', 		realpath(APPLICATION_PATH.'/..'));
-}
-if ( !defined('CONFIG_PATH') ) {
-	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/config'));
-}
-if ( !defined('MODELS_PATH') ) {
-	define('MODELS_PATH', 					realpath(APPLICATION_PATH.'/models'));
-}
-if ( !defined('CONFIG_APP_PATH') ) {
-	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/application.ini'));
-}
-if ( !defined('LIBRARY_PATH') ) {
-	define('LIBRARY_PATH', 					realpath(APPLICATION_ROOT_PATH.'/library'));
-}
-if ( !defined('IL8N_PATH') ) {
-	define('IL8N_PATH', 					realpath(APPLICATION_ROOT_PATH.'/il8n'));
-}
-if ( !defined('MODULES_PATH') ) {
-	define('MODULES_PATH', 					realpath(APPLICATION_PATH.'/modules'));
-}
-if ( !defined('DEBUG_SECRET') ) {
-	define('DEBUG_SECRET',					md5(APPLICATION_ROOT_PATH));
-}
-if ( !defined('DEBUG_MODE') ) {
-	define('DEBUG_MODE',					(
-			'development' === APPLICATION_ENV || 'testing' === APPLICATION_ENV
-			|| (!empty($_REQUEST['debug']) && $_REQUEST['debug'] === DEBUG_SECRET && DEBUG_SECRET)
-			|| (!empty($_COOKIE['debug']) && $_COOKIE['debug'] === DEBUG_SECRET && DEBUG_SECRET)
-		)	? 1
-			: 0
-	);
-}
-
-# --------------------------
-		
-if ( !defined('BASE_PATH') ) {
-	define('BASE_PATH', 					APPLICATION_ROOT_PATH);
-}
-if ( !defined('BASE_URL') ) {
-	define('BASE_URL', 						'');
-}
+# Check
+if ( !isset($prepare) || $prepare ) {
 	
-if ( !defined('PUBLIC_PATH') ) {
-	define('PUBLIC_PATH', 					realpath(APPLICATION_ROOT_PATH.'/public'));
+	# Load in Preparation
+	require_once implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__),'bootstrap.prepare.php'));
+
+	# Define the core paths
+	if ( !defined('APPLICATION_ROOT_PATH') ) {
+		define('APPLICATION_ROOT_PATH',				realpath(dirname(__FILE__).'/..'));
+	}
+	if ( !defined('APPLICATION_PATH') ) {
+		define('APPLICATION_PATH',					APPLICATION_ROOT_PATH.'/application');
+	}
+	if ( !defined('CONFIG_CORE_PATH') ) {
+		define('CONFIG_CORE_PATH',					APPLICATION_ROOT_PATH.'/application/config/core.yaml');
+	}
+
+	# Include the Yaml Parser
+	if ( !defined('YAML_PARSER_PATH') ) {
+		$temp = 'SymfonyComponents/YAML/sfYamlParser.php';
+		if ( is_file(APPLICATION_ROOT_PATH.'/common/'.$temp) )
+			define('YAML_PARSER_PATH',				APPLICATION_ROOT_PATH.'/common/'.$temp);
+		elseif ( is_file(APPLICATION_ROOT_PATH.'/library/'.$temp) )
+			define('YAML_PARSER_PATH',				APPLICATION_ROOT_PATH.'/common/'.$temp);
+		elseif ( @include_once($temp) )
+			define('YAML_PARSER_PATH',				$temp);
+		else
+			throw new Exception('Could not find the YAML Parser');
+		unset($temp);
+	}
+
+	# Prepare the environment
+	if ( !defined('APPLICATION_ENV') ) {
+		define('APPLICATION_ENV',					'development');
+	}
 }
-if ( !defined('PUBLIC_URL') ) {
-	define('PUBLIC_URL', 					BASE_URL.'/public');
-}
+
 
 # --------------------------
+# Load Zend Framework
 
-if ( !defined('HTMLPURIFIER_PATH') ) {
-	define('HTMLPURIFIER_PATH', 			realpath(COMMON_PATH . '/htmlpurifier-4.2.0-lib'));
-}
+# Check
+if ( !isset($load) || $load ) {
+	
+	# --------------------------
+	# Load the Core Configuration
+	
+	# Load the YAML Parser
+	require_once(YAML_PARSER_PATH);
+	$Yaml = new sfYamlParser();
+	
+	# Include the core configuration
+	$configuration = $Yaml->parse(file_get_contents(CONFIG_CORE_PATH));
 
-# --------------------------
+	# Adjust for our Environment
+	$configuration = $configuration[APPLICATION_ENV];
 
-if ( !defined('DATA_PATH') ) {
-	define('DATA_PATH', 					realpath(APPLICATION_PATH . '/data'));
-}
-if ( !defined('LOGS_PATH') ) {
-	define('LOGS_PATH', 					realpath(DATA_PATH . '/logs'));
-}
+	# Apply our configuration
+	foreach ( $configuration as $key => &$value ) {
+		$value = preg_replace('/\\<\\?\\=([a-Z_]+)?>/e','$1',$value);
+		define($key,$value);
+	}
 
-# --------------------------
+	# Apply include paths
+	if ( !isset($include_paths) ) {
+		$include_paths_original = explode(PATH_SEPARATOR,$str_replace('.'.PATH_SEPARATOR.'/usr/local/zend/share/ZendFramework/library'.PATH_SEPARATOR, '', get_include_path()));
+		$include_paths_new = explode(PATH_SEPARATOR,INCLUDE_PATHS);
+		$include_paths_diff = array_diff($include_paths_original,$include_paths_new);
+		$include_paths_final = array_merge($include_paths_diff, $include_paths_original);
+		$include_paths_final = implode(PATH_SEPARATOR, $include_paths_final);
+		set_include_path($include_paths_final);
+		unset($include_paths_original, $include_paths_new, $include_paths_diff, $include_paths_final);
+	}
 
-if ( !defined('MEDIA_URL') ) {
-	define('MEDIA_URL', 					PUBLIC_URL . '/media');
-}
-if ( !defined('MEDIA_PATH') ) {
-	define('MEDIA_PATH', 					realpath(PUBLIC_PATH . '/media'));
-}
+	# Unset
+	unset($configuration);
 
-if ( !defined('DELETED_URL') ) {
-	define('DELETED_URL', 					MEDIA_URL . '/deleted');
-}
-if ( !defined('DELETED_PATH') ) {
-	define('DELETED_PATH', 					realpath(MEDIA_PATH . '/deleted'));
-}
+	# --------------------------
+	# PHP Compatability Ensure
 
-if ( !defined('IMAGES_URL') ) {
-	define('IMAGES_URL', 					MEDIA_URL . '/images');
-}
-if ( !defined('IMAGES_PATH') ) {
-	define('IMAGES_PATH', 					realpath(MEDIA_PATH . '/images'));
-}
+	# Fix Request URI
+	if ( !empty($_SERVER['REDIRECT_URL']) ) {
+		$_SERVER['REQUEST_URI'] = $_SERVER['REDIRECT_URL'];
+	}
 
-if ( !defined('INVOICES_URL') ) {
-	define('INVOICES_URL', 					MEDIA_URL . '/invoices');
-}
-if ( !defined('INVOICES_PATH') ) {
-	define('INVOICES_PATH', 				realpath(MEDIA_PATH . '/invoices'));
-}
+	# Fix magic quotes
+	if ( !isset($fix_magic_quotes) || $fix_magic_quotes ) {
+		require_once BALPHP_PATH.'/core/functions/_params.funcs.php';
+		fix_magic_quotes();
+	}
 
-if ( !defined('TEMPLATES_URL') ) {
-	define('TEMPLATES_URL', 				PUBLIC_URL . '/templates');
-}
-if ( !defined('TEMPLATES_PATH') ) {
-	define('TEMPLATES_PATH', 				realpath(PUBLIC_PATH . '/templates'));
-}
 
-if ( !defined('UPLOADS_URL') ) {
-	define('UPLOADS_URL', 					MEDIA_URL . '/uploads');
-}
-if ( !defined('UPLOADS_PATH') ) {
-	define('UPLOADS_PATH', 					realpath(MEDIA_PATH . '/uploads'));
-}
+	# --------------------------
+	# Library Includes
 
-if ( !defined('THEMES_URL') ) {
-	define('THEMES_URL', 					PUBLIC_URL . '/themes');
-}
-if ( !defined('THEMES_PATH') ) {
-	define('THEMES_PATH', 					realpath(PUBLIC_PATH . '/themes'));
-}
-
-if ( !defined('SCRIPTS_URL') ) {
-	define('SCRIPTS_URL', 					ROOT_URL.BASE_URL . '/scripts');
-}
-if ( !defined('SCRIPTS_PATH') ) {
-	define('SCRIPTS_PATH', 					realpath(BASE_PATH . '/scripts'));
-}
-
-# --------------------------
-
-# Fix REQUEST_URI
-if ( !empty($_SERVER['REDIRECT_URL']) ) {
-	$_SERVER['REQUEST_URI'] = $_SERVER['REDIRECT_URL'];
-}
-
-# Fix magic quotes
-if ( !isset($fix_magic_quotes) || $fix_magic_quotes ) {
-	require_once BALPHP_PATH.'/core/functions/_params.funcs.php';
-	fix_magic_quotes();
-}
-
-# --------------------------
-
-# Ensure library/ is on include_path
-if ( !isset($include_paths) ) {
-	$include_paths = $include_paths_original = array();
-	$include_paths[] = BALPHP_PATH;
-	if ( defined('ZEND_PATH') )
-		$include_paths[] = ZEND_PATH;
-	//if ( defined('DOCTRINE_PATH') )
-	//	$include_paths[] = DOCTRINE_PATH;
-	$include_paths[] = LIBRARY_PATH;
-	//$include_paths[] = BALPHP_PATH;
-	$include_paths[] = MODELS_PATH;
-	$include_paths_original = str_replace('.:/usr/local/zend/share/ZendFramework/library:', '', get_include_path());
-	$include_paths_original = array_diff(explode(':',$include_paths_original),$include_paths);
-	$include_paths = array_merge($include_paths, $include_paths_original);
-	$include_paths = implode(PATH_SEPARATOR, $include_paths);
-	set_include_path($include_paths);
-	unset($include_paths, $include_paths_original);
-}
-
-# HTMLPurifier
-if ( HTMLPURIFIER_PATH ) {
+	# HTMLPurifier
 	require_once(HTMLPURIFIER_PATH.'/HTMLPurifier.auto.php');
 	require_once(HTMLPURIFIER_PATH.'/HTMLPurifier/Lexer/PH5P.php');
-}
 
-# Zend Application
-require_once implode(DIRECTORY_SEPARATOR, array(ZEND_PATH,'Zend','Application.php'));
+	# Zend Application
+	require_once implode(DIRECTORY_SEPARATOR, array(ZEND_PATH,'Zend','Application.php'));
 
-# Check Permissions
-if ( defined('CONFIG_APP_PATHS') ) {
-	system('chmod -R 755 '.CONFIG_APP_PATH);
-	$configs = explode(PATH_SEPARATOR,CONFIG_APP_PATHS);
-	$conf = '';
-	foreach ( $configs as $config ) {
-		$conf .= ";; $config ;;\r\n".file_get_contents($config)."\r\n\r\n";
-	}
-	file_put_contents(CONFIG_APP_PATH,$conf);
-	unset($configs, $conf);
-}
 
-# Create Application
-if ( !isset($Application) ) {
-	$Application = new Zend_Application(
-	    APPLICATION_ENV,
-	    CONFIG_APP_PATH
-	);
-}
+	# --------------------------
+	# Configure
 
-# Bootstrap
-if ( !isset($bootstrap) || $bootstrap )
-$Application->bootstrap();
+	if ( !isset($ApplicationConfig) ) {
+		# Prepare
+		$config = ''; $config_files;
 
-# Run Zend Framework
-if ( !isset($run) || $run ) {
-	try {
-		# Run Zend Framework
-		$Application->run();
-		
-		# Check for Errors
-		$FrontController = Zend_Controller_Front::getInstance();
-		$Response = $FrontController->getResponse();
-		if ( $Response && !$Response->getBody() && $Response->isException() ) {
-			$Exceptions = true;
+		# Fetch
+		if ( strstr(CONFIG_FILE_PATH,':') ) {
+			# We are wanting to load in multiple configuration files
+			$config_files = explode(':',CONFIG_FILE_PATH);
 		}
-		unset($Response);
-		unset($FrontController);
+		else {
+			# We just want to load in the sole file
+			$config_files = array(CONFIG_FILE_PATH);
+		}
+
+		# Adjust
+		foreach ( $config_files as $file ) {
+			$config .= "\n".file_get_contents($file);
+		}
+
+		# Parse
+		$configuration = $Yaml->parse($config);
+
+		# Adjust
+		$configuration = $configuration[APPLICATION_ENV];
+
+		# Prepare Zend Config
+		require('Zend/Config.php');
+		require('Zend/Config/Exception.php');
+
+		# Create Zend Config
+		$ApplicationConfig = new Zend_Config($configuration);
 	}
-	catch ( Exception $Exception ) {
+
+
+	# --------------------------
+	# Initialise
+
+	# Create Application
+	if ( !isset($Application) ) {
+		$Application = new Zend_Application(
+		    APPLICATION_ENV,
+		    $ApplicationConfig
+		);
+	}
+
+	# Bootstrap
+	if ( !isset($bootstrap) || $bootstrap ) {
+		$Application->bootstrap();
+	}
+
+	# Run
+	if ( !isset($run) || $run ) {
+		try {
+			# Run Zend Framework
+			$Application->run();
+		
+			# Check for Errors
+			$FrontController = Zend_Controller_Front::getInstance();
+			$Response = $FrontController->getResponse();
+			if ( $Response && !$Response->getBody() && $Response->isException() ) {
+				$Exceptions = true;
+			}
+			unset($Response);
+			unset($FrontController);
+		}
+		catch ( Exception $Exception ) {
+			# An Error Occured
+			$Exceptions = array($Exception);
+		}
+	}
+
+	# Error Handling
+	if ( !empty($Exceptions) ) {
 		# An Error Occured
-		$Exceptions = array($Exception);
-	}
-
-}
-
-# Check for Errors
-if ( !empty($Exceptions) ) {
-	# An Error Occured
-	if ( class_exists('Bal_Exceptor') && class_exists('Bal_Log') ) {
-		# Log Exceptions
-		if ( is_traversable($Exceptions) ) {
-			foreach ( $Exceptions as $Exception ) {
-				# Log Exceptions
+		if ( class_exists('Bal_Exceptor') && class_exists('Bal_Log') ) {
+			# Log Exceptions
+			if ( is_traversable($Exceptions) ) {
+				foreach ( $Exceptions as $Exception ) {
+					# Log Exceptions
+					$Exceptor = new Bal_Exceptor($Exception);
+					$Exceptor->log();
+				}
+			}
+		
+			# Try to Dispatch the Error Controller
+			try {
+				# Fetch
+				$FrontController = Zend_Controller_Front::getInstance();
+				//$Response = $FrontController->getResponse();
+				//$Request = $FrontController->getRequest();
+			
+				# Apply
+				//$Request->setDispatched(false);
+				//$Response->setException(new Exception('An uncaught error has occurred'));
+			
+				# Dispatch
+				$FrontController->dispatch($Request, $Response);
+			}
+			# Dispatching the Error Controller Failed
+			catch ( Exception $Exception ) {
+				# Log Exception
 				$Exceptor = new Bal_Exceptor($Exception);
 				$Exceptor->log();
+	
+				# Display a Error Page
+				echo
+					'<!DOCTYPE html><html><head><title>An error has occurred.</title></head><body>'.
+						'<h1>An error has occurred.</h1>'.
+	
+						'<h2>Error Log</h2>'.
+						Bal_Log::getInstance()->render().
+	
+						'<h2>Error Details</h2>'.
+						'<pre>'.
+							'$_GET = '."\n".
+							var_export($_GET,true)."\n\n".
+		
+							'$_POST = '."\n".
+							var_export($_POST,true)."\n\n".
+		
+							'$_SERVER = '."\n".
+							var_export($_SERVER,true)."\n\n".
+		
+							'$_ENV = '."\n".
+							var_export($_SERVER,true)."\n\n".
+		
+							'php.include_path = '."\n".
+							var_export(get_include_path(),true)."\n\n".
+						'</pre>'.
+	
+					'</body></html>';
 			}
 		}
-		
-		# Try to Dispatch the Error Controller
-		try {
-			# Fetch
-			$FrontController = Zend_Controller_Front::getInstance();
-			//$Response = $FrontController->getResponse();
-			//$Request = $FrontController->getRequest();
-			
-			# Apply
-			//$Request->setDispatched(false);
-			//$Response->setException(new Exception('An uncaught error has occurred'));
-			
-			# Dispatch
-			$FrontController->dispatch($Request, $Response);
-		}
-		# Dispatching the Error Controller Failed
-		catch ( Exception $Exception ) {
-			# Log Exception
-			$Exceptor = new Bal_Exceptor($Exception);
-			$Exceptor->log();
-	
-			# Display a Error Page
+		else {
 			echo
 				'<!DOCTYPE html><html><head><title>An error has occurred.</title></head><body>'.
 					'<h1>An error has occurred.</h1>'.
-	
-					'<h2>Error Log</h2>'.
-					Bal_Log::getInstance()->render().
-	
-					'<h2>Error Details</h2>'.
-					'<pre>'.
-						'$_GET = '."\n".
-						var_export($_GET,true)."\n\n".
-		
-						'$_POST = '."\n".
-						var_export($_POST,true)."\n\n".
-		
-						'$_SERVER = '."\n".
-						var_export($_SERVER,true)."\n\n".
-		
-						'$_ENV = '."\n".
-						var_export($_SERVER,true)."\n\n".
-		
-						'php.include_path = '."\n".
-						var_export(get_include_path(),true)."\n\n".
-					'</pre>'.
-	
 				'</body></html>';
 		}
 	}
-	else {
-		echo
-			'<!DOCTYPE html><html><head><title>An error has occurred.</title></head><body>'.
-				'<h1>An error has occurred.</h1>'.
-			'</body></html>';
-	}
+
 }

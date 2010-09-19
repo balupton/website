@@ -1,72 +1,36 @@
 <?php
+/**
+ * Welcome to the Index.php file of BalCMS.
+ * This file is used to set our necessary basic configuration, such as paths of our application!
+ * If you are installing BalCMS for the first time, you'll want to edit the base_url of the
+ * "Unconfigured Development Environment" to the url where you have install me.
+ */
 
 # Prepare
-error_reporting(E_ALL | E_STRICT);
-ini_set('error_reporting', E_ALL | E_STRICT);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
-# Prepare
-define('APPLICATION_ROOT_PATH', 			realpath(dirname(__FILE__)));
-if ( !isset($_SERVER) ) {
-	$_SERVER = array();
-}
-if ( empty($_SERVER['DOCUMENT_ROOT']) ) {
-	$_SERVER['DOCUMENT_ROOT'] = realpath(dirname(__FILE__).'/../../');
-}
-if ( empty($_SERVER['SCRIPT_FILENAME']) ) {
-	$_SERVER['SCRIPT_FILENAME'] = realpath(__FILE__);
-} else {
-	$_SERVER['SCRIPT_FILENAME'] = realpath($_SERVER['SCRIPT_FILENAME']);
-}
-
-# Debug Secret
-define('DEBUG_SECRET',						md5(APPLICATION_ROOT_PATH));
+require_once implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__),'scripts','bootstrap.prepare.php'));
 
 # Include paths
-if ( in_array($_SERVER['DOCUMENT_ROOT'], array('/Users/balupton/Server/htdocs')) ) {
+if ( true ) {
+	# Uncofigured Environment
+	define('APPLICATION_ENV', 				'development');
+}
+elseif ( strpos($_SERVER['DOCUMENT_ROOT'], '/Users/balupton/Server/htdocs') !== false ) {
 	# Development Environment
 	define('APPLICATION_ENV', 				'development');
-	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
-	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
-	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/config'));
-	
-	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
-	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.2-lib'));
-	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
-	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.10.6-lib'));
-	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-trunk/lib'));
-	
-	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/application.ini'));
-	define('CONFIG_APP_PATHS', 				realpath(CONFIG_PATH.'/balcms/standard.ini')
-												.PATH_SEPARATOR.
-												realpath(CONFIG_PATH.'/balcms/balcms.ini')
-											);
-	define('ROOT_URL',						'http://localhost');
-	define('BASE_URL', 						'/projects/balcms');
 }
-elseif ( strpos($_SERVER['HTTP_HOST'], 'balupton.com') !== false ) {
+elseif ( $_SERVER['DOCUMENT_ROOT'] === '/home/balupton/subdomains/staging.balupton.com' ||  $_SERVER['SERVER_NAME'] === 'staging.balupton.com' ) {
+	# Staging Server
+	define('APPLICATION_ENV', 				'staging');
+}
+elseif ( $_SERVER['DOCUMENT_ROOT'] === '/home/balupton/public_html' || strpos($_SERVER['HTTP_HOST'], 'balupton.com') !== false ) {
 	# Production Server
-	define('APPLICATION_ENV', 				!empty($_COOKIE['debug']) && $_COOKIE['debug']===DEBUG_SECRET ? 'staging' : 'production');
-	define('ROOT_PATH', 					realpath($_SERVER['DOCUMENT_ROOT']));
-	define('APPLICATION_PATH', 				realpath(APPLICATION_ROOT_PATH . '/application'));
-	define('CONFIG_PATH', 					realpath(APPLICATION_PATH.'/config'));
-	
-	define('COMMON_PATH', 					realpath(ROOT_PATH.'/common'));
-	define('DOCTRINE_PATH', 				realpath(COMMON_PATH.'/doctrine-1.2.2-lib'));
-	define('DOCTRINE_EXTENSIONS_PATH', 		realpath(COMMON_PATH.'/doctrine-extensions'));
-	define('ZEND_PATH', 					realpath(COMMON_PATH.'/zend-1.10.4-lib'));
-	define('BALPHP_PATH', 					realpath(COMMON_PATH.'/balphp-trunk/lib'));
-	
-	define('CONFIG_APP_PATH', 				realpath(CONFIG_PATH.'/application.ini'));
-	define('ROOT_URL',						'http://www.balupton.com');
+	define('APPLICATION_ENV', 				'production');
 }
 else {
 	throw new Exception('Unknown Project Location');
 }
 
-
 # --------------------------
 
 # Boostrap
-require_once implode(DIRECTORY_SEPARATOR, array(APPLICATION_ROOT_PATH,'scripts','bootstrap.php'));
+require implode(DIRECTORY_SEPARATOR, array(APPLICATION_ROOT_PATH,'scripts','bootstrap.php'));

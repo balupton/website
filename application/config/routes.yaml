@@ -1,0 +1,72 @@
+
+production:
+    routes:
+        # BalCMS
+        balcmshome:
+            type: "Bal_Controller_Router_Route_Simple"
+            route: "http://www.balupton.com/projects/balcms"
+        balcmsdocs:
+            type: "Bal_Controller_Router_Route_Simple"
+            route: "http://www.balupton.com/projects/balcms"
+        balcmshelp:
+            type: "Bal_Controller_Router_Route_Simple"
+            route: "http://getsatisfaction.com/balupton/products/balupton_balcms"
+        
+        # Generic
+        front:
+            route: "/:controller/:action/*"
+            defaults:
+                module: balcms
+                controller: front
+                action: index
+        default:
+            route: "/:action/*"
+            defaults:
+                module: balcms
+                controller: front
+                action: index
+        module:
+            route: "/:module/:controller/:action/*"
+        controller:
+            route: "/:controller/:action/*"
+            defaults:
+                module: balcms
+        action:
+            route: "/:action/*"
+            defaults:
+                module: balcms
+                controller: front
+                action: index
+
+        # Application
+        app:
+            route: "/:controller/:action/*"
+            defaults:
+                module: balcms
+                controller: front
+                action: index
+
+        # BalCMS: Content
+        map:
+            type: "Bal_Controller_Router_Route_Map"
+            route: "((?:[^/]+/?)+)/?(.*)"
+            map:
+                1: "map_path"
+                2: "map_params"
+            reverse: "%s//%s"
+
+        # balCMS: Admin
+        back:
+            route: "/admin/:action/*"
+            defaults:
+                module: balcms
+                controller: back
+                action: index
+
+
+staging:
+    _inherits: production
+testing:
+    _inherits: production
+development:
+    _inherits: production

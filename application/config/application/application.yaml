@@ -1,0 +1,47 @@
+production: &production
+    <<: *balcms
+    mail:
+        from:
+            name: "BalCMS System"
+            address: "balcms@balupton.com"
+
+staging: &staging
+    <<: *production
+    _inherits: "asd"
+
+testing: &testing
+    <<: *production
+    phpSettings:
+        display_startup_errors: 1
+        display_errors: 1
+    error:
+        friendly: false
+        throw: false
+    mail:
+        from:
+            name: "BalCMS System: Testing"
+            address: "balcms.testing@balupton.com"
+
+development: &development
+    <<: *production
+    phpSettings:
+        display_startup_errors: 1
+        display_errors: 1
+    error:
+        friendly: false
+        throw: false
+    data:
+        models:
+            generate: true
+        compile:
+            generate: true
+    mail:
+        send_email: false
+        from:
+            name: "BalCMS System: Development"
+            address: "balcms.development@balupton.com"
+        transport:
+            smtp:
+                host: "localhost"
+    log:
+        store: false

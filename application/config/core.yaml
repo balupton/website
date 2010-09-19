@@ -1,0 +1,112 @@
+standard: &standard
+    # Core
+    APPLICATION_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/application"
+    CONFIG_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/application/config"
+    COMMON_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/common"
+
+    # Configuration
+    CONFIG_FILE_GENERATE: >
+        false
+    CONFIG_FILE_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/application/config/application/standard.yaml<?=PATH_SEPARATOR?><?=APPLICATION_ROOT_PATH?>/application/config/application/balcms.yaml<?=PATH_SEPARATOR?><?=APPLICATION_ROOT_PATH?>/application/config/application/application.yaml"
+    INSTALLED_FILE_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/application/data/logs/installed"
+    DEBUG_SECRET: >
+        "<?=md5(APPLICATION_ROOT_PATH)?>"
+    DEBUG_MODE: >
+        "auto"
+
+    # Urls
+    ROOT_URL: >
+        "http://<?=$_SERVER['HTTP_HOST']?>"
+    BASE_URL: >
+        "auto"
+
+    # Libraries
+    DOCTRINE_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/common/doctrine-v1.2.3-lib"
+    DOCTRINE_EXTENSIONS_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/common/doctrine-extensions"
+    ZEND_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/common/zend-v1.10.7-lib"
+    BALPHP_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/common/balphp-v1.0/lib"
+    HTMLPURIFIER_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/common/htmlpurifier-v4.2.0-lib"
+
+    # Application Locations
+    DATA_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/application/data"
+    LOGS_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/application/data/logs"
+    MODELS_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/application/models"
+    MODULES_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/application/modules"
+    LIBRARY_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/library"
+    IL8N_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/il8n"
+    SCRIPTS_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/scripts"
+
+    # Public Locations
+    PUBLIC_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/public"
+    PUBLIC_URL: >
+        "<?=BASE_URL?>/public"
+    THEMES_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/public/themes"
+    THEMES_URL: >
+        "<?=BASE_URL?>/public/themes"
+    PUBLIC_STYLES_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/public/styles"
+    PUBLIC_STYLES_URL: >
+        "<?=BASE_URL?>/public/styles"
+    PUBLIC_SCRIPTS_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/public/scripts"
+    PUBLIC_SCRIPTS_URL: >
+        "<?=BASE_URL?>/public/scripts"
+    MEDIA_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/public/media"
+    MEDIA_URL: >
+        "<?=BASE_URL?>/public/media"
+    MEDIA_DELETED_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/public/media/deleted"
+    MEDIA_DELETED_URL: >
+        "<?=BASE_URL?>/public/media/deleted"
+    MEDIA_IMAGES_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/public/media/images"
+    MEDIA_IMAGES_URL: >
+        "<?=BASE_URL?>/public/media/images"
+    MEDIA_INOVICES_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/public/media/invoices"
+    MEDIA_INVOICES_URL: >
+        "<?=BASE_URL?>/public/media/invoices"
+    MEDIA_UPLOADS_PATH: >
+        "<?=APPLICATION_ROOT_PATH?>/public/media/uploads"
+    MEDIA_UPLOADS_URL: >
+        "<?=BASE_URL?>/public/media/uploads"
+
+    # Include Paths
+    INCLUDE_PATHS: >
+        "<?=BALPHP_PATH?><?=PATH_SEPARATOR?><?=ZEND_PATH?><?=PATH_SEPARATOR?><?=LIBRARY_PATH?><?=PATH_SEPARATOR?><?=MODELS_PATH?>"
+
+production:
+    <<: *standard
+    BASE_URL: >
+        ""
+
+staging:
+    <<: *standard
+    
+testing:
+    <<: *standard
+    
+development:
+    <<: *standard
+    CONFIG_FILE_GENERATE: >
+        true
