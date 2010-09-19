@@ -1,5 +1,5 @@
 
-production:
+production: &production
     routes:
         # BalCMS
         balcmshome:
@@ -12,9 +12,9 @@ production:
             type: "Bal_Controller_Router_Route_Simple"
             route: "http://getsatisfaction.com/balupton/products/balupton_balcms"
         
-        # Generic
-        front:
-            route: "/:controller/:action/*"
+        # Application
+        app:
+            route: "/:module/:controller/:action/*"
             defaults:
                 module: balcms
                 controller: front
@@ -38,14 +38,6 @@ production:
                 controller: front
                 action: index
 
-        # Application
-        app:
-            route: "/:controller/:action/*"
-            defaults:
-                module: balcms
-                controller: front
-                action: index
-
         # BalCMS: Content
         map:
             type: "Bal_Controller_Router_Route_Map"
@@ -55,7 +47,23 @@ production:
                 2: "map_params"
             reverse: "%s//%s"
 
-        # balCMS: Admin
+        # BalCMS: Feed
+        feed:
+            route: "/feed/:action/*"
+            defaults:
+                module: balcms
+                controller: feed
+                action: index
+                
+        # BalCMS: Front
+        front:
+            route: "/:controller/:action/*"
+            defaults:
+                module: balcms
+                controller: front
+                action: index
+                
+        # balCMS: Back
         back:
             route: "/admin/:action/*"
             defaults:
@@ -63,10 +71,9 @@ production:
                 controller: back
                 action: index
 
-
 staging:
-    _inherits: production
+    <<: *production
 testing:
-    _inherits: production
+    <<: *production
 development:
-    _inherits: production
+    <<: *production

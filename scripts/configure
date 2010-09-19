@@ -116,6 +116,15 @@ class Cli {
 		
 		# --------------------------
 		
+		# @TODO Setup balphp model symlink, add new path
+		
+		# Configure Permissions
+		echo "Now configuring permissions...\n\n";
+		$path = dirname(__FILE__).'/setup.php';
+		`php $path permissions`;
+		
+		# --------------------------
+		
 		# Open Url
 		echo "We are now ready to open the web installer.\n".
 			 "So open in your web browser the location of where you installed BalCMS. Eg. http://localhost/balcms\n".

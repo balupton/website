@@ -34,7 +34,7 @@
                 <div id="wphead">
                     <!--<img id="header-logo" src="edit-pages.php_files/blank.gif" alt="" height="32" width="32">-->
                     <h1 id="site-heading"><a href="<?=$base_url_full?>" title="Visit Site">
-                    	<span id="site-title"><?=$this->app()->getConfig('bal.site.name')?></span>
+                    	<span id="site-title"><?=$this->app()->getConfig('site.name')?></span>
                     	<em id="site-visit-button">Visit Site</em>
                     </a></h1>
                     <div id="wphead-info">
@@ -81,7 +81,7 @@
                 | <a href="<?=$this->url(array(),'balcmshelp',true)?>">Support</a>
             </p>
             <p id="footer-upgrade" class="alignright">
-                Version <?=$this->app()->getConfig('bal.site.version')?>
+                Version <?=$this->app()->getConfig('site.version')?>
             </p>
             <div class="clear">
             </div>

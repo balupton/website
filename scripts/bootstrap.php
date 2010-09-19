@@ -20,20 +20,18 @@ if ( !isset($prepare) || $prepare ) {
 		define('CONFIG_CORE_PATH',					APPLICATION_ROOT_PATH.'/application/config/core.yaml');
 	}
 
-	# Include the Yaml Parser
-	if ( !defined('YAML_PARSER_PATH') ) {
-		$temp = 'SymfonyComponents/YAML/sfYamlParser.php';
-		if ( is_file(APPLICATION_ROOT_PATH.'/common/'.$temp) )
-			define('YAML_PARSER_PATH',				APPLICATION_ROOT_PATH.'/common/'.$temp);
-		elseif ( is_file(APPLICATION_ROOT_PATH.'/library/'.$temp) )
-			define('YAML_PARSER_PATH',				APPLICATION_ROOT_PATH.'/common/'.$temp);
-		elseif ( @include_once($temp) )
-			define('YAML_PARSER_PATH',				$temp);
+	# Find the Yaml Parser
+	if ( !defined('SFYAML_PATH') ) {
+		$temp = 'SymfonyComponents/YAML';
+		if ( is_dir(APPLICATION_ROOT_PATH.'/common/'.$temp) )
+			define('SFYAML_PATH',				APPLICATION_ROOT_PATH.'/common/'.$temp);
+		elseif ( is_dir(APPLICATION_ROOT_PATH.'/library/'.$temp) )
+			define('SFYAML_PATH',				APPLICATION_ROOT_PATH.'/library/'.$temp);
 		else
-			throw new Exception('Could not find the YAML Parser');
+			throw new Exception('Could not find the sfYaml library.');
 		unset($temp);
 	}
-
+	
 	# Prepare the environment
 	if ( !defined('APPLICATION_ENV') ) {
 		define('APPLICATION_ENV',					'development');
@@ -51,7 +49,8 @@ if ( !isset($load) || $load ) {
 	# Load the Core Configuration
 	
 	# Load the YAML Parser
-	require_once(YAML_PARSER_PATH);
+	require_once(SFYAML_PATH.'/sfYamlParser.php');
+	require_once(SFYAML_PATH.'/sfYaml.php');
 	$Yaml = new sfYamlParser();
 	
 	# Include the core configuration
@@ -62,19 +61,18 @@ if ( !isset($load) || $load ) {
 
 	# Apply our configuration
 	foreach ( $configuration as $key => &$value ) {
-		$value = preg_replace('/\\<\\?\\=([a-Z_]+)?>/e','$1',$value);
+		$value = preg_replace('/\\<\\?\\=([a-zA-Z_]+)\\?\\>/e','\\1',trim($value));
 		define($key,$value);
 	}
 
 	# Apply include paths
-	if ( !isset($include_paths) ) {
-		$include_paths_original = explode(PATH_SEPARATOR,$str_replace('.'.PATH_SEPARATOR.'/usr/local/zend/share/ZendFramework/library'.PATH_SEPARATOR, '', get_include_path()));
+	if ( !isset($include_paths) || $include_paths ) {
+		$include_paths_original = explode(PATH_SEPARATOR,str_replace('.'.PATH_SEPARATOR.'/usr/local/zend/share/ZendFramework/library'.PATH_SEPARATOR, '', get_include_path()));
 		$include_paths_new = explode(PATH_SEPARATOR,INCLUDE_PATHS);
-		$include_paths_diff = array_diff($include_paths_original,$include_paths_new);
-		$include_paths_final = array_merge($include_paths_diff, $include_paths_original);
+		$include_paths_final = array_unique(array_merge($include_paths_new, $include_paths_original));
 		$include_paths_final = implode(PATH_SEPARATOR, $include_paths_final);
 		set_include_path($include_paths_final);
-		unset($include_paths_original, $include_paths_new, $include_paths_diff, $include_paths_final);
+		unset($include_paths_original, $include_paths_new, $include_paths_final);
 	}
 
 	# Unset
@@ -104,19 +102,21 @@ if ( !isset($load) || $load ) {
 
 	# Zend Application
 	require_once implode(DIRECTORY_SEPARATOR, array(ZEND_PATH,'Zend','Application.php'));
-
-
+	
+	# BalPHP Arrays - Used for YAML Code Below adjust_yaml_inheritance
+	require_once(BALPHP_PATH.'/core/functions/_arrays.funcs.php');
+	
 	# --------------------------
 	# Configure
-
+	
 	if ( !isset($ApplicationConfig) ) {
 		# Prepare
 		$config = ''; $config_files;
 
 		# Fetch
-		if ( strstr(CONFIG_FILE_PATH,':') ) {
+		if ( strstr(CONFIG_FILE_PATH,PATH_SEPARATOR) ) {
 			# We are wanting to load in multiple configuration files
-			$config_files = explode(':',CONFIG_FILE_PATH);
+			$config_files = explode(PATH_SEPARATOR,CONFIG_FILE_PATH);
 		}
 		else {
 			# We just want to load in the sole file
@@ -129,11 +129,17 @@ if ( !isset($load) || $load ) {
 		}
 
 		# Parse
-		$configuration = $Yaml->parse($config);
-
-		# Adjust
+		$config_tmp_file = tempnam('/tmp', 'config_tmp_file');
+		file_put_contents($config_tmp_file, $config);
+		$configuration = sfYaml::load($config_tmp_file);
+		unlink($config_tmp_file);
+		
+		# Extract
 		$configuration = $configuration[APPLICATION_ENV];
-
+		
+		# Adjust
+		$configuration = adjust_yaml_inheritance($configuration);
+		
 		# Prepare Zend Config
 		require('Zend/Config.php');
 		require('Zend/Config/Exception.php');

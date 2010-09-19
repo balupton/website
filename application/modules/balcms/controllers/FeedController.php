@@ -48,12 +48,12 @@ class Balcms_FeedController extends Zend_Controller_Action {
 		
 		# Pepare Feed
 		$feed = array(
-			'title' => $App->getConfig('bal.site.title'),
+			'title' => $App->getConfig('site.title'),
 			'link' => $App->getBaseUrl(true),
-			'author' => $App->getConfig('bal.site.author'),
+			'author' => $App->getConfig('site.author'),
 			'dateModified' => empty($Content[0]) ? time() : strtotime($Content->updated_at),
-			'description' => $App->getConfig('bal.site.description', 'News Feed for '.$App->getConfig('bal.site.title')),
-			'categories' => prepare_csv_array($App->getConfig('bal.site.keywords'))
+			'description' => $App->getConfig('site.description', 'News Feed for '.$App->getConfig('site.title')),
+			'categories' => prepare_csv_array($App->getConfig('site.keywords'))
 		);
 		
 		# Create Feed

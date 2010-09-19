@@ -11,12 +11,13 @@
  * @property string $tagline
  * @property string $description
  * @property string $description_rendered
- * @property bool $description_auto
+ * @property bool $description_useauto
  * @property string $tags
  * @property string $content
  * @property string $content_rendered
  * @property integer $position
  * @property enum $type
+ * @property bool $comments_enabled
  * @property integer $Avatar_id
  * @property integer $Route_id
  * @property integer $Parent_id
@@ -86,7 +87,7 @@ abstract class Base_Balcms_Content extends Doctrine_Record
               'auto' => true,
              ),
              ));
-        $this->hasColumn('description_auto', 'bool', null, array(
+        $this->hasColumn('description_useauto', 'bool', null, array(
              'type' => 'bool',
              'notnull' => true,
              'extra' => 
@@ -135,6 +136,11 @@ abstract class Base_Balcms_Content extends Doctrine_Record
              array(
               'auto' => true,
              ),
+             ));
+        $this->hasColumn('comments_enabled', 'bool', null, array(
+             'type' => 'bool',
+             'notnull' => true,
+             'default' => true,
              ));
         $this->hasColumn('Avatar_id', 'integer', 2, array(
              'type' => 'integer',

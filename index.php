@@ -33,4 +33,4 @@ else {
 # --------------------------
 
 # Boostrap
-require implode(DIRECTORY_SEPARATOR, array(APPLICATION_ROOT_PATH,'scripts','bootstrap.php'));
+require implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__),'scripts','bootstrap.php'));

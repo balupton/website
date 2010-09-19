@@ -1,16 +1,15 @@
 production: &production
-    <<: *balcms
+    <<<: *balcms
     mail:
         from:
             name: "BalCMS System"
             address: "balcms@balupton.com"
 
 staging: &staging
-    <<: *production
-    _inherits: "asd"
+    <<<: *production
 
 testing: &testing
-    <<: *production
+    <<<: *production
     phpSettings:
         display_startup_errors: 1
         display_errors: 1
@@ -23,7 +22,7 @@ testing: &testing
             address: "balcms.testing@balupton.com"
 
 development: &development
-    <<: *production
+    <<<: *production
     phpSettings:
         display_startup_errors: 1
         display_errors: 1

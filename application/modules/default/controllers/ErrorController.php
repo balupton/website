@@ -34,7 +34,7 @@ class ErrorController extends Zend_Controller_Action {
         $this->getHelper('layout')->disableLayout();
         
         # Use defined error view
-        $template = $this->getHelper('App')->getApp()->getConfig('bal.error.template');
+        $template = $this->getHelper('App')->getApp()->getConfig('error.template');
         if ( $template ) {
             $this->_helper->viewRenderer($template);
         }

@@ -384,7 +384,7 @@ class Balcms_Content extends Base_Balcms_Content
 	public static function renderContent ( $Content, array $params = array() ) {
 		# Prepare
 		$WidgetHelper = Bal_App::getViewHelper('widget');
-		$cache = delve($params,'cache',Bal_App::getConfig('bal.content.cache', false));
+		$cache = delve($params,'cache',Bal_App::getConfig('content.cache', false));
 		
 		# Fetch
 		$content = delve($Content,'content');
@@ -415,7 +415,7 @@ class Balcms_Content extends Base_Balcms_Content
 	public static function renderDescription ( $Content, array $params = array() ) {
 		# Prepare
 		$WidgetHelper = Bal_App::getViewHelper('widget');
-		$cache = delve($params,'cache',Bal_App::getConfig('bal.content.cache', false));
+		$cache = delve($params,'cache',Bal_App::getConfig('content.cache', false));
 		
 		# Fetch
 		$description = delve($Content,'description');

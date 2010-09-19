@@ -1,5 +1,138 @@
 balcms: &balcms
-    <<: *standard
+    phpSettings:
+        date:
+            timezone: UTC
+        post_max_size: 20M
+        upload_max_filesize: 8M
+        display_startup_errors: 0
+        display_errors: 0
+    
+    bootstrap:
+        path: "<?=APPLICATION_PATH?>/Bootstrap.php"
+        class: Bootstrap
+    
+    resources:
+        frontController:
+            moduleDirectory: "<?=APPLICATION_PATH?>/modules"
+        layou:
+            layoutPath: "<?=APPLICATION_PATH?>/layouts/scripts"
+        
+    data:
+        connection_string: sqlite:///<?=DATABASES_PATH?>/<?=APPLICATION_ENV?>.db
+        models_path: "<?=APPLICATION_PATH?>/models"
+        dump_path: "<?=APPLICATION_PATH?>/data/dump"
+        fixtures_path: "<?=APPLICATION_PATH?>/data/fixtures"
+        migrations_path: "<?=APPLICATION_PATH?>/data/migrations"
+        sql_path: "<?=APPLICATION_PATH?>/data/sql"
+        extensions_path: "<?=DOCTRINE_EXTENSIONS_PATH?>"
+        dump_path: "<?=APPLICATION_PATH?>/data/dump"
+        yaml_schema_path: "<?=APPLICATION_PATH?>/data/schema"
+        yaml_schema_file_path: "<?=APPLICATION_PATH?>/data/schema/schema.yml"
+        yaml_schema_includes:  
+            - "<?=APPLICATION_PATH?>/data/schema/_schema.yml"
+            - "<?=MODELS_PATH?>/Bal/Schema/Invoice.yaml"
+            - "<?=MODELS_PATH?>/Bal/Schema/File.yaml"
+            - "<?=MODELS_PATH?>/Bal/Schema/Message.yaml"
+            - "<?=MODELS_PATH?>/Bal/Schema/Route.yaml"
+            - "<?=MODELS_PATH?>/Bal/Schema/User.yaml"
+            - "<?=MODELS_PATH?>/Balcms/Schema/Schema.yaml"
+        models:
+            generate: true
+            options:
+                pearStyle: true
+                baseClassesDirectory: null
+                baseClassPrefix: "Base_"
+                classPrefix: ""
+                classPrefixFiles: false
+        autoloader: "zend"
+        compile:
+            generate: true
+            use: false
+            path: "<?=LIBRARY_PATH?>/Doctrine.compiled.php"
+            drivers:
+                - "mysql"
+    
+    locale:
+        locale: "en_AU"
+        timezone: "Australia/Perth"
+        currency: "AUD"
+    
+    mail:
+        send_email: true
+        from:
+            name: "BalCMS System"
+            address: "balcms@balupton.com"
+        log: # Where Error Logs will be sent to
+            name: "Balupton Log"
+            address: "log@balupton.com"
+        transport:
+            smtp:
+                # Be nice, don't abuse this privellege.
+                host: "localhost"
+                host: "smtp.gmail.com"
+                config:
+                    username: "balupton.mailserver@gmail.com"
+                    password: "random123"
+                    port: 465
+                    auth: "login"
+                    ssl: "ssl"
+        
+    payment:
+        gateway: "paypal"
+        default:
+            store_path: "<?=LOGS_PATH?>/payment"
+        paypal:
+            url: "https://www.paypal.com/cgi-bin/webscr"
+            token: ""
+            business: ""
+            notify_url: "<?=SCRIPTS_URL?>/payment/paypal/ipn.php"
+            return: "<?=SCRIPTS_URL?>/payment/paypal/pdt.php"
+
+    site:
+        name: "Your New Website" # Used in text throughout the site
+        title: "My New Website" # Used in the page title
+        description: "Your New Website's Description" # Used in the meta data
+        keywords: "your, new, websites, keywords" # Used in the meta data
+        separator: " > " # Used to sperarate page titles
+        generator: "BalCMS - http://www.balupton.com/projects/balcms"
+        version: "0.10.0-dev Sydney"
+        author:
+            title: "Site Admin's Name"
+            email: ""
+            website: ""
+            
+    error:
+        friendly: true
+        throw: false
+        template: error
+        
+    setup:
+        secret: "secret"
+        salt: "salt"
+        
+    auth:
+        remember: "+2 weeks"
+        
+    log:
+        store: true
+        request: true
+        
+    paging:
+        items: 15 # how many items should be displayed on a page
+        chunk: 5 # how many page numbers should be displayed
+    
+    services:
+        analytics:
+            code: false
+        reinvigorate:
+            code: false
+        gsfn:
+            company: false
+        
+    areaThemes:
+        default: "titan"
+        back: balcms
+        front: titan
     
     routing:
         defaults:
@@ -48,31 +181,6 @@ balcms: &balcms
     
     content:
         cache: true # should we use the rendered content cache?
-    
-    paging:
-        items: 15 # how many items should be displayed on a page
-        chunk: 5 # how many page numbers should be displayed
-    
-    data:
-        models:
-            generate: false
-            yaml_schema_includes:  
-                - "{APPLICATION_PATH}/data/schema/_schema.yml"
-                - "{MODELS_PATH}/Bal/Schema/Invoice.yaml"
-                - "{MODELS_PATH}/Bal/Schema/File.yaml"
-                - "{MODELS_PATH}/Bal/Schema/Message.yaml"
-                - "{MODELS_PATH}/Bal/Schema/Route.yaml"
-                - "{MODELS_PATH}/Bal/Schema/User.yaml"
-                - "{MODELS_PATH}/Balcms/Schema/Schema.yaml"
-        compile:
-            generate: false
-    
-    site:
-        version: "0.10.0-dev Sydney"
-    
-    areaThemes:
-        back: balcms
-        front: titan
     
     editor:
         code: tinymce

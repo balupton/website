@@ -57,10 +57,10 @@
 		</div>
 		<div id="wrapper">
 			<h1 id="title">
-				<a id="logo" href="<?=$baseFullUrl?>"><?=$this->app()->getConfig('bal.site.name')?></a>
+				<a id="logo" href="<?=$baseFullUrl?>"><?=$this->app()->getConfig('site.name')?></a>
 			</h1>
 			<div id="description">
-				<?=$this->app()->getConfig('bal.site.name')?>
+				<?=$this->app()->getConfig('site.name')?>
 			</div>
 			<div id="navigation">
 				<div id="nav-main">
@@ -86,14 +86,14 @@
 			</div>
 			<div id="copyright">
 				<div id="footer-text">
-					<p><?=$this->app()->getConfig('bal.site.name')?> &copy; 2009
+					<p><?=$this->app()->getConfig('site.name')?> &copy; 2009
 				</div>
 			</div>
 		</div>
 	</div>
 		
 	<?
-		$analyticsCode = $this->app()->getConfig('bal.analytics.code');
+		$analyticsCode = $this->app()->getConfig('analytics.code');
 		if ( $analyticsCode ) : ?>
 			<script type="text/javascript">
 			//<![CDATA[
