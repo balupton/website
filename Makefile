@@ -24,7 +24,7 @@ ignore:
 	edit .gitignore ;
 
 add:
-	git add .gitignore * ;
+	git add .gitignore .htaccess * ;
 
 update:
 	git pull ;
