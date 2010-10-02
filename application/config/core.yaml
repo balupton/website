@@ -23,7 +23,7 @@ balcms: &balcms
 
     # Urls
     ROOT_URL: >
-        http://<?=$_SERVER['HTTP_HOST']?>
+        http://<?=HTTP_HOST?>
     BASE_URL: >
         auto
 

@@ -130,7 +130,7 @@ balcms: &balcms
             company: false
         
     areaThemes:
-        default: "titan"
+        default: titan
         back: balcms
         front: titan
     

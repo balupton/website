@@ -109,7 +109,10 @@ if ( !class_exists('Bootstrapr') ) {
 				define('CONFIG_CORE_PATH',					APPLICATION_ROOT_PATH.'/application/config/core.yaml');
 			}
 			if ( !defined('DOCUMENT_ROOT') ) {
-				define('DOCUMENT_ROOT',						$_SERVER['DOCUMENT_ROOT']); // ensured in bootstap.prepare.php
+				define('DOCUMENT_ROOT',						$_SERVER['DOCUMENT_ROOT']);
+			}
+			if ( !defined('HTTP_HOST') ) {
+				define('HTTP_HOST',						$_SERVER['HTTP_HOST']);
 			}
 
 			# Find the Yaml Parser

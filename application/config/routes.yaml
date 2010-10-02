@@ -57,7 +57,7 @@ production: &production
                 
         # BalCMS: Front
         front:
-            route: "/:controller/:action/*"
+            route: "/front/:action/*"
             defaults:
                 module: balcms
                 controller: front

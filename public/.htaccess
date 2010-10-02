@@ -1,1 +1,7 @@
-# empty
+<IfModule mod_rewrite.c> 
+    RewriteEngine   on
+    RewriteCond     %{REQUEST_FILENAME}     -f
+    RewriteCond     %{REQUEST_URI}          \.css$
+    RewriteCond     %{QUERY_STRING}         csscaffold
+    RewriteRule     ^(.+)$                  styles/csscaffold.php?f=%{REQUEST_URI}&%{QUERY_STRING}
+</IfModule>
