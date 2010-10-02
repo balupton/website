@@ -115,12 +115,12 @@ if ( !class_exists('Bootstrapr') ) {
 			# Find the Yaml Parser
 			if ( !defined('SFYAML_PATH') ) {
 				$temp = 'SymfonyComponents/YAML';
+				if ( defined('COMMON_PATH') && is_dir(COMMON_PATH.'/'.$temp) )
+					define('SFYAML_PATH',				COMMON_PATH.'/'.$temp);
 				if ( is_dir(APPLICATION_ROOT_PATH.'/common/'.$temp) )
 					define('SFYAML_PATH',				APPLICATION_ROOT_PATH.'/common/'.$temp);
 				elseif ( is_dir(APPLICATION_ROOT_PATH.'/library/'.$temp) )
 					define('SFYAML_PATH',				APPLICATION_ROOT_PATH.'/library/'.$temp);
-				else
-					throw new Exception('Could not find the sfYaml library.');
 				unset($temp);
 			}
 	
@@ -137,7 +137,12 @@ if ( !class_exists('Bootstrapr') ) {
 		private function _initConfiguration ( ) {
 			# Prepare
 			$this->bootstrap('environment');
-		
+			
+			# Check for sfYaml
+			if ( !defined('SFYAML_PATH') ) {
+				throw new Exception('Could not find the sfYaml library.');
+			}
+				
 			# Load the YAML Parser
 			require_once(SFYAML_PATH.'/sfYamlParser.php');
 			require_once(SFYAML_PATH.'/sfYaml.php');
@@ -160,7 +165,8 @@ if ( !class_exists('Bootstrapr') ) {
 			# Apply our configuration
 			foreach ( $configuration as $key => &$value ) {
 				$value = preg_replace('/\\<\\?\\=([a-zA-Z_]+)\\?\\>/e','\\1',trim($value));
-				define($key,$value);
+				if ( !defined($key) )
+					define($key,$value);
 			}
 		}
 	

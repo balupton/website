@@ -8,13 +8,10 @@
 # Adjust Application Environments
 
 # Include paths
-if ( true ) {
-	# Uncofigured Environment
-	define('APPLICATION_ENV', 				'development');
-}
-elseif ( strpos($_SERVER['DOCUMENT_ROOT'], '/Users/balupton/Server/htdocs') !== false ) {
+if ( strpos($_SERVER['DOCUMENT_ROOT'], '/Users/balupton/Server/public_html') !== false ) {
 	# Development Environment
 	define('APPLICATION_ENV', 				'development');
+	define('COMMON_PATH', 					'/Users/balupton/Server/public_html/common');
 }
 elseif ( $_SERVER['DOCUMENT_ROOT'] === '/home/balupton/subdomains/staging.balupton.com' ||  $_SERVER['SERVER_NAME'] === 'staging.balupton.com' ) {
 	# Staging Server
@@ -24,6 +21,11 @@ elseif ( $_SERVER['DOCUMENT_ROOT'] === '/home/balupton/public_html' || strpos($_
 	# Production Server
 	define('APPLICATION_ENV', 				'production');
 }
+elseif ( true ) {
+	# Uncofigured Environment
+	define('APPLICATION_ENV', 				'development');
+}
 else {
+	# Uncofigured Environment
 	throw new Exception('Unknown Project Location');
 }

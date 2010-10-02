@@ -23,9 +23,17 @@ class Cli {
 		# --------------------------
 		
 		# Common Path
-		echo "Where would you like to place your common directory? Default is ./common\n".
-			 "This contains resources which BalCMS uses such as Zend Framework, Doctrine ORM etc.\n";
-		$common_path = readline('> ');
+		if ( defined('COMMON_PATH') ) {
+			$common_path = COMMON_PATH;
+		}
+		else {
+			# Common Path
+			echo "Where would you like to place your common directory? Default is ./common\n".
+				 "This contains resources which BalCMS uses such as Zend Framework, Doctrine ORM etc.\n";
+			$common_path = readline('> ');
+		}
+		
+		# Adjust Common Path
 		if ( !$common_path ) {
 			$common_path = APPLICATION_ROOT_PATH.'/common';
 		}
@@ -34,7 +42,7 @@ class Cli {
 			exit;
 		}
 		$common_path = realpath($common_path);
-		
+	
 		# Prepare Config
 		$balcms_path = APPLICATION_ROOT_PATH;
 		
@@ -119,6 +127,9 @@ class Cli {
 		# Setup BalPHP Models Symlink
 		echo "Setting up necessary symlinks...\n\n";
 		$path = APPLICATION_ROOT_PATH.'/application/models/Bal';
+		if ( !is_file($path) ) {
+			unlink($path);
+		}
 		if ( !is_dir($path) ) {
 			echo "Installing BalPHP Models Symlink to [$path].\n\n";
 			`ln -s $balphp_path/lib/models $path`;
