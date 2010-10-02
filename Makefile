@@ -4,6 +4,13 @@ MAKE = make $(MAKEFLAGS)
 default:
 	$(MAKE) setup ;
 	
+all:
+	$(MAKE) configure ;
+	$(MAKE) install ;
+	
+configure:
+	php ./scripts/configure ;
+
 permissions:
 	php ./scripts/setup.php permissions ;
 
@@ -17,7 +24,7 @@ ignore:
 	edit .gitignore ;
 
 add:
-	git add * ;
+	git add .gitignore * ;
 
 update:
 	git pull ;

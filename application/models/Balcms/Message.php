@@ -45,7 +45,7 @@ class Balcms_Message extends Base_Balcms_Message
 		$Content = $this->Content;
 		
 		# Prepare URL
-		$contentUrl = $rootUrl.$View->url()->content($Content);
+		$contentUrl = $rootUrl.$View->url()->content($Content)->toString();
 		$params['Content_url'] = $contentUrl;
 		
 		# Send On

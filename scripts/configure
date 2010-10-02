@@ -5,8 +5,8 @@ class Cli {
 	
 	function __construct ( ) {
 		# Prepare
-		$load = false;
-		require(dirname(__FILE__).'/bootstrap.php');
+		require(__DIR__.'/bootstrapr.php');
+		$Bootstrapr->bootstrap('environment');
 		
 		# Install
 		$this->configure();
@@ -44,14 +44,14 @@ class Cli {
 		echo "\nDownloading the resources into [${common_path}].\n\n";
 	
 		# BalPHP v1.0
-		$path = $common_path.'/balphp-v1.0';
+		$balphp_path = $path = $common_path.'/balphp-v1.0';
 		if ( !is_dir($path) ) {
 			echo "Installing BalPHP to [$path].\n\n";
 			`git clone git@github.com:balupton/balphp.git $path`;
 			`cd $path; git checkout v1.0; cd ${balcms_path};`;
 		}
 		else {
-			echo "BalPHP is already installed at [${path}].\n\n";
+			echo "BalPHP is already installed at [$path].\n\n";
 		}
 		
 		# CSScaffold
@@ -61,7 +61,7 @@ class Cli {
 			`git svn clone https://balupton.springloops.com/source/devenv/trunk/common/csscaffold ${path}`;
 		}
 		else {
-			echo "CSScaffold is already installed at [${path}].\n\n";
+			echo "CSScaffold is already installed at [$path].\n\n";
 		}
 		
 		# Doctrine Extensions
@@ -71,7 +71,7 @@ class Cli {
 			`git svn clone https://balupton.springloops.com/source/devenv/trunk/common/doctrine-extensions ${path}`;
 		}
 		else {
-			echo "Doctrine Extensions is already installed at [${path}].\n\n";
+			echo "Doctrine Extensions is already installed at [$path].\n\n";
 		}
 		
 		# Doctrine ORM v1.2.3 Library
@@ -81,7 +81,7 @@ class Cli {
 			`svn export http://svn.doctrine-project.org/tags/1.2.3/lib ${path}`;
 		}
 		else {
-			echo "Doctrine ORM is already installed at [${path}].\n\n";
+			echo "Doctrine ORM is already installed at [$path].\n\n";
 		}
 		
 		# HTML Purifier v4.2.0 Library
@@ -91,7 +91,7 @@ class Cli {
 			`svn export https://balupton.springloops.com/source/devenv/trunk/common/htmlpurifier-v4.2.0-lib ${path}`;
 		}
 		else {
-			echo "HTML Purifier is already installed at [${path}].\n\n";
+			echo "HTML Purifier is already installed at [$path].\n\n";
 		}
 		
 		# YAML Extensions
@@ -101,7 +101,7 @@ class Cli {
 			`svn export http://svn.symfony-project.com/components/yaml/tags/RELEASE_1_0_3/lib ${path}`;
 		}
 		else {
-			echo "YAML is already installed at [${path}].\n\n";
+			echo "YAML is already installed at [$path].\n\n";
 		}
 		
 		# Zend Framework v1.10.7 Library
@@ -111,25 +111,26 @@ class Cli {
 			`svn export http://framework.zend.com/svn/framework/standard/tags/release-1.10.7/library ${path}`;
 		}
 		else {
-			echo "Zend Framework is already installed at [${path}].\n\n";
+			echo "Zend Framework is already installed at [$path].\n\n";
 		}
 		
 		# --------------------------
 		
-		# @TODO Setup balphp model symlink, add new path
-		
-		# Configure Permissions
-		echo "Now configuring permissions...\n\n";
-		$path = dirname(__FILE__).'/setup.php';
-		`php $path permissions`;
+		# Setup BalPHP Models Symlink
+		echo "Setting up necessary symlinks...\n\n";
+		$path = APPLICATION_ROOT_PATH.'/application/models/Bal';
+		if ( !is_dir($path) ) {
+			echo "Installing BalPHP Models Symlink to [$path].\n\n";
+			`ln -s $balphp_path/lib/models $path`;
+		}
+		else {
+			echo "BalPHP Models Symlink is already installed at [$path].\n\n";
+		}
 		
 		# --------------------------
 		
 		# Open Url
-		echo "We are now ready to open the web installer.\n".
-			 "So open in your web browser the location of where you installed BalCMS. Eg. http://localhost/balcms\n".
-			 "Press the enter key to exit.\n";
-		readline('>');
+		echo "Your BalCMS Installation is Now Configured.\n";
 		// system("open ${root_url}${base_url}");
 		
 		# Return true

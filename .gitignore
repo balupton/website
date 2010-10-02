@@ -2,6 +2,8 @@ application/data/migrations
 application/data/logs/installed
 application/data/logs/payment
 application/data/logs/paypal
+application/models/Bal
+application/models/Base
 common/balphp-v1.0
 common/csscaffold
 common/doctrine-extensions

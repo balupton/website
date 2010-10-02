@@ -7,14 +7,8 @@ ini_set('display_startup_errors', 1);
 # Load
 if ( empty($Application) ) {
 	# Bootstrap
-	$run = $bootstrap = false;
-	$root_dir = '';
-	if ( !empty($_SERVER['PWD']) ) {
-		$root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['PWD']);
-	} else {
-		$root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['SCRIPT_FILENAME']);
-	}
-	require_once ($root_dir.DIRECTORY_SEPARATOR.'index.php');
+	require_once(__DIR__.'/bootstrapr.php');
+	$Bootstrapr->bootstrap('zend-application');
 }
 
 # Bootstrap

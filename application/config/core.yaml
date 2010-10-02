@@ -10,6 +10,10 @@ balcms: &balcms
         false
     CONFIG_FILE_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/config/application/balcms.yaml<?=PATH_SEPARATOR?><?=APPLICATION_ROOT_PATH?>/application/config/application/application.yaml
+    NAVIGATION_FILE_PATH: >
+        <?=APPLICATION_ROOT_PATH?>/application/config/nav.yaml
+    ROUTES_FILE_PATH: >
+        <?=APPLICATION_ROOT_PATH?>/application/config/routes.yaml
     INSTALLED_FILE_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/data/logs/installed
     DEBUG_SECRET: >
@@ -102,11 +106,11 @@ production: &production
     BASE_URL: ""
 
 staging: &staging
-    <<: *production
+    <<: *balcms
     
 testing: &testing
-    <<: *production
+    <<: *balcms
     
 development: &development
-    <<: *production
+    <<: *balcms
     CONFIG_FILE_GENERATE: true

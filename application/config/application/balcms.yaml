@@ -14,7 +14,7 @@ balcms: &balcms
     resources:
         frontController:
             moduleDirectory: "<?=APPLICATION_PATH?>/modules"
-        layou:
+        layout:
             layoutPath: "<?=APPLICATION_PATH?>/layouts/scripts"
         
     data:
