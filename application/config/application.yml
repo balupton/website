@@ -113,9 +113,5 @@ development: &development
         from:
             name: "Benjamin Lupton: Development"
             address: "development.system@balupton.com"
-        transport:
-            smtp:
-                host: "localhost"
-                config: ""
     log:
         store: false

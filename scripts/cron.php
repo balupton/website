@@ -1,19 +1,15 @@
 <?php
 # Load
 if ( empty($GLOBALS['Application']) ) {
-	# Errors
-	error_reporting(E_ALL | E_STRICT);
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
 	# Bootstrap
 	require_once(dirname(__FILE__).'/bootstrapr.php');
 	$GLOBALS['Bootstrapr']->bootstrap('zend-application');
-	# Load
-	$GLOBALS['Application']->bootstrap('ScriptCron');
 	# Headers
 	header('Content-Type: text/plain');
 }
 
+# Load
+$GLOBALS['Application']->bootstrap('ScriptCron');
 
 # ==========================================
 # Refresh Content Cache
