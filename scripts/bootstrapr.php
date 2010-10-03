@@ -55,7 +55,7 @@ if ( !class_exists('Bootstrapr') ) {
 
 			# Document Root
 			if ( empty($_SERVER['DOCUMENT_ROOT']) ) {
-				$_SERVER['DOCUMENT_ROOT']		= realpath(__DIR__.'/..');
+				$_SERVER['DOCUMENT_ROOT']		= realpath(dirname(__FILE__).'/..');
 				// $root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['PWD']);
 				// $root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['SCRIPT_FILENAME']);
 			}
@@ -96,13 +96,13 @@ if ( !class_exists('Bootstrapr') ) {
 			$this->bootstrap('server');
 			
 			# Load in the Application Environment File
-			if ( is_file(__DIR__.'/../config.php') ) {
-				require_once(__DIR__.'/../config.php');
+			if ( is_file(dirname(__FILE__).'/../config.php') ) {
+				require_once(dirname(__FILE__).'/../config.php');
 			}
 		
 			# Define the core paths
 			if ( !defined('APPLICATION_ROOT_PATH') ) {
-				define('APPLICATION_ROOT_PATH',				realpath(__DIR__.'/..'));
+				define('APPLICATION_ROOT_PATH',				realpath(dirname(__FILE__).'/..'));
 			}
 			if ( !defined('APPLICATION_PATH') ) {
 				define('APPLICATION_PATH',					APPLICATION_ROOT_PATH.'/application');

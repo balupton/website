@@ -5,7 +5,7 @@ class Cli {
 	
 	function __construct ( ) {
 		# Prepare
-		require(__DIR__.'/bootstrapr.php');
+		require(dirname(__FILE__).'/bootstrapr.php');
 		$Bootstrapr->bootstrap('environment');
 		
 		# Install

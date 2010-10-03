@@ -7,7 +7,7 @@ ini_set('display_startup_errors', 1);
 # Load
 if ( empty($Application) ) {
 	# Bootstrap
-	require_once(__DIR__.'/bootstrapr.php');
+	require_once(dirname(__FILE__).'/bootstrapr.php');
 	$Bootstrapr->bootstrap('zend-application');
 }
 

@@ -6,7 +6,7 @@ if ( empty($GLOBALS['Application']) ) {
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	# Bootstrap
-	require_once(__DIR__.'/bootstrapr.php');
+	require_once(dirname(__FILE__).'/bootstrapr.php');
 	$GLOBALS['Bootstrapr']->bootstrap('zend-application');
 	# Load
 	$GLOBALS['Application']->bootstrap('ScriptCron');
