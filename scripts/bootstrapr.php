@@ -96,7 +96,9 @@ if ( !class_exists('Bootstrapr') ) {
 			$this->bootstrap('server');
 			
 			# Load in the Application Environment File
-			require_once(__DIR__.'/../config.php');
+			if ( is_file(__DIR__.'/../config.php') ) {
+				require_once(__DIR__.'/../config.php');
+			}
 		
 			# Define the core paths
 			if ( !defined('APPLICATION_ROOT_PATH') ) {
