@@ -127,7 +127,7 @@ class Cli {
 		# Setup BalPHP Models Symlink
 		echo "Setting up necessary symlinks...\n\n";
 		$path = APPLICATION_ROOT_PATH.'/application/models/Bal';
-		if ( !is_file($path) ) {
+		if ( is_file($path) ) {
 			unlink($path);
 		}
 		if ( !is_dir($path) ) {
