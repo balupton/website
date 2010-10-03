@@ -7,14 +7,13 @@ production: &production
         transport:
             smtp:
                 # Be nice, don't abuse this privellege.
-                host: "localhost"
                 host: "smtp.gmail.com"
                 config:
                     username: "balupton@balupton.com"
                     password: "3IHen*4$"
                     port: 587
                     auth: "login"
-        
+    
     data:
         connection_string: "mysql://balupton_balsite:CIhbTIPwW7Ly@localhost/balupton_balsite"
     
@@ -73,9 +72,17 @@ production: &production
 
 staging: &staging
     <<<: *production
-
+    data:
+        connection_string: "mysql://balupton_balstag:CIhbTIPwW7Ly@localhost/balupton_balsite"
+    mail:
+        from:
+            name: "Benjamin Lupton: Staging"
+            address: "staging.system@balupton.com"
+    
 testing: &testing
     <<<: *production
+    data:
+        connection_string: "mysql://balupton_baltest:CIhbTIPwW7Ly@localhost/balupton_balsite"
     phpSettings:
         display_startup_errors: 1
         display_errors: 1
@@ -84,8 +91,8 @@ testing: &testing
         throw: false
     mail:
         from:
-            name: "BalCMS System: Testing"
-            address: "balcms.testing@balupton.com"
+            name: "Benjamin Lupton: Testing"
+            address: "testing.system@balupton.com"
 
 development: &development
     <<<: *production
@@ -104,8 +111,8 @@ development: &development
     mail:
         send_email: false
         from:
-            name: "BalCMS System: Development"
-            address: "balcms.development@balupton.com"
+            name: "Benjamin Lupton: Development"
+            address: "development.system@balupton.com"
         transport:
             smtp:
                 host: "localhost"
