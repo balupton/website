@@ -1,2 +1,2 @@
 #!/usr/bin/env php
-<?php require_once(__DIR__.DIRECTORY_SEPARATOR.'setup.php');
+<?php require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'setup.php');

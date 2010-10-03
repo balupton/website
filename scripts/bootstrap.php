@@ -3,7 +3,7 @@
 # --------------------------
 # Load Bootstraper
 
-require_once(__DIR__.'/bootstrapr.php');
+require_once(dirname(__FILE__).'/bootstrapr.php');
 
 # --------------------------
 # Boostrap Bootstraper
