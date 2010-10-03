@@ -11,8 +11,9 @@ production: &production
                 config:
                     username: "balupton@balupton.com"
                     password: "3IHen*4$"
-                    port: 587
+                    port: 465
                     auth: "login"
+                    ssl: "ssl"
     
     data:
         connection_string: "mysql://balupton_balsite:CIhbTIPwW7Ly@localhost/balupton_balsite"
