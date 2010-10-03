@@ -1,18 +1,13 @@
 <?php
-# Prepare Reporting
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
 # Load
-if ( empty($Application) ) {
+if ( empty($GLOBALS['Application']) ) {
 	# Bootstrap
 	require_once(dirname(__FILE__).'/bootstrapr.php');
 	$Bootstrapr->bootstrap('zend-application');
 }
 
-# Bootstrap
-$Application->bootstrap('ScriptSetup');
+# Load
+$GLOBALS['Application']->bootstrap('ScriptSetup');
 
 # App
 Bal_App::getInstance($Application)->setup();

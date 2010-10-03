@@ -1,19 +1,14 @@
 #!/usr/bin/env php
 <?php
-# Prepare Reporting
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
 # Load
-if ( empty($Application) ) {
+if ( empty($GLOBALS['Application']) ) {
 	# Bootstrap
-	$run = $bootstrap = false;
-	require_once(dirname(__FILE__).'/../index.php');
+	require_once(dirname(__FILE__).'/bootstrapr.php');
+	$Bootstrapr->bootstrap('zend-application');
 }
 
-# Bootstrap
-$Application->bootstrap('ScriptDoctrine');
+# Load
+$GLOBALS['Application']->bootstrap('ScriptDoctrine');
 
 # App
 Bal_App::getInstance($Application)->doctrineCli();
