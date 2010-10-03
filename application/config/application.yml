@@ -73,7 +73,7 @@ production: &production
 staging: &staging
     <<<: *production
     data:
-        connection_string: "mysql://balupton_balstag:CIhbTIPwW7Ly@localhost/balupton_balsite"
+        connection_string: "mysql://balupton_balsite:CIhbTIPwW7Ly@localhost/balupton_balstag"
     mail:
         from:
             name: "Benjamin Lupton: Staging"
@@ -82,7 +82,7 @@ staging: &staging
 testing: &testing
     <<<: *production
     data:
-        connection_string: "mysql://balupton_baltest:CIhbTIPwW7Ly@localhost/balupton_balsite"
+        connection_string: "mysql://balupton_balsite:CIhbTIPwW7Ly@localhost/balupton_baltest"
     phpSettings:
         display_startup_errors: 1
         display_errors: 1
