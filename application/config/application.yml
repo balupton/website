@@ -7,6 +7,10 @@ production: &production
 
 staging: &staging
     <<<: *production
+    mail:
+        from:
+            name: "BalCMS System: Staging"
+            address: "staging.balcms@balupton.com"
 
 testing: &testing
     <<<: *production
@@ -19,7 +23,7 @@ testing: &testing
     mail:
         from:
             name: "BalCMS System: Testing"
-            address: "balcms.testing@balupton.com"
+            address: "testing.balcms@balupton.com"
 
 development: &development
     <<<: *production
@@ -38,9 +42,6 @@ development: &development
         send_email: false
         from:
             name: "BalCMS System: Development"
-            address: "balcms.development@balupton.com"
-        transport:
-            smtp:
-                host: "localhost"
+            address: "development.balcms@balupton.com"
     log:
         store: false
