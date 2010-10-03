@@ -106,7 +106,7 @@ if ( !class_exists('Bootstrapr') ) {
 				define('APPLICATION_PATH',					APPLICATION_ROOT_PATH.'/application');
 			}
 			if ( !defined('CONFIG_CORE_PATH') ) {
-				define('CONFIG_CORE_PATH',					APPLICATION_ROOT_PATH.'/application/config/core.yaml');
+				define('CONFIG_CORE_PATH',					APPLICATION_ROOT_PATH.'/application/config/core.yml');
 			}
 			if ( !defined('DOCUMENT_ROOT') ) {
 				define('DOCUMENT_ROOT',						$_SERVER['DOCUMENT_ROOT']);
@@ -167,7 +167,7 @@ if ( !class_exists('Bootstrapr') ) {
 	
 			# Apply our configuration
 			foreach ( $configuration as $key => &$value ) {
-				$value = preg_replace('/\\<\\?\\=([a-zA-Z_]+)\\?\\>/e','\\1',trim($value));
+				$value = preg_replace('/\\<\\?\\=([a-zA-Z0-9_()]+)\\?\\>/e','\\1',trim($value));
 				if ( !defined($key) )
 					define($key,$value);
 			}
