@@ -67,15 +67,7 @@ balcms: &balcms
             address: "log@balupton.com"
         transport:
             smtp:
-                # Be nice, don't abuse this privellege.
                 host: "localhost"
-                host: "smtp.gmail.com"
-                config:
-                    username: "balupton.mailserver@gmail.com"
-                    password: "random123"
-                    port: 465
-                    auth: "login"
-                    ssl: "ssl"
         
     payment:
         gateway: "paypal"
