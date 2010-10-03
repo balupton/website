@@ -66,6 +66,8 @@ Balcms_Content:
             extra:
                 html: raw #handled explicity inside now
                 auto: true
+        last_refreshed: # When was the content's cache last refreshed
+            type: timestamp
             
         position:
             type: integer(2)

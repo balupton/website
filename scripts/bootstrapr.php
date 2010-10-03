@@ -412,4 +412,7 @@ if ( !class_exists('Bootstrapr') ) {
 # --------------------------
 # Create Bootstrapr
 
-$Bootstrapr = new Bootstrapr();
+global $Bootstrapr;
+if ( empty($Bootstrapr) ) {
+	$Bootstrapr = new Bootstrapr();
+}

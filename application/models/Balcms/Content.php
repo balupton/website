@@ -438,6 +438,63 @@ class Balcms_Content extends Base_Balcms_Content
 	}
 	
 	/**
+	 * Refresh the Content Cache
+	 */
+	public function refresh ( $update_content = true, $update_description = true ) {
+		# Prepare
+		$save = false;
+		
+		# Fetch
+		$Content = $this;
+		
+		# Render Content
+		if ( $update_content ) {
+			$content_rendered = Content::renderContent($Content, array('cache'=>false));
+			$Content->set('content_rendered', $content_rendered, false);
+			# Save
+			$save = true;
+		}
+		
+		# Render Description
+		if ( $update_description ) {
+			# Description
+			$description = $Content->description;
+			$description_empty = !$description || $description === '<!--[empty/]-->';
+			$description_useauto = $Content->description_useauto;
+			if ( $update_description && !$description_empty ) {
+				# Disable Auto
+				$Content->set('description_useauto',false,false);
+				# Render Description
+				$description_rendered = Content::renderDescription($Content, array('cache'=>false));
+				# Set Description
+				$Content->set('description_rendered', $description_rendered, false);
+				# Save
+				$save = true;
+			}
+			elseif ( $Content->description_useauto || $description_empty ) {
+				# Use Auto
+				$Content->set('description_useauto',true,false);
+				# Render Auto Description
+				$description_rendered = substr(preg_replace('/\s\s+/',' ',strip_tags($Content->content_rendered)), 0, 1000);
+				if ( reallyempty($description_rendered) ) $description_rendered = '<!--[empty/]-->';
+				# Set Description
+				$Content->set('description', $description_rendered, false);
+				$Content->set('description_rendered', $description_rendered, false);
+				# Save
+				$save = true;
+			}
+		}
+		
+		# Update Last Refresh
+		if ( $save ) {
+			$this->last_refreshed = doctrine_timestamp();
+		}
+		
+		# Return save
+		return $save;
+	}
+	
+	/**
 	 * Ensure the Render of the Content and Description
 	 * @param Doctrine_Event $Event
 	 * @return bool
@@ -456,42 +513,8 @@ class Balcms_Content extends Base_Balcms_Content
 		$Content = $Event->getInvoker();
 		$modified = $Content->getModified();
 		
-		# Content
-		if ( array_key_exists('content', $modified) ) {
-			# Render Content
-			$content_rendered = Content::renderContent($Content, array('cache'=>false));
-			$Content->set('content_rendered', $content_rendered, false);
-			# Save
-			$save = true;
-		}
-		
-		# Description
-		$description = $Content->description;
-		$description_modified = array_key_exists('description', $modified);
-		$description_empty = !$description || $description === '<!--[empty/]-->';
-		$description_useauto = $Content->description_useauto;
-		if ( $description_modified && !$description_empty ) {
-			# Disable Auto
-			$Content->set('description_useauto',false,false);
-			# Render Description
-			$description_rendered = Content::renderDescription($Content, array('cache'=>false));
-			# Set Description
-			$Content->set('description_rendered', $description_rendered, false);
-			# Save
-			$save = true;
-		}
-		elseif ( $Content->description_useauto || $description_empty ) {
-			# Use Auto
-			$Content->set('description_useauto',true,false);
-			# Render Auto Description
-			$description_rendered = substr(preg_replace('/\s\s+/',' ',strip_tags($Content->content_rendered)), 0, 1000);
-			if ( reallyempty($description_rendered) ) $description_rendered = '<!--[empty/]-->';
-			# Set Description
-			$Content->set('description', $description_rendered, false);
-			$Content->set('description_rendered', $description_rendered, false);
-			# Save
-			$save = true;
-		}
+		# Refresh
+		$save = $Content->refresh(array_key_exists('content', $modified), array_key_exists('description', $modified));
 		
 		# Return save
 		return $save;
