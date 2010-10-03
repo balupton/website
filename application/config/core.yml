@@ -20,6 +20,8 @@ balcms: &balcms
         <?=md5(APPLICATION_ROOT_PATH)?>
     DEBUG_MODE: >
         auto
+    PROFILE_MODE: >
+        0
 
     # Urls
     ROOT_URL: >
