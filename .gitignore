@@ -11,3 +11,4 @@ common/doctrine-v1.2.3-lib
 common/htmlpurifier-v4.2.0-lib
 common/SymfonyComponents
 common/zend-v1.10.7-lib
+sites/*

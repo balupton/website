@@ -9,11 +9,11 @@ balcms: &balcms
     CONFIG_FILE_GENERATE: >
         false
     CONFIG_FILE_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/config/application/balcms.yaml<?=PATH_SEPARATOR?><?=APPLICATION_ROOT_PATH?>/application/config/application/application.yaml
+        <?=APPLICATION_ROOT_PATH?>/application/config/balcms.yml<?=PATH_SEPARATOR?><?=APPLICATION_ROOT_PATH?>/application/config/application.yml
     NAVIGATION_FILE_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/config/nav.yaml
+        <?=APPLICATION_ROOT_PATH?>/application/config/nav.yml
     ROUTES_FILE_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/config/routes.yaml
+        <?=APPLICATION_ROOT_PATH?>/application/config/routes.yml
     INSTALLED_FILE_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/data/logs/installed
     DEBUG_SECRET: >
