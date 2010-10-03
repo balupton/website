@@ -456,33 +456,30 @@ class Balcms_Content extends Base_Balcms_Content
 		}
 		
 		# Render Description
-		if ( $update_description ) {
-			# Description
-			$description = $Content->description;
-			$description_empty = !$description || $description === '<!--[empty/]-->';
-			$description_useauto = $Content->description_useauto;
-			if ( $update_description && !$description_empty ) {
-				# Disable Auto
-				$Content->set('description_useauto',false,false);
-				# Render Description
-				$description_rendered = Content::renderDescription($Content, array('cache'=>false));
-				# Set Description
-				$Content->set('description_rendered', $description_rendered, false);
-				# Save
-				$save = true;
-			}
-			elseif ( $Content->description_useauto || $description_empty ) {
-				# Use Auto
-				$Content->set('description_useauto',true,false);
-				# Render Auto Description
-				$description_rendered = substr(preg_replace('/\s\s+/',' ',strip_tags($Content->content_rendered)), 0, 1000);
-				if ( reallyempty($description_rendered) ) $description_rendered = '<!--[empty/]-->';
-				# Set Description
-				$Content->set('description', $description_rendered, false);
-				$Content->set('description_rendered', $description_rendered, false);
-				# Save
-				$save = true;
-			}
+		$description = $Content->description;
+		$description_empty = !$description || $description === '<!--[empty/]-->';
+		$description_useauto = $Content->description_useauto;
+		if ( $update_description && !$description_empty ) {
+			# Disable Auto
+			$Content->set('description_useauto',false,false);
+			# Render Description
+			$description_rendered = Content::renderDescription($Content, array('cache'=>false));
+			# Set Description
+			$Content->set('description_rendered', $description_rendered, false);
+			# Save
+			$save = true;
+		}
+		elseif ( $Content->description_useauto || $description_empty ) {
+			# Use Auto
+			$Content->set('description_useauto',true,false);
+			# Render Auto Description
+			$description_rendered = substr(preg_replace('/\s\s+/',' ',strip_tags($Content->content_rendered)), 0, 1000);
+			if ( reallyempty($description_rendered) ) $description_rendered = '<!--[empty/]-->';
+			# Set Description
+			$Content->set('description', $description_rendered, false);
+			$Content->set('description_rendered', $description_rendered, false);
+			# Save
+			$save = true;
 		}
 		
 		# Update Last Refresh
