@@ -6,14 +6,13 @@ production: &production
             address: "system@balupton.com"
         transport:
             smtp:
-                # Be nice, don't abuse this privellege.
                 host: "smtp.gmail.com"
                 config:
                     username: "balupton@balupton.com"
                     password: "3IHen*4$"
-                    port: 465
+                    port: 587
                     auth: "login"
-                    ssl: "ssl"
+                    ssl: "tls"
     
     data:
         connection_string: "mysql://balupton_balsite:CIhbTIPwW7Ly@localhost/balupton_balsite"
@@ -110,12 +109,13 @@ development: &development
         compile:
             generate: true
     mail:
-        send_email: false
+        #send_email: false
         from:
             name: "Benjamin Lupton: Development"
             address: "development.system@balupton.com"
         transport:
             smtp:
                 host: "localhost"
+                config: ""
     log:
         store: false
