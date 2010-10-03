@@ -2,8 +2,74 @@ production: &production
     <<<: *balcms
     mail:
         from:
-            name: "BalCMS System"
-            address: "balcms@balupton.com"
+            name: "Benjamin Lupton"
+            address: "system@balupton.com"
+        transport:
+            smtp:
+                # Be nice, don't abuse this privellege.
+                host: "localhost"
+                host: "smtp.gmail.com"
+                config:
+                    username: "balupton@balupton.com"
+                    password: "3IHen*4$"
+                    port: 587
+                    auth: "login"
+        
+    data:
+        connection_string: "mysql://balupton_balsite:CIhbTIPwW7Ly@localhost/balupton_balsite"
+    
+    site:
+        name: "Benjamin Lupton"
+        title: "Balupton"
+        description: "Website of Benjamin Lupton, a passionate Freelance Web 2.0 Architect who specialises in Web 2.0 technologies such as Ajax, jQuery, MooTools, Zend Framework and Doctrine ORM. Creator of jQuery Ajaxy, Lightbox and BalCMS."
+        keywords: "ajax, ajaxy, balupton, benjamin lupton, jquery, lightbox, lupton, sparkle, web 2.0, welcome"
+        separator: " > "
+        author:
+            title: "Benjamin Lupton"
+            email: "contact@balupton.com"
+            url: "http://www.balupton.com"
+            
+    setup:
+        secret: "kudos123"
+        salt: "kudos123"
+    
+    services:
+        analytics:
+            code: "UA-4446117-1"
+        reinvigorate:
+            code: false # "702o7-66905bt9t0"
+        gsfn:
+            company: "balupton"
+    
+    locale:
+        locale: "en_AU"
+        timezone: "Australia/Perth"
+        currency: "AUD"
+        
+    areaThemes:
+        default: balupton
+        back: balcms
+        front: balupton
+        
+    editor:
+        code: bespin
+        
+    invoice:
+        company:
+            name: "Benjamin Arthur Lupton"
+            address1: "43A Weston St"
+            address2: ""
+            suburb: "Carlisle"
+            state: "Western Australia"
+            country: "Australia"
+            postcode: "6101"
+            
+    payment:
+        gateway: "paypal"
+        paypal:
+            token: "WG_jTBzfesbn5syxVT2W9xhn6mws3wwslciKoHDU_Z-DusYuFvYVNFqBSY4"
+            business: "balupton@gmail.com"
+
 
 staging: &staging
     <<<: *production
@@ -30,6 +96,7 @@ development: &development
         friendly: false
         throw: false
     data:
+        connection_string: "mysql://root:1234@localhost/balupton;unix_socket=/tmp/mysql.sock"
         models:
             generate: true
         compile:

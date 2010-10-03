@@ -4,124 +4,1176 @@ Content:
     Content_Welcome:
         code: "welcome"
         title: "Welcome"
-        description: "Home Page"
-        content: "[carousel]bloc-party,zouk-festival,lala-festival[/carousel]<br/>[taglist/]<br/>[recentlist/]"
-        Author: User_Mydance
+        position: 1
+        comments_enabled: false
+        Author: User_Balupton
+        Tags: "jquery, lightbox, sparkle, ajaxy, ajax, web 2.0, balupton, benjamin lupton, lupton"
+        content: |
+            <section id="about" class="about section simple">
+                <h1>Welcome</h1>
+                <p>
+                    <strong>Hello and welcome!</strong>
+                    Hopefully what you are looking for is featured below, if not you will have to do some <strong>exploring!</strong>
+                    Top right you can <label for="search-query" class="link">search</label> or get in <a href="#nav-actions">contact</a>.
+                    <em>Or you can educate and inspire yourself by looking around.</em>
+                    <strong>Enjoy, and hope you have a nice day.</strong>
+                </p>
+                <a href="[url user="balupton" /]" title="Learn about me" class="me">
+                    <img src="[url file="images/me.jpg" /]" width="155" height="155" />
+                </a>
+            </section>
         
-    Content_Events:
-        code: "events"
-        title: "Events"
-        description: "Event Listing"
-        content: "[eventlist/]"
-        tags: [event,cool]
-        Author: User_Mydance
+            [contentlist title="<strong>Featured</strong> Projects" id="home-featured" featured="true" Parent="projects" /]
+            
+            [contentlist title="<strong>Recent</strong> Articles" id="home-recent" Parent="articles" recent="true" /]
         
-    Content_Events_BlocParty:
-        code: "bloc-party"
-        title: "Bloc Party"
-        description: "Event for Bloc Party"
-        type: event
-        event_start_at: "2009-03-14 21:15"
-        event_finish_at: "2009-03-14 23:15"
-        content: "Bloc Party are famous and kick ass"
-        tags: [event,bloc party,rock]
-        Parent: Content_Events
-        Author: User_Mydance
-        
-    Content_Events_ZoukFestival:
-        code: "zouk-festival"
-        title: "Zouk Festival"
-        description: "Event for Zouk Festival"
-        type: event
-        event_start_at: "2009-03-12 12:25"
-        event_finish_at: "2009-03-12 14:25"
-        content: "Zouk Festival are famous and kick ass"
-        tags: [event,zouk,festival]
-        Parent: Content_Events
-        Author: User_Mydance
-        
-    Content_Events_LaLa:
-        code: "lala-festival"
-        title: "LaLa Festival"
-        description: "Event for LaLa Festival"
-        type: event
-        event_start_at: "2009-04-14 12:25"
-        event_finish_at: "2009-04-14 14:25"
-        content: "LaLa Festival are famous and kick ass"
-        tags: [event,lala,festival]
-        Parent: Content_Events
-        Author: User_Mydance
+    Content_Services:
+        code: "services"
+        title: "Services"
+        tagline: "Services & Offerings"
+        position: 2
+        comments_enabled: false
+        Author: User_Balupton
+        content: |
+            <section id="about" class="about section simple">
+                <h1>Hire</h1>
+                <p>
+                    I'm currently <strong style="color:red">unavailable</strong> for hire until <strong style="color:green">October</strong>.
+                </p>
+            </section>
         
     Content_Articles:
         code: "articles"
         title: "Articles"
-        description: "Article Listing"
-        content: "[articlelist/]"
-        Author: User_Mydance
+        tagline: "Articles & Tutorials"
+        position: 3
+        comments_enabled: false
+        Author: User_Balupton
+        content: |
+            [contentlist title="false"/]
         
-    Content_Articles_NewSite:
+    Content_Projects:
+        code: "projects"
+        title: "Projects"
+        tagline: "Projects & Resources"
+        position: 4
+        Author: User_Balupton
+        content: |
+            [contentlist title="false"/]
+        
+    Content_Work:
+        code: "work"
+        title: "Portfolio"
+        tagline: "Portfolio of Paid Work"
+        position: 5
+        comments_enabled: false
+        Author: User_Balupton
+        content: |
+            [contentlist title="false"/]
+        
+    Content_Clients:
+        code: "clients"
+        title: "Clients"
+        tagline: "Clients & Consumers"
+        position: 6
+        comments_enabled: false
+        Author: User_Balupton
+        content: |
+            [contentlist title="false"/]
+
+
+# Work
+
+    Content_Work_MyDance:
+        code: "mydance-site"
+        status: "pending"
+        title: "MyDance Website"
+        tagline: "Live, Breath, Feel, Dance"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Work
+        Tags: "dance, zouk, salsa, balcms, newsletters"
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p><a href="http://mydance.com.au" title="Visit MyDance">MyDance</a> is a website from Perth, Australia aimed to provide a encyclopedia of dance related information.</p>
+            </section>
+            
+    Content_Work_ConceptCupboard:
+        code: "concept-cupboard"
+        status: "deprecated"
+        title: "Concept Cupboard"
+        tagline: ""
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Work
+        Tags: "bidding, freelance, job-search, notifications, invoicing, balcms"
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p>Concept Cupboard is a proof of concept service developed for 7dots for use by Burn.</p>
+            </section>
+            
+    Content_Work_ShortOfStaff:
+        code: "short-of-staff"
+        status: "deprecated"
+        title: "Short of Staff"
+        tagline: ""
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Work
+        Tags: "freelance, job-search, notifications, invoicing, balcms"
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p>Short of Staff is a proof of concept service developed for 7dots for use by Burn.</p>
+            </section>
+            
+    Content_Work_Gates:
+        code: "gates-system"
+        title: "Gates Online System"
+        tagline: "Global Agency for Training, Education and Services"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Work
+        Tags: "featured, students, university, il8n, ajaxy, balcms"
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p><a href="http://www.gatesonline.com.au/">Gates Online System</a> is a product by Higher Education & New Future Agency (HENFA) is Australian registered Agency providing information and services for overseas students. HENFA has an extensive experience of counseling overseas students. Our main aim is to promote the Australian high quality education throughout the world, counseling overseas students, who are willing to study in Australia, helping them step by step to fulfill their goals and dreams.</p>
+            </section>
+            
+    Content_Work_Wbhomes:
+        code: "wbhomes-site"
+        title: "Webb & Brown-Neaves Homes"
+        tagline: "Luxury Home Builders"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Work
+        Tags: "featured, homes, ajaxy"
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p><a href="http://wbhomes.com.au">WB Homes</a> are a luxury home builder with a range of display homes throughout Perth, WA.</p>
+            </section>
+               
+    Content_Work_Ers:
+        code: "education-research-site"
+        title: "Education Research Solutions"
+        tagline: "Outcomes into Practice"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Work
+        Tags: "featured, clickonce, ecommerce"
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p>We have developed support programs to provide an exciting, innovative and easy to use approach to curriculum planning and organising. Our Curriculum Organiser was developed after extensive advice from teachers on ways to cope with the demands put upon teachers and has been designed to save time. Furthermore, it provides the means for improving student learning outcomes.</p>
+                <p>Curriculum Organiser provides all documents required for teacher planning in one location. It has the flexibility to include your own plans, to adapt all provided documents, and to create new documents. For more information, please don't hesitate to contact us.</p>
+                <a href="http://educationresearch.com.au/aboutus/index.php?sub_menu=112">Click here to read what teachers have to say about our products.</a>
+            </section>
+            
+
+# Clients
+
+    Content_Clients_7dots:
+        code: "7dots"
+        status: "deprecated"
+        title: "7dots"
+        tagline: "Digital Consultancy"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Clients
+        Tags: "firm, design, startup"
+        description: |
+            <p>7dots is a digital consultancy providing a range of online products and services to both individual companies and marketing agencies.</p>
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p><a href="http://www.7dots.co.uk/">7dots</a> is a digital consultancy providing a range of online products and services to both individual companies and marketing agencies.</p>
+                <p>We are project management focused and pride ourselves in our ability to make your digital projects run on time, on budget and to the precise specification your company needs.</p>
+                <p>Our experience spans a wide range of industries and ranges from small websites for start-up companies, to complex, multi-lingual, globally deployed sites for multi-national blue chip corporations.</p>
+                <a href="http://www.7dots.co.uk/">Read more about 7dots</a>
+            </section>
+            
+    Content_Clients_Ibt:
+        code: "ibt"
+        title: "Innovative Business Technologies"
+        tagline: "Premium Web 2.0 Solutions"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Clients
+        Tags: "featured, firm, design, startup"
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p><a href="http://ibtsolutions.com.au/">Innovative Business Technologies</a> are a small web firm startup in Sydney, Australia. Offering to provide the best web 2.0 solutions to medium sized businesses.</p>
+            </section>
+            
+    Content_Clients_MyDance:
+        code: "mydance"
+        status: "pending"
+        title: "MyDance"
+        tagline: "Live, Breath, Feel, Dance"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Clients
+        Tags: "dance, zouk, salsa, freemove"
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p><a href="http://mydance.com.au" title="Visit MyDance">MyDance</a> is a small startup from Perth, Australia aimed to provide a encyclopedia of dance related information.</p>
+            </section>
+            
+    Content_Clients_Platform:
+        code: "platform-interactive"
+        title: "Platform Interactive"
+        tagline: "Digital Online Profitability"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Clients
+        Tags: "featured, platform, interactive, direct, platform-direct"
+        description: |
+            <p>Platform Interactive is one of Australia's leading providers of online business solutions providing state of the art systems allowing organisations to communicate and transact with its customers, employees and stakeholders.</p>
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p><a href="http://www.platforminteractive.com.au">Platform Interactive</a> is one of Australia's leading providers of online business solutions providing state of the art systems allowing organisations to communicate and transact with its customers, employees and stakeholders.</p>
+                <p>The suite of products developed by Platform includes Platform CMS, a highly flexible and feature rich website content management system, and Platform Direct, an incredibly powerful Electronic Direct Marketing system providing both email and SMS broadcasting. The two systems, while available as standalone, are fully integrated to provide a single customer view, web business and communication framework.</p>
+                <a href="http://www.platforminteractive.com.au/about/platform-interactive">Read more about Platform Interactive</a>
+            </section>
+            
+    Content_Clients_Ers:
+        code: "education-research"
+        title: "Education Research Solutions"
+        tagline: "Outcomes into Practice"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Clients
+        Tags: "featured, education, ecommerce"
+        content: |
+            <section id="about" class="about section simple">
+                <h1>About</h1>
+                <p>We have developed support programs to provide an exciting, innovative and easy to use approach to curriculum planning and organising. Our Curriculum Organiser was developed after extensive advice from teachers on ways to cope with the demands put upon teachers and has been designed to save time. Furthermore, it provides the means for improving student learning outcomes.</p>
+                <p>Curriculum Organiser provides all documents required for teacher planning in one location. It has the flexibility to include your own plans, to adapt all provided documents, and to create new documents. For more information, please don't hesitate to contact us.</p>
+                <a href="http://educationresearch.com.au/aboutus/index.php?sub_menu=112">Click here to read what teachers have to say about our products.</a>
+            </section>
+            
+# Articles
+
+    Content_Articles_Newsite:
         code: "newsite"
-        title: "New Site"
-        description: "New Site!"
-        content: "Our new website is live!"
-        tags: [news,newsletter]
+        title: "Welcome to the New Website"
+        tagline: "It's now live"
+        position: 1
+        Author: User_Balupton
         Parent: Content_Articles
-        Author: User_Mydance
-        
-    Content_Resources:
-        code: "resources"
-        title: "Resources"
-        description: "Knowledge Base Area"
-        content: "[contentlist/]"
-        Author: User_Mydance
-        
-    Content_Resources_Equipment:
-        code: "equipment"
-        title: "Equipment"
-        description: "Equipment Listing"
-        content: "[contentlist/]"
-        Parent: Content_Resources
-        Author: User_Mydance
-        
-    Content_Resources_Equipment_Shoes:
-        code: "shoes"
-        title: "New Shoes"
-        description: "New Shoes!"
-        content: "some new shoes!"
-        Parent: Content_Resources_Equipment
-        Author: User_Mydance
+        Tags: "featured, balupton, website, live"
+        description: |
+             <p>The new website is now live! I'm extremely proud of it, as it is a brilliant showcase of all my work.</p>
+        content: |
+            <section class="about section simple noindex">
+                <h1>About</h1>
+                <p>The new website is now live! I'm extremely proud of it, as it is a brilliant showcase of all my work.</p>
+                <p>It features such technologies as [url content="balcms" link="true"/] for the Content Management System, [url content="jquery-ajaxy" link="true"/] for the Web 2.0 Ajax Effects, [url content="jquery-sparkle" link="true"/] for the Web 2.0 Framework, and [url content="jquery-syntaxhighlighter" link="true"/] for the Syntax Highlighter.</p>
+                <p>There are still a fair few quirks here and there, and a lot of improvements to be made: such as fixing it for internet explorer, a better user page, and better content - but alas, it is still ready for production use, so yay!</p>
+                <p>I hope you enjoy it, if you have any feedback then definitely <a href="#getintouch">get in touch</a>.</p>
+            </section>
+            
+    Content_Articles_Adding_Navigation_To_Balcms:
+        code: "adding-navigation-to-balcms"
+        title: "Adding Navigation to BalCMS"
+        tagline: "How to add a new navigation menu to a balCMS layout"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Articles
+        Tags: "featured, balcms, navigation, tutorial"
+        description: |
+            <p>An article to cover adding, rendering and styling of BalCMS Navigation Menus.</p>
+        content: |
+            <section class="section" id="step1">
+                <h1>1. Modifying nav.json</h1>
+                
+                <p>
+                    First off, what we need to do is add our new navigation menu to application's navigation file.<br/>
+                    Navigate to <code class="path">./application/config/nav.json</code><br/>
+                    Change:
+                </p>
+                
+                [code language="javascript" encoded="true"]
+                    {
+                        "balcms": {
+                            "front": {
+                                "actions": &#91;
+                                    {
+                                        "id": "front-action-contact", 
+                                        "label": "Contact", 
+                                        "uri": "mailto:contact@balupton.com", 
+                                        "class": ""
+                                    }
+                                &#93;, 
+                                "footer": &#91;
+                                    {
+                                        "id": "front-action-contact", 
+                                        "label": "Contact Us", 
+                                        "uri": "mailto:contact@balupton.com", 
+                                        "class": "gsfn"
+                                    }
+                                &#93;
+                            }
+                        }
+                    }
+                [/code]
+                
+                <p>To:</p>
+                [code language="javascript" encoded="true"]
+                    {
+                        "balcms": {
+                            "front": {
+                                "actions": &#91;
+                                    {
+                                        "id": "front-action-contact", 
+                                        "label": "Contact", 
+                                        "uri": "mailto:contact@balupton.com", 
+                                        "class": ""
+                                    }
+                                &#93;, 
+                                "footer": &#91;
+                                    {
+                                        "id": "front-action-contact", 
+                                        "label": "Contact Us", 
+                                        "uri": "mailto:contact@balupton.com", 
+                                        "class": "gsfn"
+                                    }
+                                &#93;,
+                                "social": &#91;
+                                    {
+                                        "class": "facebook", 
+                                        "uri": "http://www.facebook.com/pages/Benjamin-balupton-Lupton/229416884376", 
+                                        "title": "Facebook Page", 
+                                        "label": "Facebook"
+                                    }, 
+                                    {
+                                        "class": "linkedin", 
+                                        "uri": "http://www.linkedin.com/in/balupton", 
+                                        "title": "LinkedIn Professional Profile", 
+                                        "label": "LinkedIn"
+                                    }, 
+                                    {
+                                        "class": "email", 
+                                        "uri": "mailto:contact@balupton.com", 
+                                        "title": "Email me", 
+                                        "label": "Email"
+                                    }, 
+                                    {
+                                        "class": "google", 
+                                        "uri": "http://www.google.com/profiles/balupton", 
+                                        "title": "Google Public Profile", 
+                                        "label": "Google"
+                                    }, 
+                                    {
+                                        "class": "twitter", 
+                                        "uri": "http://twitter.com/balupton", 
+                                        "title": "Twitter", 
+                                        "label": "Twitter"
+                                    }, 
+                                    {
+                                        "class": "lastfm", 
+                                        "uri": "http://www.last.fm/user/balupton", 
+                                        "title": "Last.fm Music History", 
+                                        "label": "Last.fm"
+                                    }, 
+                                    {
+                                        "class": "vimeo", 
+                                        "uri": "http://vimeo.com/balupton", 
+                                        "title": "Vimeo Video Directory", 
+                                        "label": "Vimeo"
+                                    }
+                                &#93;
+                            }
+                        }
+                    }
+                [/code]
+            </section>
+                
+            <section class="section" id="step2">
+                <h1>2. Displaying in layout.phtml</h1>
+                
+                <p>
+                    Secondly, we actually want to display our new navigation menu in our layout.<br/>
+                    Navigate to <code class="path">./public/themes/<span class="var">yourtheme</span>/layouts/layout.phtml</code><br/>
+                    And to display:
+                </p>
+                
+                [code language="php" encoded="true"]
+                    &lt;!-- Social --&gt;
+                    &lt;?=$this-&gt;partial('partials/nav-links.phtml',array(
+                        'title' =&gt; 'Social Links',
+                        'class' =&gt; 'nav-social simple',
+                        'Items' =&gt; 'front.social'
+                    ))?&gt;
+                [/code]
+                
+                <p>Or if you would like greater control!</p>
+                [code language="php" encoded="true"]
+                    &lt;!-- Social --&gt;
+                    &lt;?=$this-&gt;app()-&gt;getNavigationMenu('front.social')
+                        -&gt;setTemplate('&lt;span class="title"&gt;$label&lt;/span&gt;')
+                        -&gt;render()?&gt;
+                [/code]
+            </section>
+            
+            <section class="section" id="step3">
+                <h1>3. Adding Style in style.css (optional)</h1>
+                
+                <p>
+                    Finally, we may want to style our new social menu (like the one on this site at the <a href="#subfooter">footer</a>).<br/>
+                    Navigate to <code class="path">./public/themes/<span class="var">yourtheme</span>/styles/style.css</code><br/>
+                    And to style cleanly with <a href="http://github.com/anthonyshort/csscaffold" title="CSS Framework for PHP: Supports Mixins, OOCSS">CSScaffold</a> goodness and some images, use:
+                </p>
+                
+                [code language="css" encoded="true"]
+                    /* List Social */
+                    .nav-social {
+                        padding:10px 0;
+                        background:$color_bg;
+                        +opacity(0.5);
+                        +transition("opacity 1.0s ease-out");
+                    
+                        a {
+                            +clear_link;
+                            width:32px;
+                            height:32px;
+                            display:block;
+                            margin:0 5px;
+                            +box-shadow("0px", "0px", "6px", "#AAA");
+                            +border-radius("4px 4px");
+                        
+                            +opacity(0.4);
+                            background:$color_bg;
+                        
+                            +transition("opacity 1.0s ease-out");
+                        
+                            .title {
+                                display:none;
+                            }
+                        }
+                        a:hover {
+                            +box-shadow("0px", "0px", "6px", "#666");
+                            +opacity(1.0);
+                        }
+                    
+                        .facebook {
+                            background: url("../images/facebook.png") no-repeat top left;
+                        }
+                        .twitter {
+                            background: url("../images/twitter.png") no-repeat top left;
+                        }
+                        .email {
+                            background: url("../images/email.png") no-repeat top left;
+                        }
+                        .linkedin {
+                            background: url("../images/linkedin.png") no-repeat top left;
+                        }
+                        .vimeo {
+                            background: url("../images/vimeo.png") no-repeat top left;
+                        }
+                        .lastfm {
+                            background: url("../images/lastfm.png") no-repeat top left;
+                        }
+                        .google {
+                            background: url("../images/google.png") no-repeat top left;
+                        }
+                    }
+                    .nav-social:hover {
+                        +opacity(1);
+                    }
+                [/code]
+                
+                <p>Or to style using plain and messy CSS3:</p>
+                [code language="css" encoded="true"]
+                    #subfooter .nav-social
+                    {
+                        padding: 10px 0;
+                        background: #F9F9F9;
+                        opacity: 0.5;
+                        -moz-opacity: 0.5;
+                        -khtml-opacity: 0.5;
+                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+                        filter: alpha(opacity=50);
+                        -webkit-transition: opacity 1.0s ease-out;
+                        -moz-transition: opacity 1.0s ease-out;
+                        transition: opacity 1.0s ease-out;
+                    }
+                
+                    #subfooter .nav-social a
+                    {
+                        width: 32px;
+                        height: 32px;
+                        display: block;
+                        margin: 0 5px;
+                        -moz-box-shadow: 0px 0px 6px #AAA;
+                        -webkit-box-shadow: 0px 0px 6px #AAA;
+                        box-shadow: 0px 0px 6px #AAA;
+                        -webkit-border-radius: 4px 4px;
+                        -moz-border-radius: 4px 4px;
+                        border-radius: 4px 4px;
+                        opacity: 0.4;
+                        -moz-opacity: 0.4;
+                        -khtml-opacity: 0.4;
+                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+                        filter: alpha(opacity=40);
+                        background: #F9F9F9;
+                        -webkit-transition: opacity 1.0s ease-out;
+                        -moz-transition: opacity 1.0s ease-out;
+                        transition: opacity 1.0s ease-out;
+                    }
+                
+                    #subfooter .nav-social a .title
+                    {
+                        display: none;
+                    }
+                
+                    #subfooter .nav-social a:hover
+                    {
+                        -moz-box-shadow: 0px 0px 6px #666;
+                        -webkit-box-shadow: 0px 0px 6px #666;
+                        box-shadow: 0px 0px 6px #666;
+                        opacity: 1.0;
+                        -moz-opacity: 1.0;
+                        -khtml-opacity: 1.0;
+                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+                        filter: alpha(opacity=100);
+                    }
+                
+                    #subfooter .nav-social .facebook
+                    {
+                        background: url(/projects/balupton/public/themes/balupton/images/facebook.png) no-repeat top left;
+                    }
+                
+                    #subfooter .nav-social .twitter
+                    {
+                        background: url(/projects/balupton/public/themes/balupton/images/twitter.png) no-repeat top left;
+                    }
+                
+                    #subfooter .nav-social .email
+                    {
+                        background: url(/projects/balupton/public/themes/balupton/images/email.png) no-repeat top left;
+                    }
+                
+                    #subfooter .nav-social .linkedin
+                    {
+                        background: url(/projects/balupton/public/themes/balupton/images/linkedin.png) no-repeat top left;
+                    }
+                
+                    #subfooter .nav-social .vimeo
+                    {
+                        background: url(/projects/balupton/public/themes/balupton/images/vimeo.png) no-repeat top left;
+                    }
+                
+                    #subfooter .nav-social .lastfm
+                    {
+                        background: url(/projects/balupton/public/themes/balupton/images/lastfm.png) no-repeat top left;
+                    }
+                
+                    #subfooter .nav-social .google
+                    {
+                        background: url(/projects/balupton/public/themes/balupton/images/google.png) no-repeat top left;
+                    }
+                
+                    #subfooter .nav-social:hover
+                    {
+                        opacity: 1;
+                        -moz-opacity: 1;
+                        -khtml-opacity: 1;
+                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+                        filter: alpha(opacity=100);
+                    }
+                [/code]
+            </section>
+
+    
+    Content_Articles_Using_Balcms:
+        code: "using-balcms"
+        status: "pending"
+        title: "Using BalCMS"
+        tagline: "A quick walkthrough through the functionality of BalCMS"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Articles
+        Tags: "balcms"
+        content: |
+            BalCMS is awesome.
+    
+    Content_Articles_Using_Balphp:
+        code: "using-balphp"
+        status: "pending"
+        title: "Using BalPHP"
+        tagline: "A quick walkthrough through the functionality of BalPHP"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Articles
+        Tags: "balphp"
+        content: |
+            BalPHP is awesome.
+    
+    Content_Articles_Using_Sparkle:
+        code: "using-sparkle"
+        status: "pending"
+        title: "Using Sparkle"
+        tagline: "A quick walkthrough through the functionality of Sparkle"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Articles
+        Tags: "sparkle"
+        content: |
+            Sparkle is awesome.
+    
+# Projects
+    
+    Content_Projects_BalCMS:
+        code: "balcms"
+        title: "BalCMS"
+        tagline: "A Zend Framework & Web 2.0 Content Mangement System"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Projects
+        Tags: "web 2.0, ajax, widgets, balcms, jquery-ajaxy, jquery-sparkle, jquery-syntaxhighlighter, open-source, agpl"
+        description: |
+            <p>Based on Zend Framework and best practices, providing a true Web 2.0 experience.</p>
+        content: |
+            <section id="about" class="about section simple noindex">
+                <h1>About</h1>
+                <p>Based on Zend Framework and best practices, providing a true Web 2.0 experience.</p>
+                <p>Release is upcoming.</p>
+            </section>
+            
+    Content_Projects_Jquery_Ajaxy:
+        code: "jquery-ajaxy"
+        title: "jQuery Ajaxy"
+        tagline: "Simple Ajax Handler/Remote for Hash, State, Bookmarking, and Forward Back Buttons"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Projects
+        Tags: "featured, jquery, history, hashchange, remote, state, hash, onhashchange, event, back forward buttons, bookmark, ajax, web 2.0, open-source, agpl"
+        description: |
+            <p><strong>jQuery Ajaxy</strong> allows you to easily upgrade your web site into a full featured Ajax web application. It aims at solving complicated AJAX Paradigms by providing you with a easy managed solution to bind into page state (URL Hash) changes, AJAX form submits, and support AJAX links.</p> 
+        content: |
+            <section id="about" class="about section simple noindex">
+                <h1>About</h1>
+                <p><strong>jQuery Ajaxy</strong> allows you to easily upgrade your web site into a full featured Ajax web application. It aims at solving complicated AJAX Paradigms by providing you with a easy managed solution to bind into page state (URL Hash) changes, AJAX form submits, and support AJAX links.</p> 
+                <p>Anyone who has tried to do this themselves would no doubt have spent countless hours debugging tedious javascript ajax requests, trying to figure out how to get ajax pages bookmarkable and working with back and forward buttons, or even struggled to add javascript effects to help manage your pages. jQuery Ajaxy was developed to solve all these problems, as well as some you may have never encountered such as; How do I keep my page indexable by Search Engines while making it an Ajax Application, How do I keep my site accessible to those who have javascript disabled? How I ensure I send the correct page back to the browser?</p> 
+                <p>All of those problems are extremely difficult to solve, which is why we've solved them for you.</p> 
+            </section>
+            
+            <section id="features" class="section noindex">
+                <h1>Features</h1>
+                <ul class="features">
+                    <li>It's unbelievably simple to upgrade your ordinary links and forms into Ajax requests by just adding a CSS classname.</li> 
+                    <li>You already have automatic support for tracking state changes in your now web application so you don't have to worry about this at all - we do it for you. This allows it so the user can still use those back and forward buttons, or even send the page URL to a friend and see the same thing!</li> 
+                    <li>You can even submit forms via Ajax with confidence, without having to do any extra server side code.</li> 
+                    <li>You will also have the ability to control your web applications state manually through your code for advanced circumstances.</li> 
+                    <li>You will still have support for classical anchors despite us using hashes for our web application states! This means you can still direct your users to particular content on a webpage using a link like: <code>my/web/page.html#the-content-to-scroll-to</code></li> 
+                </ul> 
+            </section>
+            
+            <section id="compatability" class="section noindex">
+                <h1>Browser Compatability</h1>
+                <ul class="compatability browsers">
+                    <li class="supported firefox">
+                        <span class="title">Firefox 2.0+</span>
+                    </li>
+                    <li class="supported safari">
+                        <span class="title">Safari 3.0+</span>
+                    </li>
+                    <li class="supported ie">
+                        <span class="title">Internet Explorer 6.0+</span>
+                    </li>
+                    <li class="supported opera">
+                        <span class="title">Opera 9.5+</span>
+                    </li>
+                    <li class="supported chrome">
+                        <span class="title">Chrome 1.0+</span>
+                    </li>
+                </ul>
+            </section>
+            
+            <hr/>
+            
+            <section id="demo" class="demo section clean">
+                <h1 title="Demo">Demonstration</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-ajaxy/demo/" class="biglink">Tryout a <strong>Demonstration</strong></a>
+            </section>
+            
+            <section id="download" class="download section clean">
+                <h1>Download</h1>
+                <a href="http://github.com/balupton/jquery-ajaxy/zipball/master" class="biglink">
+                    <strong>Download</strong> the Latest
+                </a>
+            </section>
+            
+            <section id="docs" class="docs section clean">
+                <h1 title="Docs">Documentation</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-ajaxy/demo/" class="biglink">Read the <strong>Documentation</strong></a>
+            </section>
+            
+            <section id="support" class="support section clean">
+                <h1>Support</h1>
+                <a href="http://getsatisfaction.com/balupton/products/balupton_jquery_ajaxy" class="biglink gsfnwidget">Get <strong>Support</strong></a>
+            </section>
+            
+            <section id="subscribe" class="subscribe section clean">
+                <h1>Subscribe</h1>
+                <a href="http://github.com/balupton/jquery-ajaxy/commits/master.atom" class="biglink"><strong>Subscribe</strong> to Updates</a>
+            </section>
+            
+    
+    Content_Projects_Jquery_ScrollTo:
+        code: "jquery-scrollto"
+        title: "jQuery ScrollTo"
+        tagline: "Smooth Scrolling to any jQuery/DOM Element"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Projects
+        Tags: "jquery, scrollto, scroll, scolling, scrollable, scrollat"
+        description: |
+            <p><strong>jQuery ScrollTo</strong> is a great and reliable way to scroll to any element on your page. It brings such features as:</p> 
+        content: |
+            <section id="about" class="about section simple noindex">
+                <h1>About</h1>
+                <p><strong>jQuery ScrollTo</strong> is a great and reliable way to scroll to any element on your page.</p> 
+            </section>
+            
+            <section id="features" class="section noindex">
+                <h1>Features</h1>
+                <ul class="features">
+                    <li>Extremely simple to use: just call $('#element).ScrollTo() and your user will be smoothly scrolled to that element!</li> 
+                    <li>Only 1KB in size! Making it the smallest ScrollTo plugin and won't slow you down.</li> 
+                    <li>Supports all the elements you can throw at it! Even those ones in modals and scrollable areas! So you can now feel at ease knowing your user will always be scrolled to that correct place which you intended.</li> 
+                    <li>It's even easy customise and work with! You can specify such options as duration, easing, and callback on your ScrollTo call.</li>
+                </ul> 
+            </section>
+            
+            <section id="compatability" class="section noindex">
+                <h1>Browser Compatability</h1>
+                <ul class="compatability browsers">
+                    <li class="supported firefox">
+                        <span class="title">Firefox 2.0+</span>
+                    </li>
+                    <li class="supported safari">
+                        <span class="title">Safari 3.0+</span>
+                    </li>
+                    <li class="supported ie">
+                        <span class="title">Internet Explorer 6.0+</span>
+                    </li>
+                    <li class="supported opera">
+                        <span class="title">Opera 9.5+</span>
+                    </li>
+                    <li class="supported chrome">
+                        <span class="title">Chrome 1.0+</span>
+                    </li>
+                </ul>
+            </section>
+            
+            <hr/>
+            
+            <section id="demo" class="demo section clean">
+                <h1 title="Demo">Demonstration</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-scrollto/demo/" class="biglink">Tryout a <strong>Demonstration</strong></a>
+            </section>
+            
+            <section id="download" class="download section clean">
+                <h1>Download</h1>
+                <a href="http://github.com/balupton/jquery-scrollto/zipball/master" class="biglink">
+                    <strong>Download</strong> the Latest
+                </a>
+            </section>
+            
+            <section id="docs" class="docs section clean">
+                <h1 title="Docs">Documentation</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-scrollto/demo/" class="biglink">Read the <strong>Documentation</strong></a>
+            </section>
+            
+            <section id="support" class="support section clean">
+                <h1>Support</h1>
+                <a href="http://getsatisfaction.com/balupton/products/balupton_jquery_scrollto" class="biglink gsfnwidget">Get <strong>Support</strong></a>
+            </section>
+            
+            <section id="subscribe" class="subscribe section clean">
+                <h1>Subscribe</h1>
+                <a href="http://github.com/balupton/jquery-scrollto/commits/master.atom" class="biglink"><strong>Subscribe</strong> to Updates</a>
+            </section>
+            
+    
+    Content_Projects_Jquery_History:
+        code: "jquery-history"
+        title: "jQuery History"
+        tagline: "Simple History Handler/Remote for Hash, State, Bookmarking, and Forward Back Buttons"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Projects
+        Tags: "jquery, history, hashchange, remote, state, hash, onhashchange, event, back forward buttons, bookmark, web 2.0, open-source, agpl"
+        description: |
+            <p><strong>jQuery History</strong> allows you to easily track changes of the pages state by tracking URL Hashes. Supports changes triggered by bookmarks and back & forward buttons, as well as cross browser support.</p>
+        content: |
+            <section id="about" class="about section simple noindex">
+                <h1>About</h1>
+                <p><strong>jQuery History</strong> allows you to easily track changes of the pages state by tracking URL Hashes. Supports changes triggered by bookmarks and back & forward buttons, as well as cross browser support.</p>
+            </section>
+            
+            <section id="features" class="section noindex">
+                <h1>Features</h1>
+                <ul class="features"> 
+                    <li>Tracks state changed within your application. States can be changed by the user via modification of the Page URL's Hash (everything after the # in the URL), or via you manually in your code.</li> 
+                    <li>Is able to detect all the possible ways a page's state can change. These can be via links in your code, back-forward buttons in your browser, manual modification of the URL's hash, using bookmarks that contain hashes, and finally refreshing a page with a hash.</li> 
+                    <li>Routinely tested in all major browsers before each release. Explicitly it has been tested in IE6 and above, Firefox 2 and above, Safari 2 and above, Chrome 1 and above, and Opera 8 and above.</li> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#demo" title="Learn more about this feature">Allows you to bind handlers</a> to state changes within your web application. Eg. <code>$.History.bind('myState',function(state){});</code></li> 
+                    <li>Allows you to trigger a <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#go" title="Learn more about this feature">state change manually</a> within your code. Eg. <code>$.History.go('myState');</code></li> 
+                    <li>Allows you to trigger a <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#trigger" title="Learn more about this feature">state handler manually</a> within your code, such that the state is not recorded. Eg. <code>$.History.trigger('myState')</code></li> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#ajax" title="Learn more about this feature">Allows for easy integration with Ajax Applications</a> via the use of <a href="http://www.balupton.com/projects/jquery-ajaxy" class="extern" title="Visit jQuery Ajaxy's Homepage to learn more">jQuery Ajaxy</a>.</li> 
+                </ul> 
+            </section>
+            
+            <section id="compatability" class="section noindex">
+                <h1>Browser Compatability</h1>
+                <ul class="compatability browsers">
+                    <li class="supported firefox">
+                        <span class="title">Firefox 2.0+</span>
+                    </li>
+                    <li class="supported safari">
+                        <span class="title">Safari 3.0+</span>
+                    </li>
+                    <li class="supported ie">
+                        <span class="title">Internet Explorer 6.0+</span>
+                    </li>
+                    <li class="supported opera">
+                        <span class="title">Opera 9.5+</span>
+                    </li>
+                    <li class="supported chrome">
+                        <span class="title">Chrome 1.0+</span>
+                    </li>
+                </ul>
+            </section>
+            
+            <hr/>
+            
+            <section id="demo" class="demo section clean">
+                <h1 title="Demo">Demonstration</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-history/demo/" class="biglink">Tryout a <strong>Demonstration</strong></a>
+            </section>
+            
+            <section id="download" class="download section clean">
+                <h1>Download</h1>
+                <a href="http://github.com/balupton/jquery-history/zipball/master" class="biglink">
+                    <strong>Download</strong> the Latest
+                </a>
+            </section>
+            
+            <section id="docs" class="docs section clean">
+                <h1 title="Docs">Documentation</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-history/demo/" class="biglink">Read the <strong>Documentation</strong></a>
+            </section>
+            
+            <section id="support" class="support section clean">
+                <h1>Support</h1>
+                <a href="http://getsatisfaction.com/balupton/products/balupton_jquery_history" class="biglink gsfnwidget">Get <strong>Support</strong></a>
+            </section>        
+            
+            <section id="subscribe" class="subscribe section clean">
+                <h1>Subscribe</h1>
+                <a href="http://github.com/balupton/jquery-history/commits/master.atom" class="biglink"><strong>Subscribe</strong> to Updates</a>
+            </section>
+    
+    Content_Projects_Jquery_Sparkle:
+        code: "jquery-sparkle"
+        title: "jQuery Sparkle"
+        tagline: "jQuery's Don't-Repeat-Yourself Plugin/Effect Framework"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Projects
+        Tags: "featured, jquery, sparkle, plugins, effects, dry, framwork, event, calendar, timepicker, datepicker, datetimepicker, special events, bespin, prototypes, editors, wysiwyg, open-source, agpl"
+        description: |
+            <p><strong>jQuery Sparkle</strong> is a simple but powerful DRY Plugin/Effect Framework aimed to simplify your jQuery development such that you no longer have to repeat yourself.</p> 
+            <p>But at it's core it is mostly just a framework to allow you to develop faster, utilising the <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself" title="Learn more about DRY ideology" target="_blank" class="help extern">Don't-Repeat-Yourself</a> ideology.</p>
+        content: |
+            <section id="about" class="about section simple noindex">
+                <h1>About</h1>
+                <p><strong>jQuery Sparkle</strong> is a simple but powerful DRY Plugin/Effect Framework aimed to simplify your jQuery development such that you no longer have to repeat yourself.</p> 
+                <p>But at it's core it is mostly just a framework to allow you to develop faster, utilising the <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself" title="Learn more about DRY ideology" target="_blank" class="help extern">Don't-Repeat-Yourself</a> ideology.</p> 
+            </section>
+            
+            <section id="features" class="section noindex">
+                <h1>Features</h1>
+                <ul class="features"> 
+                    <li>An <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#eventcalendar" title="View the EventCalendar Demo">EventCalendar</a> built upon the <a href="http://jqueryui.com/demos/datepicker/" title="View jQuery UI's Demo" target="_blank" class="help extern">jQuery UI DatePicker</a>. (It also supports AJAX for loading events).</li> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#bespin" title="View the Bespin Demo">jQuery Plugins</a> for the <a href="http://mozillalabs.com/bespin/" title="Find out More about Bespin" target="_blank" class="help extern">Bespin</a> and <a href="http://tinymce.moxiecode.com/" title="Find out More about Bespin" target="_blank" class="help extern">TinyMCE</a> <a href="http://en.wikipedia.org/wiki/WYSIWYG" title="Learn more about What-You-See-Is-What-You-Get" target="_blank" class="help extern">WYSIWYG</a> editors.</li> 
+                    <li>A PasswordStrength indicator.</li> 
+                    <li>A <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#sparkle-demo-time" title="View the TimePicker Demo">TimePicker</a> and <a href="#sparkle-demo-datetime" title="View the DateTimePicker Demo">DateTimePicker</a>.</li> 
+                    <li>Automatic <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#sparkle-demo-hint" title="View the Placeholder/Hint Demo">Graceful Degradation</a> for HTML5's <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/common-input-element-attributes.html#the-placeholder-attribute" title="Learn more about HTML5's Placeholder attribute" target="_blank" class="help extern">placeholder</a> attribute.</li> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#prototype-queryStringToJSON" title="View the queryStringToJSON Demo">String.prototype.queryStringToJSON</a> to easily convert a QueryString into a JSON Object. Eg. "file.js?a=1" to {a:1}</li> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#prototype-toSlug" title="View the toSlug Demo">String.prototype.toSlug</a> to easily convert a String into a Slug. Eg. "Hello World" to "hello-world"</li> 
+                    <li>A <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#event-enter" title="View the Enter event Demo">Enter Event</a> to easily capture ENTER key presses.</li> 
+                    <li>A <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#event-cancel" title="View the Cancel event Demo">Cancel Event</a> to easily capture ESCAPE key presses.</li> 
+                    <li>A <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#event-lastclick" title="View the LastClick event Demo">LastClick Event</a> to easily capture the last click of a series of clicks.</li> 
+                    <li>A <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#event-firstclick" title="View the FirstClick event Demo">FirstClick Event</a> to easily capture the first click of a series of clicks.</li> 
+                    <li>A <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/#event-singleclick" title="View the SingleClick event Demo">SingleClick Event</a> to easily capture a single click. Unlike the builtin click which fires for each and every click.</li> 
+                </ul> 
+            </section>
+            
+            <section id="compatability" class="section noindex">
+                <h1>Browser Compatability</h1>
+                <ul class="compatability browsers">
+                    <li class="supported firefox">
+                        <span class="title">Firefox 2.0+</span>
+                    </li>
+                    <li class="supported safari">
+                        <span class="title">Safari 3.0+</span>
+                    </li>
+                    <li class="supported ie">
+                        <span class="title">Internet Explorer 6.0+</span>
+                    </li>
+                    <li class="supported opera">
+                        <span class="title">Opera 9.5+</span>
+                    </li>
+                    <li class="supported chrome">
+                        <span class="title">Chrome 1.0+</span>
+                    </li>
+                </ul>
+            </section>
+            
+            <hr/>
+            
+            <section id="demo" class="demo section clean">
+                <h1 title="Demo">Demonstration</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/" class="biglink">Tryout a <strong>Demonstration</strong></a>
+            </section>
+            
+            <section id="download" class="download section clean">
+                <h1>Download</h1>
+                <a href="http://github.com/balupton/jquery-sparkle/zipball/master" class="biglink">
+                    <strong>Download</strong> the Latest
+                </a>
+            </section>
+            
+            <section id="docs" class="docs section clean">
+                <h1 title="Docs">Documentation</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-sparkle/demo/" class="biglink">Read the <strong>Documentation</strong></a>
+            </section>
+            
+            <section id="support" class="support section clean">
+                <h1>Support</h1>
+                <a href="http://getsatisfaction.com/balupton/products/balupton_jquery_sparkle" class="biglink gsfnwidget">Get <strong>Support</strong></a>
+            </section>        
+            
+            <section id="subscribe" class="subscribe section clean">
+                <h1>Subscribe</h1>
+                <a href="http://github.com/balupton/jquery-sparkle/commits/master.atom" class="biglink"><strong>Subscribe</strong> to Updates</a>
+            </section>
+    
+    Content_Projects_Jquery_Lightbox:
+        code: "jquery-lightbox"
+        title: "jQuery Lightbox"
+        tagline: "Balupton Edition"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Projects
+        Tags: "featured, jquery, lightbox, modal, dialog, gallery, images, open-source, agpl"
+        description: |
+            <p>
+                Ever had to link to many images within a page, and noticed how merely satifactory it is requiring the user to view each image in a new window or tab? Yeah, we thought so.
+                <strong>Lightboxes</strong> enable you to <strong>seamlessly display images</strong> within your website easily and literally with a <strong>click of a button</strong>. 
+            </p>
+        content: |
+            <section id="about" class="about section simple noindex">
+                <h1>About</h1>
+                Ever had to link to many images within a page, and noticed how merely satifactory it is requiring the user to view each image in a new window or tab? Yeah, we thought so.
+                <strong>Lightboxes</strong> enable you to <strong>seamlessly display images</strong> within your website easily and literally with a <strong>click of a button</strong>. 
+            </section>
+            
+            <section id="features" class="section noindex">
+                <h1>Features</h1>
+                <ul class="features">
+                    <li>Image Grouping</li>
+                    <li>Image titles and descriptions.</li>
+                    <li>Autoloader <span class="description">- only one file needs to be included.</span></li>
+                    <li>Developer safe <span class="description">- easily extendable.</span></li>
+                    <li>Desinger safe <span class="description">- easily customisable.</span></li>
+                    <li>Quick load <span class="description">- only 21KB in size.</span></li>
+                    <li>ColorBlend <span class="description">- amazing effects.</span></li>
+                    <li>Auto-resize <span class="description">- image size auto adjusts.</span></li>
+                </ul>
+            </section>
+            
+            <section id="compatability" class="section noindex">
+                <h1>Browser Compatability</h1>
+                <ul class="compatability browsers">
+                    <li class="supported firefox">
+                        <span class="title">Firefox 2.0+</span>
+                    </li>
+                    <li class="supported safari">
+                        <span class="title">Safari 3.0+</span>
+                    </li>
+                    <li class="supported ie">
+                        <span class="title">Internet Explorer 6.0+</span>
+                    </li>
+                    <li class="supported opera">
+                        <span class="title">Opera 9.5+</span>
+                    </li>
+                    <li class="supported chrome">
+                        <span class="title">Chrome 1.0+</span>
+                    </li>
+                </ul>
+            </section>
+            
+            <hr/>
+            
+            <section id="demo" class="demo section clean">
+                <h1 title="Demo">Demonstration</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-lightbox/demo/" class="biglink">Tryout a <strong>Demonstration</strong></a>
+            </section>
+            
+            <section id="download" class="download section clean">
+                <h1>Download</h1>
+                <a href="http://github.com/balupton/jquery-lightbox/zipball/master" class="biglink">
+                    <strong>Download</strong> the Latest
+                </a>
+            </section>
+            
+            <section id="docs" class="docs section clean">
+                <h1 title="Docs">Documentation</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-lightbox/demo/" class="biglink">Read the <strong>Documentation</strong></a>
+            </section>
+            
+            <section id="support" class="support section clean">
+                <h1>Support</h1>
+                <a href="http://getsatisfaction.com/balupton/products/balupton_jquery_lightbox" class="biglink gsfnwidget">Get <strong>Support</strong></a>
+            </section>
+            
+            <section id="subscribe" class="subscribe section clean">
+                <h1>Subscribe</h1>
+                <a href="http://github.com/balupton/jquery-lightbox/commits/master.atom" class="biglink"><strong>Subscribe</strong> to Updates</a>
+            </section>
+            
+            
+    Content_Projects_Jquery_Syntaxhighlighter:
+        code: "jquery-syntaxhighlighter"
+        title: "jQuery Syntax Highlighter"
+        tagline: "Based on Google's Prettify"
+        position: 1
+        Author: User_Balupton
+        Parent: Content_Projects
+        Tags: "jquery, syntax, highlighter, code, open-source, agpl, google prettify, prettify"
+        description: |
+            <p> 
+                <strong>jQuery Syntax Highlighter</strong> provides an elegant and simplistic interface for using <a href="http://code.google.com/p/google-code-prettify/" class="extern">Google's Prettify</a> with jQuery. We also add a series of features that aren't possible just using Prettify, to ensure that you get the best experience possible:
+            </p>
+        content: |
+            <section id="about" class="about section simple noindex">
+                <h1>About</h1>
+                <p>
+                    <strong>jQuery Syntax Highlighter</strong> provides an elegant and simplistic interface for using <a href="http://code.google.com/p/google-code-prettify/" class="extern">Google's Prettify</a> with jQuery. We also add a series of features that aren't possible just using Prettify, to ensure that you get the best experience possible:
+                </p>
+            </section>
+            
+            <section id="features" class="section noindex">
+                <h1>Features</h1>
+                <ul class="features"><ul class="features"> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-syntaxhighlighter/#install" title="See the quick and easy installation instructions">Installation and usage</a> can be done in two lines!</li> 
+                    <li>Code can either be wrapped (default) or scrollable.</li> 
+                    <li>Styling is themeable. Comes with two custom themes (balupton and google).</li> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-syntaxhighlighter/#using" title="See more information on using the Syntax Highlighter">Support for using the <code>code</code> element for SEO and semantic relevance!</a> We also support <code>pre</code> elements.</li> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-syntaxhighlighter/#using" title="See more information on using the Syntax Highlighter">Supports the following languages</a> out of the box: <em>bsh, c, cc, cpp, cs, csh, cyc, cv, htm, html, java, js, m, mxml, perl, pl, pm, py, rb, sh, xhtml, xml, xsl.</em></li> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-syntaxhighlighter/#using" title="See more information on using the Syntax Highlighter">Lightweight auto-detection for which language you are using.</a> We can also manually sepecify the language for SEO and semantic relevance according to the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-code-element" class="extern">WhatWG's recommendation</a> on code inclusion.</li> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-syntaxhighlighter/#ajax" title="See more information about using the Syntax Highlighter with dynamic content">Ajax and Dynamic Content Safe.</a> Can be used on the fly with dynamic content safely.</li> 
+                    <li><a href="http://www.balupton.com/sandbox/jquery-syntaxhighlighter/#options" title="See all the options/configuration we support">Only configurable</a> at the global level for maximum speed benefits.</li> 
+                </ul>
+            </section>
+            
+            <section id="compatability" class="section noindex">
+                <h1>Browser Compatability</h1>
+                <ul class="compatability browsers">
+                    <li class="supported firefox">
+                        <span class="title">Firefox 2.0+</span>
+                    </li>
+                    <li class="supported safari">
+                        <span class="title">Safari 3.0+</span>
+                    </li>
+                    <li class="supported ie">
+                        <span class="title">Internet Explorer 6.0+</span>
+                    </li>
+                    <li class="supported opera">
+                        <span class="title">Opera 9.5+</span>
+                    </li>
+                    <li class="supported chrome">
+                        <span class="title">Chrome 1.0+</span>
+                    </li>
+                </ul>
+            </section>
+            
+            <hr/>
+            
+            <section id="demo" class="demo section clean">
+                <h1 title="Demo">Demonstration</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-syntaxhighlighter/demo/" class="biglink">Tryout a <strong>Demonstration</strong></a>
+            </section>
+            
+            <section id="download" class="download section clean">
+                <h1>Download</h1>
+                <a href="http://github.com/balupton/jquery-syntaxhighlighter/zipball/master" class="biglink">
+                    <strong>Download</strong> the Latest
+                </a>
+            </section>
+            
+            <section id="docs" class="docs section clean">
+                <h1 title="Docs">Documentation</h1>
+                <a href="http://www.balupton.com/sandbox/jquery-syntaxhighlighter/demo/" class="biglink">Read the <strong>Documentation</strong></a>
+            </section>
+            
+            <section id="support" class="support section clean">
+                <h1>Support</h1>
+                <a href="http://getsatisfaction.com/balupton/products/balupton_jquery_syntaxhighlighter" class="biglink gsfnwidget">Get <strong>Support</strong></a>
+            </section>
+            
+            <section id="subscribe" class="subscribe section clean">
+                <h1>Subscribe</h1>
+                <a href="http://github.com/balupton/jquery-syntaxhighlighter/commits/master.atom" class="biglink"><strong>Subscribe</strong> to Updates</a>
+            </section>
 
 User:
     User_Balcms:
         id: 1
         username: "balcms"
         password: "random"
+        type: "user"
         status: "published"
-        displayname: "Administrator"
-        fullname: "Benajmin Lupton"
+        displayname: "BalCMS"
         email: "balcms@balupton.com"
-        Roles:
-            - Role_SuperAdmin
-        subscriptions: [newsletter]
         title: "Mr"
         firstname: "Benjamin"
         lastname: "Lupton"
         phone: "+61430208061"
-        type: "user"
-    User_Mydance:
-        id: 2
-        username: "mydance"
-        password: "benlupton123"
-        status: "published"
-        displayname: "MyDance"
-        email: "contact@mydance.com.au"
         Roles:
-            - Role_MyDanceAdmin
-        title: "Ms"
-        firstname: "Premala"
-        lastname: "Sangarananda"
-        phone: "Private"
+            - Role_SuperAdmin
+    User_Balupton:
+        id: 2
+        username: "balupton"
+        password: "sunkanma"
         type: "user"
+        status: "published"
+        displayname: "Benjamin (balupton) Lupton"
+        email: "contact@balupton.com"
+        title: "Mr"
+        firstname: "Benjamin"
+        lastname: "Lupton"
+        phone: "+61430208061"
+        description: |
+            <a href="http://www.balupton.com" title="Visit his Website">Benjamin "balupton" Lupton</a> has been passionately freelancing since 2006, the same time he started university at 15.
+            Working outdoors he believes in graceful clean code and specializes with <a href="http://en.wikipedia.org/wiki/Web_2.0" title="Learn more about Web 2.0">Web 2.0</a> technologies such as <a href="http://en.wikipedia.org/wiki/Ajax_(programming)" title="Learn more about Ajax">Ajax</a>, <a href="http://jquery.com" title="Learn more about jQuery">jQuery</a>, <a href="http://mootools.net/" title="Learn more about MooTools">MooTools</a>, <a href="http://framework.zend.com/" title="Learn more about Zend Framework">Zend Framework</a> and <a href="http://www.doctrine-project.org/" title="Learn more about Doctrine ORM">Doctrine ORM</a>.
+            He's armed with an armanda of <a href="http://www.balupton.com/projects" title="View his Open-Source Solutions">rich open-source solutions</a> aimed at pushing your websites further.
+            Learn more about him at his <a href="http://www.balupton.com" title="Visit his Website">website</a>, or follow him on <a href="http://twitter.com/balupton" title="Follow Balupton">twitter</a>.
+        Roles:
+            - Role_SuperAdmin
+
 
 Permission:
     Permission_Admin:
@@ -130,43 +1182,29 @@ Permission:
     Permission_Content:
         id: 2
         code: content
-    Permission_ContentEvent:
+    Permission_Event:
         id: 3
-        code: content_event
+        code: event
     Permission_Media:
         id: 4
         code: media
-    Permission_User:
+    Permission_Subscription:
         id: 5
-        code: user
-    Permission_UserSubscriber:
+        code: subscription
+    Permission_User:
         id: 6
-        code: user_subscriber
-    Permission_Crud:
-        id: 7
-        code: crud
+        code: user
+
 
 Role:
     Role_SuperAdmin:
         id: 1
         code: superadmin
-        level: 10
         Permissions:
             - Permission_Admin
             - Permission_Content
-            - Permission_ContentEvent
+            - Permission_Event
             - Permission_Media
+            - Permission_Subscription
             - Permission_User
-            - Permission_UserSubscriber
-            - Permission_Crud
-    Role_MyDanceAdmin:
-        id: 2
-        code: mydanceadmin
-        level: 7
-        Permissions:
-            - Permission_Admin
-            - Permission_Content
-            - Permission_ContentEvent
-            - Permission_Media
-            - Permission_UserSubscriber
             
