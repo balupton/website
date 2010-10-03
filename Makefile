@@ -23,6 +23,9 @@ setup:
 ignore:
 	edit .gitignore ;
 
+cron:
+	php ./scripts/cron.php ;
+
 add:
 	git add .gitignore .htaccess * ;
 
