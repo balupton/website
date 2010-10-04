@@ -36,7 +36,7 @@ production: &production
         analytics:
             code: "UA-4446117-1"
         reinvigorate:
-            code: false # "702o7-66905bt9t0"
+            code: "702o7-66905bt9t0"
         gsfn:
             company: "balupton"
     
@@ -78,6 +78,11 @@ staging: &staging
         from:
             name: "Benjamin Lupton: Staging"
             address: "staging.system@balupton.com"
+    services:
+        analytics:
+            code: "UA-4446117-2"
+        reinvigorate:
+            code: "2bh1g-3mj47c35cy"
     
 testing: &testing
     <<<: *production
@@ -93,6 +98,11 @@ testing: &testing
         from:
             name: "Benjamin Lupton: Testing"
             address: "testing.system@balupton.com"
+    services:
+        analytics:
+            code: ""
+        reinvigorate:
+            code: ""
 
 development: &development
     <<<: *production
@@ -115,3 +125,8 @@ development: &development
             address: "development.system@balupton.com"
     log:
         store: false
+    services:
+        analytics:
+            code: ""
+        reinvigorate:
+            code: ""
