@@ -31,3 +31,6 @@ add:
 
 update:
 	git pull ;
+
+deploy:
+	git checkout master; git merge dev; git checkout dev; git push --all; git push beanstalk --all;
