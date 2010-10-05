@@ -27,15 +27,15 @@ balcms: &balcms
         extensions_path: "<?=DOCTRINE_EXTENSIONS_PATH?>"
         dump_path: "<?=APPLICATION_PATH?>/data/dump"
         yaml_schema_path: "<?=APPLICATION_PATH?>/data/schema"
-        yaml_schema_file_path: "<?=APPLICATION_PATH?>/data/schema/schema.yml"
+        yaml_schema_file_path: "<?=APPLICATION_PATH?>/data/schema/compiled/schema.yml"
         yaml_schema_includes:  
-            - "<?=APPLICATION_PATH?>/data/schema/_schema.yml"
-            - "<?=MODELS_PATH?>/Bal/Schema/Invoice.yaml"
-            - "<?=MODELS_PATH?>/Bal/Schema/File.yaml"
-            - "<?=MODELS_PATH?>/Bal/Schema/Message.yaml"
-            - "<?=MODELS_PATH?>/Bal/Schema/Route.yaml"
-            - "<?=MODELS_PATH?>/Bal/Schema/User.yaml"
-            - "<?=MODELS_PATH?>/Balcms/Schema/Schema.yaml"
+            - "<?=APPLICATION_PATH?>/data/schema/schema.yml"
+            - "<?=MODELS_PATH?>/Bal/Schema/Invoice.yml"
+            - "<?=MODELS_PATH?>/Bal/Schema/File.yml"
+            - "<?=MODELS_PATH?>/Bal/Schema/Message.yml"
+            - "<?=MODELS_PATH?>/Bal/Schema/Route.yml"
+            - "<?=MODELS_PATH?>/Bal/Schema/User.yml"
+            - "<?=MODELS_PATH?>/Balcms/Schema/Schema.yml"
         models:
             generate: true
             options:
