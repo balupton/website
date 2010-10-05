@@ -27,10 +27,10 @@ cron:
 	php ./scripts/cron.php ;
 
 add:
-	git add .gitignore .htaccess * ;
+	git add -u ;
 
 update:
 	git pull ;
 
 deploy:
-	git checkout master; git merge dev; git checkout dev; git push --all; git push beanstalk --all;
+	git checkout master; git merge dev; git checkout dev; git push --all;

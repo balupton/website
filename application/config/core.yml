@@ -6,14 +6,18 @@ balcms: &balcms
         <?=APPLICATION_ROOT_PATH?>/common
 
     # Configuration
-    CONFIG_FILE_GENERATE: >
-        false
     CONFIG_FILE_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/config/balcms.yml<?=PATH_SEPARATOR?><?=APPLICATION_ROOT_PATH?>/application/config/application.yml
+    CONFIG_COMPILED_FILE_PATH: >
+        <?=APPLICATION_ROOT_PATH?>/application/config/compiled/application.data
     NAVIGATION_FILE_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/config/nav.yml
+    NAVIGATION_COMPILED_FILE_PATH: >
+        <?=APPLICATION_ROOT_PATH?>/application/config/compiled/nav.data
     ROUTES_FILE_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/config/routes.yml
+    ROUTES_COMPILED_FILE_PATH: >
+        <?=APPLICATION_ROOT_PATH?>/application/config/compiled/routes.data
     INSTALLED_FILE_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/data/logs/installed
     DEBUG_SECRET: >
@@ -21,7 +25,6 @@ balcms: &balcms
     DEBUG_MODE: >
         auto
     PROFILE_MODE: >
-        0
 
     # Urls
     ROOT_URL: >

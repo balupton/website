@@ -110,6 +110,9 @@ if ( !class_exists('Bootstrapr') ) {
 			if ( !defined('CONFIG_CORE_PATH') ) {
 				define('CONFIG_CORE_PATH',					APPLICATION_ROOT_PATH.'/application/config/core.yml');
 			}
+			if ( !defined('CONFIG_CORE_COMPILED_PATH') ) {
+				define('CONFIG_CORE_COMPILED_PATH',			APPLICATION_ROOT_PATH.'/application/config/compiled/core.data');
+			}
 			if ( !defined('DOCUMENT_ROOT') ) {
 				define('DOCUMENT_ROOT',						$_SERVER['DOCUMENT_ROOT']);
 			}
@@ -142,6 +145,7 @@ if ( !class_exists('Bootstrapr') ) {
 		private function _initConfiguration ( ) {
 			# Prepare
 			$this->bootstrap('environment');
+			$configuration = null;
 			
 			# Check for sfYaml
 			if ( !defined('SFYAML_PATH') ) {
@@ -152,10 +156,18 @@ if ( !class_exists('Bootstrapr') ) {
 			require_once(SFYAML_PATH.'/sfYamlParser.php');
 			require_once(SFYAML_PATH.'/sfYaml.php');
 			$Yaml = new sfYamlParser();
-	
+			
 			# Include the core configuration
-			$configuration = $Yaml->parse(file_get_contents(CONFIG_CORE_PATH));
-
+			if ( is_readable(CONFIG_CORE_COMPILED_PATH) && filemtime(CONFIG_CORE_COMPILED_PATH) > filemtime(CONFIG_CORE_PATH) ) {
+				$configuration = unserialize(file_get_contents(CONFIG_CORE_COMPILED_PATH));
+			}
+			
+			# Include the core configuration (falling back on uncompiled if compiled didn't work)
+			if ( !$configuration ) {
+				$configuration = $Yaml->parse(file_get_contents(CONFIG_CORE_PATH));
+				file_put_contents(CONFIG_CORE_COMPILED_PATH, serialize($configuration));
+			}
+			
 			# Adjust for our Environment
 			$configuration = $configuration[APPLICATION_ENV];
 	
@@ -229,9 +241,9 @@ if ( !class_exists('Bootstrapr') ) {
 			# Prepare
 			$this->bootstrap('libraries');
 			global $ApplicationConfig;
-			$config = ''; $config_files;
-
-			# Fetch
+			$config = ''; $config_files = $configuration = null;
+			
+			# Determine Configuration Files
 			if ( strstr(CONFIG_FILE_PATH,PATH_SEPARATOR) ) {
 				# We are wanting to load in multiple configuration files
 				$config_files = explode(PATH_SEPARATOR,CONFIG_FILE_PATH);
@@ -241,17 +253,41 @@ if ( !class_exists('Bootstrapr') ) {
 				$config_files = array(CONFIG_FILE_PATH);
 			}
 
-			# Adjust
-			foreach ( $config_files as $file ) {
-				$config .= "\n".file_get_contents($file);
+			# Check if Compiled Exists
+			if ( is_readable(CONFIG_COMPILED_FILE_PATH) ) {
+				# Check Modified Times
+				$compiled_mtime = filemtime(CONFIG_COMPILED_FILE_PATH);
+				$recompile = false;
+				foreach ( $config_files as $file ) {
+					if ( $compiled_mtime < filemtime($file) ) {
+						$recompile = true;
+						break;
+					}
+				}
+				
+				# Should we use the compiled version?
+				if ( !$recompile ) {
+					$configuration = unserialize(file_get_contents(CONFIG_COMPILED_FILE_PATH));
+				}
 			}
-
-			# Parse
-			$config_tmp_file = tempnam('/tmp', 'config_tmp_file');
-			file_put_contents($config_tmp_file, $config);
-			$configuration = sfYaml::load($config_tmp_file);
-			unlink($config_tmp_file);
-		
+			
+			# Check if Compiled is Adequate
+			if ( !$configuration ) {
+				# Adjust
+				foreach ( $config_files as $file ) {
+					$config .= "\n".file_get_contents($file);
+				}
+			
+				# Parse
+				$config_tmp_file = tempnam('/tmp', 'config_tmp_file');
+				file_put_contents($config_tmp_file, $config);
+				$configuration = sfYaml::load($config_tmp_file);
+				unlink($config_tmp_file);
+			
+				# Store
+				file_put_contents(CONFIG_COMPILED_FILE_PATH, serialize($configuration));
+			}
+			
 			# Extract
 			$configuration = $configuration[APPLICATION_ENV];
 		

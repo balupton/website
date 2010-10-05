@@ -1,6 +1,8 @@
 config.php
+application/config/compiled/*
 application/data/database/*.db
 application/data/dump/data.yml
+application/data/schema/compiled/*
 application/data/migrations
 application/data/logs/installed
 application/data/logs/payment
