@@ -96,7 +96,11 @@ PermissionAndUser:
         type: simple
         
 
+<<<<<<< HEAD
 # ^ /users/balupton/Server/public_html/sites/balupton.com/application/data/schema/_schema.yml
+=======
+# ^ /users/balupton/Server/public_html/sites/balcms/application/data/schema/_schema.yml
+>>>>>>> balcms
 
 
 # ==============================================
@@ -490,7 +494,11 @@ InvoiceDataBackup:
 
 
 
+<<<<<<< HEAD
 # ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/Invoice.yaml
+=======
+# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/Invoice.yaml
+>>>>>>> balcms
 
 
 # ==============================================
@@ -554,7 +562,11 @@ Bal_File:
             type: string(255)
 
 
+<<<<<<< HEAD
 # ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/File.yaml
+=======
+# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/File.yaml
+>>>>>>> balcms
 
 
 # ==============================================
@@ -639,7 +651,11 @@ Bal_Message:
             onDelete: "CASCADE" # If UserFrom is deleted, cascade
     
 
+<<<<<<< HEAD
 # ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/Message.yaml
+=======
+# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/Message.yaml
+>>>>>>> balcms
 
 
 # ==============================================
@@ -667,7 +683,11 @@ Bal_Route:
             type: array
 
 
+<<<<<<< HEAD
 # ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/Route.yaml
+=======
+# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/Route.yaml
+>>>>>>> balcms
 
 
 # ==============================================
@@ -959,7 +979,11 @@ Bal_PermissionAndUser:
             onDelete: "CASCADE" # If Permission is deleted, delete reference
 
 
+<<<<<<< HEAD
 # ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/User.yaml
+=======
+# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/User.yaml
+>>>>>>> balcms
 
 
 # ==============================================
@@ -1178,5 +1202,9 @@ Balcms_User:
             default: "user"
 
 
+<<<<<<< HEAD
 # ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Balcms/Schema/Schema.yaml
+=======
+# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Balcms/Schema/Schema.yaml
+>>>>>>> balcms
 
