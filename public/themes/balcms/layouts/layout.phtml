@@ -50,12 +50,13 @@
                 </div>
                 <div id="wpbody">
 					<?
-					
-					try { echo $this->app()->getNavigationMenu('back.main')->setPartial(array('navigation/menu.phtml', 'default'))->render(); }
+					try {
+						echo $this->app()->getNavigationMenu('back.main')->setPartial(array('navigation/menu.phtml', 'default'))->render();
+					}
 					catch ( Exception $e ) {
 						echo $e->getMessage();
 						die;
-					}				
+					}
 					?>
 					<div id="wpbody-content">
                         <?= $this->layout()->content?>

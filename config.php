@@ -8,7 +8,9 @@
 # Adjust Application Environments
 
 # Include paths
-if ( strpos($_SERVER['DOCUMENT_ROOT'], '/Users/balupton/Server/public_html') !== false ) {
+if (
+	strpos(strtolower($_SERVER['DOCUMENT_ROOT']), '/users/balupton/server/public_html') !== false
+) {
 	# Development Environment
 	define('APPLICATION_ENV', 				'development');
 	define('COMMON_PATH', 					'/Users/balupton/Server/public_html/common');

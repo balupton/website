@@ -96,7 +96,7 @@ PermissionAndUser:
         type: simple
         
 
-# ^ /Users/balupton/Server/public_html/sites/balupton.com/application/data/schema/_schema.yml
+# ^ /users/balupton/Server/public_html/sites/balupton.com/application/data/schema/_schema.yml
 
 
 # ==============================================
@@ -490,7 +490,7 @@ InvoiceDataBackup:
 
 
 
-# ^ /Users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/Invoice.yaml
+# ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/Invoice.yaml
 
 
 # ==============================================
@@ -554,7 +554,7 @@ Bal_File:
             type: string(255)
 
 
-# ^ /Users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/File.yaml
+# ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/File.yaml
 
 
 # ==============================================
@@ -639,7 +639,7 @@ Bal_Message:
             onDelete: "CASCADE" # If UserFrom is deleted, cascade
     
 
-# ^ /Users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/Message.yaml
+# ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/Message.yaml
 
 
 # ==============================================
@@ -667,7 +667,7 @@ Bal_Route:
             type: array
 
 
-# ^ /Users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/Route.yaml
+# ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/Route.yaml
 
 
 # ==============================================
@@ -959,7 +959,7 @@ Bal_PermissionAndUser:
             onDelete: "CASCADE" # If Permission is deleted, delete reference
 
 
-# ^ /Users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/User.yaml
+# ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Bal/Schema/User.yaml
 
 
 # ==============================================
@@ -1178,5 +1178,5 @@ Balcms_User:
             default: "user"
 
 
-# ^ /Users/balupton/Server/public_html/sites/balupton.com/application/models/Balcms/Schema/Schema.yaml
+# ^ /users/balupton/Server/public_html/sites/balupton.com/application/models/Balcms/Schema/Schema.yaml
 

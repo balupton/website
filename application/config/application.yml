@@ -113,7 +113,7 @@ development: &development
         friendly: false
         throw: false
     data:
-        connection_string: "mysql://root:1234@localhost/balupton;unix_socket=/tmp/mysql.sock"
+        connection_string: "mysql://root:1234@localhost/balsite;unix_socket=/tmp/mysql.sock"
         models:
             generate: true
         compile:
