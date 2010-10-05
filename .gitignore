@@ -1,3 +1,4 @@
+config.php
 application/data/database/*.db
 application/data/dump/data.yml
 application/data/migrations
