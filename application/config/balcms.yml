@@ -25,7 +25,6 @@ balcms: &balcms
         migrations_path: "<?=APPLICATION_PATH?>/data/migrations"
         sql_path: "<?=APPLICATION_PATH?>/data/sql"
         extensions_path: "<?=DOCTRINE_EXTENSIONS_PATH?>"
-        dump_path: "<?=APPLICATION_PATH?>/data/dump"
         yaml_schema_path: "<?=APPLICATION_PATH?>/data/schema"
         yaml_schema_file_path: "<?=APPLICATION_PATH?>/data/schema/compiled/schema.yml"
         yaml_schema_includes:  

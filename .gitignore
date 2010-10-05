@@ -1,8 +1,8 @@
 config.php
-application/config/compiled/*
+application/config/compiled/*.data
 application/data/database/*.db
 application/data/dump/data.yml
-application/data/schema/compiled/*
+application/data/schema/compiled/*.data
 application/data/migrations
 application/data/logs/installed
 application/data/logs/payment
