@@ -1,6 +1,70 @@
 balcms:
     front:
         actions:
+            skype:
+                class: skype
+                label: Skype
+                uri: "skype:balupton?userinfo"
+            twitter:
+                class: twitter
+                label: Twitter
+                uri: "http://www.twitter.com/balupton"
+            support:
+                class: "contact gsfnwidget"
+                label: Support
+                uri: "http://getsatisfaction.com/balupton"
+        
         footer:
+            contact:
+                id: "front-action-contact"
+                label: "Contact Us"
+                uri: "mailto:contact@balupton.com"
+                class: "gsfnwidget"
+        
         social:
-            
+            facebook:
+                class: "facebook" 
+                uri: "http://www.facebook.com/pages/Benjamin-balupton-Lupton/229416884376" 
+                title: "Facebook Page" 
+                label: "Facebook"
+            linkedin:
+                class: "linkedin" 
+                uri: "http://www.linkedin.com/in/balupton" 
+                title: "LinkedIn Professional Profile" 
+                label: "LinkedIn"
+            twitter:
+                class: "twitter" 
+                uri: "http://twitter.com/balupton" 
+                title: "Twitter" 
+                label: "Twitter"
+            feed:
+                class: "feed"
+                uri: "http://www.balupton.com/feed/rss"
+                title: "RSS Feed"
+                label: "RSS Feed"
+            skype:
+                class: "skype" 
+                uri: "skype:balupton?userinfo" 
+                title: "Skype" 
+                label: "Skype"
+            email:
+                class: "email" 
+                uri: "mailto:contact@balupton.com" 
+                title: "Email me" 
+                label: "Email"
+            google:
+                class: "google" 
+                uri: "http://www.google.com/profiles/balupton" 
+                title: "Google Public Profile" 
+                label: "Google"
+            lastfm:
+                class: "lastfm" 
+                uri: "http://www.last.fm/user/balupton" 
+                title: "Last.fm Music History" 
+                label: "Last.fm"
+            vimeo:
+                class: "vimeo" 
+                uri: "http://vimeo.com/balupton" 
+                title: "Vimeo Video Directory" 
+                label: "Vimeo"
+                
