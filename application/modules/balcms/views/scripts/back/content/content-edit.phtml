@@ -6,7 +6,7 @@
 	$this->url()->renege('route','back');
 	
 	# Editor
-	$editor = $this->app()->getConfig('editor');
+	$editor = $this->app()->getConfig('editor.code');
 	
 	# Content
 	$Content = delve($this,'Content');
@@ -323,7 +323,10 @@ $(function(){
 	// Help
 	$('#content-description-field h3').help('Excerpts are hand-crafted summaries of your content, they are used within such things as listings and search results.');
 	// Editors
-	<? if ( $editor === 'tinymce' ) : ?>
+	<? if ( $editor === 'aloha' ) : ?>
+		$('#Content-content').aloha();
+		$('#Content-description').aloha();
+	<? elseif ( $editor === 'tinymce' ) : ?>
 		$('#Content-content').Tinymce('rich');
 		$('#Content-description').Tinymce('simple');
 	<? elseif ( $editor === 'bespin' ): ?>

@@ -42,14 +42,7 @@ foreach ($this->container as $Page ) :
 	}
 
 	// Display
-	$li = $this->HtmlElement(
-		'li',
-		true,
-		array('id'=>($Page->id?$id_prefix.$Page->id:''),'class'=>implode(' ',$class)),
-		true,
-		false
-	);
-	echo $li;
+	echo '<li id="'.($Page->id?$id_prefix.$Page->id:'').'" class="'.implode(' ',$class).'">';
 	// Handle
 	if ( $sep ) {
 		// Sep
@@ -94,13 +87,9 @@ foreach ($this->container as $Page ) :
 						$SubPage->id = null;
 						$subpage = html_entity_decode($this->navigation()->menu()->htmlify($SubPage)).PHP_EOL;
 						// Wrap
-						$li = $this->HtmlElement(
-							'li',
-							$subpage,
-							array('id'=>($SubPage->id?$id_prefix.$SubPage->id:''),'class'=>implode(' ',$class))
-						);
-						// Display
-						echo $li.PHP_EOL;
+						echo '<li id="'.($SubPage->id?$id_prefix.$SubPage->id:'').'" class="'.implode(' ',$class).'">'.
+							$subpage.
+						'</li>';
 					endforeach;?>
 				</ul>
 			</div><?

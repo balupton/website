@@ -13,20 +13,20 @@ balcms: &balcms
     
     resources:
         frontController:
-            moduleDirectory: "<?=APPLICATION_PATH?>/modules"
+            moduleDirectory: "<?=MODULES_PATH?>"
         layout:
             layoutPath: "<?=APPLICATION_PATH?>/layouts/scripts"
         
     data:
         connection_string: sqlite:///<?=DATABASES_PATH?>/<?=APPLICATION_ENV?>.db
-        models_path: "<?=APPLICATION_PATH?>/models"
-        dump_path: "<?=APPLICATION_PATH?>/data/dump"
-        fixtures_path: "<?=APPLICATION_PATH?>/data/fixtures"
-        migrations_path: "<?=APPLICATION_PATH?>/data/migrations"
-        sql_path: "<?=APPLICATION_PATH?>/data/sql"
+        models_path: "<?=MODELS_PATH?>"
+        dump_path: "<?=DATA_DUMP_PATH?>"
+        fixtures_path: "<?=DATA_FIXTURES_PATH?>"
+        migrations_path: "<?=DATA_MIGRATIONS_PATH?>"
+        sql_path: "<?=DATA_SQL_PATH?>"
         extensions_path: "<?=DOCTRINE_EXTENSIONS_PATH?>"
-        yaml_schema_path: "<?=APPLICATION_PATH?>/data/schema"
-        yaml_schema_file_path: "<?=APPLICATION_PATH?>/data/schema/compiled/schema.yml"
+        yaml_schema_path: "<?=DATA_SCHEMA_PATH?>"
+        yaml_schema_file_path: "<?=DATA_SCHEMA_COMPILED_FILE_PATH?>"
         yaml_schema_includes:  
             - "<?=APPLICATION_PATH?>/data/schema/schema.yml"
             - "<?=MODELS_PATH?>/Bal/Schema/Invoice.yml"
@@ -71,7 +71,7 @@ balcms: &balcms
     payment:
         gateway: "paypal"
         default:
-            store_path: "<?=LOGS_PATH?>/payment"
+            store_path: "<?=LOGS_PAYMENT_PATH?>"
         paypal:
             url: "https://www.paypal.com/cgi-bin/webscr"
             token: ""

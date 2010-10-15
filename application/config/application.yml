@@ -44,4 +44,6 @@ development: &development
             name: "BalCMS System: Development"
             address: "development.balcms@balupton.com"
     log:
-        store: false
+        store: true
+    editor:
+        code: aloha

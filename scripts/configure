@@ -23,119 +23,158 @@ class Cli {
 		# --------------------------
 		
 		# Common Path
-		if ( defined('COMMON_PATH') ) {
-			$common_path = COMMON_PATH;
-		}
-		else {
+		if ( !defined('COMMON_PATH') ) {
 			# Common Path
-			echo "Where would you like to place your common directory? Default is ./common\n".
-				 "This contains resources which BalCMS uses such as Zend Framework, Doctrine ORM etc.\n";
-			$common_path = readline('> ');
+			echo "Error: You have not specified a common path... This should have been set already..."."\n";
+			exit;
 		}
 		
 		# Adjust Common Path
-		if ( !$common_path ) {
-			$common_path = APPLICATION_ROOT_PATH.'/common';
-		}
-		if ( !is_dir($common_path) && !mkdir($common_path) ) {
-			echo "Error: Could not find the location specified: [${common_path}]";
+		if ( !is_dir(COMMON_PATH) && !mkdir(COMMON_PATH) ) {
+			echo "Error: Could not read the common directory: [".COMMON_PATH."]";
 			exit;
 		}
-		$common_path = realpath($common_path);
-	
+		
 		# Prepare Config
 		$balcms_path = APPLICATION_ROOT_PATH;
+		$common_path = COMMON_PATH;
+		$library_path = LIBRARY_PATH;
+		
 		
 		# --------------------------
 		
-		# Grab Resources
+		# Prepare Resources
+		$resourcesToInstall = array(
+			array(
+				'title'			=> 'BalPHP',
+				'source'		=> 'git@github.com:balupton/balphp.git',
+				'destination'	=> "${common_path}/balphp-v1.0",
+				'command'		=> 'git clone',
+				'branch'		=> 'v1.0',
+				'symlinks'		=> array(
+					array(
+						'source'		=> "${common_path}/balphp-v1.0/lib/Bal",
+						'destination'	=> "${library_path}/Bal"
+					)
+				)
+			),
+			array(
+				'title'			=> 'CSScaffold',
+				'source'		=> 'git@github.com:balupton/csscaffold.git',
+				'destination'	=> "${common_path}/csscaffold",
+				'command'		=> 'git svn clone'
+			),
+			array(
+				'title'			=> 'Doctrine Extension Taggable',
+				'source'		=> 'git@github.com:balupton/Doctrine-Extension-Taggable.git',
+				'destination'	=> "${common_path}/doctrine-extensions/Taggable",
+				'command'		=> 'git clone'
+			),
+			array(
+				'title'			=> 'CSScaffold',
+				'source'		=> 'git@github.com:balupton/CSScaffold.git',
+				'destination'	=> "${common_path}/csscaffold",
+				'command'		=> 'git clone'
+			),
+			array(
+				'title'			=> 'Doctrine ORM',
+				'source'		=> 'http://github.com/balupton/doctrine1',
+				'destination'	=> "${common_path}/doctrine1",
+				'command'		=> 'git clone',
+				'symlinks'		=> array(
+					array(
+						'source'		=> "${common_path}/doctrine1/lib/Doctrine",
+						'destination'	=> "${library_path}/Doctrine"
+					),
+					array(
+						'source'		=> "${common_path}/doctrine1/lib/Doctrine.php",
+						'destination'	=> "${library_path}/Doctrine.php"
+					)
+				)
+			),
+			array(
+				'title'			=> 'HTML Purifier',
+				'source'		=> 'git@github.com:balupton/htmlpurifier.git',
+				'destination'	=> "${common_path}/htmlpurifier-v4.2.0-lib",
+				'command'		=> 'git clone',
+				'branch'		=> 'v4.2.0'
+			),
+			array(
+				'title'			=> 'Symfony YAML Components',
+				'source'		=> 'http://svn.symfony-project.com/components/yaml/tags/RELEASE_1_0_3/lib',
+				'destination'	=> "${common_path}/SymfonyComponents/YAML",
+				'command'		=> 'svn export'
+			),
+			array(
+				'title'			=> 'Zend Framework',
+				'source'		=> 'http://framework.zend.com/svn/framework/standard/tags/release-1.10.7/library',
+				'destination'	=> "${common_path}/zend-v1.10.7-lib",
+				'command'		=> 'svn export',
+				'symlinks'		=> array(
+					array(
+						'source'		=> "${common_path}/zend-v1.10.7-lib/Zend",
+						'destination'	=> "${library_path}/Zend"
+					)
+				)
+			)
+		);
+		
+		# Prepare Symlinks
+		$symlinksToInstall = array(
+			array(
+				'title'			=> 'BalPHP Models',
+				'source'		=> "$balphp_path/lib/models",
+				'destination'	=> APPLICATION_ROOT_PATH.'/application/models/Bal'
+			)
+		);
+				
+		# --------------------------
+		
+		# Setup Resources
 		echo "\nDownloading the resources into [${common_path}].\n\n";
-	
-		# BalPHP v1.0
-		$balphp_path = $path = $common_path.'/balphp-v1.0';
-		if ( !is_dir($path) ) {
-			echo "Installing BalPHP to [$path].\n\n";
-			`git clone git@github.com:balupton/balphp.git $path`;
-			`cd $path; git checkout v1.0; cd ${balcms_path};`;
-		}
-		else {
-			echo "BalPHP is already installed at [$path].\n\n";
-		}
-		
-		# CSScaffold
-		$path = $common_path.'/csscaffold';
-		if ( !is_dir($path) ) {
-			echo "Installing CSScaffold to [$path].\n\n";
-			`git svn clone https://balupton.springloops.com/source/devenv/trunk/common/csscaffold ${path}`;
-		}
-		else {
-			echo "CSScaffold is already installed at [$path].\n\n";
-		}
-		
-		# Doctrine Extensions
-		$path = $common_path.'/doctrine-extensions';
-		if ( !is_dir($path) ) {
-			echo "Installing Doctrine Extensions to [$path].\n\n";
-			`git svn clone https://balupton.springloops.com/source/devenv/trunk/common/doctrine-extensions ${path}`;
-		}
-		else {
-			echo "Doctrine Extensions is already installed at [$path].\n\n";
-		}
-		
-		# Doctrine ORM v1.2.3 Library
-		$path = $common_path.'/doctrine-v1.2.3-lib';
-		if ( !is_dir($path) ) {
-			echo "Installing Doctrine ORM to [$path].\n\n";
-			`svn export http://svn.doctrine-project.org/tags/1.2.3/lib ${path}`;
-		}
-		else {
-			echo "Doctrine ORM is already installed at [$path].\n\n";
-		}
-		
-		# HTML Purifier v4.2.0 Library
-		$path = $common_path.'/htmlpurifier-v4.2.0-lib';
-		if ( !is_dir($path) ) {
-			echo "Installing HTML Purifier to [$path].\n\n";
-			`svn export https://balupton.springloops.com/source/devenv/trunk/common/htmlpurifier-v4.2.0-lib ${path}`;
-		}
-		else {
-			echo "HTML Purifier is already installed at [$path].\n\n";
-		}
-		
-		# YAML Extensions
-		$path = $common_path.'/SymfonyComponents/YAML';
-		if ( !is_dir($path) ) {
-			echo "Installing YAML to [$path].\n\n";
-			`svn export http://svn.symfony-project.com/components/yaml/tags/RELEASE_1_0_3/lib ${path}`;
-		}
-		else {
-			echo "YAML is already installed at [$path].\n\n";
-		}
-		
-		# Zend Framework v1.10.7 Library
-		$path = $common_path.'/zend-v1.10.7-lib';
-		if ( !is_dir($path) ) {
-			echo "Installing Zend Framework to [$path].\n\n";
-			`svn export http://framework.zend.com/svn/framework/standard/tags/release-1.10.7/library ${path}`;
-		}
-		else {
-			echo "Zend Framework is already installed at [$path].\n\n";
+		foreach ( $resourcesToInstall as $resource ) {
+			$title = $source = $destination = $command = $branch = null;
+			$symlinks = array();
+			extract($resource);
+			// Check
+			if ( is_file($destination) ) {
+				unlink($destination);
+			}
+			// Apply
+			if ( !is_dir($destination) ) {
+				echo "Installing the Resource [{$title}] to [${destination}].\n\n";
+				`${command} ${source} ${destination}`;
+				if ( $branch ) {
+					`cd ${destination} ; git checkout ${branch} ; cd ${balcms_path}`;
+				}
+			}
+			else {
+				echo "The Resource [{$title}] is already installed at [${destination}].\n\n";
+			}
+			// Symlinks
+			foreach ( $symlinks as $symlink ) {
+				if ( empty($symlink['title']) ) $symlink['title'] = $title;
+				$symlinksToInstall[] = $symlink;
+			}
 		}
 		
 		# --------------------------
 		
-		# Setup BalPHP Models Symlink
+		# Setup Symlinks
 		echo "Setting up necessary symlinks...\n\n";
-		$path = APPLICATION_ROOT_PATH.'/application/models/Bal';
-		if ( is_file($path) ) {
-			unlink($path);
-		}
-		if ( !is_dir($path) ) {
-			echo "Installing BalPHP Models Symlink to [$path].\n\n";
-			`ln -s $balphp_path/lib/models $path`;
-		}
-		else {
-			echo "BalPHP Models Symlink is already installed at [$path].\n\n";
+		foreach ( $symlinksToInstall as $symlink ) {
+			$title = $source = $destination = null;
+			extract($symlink);
+			if ( is_file($destination) ) {
+				unlink($destination);
+			}
+			if ( !is_dir($destination) ) {
+				echo "Installing the Symlink [{$title}] to [${destination}].\n\n";
+				`ln -s ${source} ${destination}`;
+			}
+			else {
+				echo "The Symlink [{$title}] is already installed at [${destination}].\n\n";
+			}
 		}
 		
 		# --------------------------
