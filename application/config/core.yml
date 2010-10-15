@@ -36,7 +36,7 @@ balcms: &balcms
 
     # Libraries
     DOCTRINE_PATH: >
-        <?=COMMON_PATH?>/doctrine-v1.2.3-lib
+        <?=COMMON_PATH?>/doctrine1/lib
     DOCTRINE_EXTENSIONS_PATH: >
         <?=COMMON_PATH?>/doctrine-extensions
     ZEND_PATH: >
