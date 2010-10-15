@@ -124,9 +124,6 @@ development: &development
             name: "Benjamin Lupton: Development"
             address: "development.system@balupton.com"
     log:
-        store: false
-    services:
-        analytics:
-            code: ""
-        reinvigorate:
-            code: ""
+        store: true
+    editor:
+        code: aloha

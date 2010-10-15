@@ -117,9 +117,15 @@ if ( !class_exists('Bootstrapr') ) {
 				define('DOCUMENT_ROOT',						$_SERVER['DOCUMENT_ROOT']);
 			}
 			if ( !defined('HTTP_HOST') ) {
-				define('HTTP_HOST',						$_SERVER['HTTP_HOST']);
+				define('HTTP_HOST',							$_SERVER['HTTP_HOST']);
 			}
-
+			if ( !defined('COMMON_PATH') ) {
+				define('COMMON_PATH',						APPLICATION_ROOT_PATH.'/common');
+			}
+			if ( !defined('LIBRARY_PATH') ) {
+				define('LIBRARY_PATH',						APPLICATION_ROOT_PATH.'/library');
+			}
+			
 			# Find the Yaml Parser
 			if ( !defined('SFYAML_PATH') ) {
 				$temp = 'SymfonyComponents/YAML';

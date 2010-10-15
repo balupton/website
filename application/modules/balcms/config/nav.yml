@@ -1,164 +1,164 @@
 "front":
-	"actions":
+    "actions":
 "back":
-	"fav":
-	    "content-new":
-	    	"id": "back-fav-content-new"
-			"privilege": "permission-content"
-			"label": "New Content"
-			"action": "content-new"
-			"route": "back"
-	    "event-new":
-	    	"id": "back-fav-event-new"
-			"privilege": "permission-content_event"
-			"label": "New Event"
-			"action": "event-new"
-			"route": "back"
-	    "media-new":
-    		"id": "back-fav-media-new"
-			"privilege": "permission-media"
-			"label": "New Media"
-			"action": "media-new"
-			"route": "back"
-	    "user-new":
-			"id": "back-fav-user-new"
-			"privilege": "permission-user"
-			"label": "New User"
-			"action": "user-new"
-			"route": "back"
-	"main":
-	    "one":
-	    	"label": "---"
-			"uri": "#"
-	    "dashboard":
-    		"id": "back-main-dashboard"
-			"privilege": "permission-admin"
-			"label": "Dashboard"
-			"action": "dashboard"
-			"route": "back"
-			"class": "menu-top-last"
-			"pages":
-			    "dashboard":
-		    		"id": "back-main-dashboard-dashboard"
-    				"label": "Dashboard"
-    				"privilege": "permission-admin"
-    				"action": "dashboard"
-    				"route": "back"
-    				"class": "parent"
-    	"two":
-			"label": "---"
-			"uri": "#"
-	    "content":
-			"id": "back-main-content"
-			"privilege": "permission-content"
-			"label": "Content"
-			"action": "content"
-			"route": "back"
-			"pages":
-			    "list":
-			    	"id": "back-main-content-list"
-    				"privilege": "permission-content"
-    				"label": "Content"
-    				"action": "content-list"
-    				"route": "back"
-    				"class": "parent"
-    			"new":
-    				"id": "back-main-content-new"
-    				"privilege": "permission-content"
-    				"label": "&mdash; New Content"
-    				"action": "content-new"
-    				"route": "back"
-    				"class": "child"
-    			"event-list":
-    				"id": "back-main-event-list"
-    				"privilege": "permission-content_event"
-    				"label": "Events"
-    				"action": "event-list"
-    				"route": "back"
-    				"class": "parent"
-    			"event-new":
-    				"id": "back-main-event-new"
-    				"privilege": "permission-content_event"
-    				"label": "&mdash; New Event"
-    				"action": "event-new"
-    				"route": "back"
-    				"class": "child"
-    	"user":
-			"id": "back-main-user"
-			"privilege": "permission-user"
-			"label": "Users"
-			"action": "user"
-			"route": "back"
-			"pages":
-			    "list":
-		    		"id": "back-main-user-list"
-    				"privilege": "permission-user"
-    				"label": "Users"
-    				"action": "user-list"
-    				"route": "back"
-    				"class": "parent"
-    			"new":
-    				"id": "back-main-user-new"
-    				"privilege": "permission-user"
-    				"label": "&mdash; New User"
-    				"action": "user-new"
-    				"route": "back"
-    				"class": "child"
-    			"subscriber-list":
-    				"id": "back-main-subscriber-list"
-    				"privilege": "permission-user_subscriber"
-    				"label": "Subscribers"
-    				"action": "subscriber-list"
-    				"route": "back"
-    				"class": "parent"
-		"media":
-			"id": "back-main-media"
-			"privilege": "permission-media"
-			"label": "Media"
-			"action": "media"
-			"route": "back"
-			"class": "menu-top-last"
-			"pages":
-			    "file-list":
-			    	"id": "back-main-media-file-list"
-    				"privilege": "permission-media"
-    				"label": "Files"
-    				"action": "media-file-list"
-    				"route": "back"
-    				"class": "parent"
-	    "three":
-			"label": "---"
-			"uri": "#"
-		"crud":
-			"id": "back-main-crud"
-			"label": "CRUD"
-			"privilege": "permission-crud"
-			"action": "crud-list"
-			"route": "back"
-			"params":
-				"type": "message"
-			"class": "menu-top-last"
-			"pages":
-			    "list-message":
-			    	"id": "back-main-crud-list-message"
-    				"label": "Messages"
-    				"privilege": "permission-crud"
-    				"action": "crud-list"
-    				"route": "back"
-    				"class": "parent"
-    				"params":
-    					"type": "message"
-			"new-message":
-				"id": "back-main-crud-new-message"
-				"label": "&mdash; New Message"
-				"privilege": "permission-crud"
-				"action": "crud-new"
-				"route": "back"
-				"class": "child"
-				"params":
-					"type": "message"
-		"four":
-			"label": "---"
-			"uri": "#"
-			"privilege": "permission-crud"
-			
+    "fav":
+        "content-new":
+            "id": "back-fav-content-new"
+            "privilege": "permission-content"
+            "label": "New Content"
+            "action": "content-new"
+            "route": "back"
+        "event-new":
+            "id": "back-fav-event-new"
+            "privilege": "permission-content_event"
+            "label": "New Event"
+            "action": "event-new"
+            "route": "back"
+        "media-new":
+            "id": "back-fav-media-new"
+            "privilege": "permission-media"
+            "label": "New Media"
+            "action": "media-new"
+            "route": "back"
+        "user-new":
+            "id": "back-fav-user-new"
+            "privilege": "permission-user"
+            "label": "New User"
+            "action": "user-new"
+            "route": "back"
+    "main":
+        "one":
+            "label": "---"
+            "uri": "#"
+        "dashboard":
+            "id": "back-main-dashboard"
+            "privilege": "permission-admin"
+            "label": "Dashboard"
+            "action": "dashboard"
+            "route": "back"
+            "class": "menu-top-last"
+            "pages":
+                "dashboard":
+                    "id": "back-main-dashboard-dashboard"
+                    "label": "Dashboard"
+                    "privilege": "permission-admin"
+                    "action": "dashboard"
+                    "route": "back"
+                    "class": "parent"
+        "two":
+            "label": "---"
+            "uri": "#"
+        "content":
+            "id": "back-main-content"
+            "privilege": "permission-content"
+            "label": "Content"
+            "action": "content"
+            "route": "back"
+            "pages":
+                "list":
+                    "id": "back-main-content-list"
+                    "privilege": "permission-content"
+                    "label": "Content"
+                    "action": "content-list"
+                    "route": "back"
+                    "class": "parent"
+                "new":
+                    "id": "back-main-content-new"
+                    "privilege": "permission-content"
+                    "label": "&mdash; New Content"
+                    "action": "content-new"
+                    "route": "back"
+                    "class": "child"
+                "event-list":
+                    "id": "back-main-event-list"
+                    "privilege": "permission-content_event"
+                    "label": "Events"
+                    "action": "event-list"
+                    "route": "back"
+                    "class": "parent"
+                "event-new":
+                    "id": "back-main-event-new"
+                    "privilege": "permission-content_event"
+                    "label": "&mdash; New Event"
+                    "action": "event-new"
+                    "route": "back"
+                    "class": "child"
+        "user":
+            "id": "back-main-user"
+            "privilege": "permission-user"
+            "label": "Users"
+            "action": "user"
+            "route": "back"
+            "pages":
+                "list":
+                    "id": "back-main-user-list"
+                    "privilege": "permission-user"
+                    "label": "Users"
+                    "action": "user-list"
+                    "route": "back"
+                    "class": "parent"
+                "new":
+                    "id": "back-main-user-new"
+                    "privilege": "permission-user"
+                    "label": "&mdash; New User"
+                    "action": "user-new"
+                    "route": "back"
+                    "class": "child"
+                "subscriber-list":
+                    "id": "back-main-subscriber-list"
+                    "privilege": "permission-user_subscriber"
+                    "label": "Subscribers"
+                    "action": "subscriber-list"
+                    "route": "back"
+                    "class": "parent"
+        "media":
+            "id": "back-main-media"
+            "privilege": "permission-media"
+            "label": "Media"
+            "action": "media"
+            "route": "back"
+            "class": "menu-top-last"
+            "pages":
+                "file-list":
+                    "id": "back-main-media-file-list"
+                    "privilege": "permission-media"
+                    "label": "Files"
+                    "action": "media-file-list"
+                    "route": "back"
+                    "class": "parent"
+        "three":
+            "label": "---"
+            "uri": "#"
+        "crud":
+            "id": "back-main-crud"
+            "label": "CRUD"
+            "privilege": "permission-crud"
+            "action": "crud-list"
+            "route": "back"
+            "params":
+                "type": "message"
+            "class": "menu-top-last"
+            "pages":
+                "list-message":
+                    "id": "back-main-crud-list-message"
+                    "label": "Messages"
+                    "privilege": "permission-crud"
+                    "action": "crud-list"
+                    "route": "back"
+                    "class": "parent"
+                    "params":
+                        "type": "message"
+            "new-message":
+                "id": "back-main-crud-new-message"
+                "label": "&mdash; New Message"
+                "privilege": "permission-crud"
+                "action": "crud-new"
+                "route": "back"
+                "class": "child"
+                "params":
+                    "type": "message"
+        "four":
+            "label": "---"
+            "uri": "#"
+            "privilege": "permission-crud"
+            

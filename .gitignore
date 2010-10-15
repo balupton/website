@@ -7,6 +7,7 @@ application/data/migrations
 application/data/logs/installed
 application/data/logs/payment
 application/data/logs/paypal
+application/data/cache
 application/models/Bal
 application/models/Base
 common/balphp-v1.0
@@ -16,4 +17,9 @@ common/doctrine-v1.2.3-lib
 common/htmlpurifier-v4.2.0-lib
 common/SymfonyComponents
 common/zend-v1.10.7-lib
+library/Bal
+library/Doctrine
+library/Doctrine.php
+library/Zend
 sites/*
+public/media/cache

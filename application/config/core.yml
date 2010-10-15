@@ -1,30 +1,32 @@
 balcms: &balcms
     # Core
     CONFIG_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/config
-    COMMON_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/common
+        <?=APPLICATION_PATH?>/config
+    CONFIG_COMPILED_PATH: >
+        <?=CONFIG_PATH?>/compiled
 
-    # Configuration
+    # Configuration Paths
     CONFIG_FILE_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/config/balcms.yml<?=PATH_SEPARATOR?><?=APPLICATION_ROOT_PATH?>/application/config/application.yml
-    CONFIG_COMPILED_FILE_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/config/compiled/application.data
+        <?=CONFIG_PATH?>/balcms.yml<?=PATH_SEPARATOR?><?=CONFIG_PATH?>/application.yml
     NAVIGATION_FILE_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/config/nav.yml
-    NAVIGATION_COMPILED_FILE_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/config/compiled/nav.data
+        <?=CONFIG_PATH?>/nav.yml
     ROUTES_FILE_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/config/routes.yml
-    ROUTES_COMPILED_FILE_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/config/compiled/routes.data
+        <?=CONFIG_PATH?>/routes.yml
     INSTALLED_FILE_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/data/logs/installed
+    CONFIG_COMPILED_FILE_PATH: >
+        <?=CONFIG_COMPILED_PATH?>/application.data
+    NAVIGATION_COMPILED_FILE_PATH: >
+        <?=CONFIG_COMPILED_PATH?>/nav.data
+    ROUTES_COMPILED_FILE_PATH: >
+        <?=CONFIG_COMPILED_PATH?>/routes.data
+
+    # Configuration
     DEBUG_SECRET: >
         <?=md5(APPLICATION_ROOT_PATH)?>
     DEBUG_MODE: >
         auto
-    PROFILE_MODE: >
+    PROFILE_MODE: false
 
     # Urls
     ROOT_URL: >
@@ -43,20 +45,40 @@ balcms: &balcms
         <?=COMMON_PATH?>/balphp-v1.0/lib
     HTMLPURIFIER_PATH: >
         <?=COMMON_PATH?>/htmlpurifier-v4.2.0-lib
+    PHPCLOSURE_PATH: >
+        <?=COMMON_PATH?>/php-closure'
 
-    # Application Locations
+    # Data Locations
     DATA_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/data
+    DATA_DUMP_PATH: >
+        <?=DATA_PATH?>/dump
+    DATA_FIXTURES_PATH: >
+        <?=DATA_PATH?>/fixtures
+    DATA_MIGRATIONS_PATH: >
+        <?=DATA_PATH?>/migrations
+    DATA_SQL_PATH: >
+        <?=DATA_PATH?>/sql
+    DATA_SCHEMA_PATH: >
+        <?=DATA_PATH?>/schema
+    DATA_SCHEMA_COMPILED_PATH: >
+        <?=DATA_SCHEMA_PATH?>/compiled
+    DATA_SCHEMA_COMPILED_FILE_PATH: >
+        <?=DATA_SCHEMA_COMPILED_PATH?>/schema.yml
+
+    # Application Locations
     DATABASES_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/data/database
+        <?=DATA_PATH?>/database
     LOGS_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/application/data/logs
+        <?=DATA_PATH?>/logs
+    LOGS_PAYMENT_PATH: >
+        <?=LOGS_PATH?>/payment
     MODELS_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/models
+    MODELS_BASE_PATH: >
+        <?=MODELS_PATH?>/Base
     MODULES_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/modules
-    LIBRARY_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/library
     IL8N_PATH: >
         <?=APPLICATION_ROOT_PATH?>/il8n
     SCRIPTS_PATH: >
@@ -93,7 +115,7 @@ balcms: &balcms
         <?=APPLICATION_ROOT_PATH?>/public/media/images
     MEDIA_IMAGES_URL: >
         <?=BASE_URL?>/public/media/images
-    MEDIA_INOVICES_PATH: >
+    MEDIA_INVOICES_PATH: >
         <?=APPLICATION_ROOT_PATH?>/public/media/invoices
     MEDIA_INVOICES_URL: >
         <?=BASE_URL?>/public/media/invoices
@@ -102,9 +124,21 @@ balcms: &balcms
     MEDIA_UPLOADS_URL: >
         <?=BASE_URL?>/public/media/uploads
 
+    # Cache Paths
+    CACHE_PATH: >
+        <?=DATA_PATH?>/cache
+    CACHE_SCRIPTS_PATH: >
+        <?=MEDIA_PATH?>/cache/scripts
+    CACHE_SCRIPTS_URL: >
+        <?=MEDIA_URL?>/cache/scripts
+    CACHE_STYLES_PATH: >
+        <?=MEDIA_PATH?>/cache/styles
+    CACHE_STYLES_URL: >
+        <?=MEDIA_URL?>/cache/styles
+
     # Include Paths
     INCLUDE_PATHS: >
-        <?=BALPHP_PATH?><?=PATH_SEPARATOR?><?=ZEND_PATH?><?=PATH_SEPARATOR?><?=LIBRARY_PATH?><?=PATH_SEPARATOR?><?=MODELS_PATH?>
+        <?=LIBRARY_PATH?><?=PATH_SEPARATOR?><?=MODELS_PATH?>
 
 production: &production
     <<: *balcms
