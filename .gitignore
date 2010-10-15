@@ -1,5 +1,7 @@
 config.php
 application/config/compiled/*.data
+application/data/schema/compiled/*.yml
+application/modules/*/config/compiled/*.data
 application/data/database/*.db
 application/data/dump/data.yml
 application/data/schema/compiled/*.yml
