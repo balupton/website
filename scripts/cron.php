@@ -1,11 +1,11 @@
 <?php
 # Load
 if ( empty($GLOBALS['Application']) ) {
+	# Headers
+	header('Content-Type: text/plain');
 	# Bootstrap
 	require_once(dirname(__FILE__).'/bootstrapr.php');
 	$GLOBALS['Bootstrapr']->bootstrap('zend-application');
-	# Headers
-	header('Content-Type: text/plain');
 }
 
 # Load
@@ -57,3 +57,5 @@ foreach ( $Messages as $Message ) {
 
 # ==========================================
 # Complete
+
+echo 'Cron: Completed'."\n";

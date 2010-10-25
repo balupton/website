@@ -72,13 +72,28 @@ if ( !class_exists('Bootstrapr') ) {
 				$_SERVER['HOSTNAME'] = '';
 			}
 			
+			# CLI
+			if ( !isset($_SERVER['CLI']) ) {
+				$_SERVER['CLI'] = empty($_SERVER['HTTP_HOST']);
+			}
+			
 			# Server Name
 			if ( empty($_SERVER['SERVER_NAME']) ) {
-				$_SERVER['SERVER_NAME'] = empty($_SERVER['HTTP_HOST']) ? '' : $_SERVER['HTTP_HOST'];
+				// Fallback onto HTTP_HOST
+				if ( empty($_SERVER['HTTP_HOST']) ) {
+					echo 'We could not detect the HTTP_HOST. What is it? [Default is localhost]'."\n";
+					$http_host = trim(readline('> '));
+					if ( !$http_host ) $http_host = 'localhost';
+					$_SERVER['HTTP_HOST'] = $http_host;
+					unset($http_host);
+				}
+				// Apply ensured HTTP_HOST to SERVER_NAME
+				$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 			}
 
 			# HTTP Host
 			if ( empty($_SERVER['HTTP_HOST']) ) {
+				// Fallback onto SERVER_NAME (which falls back onto us)
 				$_SERVER['HTTP_HOST'] = $_SERVER['SERVER_NAME'];
 			}
 
