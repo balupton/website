@@ -20,21 +20,14 @@
 </head>
 <body class="home blog">
     <?
-		$headScript = $this->app()->headScript()
-			// jQuery
-			->offsetSetFile(20,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' : $publicUrl.'/scripts/jquery-1.4.2.min.js')
-			// UI
-			->offsetSetFile(30,APPLICATION_ENV === 'production' ? 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' : $jqueryUiUrl.'/js/jquery-ui-1.7.2.custom.min.js')
-		    // Application
-		    ->offsetSetFile(60,$jquerySparkleUrl.'/scripts/jquery.sparkle.js')
-			;
-		if ( APPLICATION_ENV !== 'development' )
-			$headScript
-				// GSFN
-		    	->offsetSetFile(80,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
-		    	->offsetSetScript(81,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
-				;
-	    echo $headScript;
+    	$headScript = $this->app()->headScript();
+    	if ( APPLICATION_ENV !== 'development' )
+    		$headScript
+    			// GSFN
+    	    	->offsetSetFile(10,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
+    	    	->offsetSetScript(11,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
+    			;
+        echo $headScript;
     ?>
 	
 	<div id="header" class="clear">
