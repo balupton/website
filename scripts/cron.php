@@ -19,6 +19,7 @@ $Contents = Doctrine_Query::create()
 	->from('Content c')
 	->where('c.last_refreshed IS NULL')
 	->orWhere('c.last_refreshed < ?', doctrine_timestamp(strtotime('-2 days')))
+	->orWhere('c.last_refreshed <= c.updated_at')
 	->limit(25)
 	->execute()
 	;
