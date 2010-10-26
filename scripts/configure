@@ -39,6 +39,7 @@ class Cli {
 		$balcms_path = APPLICATION_ROOT_PATH;
 		$common_path = COMMON_PATH;
 		$library_path = LIBRARY_PATH;
+		$balphp_path = "${common_path}/balphp-v1.0"; // BALPHP_PATH;
 		
 		
 		# --------------------------
@@ -53,7 +54,7 @@ class Cli {
 				'branch'		=> 'v1.0',
 				'symlinks'		=> array(
 					array(
-						'source'		=> "${common_path}/balphp-v1.0/lib/Bal",
+						'source'		=> "$balphp_path/lib/Bal",
 						'destination'	=> "${library_path}/Bal"
 					)
 				)
