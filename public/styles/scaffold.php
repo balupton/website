@@ -1,0 +1,83 @@
+<?php
+# Init
+$bootstrapr = str_replace('public/styles/scaffold.php','',$_SERVER['SCRIPT_FILENAME']).'/scripts/bootstrapr.php';
+require_once($bootstrapr);
+$Bootstrapr->bootstrap('configuration');
+
+/**
+ * The environment class helps us handle errors
+ * and autoloading of classes. It's not required
+ * to make Scaffold function, but makes it a bit
+ * nicer to use.
+ */
+require_once SCAFFOLD_PATH.'/lib/Scaffold/Environment.php';
+
+/**
+ * Set timezone, just in case it isn't set. PHP 5.3+ 
+ * throws a tantrum if you try and use time() without
+ * this being set.
+ */
+date_default_timezone_set('GMT');
+
+/**
+ * Automatically load any Scaffold Classes
+ */
+Scaffold_Environment::auto_load();
+
+/**
+ * Let Scaffold handle errors
+ */
+Scaffold_Environment::handle_errors();
+
+/** 
+ * Set the view to use for errors and exceptions
+ */
+Scaffold_Environment::set_view(realpath(SCAFFOLD_PATH.'/views/error.php'));
+
+# Scaffold Config
+$config = array(
+	'system' => SCAFFOLD_PATH.'/',
+	'urlpath' => PUBLIC_PATH,
+	'production' => DEBUG_MODE ? false : true,
+	'enable_url' => true,
+	'enable_string' => false,
+	'set_etag' => true,
+	'output_compression' => false,
+	'load_paths' => array(
+		SCAFFOLD_PATH.'/imports'
+	),
+	'max_age' => false,
+	'extensions' => array(
+		'AbsoluteUrls',
+		'Embed',
+		'Functions',
+		'HSL',
+		'ImageReplace',
+		'Minify',
+		'Properties',
+		'Random',
+		'Import',
+		'Mixins',
+		'NestedSelectors',
+		'Variables',
+		'XMLVariables',
+		//'Sass',
+		//'CSSTidy',
+		//'YUI'
+	)
+);
+
+# The container creates Scaffold objects
+$Container = new Scaffold_Container(SCAFFOLD_PATH,$config);
+
+# This is where the magic happens
+$Scaffold = $Container->build();
+
+# Compile
+$Source = $Scaffold->getSource(null, $config);
+
+// Compiles the source object
+$Source = $Scaffold->compile($Source);
+
+// Use the result to render it to the browser. Hooray!
+$Scaffold->render($Source);
