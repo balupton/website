@@ -2,7 +2,7 @@
 # Init
 $bootstrapr = str_replace('public/styles/scaffold.php','',$_SERVER['SCRIPT_FILENAME']).'/scripts/bootstrapr.php';
 require_once($bootstrapr);
-$Bootstrapr->bootstrap('configuration');
+$Bootstrapr->bootstrap('application-configuration');
 
 /**
  * The environment class helps us handle errors
@@ -35,40 +35,10 @@ Scaffold_Environment::handle_errors();
 Scaffold_Environment::set_view(realpath(SCAFFOLD_PATH.'/views/error.php'));
 
 # Scaffold Config
-$config = array(
-	'system' => SCAFFOLD_PATH.'/',
-	'urlpath' => PUBLIC_PATH,
-	'production' => DEBUG_MODE ? false : true,
-	'enable_url' => true,
-	'enable_string' => false,
-	'set_etag' => true,
-	'output_compression' => false,
-	'load_paths' => array(
-		SCAFFOLD_PATH.'/imports'
-	),
-	'max_age' => false,
-	'extensions' => array(
-		'AbsoluteUrls',
-		'Embed',
-		'Functions',
-		'HSL',
-		'ImageReplace',
-		'Minify',
-		'Properties',
-		'Random',
-		'Import',
-		'Mixins',
-		'NestedSelectors',
-		'Variables',
-		'XMLVariables',
-		//'Sass',
-		//'CSSTidy',
-		//'YUI'
-	)
-);
+$config = $GLOBALS['ApplicationConfiguration']['compilers']['scaffold']['config'];
 
 # The container creates Scaffold objects
-$Container = new Scaffold_Container(SCAFFOLD_PATH,$config);
+$Container = Scaffold_Container::getInstance(SCAFFOLD_PATH,$config);
 
 # This is where the magic happens
 $Scaffold = $Container->build();

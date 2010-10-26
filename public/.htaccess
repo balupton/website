@@ -7,6 +7,15 @@
     RewriteRule     ^(.+)$                  styles/scaffold.php?f=%{REQUEST_URI}&%{QUERY_STRING}
     
     RewriteCond     %{REQUEST_FILENAME}     -f
-    RewriteCond     %{REQUEST_URI}          \.scss$
+    RewriteCond     %{REQUEST_URI}          \.scaffold$
     RewriteRule     ^(.+)$                  styles/scaffold.php?f=%{REQUEST_URI}&%{QUERY_STRING}
+    
+    RewriteCond     %{REQUEST_FILENAME}     -f
+    RewriteCond     %{REQUEST_URI}          \.css$
+    RewriteCond     %{QUERY_STRING}         csscaffold
+    RewriteRule     ^(.+)$                  styles/csscaffold.php?f=%{REQUEST_URI}&%{QUERY_STRING}
+    
+    RewriteCond     %{REQUEST_FILENAME}     -f
+    RewriteCond     %{REQUEST_URI}          \.scss$
+    RewriteRule     ^(.+)$                  styles/csscaffold.php?f=%{REQUEST_URI}&%{QUERY_STRING}
 </IfModule>
