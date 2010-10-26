@@ -140,6 +140,12 @@ if ( !class_exists('Bootstrapr') ) {
 			if ( !defined('LIBRARY_PATH') ) {
 				define('LIBRARY_PATH',						APPLICATION_ROOT_PATH.'/library');
 			}
+			if ( !defined('DEBUG_MODE') ) {
+				define('DEBUG_MODE',						false);
+			}
+			if ( !defined('PRODUCTION_MODE') ) {
+				define('PRODUCTION_MODE',					!DEBUG_MODE);
+			}
 			
 			# Find the Yaml Parser
 			if ( !defined('SFYAML_PATH') ) {
@@ -185,7 +191,7 @@ if ( !class_exists('Bootstrapr') ) {
 			
 			# Include the core configuration (falling back on uncompiled if compiled didn't work)
 			if ( !$configuration ) {
-				$configuration = $Yaml->parse(str_replace('	','    ',file_get_contents(CONFIG_CORE_PATH)));
+				$configuration = $Yaml->parse(str_replace("\t",'    ',file_get_contents(CONFIG_CORE_PATH)));
 				file_put_contents(CONFIG_CORE_COMPILED_PATH, serialize($configuration));
 			}
 			
@@ -235,33 +241,18 @@ if ( !class_exists('Bootstrapr') ) {
 				require_once BALPHP_PATH.'/core/functions/_params.funcs.php';
 				fix_magic_quotes();
 			}
-		}
-	
-		/**
-		 * Initialise our Libraries needed for Zend Framework
-		 */
-		private function _initLibraries ( ) {
-			# Prepare
-			$this->bootstrap('compatibility');
-		
-			# HTMLPurifier
-			require_once(HTMLPURIFIER_PATH.'/HTMLPurifier.auto.php');
-			require_once(HTMLPURIFIER_PATH.'/HTMLPurifier/Lexer/PH5P.php');
-
-			# Zend Application
-			require_once implode(DIRECTORY_SEPARATOR, array(ZEND_PATH,'Zend','Application.php'));
-	
+			
 			# BalPHP Arrays - Used for YAML Code Below adjust_yaml_inheritance
 			require_once(BALPHP_PATH.'/core/functions/_arrays.funcs.php');
 		}
-	
+		
 		/**
-		 * Load our Zend Framework Configuration
+		 * Load our Application Configuration
 		 */
-		private function _initZendConfig ( ) {
+		private function _initApplicationConfiguration ( ) {
 			# Prepare
-			$this->bootstrap('libraries');
-			global $ApplicationConfig;
+			$this->bootstrap('compatibility');
+			global $ApplicationConfiguration;
 			$config = ''; $config_files = $configuration = null;
 			
 			# Determine Configuration Files
@@ -296,7 +287,7 @@ if ( !class_exists('Bootstrapr') ) {
 			if ( !$configuration ) {
 				# Adjust
 				foreach ( $config_files as $file ) {
-					$config .= "\n".file_get_contents($file);
+					$config .= "\n".str_replace("\t",'    ',file_get_contents($file));
 				}
 			
 				# Parse
@@ -314,13 +305,40 @@ if ( !class_exists('Bootstrapr') ) {
 		
 			# Adjust
 			$configuration = adjust_yaml_inheritance($configuration);
+			
+			# Create Zend Config
+			$ApplicationConfiguration = $configuration;
+		}
 		
+		/**
+		 * Initialise our Libraries needed for Zend Framework
+		 */
+		private function _initLibraries ( ) {
+			# Prepare
+			$this->bootstrap('application-configuration');
+			
+			# HTMLPurifier
+			require_once(HTMLPURIFIER_PATH.'/HTMLPurifier.auto.php');
+			require_once(HTMLPURIFIER_PATH.'/HTMLPurifier/Lexer/PH5P.php');
+
+			# Zend Application
+			require_once implode(DIRECTORY_SEPARATOR, array(ZEND_PATH,'Zend','Application.php'));
+		}
+	
+		/**
+		 * Load our Zend Framework Configuration
+		 */
+		private function _initZendConfig ( ) {
+			# Prepare
+			$this->bootstrap('libraries');
+			global $ApplicationConfig, $ApplicationConfiguration;
+			
 			# Prepare Zend Config
 			require('Zend/Config.php');
 			require('Zend/Config/Exception.php');
 
 			# Create Zend Config
-			$ApplicationConfig = new Zend_Config($configuration);
+			$ApplicationConfig = new Zend_Config($ApplicationConfiguration);
 		}
 	
 		/**

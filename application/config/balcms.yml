@@ -188,3 +188,41 @@ balcms: &balcms
             state: "Your Company's State"
             country: "Your Company's Country"
             postcode: "Your Company's Postcode"
+    
+    compilers:
+        csscaffold:
+            config:
+                system: "<?=CSSCAFFOLD_COMPILER_PATH?>/"
+                cache: "<?=CACHE_STYLES_PATH?>"
+                cache_lifetime: 3600
+                enable_log: true
+                error_threshold: 1
+                gzip_compression: false
+            options:
+            	
+        scaffold:
+            config:
+                system: "<?=SCAFFOLD_PATH?>/"
+                urlpath: "<?=PUBLIC_PATH?>"
+                production: "<?=PRODUCTION_MODE?>"
+                enable_url: true
+                enable_string: false
+                set_etag: true
+                output_compression: false
+                import_paths:
+                    - "<?=SCAFFOLD_PATH?>/imports"
+                max_age: false
+                extensions:
+                    - "AbsoluteUrls"
+                    - "Embed"
+                    - "Functions"
+                    - "HSL"
+                    - "ImageReplace"
+                    - "Minify"
+                    - "Properties"
+                    - "Random"
+                    - "Import"
+                    - "Mixins"
+                    - "NestedSelectors"
+                    - "Variables"
+                    - "XMLVariables"

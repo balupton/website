@@ -47,6 +47,8 @@ balcms: &balcms
         <?=COMMON_PATH?>/htmlpurifier-v4.2.0-lib
     SCAFFOLD_PATH: >
         <?=COMMON_PATH?>/scaffold
+    CSSCAFFOLD_PATH: >
+        <?=COMMON_PATH?>/csscaffold
 
     # Data Locations
     DATA_PATH: >
@@ -143,6 +145,8 @@ balcms: &balcms
     # Compilers
     SCAFFOLD_COMPILER_PATH: >
         <?=PUBLIC_STYLES_PATH?>/scaffold.php?>
+    CSSCAFFOLD_COMPILER_PATH: >
+    	<?=PUBLIC_STYLES_PATH?>/csscaffold.php?>
     
 production: &production
     <<: *balcms
