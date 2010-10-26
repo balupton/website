@@ -59,21 +59,16 @@ class Cli {
 				)
 			),
 			array(
-				'title'			=> 'CSScaffold',
-				'source'		=> 'git@github.com:balupton/csscaffold.git',
-				'destination'	=> "${common_path}/csscaffold",
-				'command'		=> 'git svn clone'
+				'title'			=> 'Scaffold',
+				'source'		=> 'git@github.com:balupton/scaffold.git',
+				'destination'	=> "${common_path}/scaffold",
+				'command'		=> 'git clone',
+				'submodules'	=> true
 			),
 			array(
 				'title'			=> 'Doctrine Extension Taggable',
 				'source'		=> 'git@github.com:balupton/Doctrine-Extension-Taggable.git',
 				'destination'	=> "${common_path}/doctrine-extensions/Taggable",
-				'command'		=> 'git clone'
-			),
-			array(
-				'title'			=> 'CSScaffold',
-				'source'		=> 'git@github.com:balupton/CSScaffold.git',
-				'destination'	=> "${common_path}/csscaffold",
 				'command'		=> 'git clone'
 			),
 			array(
@@ -133,7 +128,7 @@ class Cli {
 		# Setup Resources
 		echo "\nDownloading the resources into [${common_path}].\n\n";
 		foreach ( $resourcesToInstall as $resource ) {
-			$title = $source = $destination = $command = $branch = null;
+			$title = $source = $destination = $command = $branch = $submodules = null;
 			$symlinks = array();
 			extract($resource);
 			// Check
@@ -143,9 +138,15 @@ class Cli {
 			// Apply
 			if ( !is_dir($destination) ) {
 				echo "Installing the Resource [{$title}] to [${destination}].\n\n";
+				// Clone
 				`${command} ${source} ${destination}`;
+				// Branch
 				if ( $branch ) {
 					`cd ${destination} ; git checkout ${branch} ; cd ${balcms_path}`;
+				}
+				// Submodules
+				if ( $submodules ) {
+					cd ${destination} ; git submodule init ; git submodule update ; cd ${balcms_path}`;
 				}
 			}
 			else {
