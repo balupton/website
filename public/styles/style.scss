@@ -1,0 +1,84 @@
+
+/* Misc */
+
+.max_file_size_text {
+	color:#666666;
+	font-size:11px;
+	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+	font-style:italic;
+}
+
+
+/* Debug Styling */
+
+.debug {
+	font-family: Consolas, "Courier New";
+	font-size: 12px;
+	background: white;
+	border:1px solid #CCC;
+	padding:1em 0em;
+	
+	.link:hover {
+		text-decoration:underline;
+	}
+	.link {
+		cursor:pointer;
+	}
+	.help {
+		font-style: italic;
+		cursor:help;
+	}
+	
+	* {
+		margin:0px;
+		padding:0px;
+	}
+	
+	&, pre, .array .var, .object .var {
+		margin-left: 2em;
+	}
+	
+	.var {
+		display:block;
+		position:relative;
+	}
+	
+	.name {
+		font-weight:bold;
+		display:block;
+		float:left;
+		min-width:2em;
+	}
+	
+	&, .type {
+		color:gray;
+	}
+
+	.type,
+	.value,
+	.help,
+	.help-link {
+		margin-left: 1em;
+	}
+	.array .value,
+	.object .value {
+		color:black;
+	}
+	.string .value {
+		color:green;
+	}
+	.double .value,
+	.integer .value {
+		color:pink;
+	}
+	.resource .value {
+		color:black;
+	}
+	.method .value {
+		color:black;
+	}
+	.null .value {
+		color:blue;
+	}
+	
+}

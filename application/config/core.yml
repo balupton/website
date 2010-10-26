@@ -45,8 +45,8 @@ balcms: &balcms
         <?=COMMON_PATH?>/balphp-v1.0/lib
     HTMLPURIFIER_PATH: >
         <?=COMMON_PATH?>/htmlpurifier-v4.2.0-lib
-    PHPCLOSURE_PATH: >
-        <?=COMMON_PATH?>/php-closure'
+    SCAFFOLD_PATH: >
+        <?=COMMON_PATH?>/scaffold
 
     # Data Locations
     DATA_PATH: >
@@ -139,7 +139,11 @@ balcms: &balcms
     # Include Paths
     INCLUDE_PATHS: >
         <?=LIBRARY_PATH?><?=PATH_SEPARATOR?><?=MODELS_PATH?>
-
+    
+    # Compilers
+    SCAFFOLD_COMPILER_PATH: >
+        <?=PUBLIC_STYLES_PATH?>/scaffold.php?>
+    
 production: &production
     <<: *balcms
     BASE_URL: ""

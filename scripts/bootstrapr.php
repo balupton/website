@@ -185,7 +185,7 @@ if ( !class_exists('Bootstrapr') ) {
 			
 			# Include the core configuration (falling back on uncompiled if compiled didn't work)
 			if ( !$configuration ) {
-				$configuration = $Yaml->parse(file_get_contents(CONFIG_CORE_PATH));
+				$configuration = $Yaml->parse(str_replace('	','    ',file_get_contents(CONFIG_CORE_PATH)));
 				file_put_contents(CONFIG_CORE_COMPILED_PATH, serialize($configuration));
 			}
 			
