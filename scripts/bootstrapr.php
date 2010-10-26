@@ -52,10 +52,10 @@ if ( !class_exists('Bootstrapr') ) {
 			if ( !isset($_SERVER) ) {
 				$_SERVER = array();
 			}
-
+			
 			# Document Root
 			if ( empty($_SERVER['DOCUMENT_ROOT']) ) {
-				$_SERVER['DOCUMENT_ROOT']		= realpath(dirname(__FILE__).'/..');
+				$_SERVER['DOCUMENT_ROOT'] = preg_replace('/^(.+?)(public_html|www|htdocs)(.*)/i', '$1$2', realpath(dirname(__FILE__).'/..'));
 				// $root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['PWD']);
 				// $root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['SCRIPT_FILENAME']);
 			}
@@ -66,26 +66,44 @@ if ( !class_exists('Bootstrapr') ) {
 			} else {
 				$_SERVER['SCRIPT_FILENAME']		= realpath($_SERVER['SCRIPT_FILENAME']);
 			}
-
+			
+			# Server Port
+			if ( empty($_SERVER['SERVER_PORT']) ) {
+				$_SERVER['SERVER_PORT'] = 80;
+			}
+			
+			# Server Port
+			if ( empty($_SERVER['SERVER_ADDR']) ) {
+				$_SERVER['SERVER_ADDR'] = 'localhost';
+			}
+			
+			# Script Uri
+			if ( empty($_SERVER['REQUEST_URI']) ) {
+				// We are in a CLI
+				$_SERVER['REQUEST_URI'] = str_replace(
+					$_SERVER['DOCUMENT_ROOT'],
+					'',
+					$_SERVER['SCRIPT_FILENAME']
+				);
+			}
+			
 			# Hostname
 			if ( empty($_SERVER['HOSTNAME']) ) {
-				$_SERVER['HOSTNAME'] = '';
+				$_SERVER['HOSTNAME'] 			= '';
 			}
 			
 			# CLI
 			if ( !isset($_SERVER['CLI']) ) {
-				$_SERVER['CLI'] = empty($_SERVER['HTTP_HOST']);
+				$_SERVER['CLI'] = empty($_SERVER['HTTP_USER_AGENT']);
 			}
 			
 			# Server Name
 			if ( empty($_SERVER['SERVER_NAME']) ) {
 				// Fallback onto HTTP_HOST
 				if ( empty($_SERVER['HTTP_HOST']) ) {
-					echo 'We could not detect the HTTP_HOST. What is it? [Default is localhost]'."\n";
-					$http_host = trim(readline('> '));
-					if ( !$http_host ) $http_host = 'localhost';
-					$_SERVER['HTTP_HOST'] = $http_host;
-					unset($http_host);
+					// We are running in a CLI environment
+					// The HTTP_HOST should be defined in the config.php
+					$_SERVER['HTTP_HOST'] = 'localhost';
 				}
 				// Apply ensured HTTP_HOST to SERVER_NAME
 				$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
@@ -97,6 +115,11 @@ if ( !class_exists('Bootstrapr') ) {
 				$_SERVER['HTTP_HOST'] = $_SERVER['SERVER_NAME'];
 			}
 
+			# PHP_SELF
+			if ( empty($_SERVER['PHP_SELF']) ) {
+				$_SERVER['PHP_SELF'] = $_SERVER['REQUEST_URI'];
+			}
+			
 			# Request URI
 			if ( !empty($_SERVER['REDIRECT_URL']) ) {
 				$_SERVER['REQUEST_URI'] = $_SERVER['REDIRECT_URL'];
