@@ -1,0 +1,15 @@
+[submodule "/Users/balupton/Server/public_html/sites/balcms/public/scripts/aloha-editor"]
+	path = /Users/balupton/Server/public_html/sites/balcms/public/scripts/aloha-editor
+	url = http://github.com/balupton/Aloha-Editor.git
+[submodule "/Users/balupton/Server/public_html/sites/balcms/public/scripts/jquery-ajaxy"]
+	path = /Users/balupton/Server/public_html/sites/balcms/public/scripts/jquery-ajaxy
+	url = http://github.com/balupton/jquery-ajaxy.git
+[submodule "/Users/balupton/Server/public_html/sites/balcms/public/scripts/jquery-lightbox"]
+	path = /Users/balupton/Server/public_html/sites/balcms/public/scripts/jquery-lightbox
+	url = http://github.com/balupton/jquery-lightbox.git
+[submodule "/Users/balupton/Server/public_html/sites/balcms/public/scripts/jquery-sparkle"]
+	path = /Users/balupton/Server/public_html/sites/balcms/public/scripts/jquery-sparkle
+	url = http://github.com/balupton/jquery-sparkle.git
+[submodule "/Users/balupton/Server/public_html/sites/balcms/public/scripts/jquery-syntaxhighlighter"]
+	path = /Users/balupton/Server/public_html/sites/balcms/public/scripts/jquery-syntaxhighlighter
+	url = http://github.com/balupton/jQuery-SyntaxHighlighter.git

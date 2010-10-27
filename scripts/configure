@@ -201,11 +201,7 @@ class Cli {
 	 */
 	public function installAdvanced ( ) {
 		# Prepare
-		
-		# --------------------------
-		
-		# Initialise Submodules
-		`git submodule init`;
+		$APPLICATION_ROOT_PATH = APPLICATION_ROOT_PATH;
 		
 		# --------------------------
 		
@@ -252,10 +248,7 @@ class Cli {
 		# --------------------------
 		
 		# Update Submodules
-		`git submodule update`;
-		
-		# Update All Inclusive Submodules
-		`git submodule foreach --recursive "git submodule init; git submodule update;"`;
+		`cd ${APPLICATION_ROOT_PATH}; git submodule init; git submodule update;`;
 		
 		# --------------------------
 		
@@ -299,7 +292,8 @@ class Cli {
 		# Setup Resources
 		echo "\n$message\n\n";
 		foreach ( $resources as $resource ) {
-			$title = $source = $destination = $command = $branch = $submodules = null;
+			$title = $source = $destination = $command = $submodules = null;
+			$branch = 'master';
 			$symlinks = array();
 			extract($resource);
 			
@@ -316,17 +310,20 @@ class Cli {
 				`${command} ${source} ${destination}`;
 				
 				# Branch
-				if ( $branch ) {
+				if ( $branch && $branch !== 'master' ) {
 					`cd ${destination} ; git checkout ${branch} ; cd ${APPLICATION_ROOT_PATH}`;
 				}
 				
-				# Submodules
-				if ( $submodules ) {
-					`cd ${destination} ; git submodule init ; git submodule update ; git submodule foreach --recursive "git submodule init; git submodule update;"; cd ${APPLICATION_ROOT_PATH}`;
-				}
 			}
 			else {
 				echo "The Resource [${title}] is already installed at [${destination}].\n\n";
+				if ( strstr($command, 'git') )
+					`cd ${destination} ; git pull origin ${branch}; cd ${APPLICATION_ROOT_PATH}`;
+			}
+		
+			# Submodules
+			if ( $submodules ) {
+				`cd ${destination} ; git submodule init ; git submodule update ; git submodule foreach --recursive "git pull origin master; git submodule init; git submodule update;"; cd ${APPLICATION_ROOT_PATH}`;
 			}
 			
 			# Symlinks
