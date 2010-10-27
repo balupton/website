@@ -3,22 +3,55 @@
 
 class Cli {
 	
-	function __construct ( ) {
+	/**
+	 * Constructor our Configure Class
+	 */
+	public function __construct ( ) {
 		# Prepare
 		require(dirname(__FILE__).'/bootstrapr.php');
-		$Bootstrapr->bootstrap('environment');
+	}
+	
+	/**
+	 * Run our Configuration
+	 */
+	public function run ( ) {
+		# Say Hello
+		$this->welcome();
 		
-		# Install
-		$this->configure();
+		# Install Core Configuration
+		$this->installCore();
+		
+		# Install Base Configuration
+		$this->installBase();
+		
+		# Install Advanced Configuration
+		$this->installAdvanced();
+		
+		# Say Bye
+		$this->goodbye();
 	}
 	
-	function escape ( $input ) {
-		return preg_replace('/([\\\\\\/$])/','\\\\${1}',$input);
-	}
-	
-	function configure ( ) {
-		# Prepare
+	/**
+	 * Display a nice Welcome Message
+	 */
+	public function welcome ( ) {
+		# Hi
 		echo "Welcome to the BalCMS Installer.\n\n";
+	}
+	
+	public function goodbye ( ) {
+		# Bye
+		echo "Your BalCMS Installation is Now Configured.\n";
+		// system("open ${root_url}${base_url}");
+	}
+	
+	/**
+	 * Perform the Core Installation
+	 */
+	public function installCore ( ) {
+		# Prepare
+		global $Bootstrapr;
+		$Bootstrapr->bootstrap('environment');
 		
 		# --------------------------
 		
@@ -35,160 +68,276 @@ class Cli {
 			exit;
 		}
 		
-		# Prepare Config
-		$balcms_path = APPLICATION_ROOT_PATH;
-		$common_path = COMMON_PATH;
-		$library_path = LIBRARY_PATH;
-		$balphp_path = "${common_path}/balphp-v1.0"; // BALPHP_PATH;
+		# --------------------------
 		
+		# Define our Core Resources
+		$resources = array(
+			array(
+				'title'			=> 'Symfony YAML Components',
+				'source'		=> 'http://svn.symfony-project.com/components/yaml/tags/RELEASE_1_0_3/lib',
+				'destination'	=> SFYAML_PATH,
+				'command'		=> 'svn export'
+			)
+		);
 		
 		# --------------------------
 		
-		# Prepare Resources
-		$resourcesToInstall = array(
+		# Install our Core Resources
+		$this->installResources($resources, 'Installing Core Resources...');
+		
+		# --------------------------
+		
+		# Return true
+		return true;
+	}
+	
+	/**
+	 * Perform the Base Installation
+	 */
+	public function installBase ( ) {
+		# Prepare
+		global $Bootstrapr;
+		$Bootstrapr->bootstrap('configuration');
+		
+		# --------------------------
+		
+		# Define our Base Resources
+		$resources = array(
 			array(
 				'title'			=> 'BalPHP',
-				'source'		=> 'git@github.com:balupton/balphp.git',
-				'destination'	=> "${common_path}/balphp-v1.0",
+				'source'		=> 'http://github.com/balupton/balphp.git',
+				'destination'	=> BALPHP_PATH,
 				'command'		=> 'git clone',
 				'branch'		=> 'v1.0',
 				'symlinks'		=> array(
 					array(
-						'source'		=> "$balphp_path/lib/Bal",
-						'destination'	=> "${library_path}/Bal"
+						'source'		=> BALPHP_PATH.'/lib/Bal',
+						'destination'	=> LIBRARY_PATH.'/Bal'
 					)
 				)
 			),
 			array(
-				'title'			=> 'Scaffold',
-				'source'		=> 'git@github.com:balupton/scaffold.git',
-				'destination'	=> "${common_path}/scaffold",
-				'command'		=> 'git clone',
-				'submodules'	=> true
-			),
-			array(
 				'title'			=> 'Doctrine Extension Taggable',
-				'source'		=> 'git@github.com:balupton/Doctrine-Extension-Taggable.git',
-				'destination'	=> "${common_path}/doctrine-extensions/Taggable",
+				'source'		=> 'http://github.com/balupton/Doctrine-Extension-Taggable.git',
+				'destination'	=> DOCTRINE_EXTENSIONS_PATH.'/Taggable',
 				'command'		=> 'git clone'
 			),
 			array(
 				'title'			=> 'Doctrine ORM',
 				'source'		=> 'http://github.com/balupton/doctrine1',
-				'destination'	=> "${common_path}/doctrine1",
+				'destination'	=> DOCTRINE_PATH,
 				'command'		=> 'git clone',
 				'symlinks'		=> array(
 					array(
-						'source'		=> "${common_path}/doctrine1/lib/Doctrine",
-						'destination'	=> "${library_path}/Doctrine"
+						'source'		=> DOCTRINE_PATH.'/lib/Doctrine',
+						'destination'	=> LIBRARY_PATH.'/Doctrine'
 					),
 					array(
-						'source'		=> "${common_path}/doctrine1/lib/Doctrine.php",
-						'destination'	=> "${library_path}/Doctrine.php"
+						'source'		=> DOCTRINE_PATH.'/lib/Doctrine.php',
+						'destination'	=> LIBRARY_PATH.'/Doctrine.php'
 					)
 				)
 			),
 			array(
 				'title'			=> 'HTML Purifier',
-				'source'		=> 'git@github.com:balupton/htmlpurifier.git',
-				'destination'	=> "${common_path}/htmlpurifier-v4.2.0-lib",
+				'source'		=> 'http://github.com/balupton/htmlpurifier.git',
+				'destination'	=> HTMLPURIFIER_PATH,
 				'command'		=> 'git clone',
 				'branch'		=> 'v4.2.0'
 			),
 			array(
-				'title'			=> 'Symfony YAML Components',
-				'source'		=> 'http://svn.symfony-project.com/components/yaml/tags/RELEASE_1_0_3/lib',
-				'destination'	=> "${common_path}/SymfonyComponents/YAML",
-				'command'		=> 'svn export'
-			),
-			array(
 				'title'			=> 'Zend Framework',
 				'source'		=> 'http://framework.zend.com/svn/framework/standard/tags/release-1.10.7/library',
-				'destination'	=> "${common_path}/zend-v1.10.7-lib",
+				'destination'	=> ZEND_PATH,
 				'command'		=> 'svn export',
 				'symlinks'		=> array(
 					array(
-						'source'		=> "${common_path}/zend-v1.10.7-lib/Zend",
-						'destination'	=> "${library_path}/Zend"
+						'source'		=> ZEND_PATH.'/Zend',
+						'destination'	=> LIBRARY_PATH.'/Zend'
 					)
 				)
+			),
+			array(
+				'title'			=> 'Scaffold',
+				'source'		=> 'http://github.com/balupton/scaffold.git',
+				'destination'	=> SCAFFOLD_PATH,
+				'command'		=> 'git clone',
+				'submodules'	=> true
+			),
+			array(
+				'title'			=> 'CSScaffold',
+				'source'		=> 'http://github.com/balupton/csscaffold.git',
+				'destination'	=> CSSCAFFOLD_PATH,
+				'command'		=> 'git clone',
+				'submodules'	=> true
 			)
 		);
 		
-		# Prepare Symlinks
-		$symlinksToInstall = array(
+		# Define our Base Symlinks
+		$symlinks = array(
 			array(
 				'title'			=> 'BalPHP Models',
-				'source'		=> "$balphp_path/lib/models",
+				'source'		=> BALPHP_PATH.'/lib/models',
 				'destination'	=> APPLICATION_ROOT_PATH.'/application/models/Bal'
 			)
 		);
-				
-		# --------------------------
-		
-		# Setup Resources
-		echo "\nDownloading the resources into [${common_path}].\n\n";
-		foreach ( $resourcesToInstall as $resource ) {
-			$title = $source = $destination = $command = $branch = $submodules = null;
-			$symlinks = array();
-			extract($resource);
-			// Check
-			if ( is_file($destination) ) {
-				unlink($destination);
-			}
-			// Apply
-			if ( !is_dir($destination) ) {
-				echo "Installing the Resource [{$title}] to [${destination}].\n\n";
-				// Clone
-				`${command} ${source} ${destination}`;
-				// Branch
-				if ( $branch ) {
-					`cd ${destination} ; git checkout ${branch} ; cd ${balcms_path}`;
-				}
-				// Submodules
-				if ( $submodules ) {
-					`cd ${destination} ; git submodule init ; git submodule update ; cd ${balcms_path}`;
-				}
-			}
-			else {
-				echo "The Resource [{$title}] is already installed at [${destination}].\n\n";
-			}
-			// Symlinks
-			foreach ( $symlinks as $symlink ) {
-				if ( empty($symlink['title']) ) $symlink['title'] = $title;
-				$symlinksToInstall[] = $symlink;
-			}
-		}
 		
 		# --------------------------
 		
+		# Install our Base Resources
+		$this->installResources($resources, 'Installing Base Resources...');
+		
+		# Install our Base Symlinks
+		$this->installSymlinks($symlinks, 'Installing Base Symlinks...');
+		
+		# --------------------------
+		
+		# Return true
+		return true;
+	}
+	
+	/**
+	 * Perform the Advanced Installation
+	 */
+	public function installAdvanced ( ) {
+		# Prepare
+		
+		# --------------------------
+		
+		# Initialise Submodules
+		`git submodule init`;
+		
+		# --------------------------
+		
+		# Define our Advanced Resources
+		$resources = array(
+			array(
+				'title'			=> 'Aloha Editor',
+				'source'		=> 'http://github.com/balupton/aloha-editor.git',
+				'destination'	=> ALOHA_EDITOR_PATH,
+				'command'		=> 'git submodule add',
+				'submodules'	=> true
+			),
+			array(
+				'title'			=> 'jQuery Ajaxy',
+				'source'		=> 'http://github.com/balupton/jquery-ajaxy.git',
+				'destination'	=> JQUERY_AJAXY_PATH,
+				'command'		=> 'git submodule add'
+			),
+			array(
+				'title'			=> 'jQuery Lightbox',
+				'source'		=> 'http://github.com/balupton/jquery-lightbox.git',
+				'destination'	=> JQUERY_LIGHTBOX_PATH,
+				'command'		=> 'git submodule add'
+			),
+			array(
+				'title'			=> 'jQuery Sparkle',
+				'source'		=> 'http://github.com/balupton/jquery-sparkle.git',
+				'destination'	=> JQUERY_SPARKLE_PATH,
+				'command'		=> 'git submodule add'
+			),
+			array(
+				'title'			=> 'jQuery Syntax Highlighter',
+				'source'		=> 'http://github.com/balupton/jquery-syntaxhighlighter.git',
+				'destination'	=> JQUERY_SYNTAXHIGHLIGHTER_PATH,
+				'command'		=> 'git submodule add'
+			)
+		);
+		
+		# --------------------------
+		
+		# Install our Advanced Resources
+		$this->installResources($resources, 'Installing Advanced Resources...');
+		
+		# --------------------------
+		
+		# Update Submodules
+		`git submodule update`;
+		
+		# Update All Inclusive Submodules
+		`git submodule foreach --recursive "git submodule init; git submodule update;"`;
+		
+		# --------------------------
+		
+		# Return true
+		return true;
+	}
+	
+	/**
+	 * Install a series of Symlinks
+	 * @param array $symlinks
+	 * @param stirng $message [optional]
+	 */
+	public function installSymlinks ( $symlinks, $message = 'Installing Symlinks...' ) {
 		# Setup Symlinks
-		echo "Setting up necessary symlinks...\n\n";
-		foreach ( $symlinksToInstall as $symlink ) {
+		echo "\n$message\n\n";
+		foreach ( $symlinks as $symlink ) {
 			$title = $source = $destination = null;
 			extract($symlink);
 			if ( is_file($destination) ) {
 				unlink($destination);
 			}
 			if ( !is_dir($destination) ) {
-				echo "Installing the Symlink [{$title}] to [${destination}].\n\n";
+				echo "Installing the Symlink [${title}] to [${destination}].\n\n";
 				`ln -s ${source} ${destination}`;
 			}
 			else {
-				echo "The Symlink [{$title}] is already installed at [${destination}].\n\n";
+				echo "The Symlink [${title}] is already installed at [${destination}].\n\n";
 			}
 		}
+	}
+	
+	/**
+	 * Install a series of Resources
+	 * @param array $resources
+	 * @param stirng $message [optional]
+	 */
+	public function installResources ( $resources, $message = 'Installing Resources...' ) {
+		# Prepare
+		$APPLICATION_ROOT_PATH = APPLICATION_ROOT_PATH;
 		
-		# --------------------------
-		
-		# Open Url
-		echo "Your BalCMS Installation is Now Configured.\n";
-		// system("open ${root_url}${base_url}");
-		
-		# Return true
-		return true;
+		# Setup Resources
+		echo "\n$message\n\n";
+		foreach ( $resources as $resource ) {
+			$title = $source = $destination = $command = $branch = $submodules = null;
+			$symlinks = array();
+			extract($resource);
+			
+			# Check
+			if ( is_file($destination) ) {
+				unlink($destination);
+			}
+			
+			# Apply
+			if ( !is_dir($destination) ) {
+				echo "Installing the Resource [${title}] to [${destination}].\n\n";
+				
+				# Clone
+				`${command} ${source} ${destination}`;
+				
+				# Branch
+				if ( $branch ) {
+					`cd ${destination} ; git checkout ${branch} ; cd ${APPLICATION_ROOT_PATH}`;
+				}
+				
+				# Submodules
+				if ( $submodules ) {
+					`cd ${destination} ; git submodule init ; git submodule update ; git submodule foreach --recursive "git submodule init; git submodule update;"; cd ${APPLICATION_ROOT_PATH}`;
+				}
+			}
+			else {
+				echo "The Resource [${title}] is already installed at [${destination}].\n\n";
+			}
+			
+			# Symlinks
+			foreach ( $symlinks as $symlink ) {
+				if ( empty($symlink['title']) ) $symlink['title'] = $title;
+				$symlinksToInstall[] = $symlink;
+			}
+		}
 	}
 	
 }
 
 $Cli = new Cli();
+$Cli->run();

@@ -175,10 +175,12 @@ if ( !class_exists('Bootstrapr') ) {
 				$temp = 'SymfonyComponents/YAML';
 				if ( defined('COMMON_PATH') && is_dir(COMMON_PATH.'/'.$temp) )
 					define('SFYAML_PATH',				COMMON_PATH.'/'.$temp);
-				if ( is_dir(APPLICATION_ROOT_PATH.'/common/'.$temp) )
-					define('SFYAML_PATH',				APPLICATION_ROOT_PATH.'/common/'.$temp);
-				elseif ( is_dir(APPLICATION_ROOT_PATH.'/library/'.$temp) )
-					define('SFYAML_PATH',				APPLICATION_ROOT_PATH.'/library/'.$temp);
+				elseif ( is_dir(COMMON_PATH.'/'.$temp) )
+					define('SFYAML_PATH',				COMMON_PATH.'/'.$temp);
+				elseif ( is_dir(LIBRARY_PATH.'/'.$temp) )
+					define('SFYAML_PATH',				LIBRARY_PATH.'/'.$temp);
+				else
+					define('SFYAML_PATH',				COMMON_PATH.'/'.$temp);
 				unset($temp);
 			}
 	
@@ -198,7 +200,7 @@ if ( !class_exists('Bootstrapr') ) {
 			$configuration = null;
 			
 			# Check for sfYaml
-			if ( !defined('SFYAML_PATH') ) {
+			if ( !defined('SFYAML_PATH') || !is_dir(SFYAML_PATH) ) {
 				throw new Exception('Could not find the sfYaml library.');
 			}
 				

@@ -125,7 +125,33 @@ balcms: &balcms
         <?=APPLICATION_ROOT_PATH?>/public/media/uploads
     MEDIA_UPLOADS_URL: >
         <?=BASE_URL?>/public/media/uploads
-
+	
+	# Scripts
+	ALOHA_EDITOR_PATH: >
+		<?=PUBLIC_SCRIPTS_PATH?>/aloha-editor
+	ALOHA_EDITOR_URL: >
+		<?=PUBLIC_SCRIPTS_URL?>/aloha-editor
+		
+	JQUERY_AJAXY_PATH: >
+		<?=PUBLIC_SCRIPTS_PATH?>/jquery-ajaxy
+	JQUERY_AJAXY_URL: >
+		<?=PUBLIC_SCRIPTS_URL>/jquery-ajaxy
+		
+	JQUERY_LIGHTBOX_PATH: >
+		<?=PUBLIC_SCRIPTS_URL?>/jquery-lightbox
+	JQUERY_LIGHTBOX_URL: >
+		<?=PUBLIC_SCRIPTS_PATH?>/jquery-lightbox
+		
+	JQUERY_SPARKLE_PATH: >
+		<?=PUBLIC_SCRIPTS_PATH?>/jquery-sparkle
+	JQUERY_SPARKLE_URL: >
+		<?=PUBLIC_SCRIPTS_URL?>/jquery-sparkle
+		
+	JQUERY_SYNTAXHIGHLIGHTER_PATH: >
+		<?=PUBLIC_SCRIPTS_PATH?>/jquery-syntaxhighlighter
+	JQUERY_SYNTAXHIGHLIGHTER_URL: >
+		<?=PUBLIC_SCRIPTS_URL?>/jquery-syntaxhighlighter
+	
     # Cache Paths
     CACHE_PATH: >
         <?=DATA_PATH?>/cache
