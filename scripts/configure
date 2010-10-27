@@ -213,7 +213,7 @@ class Cli {
 		$resources = array(
 			array(
 				'title'			=> 'Aloha Editor',
-				'source'		=> 'http://github.com/balupton/aloha-editor.git',
+				'source'		=> 'http://github.com/balupton/Aloha-Editor.git',
 				'destination'	=> ALOHA_EDITOR_PATH,
 				'command'		=> 'git submodule add',
 				'submodules'	=> true
@@ -238,7 +238,7 @@ class Cli {
 			),
 			array(
 				'title'			=> 'jQuery Syntax Highlighter',
-				'source'		=> 'http://github.com/balupton/jquery-syntaxhighlighter.git',
+				'source'		=> 'http://github.com/balupton/jQuery-SyntaxHighlighter.git',
 				'destination'	=> JQUERY_SYNTAXHIGHLIGHTER_PATH,
 				'command'		=> 'git submodule add'
 			)

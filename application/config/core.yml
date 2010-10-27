@@ -138,9 +138,9 @@ balcms: &balcms
 		<?=PUBLIC_SCRIPTS_URL>/jquery-ajaxy
 		
 	JQUERY_LIGHTBOX_PATH: >
-		<?=PUBLIC_SCRIPTS_URL?>/jquery-lightbox
-	JQUERY_LIGHTBOX_URL: >
 		<?=PUBLIC_SCRIPTS_PATH?>/jquery-lightbox
+	JQUERY_LIGHTBOX_URL: >
+		<?=PUBLIC_SCRIPTS_URL?>/jquery-lightbox
 		
 	JQUERY_SPARKLE_PATH: >
 		<?=PUBLIC_SCRIPTS_PATH?>/jquery-sparkle
