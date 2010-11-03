@@ -147,7 +147,7 @@ class Cli {
 			),
 			array(
 				'title'			=> 'Zend Framework',
-				'source'		=> 'http://framework.zend.com/svn/framework/standard/tags/release-1.10.7/library',
+				'source'		=> 'http://framework.zend.com/svn/framework/standard/tags/release-1.11.0/library',
 				'destination'	=> ZEND_PATH,
 				'command'		=> 'svn export',
 				'symlinks'		=> array(

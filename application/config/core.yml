@@ -40,7 +40,7 @@ balcms: &balcms
     DOCTRINE_EXTENSIONS_PATH: >
         <?=COMMON_PATH?>/doctrine-extensions
     ZEND_PATH: >
-        <?=COMMON_PATH?>/zend-v1.10.7-lib
+        <?=COMMON_PATH?>/zend-v1.11.0-lib
     BALPHP_PATH: >
         <?=COMMON_PATH?>/balphp-v1.0/lib
     HTMLPURIFIER_PATH: >
