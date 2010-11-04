@@ -124,16 +124,17 @@ class Cli {
 			),
 			array(
 				'title'			=> 'Doctrine ORM',
-				'source'		=> 'http://github.com/balupton/doctrine1',
-				'destination'	=> DOCTRINE_PATH,
+				'source'		=> 'http://github.com/balupton/doctrine1.git',
+				'destination'	=> DOCTRINE_ROOT_PATH,
 				'command'		=> 'git clone',
+				'branch'		=> 'v1.2.1-bal',
 				'symlinks'		=> array(
 					array(
-						'source'		=> DOCTRINE_PATH.'/lib/Doctrine',
+						'source'		=> DOCTRINE_PATH.'/Doctrine',
 						'destination'	=> LIBRARY_PATH.'/Doctrine'
 					),
 					array(
-						'source'		=> DOCTRINE_PATH.'/lib/Doctrine.php',
+						'source'		=> DOCTRINE_PATH.'/Doctrine.php',
 						'destination'	=> LIBRARY_PATH.'/Doctrine.php'
 					)
 				)
@@ -147,9 +148,10 @@ class Cli {
 			),
 			array(
 				'title'			=> 'Zend Framework',
-				'source'		=> 'http://framework.zend.com/svn/framework/standard/tags/release-1.11.0/library',
+				'source'		=> 'http://github.com/balupton/zend-framework-v1.git',
 				'destination'	=> ZEND_PATH,
-				'command'		=> 'svn export',
+				'command'		=> 'git clone',
+				'branch'		=> 'v1.11.0-bal',
 				'symlinks'		=> array(
 					array(
 						'source'		=> ZEND_PATH.'/Zend',
@@ -285,9 +287,10 @@ class Cli {
 	 * @param array $resources
 	 * @param stirng $message [optional]
 	 */
-	public function installResources ( $resources, $message = 'Installing Resources...' ) {
+	public function installResources ( $resources, $message = 'Installing Resources...', $symlinksMessage = 'Installing Resource Symlinks...' ) {
 		# Prepare
 		$APPLICATION_ROOT_PATH = APPLICATION_ROOT_PATH;
+		$symlinksToInstall = array();
 		
 		# Setup Resources
 		echo "\n$message\n\n";
@@ -332,6 +335,10 @@ class Cli {
 				$symlinksToInstall[] = $symlink;
 			}
 		}
+		
+		# Install Symlinks
+		if ( count($symlinksToInstall) )
+			$this->installSymlinks($symlinksToInstall, $symlinksMessage);
 	}
 	
 }
