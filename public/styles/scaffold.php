@@ -35,7 +35,7 @@ Scaffold_Environment::handle_errors();
 Scaffold_Environment::set_view(realpath(SCAFFOLD_PATH.'/views/error.php'));
 
 # Scaffold Config
-$config = $GLOBALS['ApplicationConfiguration']['compilers']['scaffold']['config'];
+$config = $GLOBALS['ApplicationConfiguration']['compiler']['scaffold']['config'];
 
 # The container creates Scaffold objects
 $Container = Scaffold_Container::getInstance(SCAFFOLD_PATH,$config);

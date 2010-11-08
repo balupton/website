@@ -56,6 +56,7 @@
 			<div id="side-info-column" class="inner-sidebar">
 				<div id='side-sortables' class='meta-box-sortables sidebar-boxes'>
 				
+					<!-- Publish -->
 					<div id="sidebar-publish-box" class="postbox sidebar-box sidebar-box-sections">
 						<h3>Publish</h3>
 						<div class="inside">
@@ -70,6 +71,7 @@
 									<div class="clear"></div>
 								</div>
 								<div id="misc-publishing-actions">
+									<!-- Status -->
 									<div class="misc-pub-section field">
 										<label for="content-status">Status:</label>
 										<span id="content-status-view" class="field-value"><?=ucfirst(delve($Content,'status'))?></span>
@@ -78,6 +80,7 @@
 											<?=$this->formDoctrine(array('target'=>array('Content','status'),'source'=>$this,'attribs'=>array('tabindex'=>50)))?>
 										</span>
 									</div>
+									<!-- Author -->
 									<? if ( $Content_Author ) :
 			                        	$author = delve($Content_Author, 'displayname');
 			                        	$author_url = $this->url()->action('content-list')->search($author)->toString();
@@ -88,6 +91,7 @@
 											<span class="field-value" id="content-author-view"><?=$author_link?></span>
 										</div>
 									<? endif; ?>
+									<!-- Date -->
 									<div class="misc-pub-section misc-pub-section-last field" id="content-published_at-field">
 										<label for="content-published_at">Publish<?=$mode_edit?'<span class="weak">ed</span>':''?> on:</label>
 										<span class="field-value" id="content-published_at-view"><?=$this->locale()->datetime(delve($Content,'published_at'))?></span>
@@ -115,6 +119,7 @@
 						</div>
 					</div>
 					
+					<!-- Tags -->
 					<div id="sidebar-tags-box" class="postbox sidebar-box">
 						<h3>Tags</h3>
 						<div class="inside">
@@ -126,6 +131,7 @@
 						</div>
 					</div>
 					
+					<!-- Avatar -->
 					<div id="sidebar-avatar-box" class="postbox sidebar-box">
 						<h3>Avatar</h3>
 						<div class="inside">
@@ -152,6 +158,7 @@
 						</div>
 					</div>
 					
+					<!-- Subscriptions -->
 					<div id="sidebar-subscription-box" class="postbox sidebar-box">
 						<h3>Subscriptions</h3>
 						<div class="inside">
@@ -178,12 +185,16 @@
 			</div>
 			<div id="post-body">
 				<div id="post-body-content" class="field-container">
+				
+					<!-- Title -->
 					<div id="content-title-field" class="field field-simple">
 						<label class="screen-reader-text" for="content-title">
 							Title
 						</label>
 						<?=$this->formText('Content[title]', delve($Content,'title'), array('tabindex'=>10,'autocomplete'=>'off','class'=>'form-input-tip','title'=>'Title'))?>
 					</div>
+					
+					<!-- Parent -->
 					<div id="content-parent-field" class="field field-little">
 						<label for="content-parent">
 							File under:
@@ -217,6 +228,8 @@
 							?>
 						</select>
 					</div>
+					
+					<!-- Location -->
 					<div id="content-code-field" class="field field-little">
 						<label for="content-code">
 							Location:
@@ -225,14 +238,26 @@
 						<span class="inline-edit-panel" id="content-code-panel"></span>
 					</div>
 					
-					<div id="content-content-field" class="field field-rich ">
-						<? if ( $editor === 'bespin' ) : ?>
+					<!-- Content -->
+					<? if ( $editor === 'bespin' ) : ?>
+						<div id="content-content-field" class="field field-rich ">
 							<?=$this->formTextarea('Content[content]', '', array('tabindex'=>30, 'rows'=>15))?>
-						<? else: ?>
+						</div>
+					<? elseif ( $editor === 'tinymce' ): ?>
+						<div id="content-content-field" class="field field-rich ">
 							<?=$this->formTextarea('Content[content]', delve($Content,'content'), array('tabindex'=>30, 'rows'=>5))?>
-						<? endif; ?>
-					</div>
+						</div>
+					<? else: ?>
+						<div id="content-content-field" class="field field-rich field-wrapper postbox widget">
+							<h3>Content <span style="float:right;display:none">
+								<a class="button white small active">wysiwyg</a>
+								<a class="button white small">html</a>
+							</span></h3>
+							<?=$this->formTextarea('Content[content]', delve($Content,'content'), array('tabindex'=>30, 'rows'=>5))?>
+						</div>
+					<? endif; ?>
 					
+					<!-- Description -->
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Excerpt</h3>
 						<div class="inside">
@@ -244,6 +269,7 @@
 						</div>
 					</div>
 					
+					<!-- Extra Information -->
 					<? if ( $type === 'event' ): ?>
 					<div id="content-description-field" class="field field-wrapper postbox widget">
 						<h3>Event Information</h3>

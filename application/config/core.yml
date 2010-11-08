@@ -175,6 +175,8 @@ balcms: &balcms
         <?=PUBLIC_STYLES_PATH?>/scaffold.php?>
     CSSCAFFOLD_COMPILER_PATH: >
     	<?=PUBLIC_STYLES_PATH?>/csscaffold.php?>
+    CLOSURE_COMPILER_PATH: >
+    	/Users/balupton/bin/closure.jar
     
 production: &production
     <<: *balcms

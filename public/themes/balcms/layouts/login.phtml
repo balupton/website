@@ -18,8 +18,8 @@
 		if ( APPLICATION_ENV !== 'development' )
 			$headScript
 				// GSFN
-		    	->offsetSetFile(10,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
-		    	->offsetSetScript(11,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
+		    	->offsetSetFile(1000,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
+		    	->offsetSetScript(1001,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });")
 				;
 	    echo $headScript;
 	?>

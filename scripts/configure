@@ -111,7 +111,7 @@ class Cli {
 				'branch'		=> 'v1.0',
 				'symlinks'		=> array(
 					array(
-						'source'		=> BALPHP_PATH.'/lib/Bal',
+						'source'		=> BALPHP_PATH.'/Bal',
 						'destination'	=> LIBRARY_PATH.'/Bal'
 					)
 				)
@@ -179,7 +179,7 @@ class Cli {
 		$symlinks = array(
 			array(
 				'title'			=> 'BalPHP Models',
-				'source'		=> BALPHP_PATH.'/lib/models',
+				'source'		=> BALPHP_PATH.'/models',
 				'destination'	=> APPLICATION_ROOT_PATH.'/application/models/Bal'
 			)
 		);
@@ -269,16 +269,12 @@ class Cli {
 		foreach ( $symlinks as $symlink ) {
 			$title = $source = $destination = null;
 			extract($symlink);
-			if ( is_file($destination) ) {
-				unlink($destination);
-			}
-			if ( !is_dir($destination) ) {
-				echo "Installing the Symlink [${title}] to [${destination}].\n\n";
-				`ln -s ${source} ${destination}`;
-			}
-			else {
-				echo "The Symlink [${title}] is already installed at [${destination}].\n\n";
-			}
+			# Handle Existing File
+			@unlink($destination);
+			@rmdir($destination);
+			# Handle Symlink
+			echo "Installing the Symlink ${title} [${source}] to [${destination}].\n\n";
+			`ln -s ${source} ${destination}`;
 		}
 	}
 	

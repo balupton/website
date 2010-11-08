@@ -40,7 +40,7 @@ class Balcms_BackController extends Zend_Controller_Action {
 			# Check Permission Access For Admin Area
 			try {
 				$User = $App->getUser();
-				if ( delve($User,'id') && !$App->hasPermission('permission-admin') ) {
+				if ( delve($User,'id') && !$App->hasPermission('admin') ) {
 					# Log
 					$Log = Bal_App::getLog();
 					$log_details = array(

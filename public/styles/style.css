@@ -1,4 +1,17 @@
 
+/* Aloha */
+	
+	.GENTICS_editable {
+		margin: 0.5em;
+		min-height: 4em;
+	}
+
+/* ExtJS Fix */
+
+	ul.x-tab-strip li {
+		margin-bottom: 0px;
+	}
+	
 /* Misc */
 
 	.max_file_size_text {
