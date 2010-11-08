@@ -247,10 +247,11 @@ class Cli {
 		# Install our Advanced Resources
 		$this->installResources($resources, 'Installing Advanced Resources...');
 		
-		# --------------------------
+		# ----------------
 		
 		# Update Submodules
-		`cd ${APPLICATION_ROOT_PATH}; git submodule init; git submodule update;`;
+		echo "\n\nInstalling Submodules...\n";
+		`cd ${APPLICATION_ROOT_PATH}; git submodule init; git submodule update; git submodule foreach 'git submodule init; git submodule update;'`;
 		
 		# --------------------------
 		
@@ -261,11 +262,11 @@ class Cli {
 	/**
 	 * Install a series of Symlinks
 	 * @param array $symlinks
-	 * @param stirng $message [optional]
+	 * @param string $message [optional]
 	 */
 	public function installSymlinks ( $symlinks, $message = 'Installing Symlinks...' ) {
 		# Setup Symlinks
-		echo "\n$message\n\n";
+		echo "\n\n$message\n";
 		foreach ( $symlinks as $symlink ) {
 			$title = $source = $destination = null;
 			extract($symlink);
@@ -273,7 +274,7 @@ class Cli {
 			@unlink($destination);
 			@rmdir($destination);
 			# Handle Symlink
-			echo "Installing the Symlink ${title} [${source}] to [${destination}].\n\n";
+			echo "\nInstalling the Symlink ${title} [${source}] to [${destination}].\n";
 			`ln -s ${source} ${destination}`;
 		}
 	}
@@ -281,7 +282,7 @@ class Cli {
 	/**
 	 * Install a series of Resources
 	 * @param array $resources
-	 * @param stirng $message [optional]
+	 * @param string $message [optional]
 	 */
 	public function installResources ( $resources, $message = 'Installing Resources...', $symlinksMessage = 'Installing Resource Symlinks...' ) {
 		# Prepare
@@ -289,7 +290,7 @@ class Cli {
 		$symlinksToInstall = array();
 		
 		# Setup Resources
-		echo "\n$message\n\n";
+		echo "\n\n$message\n";
 		foreach ( $resources as $resource ) {
 			$title = $source = $destination = $command = $submodules = null;
 			$branch = 'master';
@@ -300,13 +301,16 @@ class Cli {
 			if ( is_file($destination) ) {
 				unlink($destination);
 			}
+		
+			# Prepare
+			$destinationRelative = str_replace($APPLICATION_ROOT_PATH.'/', '', $destination);
 			
 			# Apply
 			if ( !is_dir($destination) ) {
-				echo "Installing the Resource [${title}] to [${destination}].\n\n";
+				echo "\nInstalling the Resource [${title}] to [${destination}].\n";
 				
 				# Clone
-				`${command} ${source} ${destination}`;
+				`cd ${APPLICATION_ROOT_PATH} ; ${command} ${source} ${destinationRelative}`;
 				
 				# Branch
 				if ( $branch && $branch !== 'master' ) {
@@ -315,14 +319,9 @@ class Cli {
 				
 			}
 			else {
-				echo "The Resource [${title}] is already installed at [${destination}].\n\n";
+				echo "\nThe Resource [${title}] is already installed at [${destination}].\n";
 				if ( strstr($command, 'git') )
 					`cd ${destination} ; git pull origin ${branch}; cd ${APPLICATION_ROOT_PATH}`;
-			}
-		
-			# Submodules
-			if ( $submodules ) {
-				`cd ${destination} ; git submodule init ; git submodule update ; git submodule foreach --recursive "git pull origin master; git submodule init; git submodule update;"; cd ${APPLICATION_ROOT_PATH}`;
 			}
 			
 			# Symlinks
