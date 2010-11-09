@@ -50,10 +50,10 @@
 	<div id="top"></div>
 	
 	<!-- Wrap -->
-	<div id="bg">
+	<div id="wrap">
 		
 		<!-- Header -->
-		<div class="header">
+		<div class="header" id="header">
 			<h1>
 				<a href="<?=$baseUrl?>">
 					<?=$this->app()->getConfig('site.name')?>
@@ -61,14 +61,9 @@
 			</h1>
 			<ul class="rss">
 				<li>
-					<a href=
-					"http://localhost/sites/fascialmechanics.com.au/?feed=rss2">
-					Entries (RSS)</a>
-				</li>
-				<li>
-					<a href=
-					"http://localhost/sites/fascialmechanics.com.au/?feed=comments-rss2">
-					Comments (RSS)</a>
+					<a href="<?=$baseUrl?>/feed/rss">
+						Subscribe via RSS
+					</a>
 				</li>
 			</ul>
 		</div>
@@ -84,79 +79,14 @@
 		</div>
 		
 		<!-- Content -->
-		<div class="con">
+		<div id="content">
 			
 			<!-- Article -->
 			<div class="sl-a">
 				<div class="sl-t"></div>
 				<div class="sl">
-					<?=$this->log()->render()?>
+					<?=true?'':$this->log()->render()?>
 					<?=$this->layout()->content?>
-					
-					<div class="post-page">
-						<h1>
-							About
-						</h1>
-						<p>
-							This is an example of a WordPress
-							page, you could edit this to put
-							information about yourself or your
-							site so readers know where you are
-							coming from. You can create as many
-							pages like this one or sub-pages as
-							you like and manage all of your
-							content inside of WordPress.
-						</p>
-						<div class="clear"></div>
-						<p>
-							<a class="post-edit-link" href=
-							"http://localhost/sites/fascialmechanics.com.au/wp-admin/post.php?post=2&amp;action=edit"
-							title="Edit Page">Edit this
-							entry.</a>
-						</p>
-					</div>
-					<div class="com-form com-form-bot" id=
-					"respond">
-						<h3>
-							Leave a Reply
-						</h3>
-						<div id="cancel-comment-reply">
-							<small><a rel="nofollow" id=
-							"cancel-comment-reply-link" href=
-							"/sites/fascialmechanics.com.au/?page_id=2#respond"
-							class="c1" name=
-							"cancel-comment-reply-link">Click
-							here to cancel reply.</a></small>
-						</div>
-						<form id="comment-form" action=
-						"http://localhost/sites/fascialmechanics.com.au/wp-comments-post.php"
-						method="post" name="comment-form">
-							<p>
-								Logged in as <a href=
-								"http://localhost/sites/fascialmechanics.com.au/wp-admin/profile.php">
-								balupton</a>. <a href=
-								"http://localhost/sites/fascialmechanics.com.au/wp-login.php?action=logout&amp;redirect_to=http%3A%2F%2Flocalhost%2Fsites%2Ffascialmechanics.com.au%2F%3Fpage_id%3D2&amp;_wpnonce=a035cb1dfb"
-								title=
-								"Log out of this account">Log
-								out &raquo;</a>
-							</p>
-							<p>
-								<textarea name="comment" id=
-								"comment" cols="50" rows="10">
-</textarea>
-							</p><button name="submit" type=
-							"submit">Post</button> <input type=
-							'hidden' name='comment_post_ID'
-							value='2' id='comment_post_ID' />
-							<input type='hidden' name=
-							'comment_parent' id=
-							'comment_parent' value='0' />
-							<input type="hidden" id=
-							"_wp_unfiltered_html_comment" name=
-							"_wp_unfiltered_html_comment"
-							value="9eb884d421" />
-						</form>
-					</div>
 				</div>
 				<div class="sl-b"></div>
 			</div>
@@ -177,68 +107,55 @@
 						</form>
 					</div>
 					
-					<div class="recent-all recent">
-						<ul class="tabs">
-							<li>
-								<a href="#r-com"><span>Latest
-								Comments</span></a>
-							</li>
-							<li>
-								<a href=
-								"#r-tags"><span>Tags</span></a>
-							</li>
-						</ul><br clear="all" />
-						<ul id="r-com">
-							<li>
-								<a href=
-								"http://localhost/sites/fascialmechanics.com.au/?p=1#comment-1">
-								Mr WordPress:</a> Hi, this is a
-								comment.To delete a comment,
-								just log in and view the post's
-								comments. There you will have
-								the option to edit or delete
-								them.
-							</li>
-						</ul>
-						<div id="r-tags"></div>
+					<!-- Categories Widget -->
+					<div class="categ-all">
+						<?
+							$Featured = $this->app()->fetchRecords('Content',array(
+								'fetch' => 'simplelist',
+								'featured' => true
+							));
+							echo $this->partial('partials/nav-content.phtml',array(
+								'title' => 'Featured Content',
+								'class' => 'categ',
+								'Items' => $Featured
+							));
+						?>
 					</div>
-					<div class="categ-all categ">
-						<h3>
-							Categories
-						</h3>
-						<ul>
-							<li class="cat-item cat-item-1">
-								<a href=
-								"http://localhost/sites/fascialmechanics.com.au/?cat=1"
-								title=
-								"View all posts filed under Uncategorized">
-								Uncategorized</a> (1)
-							</li>
-						</ul>
+					
+					<!-- Recent Widget -->
+					<div class="widget">
+						<?
+							$Recent = $this->app()->fetchRecords('Content',array(
+								'fetch' => 'simplelist',
+								'recent' => true,
+								'limit' => 7
+							));
+							echo $this->partial('partials/nav-content.phtml',array(
+								'title' => 'Recently Updated',
+								'class' => 'widget-all',
+								'Items' => $Recent
+							));
+						?>
 					</div>
-					<div class="widget widget-all">
-						<h3>
-							Archives
-						</h3>
-						<ul>
-							<li>
-								<a href=
-								'http://localhost/sites/fascialmechanics.com.au/?m=201011'
-								title='November 2010'>November
-								2010</a>
-							</li>
-						</ul>
+					
+					<!-- Archives Widget -->
+					<div class="widget tags">
+						<?=$this->partial('partials/nav-tags.phtml',array(
+							'title' => 'Categories',
+							'class' => 'widget-all',
+							'Items' => $Tags
+						))?>
 					</div>
 				</div>
+				<div class="sr-b"></div>
 			</div>
 		</div>
 		
 		<!-- Footer -->
-		<div class="footer">
+		<div id="footer">
 			<p class="theme">
-				Proudly produced by
-					<a href="http://www.balupton.com/" rel="developer">Benjamin Lupton</a> and 
-					<a href="http://designdisease.com/" rel="designer">Design Disease</a>
+				Proudly produced by <a href="http://www.balupton.com/" rel="developer">Benjamin Lupton</a>
+				<span style="color:#CCC">and <a href="http://designdisease.com/" rel="designer" style="color:#CCC">Design Disease</a></span>
 			</p>
 		</div>
 	</div>

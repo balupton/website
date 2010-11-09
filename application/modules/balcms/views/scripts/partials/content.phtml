@@ -24,8 +24,8 @@
 	$Content_Ancestors = delve($this,'Content_Ancestors',$this->content()->getAncestors($Content));
 	$Content_Ancestors = $Content->toNavItems($Content_Ancestors);
 	array_unshift($Content_Ancestors,array(
-		'label' => 'Home',
-		'title' => 'Home',
+		'label' => $this->locale()->translate('article-ancestors-home-label'),
+		'title' => $this->locale()->translate('article-ancestors-home-title'),
 		'uri' => $base_url
 	));
 	# Children
@@ -82,8 +82,8 @@
 		$Content_Avatar_url = $this->url()->media($Content_Avatar)->toString();
 		?>
 		<div class="article-avatar avatar">
-			<a href="<?=$Content_Avatar_url?>" title="View Image">
-				<img src="<?=$Content_Avatar_url?>?width=200" title="<?=$Content_title?>" alt="<?=$Content_title?>'s Avatar" />
+			<a href="<?=$Content_Avatar_url?>" title="<?=$this->locale()->translate('article-avatar-title')?>">
+				<img src="<?=$Content_Avatar_url?>?width=200" title="<?=$Content_title?>" alt="<?=$this->locale()->translate('article-avatar-alt',$Content_title)?>" />
 			</a>
 		</div>
 	<? endif; ?>
@@ -99,17 +99,17 @@
 			
 			<!-- Header -->
 			<header class="header"><h1>
-				<span class="title">The End.</span>
+				<span class="title"><?=$this->locale()->translate('article-footer-title')?></span>
 			</h1></header>
 			
 			<!-- Published -->
 			<section class="article-published section" id="article-published">
 				<header class="header">
-					<h1><span class="title">Published</span></h1>
+					<h1><span class="title"><?=$this->locale()->translate('article-published-title')?></span></h1>
 				</header>
 				
 				<p class="published">
-					<span class="title">Published on</span>
+					<span class="title"><?=$this->locale()->translate('article-published-description')?></span>
 					<a class="description" href="<?=$Content_url?>"><time datetime="<?=date('c',strtotime($Content_published_at))?>" pubdate>
 						<?=$this->locale()->date($Content_published_at, Zend_Date::DATE_LONG)?>
 						@
@@ -122,11 +122,11 @@
 			<!-- Author -->
 			<section class="article-author section" id="article-author">
 				<header class="header">
-					<h1><span class="title">About the Author</span></h1>
+					<h1><span class="title"><?=$this->locale()->translate('article-author-title')?></span></h1>
 				</header>
 				
 				<p class="author-title">
-					<span class="title">Written by</span>
+					<span class="title"><?=$this->locale()->translate('article-author-description')?></span>
 					<a class="description" href="<?=$Content_Author_url?>">
 						<?=$Content_Author_displayname?>
 					</a>
@@ -137,8 +137,8 @@
 						$Content_Author_Avatar_url = $this->url()->media($Content_Author_Avatar)->toString();
 						?>
 						<div class="author-avatar avatar">
-							<a href="<?=$Content_Author_Avatar_url?>" title="View Image">
-								<img src="<?=$Content_Author_Avatar_url?>?width=200" title="<?=$Content_Author_displayname?>" alt="<?=$Content_Author_displayname?>'s Avatar" />
+							<a href="<?=$Content_Author_Avatar_url?>" title="<?=$this->locale()->translate('article-author-image-title')?>">
+								<img src="<?=$Content_Author_Avatar_url?>?width=200" title="<?=$Content_Author_displayname?>" alt="<?=$this->locale()->translate('article-author-image-alt', $Content_Author_displayname)?>" />
 							</a>
 						</div>
 					<? endif; ?>
@@ -152,7 +152,7 @@
 			<? if ( delve($Content,'comments_enabled',false) ) : ?>
 				<section class="article-comments section" id="article-comments">
 					<header class="header">
-						<h1><span class="title">Comments</span></h1>
+						<h1><span class="title"><?=$this->locale()->translate('article-comments-title')?></span></h1>
 					</header>
 			
 					<div class="article-comments-content">
@@ -167,7 +167,7 @@
 								(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 							})();
 						</script>
-						<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=balupton">comments powered by Disqus.</a></noscript>
+						<noscript><?=$this->locale()->translate('article-footer-comments-noscript','http://disqus.com/?ref_noscript=balupton')?></noscript>
 					</div>
 				</section>
 			<? endif; ?>
@@ -180,7 +180,7 @@
 				<?=Content::renderDescription($Content)?>
 			</div>
 			<div class="article-description-more">
-				<a href="<?=$Content_url?>" title="View the entire article">Continue Reading</a>
+				<a href="<?=$Content_url?>" title="<?=$this->locale()->translate('article-continue-description')?>"><?=$this->locale()->translate('article-continue-title')?></a>
 			</div>
 		</div>
 	<? endif; ?>

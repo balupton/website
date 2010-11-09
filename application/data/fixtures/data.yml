@@ -4,124 +4,96 @@ Content:
     Content_Welcome:
         code: "welcome"
         title: "Welcome"
-        description: "Home Page"
-        content: "[carousel]bloc-party,zouk-festival,lala-festival[/carousel]<br/>[taglist/]<br/>[recentlist/]"
-        Author: User_Mydance
-        
-    Content_Events:
-        code: "events"
-        title: "Events"
-        description: "Event Listing"
-        content: "[eventlist/]"
-        tags: [event,cool]
-        Author: User_Mydance
-        
-    Content_Events_BlocParty:
-        code: "bloc-party"
-        title: "Bloc Party"
-        description: "Event for Bloc Party"
-        type: event
-        event_start_at: "2009-03-14 21:15"
-        event_finish_at: "2009-03-14 23:15"
-        content: "Bloc Party are famous and kick ass"
-        tags: [event,bloc party,rock]
-        Parent: Content_Events
-        Author: User_Mydance
-        
-    Content_Events_ZoukFestival:
-        code: "zouk-festival"
-        title: "Zouk Festival"
-        description: "Event for Zouk Festival"
-        type: event
-        event_start_at: "2009-03-12 12:25"
-        event_finish_at: "2009-03-12 14:25"
-        content: "Zouk Festival are famous and kick ass"
-        tags: [event,zouk,festival]
-        Parent: Content_Events
-        Author: User_Mydance
-        
-    Content_Events_LaLa:
-        code: "lala-festival"
-        title: "LaLa Festival"
-        description: "Event for LaLa Festival"
-        type: event
-        event_start_at: "2009-04-14 12:25"
-        event_finish_at: "2009-04-14 14:25"
-        content: "LaLa Festival are famous and kick ass"
-        tags: [event,lala,festival]
-        Parent: Content_Events
-        Author: User_Mydance
-        
-    Content_Articles:
-        code: "articles"
-        title: "Articles"
-        description: "Article Listing"
-        content: "[articlelist/]"
-        Author: User_Mydance
-        
-    Content_Articles_NewSite:
-        code: "newsite"
-        title: "New Site"
-        description: "New Site!"
-        content: "Our new website is live!"
-        tags: [news,newsletter]
-        Parent: Content_Articles
-        Author: User_Mydance
-        
-    Content_Resources:
-        code: "resources"
-        title: "Resources"
-        description: "Knowledge Base Area"
-        content: "[contentlist/]"
-        Author: User_Mydance
-        
-    Content_Resources_Equipment:
-        code: "equipment"
-        title: "Equipment"
-        description: "Equipment Listing"
-        content: "[contentlist/]"
-        Parent: Content_Resources
-        Author: User_Mydance
-        
-    Content_Resources_Equipment_Shoes:
-        code: "shoes"
-        title: "New Shoes"
-        description: "New Shoes!"
-        content: "some new shoes!"
-        Parent: Content_Resources_Equipment
-        Author: User_Mydance
+        position: 1
+        comments_enabled: false
+        Author: User_Admin
+        Tags: "welcome, new-website, new, awesome"
+        content: |
+            <p><strong>Welcome to your new website!</strong></p>
+            
+            <p>Below we display the contentlist widget, it's specified to display all the featured posts.</p>
+            [contentlist title="<strong>Featured</strong> Content" featured="true" Parent="false" /]
+            
+            <p>You can see other uses of the contentlist widget by taking a look at the other posts.</p>
+    
+    Content_News:
+        code: "news"
+        title: "News"
+        tagline: "Latest Happenings"
+        position: 2
+        comments_enabled: false
+        Author: User_Admin
+        tags: "featured, news, breaking-news"
+        content: |
+            <p>This post is used to display the latest news.</p>
+            <p>This is done with the below widget:</p>
+            [contentlist title="<strong>Latest</strong> News" recent="true" /]
+            <p>What that widget does is fetch all the pages underneath news and order them by the most recent first.</p>
+            <p>We are able to know what is news as when we create new news, we can specifify where that news will be filed by the "filed under" property.</p>
+        description: |
+            <p>This post is used to display the latest news.</p>
+    
+    Content_YouTubeVideo:
+        code: "youtube-video"
+        title: "YouTube Video"
+        tagline: "An example of a youtube video"
+        position: 1
+        comments_enabled: true
+        Author: User_Admin
+        Parent: Content_News
+        tags: "youtube, video, social, vimeo"
+        content: |
+            <p>We can also insert youtube videos into our posts by using the YouTube widget like so:</p>
+            [youtube]http://www.youtube.com/watch?v=JUUvq48Gb3w[/youtube]
+            
+            <p>&nbsp;</p>
+            
+            <p>Or even a vimeo video like so:</p>
+            [vimeo]http://vimeo.com/11932087[/vimeo]
+        description: |
+            <p>This post serves to provide an example of attaching a YouTube or Vimeo video inside your page.</p>
+       
+    Content_IsFeatured:
+        code: "is-featured"
+        title: "Is Featured"
+        tagline: "This post is featured"
+        position: 1
+        comments_enabled: true
+        Author: User_Admin
+        Parent: Content_News
+        tags: "featured"
+        content: |
+            <p>This post is featured! YAY!</p>
+
 
 User:
     User_Balcms:
         id: 1
         username: "balcms"
         password: "random"
+        type: "user"
         status: "published"
-        displayname: "Administrator"
-        fullname: "Benajmin Lupton"
+        displayname: "BalCMS"
         email: "balcms@balupton.com"
-        Roles:
-            - Role_SuperAdmin
-        subscriptions: [newsletter]
         title: "Mr"
         firstname: "Benjamin"
         lastname: "Lupton"
-        phone: "+61430208061"
-        type: "user"
-    User_Mydance:
-        id: 2
-        username: "mydance"
-        password: "benlupton123"
-        status: "published"
-        displayname: "MyDance"
-        email: "contact@mydance.com.au"
         Roles:
-            - Role_MyDanceAdmin
-        title: "Ms"
-        firstname: "Premala"
-        lastname: "Sangarananda"
-        phone: "Private"
+            - Role_SuperAdmin
+    User_Admin:
+        id: 2
+        username: "admin"
+        password: "random"
         type: "user"
+        status: "published"
+        displayname: "Website Administrator"
+        email: "balcms@balupton.com"
+        title: "Mr"
+        firstname: "Benjamin"
+        lastname: "Lupton"
+        Roles:
+            - Role_WebsiteAdmin
+
 
 Permission:
     Permission_Admin:
@@ -130,43 +102,38 @@ Permission:
     Permission_Content:
         id: 2
         code: content
-    Permission_ContentEvent:
+    Permission_Event:
         id: 3
-        code: content_event
+        code: event
     Permission_Media:
         id: 4
         code: media
-    Permission_User:
+    Permission_Subscription:
         id: 5
-        code: user
-    Permission_UserSubscriber:
+        code: subscription
+    Permission_User:
         id: 6
-        code: user_subscriber
-    Permission_Crud:
-        id: 7
-        code: crud
+        code: user
+
 
 Role:
     Role_SuperAdmin:
         id: 1
         code: superadmin
-        level: 10
         Permissions:
             - Permission_Admin
             - Permission_Content
-            - Permission_ContentEvent
+            - Permission_Event
+            - Permission_Media
+            - Permission_Subscription
+            - Permission_User
+            
+    Role_WebsiteAdmin:
+        id: 2
+        code: websiteadmin
+        Permissions:
+            - Permission_Admin
+            - Permission_Content
             - Permission_Media
             - Permission_User
-            - Permission_UserSubscriber
-            - Permission_Crud
-    Role_MyDanceAdmin:
-        id: 2
-        code: mydanceadmin
-        level: 7
-        Permissions:
-            - Permission_Admin
-            - Permission_Content
-            - Permission_ContentEvent
-            - Permission_Media
-            - Permission_UserSubscriber
             

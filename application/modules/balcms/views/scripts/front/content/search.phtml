@@ -8,7 +8,7 @@
 	$Content_url = $this->url()->action('search')->search($search)->toString();
 	$Content_article_class = 'search article mode-article';
 	$Content_article_id = 'search-'.$search['code'];
-	$Content_title = 'Search: ';
+	$Content_title = $this->locale()->translate('search').': ';
 	$Content_tagline = delve($search,'query','N/A');
 ?>
 <article

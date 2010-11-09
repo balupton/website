@@ -138,6 +138,11 @@ if ( !class_exists('Bootstrapr') ) {
 				require_once(dirname(__FILE__).'/../config.php');
 			}
 		
+			# Prepare the environment
+			if ( !defined('APPLICATION_ENV') ) {
+				define('APPLICATION_ENV',					'development');
+			}
+			
 			# Define the core paths
 			if ( !defined('APPLICATION_ROOT_PATH') ) {
 				define('APPLICATION_ROOT_PATH',				realpath(dirname(__FILE__).'/..'));
@@ -164,7 +169,7 @@ if ( !class_exists('Bootstrapr') ) {
 				define('LIBRARY_PATH',						APPLICATION_ROOT_PATH.'/library');
 			}
 			if ( !defined('DEBUG_MODE') ) {
-				define('DEBUG_MODE',						false);
+				define('DEBUG_MODE',						APPLICATION_ENV === 'development');
 			}
 			if ( !defined('PRODUCTION_MODE') ) {
 				define('PRODUCTION_MODE',					!DEBUG_MODE);
@@ -184,10 +189,6 @@ if ( !class_exists('Bootstrapr') ) {
 				unset($temp);
 			}
 	
-			# Prepare the environment
-			if ( !defined('APPLICATION_ENV') ) {
-				define('APPLICATION_ENV',					'development');
-			}
 		}
 	
 		/**
