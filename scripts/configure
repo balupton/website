@@ -271,6 +271,7 @@ class Cli {
 			$title = $source = $destination = null;
 			extract($symlink);
 			# Handle Existing File
+			`mkdir -p $destination`;
 			@unlink($destination);
 			@rmdir($destination);
 			# Handle Symlink
