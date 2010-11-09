@@ -107,7 +107,7 @@ class Cli {
 				'title'			=> 'BalPHP',
 				'source'		=> 'http://github.com/balupton/balphp.git',
 				'destination'	=> BALPHP_PATH,
-				'command'		=> 'git clone',
+				'vcs'			=> 'git',
 				'branch'		=> 'v1.0',
 				'symlinks'		=> array(
 					array(
@@ -120,13 +120,13 @@ class Cli {
 				'title'			=> 'Doctrine Extension Taggable',
 				'source'		=> 'http://github.com/balupton/Doctrine-Extension-Taggable.git',
 				'destination'	=> DOCTRINE_EXTENSIONS_PATH.'/Taggable',
-				'command'		=> 'git clone'
+				'vcs'			=> 'git'
 			),
 			array(
 				'title'			=> 'Doctrine ORM',
 				'source'		=> 'http://github.com/balupton/doctrine1.git',
 				'destination'	=> DOCTRINE_ROOT_PATH,
-				'command'		=> 'git clone',
+				'vcs'			=> 'git',
 				'branch'		=> 'v1.2.1-bal',
 				'symlinks'		=> array(
 					array(
@@ -143,14 +143,14 @@ class Cli {
 				'title'			=> 'HTML Purifier',
 				'source'		=> 'http://github.com/balupton/htmlpurifier.git',
 				'destination'	=> HTMLPURIFIER_PATH,
-				'command'		=> 'git clone',
+				'vcs'			=> 'git',
 				'branch'		=> 'v4.2.0'
 			),
 			array(
 				'title'			=> 'Zend Framework',
 				'source'		=> 'http://github.com/balupton/zend-framework-v1.git',
 				'destination'	=> ZEND_PATH,
-				'command'		=> 'git clone',
+				'vcs'			=> 'git',
 				'branch'		=> 'v1.11.0-bal',
 				'symlinks'		=> array(
 					array(
@@ -163,14 +163,14 @@ class Cli {
 				'title'			=> 'Scaffold',
 				'source'		=> 'http://github.com/balupton/scaffold.git',
 				'destination'	=> SCAFFOLD_PATH,
-				'command'		=> 'git clone',
+				'vcs'			=> 'git',
 				'submodules'	=> true
 			),
 			array(
 				'title'			=> 'CSScaffold',
 				'source'		=> 'http://github.com/balupton/csscaffold.git',
 				'destination'	=> CSSCAFFOLD_PATH,
-				'command'		=> 'git clone',
+				'vcs'			=> 'git',
 				'submodules'	=> true
 			)
 		);
@@ -213,32 +213,32 @@ class Cli {
 				'title'			=> 'Aloha Editor',
 				'source'		=> 'http://github.com/balupton/Aloha-Editor.git',
 				'destination'	=> ALOHA_EDITOR_PATH,
-				'command'		=> 'git submodule add',
+				'vcs'			=> 'git',
 				'submodules'	=> true
 			),
 			array(
 				'title'			=> 'jQuery Ajaxy',
 				'source'		=> 'http://github.com/balupton/jquery-ajaxy.git',
 				'destination'	=> JQUERY_AJAXY_PATH,
-				'command'		=> 'git submodule add'
+				'vcs'			=> 'git'
 			),
 			array(
 				'title'			=> 'jQuery Lightbox',
 				'source'		=> 'http://github.com/balupton/jquery-lightbox.git',
 				'destination'	=> JQUERY_LIGHTBOX_PATH,
-				'command'		=> 'git submodule add'
+				'vcs'			=> 'git'
 			),
 			array(
 				'title'			=> 'jQuery Sparkle',
 				'source'		=> 'http://github.com/balupton/jquery-sparkle.git',
 				'destination'	=> JQUERY_SPARKLE_PATH,
-				'command'		=> 'git submodule add'
+				'vcs'			=> 'git'
 			),
 			array(
 				'title'			=> 'jQuery Syntax Highlighter',
 				'source'		=> 'http://github.com/balupton/jQuery-SyntaxHighlighter.git',
 				'destination'	=> JQUERY_SYNTAXHIGHLIGHTER_PATH,
-				'command'		=> 'git submodule add'
+				'vcs'			=> 'git'
 			)
 		);
 		
@@ -292,7 +292,7 @@ class Cli {
 		# Setup Resources
 		echo "\n\n$message\n";
 		foreach ( $resources as $resource ) {
-			$title = $source = $destination = $command = $submodules = null;
+			$title = $source = $destination = $command = $submodules = $vcs = $submodule = $inside = null;
 			$branch = 'master';
 			$symlinks = array();
 			extract($resource);
@@ -304,23 +304,63 @@ class Cli {
 		
 			# Prepare
 			$destinationRelative = str_replace($APPLICATION_ROOT_PATH.'/', '', $destination);
+			if ( strstr($destination, APPLICATION_ROOT_PATH) ) {
+				// We are installing within our application
+				$inside = true;
+			}
+			
+			# Create Destination
+			if ( !is_dir($destination) ) `mkdir -p $destination`;
+			
+			# Detect VCS
+			if ( !$vcs ) {
+				$vcs = strstr($command, 'git') ? 'git' : 'svn';
+			}
+			
+			# Detect Command
+			if ( !$command ) {
+				# Detect Command
+				if ( $vcs === 'git' ) {
+					if ( $inside === true ) {
+						// We are installing within our application, use submodule
+						$submodule = true;
+					}
+				}
+				
+				# Apply Command
+				if ( $vcs === 'git' ) {
+					if ( $submodule ) {
+						$command = 'git submodule add';
+					}
+					else {
+						$command = 'git clone';
+					}
+				}
+				else {
+					$command = 'git svn export';
+				}
+			}
 			
 			# Apply
 			if ( !is_dir($destination) ) {
+				# Create
 				echo "\nInstalling the Resource [${title}] to [${destination}].\n";
 				
-				# Clone
+				# Fetch
 				`cd ${APPLICATION_ROOT_PATH} ; ${command} ${source} ${destinationRelative}`;
 				
 				# Branch
-				if ( $branch && $branch !== 'master' ) {
+				if ( $vcs === 'git' && $branch && $branch !== 'master' ) {
 					`cd ${destination} ; git checkout ${branch} ; cd ${APPLICATION_ROOT_PATH}`;
 				}
 				
 			}
 			else {
+				# Exists
 				echo "\nThe Resource [${title}] is already installed at [${destination}].\n";
-				if ( strstr($command, 'git') )
+				
+				# Update
+				if ( $vcs === 'git' )
 					`cd ${destination} ; git pull origin ${branch}; cd ${APPLICATION_ROOT_PATH}`;
 			}
 			
