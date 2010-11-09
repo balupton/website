@@ -42,7 +42,7 @@ balcms: &balcms
     DOCTRINE_EXTENSIONS_PATH: >
         <?=COMMON_PATH?>/doctrine-extensions
     ZEND_PATH: >
-        <?=COMMON_PATH?>/zend-v1.11.0-bal-lib
+        <?=COMMON_PATH?>/zend-v1.10.8-bal-lib
     BALPHP_ROOT_PATH: >
         <?=COMMON_PATH?>/balphp-v1.0
     BALPHP_PATH: >

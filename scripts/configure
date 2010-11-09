@@ -151,7 +151,7 @@ class Cli {
 				'source'		=> 'http://github.com/balupton/zend-framework-v1.git',
 				'destination'	=> ZEND_PATH,
 				'vcs'			=> 'git',
-				'branch'		=> 'v1.11.0-bal',
+				'branch'		=> 'v1.10.8-bal',
 				'symlinks'		=> array(
 					array(
 						'source'		=> ZEND_PATH.'/Zend',
