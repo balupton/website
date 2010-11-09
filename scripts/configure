@@ -343,8 +343,8 @@ class Cli {
 				# Create
 				echo "\nInstalling the Resource [${title}] to [${destination}].\n";
 				
-				# Create Destination
-				if ( !is_dir($destination) ) `mkdir -p $destination`;
+				# Create Parent Directories
+				if ( !is_dir($destination) ) system('mkdir -p '.realpath($destination.'/..'));
 				
 				# Fetch
 				`cd ${APPLICATION_ROOT_PATH} ; ${command} ${source} ${destinationRelative}`;
