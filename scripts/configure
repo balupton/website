@@ -74,9 +74,9 @@ class Cli {
 		$resources = array(
 			array(
 				'title'			=> 'Symfony YAML Components',
-				'source'		=> 'http://svn.symfony-project.com/components/yaml/tags/RELEASE_1_0_3/lib',
-				'destination'	=> SFYAML_PATH,
-				'command'		=> 'svn export'
+				'source'		=> 'git://github.com/fabpot/yaml.git',
+				'destination'	=> SFYAML_ROOT_PATH,
+				'vcs'			=> 'git'
 			)
 		);
 		
@@ -309,9 +309,6 @@ class Cli {
 				$inside = true;
 			}
 			
-			# Create Destination
-			if ( !is_dir($destination) ) `mkdir -p $destination`;
-			
 			# Detect VCS
 			if ( !$vcs ) {
 				$vcs = strstr($command, 'git') ? 'git' : 'svn';
@@ -345,6 +342,9 @@ class Cli {
 			if ( !is_dir($destination) ) {
 				# Create
 				echo "\nInstalling the Resource [${title}] to [${destination}].\n";
+				
+				# Create Destination
+				if ( !is_dir($destination) ) `mkdir -p $destination`;
 				
 				# Fetch
 				`cd ${APPLICATION_ROOT_PATH} ; ${command} ${source} ${destinationRelative}`;
