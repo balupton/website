@@ -106,7 +106,7 @@ class Cli {
 			array(
 				'title'			=> 'BalPHP',
 				'source'		=> 'http://github.com/balupton/balphp.git',
-				'destination'	=> BALPHP_PATH,
+				'destination'	=> BALPHP_ROOT_PATH,
 				'vcs'			=> 'git',
 				'branch'		=> 'v1.0',
 				'symlinks'		=> array(
