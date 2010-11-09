@@ -74,7 +74,7 @@ class Cli {
 		$resources = array(
 			array(
 				'title'			=> 'Symfony YAML Components',
-				'source'		=> 'git://github.com/fabpot/yaml.git',
+				'source'		=> 'http://github.com/fabpot/yaml.git',
 				'destination'	=> SFYAML_ROOT_PATH,
 				'vcs'			=> 'git'
 			)
@@ -141,7 +141,7 @@ class Cli {
 			),
 			array(
 				'title'			=> 'HTML Purifier',
-				'source'		=> 'http://github.com/balupton/htmlpurifier.git',
+				'source'		=> 'http://github.com/balupton/HTMLPurifier.git',
 				'destination'	=> HTMLPURIFIER_PATH,
 				'vcs'			=> 'git',
 				'branch'		=> 'v4.2.0'
@@ -342,9 +342,6 @@ class Cli {
 			if ( !is_dir($destination) ) {
 				# Create
 				echo "\nInstalling the Resource [${title}] to [${destination}].\n";
-				
-				# Create Parent Directories
-				if ( !is_dir($destination) ) system('mkdir -p '.realpath($destination.'/..'));
 				
 				# Fetch
 				`cd ${APPLICATION_ROOT_PATH} ; ${command} ${source} ${destinationRelative}`;
