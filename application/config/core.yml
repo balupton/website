@@ -159,6 +159,8 @@ balcms: &balcms
     # Cache Paths
     CACHE_PATH: >
         <?=DATA_PATH?>/cache
+    CACHE_LOCALE_PATH: >
+        <?=CACHE_PATH?>/locale
     CACHE_SCRIPTS_PATH: >
         <?=MEDIA_PATH?>/cache/scripts
     CACHE_SCRIPTS_URL: >
