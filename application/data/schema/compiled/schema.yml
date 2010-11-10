@@ -96,7 +96,7 @@ PermissionAndUser:
         type: simple
         
 
-# ^ /users/balupton/Server/public_html/sites/balcms/application/data/schema/schema.yml
+# ^ /Users/balupton/Server/public_html/sites/balcms/application/data/schema/schema.yml
 
 
 # ==============================================
@@ -490,7 +490,7 @@ InvoiceDataBackup:
 
 
 
-# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/Invoice.yml
+# ^ /Users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/Invoice.yml
 
 
 # ==============================================
@@ -554,7 +554,7 @@ Bal_File:
             type: string(255)
 
 
-# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/File.yml
+# ^ /Users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/File.yml
 
 
 # ==============================================
@@ -639,7 +639,7 @@ Bal_Message:
             onDelete: "CASCADE" # If UserFrom is deleted, cascade
     
 
-# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/Message.yml
+# ^ /Users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/Message.yml
 
 
 # ==============================================
@@ -667,7 +667,7 @@ Bal_Route:
             type: array
 
 
-# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/Route.yml
+# ^ /Users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/Route.yml
 
 
 # ==============================================
@@ -959,7 +959,7 @@ Bal_PermissionAndUser:
             onDelete: "CASCADE" # If Permission is deleted, delete reference
 
 
-# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/User.yml
+# ^ /Users/balupton/Server/public_html/sites/balcms/application/models/Bal/Schema/User.yml
 
 
 # ==============================================
@@ -1178,5 +1178,5 @@ Balcms_User:
             default: "user"
 
 
-# ^ /users/balupton/Server/public_html/sites/balcms/application/models/Balcms/Schema/Schema.yml
+# ^ /Users/balupton/Server/public_html/sites/balcms/application/models/Balcms/Schema/Schema.yml
 
