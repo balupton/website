@@ -168,12 +168,6 @@ if ( !class_exists('Bootstrapr') ) {
 			if ( !defined('LIBRARY_PATH') ) {
 				define('LIBRARY_PATH',						APPLICATION_ROOT_PATH.'/library');
 			}
-			if ( !defined('DEBUG_MODE') ) {
-				define('DEBUG_MODE',						APPLICATION_ENV === 'development');
-			}
-			if ( !defined('PRODUCTION_MODE') ) {
-				define('PRODUCTION_MODE',					!DEBUG_MODE);
-			}
 			
 			# Find the Yaml Parser
 			if ( !defined('SFYAML_PATH') ) {
@@ -244,11 +238,19 @@ if ( !class_exists('Bootstrapr') ) {
 				unset($relative_path);
 			}
 	
-			# Apply our configuration
+			# Apply Our Configuration
 			foreach ( $configuration as $key => &$value ) {
 				$value = preg_replace('/\\<\\?\\=([a-zA-Z0-9_()]+)\\?\\>/e','\\1',trim($value));
 				if ( !defined($key) )
 					define($key,$value);
+			}
+			
+			# Apply Post Configuration
+			if ( !defined('DEBUG_MODE') ) {
+				define('DEBUG_MODE',						APPLICATION_ENV === 'development');
+			}
+			if ( !defined('PRODUCTION_MODE') ) {
+				define('PRODUCTION_MODE',					!DEBUG_MODE);
 			}
 		}
 	
