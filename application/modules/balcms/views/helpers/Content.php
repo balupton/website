@@ -125,7 +125,13 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$model = array_merge($params, $model);
 		
 		# Render
-		return $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/taglist/taglist'), $model);
+		$result = $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/taglist/taglist'), $model);
+		
+		# Clean
+		$TagList->free(true);
+		
+		# Return result
+		return $result;
 	}
 	
 	/**
@@ -153,6 +159,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 					$file = Bal_Doctrine_Core::getItem('File',$file);
 					if ( !$file || !$file->id ) break;
 					$text = $file->title;
+					$file->free(true);
 				}
 				$url = $this->view->url()->file($file)->toString();
 				break;
@@ -162,6 +169,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 				if ( !$content || !$content->id ) break;
 				$text = $content->title;
 				$url = $this->view->url()->content($content)->toString();
+				$content->free(true);
 				break;
 				
 			case $user:
@@ -169,6 +177,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 				if ( !$user || !$user->id ) break;
 				$text = $user->displayname;
 				$url = $this->view->url()->user($user)->toString();
+				$user->free(true);
 				break;
 		}
 		
@@ -259,7 +268,13 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$model = $this->_generateModel($params);
 		
 		# Render
-		return $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/contentlist/contentlist'), $model);
+		$result = $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/contentlist/contentlist'), $model);
+		
+		# Clean
+		//$model['ContentList']->free(true);
+		
+		# Return result
+		return $result;
 	}
 	
 	/**
@@ -288,6 +303,13 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		
 		# Render
 		return $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/eventlist/eventlist'), $model);
+		
+		# Clean
+		$EventsPast->free(true);
+		$EventsFuture->free(true);
+		
+		# Return result
+		return $result;
 	}
 	
 	/**

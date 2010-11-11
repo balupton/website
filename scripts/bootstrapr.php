@@ -29,7 +29,50 @@ if ( !class_exists('Bootstrapr') ) {
 			$this->$function();
 		}
 	
-	
+		/**
+		 * Convenient logging to profile the bootstrap
+		 */
+		public static function log ( $file, $line = null, $class = null, $function = null, $args = null ) {
+			if ( !defined('PROFILE_BOOTSTRAP') || !PROFILE_BOOTSTRAP ) return false;
+			if ( $line === null ) {
+				echo '<!--['.date('H:i:s:u').']:['.$file.']-->';
+			}
+			elseif ( $class === null ) {
+				echo '<!--['.date('H:i:s:u').']:['.$file.':'.$line.']-->';
+			}
+			else {
+				$vars = '';
+				if ( !empty($args) && is_array($args) ) {
+					foreach ( $args as $arg ) {
+						if ( is_array($arg) ) {
+							$vars .= 'Array('.count($arg).')';
+						}
+						elseif ( is_object($arg) ) {
+							$vars .= get_class($arg).'()';
+						}
+						else {
+							$vars .= var_export($arg,true);
+						}
+						$vars .= ', ';
+					}
+					$vars = substr($vars,0,-2);
+				}
+				echo
+				'<!--'.
+					'['.date('H:i:s:u').']:'.
+					'['.
+						($class?$class.'::':'').
+						($function?$function.'(':'').
+						$vars.
+						($function?')':'').
+					']:['.
+						$file.':'.$line.
+					']'.
+				'-->'."\n";
+			}
+			return true;
+		}
+		
 		/**
 		 * Prepares Basic Error Reporting
 		 */
@@ -138,6 +181,11 @@ if ( !class_exists('Bootstrapr') ) {
 				require_once(dirname(__FILE__).'/../config.php');
 			}
 		
+			# Prepare the environment
+			if ( !defined('APPLICATION_ENV') ) {
+				define('APPLICATION_ENV',					'development');
+			}
+			
 			# Define the core paths
 			if ( !defined('APPLICATION_ROOT_PATH') ) {
 				define('APPLICATION_ROOT_PATH',				realpath(dirname(__FILE__).'/..'));
@@ -163,31 +211,33 @@ if ( !class_exists('Bootstrapr') ) {
 			if ( !defined('LIBRARY_PATH') ) {
 				define('LIBRARY_PATH',						APPLICATION_ROOT_PATH.'/library');
 			}
-			if ( !defined('DEBUG_MODE') ) {
-				define('DEBUG_MODE',						false);
-			}
-			if ( !defined('PRODUCTION_MODE') ) {
-				define('PRODUCTION_MODE',					!DEBUG_MODE);
-			}
 			
 			# Find the Yaml Parser
 			if ( !defined('SFYAML_PATH') ) {
-				$temp = 'SymfonyComponents/YAML';
-				if ( defined('COMMON_PATH') && is_dir(COMMON_PATH.'/'.$temp) )
-					define('SFYAML_PATH',				COMMON_PATH.'/'.$temp);
-				elseif ( is_dir(COMMON_PATH.'/'.$temp) )
-					define('SFYAML_PATH',				COMMON_PATH.'/'.$temp);
-				elseif ( is_dir(LIBRARY_PATH.'/'.$temp) )
-					define('SFYAML_PATH',				LIBRARY_PATH.'/'.$temp);
-				else
-					define('SFYAML_PATH',				COMMON_PATH.'/'.$temp);
-				unset($temp);
+				$paths = array('SymfonyComponents/YAML/lib','SymfonyComponents/YAML');
+				$rootpaths = array('SymfonyComponents/YAML','SymfonyComponents/YAML');
+				$subpaths = array('', COMMON_PATH.'/', LIBRARY_PATH.'/');
+				
+				foreach ( $paths as $key => $path ) {
+					foreach ( $subpaths as $subpath ) {
+						$fullpath = $subpath.$path;
+						$rootpath = $subpath.$rootpaths[$key];
+						if ( is_dir($fullpath) ) {
+							define('SFYAML_PATH', $fullpath);
+							define('SFYAML_ROOT_PATH', $rootpath);
+							break 2;
+						}
+					}
+				}
+				
+				if ( !defined('SFYAML_PATH') ) {
+					define('SFYAML_ROOT_PATH', 	COMMON_PATH.'/SymfonyComponents/YAML');
+					define('SFYAML_PATH', 		SFYAML_ROOT_PATH.'/lib');
+				}
+				
+				unset($paths); unset($subpaths); unset($fullpath); unset($key);
 			}
 	
-			# Prepare the environment
-			if ( !defined('APPLICATION_ENV') ) {
-				define('APPLICATION_ENV',					'development');
-			}
 		}
 	
 		/**
@@ -231,11 +281,19 @@ if ( !class_exists('Bootstrapr') ) {
 				unset($relative_path);
 			}
 	
-			# Apply our configuration
+			# Apply Our Configuration
 			foreach ( $configuration as $key => &$value ) {
 				$value = preg_replace('/\\<\\?\\=([a-zA-Z0-9_()]+)\\?\\>/e','\\1',trim($value));
 				if ( !defined($key) )
 					define($key,$value);
+			}
+			
+			# Apply Post Configuration
+			if ( !defined('DEBUG_MODE') ) {
+				define('DEBUG_MODE',						APPLICATION_ENV === 'development');
+			}
+			if ( !defined('PRODUCTION_MODE') ) {
+				define('PRODUCTION_MODE',					!DEBUG_MODE);
 			}
 		}
 	

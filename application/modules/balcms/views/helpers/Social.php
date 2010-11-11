@@ -40,7 +40,7 @@ class Balcms_View_Helper_Social extends Zend_View_Helper_Abstract {
 			# We have a url
 			$url = $content;
 			$matches = array();
-			preg_match('/v[\/=]([a-zA-Z]+)/', $url, $matches);
+			preg_match('/v[\/=]([^&]+)/', $url, $matches);
 			$code = $matches[1];
 		} else {
 			$code = $content;

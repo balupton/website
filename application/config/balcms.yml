@@ -123,7 +123,7 @@ balcms: &balcms
     areaThemes:
         default: titan
         back: balcms
-        front: titan
+        front: albeo
     
     routing:
         defaults:
@@ -189,7 +189,12 @@ balcms: &balcms
             country: "Your Company's Country"
             postcode: "Your Company's Postcode"
     
-    compilers:
+    compiler:
+    	style:
+    		code: 'scaffold'
+    	script:
+    		code: 'closure-webservice'
+    	
         csscaffold:
             config:
                 system: "<?=CSSCAFFOLD_COMPILER_PATH?>/"

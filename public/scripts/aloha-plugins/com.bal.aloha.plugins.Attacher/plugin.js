@@ -23,12 +23,12 @@
 	
 	// Create
 	GENTICS.Aloha.Attacher = new GENTICS.Aloha.Plugin('com.bal.aloha.plugins.Attacher');
-	eu.iksproject.LoaderPlugin.loadAsset('com.bal.aloha.plugins.Attacher', 'resources/style', 'css');
+	//eu.iksproject.LoaderPlugin.loadAsset('com.bal.aloha.plugins.Attacher', 'resources/style', 'css');
 	
 	// Extend
 	jQuery.extend(GENTICS.Aloha.Attacher,{
 		scope: 'GENTICS.Aloha.continuoustext',
-		languages: ['en','de'],
+		//languages: ['en','de'],
 		Buttons: null,
 		Events: null,
 		Modals: null,

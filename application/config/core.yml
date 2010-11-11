@@ -35,12 +35,16 @@ balcms: &balcms
         auto
 
     # Libraries
+    DOCTRINE_ROOT_PATH: >
+        <?=COMMON_PATH?>/doctrine-v1.2.1-bal
     DOCTRINE_PATH: >
-        <?=COMMON_PATH?>/doctrine1/lib
+        <?=COMMON_PATH?>/doctrine-v1.2.1-bal/lib
     DOCTRINE_EXTENSIONS_PATH: >
         <?=COMMON_PATH?>/doctrine-extensions
     ZEND_PATH: >
-        <?=COMMON_PATH?>/zend-v1.11.0-lib
+        <?=COMMON_PATH?>/zend-v1.10.8-bal-lib
+    BALPHP_ROOT_PATH: >
+        <?=COMMON_PATH?>/balphp-v1.0
     BALPHP_PATH: >
         <?=COMMON_PATH?>/balphp-v1.0/lib
     HTMLPURIFIER_PATH: >
@@ -155,6 +159,8 @@ balcms: &balcms
     # Cache Paths
     CACHE_PATH: >
         <?=DATA_PATH?>/cache
+    CACHE_LOCALE_PATH: >
+        <?=CACHE_PATH?>/locale
     CACHE_SCRIPTS_PATH: >
         <?=MEDIA_PATH?>/cache/scripts
     CACHE_SCRIPTS_URL: >
@@ -173,6 +179,8 @@ balcms: &balcms
         <?=PUBLIC_STYLES_PATH?>/scaffold.php?>
     CSSCAFFOLD_COMPILER_PATH: >
     	<?=PUBLIC_STYLES_PATH?>/csscaffold.php?>
+    CLOSURE_COMPILER_PATH: >
+    	/Users/balupton/bin/closure.jar
     
 production: &production
     <<: *balcms

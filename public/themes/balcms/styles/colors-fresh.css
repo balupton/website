@@ -284,6 +284,7 @@ input[type=submit] {
 	color: #464646;
 }
 
+.button.hover,
 .button:hover,
 .button-secondary:hover,
 .submit input:hover,
@@ -299,6 +300,7 @@ input[type=submit]:hover {
 	background: #f2f2f2 url(../images/white-grad.png) repeat-x scroll left top;
 }
 
+.button.active,
 .button:active,
 .submit input:active,
 .button-secondary:active {
@@ -319,8 +321,10 @@ input[type=submit]:hover {
 	background: #21759b url(../images/button-grad-active.png) repeat-x scroll left top !important;
 }
 
+.button.disabled,
 .button[disabled],
 .button:disabled,
+.button-secondary.disabled,
 .button-secondary[disabled],
 .button-secondary:disabled,
 a.button.disabled {
@@ -328,6 +332,7 @@ a.button.disabled {
 	border-color: #ccc;
 }
 
+.button-primary.disabled,
 .button-primary[disabled],
 .button-primary:disabled {
 	color: #2fa0d5 !important;
@@ -361,6 +366,7 @@ div.dashboard-widget-submit input:hover,
 	border-color: #dfdfdf;
 }
 
+.button-primary.hover,
 .button-primary:hover,
 #login form .submit input:hover {
 	border-color: #13455b !important;

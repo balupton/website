@@ -25,6 +25,7 @@
 "logout": "Logout"
 "login": "Login"
 "other": "other"
+"search": "Search"
 
 # Times
 "time-ago": "%s %s %s"
@@ -33,7 +34,7 @@
 
 # Errors
 "The credentials that were supplied are invalid": "Incorrect username and/or password."
-"The indentity could not be found": "Incorrect username and/or password."
+"The identity could not be found": "Incorrect username and/or password."
 "error-unknown": "An error has occurred."
 "error-application": "Application Error"
 "error-404": "Page Not Found"
@@ -47,3 +48,20 @@
 "error-doctrine-validation-timestamp": "<em>$field</em> must be a valid <em>date and time</em>."
 "error-doctrine-validation-unique": "A <em>$singular</em> item already exists with the same <em>$field</em>."
 "error-doctrine-validation-length": "<em>$field</em> must not be more than <em>$length</em> characters long."
+
+# Content
+"article-ancestors-home-label": "Home"
+"article-ancestors-home-title": "Home"
+"article-footer-title": "The End."
+"article-published-title": "Published"
+"article-published-description": "Published on"
+"article-author-title": "About the Author"
+"article-author-description": "Written by"
+"article-comments-title": "Comments"
+"article-comments-noscript": "Please enable JavaScript to view the <a href="%s">comments powered by Disqus.</a>"
+"article-continue-title": "Continue Reading"
+"article-continue-description": "View the entire article"
+"article-avatar-title": "View Image"
+"article-avatar-alt": "%s's Image"
+"article-author-title": "View Image"
+"article-author-alt": "%s's Image"

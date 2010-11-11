@@ -1169,7 +1169,7 @@ User:
         description: |
             <a href="http://www.balupton.com" title="Visit his Website">Benjamin "balupton" Lupton</a> has been passionately freelancing since 2006, the same time he started university at 15.
             Working outdoors he believes in graceful clean code and specializes with <a href="http://en.wikipedia.org/wiki/Web_2.0" title="Learn more about Web 2.0">Web 2.0</a> technologies such as <a href="http://en.wikipedia.org/wiki/Ajax_(programming)" title="Learn more about Ajax">Ajax</a>, <a href="http://jquery.com" title="Learn more about jQuery">jQuery</a>, <a href="http://mootools.net/" title="Learn more about MooTools">MooTools</a>, <a href="http://framework.zend.com/" title="Learn more about Zend Framework">Zend Framework</a> and <a href="http://www.doctrine-project.org/" title="Learn more about Doctrine ORM">Doctrine ORM</a>.
-            He's armed with an armanda of <a href="http://www.balupton.com/projects" title="View his Open-Source Solutions">rich open-source solutions</a> aimed at pushing your websites further.
+            He's armed with an armada of <a href="http://www.balupton.com/projects" title="View his Open-Source Solutions">rich open-source solutions</a> aimed at pushing your websites further.
             Learn more about him at his <a href="http://www.balupton.com" title="Visit his Website">website</a>, or follow him on <a href="http://twitter.com/balupton" title="Follow Balupton">twitter</a>.
         Roles:
             - Role_SuperAdmin
@@ -1207,4 +1207,3 @@ Role:
             - Permission_Media
             - Permission_Subscription
             - Permission_User
-            

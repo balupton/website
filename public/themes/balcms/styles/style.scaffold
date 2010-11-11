@@ -1,0 +1,4 @@
+.button.small {
+	font-size: 11px;
+	padding: .2em 1em .275em;
+}

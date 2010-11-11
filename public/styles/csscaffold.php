@@ -6,7 +6,7 @@ $Bootstrapr->bootstrap('application-configuration');
 
 # Scaffold Config
 if ( !defined('SCAFFOLD_PRODUCTION') ) define('SCAFFOLD_PRODUCTION',PRODUCTION_MODE);
-$config = $GLOBALS['ApplicationConfiguration']['compilers']['scaffold']['config'];
+$config = $GLOBALS['ApplicationConfiguration']['compiler']['scaffold']['config'];
 $options = array();
 
 # Load Scaffold
