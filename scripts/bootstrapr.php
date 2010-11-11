@@ -29,7 +29,50 @@ if ( !class_exists('Bootstrapr') ) {
 			$this->$function();
 		}
 	
-	
+		/**
+		 * Convenient logging to profile the bootstrap
+		 */
+		public static function log ( $file, $line = null, $class = null, $function = null, $args = null ) {
+			if ( !defined('PROFILE_BOOTSTRAP') || !PROFILE_BOOTSTRAP ) return false;
+			if ( $line === null ) {
+				echo '<!--['.date('H:i:s:u').']:['.$file.']-->';
+			}
+			elseif ( $class === null ) {
+				echo '<!--['.date('H:i:s:u').']:['.$file.':'.$line.']-->';
+			}
+			else {
+				$vars = '';
+				if ( !empty($args) && is_array($args) ) {
+					foreach ( $args as $arg ) {
+						if ( is_array($arg) ) {
+							$vars .= 'Array('.count($arg).')';
+						}
+						elseif ( is_object($arg) ) {
+							$vars .= get_class($arg).'()';
+						}
+						else {
+							$vars .= var_export($arg,true);
+						}
+						$vars .= ', ';
+					}
+					$vars = substr($vars,0,-2);
+				}
+				echo
+				'<!--'.
+					'['.date('H:i:s:u').']:'.
+					'['.
+						($class?$class.'::':'').
+						($function?$function.'(':'').
+						$vars.
+						($function?')':'').
+					']:['.
+						$file.':'.$line.
+					']'.
+				'-->'."\n";
+			}
+			return true;
+		}
+		
 		/**
 		 * Prepares Basic Error Reporting
 		 */
