@@ -33,4 +33,4 @@ update:
 	git checkout balcms; git pull balcms master; git checkout dev; git merge balcms;
 
 deploy:
-	git checkout master; git merge dev; git checkout dev; git push --all; git push beanstalk --all; git push springloops --all;
+	git checkout master; git merge dev; git checkout dev; git push --all;
