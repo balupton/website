@@ -32,7 +32,9 @@ foreach ( $Contents as $Content ) {
 	else {
 		echo 'Cron: Ignored Content ['.$Content->code.'] Cache'."\n";
 	}
+	$Content->free(false);
 }
+$Contents->free(true);
 
 # Update their Cache
 echo "\n".'Cron: Second Content Run:'."\n";
@@ -44,7 +46,9 @@ foreach ( $Contents as $Content ) {
 	else {
 		echo 'Cron: Ignored Content ['.$Content->code.'] Cache'."\n";
 	}
+	$Content->free(false);
 }
+$Contents->free(true);
 
 # ==========================================
 # Send Pending Messages
@@ -66,9 +70,10 @@ if ( !count($Messages) ) {
 	foreach ( $Messages as $Message ) {
 		$Message->send()->save();
 		echo 'Cron: Sent Message ['.$Message->code.'] to ['.$Message->UserFor->email.']'."\n";
+		$Message->free(false);
 	}
 }
-
+$Messages->free(true);
 
 # ==========================================
 # Complete
