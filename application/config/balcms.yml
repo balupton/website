@@ -18,7 +18,9 @@ balcms: &balcms
             layoutPath: "<?=APPLICATION_PATH?>/layouts/scripts"
         
     data:
-        connection_string: sqlite:///<?=DATABASES_PATH?>/<?=APPLICATION_ENV?>.db
+        connection_string: "sqlite:///<?=DATABASES_PATH?>/<?=APPLICATION_ENV?>.db"
+        cache_dsn: "sqlite:///<?=CACHE_PATH?>/<?=APPLICATION_ENV?>.db"
+        cache_lifespan: 3600
         models_path: "<?=MODELS_PATH?>"
         dump_path: "<?=DATA_DUMP_PATH?>"
         fixtures_path: "<?=DATA_FIXTURES_PATH?>"
@@ -45,11 +47,12 @@ balcms: &balcms
                 classPrefixFiles: false
         autoloader: "zend"
         compile:
-            generate: true
+            generate: false
             use: false
             path: "<?=LIBRARY_PATH?>/Doctrine.compiled.php"
             drivers:
                 - "mysql"
+                - "sqlite"
     
     locale:
         locale: "en_AU"
