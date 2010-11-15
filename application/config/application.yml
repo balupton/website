@@ -113,7 +113,7 @@ development: &development
         friendly: false
         throw: false
     data:
-        connection_string: "mysql://root:1234@localhost/balsite;unix_socket=/tmp/mysql.sock"
+        connection_string: "mysql://root:1234@localhost/balsite;unix_socket=/usr/local/zend/mysql/tmp/mysql.sock"
         models:
             generate: true
         compile:
@@ -124,6 +124,6 @@ development: &development
             name: "Benjamin Lupton: Development"
             address: "development.system@balupton.com"
     log:
-        store: true
+        store: false
     editor:
         code: aloha
