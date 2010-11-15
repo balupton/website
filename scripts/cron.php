@@ -17,14 +17,13 @@ $GLOBALS['Application']->bootstrap('ScriptCron');
 # Retrieve Content to Update
 $Contents = Doctrine_Query::create()
 	->from('Content c')
-	->where('c.last_refreshed IS NULL')
-	->orWhere('c.last_refreshed < ?', doctrine_timestamp(strtotime('-2 days')))
-	->orWhere('c.last_refreshed <= c.created_at')
+	->orderBy('c.last_refreshed ASC')
 	->limit(25)
 	->execute()
 	;
 
 # Update their Cache
+echo "\n".'Cron: First Content Run:'."\n";
 foreach ( $Contents as $Content ) {
 	if ( $Content->refresh() ) {
 		echo 'Cron: Updated Content ['.$Content->code.'] Cache'."\n";
@@ -35,9 +34,21 @@ foreach ( $Contents as $Content ) {
 	}
 }
 
+# Update their Cache
+echo "\n".'Cron: Second Content Run:'."\n";
+foreach ( $Contents as $Content ) {
+	if ( $Content->refresh() ) {
+		echo 'Cron: Updated Content ['.$Content->code.'] Cache'."\n";
+		$Content->save();
+	}
+	else {
+		echo 'Cron: Ignored Content ['.$Content->code.'] Cache'."\n";
+	}
+}
 
 # ==========================================
 # Send Pending Messages
+echo "\n".'Cron: Sending Any Pending Messages:'."\n";
 
 # Retrieve Messages to Send
 $Messages = Doctrine_Query::create()
@@ -49,13 +60,17 @@ $Messages = Doctrine_Query::create()
 	;
 
 # Send these Messages
-foreach ( $Messages as $Message ) {
-	$Message->send()->save();
-	echo 'Cron: Sent Message ['.$Message->code.'] to ['.$Message->UserFor->email.']'."\n";
+if ( !count($Messages) ) {
+	echo 'Cron: No Pending Messages To Be Sent'."\n";
+} else {
+	foreach ( $Messages as $Message ) {
+		$Message->send()->save();
+		echo 'Cron: Sent Message ['.$Message->code.'] to ['.$Message->UserFor->email.']'."\n";
+	}
 }
 
 
 # ==========================================
 # Complete
 
-echo 'Cron: Completed'."\n";
+echo "\n".'Cron: Completed'."\n";
