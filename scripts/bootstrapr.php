@@ -110,7 +110,7 @@ if ( !class_exists('Bootstrapr') ) {
 			} else {
 				$_SERVER['SCRIPT_FILENAME']		= realpath($_SERVER['SCRIPT_FILENAME']);
 			}
-			$_SERVER['DOCUMENT_ROOT'] = realpath($_SERVER['SCRIPT_FILENAME']);
+			$_SERVER['SCRIPT_FILENAME'] = realpath($_SERVER['SCRIPT_FILENAME']);
 			
 			# Server Port
 			if ( empty($_SERVER['SERVER_PORT']) ) {
