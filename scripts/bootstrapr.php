@@ -102,6 +102,7 @@ if ( !class_exists('Bootstrapr') ) {
 				// $root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['PWD']);
 				// $root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['SCRIPT_FILENAME']);
 			}
+			$_SERVER['DOCUMENT_ROOT'] = realpath($_SERVER['DOCUMENT_ROOT']);
 
 			# Script Filename
 			if ( empty($_SERVER['SCRIPT_FILENAME']) ) {
@@ -109,6 +110,7 @@ if ( !class_exists('Bootstrapr') ) {
 			} else {
 				$_SERVER['SCRIPT_FILENAME']		= realpath($_SERVER['SCRIPT_FILENAME']);
 			}
+			$_SERVER['DOCUMENT_ROOT'] = realpath($_SERVER['SCRIPT_FILENAME']);
 			
 			# Server Port
 			if ( empty($_SERVER['SERVER_PORT']) ) {
@@ -280,7 +282,15 @@ if ( !class_exists('Bootstrapr') ) {
 				$configuration['BASE_URL'] = $relative_path;
 				unset($relative_path);
 			}
-	
+			if ( !defined('DEBUG_MODE') && trim($configuration['DEBUG_MODE']) === 'auto' ) {
+				define('DEBUG_MODE',		APPLICATION_ENV === 'development');
+				unset($configuration['DEBUG_MODE']);
+			}
+			if ( !defined('PRODUCTION_MODE') && trim($configuration['PRODUCTION_MODE']) === 'auto' ) {
+				define('PRODUCTION_MODE',	DEBUG_MODE);
+				unset($configuration['PRODUCTION_MODE']);
+			}
+			
 			# Apply Our Configuration
 			foreach ( $configuration as $key => &$value ) {
 				$value = preg_replace('/\\<\\?\\=([a-zA-Z0-9_()]+)\\?\\>/e','\\1',trim($value));
@@ -288,13 +298,6 @@ if ( !class_exists('Bootstrapr') ) {
 					define($key,$value);
 			}
 			
-			# Apply Post Configuration
-			if ( !defined('DEBUG_MODE') ) {
-				define('DEBUG_MODE',						APPLICATION_ENV === 'development');
-			}
-			if ( !defined('PRODUCTION_MODE') ) {
-				define('PRODUCTION_MODE',					!DEBUG_MODE);
-			}
 		}
 	
 		/**

@@ -22,11 +22,10 @@ balcms: &balcms
         <?=CONFIG_COMPILED_PATH?>/routes.data
 
     # Configuration
-    DEBUG_SECRET: >
-        <?=md5(APPLICATION_ROOT_PATH)?>
-    DEBUG_MODE: >
-        auto
+    DEBUG_SECRET: <?=md5(APPLICATION_ROOT_PATH)?>
     PROFILE_MODE: false
+    DEBUG_MODE: auto
+    PRODUCTION_MODE: auto
 
     # Urls
     ROOT_URL: >
