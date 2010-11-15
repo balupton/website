@@ -220,6 +220,7 @@ class Cli {
 				'title'			=> 'jQuery Ajaxy',
 				'source'		=> 'http://github.com/balupton/jquery-ajaxy.git',
 				'destination'	=> JQUERY_AJAXY_PATH,
+				'branch'		=> 'v1.7',
 				'vcs'			=> 'git'
 			),
 			array(
@@ -349,7 +350,7 @@ class Cli {
 				
 				# Branch
 				if ( $vcs === 'git' && $branch && $branch !== 'master' ) {
-					`cd ${destination} ; git checkout ${branch} ; cd ${APPLICATION_ROOT_PATH}`;
+					`cd ${destination} ; git stash save "before-reset" ; git reset --hard ; git checkout ${branch} ; cd ${APPLICATION_ROOT_PATH}`;
 				}
 				
 			}
@@ -359,7 +360,7 @@ class Cli {
 				
 				# Update
 				if ( $vcs === 'git' )
-					`cd ${destination} ; git pull origin ${branch}; cd ${APPLICATION_ROOT_PATH}`;
+					`cd ${destination} ; git checkout ${branch} ; git pull origin ${branch}; cd ${APPLICATION_ROOT_PATH}`;
 			}
 			
 			# Symlinks
