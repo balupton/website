@@ -127,7 +127,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		# Render
 		$result = $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/taglist/taglist'), $model);
 		
-		# Clean
+		# Free
 		$TagList->free(true);
 		
 		# Return result
@@ -148,6 +148,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$innerContent = delve($params,'innerContent',null);
 		if ( $content === $innerContent ) $content = null;
 		$result = $text = $url = '';
+		$free = false;
 		
 		# Handle
 		switch ( true ) {
@@ -156,29 +157,55 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 					$text = basename($file);
 				}
 				else {
-					$file = Bal_Doctrine_Core::getItem('File',$file);
+					# Resolve
+					if ( !Bal_Doctrine_Core::isRecord('File',$file) ) {
+						$file = Bal_Doctrine_Core::getItem('File',$file);
+						$free = $file;
+					}
+					
+					# Check
 					if ( !$file || !$file->id ) break;
+					
+					# Fetch
 					$text = $file->title;
-					$file->free(true);
 				}
 				$url = $this->view->url()->file($file)->toString();
 				break;
 				
 			case $content:
-				$content = Bal_Doctrine_Core::getItem('Content',$content);
+				# Resolve
+				if ( !Bal_Doctrine_Core::isRecord('Content',$content) ) {
+					$content = Bal_Doctrine_Core::getItem('Content',$content);
+					$free = $content;
+				}
+				
+				# Check
 				if ( !$content || !$content->id ) break;
+				
+				# Fetch
 				$text = $content->title;
 				$url = $this->view->url()->content($content)->toString();
-				$content->free(true);
 				break;
 				
 			case $user:
-				$user = Bal_Doctrine_Core::getItem('User',$user);
+				# Resolve
+				if ( !Bal_Doctrine_Core::isRecord('User',$user) ) {
+					$user = Bal_Doctrine_Core::getItem('User',$user);
+					$free = $user;
+				}
+				
+				# Check
 				if ( !$user || !$user->id ) break;
+				
+				# Fetch
 				$text = $user->displayname;
 				$url = $this->view->url()->user($user)->toString();
-				$user->free(true);
 				break;
+		}
+		
+		# Free
+		if ( $free ) {
+			// $free->free(false);
 		}
 		
 		# Prepare
@@ -270,8 +297,8 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		# Render
 		$result = $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/contentlist/contentlist'), $model);
 		
-		# Clean
-		//$model['ContentList']->free(true);
+		# Free
+		// (if not commented out, fails) $model['ContentList']->free(true);
 		
 		# Return result
 		return $result;
@@ -304,7 +331,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		# Render
 		return $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/eventlist/eventlist'), $model);
 		
-		# Clean
+		# Free
 		$EventsPast->free(true);
 		$EventsFuture->free(true);
 		
