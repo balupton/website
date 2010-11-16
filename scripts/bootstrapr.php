@@ -102,6 +102,7 @@ if ( !class_exists('Bootstrapr') ) {
 				// $root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['PWD']);
 				// $root_dir = preg_replace('/scripts\/?.*$/', '', $_SERVER['SCRIPT_FILENAME']);
 			}
+			$_SERVER['DOCUMENT_ROOT'] = realpath($_SERVER['DOCUMENT_ROOT']);
 
 			# Script Filename
 			if ( empty($_SERVER['SCRIPT_FILENAME']) ) {
@@ -109,6 +110,7 @@ if ( !class_exists('Bootstrapr') ) {
 			} else {
 				$_SERVER['SCRIPT_FILENAME']		= realpath($_SERVER['SCRIPT_FILENAME']);
 			}
+			$_SERVER['SCRIPT_FILENAME'] = realpath($_SERVER['SCRIPT_FILENAME']);
 			
 			# Server Port
 			if ( empty($_SERVER['SERVER_PORT']) ) {
@@ -137,7 +139,7 @@ if ( !class_exists('Bootstrapr') ) {
 			
 			# CLI
 			if ( !isset($_SERVER['CLI']) ) {
-				$_SERVER['CLI'] = empty($_SERVER['HTTP_USER_AGENT']);
+				$_SERVER['CLI'] = empty($_SERVER['HTTP_USER_AGENT']) && empty($_SERVER['HTTP_HOST']);
 			}
 			
 			# Server Name

@@ -5,6 +5,23 @@ if ( empty($GLOBALS['Application']) ) {
 	header('Content-Type: text/plain');
 	# Bootstrap
 	require_once(dirname(__FILE__).'/bootstrapr.php');
+	$GLOBALS['Bootstrapr']->bootstrap('configuration');
+	# Determine if we need more memory
+	$memory_has = preg_replace('/[^0-9]/','',ini_get('memory_limit'));
+	$memory_required = 64;
+	if ( $memory_has < $memory_required ) {
+		if ( $_SERVER['CLI'] ) {
+			echo
+				"CLI does not have enough memory, sending a HTTP request...\n\n".
+				file_get_contents(ROOT_URL.BASE_URL.'/scripts/cron.php');
+			die;
+		}
+		else {
+			echo
+				"HTTP does not have enough memory, trying anyway...\n\n";
+		}
+	}
+	# Continue with Bootstrap
 	$GLOBALS['Bootstrapr']->bootstrap('zend-application');
 }
 
@@ -22,7 +39,7 @@ $ContentsQuery = Doctrine_Query::create()
 	;
 
 # Retrieve Content to Update
-echo "\n".'Cron: First Content Run:'."\n";
+echo 'Cron: First Content Run:'."\n";
 $Contents = $ContentsQuery->execute();
 
 # Update their Cache
