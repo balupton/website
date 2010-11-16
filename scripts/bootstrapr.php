@@ -139,7 +139,7 @@ if ( !class_exists('Bootstrapr') ) {
 			
 			# CLI
 			if ( !isset($_SERVER['CLI']) ) {
-				$_SERVER['CLI'] = empty($_SERVER['HTTP_USER_AGENT']);
+				$_SERVER['CLI'] = empty($_SERVER['HTTP_USER_AGENT']) && empty($_SERVER['HTTP_HOST']);
 			}
 			
 			# Server Name

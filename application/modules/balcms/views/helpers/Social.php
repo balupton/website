@@ -68,7 +68,11 @@ class Balcms_View_Helper_Social extends Zend_View_Helper_Abstract {
 		$json_url = $oembed_endpoint.'.json?url='.rawurlencode($video_url);
 		
 		# Load in the oEmbed Object
-		$Oembed = json_decode(file_get_contents($json_url));
+		$Oembed = @file_get_contents($json_url);
+		if ( !$Oembed ) {
+			return '<p>The Vimeo item could not be found.</p>';
+		}
+		$Oembed = json_decode($Oembed);
 
 		# Apply the Model
 		$model = compact('Oembed');
