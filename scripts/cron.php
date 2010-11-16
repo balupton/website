@@ -5,6 +5,23 @@ if ( empty($GLOBALS['Application']) ) {
 	header('Content-Type: text/plain');
 	# Bootstrap
 	require_once(dirname(__FILE__).'/bootstrapr.php');
+	$GLOBALS['Bootstrapr']->bootstrap('configuration');
+	# Determine if we need more memory
+	$memory_has = preg_replace('/[^0-9]/','',ini_get('memory_limit'));
+	$memory_required = 64;
+	if ( $memory_has < $memory_required ) {
+		if ( $_SERVER['CLI'] ) {
+			echo
+				"CLI does not have enough memory, sending a HTTP request...\n\n".
+				file_get_contents(ROOT_URL.BASE_URL.'/scripts/cron.php');
+			die;
+		}
+		else {
+			echo
+				"HTTP does not have enough memory, trying anyway...\n\n";
+		}
+	}
+	# Continue with Bootstrap
 	$GLOBALS['Bootstrapr']->bootstrap('zend-application');
 }
 
@@ -15,29 +32,17 @@ $GLOBALS['Application']->bootstrap('ScriptCron');
 # Refresh Content Cache
 
 # Retrieve Content to Update
-$Contents = Doctrine_Query::create()
+$ContentsQuery = Doctrine_Query::create()
 	->from('Content c')
 	->orderBy('c.last_refreshed ASC')
 	->limit(25)
-	->execute()
 	;
 
-# Update their Cache
-echo "\n".'Cron: First Content Run:'."\n";
-foreach ( $Contents as $Content ) {
-	if ( $Content->refresh() ) {
-		echo 'Cron: Updated Content ['.$Content->code.'] Cache'."\n";
-		$Content->save();
-	}
-	else {
-		echo 'Cron: Ignored Content ['.$Content->code.'] Cache'."\n";
-	}
-	$Content->free(false);
-}
-$Contents->free(true);
+# Retrieve Content to Update
+echo 'Cron: First Content Run:'."\n";
+$Contents = $ContentsQuery->execute();
 
 # Update their Cache
-echo "\n".'Cron: Second Content Run:'."\n";
 foreach ( $Contents as $Content ) {
 	if ( $Content->refresh() ) {
 		echo 'Cron: Updated Content ['.$Content->code.'] Cache'."\n";
@@ -46,9 +51,7 @@ foreach ( $Contents as $Content ) {
 	else {
 		echo 'Cron: Ignored Content ['.$Content->code.'] Cache'."\n";
 	}
-	$Content->free(false);
 }
-$Contents->free(true);
 
 # ==========================================
 # Send Pending Messages
@@ -70,10 +73,10 @@ if ( !count($Messages) ) {
 	foreach ( $Messages as $Message ) {
 		$Message->send()->save();
 		echo 'Cron: Sent Message ['.$Message->code.'] to ['.$Message->UserFor->email.']'."\n";
-		$Message->free(false);
 	}
 }
-$Messages->free(true);
+
+// When doing a second round, it will cause the tags to delete. So we don't do a second round.
 
 # ==========================================
 # Complete
