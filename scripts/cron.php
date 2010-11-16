@@ -15,29 +15,17 @@ $GLOBALS['Application']->bootstrap('ScriptCron');
 # Refresh Content Cache
 
 # Retrieve Content to Update
-$Contents = Doctrine_Query::create()
+$ContentsQuery = Doctrine_Query::create()
 	->from('Content c')
 	->orderBy('c.last_refreshed ASC')
 	->limit(25)
-	->execute()
 	;
 
-# Update their Cache
+# Retrieve Content to Update
 echo "\n".'Cron: First Content Run:'."\n";
-foreach ( $Contents as $Content ) {
-	if ( $Content->refresh() ) {
-		echo 'Cron: Updated Content ['.$Content->code.'] Cache'."\n";
-		$Content->save();
-	}
-	else {
-		echo 'Cron: Ignored Content ['.$Content->code.'] Cache'."\n";
-	}
-	$Content->free(false);
-}
-$Contents->free(true);
+$Contents = $ContentsQuery->execute();
 
 # Update their Cache
-echo "\n".'Cron: Second Content Run:'."\n";
 foreach ( $Contents as $Content ) {
 	if ( $Content->refresh() ) {
 		echo 'Cron: Updated Content ['.$Content->code.'] Cache'."\n";
@@ -46,9 +34,7 @@ foreach ( $Contents as $Content ) {
 	else {
 		echo 'Cron: Ignored Content ['.$Content->code.'] Cache'."\n";
 	}
-	$Content->free(false);
 }
-$Contents->free(true);
 
 # ==========================================
 # Send Pending Messages
@@ -70,10 +56,10 @@ if ( !count($Messages) ) {
 	foreach ( $Messages as $Message ) {
 		$Message->send()->save();
 		echo 'Cron: Sent Message ['.$Message->code.'] to ['.$Message->UserFor->email.']'."\n";
-		$Message->free(false);
 	}
 }
-$Messages->free(true);
+
+// When doing a second round, it will cause the tags to delete. So we don't do a second round.
 
 # ==========================================
 # Complete
