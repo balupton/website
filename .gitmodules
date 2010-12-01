@@ -1,6 +1,3 @@
-[submodule "public/scripts/aloha-editor"]
-	path = public/scripts/aloha-editor
-	url = http://github.com/balupton/Aloha-Editor.git
 [submodule "public/scripts/jquery-ajaxy"]
 	path = public/scripts/jquery-ajaxy
 	url = http://github.com/balupton/jquery-ajaxy.git

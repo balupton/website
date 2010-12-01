@@ -210,13 +210,6 @@ class Cli {
 		# Define our Advanced Resources
 		$resources = array(
 			array(
-				'title'			=> 'Aloha Editor',
-				'source'		=> 'http://github.com/balupton/Aloha-Editor.git',
-				'destination'	=> ALOHA_EDITOR_PATH,
-				'vcs'			=> 'git',
-				'submodules'	=> true
-			),
-			array(
 				'title'			=> 'jQuery Ajaxy',
 				'source'		=> 'http://github.com/balupton/jquery-ajaxy.git',
 				'destination'	=> JQUERY_AJAXY_PATH,
