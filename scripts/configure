@@ -285,6 +285,9 @@ class Cli {
 			$symlinks = array();
 			extract($resource);
 			
+			# Ensure
+			if ( empty($branch) ) $branch = 'master';
+			
 			# Check
 			if ( is_file($destination) ) {
 				unlink($destination);
@@ -335,7 +338,7 @@ class Cli {
 				`cd ${APPLICATION_ROOT_PATH} ; ${command} ${source} ${destinationRelative}`;
 				
 				# Branch
-				if ( $vcs === 'git' && $branch && $branch !== 'master' ) {
+				if ( $vcs === 'git' ) {
 					`cd ${destination} ; git stash save "before-reset" ; git reset --hard ; git checkout ${branch} ; cd ${APPLICATION_ROOT_PATH}`;
 				}
 				
