@@ -12,14 +12,6 @@ application/data/logs/paypal
 application/data/cache
 application/models/Bal
 application/models/Base
-common/balphp-v1.0
-common/csscaffold
-common/scaffold
-common/doctrine-extensions
-common/doctrine-v1.2.3-lib
-common/htmlpurifier-v4.2.0-lib
-common/SymfonyComponents
-common/zend-v1.10.7-lib
 library/Bal
 library/Doctrine
 library/Doctrine.php
