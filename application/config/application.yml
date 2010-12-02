@@ -15,7 +15,7 @@ production: &production
                     ssl: "tls"
     
     data:
-        connection_string: "mysql://db113264:sunkanma12@internal-db.s113264.gridserver.com/db113264_balsite"
+        connection_string: "mysql://balupton_balsite:CIhbTIPwW7Ly@localhost/balupton_balsite"
     
     site:
         name: "Benjamin Lupton"

@@ -26,7 +26,8 @@ balcms: &balcms
     PROFILE_MODE: false
     DEBUG_MODE: auto
     PRODUCTION_MODE: auto
-
+	FREE_RESOURCES: false
+	
     # Urls
     ROOT_URL: >
         http://<?=HTTP_HOST?>

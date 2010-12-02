@@ -128,7 +128,9 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$result = $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/taglist/taglist'), $model);
 		
 		# Free
-		$TagList->free(true);
+		if ( FREE_RESOURCES ) {
+			$TagList->free(true);
+		}
 		
 		# Return result
 		return $result;
@@ -204,7 +206,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		}
 		
 		# Free
-		if ( $free ) {
+		if ( $free && FREE_RESOURCES ) {
 			// $free->free(false);
 		}
 		
@@ -298,7 +300,9 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		$result = $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/contentlist/contentlist'), $model);
 		
 		# Free
-		// (if not commented out, fails) $model['ContentList']->free(true);
+		if ( FREE_RESOURCES ) {
+			// (if not commented out, fails) $model['ContentList']->free(true);
+		}
 		
 		# Return result
 		return $result;
@@ -332,8 +336,10 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 		return $this->view->getHelper('widget')->renderWidgetView(delve($params,'partial','content/eventlist/eventlist'), $model);
 		
 		# Free
-		$EventsPast->free(true);
-		$EventsFuture->free(true);
+		if ( FREE_RESOURCES ) {
+			$EventsPast->free(true);
+			$EventsFuture->free(true);
+		}
 		
 		# Return result
 		return $result;
