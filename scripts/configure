@@ -238,7 +238,7 @@ class Cli {
 		
 		# Update Submodules
 		echo "\n\nInstalling Submodules...\n";
-		`cd ${APPLICATION_ROOT_PATH}; git submodule init; git submodule update; git submodule foreach 'git submodule init; git submodule update;'`;
+		//`cd ${APPLICATION_ROOT_PATH}; git submodule update; git submodule init; git submodule update; git submodule foreach 'git submodule update; git submodule init; git submodule update;'`;
 		
 		# --------------------------
 		
@@ -336,21 +336,15 @@ class Cli {
 				
 				# Fetch
 				`cd ${APPLICATION_ROOT_PATH} ; ${command} ${source} ${destinationRelative}`;
-				
-				# Branch
-				if ( $vcs === 'git' ) {
-					`cd ${destination} ; git stash save "before-reset" ; git reset --hard ; git checkout ${branch} ; cd ${APPLICATION_ROOT_PATH}`;
-				}
-				
 			}
 			else {
 				# Exists
 				echo "\nThe Resource [${title}] is already installed at [${destination}].\n";
-				
-				# Update
-				if ( $vcs === 'git' )
-					`cd ${destination} ; git checkout ${branch} ; git pull origin ${branch}; cd ${APPLICATION_ROOT_PATH}`;
 			}
+			
+			# Ensure Correct Branch
+			if ( $vcs === 'git' )
+				`cd ${destination}; git stash save "before-reset"; git reset --hard; git branch ${branch}-old; git reset --hard; git checkout ${branch}-old; git branch -D ${branch}; git checkout -t origin/${branch}; git checkout ${branch}; git reset --hard; git branch -D ${branch}-old; git pull origin ${branch}; cd ${APPLICATION_ROOT_PATH}`;
 			
 			# Symlinks
 			foreach ( $symlinks as $symlink ) {
