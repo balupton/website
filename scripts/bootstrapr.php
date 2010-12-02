@@ -166,9 +166,10 @@ if ( !class_exists('Bootstrapr') ) {
 			}
 			
 			# Request URI
-			if ( !empty($_SERVER['REDIRECT_URL']) ) {
+			if ( empty($_SERVER['REQUEST_URI']) && !empty($_SERVER['REDIRECT_URL']) ) {
 				$_SERVER['REQUEST_URI'] = $_SERVER['REDIRECT_URL'];
 			}
+			
 		}
 		
 		/**

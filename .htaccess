@@ -1,6 +1,10 @@
 Options +FollowSymlinks -Indexes
 RewriteEngine On
 
+# Always use the latest php version
+Action php5-script /gs-bin/php5-latest
+AddHandler php5-script .php
+
 # Feeds to Feedburner
 RewriteCond %{HTTP_USER_AGENT} !FeedBurner
 RewriteRule ^feed/(atom|rss)$ http://feeds.feedburner.com/balupton/$1 [R,L]

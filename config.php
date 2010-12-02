@@ -23,17 +23,27 @@ elseif ( $_SERVER['DOCUMENT_ROOT'] === '/home/balupton/subdomains/staging.balupt
 	define('APPLICATION_ENV', 				'staging');
 	$_SERVER['HTTP_HOST'] = 				'localhost';
 }
-elseif ( $_SERVER['DOCUMENT_ROOT'] === '/home/balupton/public_html' || strpos($_SERVER['HTTP_HOST'], 'balupton.com') !== false ) {
+elseif ( $_SERVER['DOCUMENT_ROOT'] === '/home/balupton/public_html' ) {
 	# Production Server
 	define('APPLICATION_ENV', 				'production');
 	$_SERVER['HTTP_HOST'] = 				'balupton.com';
 }
-elseif ( $_SERVER['DOCUMENT_ROOT'] === '/nfs/c07/h02/mnt/113264/domains/balupton.com' || $_SERVER['DOCUMENT_ROOT'] === '/home/113264/domains/s113264.gridserver.com/html' || $_SERVER['DOCUMENT_ROOT'] === '/home/113264/domains/balupton.com/html' || strpos($_SERVER['HTTP_HOST'], 'balupton.com.s113264.gridserver.com') !== false ) {
+elseif
+(
+		$_SERVER['DOCUMENT_ROOT'] === '/nfs/c07/h02/mnt/113264/domains/balupton.com/html'
+	|| 	$_SERVER['DOCUMENT_ROOT'] === '/home/113264/users/.home/domains/balupton.com/html'
+	|| 	$_SERVER['DOCUMENT_ROOT'] === '/home/113264/domains/s113264.gridserver.com/html'
+	|| 	$_SERVER['DOCUMENT_ROOT'] === '/home/113264/domains/balupton.com/html'
+	|| 	strpos($_SERVER['HTTP_HOST'], 'balupton.com.s113264.gridserver.com') !== false
+	|| 	strpos($_SERVER['HTTP_HOST'], 'balupton.com') !== false
+) {
 	# Production Server
 	define('APPLICATION_ENV', 				'production');
+	define('HTTP_HOST',						'balupton.com.s113264.gridserver.com');
+	define('ROOT_URL',						'http://balupton.com.s113264.gridserver.com');
 	$_SERVER['HTTP_HOST'] = 				'balupton.com.s113264.gridserver.com';
 }
-elseif ( true ) {
+elseif ( false ) {
 	# Uncofigured Environment
 	define('APPLICATION_ENV', 				'development');
 	$_SERVER['HTTP_HOST'] = 				'localhost';
@@ -42,3 +52,4 @@ else {
 	# Uncofigured Environment
 	throw new Exception('Unknown Project Location');
 }
+
