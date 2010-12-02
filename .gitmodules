@@ -10,9 +10,6 @@
 [submodule "public/scripts/jquery-syntaxhighlighter"]
 	path = public/scripts/jquery-syntaxhighlighter
 	url = http://github.com/balupton/jQuery-SyntaxHighlighter.git
-[submodule "common/SymfonyComponents/YAML"]
-	path = common/SymfonyComponents/YAML
-	url = http://github.com/fabpot/yaml.git
 [submodule "common/balphp-v1.0"]
 	path = common/balphp-v1.0
 	url = http://github.com/balupton/balphp.git
@@ -31,3 +28,6 @@
 [submodule "common/scaffold"]
 	path = common/scaffold
 	url = http://github.com/balupton/Scaffold.git
+[submodule "common/SymfonyComponents/YAML"]
+	path = common/SymfonyComponents/YAML
+	url = http://github.com/fabpot/yaml.git

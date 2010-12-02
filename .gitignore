@@ -1,4 +1,3 @@
-config.php
 application/config/compiled/*.data
 application/data/schema/compiled/*.yml
 application/modules/*/config/compiled/*.data
