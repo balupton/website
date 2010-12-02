@@ -9,22 +9,22 @@ all:
 	$(MAKE) install ;
 	
 configure:
-	php ./scripts/configure ;
+	php5 ./scripts/configure ;
 
 permissions:
-	php ./scripts/setup.php permissions ;
+	php5 ./scripts/setup.php permissions ;
 
 install:
-	php ./scripts/setup.php install ;
+	php5 ./scripts/setup.php install ;
 
 setup:
-	php ./scripts/setup.php ;
+	php5 ./scripts/setup.php ;
 
 ignore:
 	edit .gitignore ;
 
 cron:
-	php ./scripts/cron.php ;
+	php5 ./scripts/cron.php ;
 
 add:
 	git add -u ;
