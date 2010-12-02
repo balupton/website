@@ -10,3 +10,24 @@
 [submodule "public/scripts/jquery-syntaxhighlighter"]
 	path = public/scripts/jquery-syntaxhighlighter
 	url = http://github.com/balupton/jQuery-SyntaxHighlighter.git
+[submodule "common/balphp-v1.0"]
+	path = common/balphp-v1.0
+	url = http://github.com/balupton/balphp.git
+[submodule "common/doctrine-extensions/Taggable"]
+	path = common/doctrine-extensions/Taggable
+	url = http://github.com/balupton/Doctrine-Extension-Taggable.git
+[submodule "common/doctrine-v1.2.1-bal"]
+	path = common/doctrine-v1.2.1-bal
+	url = http://github.com/balupton/doctrine1.git
+[submodule "common/htmlpurifier-v4.2.0-lib"]
+	path = common/htmlpurifier-v4.2.0-lib
+	url = http://github.com/balupton/HTMLPurifier.git
+[submodule "common/zend-v1.10.8-bal-lib"]
+	path = common/zend-v1.10.8-bal-lib
+	url = http://github.com/balupton/zend-framework-v1.git
+[submodule "common/scaffold"]
+	path = common/scaffold
+	url = http://github.com/balupton/Scaffold.git
+[submodule "common/SymfonyComponents/YAML"]
+	path = common/SymfonyComponents/YAML
+	url = http://github.com/fabpot/yaml.git

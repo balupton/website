@@ -161,15 +161,8 @@ class Cli {
 			),
 			array(
 				'title'			=> 'Scaffold',
-				'source'		=> 'http://github.com/balupton/scaffold.git',
+				'source'		=> 'http://github.com/balupton/Scaffold.git',
 				'destination'	=> SCAFFOLD_PATH,
-				'vcs'			=> 'git',
-				'submodules'	=> true
-			),
-			array(
-				'title'			=> 'CSScaffold',
-				'source'		=> 'http://github.com/balupton/csscaffold.git',
-				'destination'	=> CSSCAFFOLD_PATH,
 				'vcs'			=> 'git',
 				'submodules'	=> true
 			)
