@@ -28,7 +28,7 @@ elseif ( $_SERVER['DOCUMENT_ROOT'] === '/home/balupton/public_html' || strpos($_
 	define('APPLICATION_ENV', 				'production');
 	$_SERVER['HTTP_HOST'] = 				'balupton.com';
 }
-elseif ( $_SERVER['DOCUMENT_ROOT'] === '/nfs/c07/h02/mnt/113264/domains/balupton.com' || $_SERVER['DOCUMENT_ROOT'] === '/home/113264/domains/s113264.gridserver.com/html' || $_SERVER['DOCUMENT_ROOT'] === '/home/113264/domains/balupton.com/html' || strpos($_SERVER['HTTP_HOST'], 'balupton.com.s113264.gridserver.com') !== false ) {
+elseif ( $_SERVER['DOCUMENT_ROOT'] === '/home/113264/users/.home/domains/balupton.com/html' || $_SERVER['DOCUMENT_ROOT'] === '/home/113264/domains/s113264.gridserver.com/html' || $_SERVER['DOCUMENT_ROOT'] === '/home/113264/domains/balupton.com/html' || strpos($_SERVER['HTTP_HOST'], 'balupton.com.s113264.gridserver.com') !== false ) {
 	# Production Server
 	define('APPLICATION_ENV', 				'production');
 	$_SERVER['HTTP_HOST'] = 				'balupton.com.s113264.gridserver.com';
