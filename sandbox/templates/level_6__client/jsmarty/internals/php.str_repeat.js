@@ -1,0 +1,1 @@
+function str_repeat(I,d){return Array(d+1).join(I);}

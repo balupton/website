@@ -1,0 +1,1 @@
+(function(){var I,d=JSmarty.Browser.getCurrentScript();I=String(d.src);I=I.slice(I.indexOf("?")+1);})();

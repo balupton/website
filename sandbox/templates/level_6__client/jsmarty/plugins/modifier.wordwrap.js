@@ -1,0 +1,1 @@
+function jsmarty_modifier_wordwrap(q,d,I,i){return JSmarty.Plugin.get("php.wordwrap")(q,d||80,(I==void (0))?"\n":I,i||false);}

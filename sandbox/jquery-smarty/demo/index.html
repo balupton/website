@@ -1,0 +1,487 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Balupton's jQuery Smarty Plugin (jQSmarty)</title>
+	<script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="../scripts/php.full.min.js"></script>
+	<script type="text/javascript" src="../scripts/jquery.smarty.min.js"></script>
+	<!--<script type="text/javascript" src="../scripts/jquery.smarty.all.min.js"></script>-->
+	<style type="text/css">
+		body {
+			font-size:14px;
+		}
+		h2 { 
+			margin-bottom:0em;
+		}
+		.example {
+			border-top:solid 1px #CCCCCC;
+			margin-top:10px;
+			padding-top:3px;
+		}
+		.example .details {
+			font-size:12px;
+		}
+		.odd { color: green; }
+		.even { color: blue; }
+		.first { font-weight:bold; }
+		.last { font-style: italic; }
+		.auto_update { font-size: 14px; font-weight:bold; font-style: italic;  }
+	</style>
+
+	<!-- GetSatisfaction -->
+	<script type="text/javascript" src="http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script> 
+	<script type="text/javascript">/*<![CDATA[*/
+	var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'right', color: '#222', style: 'question' });
+	/*]]>*/</script> 
+</head>
+<body>
+	
+	<div>
+		<h1 class="smarty">Balupton's jQuery Smarty Plugin (jQSmarty) v{$build}</h1>
+		<h2><a href="http://github.com/balupton/jquery-smarty/downloads">Download</a></h2>
+		<h2><a href="http://www.balupton.com/projects/jquery-smarty" title="Home Page">Home Page</a></h2>
+		<h2><a href="http://github.com/balupton/jquery-smarty" title="Project Page">Project Page</a></h2>
+		<h2><a href="http://getsatisfaction.com/balupton/products/balupton_jquery_smarty" title="Support Page">Support Page</a></h2>
+		<h2><a href="http://github.com/balupton/jquery-smarty/tree/master" title="Source Code">Source Code</a></h2>
+		&nbsp;
+	</div>
+	
+	<div class="example">
+		<strong>Assign:</strong>
+		<div class="details">
+			<div style="float:left; width:49%;" class="code">
+				<em>Code:</em><br />
+				<div class="content">
+					{assign var="test" value="works"} {$test}
+					<br />
+					{assign var="testnum" value=1} {$testnum}
+					<br />
+					{assign var="test2" value="[]"}
+					{assign var="test2.testa" value="yay"}
+					{assign var="test2.testz" value="!"}
+					{$test2.testa}{$test2.testz}
+					<br />
+					{$test|default:"Couldn't find $test"}
+					<br />
+					{$something_that_does_not_exist|default:"Couldn't find $something_that_does_not_exist"}
+				</div>
+			</div>
+			<div style="float:left; width:49%;" class="result">
+				<em>Result:</em><br />
+				<div class="content smarty">
+					
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	
+	<div class="example">
+		<strong>Modifiers:</strong>
+		<div class="details">
+			<div style="float:left; width:49%;" class="code">
+				<em>Code:</em><br />
+				<div class="content">
+					{"good"|cat:"bye"}
+					<br />
+					{assign var="test" value="works"|cat:"yay"} {$test}
+					<br />
+					{"We have five words here"|count_words}
+					<br />
+					{"hello how are you today?"|capitalize}
+				</div>
+			</div>
+			<div style="float:left; width:49%;" class="result">
+				<em>Result:</em><br />
+				<div class="content smarty">
+					
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	
+	<div class="example">
+		<strong>Includes:</strong>
+		<div class="details">
+			<div style="float:left; width:49%;" class="code">
+				<em>Code:</em><br />
+				<div class="content">
+					{include file='include.tpl'}
+				</div>
+			</div>
+			<div style="float:left; width:49%;" class="result">
+				<em>Result:</em><br />
+				<div class="content smarty">
+					
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	
+	<div class="example">
+		<strong>Loops:</strong>
+		<div class="details">
+			<div style="float:left; width:49%;" class="code">
+				<em>Code:</em><br />
+				<div class="content">
+					<div>
+					{section name=customer loop=$custids}
+						<p>
+						id: {$custids[customer]}<br />
+						name: {$names[customer]}<br />
+						address: {$addresses[customer]}
+						</p>
+					{/section}
+					</div>
+				</div>
+			</div>
+			<div style="float:left; width:49%;" class="result">
+				<em>Result:</em><br />
+				<div class="content smarty">
+					
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	
+	<div class="example">
+		<strong>Loops (foreach):</strong>
+		<div class="details">
+			<div style="float:left; width:49%;" class="code">
+				<em>Code:</em><br />
+				<div class="content">
+					<div>
+					{foreach from=$tuples key=theKey item=theItem name=theForeach}
+						{cycle values='odd,even' assign='class'}
+						{if $smarty.foreach.theForeach.first}
+							 {assign var='class' value=$class|cat:' first'}
+						{elseif $smarty.foreach.theForeach.last}
+							{assign var='class' value=$class|cat:' last'}
+						{/if}
+						
+						<p class="{$class}">{$smarty.foreach.theForeach.index}|{$smarty.foreach.theForeach.iteration} : {$theItem.custid}, {$theItem.name}, {$theItem.address}</p>
+					{/foreach}
+					</div>
+				</div>
+			</div>
+			<div style="float:left; width:49%;" class="result">
+				<em>Result:</em><br />
+				<div class="content smarty">
+					
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+					
+	<div class="example">
+		<strong>Dates:</strong>
+		<div class="details">
+			<div style="float:left; width:49%;" class="code">
+				<em>Code:</em><br />
+				<div class="content">
+					{$now|date_format} <br />
+					{$now|date_format:"%D"} <br />
+					{$now|date_format:$date} <br />
+					{$yesterday|date_format} <br />
+					{$yesterday|date_format:"%A, %B %e, %Y"} <br />
+					{$yesterday|date_format:$time} <br />
+				</div>
+			</div>
+			<div style="float:left; width:49%;" class="result">
+				<em>Result:</em><br />
+				<div class="content smarty">
+					
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	
+	<div class="example">
+		<strong>Logic:</strong>
+		<div class="details">
+			<div style="float:left; width:49%;" class="code">
+				<em>Code:</em><br />
+				<div class="content">
+					{assign var="name" value="Wilma"} {$name} <br />
+					{assign var="amount" value="-1"} {$amount} <br />
+					{assign var="num" value="55"} {$num} <br />
+					{assign var="foo" value="[]"} {$foo} <br />
+					
+					<br />
+					
+					{if $name eq 'Fred'}
+					    Welcome Sir.
+					{elseif $name eq 'Wilma'}
+					    Welcome Ma'am.
+					{else}
+					    Welcome, Unkown.
+					{/if}
+					
+					<br />
+					
+					{* an example with "or" logic *}
+					{if $name eq 'Fred' or $name eq 'Wilma'}
+					   name is fred or wilma
+					{/if}
+					
+					<br />
+					
+					{* same as above *}
+					{if $name == 'Fred' || $name == 'Wilma'}
+						name is Fred or Wilma
+					{/if}
+					
+					<br />
+					
+					{* parenthesis are allowed *}
+					{if ( $amount lt 0 or $amount gt 1000 ) }
+					   amount is less than 0 or above 1000
+					{/if}
+					
+					<br />
+					
+					{* you can also embed php function calls *}
+					{if count($name) gt 0}
+					   count of name is above 0
+					{/if}
+					
+					<br />
+					
+					{* check for array. *}
+					{if is_array($foo) }
+					   foo is an array
+					{/if}
+					
+					<br />
+					
+					{* check for not null. *}
+					{if isset($foo) }
+					   foo is set
+					{/if}
+					
+					<br />
+					
+					{* test if values are even or odd *}
+					{if $num is even}
+					   num is even
+					{/if}
+					<br />
+					{if $num is odd}
+					   num is odd
+					{/if}
+					<br />
+					{if $num is not odd}
+					   num is not odd (even)
+					{/if}
+					
+					<br />
+					
+					{* test if var is divisible by 4 *}
+					{if $num is div by 4}
+					   num is divisible by 4
+					{/if}
+					
+					<br />
+					
+					{*
+					  test if var is even, grouped by two. i.e.,
+					  0=even, 1=even, 2=odd, 3=odd, 4=even, 5=even, etc.
+					*}
+					{if $num is even by 2}
+					   num is even by 2
+					{/if}
+					
+					<br />
+					
+					{* 0=even, 1=even, 2=even, 3=odd, 4=odd, 5=odd, etc. *}
+					{if $num is even by 3}
+					   num is even by 3
+					{/if}
+				</div>
+			</div>
+			<div style="float:left; width:49%;" class="result">
+				<em>Result:</em><br />
+				<div class="content smarty">
+					
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	
+	<div class="example">
+		<strong>Misc:</strong>
+		<div class="details">
+			<div style="float:left; width:49%;" class="code">
+				<em>Code:</em><br />
+				<div class="content">
+					<strong>literal</strong><br />
+						{literal} {include file='include.tpl'} {/literal} <br />
+						<br />
+					
+					<strong>fsize_format</strong><br />
+						{assign var="filesize" value=773741824}
+						{$filesize|fsize_format:"GB"}<br />
+						{$filesize|fsize_format} <br />
+						<br />
+						
+					<strong>multiple modifiers:</strong><br />
+						{"multiple"|cat:" modifiers"|count_words}<br />
+						<br />
+						
+					<strong>onchange:</strong><br />
+						<a href="#" onclick="$.Smarty.assign('title', prompt('Enter the new page title')); return false;" title="for the onchange handler, check js at the bottom">Change the page title</a><br />
+						<br />
+						
+					<strong>auto_update:</strong><br />
+						{$title|default:"No title, so expect the rest to be blank as well..."|capitalize|auto_update}<br />
+						{$title|capitalize|auto_update::"div":"auto_update"}<br />
+						{$title|capitalize|auto_update:"title_span"}<br />
+						<span class="auto_update_manual">{$title|capitalize|auto_update:"div.content.smarty > span.auto_update_manual"}</span><br />
+						<br />
+				</div>
+			</div>
+			<div style="float:left; width:49%;" class="result">
+				<em>Result:</em><br />
+				<div class="content smarty">
+					
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	
+	<div class="example">
+		<strong>Sandbox (things that are still being worked on):</strong>
+		<div class="details">
+			<div style="float:left; width:49%;" class="code">
+				<em>Code:</em><br />
+				<div class="content">
+					<strong>aaa:</strong><br />
+						aaa<br />
+						<br />
+				</div>
+			</div>
+			<div style="float:left; width:49%;" class="result">
+				<em>Result:</em><br />
+				<div class="content smarty">
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+		
+	<div class="example">
+		<strong>ROAD MAP:</strong>
+		<div class="details">
+			<div style="float:left; width:49%;" class="code">
+				<em>TODO:</em><br />
+				<div class="content">
+					Add the other functions and modifiers.<br />
+					Add fetch function.<br />
+					Improve section function.<br />
+				</div>
+			</div>
+			<div style="float:left; width:49%;" class="result">
+				<em>DONE:</em><br />
+				<div class="content">
+					Added support for: debug, cycle, foreach, ifs, sections, includes, cache, modifiers, functions, assigns.
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		$(function() {
+			
+			var data = {
+				"custids": [1001,1002,1003],
+				"names": ['John Smith','Jack Jones','Jane Munson'],
+				"addresses": ['253 Abbey road', '417 Mulberry ln', '5605 apple st'],
+				//
+				"now": "now",
+				"date": '%I:%M %p',
+				"time": '%H:%M:%S',
+				"yesterday": "-1 day",
+				//
+				"tuples": {
+					"1001": {
+						"custid": 1001,
+						"name": 'John Smith',
+						"address": '253 Abbey road'
+					},
+					"1002": {
+						"custid": 1002,
+						"name": 'Jack Jones',
+						"address": '417 Mulberry ln'
+					},
+					"1003": {
+						"custid": 1003,
+						"name": 'Jane Munson',
+						"address": '5605 apple st'
+					}
+				}
+			}
+			// console.log('before assign');
+			$.Smarty.assign(data);
+			// console.log('after assign');
+			
+			// Copy templates over
+			$('.example').each(function(){
+				var $this = $(this);
+				$this.find('.details .result .content.smarty').html(
+					$this.find('.details .code .content').html()
+				);
+			})
+			
+			// Populate
+			$('.smarty').populate();
+			
+			// Add onchange hanlders
+			$.Smarty.onchange('title', function(old_value, new_value){
+				$('html > head > title').html(document.title = new_value);
+				alert('Title has changed from ['+old_value+'] to ['+new_value+']');
+			});
+		});
+	</script>
+
+	<!-- Google Analytics --> 
+	<script type="text/javascript"> 
+		//<![CDATA[
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		//]]>
+	</script> 
+	<script type="text/javascript" src="./scripts/modernizr-1.5.min.js"></script> 
+	<script type="text/javascript"> 
+		//<![CDATA[
+		try {
+			var pageTracker = _gat._getTracker("UA-4446117-1");
+			pageTracker._initData();
+			pageTracker._setCustomVar(1, "html5.boxshadow", Modernizr.boxshadow ? "yes" : "no" , 2 );
+			pageTracker._setCustomVar(2, "html5.multiplebgs", Modernizr.multiplebgs ? "yes" : "no", 2 );
+			pageTracker._setCustomVar(3, "html5.fontface", Modernizr.fontface ? "yes" : "no", 2 );
+			pageTracker._setCustomVar(4, "html5.csstransitions", Modernizr.csstransitions ? "yes" : "no", 2 );
+			pageTracker._setCustomVar(5, "html5.borderradius", Modernizr.borderradius ? "yes" : "no", 2 );
+			pageTracker._trackPageview();
+		} catch(err) {}
+		//]]>
+	</script>
+	
+	<!-- ReInvigorate --> 
+	<script type="text/javascript" src="http://include.reinvigorate.net/re_.js"></script>
+	<script type="text/javascript">
+		try {
+			reinvigorate.track("702o7-66905bt9t0");
+		} catch(err) {}
+	</script>
+	
+</body>
+</html>

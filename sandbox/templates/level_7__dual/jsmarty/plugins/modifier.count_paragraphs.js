@@ -1,0 +1,1 @@
+function jsmarty_modifier_count_paragraphs(d){return d.match(/[\r?\n]+/g).length;}

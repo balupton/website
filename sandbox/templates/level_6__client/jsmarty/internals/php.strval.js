@@ -1,0 +1,1 @@
+function strval(d){return (d==null)?"":d.toString();}

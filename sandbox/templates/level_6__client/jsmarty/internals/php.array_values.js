@@ -1,0 +1,1 @@
+function array_values(w){var I,q=0,d=[];for(I in w){if(!w.hasOwnProperty(I)){continue;}d[q++]=w[I];}return d;}

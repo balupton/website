@@ -1,0 +1,1 @@
+function jsmarty_modifier_default(I,i){return I?I:(i==void (0))?"":i;}

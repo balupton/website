@@ -1,0 +1,1 @@
+function range(q,r,d){var I=(typeof (q)=="number");var w,C=-1,f=[],d=d||1;var j=(q<r)?q:r,H=(q<r)?r:q;if(typeof (j)=="string"){j=j.charCodeAt(0);}if(typeof (H)=="string"){H=H.charCodeAt(0);}if(I){for(w=j;w<=H;w+=d){f[++C]=w;}}else{for(w=j;w<=H;w+=d){f[++C]=String.fromCharCode(w);}}return f;}

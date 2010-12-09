@@ -1,0 +1,1 @@
+JSmarty.System.read=function(q,C){var I,r,w=this.buildPath(q,C);for(I=w.length-1;0<=I;I--){try{r=System.readFile(w[I]);this.modified[q]=new Date().getTime();break;}catch(k){}}return r||function(){JSmarty.Error.log("System","can't load the "+q);return null;}();};JSmarty.System.outputString=function(){print(Array.prototype.join.call(arguments,""));};

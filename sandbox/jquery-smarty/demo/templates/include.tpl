@@ -1,0 +1,1 @@
+If you can see this, <strong>include</strong> works. {"And the text here should be capitalized."|capitalize}

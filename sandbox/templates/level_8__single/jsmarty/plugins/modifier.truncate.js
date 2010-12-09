@@ -1,0 +1,1 @@
+function jsmarty_modifier_truncate(q,i,k,I,d){if(i==0){return "";}i=Number(i||80);k=(k==void (0))?"...":k;if(i<q.length){i-=JSmarty.Plugin.get("php.min")(i,k.length);if(!I&&!d){q=q.replace(/\s+?(\S+)?$/,"").slice(0,i+1);}return (!d)?q.slice(0,i)+k:q.slice(0,i/2)+k+q.slice(-i/2);}return q;}

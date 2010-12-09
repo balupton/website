@@ -1,0 +1,1 @@
+function jsmarty_modifier_regex_replace(d,i,I){return d.replace(i,I);}

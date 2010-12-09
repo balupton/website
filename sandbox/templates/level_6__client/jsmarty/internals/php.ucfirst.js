@@ -1,0 +1,1 @@
+function ucfirst(d){return d.slice(0,1).toUpperCase().concat(d.slice(1));}

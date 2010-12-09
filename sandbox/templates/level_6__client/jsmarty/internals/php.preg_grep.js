@@ -1,0 +1,1 @@
+function preg_grep(w,I,k){var q,k,d=(I instanceof Array),C=(d)?[]:{};var r=(k=="PREG_GREP_INVERT")?function(i){return !i;}:function(i){return i;};if(d){for(q=0,k=I.length;q<k;q++){if(w.test(I[q])){C[q]=I[q];}}}else{for(q in I){C[q]=I[q];}}return C;}

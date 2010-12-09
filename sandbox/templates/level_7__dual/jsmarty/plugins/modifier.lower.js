@@ -1,0 +1,1 @@
+function jsmarty_modifier_lower(d){return d.toLowerCase();}

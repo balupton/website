@@ -1,0 +1,23 @@
+links a { margin:5px; }
+
+div { margin-left:10px; border-left:1px solid grey; margin-top:5px; margin-bottom:5px; padding-left:5px; }
+
+.container { font-size:14px;  }
+.container_intro { font-weight:bold; }
+.container_content {  }
+.container_outro { font-style:italic; }
+
+	.home { font-size:smaller; }
+	.home_intro { font-weight:bold; }
+	.home_content {  }
+	.home_outro { font-style:italic; }
+	
+	.search { font-size:smaller; }
+	.search_intro { font-weight:bold; }
+	.search_content {  }
+	.search_outro { font-style:italic; }
+
+		.search_result { font-size:smaller; }
+		.search_result_title { font-weight:bold; }
+		.search_result_content {  }
+		.search_result_outro { font-style:italic; }

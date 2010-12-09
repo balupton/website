@@ -1,0 +1,1 @@
+function jsmarty_compiler_assign(q,i){var I,k;var d=new JSmarty.Classes.Buffer();var w=q.toObject(q.toParams());return d.append("$.assign(\"",w["var"],"\",\"",w.value,"\");").toString();}

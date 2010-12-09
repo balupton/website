@@ -1,0 +1,1 @@
+function count(q,d){var I,w=0;switch(d){case 1:if(q instanceof Array){for(I=q.length-1;0<=I;I--){w+=count(q[I],1)||1;}return w;}if(q instanceof Object){for(I in q){w+=count(q[I],1)||1;}return w;}break;case 0:default:if(q instanceof Array){return q.length;}if(q instanceof Object){for(I in q){w++;}return w;}break;}return (q==null)?0:1;}

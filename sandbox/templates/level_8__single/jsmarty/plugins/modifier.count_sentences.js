@@ -1,0 +1,1 @@
+function jsmarty_modifier_count_sentences(d){return d.match(/[^\s]\.(?!\w)/g).length;}

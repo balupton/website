@@ -1,0 +1,1 @@
+var jsmarty_resource_string=[function(d,I,i){I.put("src",d);return true;},function(d,I,i){try{I.put("timestamp",JSmarty.System.timestamp(document.lastModified));}catch(q){I.put("timestamp",JSmarty.System.timestamp());}return true;},function(){return true;},function(){return true;}];

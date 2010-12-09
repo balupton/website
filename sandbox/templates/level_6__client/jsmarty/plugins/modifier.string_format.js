@@ -1,0 +1,1 @@
+function jsmarty_modifier_string_format(d,I){return JSmarty.Plugin.get("php.sprintf")(I,d);}

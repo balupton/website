@@ -1,0 +1,1 @@
+function strtr(q,w,k){switch(arguments.length){case 2:for(var I in w){q=strtr(q,I,w[I]);}return q;case 3:var d=w.length,C=k.length;if(d<C){return q.replace(RegExp(w,"g"),k.slice(0,d));}if(C<d){return q.replace(RegExp(w.slice(0,C),"g"),k);}return q.replace(RegExp(w,"g"),k);default:throw new Error("Wrong parameter count for strtr()");return ;}}

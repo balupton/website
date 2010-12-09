@@ -1,0 +1,1 @@
+function jsmarty_modifier_upper(d){return d.toUpperCase();}

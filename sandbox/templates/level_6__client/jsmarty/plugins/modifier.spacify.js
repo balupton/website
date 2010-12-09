@@ -1,0 +1,1 @@
+function jsmarty_modifier_spacify(d,I){return d.split("").join((I==void (0))?" ":I);}

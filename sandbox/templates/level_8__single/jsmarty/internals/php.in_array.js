@@ -1,0 +1,1 @@
+function in_array(C,q,I){var d,k,w=(I)?function(i){return (C===i);}:function(i){return (C==i);};for(d=0,k=q.length;d<k;d++){if(w(q[d])){return true;}}return false;}

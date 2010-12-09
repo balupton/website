@@ -1,0 +1,1 @@
+function htmlentities(I,d,i){I=I.toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");switch(d){case "ENT_QUOTES":I=I.replace(/"/g,"&quot;").replace(/'/g,"&#039;");break;case "ENT_NOQUOTES":break;case "ENT_COMPAT":default:I=I.replace(/"/g,"&quot;");break;}return I;}

@@ -1,0 +1,1 @@
+function jsmarty_modifier_date_format(i,q,k){if(!i&&!k){return "";}var I=JSmarty.Plugin.get("php.strftime");return I(q||"%b %e %Y",(new Date(i||k)).getTime());}

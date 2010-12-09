@@ -1,0 +1,1 @@
+function array_map(j){var w,q,H,d,I=[],C=[];if(j==null){j=function(i){return [i];};}for(d=0,H=arguments.length-1;d<H;d++){}for(w=0,H=arguments[1].length;w<H;w++){for(q=1;q<=d;q++){I[q-1]=arguments[q][w];}C[w]=j.apply(null,I);}return C;}

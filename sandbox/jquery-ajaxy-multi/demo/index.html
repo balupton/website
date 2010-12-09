@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+        jQuery Ajaxy
+    </title>
+	
+	<!-- Include jQuery (Ajaxy Requirement) -->
+	<script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
+	<!-- Include jQuery Ajaxy (Production) -->
+	<!-- <script type="text/javascript" src="../scripts/jquery.ajaxy.min.js"></script> -->
+	<!-- Include jQuery Ajaxy (Development) -->
+	<script type="text/javascript" src="../scripts/jquery.ajaxy.js"></script>
+	
+	<!-- Include The Demo's Requirements -->
+	<link type="text/css" rel="stylesheet" media="screen" href="./styles/style.css" />
+</head>
+<body>
+	<!-- Include jQuery Syntax Highlighter -->
+	<script type="text/javascript" src="http://github.com/balupton/jquery-syntaxhighlighter/raw/master/scripts/jquery.syntaxhighlighter.min.js"></script>
+	<!-- Initialise jQuery Syntax Highlighter -->
+	<script type="text/javascript">/*<![CDATA[*/
+		$.SyntaxHighlighter.init();
+	/*]]>*/</script>
+	
+	<!-- GetSatisfaction -->
+	<script type="text/javascript" src="http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script> 
+	<script type="text/javascript">/*<![CDATA[*/
+	var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'right', color: '#222', style: 'question' });
+	/*]]>*/</script> 
+	
+	<div class="section links" id="links">
+		<h1>jQuery Ajaxy - Multiple Ajax Areas Demo</h1>
+		<h2><a href="http://github.com/balupton/jquery-ajaxy/zipball/master" title="Download the Latest" id="download">Download</a></h2>
+		<h2><a href="http://www.balupton.com/projects/jquery-ajaxy" title="Home Page">Home Page</a></h2>
+		<h2><a href="http://github.com/balupton/jquery-ajaxy" title="Project Page">Project Page</a></h2>
+		<h2><a href="http://getsatisfaction.com/balupton/products/balupton_jquery_ajaxy" title="Support Page" class="gsfnwidget">Get Support</a></h2>
+		<h2><a href="http://github.com/balupton/jquery-ajaxy/tree/master" title="Source Code">Source Code</a></h2>
+		<h2><a href="http://github.com/balupton/jquery-ajaxy/commits/master.atom" title="Subscribe to Updates">Subscribe to Updates</a></h2>
+	</div>
+	
+	<div class="section using" id="using">
+		<h2>Using jQuery Ajaxy</h2>
+		
+		<h3>Seeing it work</h3>
+		
+		<div id="demo1" class="demo">
+			<ul id="menu1" class="menu">
+				<li><a href="./pages1/apricots.html" class="ajaxy ajaxy-page1">Learn about Apricots</a></li>
+				<li><a href="./pages1/bananas.html" class="ajaxy ajaxy-page1">Lean about Bananas</a></li>
+				<li><a href="./pages1/coconuts.html" class="ajaxy ajaxy-page1">Learn about Coconuts</a></li>
+			</ul>
+			<div id="result1">
+				<div id="content1" class="content" style="max-height:100px;overflow:auto;"></div>
+			</div>
+		</div>
+		
+		<div id="demo2" class="demo">
+			<ul id="menu2" class="menu">
+				<li><a href="./pages2/durians.html#yummy" class="ajaxy ajaxy-page2">Learn about Durians</a></li>
+				<li><a href="./pages2/eggplants.php" class="ajaxy ajaxy-page2">Have your say about Eggplants</a></li>
+			</ul>
+			<div id="result2">
+				<div id="content2" class="content" style="max-height:100px;overflow:auto;"></div>
+			</div>
+		</div>
+		
+		<div id="current"></div>
+		
+		<p>&nbsp;</p>
+	</div>
+	
+	<script type="text/javascript">
+		(function($){
+			var $body = $(document.body),
+				$current = $('#current'),
+				$menu1 = $('#menu1'),
+				$content1 = $('#content1'),
+				$menu2 = $('#menu2'),
+				$content2 = $('#content2');
+			
+			$.Ajaxy.configure({
+				'Controllers': {
+					'_generic': {
+						request: function(){
+							// Prepare
+							var Ajaxy = $.Ajaxy;
+							// Log what is happening
+							if ( Ajaxy.options.debug ) window.console.debug('$.Ajaxy.Controllers._generic.request', [this,arguments]);
+							// Loading
+							$body.addClass('loading');
+							// Done
+							return true;
+						},
+						response: function(){
+							// Prepare
+							var Ajaxy = $.Ajaxy; var data = this.State.Response.data; var state = this.state||'unknown';
+							// Log what is happening
+							if ( Ajaxy.options.debug ) window.console.debug('$.Ajaxy.Controllers._generic.response', [this,arguments], data, state);
+							// Title
+							var title = data.title||false; // if we have a title in the response JSON
+							if ( !title && this.state||false ) title = 'jQuery Ajaxy - '+this.state; // if not use the state as the title
+							if ( title ) document.title = title; // if we have a new title use it
+							// Loaded
+							$body.removeClass('loading');
+							// Display State
+							$current.text('Our current state is: ['+state+']');
+							// Return true
+							return true;
+						},
+						error: function(){
+							// Prepare
+							var Ajaxy = $.Ajaxy; var data = this.State.Error.data||this.State.Response.data; var state = this.state||'unknown';
+							// Error
+							var error = data.error||data.responseText||'Unknown Error.';
+							var error_message = data.content||error;
+							// Log what is happening
+							window.console.error('$.Ajaxy.Controllers._generic.error', [this, arguments], error_message);
+							// Loaded
+							$body.removeClass('loading');
+							// Display State
+							$current.text('Our current state is: ['+state+']');
+							// Done
+							return true;
+						}
+					},
+					'page1': {
+						classname: 'ajaxy-page1',
+						matches: /^\/pages1\/?/,
+						request: function(){
+							// Prepare
+							var Ajaxy = $.Ajaxy;
+							// Log what is happening
+							if ( Ajaxy.options.debug ) window.console.debug('$.Ajaxy.Controllers.page1.request', [this,arguments]);
+							// Adjust Menu
+							$menu1.find('.active').removeClass('active');
+							// Hide Content
+							$content1.stop(true,true).fadeOut(400);
+							// Return true
+							return true;
+						},
+						response: function(){
+							// Prepare
+							var Ajaxy = $.Ajaxy; var data = this.State.Response.data; var state = this.state; var State = this.State;
+							// Log what is happening1
+							if ( Ajaxy.options.debug ) window.console.debug('$.Ajaxy.Controllers.page.response', [this,arguments], data, state);
+							// Adjust Menu
+							$menu1.children(':has(a[href*="'+State.raw.state+'"])').addClass('active').siblings('.active').removeClass('active');
+							// Show Content
+							var Action = this;
+							$content1.html(data.content).fadeIn(400,function(){
+								Action.documentReady($content1);
+							});
+							// Return true
+							return true;
+						}
+					},
+					'page2': {
+						classname: 'ajaxy-page2',
+						matches: /^\/pages2\/?/,
+						request: function(){
+							// Prepare
+							var Ajaxy = $.Ajaxy;
+							// Log what is happening
+							if ( Ajaxy.options.debug ) window.console.debug('$.Ajaxy.Controllers.page2.request', [this,arguments]);
+							// Adjust Menu
+							$menu2.find('.active').removeClass('active');
+							// Hide Content
+							$content2.stop(true,true).fadeOut(400);
+							// Return true
+							return true;
+						},
+						response: function(){
+							// Prepare
+							var Ajaxy = $.Ajaxy; var data = this.State.Response.data; var state = this.state; var State = this.State;
+							// Log what is happening
+							if ( Ajaxy.options.debug ) window.console.debug('$.Ajaxy.Controllers.page2.response', [this,arguments], data, state);
+							// Adjust Menu
+							$menu2.children(':has(a[href*="'+State.raw.state+'"])').addClass('active').siblings('.active').removeClass('active');
+							// Show Content
+							var Action = this;
+							$content2.html(data.content).fadeIn(400,function(){
+								Action.documentReady($content2);
+							});
+							// Return true
+							return true;
+						}
+					}
+				}
+			});
+			
+			// All done
+		})(jQuery);
+		// Back to global scope
+	</script>
+	
+	<!-- Google Analytics --> 
+	<script type="text/javascript"> 
+		//<![CDATA[
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		//]]>
+	</script> 
+	<script type="text/javascript" src="./scripts/modernizr-1.5.min.js"></script> 
+	<script type="text/javascript"> 
+		//<![CDATA[
+		try {
+			var pageTracker = _gat._getTracker("UA-4446117-1");
+			pageTracker._initData();
+			if ( Modernizr ) {
+				pageTracker._setCustomVar(1, "html5.boxshadow", Modernizr.boxshadow ? "yes" : "no" , 2 );
+				pageTracker._setCustomVar(2, "html5.multiplebgs", Modernizr.multiplebgs ? "yes" : "no", 2 );
+				pageTracker._setCustomVar(3, "html5.fontface", Modernizr.fontface ? "yes" : "no", 2 );
+				pageTracker._setCustomVar(4, "html5.csstransitions", Modernizr.csstransitions ? "yes" : "no", 2 );
+				pageTracker._setCustomVar(5, "html5.borderradius", Modernizr.borderradius ? "yes" : "no", 2 );
+			}
+			pageTracker._trackPageview();
+		} catch(err) {}
+		//]]>
+	</script>
+	
+</body>
+</html>

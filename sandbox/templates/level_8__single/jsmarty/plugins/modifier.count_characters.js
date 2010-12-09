@@ -1,0 +1,1 @@
+function jsmarty_modifier_count_characters(I,d){var q=(d==void (0))?false:d;return q?I.length:I.match(/[^\s]/g).length;}

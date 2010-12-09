@@ -1,0 +1,1 @@
+function jsmarty_modifier_count_words(I){var d=JSmarty.Plugin.get("php.preg_grep");return JSmarty.Plugin.get("php.count")(d(/[a-zA-Z0-9\x80-\xff]/,I.split(/\s+/)));}

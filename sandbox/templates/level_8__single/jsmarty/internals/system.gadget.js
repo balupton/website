@@ -1,0 +1,1 @@
+(function(){var d=JSmarty.System.path;JSmarty.Classes.extend(JSmarty.prototype)({compile_dir:d+"templates_c",plugins_dir:[d+"plugins"].concat(JSmarty.Plugin.repos),template_dir:d+"templates"});})();

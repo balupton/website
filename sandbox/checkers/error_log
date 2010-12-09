@@ -1,0 +1,9 @@
+[12-Oct-2008 20:17:55] PHP Notice:  Undefined index:  iid in /home/balupton/public_html/sandbox/checkers/heatseeker.php on line 53
+[12-Oct-2008 20:17:55] PHP Notice:  Undefined index:  iid in /home/balupton/public_html/sandbox/checkers/heatseeker.php on line 57
+[12-Oct-2008 20:17:55] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/balupton/public_html/sandbox/checkers/heatseeker.php:53) in /home/balupton/public_html/sandbox/checkers/heatseeker.php on line 196
+[27-Mar-2009 09:54:31] PHP Warning:  file_get_contents() [<a href='function.file-get-contents'>function.file-get-contents</a>]: Couldn't resolve host name in /home/balupton/public_html/sandbox/checkers/heatseeker.php on line 58
+[27-Mar-2009 09:54:31] PHP Warning:  file_get_contents(http://www.heatseeker.com.au/gigs.aspx?id=Breakfest&amp;tid=2&amp;iid=1560) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: Success in /home/balupton/public_html/sandbox/checkers/heatseeker.php on line 58
+[27-Mar-2009 09:54:31] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/balupton/public_html/sandbox/checkers/heatseeker.php:58) in /home/balupton/public_html/sandbox/checkers/heatseeker.php on line 196
+[21-Oct-2009 00:27:49] PHP Notice:  Undefined index:  id in /home/balupton/public_html/sandbox/checkers/heatseeker.php on line 52
+[21-Oct-2009 00:27:49] PHP Notice:  Undefined index:  id in /home/balupton/public_html/sandbox/checkers/heatseeker.php on line 57
+[21-Oct-2009 00:27:50] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/balupton/public_html/sandbox/checkers/heatseeker.php:52) in /home/balupton/public_html/sandbox/checkers/heatseeker.php on line 196
