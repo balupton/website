@@ -13,32 +13,17 @@ Creating a New BalCMS Website
 		
 		mkdir mywebsite
 		cd mywebsite
-		git init
-		git remote add origin {your git repos read/write uri}
-		git remote add balcms git://github.com/balupton/balcms.git
-		git pull balcms master
-		git push origin master
-		git branch balcms
-		git branch dev
-		git branch production
-		git checkout dev
-		make all
+		curl -OL http://github.com/balupton/balcms/raw/master/Makefile
+		make init
+		make configure
+		make install
+		git remote add origin {your git repos read/write uri} ;
+		make deploy
 
 3.	Visit your new BalCMS Website.
 
 
-Working with an Existing BalCMS Website
-------------------
-
-1. Run the following commands:
-		
-		git clone {your git repos read/write uri} mynewwebite
-		cd mynewwebsite
-		git remote add balcms git://github.com/balupton/balcms.git
-		git checkout dev
-	
-
-Committing your Changes and Pushing to the Development Site
+Committing your Changes
 ------------------
 
 1. Run the following commands:
@@ -56,10 +41,7 @@ Pushing your Changes to the Live Site
 1. Run the following commands:
 		
 		cd mywebsite
-		git checkout production
-		git merge dev (note: if there are conflicts resolve them with [git mergetool])
-		git checkout dev
-		git push origin -all
+		make deploy
 		
 
 Upgrading your BalCMS Version
@@ -68,8 +50,5 @@ Upgrading your BalCMS Version
 1. Run the following commands:
 		
 		cd mywebsite
-		git checkout balcms
-		git pull balcms master
-		git checkout dev
-		git merge balcms (note: if there are conflicts resolve them with [git mergetool])
+		make update
 		

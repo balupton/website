@@ -16,9 +16,14 @@ BALCMS_VERSION = v1.0.0
 default:
 	$(MAKE) setup ;
 
-all:
-	$(MAKE) configure ;
-	$(MAKE) install ;
+init:
+	git init ;
+	git remote add balcms git://github.com/balupton/balcms.git ;
+	git fetch balcms ;
+	git checkout -b v1.0.0-balcms balcms/master ;
+	git branch v1.0.0-dev ;
+	git branch v1.0.0 ;
+	git branch master ;
 
 clean:
 	rm -Rf \
