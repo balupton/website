@@ -4,14 +4,31 @@
 class Cli {
 	
 	/**
-	 * Constructor our Configure Class
+	 * Our extreme base configuration
 	 */
-	public function __construct ( ) {
+	public function prepare ( ) {
+		# Prepare
+		$root_path = realpath(dirname(__FILE__).'/..');
+		
+		# Define Default Files
+		$files = array(
+			'config.default.php' => 'config.php',
+			'application/config/sample/application.yml' => 'application/config/application.yml',
+			'application/config/sample/core.yml' => 'application/config/core.yml',
+			'application/config/sample/nav.yml' => 'application/config/nav.yml',
+			'application/config/sample/routes.yml' => 'application/config/routes.yml',
+			'application/data/fixtures/data.default.yml' => 'application/data/fixtures/data.yml',
+			'application/data/schema/schema.default.yml' => 'application/data/schema/schema.yml',
+		);
+		
 		# Install Default Files
-		`cp -n config.default.php config.php`;
-		`cp -n application/config/sample/* application/config`;
-		`cp -n application/data/fixtures/data.default.yml application/data/fixtures/data.yml`;
-		`cp -n application/data/schema/schema.default.yml application/data/schema/schema.yml`;
+		echo "\nInstalling Default Configurations...\n";
+		foreach ( $files as $source => $destination ) {
+			if ( !is_file($destination) ) {
+				echo "Copied [$source] to [$destination].\n";
+				copy($root_path.'/'.$source, $root_path.'/'.$destination);
+			}
+		}
 		
 		# Prepare
 		require(dirname(__FILE__).'/bootstrapr.php');
@@ -23,6 +40,9 @@ class Cli {
 	public function run ( ) {
 		# Say Hello
 		$this->welcome();
+		
+		# Prepare
+		$this->prepare();
 		
 		# Install Core Configuration
 		$this->installCore();
@@ -42,7 +62,7 @@ class Cli {
 	 */
 	public function welcome ( ) {
 		# Hi
-		echo "Welcome to the BalCMS Installer.\n\n";
+		echo "Welcome to the BalCMS Installer.\n";
 	}
 	
 	/**
@@ -80,7 +100,7 @@ class Cli {
 		# ----------------
 		
 		# Install Submodules
-		echo "Installing Submodules...\n";
+		echo "\nInstalling Submodules...\n";
 		`git submodule init; git submodule update; git submodule foreach 'git submodule init; git submodule update;'`;
 		
 		# --------------------------
@@ -116,7 +136,13 @@ class Cli {
 		
 		# --------------------------
 		
-		# Adjust Library Path
+		# Detect BALPHP_ROOT_PATH
+		if ( !defined('BALPHP_ROOT_PATH') ) {
+			echo "Error: BALPHP_ROOT_PATH is undefined... Configuration must not have been loaded correctly...";
+			exit;
+		}
+		
+		# Ensure Library Path
 		if ( !is_dir(LIBRARY_PATH) && !mkdir(LIBRARY_PATH) ) {
 			echo "Error: Could not read the library directory: [".LIBRARY_PATH."]";
 			exit;
@@ -295,7 +321,7 @@ class Cli {
 		$symlinksToInstall = array();
 		
 		# Setup Resources
-		echo "\n\n$message\n";
+		echo "\n$message\n";
 		foreach ( $resources as $resource ) {
 			$title = $source = $destination = $command = $submodules = $vcs = $submodule = $inside = null;
 			$branch = 'master';
@@ -377,6 +403,9 @@ class Cli {
 		# Install Symlinks
 		if ( count($symlinksToInstall) )
 			$this->installSymlinks($symlinksToInstall, $symlinksMessage);
+			
+		# Done
+		echo "\n";
 	}
 	
 }
