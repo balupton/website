@@ -1,5 +1,6 @@
 production: &production
-    <<<: *default_production
+    <<<: *default
+    
     mail:
         from:
             name: "Benjamin Lupton"
@@ -71,7 +72,7 @@ production: &production
 
 
 staging: &staging
-    <<<: *default_staging
+    <<<: *production
     data:
         connection_string: "mysql://balupton_balsite:CIhbTIPwW7Ly@localhost/balupton_balstag"
     mail:
@@ -85,16 +86,33 @@ staging: &staging
             code: "2bh1g-3mj47c35cy"
     
 testing: &testing
-    <<<: *default_testing
+    <<<: *production
     data:
         connection_string: "mysql://balupton_balsite:CIhbTIPwW7Ly@localhost/balupton_baltest"
+    phpSettings:
+        display_startup_errors: 1
+        display_errors: 1
+    error:
+        friendly: false
+        throw: false
     mail:
         from:
             name: "Benjamin Lupton: Testing"
             address: "testing.system@balupton.com"
+    services:
+        analytics:
+            code: ""
+        reinvigorate:
+            code: ""
 
 development: &development
-    <<<: *default_development
+    <<<: *production
+    phpSettings:
+        display_startup_errors: 1
+        display_errors: 1
+    error:
+        friendly: false
+        throw: false
     data:
         connection_string: "mysql://root:1234@localhost/balsite;unix_socket=/usr/local/zend/mysql/tmp/mysql.sock"
         models:
@@ -102,9 +120,11 @@ development: &development
         compile:
             generate: true
     mail:
-        send_email: true
+        #send_email: false
         from:
             name: "Benjamin Lupton: Development"
             address: "development.system@balupton.com"
+    log:
+        store: false
     editor:
         code: aloha
