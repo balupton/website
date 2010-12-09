@@ -1,14 +1,16 @@
 # Standard Ignores
-application/config/compiled
-application/data/schema/compiled
-application/modules/*/config/compiled
-application/data/cache
 application/data/database/*.db
 application/data/dump/*
-application/data/schema/compiled
 application/data/migrations
+application/data/cache
 application/data/logs/*
-public/media/cache
+
+# Compile Locations
+application/config/compiled
+application/data/schema/compiled
+application/data/schema/compiled
+application/modules/*/config/compiled
+public/media/cache/*/*
 
 # Symlink Ignores
 application/models/Bal

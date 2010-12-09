@@ -1,5 +1,17 @@
+# ======================
+# Standard Make Vars
+
 MAKEFLAGS = --no-print-directory --always-make
 MAKE = make $(MAKEFLAGS)
+
+# ======================
+# Special Variables
+
+# Current BalCMS Version
+BALCMS_VERSION = v1.0.0
+
+# ======================
+# Commands
 
 default:
 	$(MAKE) setup ;
@@ -7,6 +19,14 @@ default:
 all:
 	$(MAKE) configure ;
 	$(MAKE) install ;
+
+clean:
+	rm -Rf \
+		application/config/compiled \
+		application/data/schema/compiled \
+		application/data/schema/compiled \
+		application/modules/*/config/compiled \
+		public/media/cache/*/ ;
 
 configure:
 	php5 ./scripts/configure ;
@@ -30,7 +50,7 @@ add:
 	git add -u ;
 
 update:
-	git checkout balcms; git pull balcms master; git checkout dev; git merge balcms;
+	git checkout $(BALCMS_VERSION)-balcms; git pull balcms master; git checkout $(BALCMS_VERSION)-dev; git merge $(BALCMS_VERSION)-balcms;
 
 deploy:
-	git checkout master; git merge dev; git checkout dev; git push --all;
+	git checkout $(BALCMS_VERSION); git merge $(BALCMS_VERSION)-dev; git checkout master; git merge $(BALCMS_VERSION); git checkout $(BALCMS_VERSION)-dev; git push origin --all;
