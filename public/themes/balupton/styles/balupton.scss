@@ -234,9 +234,6 @@ em {
 #footer {
 	height:300px;
 	font-family: $font_header;
-	/*background:
-		url("../images/header-background-bottom-back.jpg") top left repeat-x,
-		url("../images/header-background-bottom-back.jpg") bottom left repeat-x;*/
 	background-color: $color_bg_footer;
 	border:1px solid #CCC;
 	+box-shadow("0px", "0px", "12px", "#CCC");

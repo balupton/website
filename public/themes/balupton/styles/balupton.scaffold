@@ -16,7 +16,7 @@ aside, nav, article, figure {
 	color_normal: #373D4A;
 	color_dark: #373D4A;
 	color_darkest: black;
-	color_bg: #F9F9F9;
+	color_bg_normal: #F9F9F9;
 	color_bg_header: #F6F6F6;
 	color_bg_footer: #F3F3F3;
 	color_border: #EEE;
@@ -167,11 +167,11 @@ aside, nav, article, figure {
 
 /* Structure */
 html {
-	background: var.color_bg;
+	background: var.color_bg_normal;
 }
 body, #wrap {
 	font-family: var.font_normal;
-	background: var.color_bg;
+	background: var.color_bg_normal;
 	color: var.color_normal;
 }
 html, body, #wrap, #wrap > .inner-wrap, #main, #main > .inner-wrap, #side {
@@ -238,11 +238,9 @@ em {
 #footer {
 	height:300px;
 	font-family: var.font_header;
-	/*background:
-		url("../images/header-background-bottom-back.jpg") top left repeat-x,
-		url("../images/header-background-bottom-back.jpg") bottom left repeat-x;*/
-	background-color:var.color_bg_footer;
-	border:1px solid #CCC;
+	background: var.color_bg_footer;
+	border: 1px solid #CCC;
+	
 	@include box-shadow("0px", "0px", "12px", "#CCC");
 	
 	a {
@@ -1128,7 +1126,7 @@ html.ie {
 	}
 }
 html.opacity.csstransitions:not(.mobile) #side {
-	background:var.color_bg;
+	background:var.color_bg_normal;
 	@include opacity(0.2);
 	@include transition("opacity 0.8s ease-out");
 	&:hover {
@@ -1253,7 +1251,7 @@ ul.compatability {
 	/* List Social */
 	.nav-social {
 		padding:10px 0;
-		background:var.color_bg;
+		background:var.color_bg_normal;
 	
 		a {
 			width:32px;
@@ -1272,31 +1270,31 @@ ul.compatability {
 		}
 
 		.facebook {
-			background: var.color_bg url("../images/facebook.png") no-repeat top left;
+			background: var.color_bg_normal url("../images/facebook.png") no-repeat top left;
 		}
 		.twitter {
-			background: var.color_bg url("../images/twitter.png") no-repeat top left;
+			background: var.color_bg_normal url("../images/twitter.png") no-repeat top left;
 		}
 		.skype {
-			background: var.color_bg url("../images/skype.png") no-repeat top left;
+			background: var.color_bg_normal url("../images/skype.png") no-repeat top left;
 		}
 		.feed {
-			background: var.color_bg url("../images/rss.png") no-repeat top left;
+			background: var.color_bg_normal url("../images/rss.png") no-repeat top left;
 		}
 		.email {
-			background: var.color_bg url("../images/email.png") no-repeat top left;
+			background: var.color_bg_normal url("../images/email.png") no-repeat top left;
 		}
 		.linkedin {
-			background: var.color_bg url("../images/linkedin.png") no-repeat top left;
+			background: var.color_bg_normal url("../images/linkedin.png") no-repeat top left;
 		}
 		.vimeo {
-			background: var.color_bg url("../images/vimeo.png") no-repeat top left;
+			background: var.color_bg_normal url("../images/vimeo.png") no-repeat top left;
 		}
 		.lastfm {
-			background: var.color_bg url("../images/lastfm.png") no-repeat top left;
+			background: var.color_bg_normal url("../images/lastfm.png") no-repeat top left;
 		}
 		.google {
-			background: var.color_bg url("../images/google.png") no-repeat top left;
+			background: var.color_bg_normal url("../images/google.png") no-repeat top left;
 		}
 	}
 	.nav-social:hover {
@@ -1320,7 +1318,7 @@ ul.compatability {
 	}
 }
 html.opacity.csstransitions:not(.mobile) #subfooter .nav-social {
-	background:var.color_bg;
+	background:var.color_bg_normal;
 	@include opacity(0.5);
 	a {
 		@include opacity(0.4);
@@ -1391,7 +1389,7 @@ html.opacity.mobile  #subfooter .nav-social {
 	z-index:500;
 	width:735px;
 	height:505px;
-	background: var.color_bg;
+	background: var.color_bg_normal;
 	border:1px solid #CCC;
 	@include box-shadow("0px", "0px", "4px", "#CCC");
 	
