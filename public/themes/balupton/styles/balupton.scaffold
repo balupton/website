@@ -241,7 +241,7 @@ em {
 	/*background:
 		url("../images/header-background-bottom-back.jpg") top left repeat-x,
 		url("../images/header-background-bottom-back.jpg") bottom left repeat-x;*/
-	background-color: var.color_bg_footer;
+	background-color:var.color_bg_footer;
 	border:1px solid #CCC;
 	@include box-shadow("0px", "0px", "12px", "#CCC");
 	
