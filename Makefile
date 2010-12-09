@@ -38,7 +38,7 @@ add:
 	git add -u ;
 
 update:
-	git checkout balcms; git pull balcms master; git checkout dev; git merge balcms;
+	git checkout v1.0.0-balcms; git pull balcms master; git checkout v1.0.0-dev; git merge v1.0.0-balcms;
 
 deploy:
-	git checkout master; git merge dev; git checkout dev; git push --all;
+	git checkout v1.0.0; git merge v1.0.0-dev; git checkout master; git merge v1.0.0; git checkout v1.0.0-dev; git push origin --all;
