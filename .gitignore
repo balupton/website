@@ -1,9 +1,3 @@
-# Remove These Once You've Installed
-config.php
-application/config/*.yml
-application/data/fixtures/data.yml
-application/data/schema/schema.yml
-
 # Standard Ignores
 application/config/compiled
 application/data/schema/compiled
