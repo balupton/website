@@ -1,0 +1,332 @@
+<?php
+	# Doctype
+	echo $this->doctype('HTML5');
+	# URLs
+	$this->url()->renege('route','front');
+	$base_url_full = $this->app()->getBaseUrl(true);
+	$base_url = $this->app()->getBaseUrl();
+	$root_url = $this->app()->getRootUrl();
+	$public_url = $this->app()->getPublicUrl();
+	$front_url = $this->app()->getAreaUrl('front');
+	$jquery_ui_url = $public_url.'/scripts/jquery-ui-1.7.2';
+	$jquery_sparkle_url = $public_url.'/scripts/jquery-sparkle';
+	# Browser
+	$unsupportedBrowser = $this->app()->isBrowser('ie',array('<=','8'));
+	# User
+	$User = $this->app()->getUser();
+	# Tags
+	$Tags = $this->app()->fetchRecords('TaggableTag');
+	# Misc
+	$gsfn = $this->app()->getConfig('bal.gsfn.company');
+	$rand = rand(0,2);
+?><html class="<?=$this->app()->getHtmlClassAttribute()?>">
+<head>
+	<!-- Google Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	<!-- Header -->
+    <?= $this->app()->headMeta() ?>
+    <?= $this->app()->headTitle() ?>
+    <?=
+		$this->app()->headLink(array(
+			'minify' => true,
+			'csscaffold' => false,
+			'editor' => false
+		))
+	?>
+    <?= $this->app()->headStyle() ?>
+</head>
+<body>
+	<!-- Google Chrome Frame -->
+	<? if ( $unsupportedBrowser ) : ?>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script> 
+		<script type="text/javascript">
+			CFInstall.check({
+				mode: "overlay"
+			});
+		</script>
+	<? endif ?>
+	
+	<!-- Header -->
+    <?
+		$scripts = array(
+			'minify' => true,
+			'json' => false,
+			'editor' => false,
+			'jquery_ui' => false,
+			'jquery_lightbox' => false
+			//'syntax_highlighter' => false,
+		);
+		if ( $unsupportedBrowser ) $scripts['jquery_ajaxy'] = false;
+		$headScript = $this->app()->headScript($scripts);
+		if ( $gsfn ) {
+			$headScript
+				// GSFN
+		    	->offsetSetFile(10,'http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js')
+		    	->offsetSetScript(11,"var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: '".$gsfn."', placement: 'hidden', color: '#222', style: 'question' });")
+			;
+		}
+		$headScript->offsetSetScript(1000,'$.BalCMS.options.root_url = "'.$root_url.'"; $.BalCMS.options.base_url = "'.$base_url.'"; $.BalCMS.options.debug = '.(APPLICATION_ENV === 'production' ? 'false' : 'true').';');
+	    echo $headScript;
+	?>
+	
+	<!-- Wrap -->
+	<div id="wrap">
+		
+		<!-- Sidebar -->
+		<header id="header" class="header">
+			<div class="inner-wrap">
+			
+				<div id="header-text">
+					<div id="header-intro">Hi, I'm</div>
+					<hgroup class="hgroup">
+						<h1 id="header-name"><a href="<?=$base_url?>" title="Back to the home page">Benjamin Lupton</a></h1>
+						<?
+							$about = array(
+								'css' => array(
+									'brains',
+									'hearts',
+									'grow',
+									'alive'
+								),
+								'text' => array(
+									'I give websites their <strong>brains!</strong>',
+									'I give websites <strong>heartbeats!</strong>',
+									'I ensure websites can <strong>grow!</strong>',
+									'I make websites come <strong>alive!</strong>'
+								)
+							);
+						?>
+						<h2 id="header-title" class="<?=$about['css'][$rand]?>">
+							<a href="#about" class="help" title="Click to learn more of what I do">
+								I'm a <em>Web 2.0 Architect</em>.
+								<?=$about['text'][$rand]?>
+							</a>
+						</h2>
+					</hgroup>
+				</div>
+			
+				<nav id="nav-actions" class="nav-actions nav">
+					<header class="header">
+						<h1>
+							<span class="title">Actions</span>
+						</h1>
+					</header>
+					<?=$this->app()->getNavigationMenu('front.actions')
+						->setTemplate('<span class="title">$label</span>')
+						->render()?>
+					<!-- Search -->
+				    <form id="search" action="<?=$this->url()->action('search')->search()->toString()?>" method="post" class="search">
+						<!-- Search -->
+				        <label for="search-query">
+			                Search:
+			            </label>
+						<?=$this->formText('search[query]',delve($this,'search.query'),array('class'=>'sparkle-hint','title'=>'Search'))?>
+						<?=$this->formSubmit('search[submit]','Search',array('class'=>'button white small'))?>
+					</form>
+				</nav>
+	
+				<nav id="nav-main" class="nav-main nav">
+					<header class="header">
+						<h1>
+							<span class="title">Main Menu</span>
+						</h1>
+					</header>
+					<?=$this->app()->getNavigationMenu('front.menu')
+						->setTemplate('<span class="title">$label</span><span class="description">$title</span>')
+						->render()?>
+				</nav>
+			</div>
+		</header>
+	
+		<!-- Main -->
+		<div id="main"><div class="inner-wrap">
+		
+			<!-- Content -->
+			<section id="content" class="section">
+				<?=$this->log()->render()?>
+				<?=$this->layout()->content?>
+			</section>
+		
+			<!-- Sidebar -->
+			<section id="side" class="section simple">
+				<header class="header">
+					<h1>
+						<span class="title">Sidebar<span>
+					</h1>
+				</header>
+				
+				<!-- Recommended -->
+				
+				<!-- Tags -->
+				<?=$this->partial('partials/nav-tags.phtml',array(
+					'title' => 'Discover',
+					'class' => 'nav-discover',
+					'Items' => $Tags
+				))?>
+			</section>
+			
+		</div></div>
+	
+		<!-- Footer -->
+		<footer id="footer" class="footer"><div class="inner-wrap">
+			<?
+				$featured = array('projects','clients','work','articles');
+				$Featured = array();
+				foreach ( $featured as $item ) {
+					$Featured[$item] =  $this->app()->fetchRecords('Content',array(
+						'fetch' => 'simplelist',
+						'Parent' => $item,
+						'featured' => true,
+						'limit' => 3
+					));
+				}
+			?>
+			
+			<!-- Featured Projects -->
+			<?=$this->partial('partials/nav-content.phtml',array(
+				'title' => '<small>Featured</small> Projects',
+				'class' => 'nav-projects',
+				'Items' => $Featured['projects']
+			))?>
+			
+			<!-- Featured Clients -->
+			<?=$this->partial('partials/nav-content.phtml',array(
+				'title' => '<small>Featured</small> Clients',
+				'class' => 'nav-clients',
+				'Items' => $Featured['clients']
+			))?>
+			
+			<!-- Discover -->
+			<section id="getintouch" class="getintouch section">
+				<header class="header">
+					<h1>
+						<span class="title">Get in Touch</span>
+					</h1>
+				</header>
+				<p>
+					<label>Email</label> <a href="mailto:contact@balupton.com" title="Email me">contact@balupton.com</a>
+				</p>
+				<p>
+					<label>Skype</label> <a href="skype:balupton?userinfo" title="Skype me">balupton</a>
+				</p>
+				<p>
+					Generated with <a href="<?=$this->url()->content('balcms')->toString()?>" title="Learn more about BalCMS">BalCMS</a>.
+				</p>
+			</section>
+			
+			<!-- Featured Work -->
+			<?=$this->partial('partials/nav-content.phtml',array(
+				'title' => '<small>Featured</small> Work',
+				'class' => 'nav-work',
+				'Items' => $Featured['work']
+			))?>
+			
+			<!-- Featured Articles -->
+			<?=$this->partial('partials/nav-content.phtml',array(
+				'title' => '<small>Featured</small> Articles',
+				'class' => 'nav-articles',
+				'Items' => $Featured['articles']
+			))?>
+			
+			<!-- Discover -->
+			<section id="donate" class="donate section">
+				<header class="header">
+					<h1>
+						<span class="title">Powered By Coffee.</span>
+					</h1>
+				</header>
+				<p>
+					Coffee drives the continuous effort placed into the open-source software provided on this website. 
+					Take a stand, make a move, spare some change, <em>make it possible.</em>
+				</p>
+				
+				<form id="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+					<input type="hidden" name="cmd" value="_donations">
+					<input type="hidden" name="business" value="APWCX9D4EJPXG">
+					<input type="hidden" name="lc" value="AU">
+					<input type="hidden" name="item_name" value="Donation to Benjamin Arthur Lupton">
+					<input type="hidden" name="currency_code" value="AUD">
+					<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_SM.gif:NonHostedGuest">
+					<input id="paypal-submit" type="image" src="https://www.paypal.com/en_AU/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
+					<img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1">
+					<div id="donate-link">
+						<span class="description">Support Open-Source Software</span>
+						<Span class="title">Donate $5</span>
+					</div>
+				</form>
+			</section>
+			
+		</div></footer>
+		
+		<!-- Sub Footer -->
+		<footer id="subfooter" class="footer"><div class="inner-wrap">
+			<!-- Social -->
+			<?=$this->partial('partials/nav-links.phtml',array(
+				'title' => 'Social Links',
+				'class' => 'nav-social simple',
+				'Items' => 'front.social'
+			))?>
+			
+			<!-- Copyright -->
+			<p class="copyright" id="copyright">
+				Copyright © 2006-<?=date('Y')?> Benjamin Arthur Lupton.
+			</p>
+			
+			<!-- Licence -->
+			<p class="license" id="license">
+				The content on this website is licensed under the
+				<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/au/" class="link">
+					Creative Commons Attribution-Share Alike 3.0 Australia License
+				</a>.
+			</p>
+		</footer>
+	</div>
+
+	<!-- Modals -->
+	<section id="contact" class="contact modal section" style="display:none">
+		<header class="header">
+			<hgroup>
+				<h1 class="title">Contact!</h1>
+				<h2 class="description">How?</h2>
+			</hgroup>
+		</header>
+		<ul>
+			<li class="tweet">
+				<a href="http://twitter.com/balupton">
+					<h1>Twitter</h1>
+					<h2>Quick tweets go to @balupton</h2>
+				</a>
+			</li>
+			<li class="gsfn">
+				<a href="http://getsatisfaction.com/balupton" class="gsfnwidget">
+					<h1>GetSatisfaction</h1>
+					<h2>Suggestions and problems go here.</h2>
+				</a>
+			</li>
+			<li class="email">
+				<a href="mailto:contact@balupton.com">
+					<h1>Email</h1>
+					<h2>Job offers go to contact@balupton.com</h2>
+				</a>
+			</li>
+		</ul>
+	</section>
+	
+	<!-- Scripts -->
+	<script type="text/javascript">
+		$(function(){
+			$('#menu-front-action-contact').click(function(){
+				$('#contact').show();
+				event.preventDefault();
+			});
+			$('#contact .gsfnwidget').click(function(){
+				$('#contact').hide();
+				event.preventDefault();
+			});
+		});
+	</script>
+	
+	<!-- App Footer -->
+	<?=$this->app()->footer()?>
+</body>
+</html>

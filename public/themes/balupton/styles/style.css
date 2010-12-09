@@ -1,0 +1,18 @@
+/* Imports */
+@import url("./yui-reset-3.1.1-min.css");
+@import url("./balupton.scaffold");
+
+@-webkit-keyframes targetanim {
+	/* Currently only webkit supports CSS3 animations :-( */
+	from {
+		opacity:0.5;
+	}
+	to {
+		opacity:1;
+	}
+}
+	
+:target,.target {
+	/* http://webdesignernotebook.com/css/the-css3-target-pseudo-class-and-css-animations/ */
+	-webkit-animation: targetanim 0.5s 3 ease-out;
+}

@@ -1,0 +1,97 @@
+---
+detect_relations: false
+
+# ==============================================
+# ROUTE
+
+Route:
+    inheritance:
+        extends: Bal_Route
+        type: simple
+
+# ==============================================
+# CONTENT
+
+Content:
+    inheritance:
+        extends: Balcms_Content
+        type: simple
+
+ContentEvent:
+    inheritance:
+        extends: Balcms_ContentEvent
+        type: simple
+
+ContentProduct:
+    inheritance:
+        extends: Balcms_ContentProduct
+        type: simple
+
+ContentBook:
+    inheritance:
+        extends: Balcms_ContentBook
+        type: simple
+
+# ==============================================
+# FILE
+
+File:
+    inheritance:
+        extends: Bal_File
+        type: simple
+
+
+# ==============================================
+# MESSAGES
+
+Message:
+    inheritance:
+        extends: Balcms_Message
+        type: simple
+
+
+# ==============================================
+# INVOICES
+
+Invoice:
+    inheritance:
+        extends: Bal_Invoice
+        type: simple
+
+
+# ==============================================
+# USERS
+
+User:
+    inheritance:
+        extends: Balcms_User
+        type: simple
+
+# ==============================================
+# PERMISSIONS
+
+Role:
+    inheritance:
+        extends: Bal_Role
+        type: simple
+        
+PermissionAndRole:
+    inheritance:
+        extends: Bal_PermissionAndRole
+        type: simple
+        
+Permission:
+    inheritance:
+        extends: Bal_Permission
+        type: simple
+
+RoleAndUser:
+    inheritance:
+        extends: Bal_RoleAndUser
+        type: simple
+
+PermissionAndUser:
+    inheritance:
+        extends: Bal_PermissionAndUser
+        type: simple
+        
