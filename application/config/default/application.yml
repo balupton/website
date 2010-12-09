@@ -1,4 +1,5 @@
-balcms: &balcms
+# Default Environment
+default: &default
     phpSettings:
         date:
             timezone: UTC
@@ -30,7 +31,7 @@ balcms: &balcms
         yaml_schema_path: "<?=DATA_SCHEMA_PATH?>"
         yaml_schema_file_path: "<?=DATA_SCHEMA_COMPILED_FILE_PATH?>"
         yaml_schema_includes:  
-            - "<?=APPLICATION_PATH?>/data/schema/schema.yml"
+            - "<?=DATA_SCHEMA_PATH?>/schema.yml"
             - "<?=MODELS_PATH?>/Bal/Schema/Invoice.yml"
             - "<?=MODELS_PATH?>/Bal/Schema/File.yml"
             - "<?=MODELS_PATH?>/Bal/Schema/Message.yml"
@@ -234,3 +235,54 @@ balcms: &balcms
                     - "NestedSelectors"
                     - "Variables"
                     - "XMLVariables"
+
+# Default Environments
+default_production: &default_production
+    <<<: *default
+    mail:
+        from:
+            name: "BalCMS System"
+            address: "balcms@balupton.com"
+
+default_staging: &default_staging
+    <<<: *default
+    mail:
+        from:
+            name: "BalCMS System: Staging"
+            address: "staging.balcms@balupton.com"
+
+default_testing: &default_testing
+    <<<: *default
+    phpSettings:
+        display_startup_errors: 1
+        display_errors: 1
+    error:
+        friendly: false
+        throw: false
+    mail:
+        from:
+            name: "BalCMS System: Testing"
+            address: "testing.balcms@balupton.com"
+
+default_development: &default_development
+    <<<: *default
+    phpSettings:
+        display_startup_errors: 1
+        display_errors: 1
+    error:
+        friendly: false
+        throw: false
+    data:
+        models:
+            generate: true
+        compile:
+            generate: true
+    mail:
+        send_email: false
+        from:
+            name: "BalCMS System: Development"
+            address: "development.balcms@balupton.com"
+    log:
+        store: true
+    editor:
+        code: aloha

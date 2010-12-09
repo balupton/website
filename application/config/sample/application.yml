@@ -1,0 +1,9 @@
+# Sample Custom Configuration
+production: &production
+    <<<: *default_production
+staging: &staging
+    <<<: *default_staging
+testing: &testing
+    <<<: *default_testing
+development: &development
+    <<<: *default_development

@@ -39,6 +39,9 @@ class Cli {
 		echo "Welcome to the BalCMS Installer.\n\n";
 	}
 	
+	/**
+	 * Display a nice Goodbye Message
+	 */
 	public function goodbye ( ) {
 		# Bye
 		echo "Your BalCMS Installation is Now Configured.\n";
@@ -50,7 +53,7 @@ class Cli {
 	 */
 	public function installCore ( ) {
 		# Prepare
-		global $Bootstrapr;
+		$Bootstrapr = Bootstrapr::getInstance();
 		$Bootstrapr->bootstrap('environment');
 		
 		# --------------------------
@@ -96,8 +99,16 @@ class Cli {
 	 */
 	public function installBase ( ) {
 		# Prepare
-		global $Bootstrapr;
+		$Bootstrapr = Bootstrapr::getInstance();
 		$Bootstrapr->bootstrap('configuration');
+		
+		# --------------------------
+		
+		# Adjust Library Path
+		if ( !is_dir(LIBRARY_PATH) && !mkdir(LIBRARY_PATH) ) {
+			echo "Error: Could not read the library directory: [".LIBRARY_PATH."]";
+			exit;
+		}
 		
 		# --------------------------
 		

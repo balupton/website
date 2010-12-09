@@ -72,7 +72,7 @@ class Balcms_View_Helper_Content extends Zend_View_Helper_Abstract {
 				$fetch['Parent'] = $Content;
 			}
 			if ( empty($fetch['Parent']) ) {
-				unset($fetch['Parent']);
+				unset($fetch['Parent']); // don't fetch with a parent
 			}
 			
 			# Fetch: Codes

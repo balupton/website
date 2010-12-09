@@ -28,6 +28,17 @@ if ( !class_exists('Bootstrapr') ) {
 			$function = '_init'.$code;
 			$this->$function();
 		}
+		
+		/**
+		 * Get the Instance
+		 */
+		public static function getInstance ( ) {
+			global $Bootstrapr;
+			if ( empty($Bootstrapr) ) {
+				$Bootstrapr = new Bootstrapr();
+			}
+			return $Bootstrapr;
+		}
 	
 		/**
 		 * Convenient logging to profile the bootstrap
@@ -71,6 +82,207 @@ if ( !class_exists('Bootstrapr') ) {
 				'-->'."\n";
 			}
 			return true;
+		}
+		
+		/**
+		 * Parse a YAML File
+		 */
+		public function parseYamlFile ( $file ) {
+			return $this->parseYamlString(file_get_contents($file));
+		}
+		
+		/**
+		 * Ensure we have a valid YAML String
+		 */
+		public function ensureYamlString ( $contents ) {
+			return str_replace("\t",'    ',$contents);
+		}
+		
+		/**
+		 * Parse a YAML String
+		 */
+		public function parseYamlString ( $contents ) {
+			$contents = $this->ensureYamlString($contents);
+			$Yaml = new sfYamlParser();
+			return $Yaml->parse($contents);
+		}
+		
+		/**
+		 * Parse a YAML File with PHP Parsing
+		 */
+		public function loadYamlFile ( $file ) {
+			return sfYaml::load($file);
+		}
+		
+		/**
+		 * Parse an Advanced Yaml File
+		 * Includes Inheritance, Path Separators, and Compilation
+		 */
+		public function parseAdvancedYamlFile ( $file_path, $compiled_file_path, $inheritance = null ) {
+			# Prepare
+			$configuration = null;
+			
+			# Determine Configuration Files
+			if ( is_array($file_path) ) {
+				$config_files = $file_path;
+			}
+			elseif ( strstr($file_path,PATH_SEPARATOR) ) {
+				# We are wanting to load in multiple configuration files
+				$config_files = explode(PATH_SEPARATOR,$file_path);
+			}
+			else {
+				# We just want to load in the sole file
+				$config_files = array($file_path);
+			}
+			
+			# Extract the filemtime
+			$multi_filemtime = 0;
+			foreach ( $config_files as $_file_path ) {
+				$_filemtime = filemtime($_file_path);
+				if ( !$multi_filemtime || $_filemtime < $multi_filemtime ) {
+					$multi_filemtime = $_filemtime;
+				}
+			}
+			
+			# Include the core configuration
+			if ( is_readable($compiled_file_path) && filemtime($compiled_file_path) > $multi_filemtime ) {
+				$configuration = unserialize(file_get_contents($compiled_file_path));
+			}
+			
+			# Include the core configuration (falling back on uncompiled if compiled didn't work)
+			if ( !$configuration ) {
+				$configuration_str = '';
+				foreach ( $config_files as $_file_path ) {
+					$configuration_str .= "\n".file_get_contents($_file_path);
+				}
+				$configuration = $this->parseYamlString($configuration_str);
+				$this->ensurePath($compiled_file_path);
+				file_put_contents($compiled_file_path, serialize($configuration));
+			}
+			
+			# Extract for our Environment
+			$configuration = $configuration[APPLICATION_ENV];
+			
+			# Adjust for Yaml Inheritance
+			if ( $inheritance || ($inheritance === null && function_exists('adjust_yaml_inheritance')) ) {
+				$configuration = adjust_yaml_inheritance($configuration);
+			}
+			
+			# Return Configuration
+			return $configuration;
+		}
+		
+		/**
+		 * Load an Advanced Yaml File
+		 * Includes PHP Parsing, Inheritance, Path Separators and Compilation
+		 */ 
+		public function loadAdvancedYamlFile ( $file_path, $compiled_file_path, $temp_file_name = null, $inheritance = null ) {
+			# Prepare
+			$configuration = null;
+			
+			# Determine Temp File Name
+			if ( empty($temp_file_name) ) {
+				$temp_file_name = md5($file_path).'.yml';
+			}
+			
+			# Determine Configuration Files
+			if ( is_array($file_path) ) {
+				$config_files = $file_path;
+			}
+			elseif ( strstr($file_path,PATH_SEPARATOR) ) {
+				# We are wanting to load in multiple configuration files
+				$config_files = explode(PATH_SEPARATOR,$file_path);
+			}
+			else {
+				# We just want to load in the sole file
+				$config_files = array($file_path);
+			}
+
+			# Extract the filemtime
+			$multi_filemtime = 0;
+			foreach ( $config_files as $_file_path ) {
+				$_filemtime = filemtime($_file_path);
+				if ( !$multi_filemtime || $_filemtime < $multi_filemtime ) {
+					$multi_filemtime = $_filemtime;
+				}
+			}
+			
+			# Include the core configuration
+			if ( is_readable($compiled_file_path) && filemtime($compiled_file_path) > $multi_filemtime ) {
+				$configuration = unserialize(file_get_contents($compiled_file_path));
+			}
+			
+			# Check if Compiled is Adequate
+			if ( !$configuration ) {
+				# Adjust
+				$configuration_str = '';
+				foreach ( $config_files as $_file_path ) {
+					$configuration_str .= "\n".$this->ensureYamlString(file_get_contents($_file_path));
+				}
+				
+				# Write to Temp
+				$config_tmp_file = tempnam('/tmp', $temp_file_name);
+				file_put_contents($config_tmp_file, $configuration_str);
+				
+				# Load Yaml (with PHP parsing)
+				$configuration = $this->loadYamlFile($config_tmp_file);
+				unlink($config_tmp_file);
+				
+				# Store
+				$this->ensurePath($compiled_file_path);
+				file_put_contents($compiled_file_path, serialize($configuration));
+			}
+			
+			# Extract for our Environment
+			$configuration = $configuration[APPLICATION_ENV];
+			
+			# Adjust for Yaml Inheritance
+			if ( $inheritance || ($inheritance === null && function_exists('adjust_yaml_inheritance')) ) {
+				$configuration = adjust_yaml_inheritance($configuration);
+			}
+			
+			# Return Configuration
+			return $configuration;
+		}
+		
+		/**
+		 * Ensures all the necessary directories and the file exist for a DSN
+		 */
+		public function ensureDsnPath ( $dsn ) {
+			$prefix = 'sqlite:///';
+			if ( strpos($dsn, $prefix) === 0 ) {
+				$path = substr($dsn,strlen($prefix));
+				return $this->ensurePath($path);
+			}
+			return false;
+		}
+		
+		/**
+		 * Ensures the path is writeable
+		 */
+		public function ensureWriteable ( $path ) {
+			`chmod -R 777 $path`;
+		}
+		
+		/**
+		 * Ensures all the necessary directories and the file exist
+		 */
+		public function ensurePath ( $path ) {
+			system('mkdir -p '.dirname($path));
+			touch($path);
+			return true;
+		}
+		
+		/**
+		 * Returns the first readable file from an array
+		 */
+		public function firstReadableFile(array $files){
+			foreach ( $files as $file ) {
+				if ( is_readable($file) ) {
+					return $file;
+				}
+			}
+			return false;
 		}
 		
 		/**
@@ -197,7 +409,9 @@ if ( !class_exists('Bootstrapr') ) {
 				define('APPLICATION_PATH',					APPLICATION_ROOT_PATH.'/application');
 			}
 			if ( !defined('CONFIG_CORE_PATH') ) {
-				define('CONFIG_CORE_PATH',					APPLICATION_ROOT_PATH.'/application/config/core.yml');
+				define('CONFIG_CORE_PATH',					APPLICATION_ROOT_PATH.'/application/config/default/core.yml'.
+															PATH_SEPARATOR.
+															APPLICATION_ROOT_PATH.'/application/config/core.yml' );
 			}
 			if ( !defined('CONFIG_CORE_COMPILED_PATH') ) {
 				define('CONFIG_CORE_COMPILED_PATH',			APPLICATION_ROOT_PATH.'/application/config/compiled/core.data');
@@ -260,22 +474,10 @@ if ( !class_exists('Bootstrapr') ) {
 			# Load the YAML Parser
 			require_once(SFYAML_PATH.'/sfYamlParser.php');
 			require_once(SFYAML_PATH.'/sfYaml.php');
-			$Yaml = new sfYamlParser();
 			
-			# Include the core configuration
-			if ( is_readable(CONFIG_CORE_COMPILED_PATH) && filemtime(CONFIG_CORE_COMPILED_PATH) > filemtime(CONFIG_CORE_PATH) ) {
-				$configuration = unserialize(file_get_contents(CONFIG_CORE_COMPILED_PATH));
-			}
+			# Parse Advanced Yaml File
+			$configuration = $this->parseAdvancedYamlFile(CONFIG_CORE_PATH, CONFIG_CORE_COMPILED_PATH);
 			
-			# Include the core configuration (falling back on uncompiled if compiled didn't work)
-			if ( !$configuration ) {
-				$configuration = $Yaml->parse(str_replace("\t",'    ',file_get_contents(CONFIG_CORE_PATH)));
-				file_put_contents(CONFIG_CORE_COMPILED_PATH, serialize($configuration));
-			}
-			
-			# Adjust for our Environment
-			$configuration = $configuration[APPLICATION_ENV];
-	
 			# Adjust our configuration
 			if ( trim($configuration['BASE_URL']) === 'auto' ) {
 				# We should autodetect the base url
@@ -294,7 +496,8 @@ if ( !class_exists('Bootstrapr') ) {
 			
 			# Apply Our Configuration
 			foreach ( $configuration as $key => &$value ) {
-				$value = preg_replace('/\\<\\?\\=([a-zA-Z0-9_()]+)\\?\\>/e','\\1',trim($value));
+				$value = preg_replace('/\s/m', '', $value); // remove excess whitespace (tabs and newlines)
+				$value = preg_replace('/\\<\\?\\=([a-zA-Z0-9_()]+)\\?\\>/e','\\1',$value); // parse constants
 				if ( !defined($key) )
 					define($key,$value);
 			}
@@ -340,58 +543,10 @@ if ( !class_exists('Bootstrapr') ) {
 			# Prepare
 			$this->bootstrap('compatibility');
 			global $ApplicationConfiguration;
-			$config = ''; $config_files = $configuration = null;
+			$configuration_str = ''; $config_files = $configuration = null;
 			
-			# Determine Configuration Files
-			if ( strstr(CONFIG_FILE_PATH,PATH_SEPARATOR) ) {
-				# We are wanting to load in multiple configuration files
-				$config_files = explode(PATH_SEPARATOR,CONFIG_FILE_PATH);
-			}
-			else {
-				# We just want to load in the sole file
-				$config_files = array(CONFIG_FILE_PATH);
-			}
-
-			# Check if Compiled Exists
-			if ( is_readable(CONFIG_COMPILED_FILE_PATH) ) {
-				# Check Modified Times
-				$compiled_mtime = filemtime(CONFIG_COMPILED_FILE_PATH);
-				$recompile = false;
-				foreach ( $config_files as $file ) {
-					if ( $compiled_mtime < filemtime($file) ) {
-						$recompile = true;
-						break;
-					}
-				}
-				
-				# Should we use the compiled version?
-				if ( !$recompile ) {
-					$configuration = unserialize(file_get_contents(CONFIG_COMPILED_FILE_PATH));
-				}
-			}
-			
-			# Check if Compiled is Adequate
-			if ( !$configuration ) {
-				# Adjust
-				foreach ( $config_files as $file ) {
-					$config .= "\n".str_replace("\t",'    ',file_get_contents($file));
-				}
-			
-				# Parse
-				$config_tmp_file = tempnam('/tmp', 'config_tmp_file');
-				file_put_contents($config_tmp_file, $config);
-				$configuration = sfYaml::load($config_tmp_file);
-				unlink($config_tmp_file);
-			
-				# Store
-				file_put_contents(CONFIG_COMPILED_FILE_PATH, serialize($configuration));
-			}
-			
-			# Extract
-			$configuration = $configuration[APPLICATION_ENV];
-		
-			# Adjust
-			$configuration = adjust_yaml_inheritance($configuration);
+			# Load Yaml Configuration File
+			$configuration = $this->loadAdvancedYamlFile(CONFIG_FILE_PATH, CONFIG_COMPILED_FILE_PATH, 'config_tmp_file');
 			
 			# Create Zend Config
 			$ApplicationConfiguration = $configuration;
@@ -571,12 +726,4 @@ if ( !class_exists('Bootstrapr') ) {
 			$this->bootstrap('zend-exceptions');
 		}
 	}
-}
-
-# --------------------------
-# Create Bootstrapr
-
-global $Bootstrapr;
-if ( empty($Bootstrapr) ) {
-	$Bootstrapr = new Bootstrapr();
 }

@@ -1,5 +1,4 @@
-
-production: &production
+default: &default
     routes:
         # BalCMS
         balcmshome:
@@ -71,9 +70,12 @@ production: &production
                 controller: back
                 action: index
 
-staging:
-    <<: *production
-testing:
-    <<: *production
-development:
-    <<: *production
+# Default Environments
+default_production: &default_production
+    <<: *default
+default_staging: &default_staging
+    <<: *default
+default_testing: &default_testing
+    <<: *default
+default_development: &default_development
+    <<: *default

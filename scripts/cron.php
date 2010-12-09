@@ -5,7 +5,9 @@ if ( empty($GLOBALS['Application']) ) {
 	header('Content-Type: text/plain');
 	# Bootstrap
 	require_once(dirname(__FILE__).'/bootstrapr.php');
-	$GLOBALS['Bootstrapr']->bootstrap('configuration');
+	$Bootstrapr = Bootstrapr::getInstance();
+	# Configuration
+	$Bootstrapr->bootstrap('configuration');
 	# Determine if we need more memory
 	$memory_has = preg_replace('/[^0-9]/','',ini_get('memory_limit'));
 	$memory_required = 64;
@@ -22,7 +24,10 @@ if ( empty($GLOBALS['Application']) ) {
 		}
 	}
 	# Continue with Bootstrap
-	$GLOBALS['Bootstrapr']->bootstrap('zend-application');
+	$Bootstrapr->bootstrap('zend-application');
+}
+else {
+	$Bootstrapr = Bootstrapr::getInstance();
 }
 
 # Load
@@ -41,6 +46,20 @@ $ContentsQuery = Doctrine_Query::create()
 # Retrieve Content to Update
 echo 'Cron: First Content Run:'."\n";
 $Contents = $ContentsQuery->execute();
+
+# Update their Cache
+foreach ( $Contents as $Content ) {
+	if ( $Content->refresh() ) {
+		echo 'Cron: Updated Content ['.$Content->code.'] Cache'."\n";
+		$Content->save();
+	}
+	else {
+		echo 'Cron: Ignored Content ['.$Content->code.'] Cache'."\n";
+	}
+}
+
+# Retrieve Content to Update
+echo "\n".'Cron: Second Content Run:'."\n";
 
 # Update their Cache
 foreach ( $Contents as $Content ) {

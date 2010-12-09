@@ -1,19 +1,25 @@
-application/config/compiled/*.data
-application/data/schema/compiled/*.yml
-application/modules/*/config/compiled/*.data
-application/data/database/*.db
-application/data/dump/data.yml
-application/data/schema/compiled/*.yml
-application/data/migrations
-application/data/logs/installed
-application/data/logs/payment
-application/data/logs/paypal
+# Remove These Once You've Installed
+config.php
+application/config/*.yml
+application/data/fixtures/data.yml
+application/data/schema/schema.yml
+
+# Standard Ignores
+application/config/compiled
+application/data/schema/compiled
+application/modules/*/config/compiled
 application/data/cache
+application/data/database/*.db
+application/data/dump/*
+application/data/schema/compiled
+application/data/migrations
+application/data/logs/*
+public/media/cache
+
+# Symlink Ignores
 application/models/Bal
 application/models/Base
 library/Bal
 library/Doctrine
 library/Doctrine.php
 library/Zend
-sites/*
-public/media/cache

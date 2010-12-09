@@ -1,4 +1,4 @@
-balcms: &balcms
+default: &default
     # Core
     CONFIG_PATH: >
         <?=APPLICATION_PATH?>/config
@@ -7,10 +7,16 @@ balcms: &balcms
 
     # Configuration Paths
     CONFIG_FILE_PATH: >
-        <?=CONFIG_PATH?>/balcms.yml<?=PATH_SEPARATOR?><?=CONFIG_PATH?>/application.yml
+        <?=CONFIG_PATH?>/default/application.yml
+        <?=PATH_SEPARATOR?>
+        <?=CONFIG_PATH?>/application.yml
     NAVIGATION_FILE_PATH: >
+        <?=CONFIG_PATH?>/default/nav.yml
+        <?=PATH_SEPARATOR?>
         <?=CONFIG_PATH?>/nav.yml
     ROUTES_FILE_PATH: >
+        <?=CONFIG_PATH?>/default/routes.yml
+        <?=PATH_SEPARATOR?>
         <?=CONFIG_PATH?>/routes.yml
     INSTALLED_FILE_PATH: >
         <?=APPLICATION_ROOT_PATH?>/application/data/logs/installed
@@ -26,7 +32,7 @@ balcms: &balcms
     PROFILE_MODE: false
     DEBUG_MODE: auto
     PRODUCTION_MODE: auto
-	FREE_RESOURCES: false
+	FREE_RESOURCES: true
 	
     # Urls
     ROOT_URL: >
@@ -98,59 +104,59 @@ balcms: &balcms
     PUBLIC_URL: >
         <?=BASE_URL?>/public
     THEMES_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/public/themes
+        <?=PUBLIC_PATH?>/themes
     THEMES_URL: >
-        <?=BASE_URL?>/public/themes
+        <?=PUBLIC_URL?>/themes
     PUBLIC_STYLES_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/public/styles
+        <?=PUBLIC_PATH?>/styles
     PUBLIC_STYLES_URL: >
-        <?=BASE_URL?>/public/styles
+        <?=PUBLIC_URL?>/styles
     PUBLIC_SCRIPTS_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/public/scripts
+        <?=PUBLIC_PATH?>/scripts
     PUBLIC_SCRIPTS_URL: >
-        <?=BASE_URL?>/public/scripts
+        <?=PUBLIC_URL?>/scripts
     MEDIA_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/public/media
+        <?=PUBLIC_PATH?>/media
     MEDIA_URL: >
-        <?=BASE_URL?>/public/media
+        <?=PUBLIC_URL?>/media
     MEDIA_DELETED_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/public/media/deleted
+        <?=MEDIA_PATH?>/deleted
     MEDIA_DELETED_URL: >
-        <?=BASE_URL?>/public/media/deleted
+        <?=MEDIA_URL?>/deleted
     MEDIA_IMAGES_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/public/media/images
+        <?=MEDIA_PATH?>/images
     MEDIA_IMAGES_URL: >
-        <?=BASE_URL?>/public/media/images
+        <?=MEDIA_URL?>/images
     MEDIA_INVOICES_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/public/media/invoices
+        <?=MEDIA_PATH?>/invoices
     MEDIA_INVOICES_URL: >
-        <?=BASE_URL?>/public/media/invoices
+        <?=MEDIA_URL?>/invoices
     MEDIA_UPLOADS_PATH: >
-        <?=APPLICATION_ROOT_PATH?>/public/media/uploads
+        <?=MEDIA_PATH?>/uploads
     MEDIA_UPLOADS_URL: >
-        <?=BASE_URL?>/public/media/uploads
+        <?=MEDIA_URL?>/uploads
 	
 	# Scripts
 	ALOHA_EDITOR_PATH: >
 		<?=PUBLIC_SCRIPTS_PATH?>/aloha-editor
 	ALOHA_EDITOR_URL: >
 		<?=PUBLIC_SCRIPTS_URL?>/aloha-editor
-		
+	
 	JQUERY_AJAXY_PATH: >
 		<?=PUBLIC_SCRIPTS_PATH?>/jquery-ajaxy
 	JQUERY_AJAXY_URL: >
 		<?=PUBLIC_SCRIPTS_URL>/jquery-ajaxy
-		
+	
 	JQUERY_LIGHTBOX_PATH: >
 		<?=PUBLIC_SCRIPTS_PATH?>/jquery-lightbox
 	JQUERY_LIGHTBOX_URL: >
 		<?=PUBLIC_SCRIPTS_URL?>/jquery-lightbox
-		
+	
 	JQUERY_SPARKLE_PATH: >
 		<?=PUBLIC_SCRIPTS_PATH?>/jquery-sparkle
 	JQUERY_SPARKLE_URL: >
 		<?=PUBLIC_SCRIPTS_URL?>/jquery-sparkle
-		
+	
 	JQUERY_SYNTAXHIGHLIGHTER_PATH: >
 		<?=PUBLIC_SCRIPTS_PATH?>/jquery-syntaxhighlighter
 	JQUERY_SYNTAXHIGHLIGHTER_URL: >
@@ -181,17 +187,13 @@ balcms: &balcms
     	<?=PUBLIC_STYLES_PATH?>/csscaffold.php?>
     CLOSURE_COMPILER_PATH: >
     	/Users/balupton/bin/closure.jar
-    
-production: &production
-    <<: *balcms
-    BASE_URL: ""
 
-staging: &staging
-    <<: *balcms
-    
-testing: &testing
-    <<: *balcms
-    
-development: &development
-    <<: *balcms
-    CONFIG_FILE_GENERATE: true
+# Default Environments
+default_production: &default_production
+    <<: *default
+default_staging: &default_staging
+    <<: *default
+default_testing: &default_testing
+    <<: *default
+default_development: &default_development
+    <<: *default

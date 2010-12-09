@@ -1,4 +1,4 @@
-balcms:
+default: &default
     front:
         actions:
             skype:
@@ -67,4 +67,13 @@ balcms:
                 uri: "http://vimeo.com/balupton" 
                 title: "Vimeo Video Directory" 
                 label: "Vimeo"
-                
+
+# Default Environments
+default_production: &default_production
+    <<: *default
+default_staging: &default_staging
+    <<: *default
+default_testing: &default_testing
+    <<: *default
+default_development: &default_development
+    <<: *default
