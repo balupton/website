@@ -8,10 +8,16 @@
 		name: 'adjustments',
 		extension: function(){
 			var $this = $(this);
+			
+			// Clean up skin
 			$this.findAndSelf('section:not(.clean)').addClass('not-clean');
 			$this.findAndSelf('.nav-tags,.nav-children').filter(':has(li:first-child:last-child)').hide();
+			
+			// Prevent ajaxy from working on internal links that aren't ajaxy compatible
 			$this.findAndSelf('a[href^=http://www.balupton.com/sandbox],a[href^=/sandbox]').removeAjaxy();
-			if ( $.BalCMS.options.root_url !== 'http://www.balupton.com' ) {
+			
+			// Do something???
+			if ( false && $.BalCMS.options.root_url !== 'http://www.balupton.com' ) {
 				$this.findAndSelf('a[href^=http://www.balupton.com]').each(function(){
 					var $this = $(this);
 					$this.attr('href',
@@ -19,6 +25,7 @@
 					);
 				}).ajaxify();
 			}
+			
 			return $this;
 		}
 	});
