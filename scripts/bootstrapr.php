@@ -431,28 +431,35 @@ if ( !class_exists('Bootstrapr') ) {
 			
 			# Find the Yaml Parser
 			if ( !defined('SFYAML_PATH') ) {
-				$paths = array('SymfonyComponents/YAML/lib','SymfonyComponents/YAML');
-				$rootpaths = array('SymfonyComponents/YAML','SymfonyComponents/YAML');
-				$subpaths = array('', COMMON_PATH.'/', LIBRARY_PATH.'/');
+				$groups = array(
+					array(
+						'path' => 'SymfonyComponents/YAML/lib',
+						'root' => 'SymfonyComponents/YAML'
+					),
+					array(
+						'path' => COMMON_PATH.'/SymfonyComponents/YAML/lib',
+						'root' => COMMON_PATH.'/SymfonyComponents/YAML'
+					),
+					array(
+						'path' => LIBRARY_PATH.'/SymfonyComponents/YAML',
+						'root' => LIBRARY_PATH.'/SymfonyComponents/YAML'
+					)
+				);
 				
-				foreach ( $paths as $key => $path ) {
-					foreach ( $subpaths as $subpath ) {
-						$fullpath = $subpath.$path;
-						$rootpath = $subpath.$rootpaths[$key];
-						if ( is_dir($fullpath) ) {
-							define('SFYAML_PATH', $fullpath);
-							define('SFYAML_ROOT_PATH', $rootpath);
-							break 2;
-						}
+				foreach ( $groups as $group ) {
+					if ( is_dir($group['path']) ) {
+						define('SFYAML_PATH', $group['path']);
+						define('SFYAML_ROOT_PATH', $group['root']);
+						break;
 					}
 				}
 				
 				if ( !defined('SFYAML_PATH') ) {
+					define('SFYAML_PATH', 		COMMON_PATH.'/SymfonyComponents/YAML/lib');
 					define('SFYAML_ROOT_PATH', 	COMMON_PATH.'/SymfonyComponents/YAML');
-					define('SFYAML_PATH', 		SFYAML_ROOT_PATH.'/lib');
 				}
 				
-				unset($paths); unset($subpaths); unset($fullpath); unset($key);
+				unset($groups);
 			}
 	
 		}
