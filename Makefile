@@ -8,6 +8,14 @@ all:
 	$(MAKE) configure ;
 	$(MAKE) install ;
 
+clean:
+	rm -Rf \
+		application/config/compiled \
+		application/data/schema/compiled \
+		application/data/schema/compiled \
+		application/modules/*/config/compiled \
+		public/media/cache/*/ ;
+
 configure:
 	php5 ./scripts/configure ;
 

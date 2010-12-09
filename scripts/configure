@@ -390,7 +390,13 @@ class Cli {
 				`cd ${destination}; git reset --hard; git branch ${branch}-old; git checkout ${branch}-old; git branch -D ${branch}; git checkout -b ${branch} origin/${branch}; git checkout ${branch}; git reset --hard; git branch -D ${branch}-old; git pull origin ${branch}; cd ${APPLICATION_ROOT_PATH}`;
 			}
 			
+			# Load Submodules
+			if ( $submodules ) {
+				`cd ${destination}; git submodule init; git submodule update`;
+			}
+			
 			# Add Submodule
+			echo "Installing the Resource's Submodules.\n";
 			`cd ${APPLICATION_ROOT_PATH}; git add ${destinationRelative}`;
 			
 			# Symlinks
