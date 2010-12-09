@@ -9,10 +9,6 @@ all:
 	$(MAKE) install ;
 
 configure:
-	cp config.default.php config.php ;
-	cp application/config/sample/* application/config ;
-	cp application/data/fixtures/data.default.yml application/data/fixtures/data.yml
-	cp application/data/schema/schema.default.yml application/data/schema/schema.yml
 	php5 ./scripts/configure ;
 
 permissions:
