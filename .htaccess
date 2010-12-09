@@ -57,11 +57,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !\.(jpe?g|bmp|tiff|png|gif|js|css|php|html?)$ [NC]
 RewriteRule ^.*$ index.php [QSA,PT,L]
 
-# Force WWW
-RewriteCond %{HTTP_HOST} !www.balupton.com$ [NC]
-RewriteCond %{HTTP_HOST} balupton.com$ [NC]
-RewriteRule ^/?(.*)$ http://www.balupton.com/$1 [R=301,L] # add www, and do redirect
-
 # Types
 AddType application/xhtml+xml xhtml
 AddType application/x-httpd-php-source phps
