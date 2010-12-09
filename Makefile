@@ -31,6 +31,7 @@ clean:
 		application/data/schema/compiled/* \
 		application/data/schema/compiled/* \
 		application/modules/*/config/compiled/* \
+		common/scaffold/cache/* \
 		public/media/cache/*/* ;
 
 configure:

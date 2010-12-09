@@ -144,6 +144,9 @@ if ( !class_exists('Bootstrapr') ) {
 				}
 			}
 			
+			# Ensure Compiled File
+			$this->ensurePath($compiled_file_path);
+			
 			# Include the core configuration
 			if ( is_readable($compiled_file_path) && filemtime($compiled_file_path) > $multi_filemtime ) {
 				$configuration = unserialize(file_get_contents($compiled_file_path));
@@ -156,7 +159,6 @@ if ( !class_exists('Bootstrapr') ) {
 					$configuration_str .= "\n".file_get_contents($_file_path);
 				}
 				$configuration = $this->parseYamlString($configuration_str);
-				$this->ensurePath($compiled_file_path);
 				file_put_contents($compiled_file_path, serialize($configuration));
 			}
 			
@@ -207,6 +209,9 @@ if ( !class_exists('Bootstrapr') ) {
 				}
 			}
 			
+			# Ensure Compiled File
+			$this->ensurePath($compiled_file_path);
+			
 			# Include the core configuration
 			if ( is_readable($compiled_file_path) && filemtime($compiled_file_path) > $multi_filemtime ) {
 				$configuration = unserialize(file_get_contents($compiled_file_path));
@@ -229,7 +234,6 @@ if ( !class_exists('Bootstrapr') ) {
 				unlink($config_tmp_file);
 				
 				# Store
-				$this->ensurePath($compiled_file_path);
 				file_put_contents($compiled_file_path, serialize($configuration));
 			}
 			
