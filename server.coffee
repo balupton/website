@@ -17,4 +17,4 @@ app.use express.vhost 'balupton.*', docpadServer
 app.use express.vhost 'edit.balupton.*', filepadServer
 app.use express.vhost 'balupton.no.de', docpadServer
 app.use express.vhost 'edit.balupton.no.de', filepadServer
-app.listen process.env.PORT || 8001
+app.listen process.env.PORT || 10113 || 8001
