@@ -1,5 +1,5 @@
 {
-	"name": "balupton.site",
+	"name": "balupton.docpad",
 	"version": "0.1.0",
 	"description": "Benjamin Lupton's Website",
 	"homepage": "https://github.com/balupton/balupton.site",
@@ -31,7 +31,7 @@
 		}
 	],
 	"bugs": {
-		"web": "https://github.com/balupton/balupton.site/issues"
+		"web": "https://github.com/balupton/balupton.docpad/issues"
 	},
 	"licenses": [
 		{
@@ -41,7 +41,7 @@
 	],
 	"repository" : {
 		"type" : "git",
-		"url" : "http://github.com/balupton/balupton.site.git"
+		"url" : "http://github.com/balupton/balupton.docpad.git"
 	},
 	"dependencies": {
 		"coffee-script": ">=0.1.0",
