@@ -2,13 +2,16 @@
 docpad = require 'docpad'
 express = require 'express'
 
+# Configuration
+masterPort = process.env.PORT || 10113
+
 # Create Instances
-docpadInstance = docpad.createInstance port:8002
+docpadInstance = docpad.createInstance port: masterPort
 
 # Fetch Servers
 docpadServer = docpadInstance.server
 
 # Master Server
-app = express.createServer()
-app.use express.vhost 'balupton.*', docpadServer
-app.listen process.env.PORT || 10113
+masterServer = docpadServer
+masterServer.use express.vhost 'balupton.*', docpadServer
+masterServer.use express.vhost 'balupton.*.*', docpadServer
