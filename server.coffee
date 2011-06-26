@@ -19,7 +19,7 @@ masterServer.use express.vhost 'balupton.*.*', docpadServer
 
 # Redirects
 docpadServer.get '/projects/:name', (req, res) ->
-	res.redirect 'https://github.com/balupton/'+req.params.id, 301
+	res.redirect 'https://github.com/balupton/'+req.params.name, 301
 
 # Todo:
 # - Add redirects for old balupton.com project posts to their github pages
