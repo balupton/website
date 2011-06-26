@@ -1,6 +1,6 @@
 ---
-layout: page
-title: Benjamin "balupton" Lupton
+layout: 'page'
+title: 'Benjamin "balupton" Lupton'
 ---
 
 <!-- Posts -->
@@ -23,12 +23,14 @@ title: Benjamin "balupton" Lupton
 <section class="projects">
 	<h2>Projects</h2>
 	<nav class="linklist" typeof="dc:collection">
-		<% for Document in @Documents: %>
-			<% if Document.url.indexOf('/projects') == 0: %>
-			<li typeof="sioc:Post" about="<%= Document.url %>">
-				<a href="<%= Document.url %>" property="dc:title"><%= Document.title %></a>
-			</li>
-			<% end %>
-		<% end %>
+		<li typeof="sioc:Post" about="https://github.com/balupton/docpad">
+			<a href="https://github.com/balupton/docpad" property="dc:title">DocPad</a>
+		</li>
+		<li typeof="sioc:Post" about="https://github.com/balupton/nowpad">
+			<a href="https://github.com/balupton/nowpad" property="dc:title">NowPad</a>
+		</li>
+		<li typeof="sioc:Post" about="https://github.com/balupton/history.js">
+			<a href="https://github.com/balupton/history.js" property="dc:title">History.js</a>
+		</li>
 	</nav>
 </section>
