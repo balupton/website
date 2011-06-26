@@ -15,3 +15,8 @@ docpadServer = docpadInstance.server
 masterServer = docpadServer
 masterServer.use express.vhost 'balupton.*', docpadServer
 masterServer.use express.vhost 'balupton.*.*', docpadServer
+# Note: Change the above if you are not balupton, they should be the DNS for your own server
+
+# Todo:
+# - Add redirects for old balupton.com project posts to their github pages
+# - Make the official balupton website by making it balupton.com instead of balupton.no.de
