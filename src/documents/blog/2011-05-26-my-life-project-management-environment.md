@@ -10,7 +10,7 @@ draft: true
 
 
 - OSX, for
-	- development on my imac (2011 model, 27", 256gb SSD, 2gb HDD, 16gb ram)
+	- development on my imac (2011 model, 27", 256gb SSD, 2tb HDD, 16gb ram)
 	- primary machine
 	> Windows is abysmal to develop on, due to it's crap support for UNIX and command line driven development
 	> Mac is also better supported and easier to use than linux (aka: it doesn't crash as much and there are more apps for it)
@@ -45,11 +45,14 @@ draft: true
 	> Fast, simple, easy to develop and debug, and syncs - what more can you want?
 
 
-- Dropbox, for
+- [Dropbox](https://www.dropbox.com/referrals/NTQ2MDM3OTA5?src=global0), for
 	- file syncing
 	- all my work goes in here, along with other things I want synced
 	> Syncs my files everywhere, even to my phone, never had any problems with it
 
+- [Audio Jungle](http://audiojungle.net/?ref=balupton), for
+	- themed music and tunes
+	> Great for looking for tunes to accompany marketing videos
 
 - Picasa, Google Web Albums, for
 	- photo online backups
@@ -109,7 +112,7 @@ draft: true
 	> Working offline is essential. Version control is essential too.
 
 
-- GitHub, for
+- [GitHub](https://github.com/balupton), for
 	- code hosting
 	- issue tracking
 	- wikis
@@ -123,14 +126,14 @@ draft: true
 	> Great for user to user support, things like issue trackers aren't use friendly, GetSatisfacton makes users happy.
 
 
-- DocPad, for
+- [DocPad](https://github.com/balupton/docpad), for
 	- website enrichment
 	> The easiest way to build your static website
 	> I write my posts in markdown, and layouts in html, which are generated into a rich HTML website
 	> Posts are typically written in Sublime Text 2, then either shared as a private gist on github if I want others to preview before I publish, or save it normally and push it to my host on the next git commit and push
 
 
-- no.de, for
+- [no.de](https://no.de/), for
 	- website hosting
 	> It works, and supports cool things.
 
@@ -141,7 +144,7 @@ draft: true
 	> Can't stand their marketing, but it does the job and is cheap.
 
 
-- Twitter, for
+- [Twitter](https://twitter.com/balupton), for
 	- work related insights
 	- hustling products
 	> The best tool for connecting with strangers
@@ -156,7 +159,7 @@ draft: true
 
 - Google Reader, for
 	- rss news feeds
-	- sharing liked news items to twitter and other social networks
+	- sharing liked news items to twitter and other social networks - [connect](https://profiles.google.com/u/0/balupton/buzz)
 	> Great for sharing things that matter
 
 
