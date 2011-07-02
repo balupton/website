@@ -2,6 +2,9 @@
 docpad = require 'docpad'
 express = require 'express'
 
+# -------------------------------------
+# Server
+
 # Configuration
 masterPort = process.env.PORT || 10113
 
@@ -13,10 +16,10 @@ docpadServer = docpadInstance.server
 
 # Master Server
 masterServer = docpadServer
+
+# DNS Servers
 masterServer.use express.vhost 'balupton.*', docpadServer
 masterServer.use express.vhost 'balupton.*.*', docpadServer
-# Note: Change the above if you are not balupton, they should be the DNS for your own server
-
 
 # -------------------------------------
 # Redirects
