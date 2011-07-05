@@ -2,21 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<title>Benjamin Lupton</title>
 	<link href="http://balupton.com/atom.xml" rel="self"/>
-	<link href="http://balupton.com/"/>
-	<updated>{{ site.time | date_to_xmlschema }}</updated>
-	<id>http://balupton.com/</id>
+	<link href="http://balupton.com"/>
+	<updated><%= @Site.date.toIsoDateString() %></updated>
+	<id>http://balupton.com</id>
 	<author>
 		<name>Benjamin Lupton</name>
 		<email>b@lupton.cc</email>
 	</author>
 
-	{% for post in site.posts %}
-	<entry>
-		<title>{{ post.title }}</title>
-		<link href="http://tom.preston-werner.com{{ post.url }}"/>
-		<updated>{{ post.date | date_to_xmlschema }}</updated>
-		<id>http://tom.preston-werner.com{{ post.id }}</id>
-		<content type="html">{{ post.content | xml_escape }}</content>
-	</entry>
-	{% endfor %}
+	<% for Document in @Documents: %>
+		<% if Document.url.indexOf('/blog') == 0: %>
+			<entry>
+				<title><%= Document.title %></title>
+				<link href="http://balupton.com<%= Document.url %>"/>
+				<updated><%= Document.date.toIsoDateString() %></updated>
+				<id>http://balupton.com<%= Document.url %></id>
+				<content type="html"><%= Document.content %></content>
+			</entry>
+		<% end %>
+	<% end %>
 </feed>

@@ -51,5 +51,4 @@ docpadServer.get /^\/(?:t|twitter|tweet)\/?.*/, (req, res) ->
 # Todo
 
 # - Fix disqus comments when accessed via stateless
-# - Get atom feed going
 # - Make the official balupton website by making it balupton.com instead of balupton.no.de
