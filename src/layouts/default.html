@@ -12,7 +12,7 @@
 	<link rel="stylesheet/less" href="/styles/style.less" type="text/css" />
 
 	<!-- Less -->
-	<script src="http://lesscss.org/js/less.js"></script>
+	<script async src="http://lesscss.org/js/less.js"></script>
 </head>
 <body id="page-<%= @Document.slug %>">
 	<div id="main">
@@ -30,7 +30,7 @@
 				<p>
 					<a title="mail me" href="mailto:b@lupton.cc">Benjamin Lupton</a><br />
 					Founder of <a href="http://bevry.org" title="enrich users, empower developers, liberate markets">Bevry</a><br/>
-					JavaScript Star &#9733;
+					Pratical Dreamer
 				</p>
 			</div>
 			<nav class="contact contact-links">
@@ -58,15 +58,33 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 
 	<!-- Disqus -->
-	<script src="http://balupton.disqus.com/embed.js"></script>
+	<script async src="http://balupton.disqus.com/embed.js"></script>
 
 	<!-- History.js -->
-	<script src="http://github.com/balupton/history.js/raw/master/scripts/compressed/history.adapter.jquery.js"></script>
-	<script src="http://github.com/balupton/history.js/raw/master/scripts/compressed/history.js"></script>
-	<script src="http://github.com/balupton/jquery-scrollto/raw/master/scripts/jquery.scrollto.min.js"></script>
-	<script src="https://gist.github.com/raw/854622/ajaxify-html5.js"></script>
+	<script defer src="http://github.com/balupton/history.js/raw/master/scripts/compressed/history.adapter.jquery.js"></script>
+	<script defer src="http://github.com/balupton/history.js/raw/master/scripts/compressed/history.js"></script>
+	<script defer src="http://github.com/balupton/jquery-scrollto/raw/master/scripts/jquery.scrollto.min.js"></script>
+	<script defer src="https://gist.github.com/raw/854622/ajaxify-html5.js"></script>
 
-	<!-- Site Script -->
-	<script src="/scripts/script.coffee"></script>
+	<!-- Google Analytics --> 
+	<script defer src="http://www.google-analytics.com/ga.js"></script>
+	<script defer src="/scripts/modernizr.custom.js"></script> 
+	<script defer> 
+		//<![CDATA[
+		try {
+			var pageTracker = _gat._getTracker("UA-4446117-1");
+			pageTracker._initData();
+			if ( Modernizr ) {
+				pageTracker._setCustomVar(1, "html5.csstransforms", Modernizr.csstransforms ? "yes" : "no" , 2 );
+				pageTracker._setCustomVar(2, "html5.draganddrop", Modernizr.draganddrop ? "yes" : "no", 2 );
+				pageTracker._setCustomVar(3, "html5.history", Modernizr.history ? "yes" : "no", 2 );
+				pageTracker._setCustomVar(4, "html5.localstorage", Modernizr.localstorage ? "yes" : "no", 2 );
+				pageTracker._setCustomVar(5, "html5.flexbox", Modernizr.flexbox ? "yes" : "no", 2 );
+			}
+			pageTracker._trackPageview();
+		} catch(err) {}
+		//]]>
+	</script>
+
 </body>
 </html>
