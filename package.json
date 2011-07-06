@@ -1,6 +1,6 @@
 {
 	"name": "balupton.docpad",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Benjamin Lupton's Website",
 	"homepage": "https://github.com/balupton/balupton.site",
 	"keywords": [
@@ -46,8 +46,7 @@
 	"dependencies": {
 		"coffee-script": ">=0.1.0",
 		"express": ">=2.3.2",
-		"docpad": ">=0.8.3",
-		"filepad": ">=0.1.0"
+		"docpad": ">=0.9.0"
 	},
 	"engines" : {
 		"node": ">=0.4.0"
