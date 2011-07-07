@@ -33,6 +33,7 @@ docpadInstance.serverAction ->
 
 	# WWW Redirect
 	docpadServer.get '*', (req, res, next) ->
+		console.log req.url
 		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
 			res.redirect 'http://balupton.com'+req.url, 301
 		else
