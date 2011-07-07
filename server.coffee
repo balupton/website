@@ -12,7 +12,8 @@ masterPort = process.env.PORT || 10113
 docpadInstance = docpad.createInstance port: masterPort, maxAge: 31557600000 # one year
 
 # Fetch Servers
-docpadInstance.generateAction -> docpadInstance.serverAction ->
+#docpadInstance.generateAction -> \
+docpadInstance.serverAction ->
 	docpadServer = docpadInstance.server
 
 	# Master Server

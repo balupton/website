@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>Benjamin Lupton</title>
+	<link href="http://balupton.com/atom.xml" rel="self"/>
+	<link href="http://balupton.com"/>
+	<updated>2011-07-07T13:26:37Z</updated>
+	<id>http://balupton.com</id>
+	<author>
+		<name>Benjamin Lupton</name>
+		<email>b@lupton.cc</email>
+	</author>
+
+	
+		
+	
+		
+	
+		
+	
+		
+			<entry>
+				<title>Contributor Friendly</title>
+				<link href="http://balupton.com/blog/2011-06-26-contributor-friendly.html"/>
+				<updated>2011-06-25T14:00:00Z</updated>
+				<id>http://balupton.com/blog/2011-06-26-contributor-friendly.html</id>
+				<content type="html">&lt;p&gt;Being an open-source developer, contributing to projects is something I do every day - be it my own projects, or other's. Sometimes though, it is just too darn hard to make your contributions, submit your contributions, or have your contributions accepted within a project. This document will serve a series of guidelines for making your project easy to contribute too.&lt;/p&gt;
+
+&lt;h2&gt;At the very least&lt;/h2&gt;
+
+&lt;h3&gt;Use tabs instead of spaces for indentation&lt;/h3&gt;
+
+&lt;p&gt;One of the first things a contributor will do is open up your source code, because of this it's incredibly important you provide a positive experience around this - say they prefer their code with an indentation of 4 spaces, but your code has the indentation of 2 spaces - then bang, you've just created a negative experience and one that could have been avoided at that.&lt;/p&gt;
+
+&lt;p&gt;Unlike spaces, tabs allows your editor to customise the size of the indentation virtually - for instance a tab could be displayed as 4 spaces, or as 2 spaces based on your editors configuration. So rather than dictating your own indentation preferences on everyone else, tabs allows for everyone to edit the same document with their preferences in a non-conflicting or evasive way.&lt;/p&gt;
+
+&lt;h3&gt;Structure your code so they can contribute&lt;/h3&gt;
+
+&lt;p&gt;Contributors hands should never be tied, they should always be able to work on everything they want, and not work on anything they don't want. So don't include or do anything which can restrict or impede them.&lt;/p&gt;
+
+&lt;h3&gt;Comment liberally and concisely&lt;/h3&gt;
+
+&lt;p&gt;People should be able to skim your project and undertand what is going on, the less stop-pause-think that they need, the better - they can do less time interpreting and more time understanding, that means less time wasted and more time helping. Comment liberally, but also concisely.&lt;/p&gt;
+
+&lt;h3&gt;Have great end-user documentation&lt;/h3&gt;
+
+&lt;p&gt;Documentation is arguably the most important aspect of your project, if people can't even understand how to get their foot in the door, how do you expect them to want to start contributing and talking about the positive experience your project has brought them. Have great documentation.&lt;/p&gt;
+
+&lt;h3&gt;Get a wiki&lt;/h3&gt;
+
+&lt;p&gt;Allow people to contribute to your great documentation, and make it even greater - a wiki allows for this. If a set of installation instructions isn't working for someone, you can guarantee it's not going to work for a lot of other people too, the sooner those docs get fixed the more positive experiences there wll be surrounding your project.&lt;/p&gt;
+
+&lt;h3&gt;Get an issue tracker&lt;/h3&gt;
+
+&lt;p&gt;Allow people to contribute their ideas, feedback, bugs, praise, discussions, brainstorms, whatever. Just have a place where people can talk to each other openely and easily.&lt;/p&gt;
+
+&lt;h3&gt;Encourage feedback&lt;/h3&gt;
+
+&lt;p&gt;People won't give you feedback if you don't ask. Be extremely liberal about asking for feedback, do it on every single wiki page, ask for improvements.&lt;/p&gt;
+
+&lt;p&gt;For an installation page, attach this:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If these didn't work, let me know! Or better yet, update them with the correct instructions!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;For a roadmap page:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Now these are just my ideas!!! If you have any ideas at all, then do add them to the wiki! Every piece of feedback/thought/idea really does help!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You get the idea. But this isn't just for wiki pages, it's also on your main page:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Great! So you've downloaded my project, now if you experience any problems at all, or have any feedback you can reach me on: ...&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;It's important people know that they can get help when they need it. This may sound like it is just you giving, but by giving you will also get invaluable feedback and improvements which make your project better - and start providing those positive experiences that attract more people.&lt;/p&gt;
+
+&lt;h3&gt;Social proof&lt;/h3&gt;
+
+&lt;p&gt;Actions speak louder than words. Don't talk about how your project is used by lots of different people, don't talk about how your project can be extended - prove it, show them a wiki page where people are adding their own projects which use yours, show them a wiki page where are adding the extensions they've made. Make it easy for people to showcase what they've done, and encourage it.&lt;/p&gt;
+
+&lt;h3&gt;Be thankful and receptive&lt;/h3&gt;
+
+&lt;p&gt;Whenever a contributor does something, anything - be thankful - they have given you the greatest gift in the world, their attention - so use that gift with the utmost care and grattitude, and magnfiy that back to them. Even if their pull request is not the best, let them know on what can be improved to make it better, or why it was not the right choice, help them become the best.&lt;/p&gt;
+
+&lt;h3&gt;Make your pie in the sky vision known&lt;/h3&gt;
+
+&lt;p&gt;Do you dream great things for your project! Lock that vision in place, show people you are serious about your vision - perhaps they'll even be able to contribute theirs and you form something even better that you never could have comprehened - besides that is how great ideas are formed.&lt;/p&gt;
+
+&lt;p&gt;Having a known vision is also beneficial for young projects which do not have the community around it yet, as it provide early adopters with the roadmap of where it is going, it is your pitch to them - help me achieve this.&lt;/p&gt;
+
+&lt;h3&gt;Be responsive, even if you are busy&lt;/h3&gt;
+
+&lt;p&gt;If you are too busy to reply to something, THEN SAY THAT! Otherwise the message you are sending out is &quot;I don't care about this project&quot; or even worse: &quot;I don't care about you&quot;. All it takes is a:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I'm totally swamped right now, but I swear I'll attend to your question as soon as I can - to ensure that I remember it when I do have time, can you post it on the issue tracker here and perhaps someone else can help you in the meatime :) Again sorry, and I'm doing my best :)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The message that sends out is amazingly better than just not replying, plus it only takes a fractio more time.&lt;/p&gt;
+
+&lt;h3&gt;Be genuine&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.oprah.com/own-master-class-the-lessons/master-class-stay-true-to-yourself.html&quot;&gt;it's true&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Other extra things to consider&lt;/h2&gt;
+
+&lt;h3&gt;IRC Channel&lt;/h3&gt;
+
+&lt;p&gt;This, while it will be slow at the start will offer immensive value to everyone involved providing you are there to hear it. Imagine it as a constant room of people interested in your project, discussing your project - a place for newcomers to get instant help when they need, and a place for veterans to see problem areas, discuss new ideas, and grow the project - as well as get to know potential hires.&lt;/p&gt;
+
+&lt;h3&gt;Skype availability&lt;/h3&gt;
+
+&lt;p&gt;Post your skype details EVERYWHERE! Be available for skype, and be honest when you are too busy. Be there to give, to help.&lt;/p&gt;
+
+&lt;h3&gt;Twitter Hashtags&lt;/h3&gt;
+
+&lt;p&gt;Have an official hashtag for your project which people can use on twitter when talking about your project, display syndicated tweets with that hashtag on your website - it will provide a realtime stream of social proof that people love your project and it's active, which is invaluable.&lt;/p&gt;
+
+&lt;p&gt;You can also stake this a step further and create a hashtag for the development of your project, so whenever you do any work your project you use the project's dev hashtag and let people know - that way people can instantly see what the project's developers are up to! Who's working on what! And how ofter and when!&lt;/p&gt;
+
+&lt;h3&gt;Use GitHub&lt;/h3&gt;
+
+&lt;p&gt;Please don't be the person who is still not on facebook - inconviencing everyone else. &lt;a href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt; is free for public projects, and cheap for private projects. They are the best at what they do, and their platform comes hand in hand with all the advice in this post. They get it.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I hope this post will help you guys with your open-source projects as the advice within has with mine. If you'd like to contribute to this post you can find it's source &lt;a href=&quot;https://github.com/balupton/balupton.docpad&quot;&gt;here&lt;/a&gt;. Thanks :)&lt;/p&gt;
+
+&lt;p&gt;One thing I do need to do here is enrich the post with all the references, some quick ones that come to mind are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Gary Vaynerchuck - Crush It&lt;/li&gt;
+&lt;li&gt;Oprah - Master Class&lt;/li&gt;
+&lt;li&gt;Napolean Hill - Think &amp;amp; Grow Rich&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Can you think of others? Has this blog meant something to you? Got any feedback at all? &lt;a href=&quot;https://github.com/balupton/balupton.docpad/issues/new&quot;&gt;Let me know - I'd love to hear it :)&lt;/a&gt;&lt;/p&gt;</content>
+			</entry>
+		
+	
+		
+			<entry>
+				<title>My Life/Project Management Environment</title>
+				<link href="http://balupton.com/blog/2011-05-26-my-life-project-management-environment.html"/>
+				<updated>2011-05-25T14:00:00Z</updated>
+				<id>http://balupton.com/blog/2011-05-26-my-life-project-management-environment.html</id>
+				<content type="html">&lt;h2&gt;The Tools&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;OSX, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;development on my imac (2011 model, 27&quot;, 256gb SSD, 2tb HDD, 16gb ram)&lt;/li&gt;&lt;br /&gt;&lt;li&gt;primary machine&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Windows is abysmal to develop on, due to it's crap support for UNIX and command line driven development&lt;br /&gt;Mac is also better supported and easier to use than linux (aka: it doesn't crash as much and there are more apps for it)&lt;br /&gt;Prices with macs are now also in par with that of windows competition, plus I find mac parts are of much higher quality&lt;br /&gt;Maxed out as this is my work machine, I spend about 8 hours a day on it, it needs to be perfect. Those few second delays add up over time, and when they are longer than a few seconds, that has a serious negative impact on flow.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Fedora 15, Gnome 3, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;development on my pc laptop (crappy 1ghz compaq)&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;My second-hand macbook died, I find that macbooks prices do not justify their value yet, as when I'm on the move I don't need a lot of power, and working on a macbook 5+ hours a day is horrible for your body and the macbook's battery&lt;br /&gt;Fedora 15 and Gnome 3 because I hate Unity, KDE, etc and Gnome 2 is meh. Gnome 3 competes very very well to Expose and Spaces&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;iPhone 4, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;portable life management&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Other phones make calls, the iPhone manages my life when I'm on the move&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;VMWare Fusion, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;browser testing&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Parralels was too complicated&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Divvy, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;window management&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Haven't found anything that can compete&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Chrome, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;web browsing&lt;/li&gt;&lt;br /&gt;&lt;li&gt;bookmark syncing&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Fast, simple, easy to develop and debug, and syncs - what more can you want?&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://www.dropbox.com/referrals/NTQ2MDM3OTA5?src=global0&quot;&gt;Dropbox&lt;/a&gt;, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;file syncing&lt;/li&gt;&lt;br /&gt;&lt;li&gt;all my work goes in here, along with other things I want synced&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Syncs my files everywhere, even to my phone, never had any problems with it&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://audiojungle.net/?ref=balupton&quot;&gt;Audio Jungle&lt;/a&gt;, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;themed music and tunes&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Great for looking for tunes to accompany marketing videos&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Picasa, Google Web Albums, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;photo online backups&lt;/li&gt;&lt;br /&gt;&lt;li&gt;photo tagging&lt;/li&gt;&lt;br /&gt;&lt;li&gt;photo importing&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Experecienced wayy to many problems with iPhoto (crashes, bugs, curruptions)&lt;br /&gt;Picasa also syncs to the web, so all my photos can be backed up securely online&lt;br /&gt;And it works cross-operating system, so big win&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;iTunes, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;music management&lt;/li&gt;&lt;br /&gt;&lt;li&gt;music purchases&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I prefer Windows Media Player 11, but moving to OSX I had to give that up&lt;br /&gt;Also as an iPhone user, I have no choice&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Domai.nr, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;searching if a domain (and alternatives) is taken&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Haven't found any competitors that come close. Never had a reason to look elsewhere either.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Skype, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;IM and skype-to-skype calls&lt;/li&gt;&lt;br /&gt;&lt;li&gt;video calls on my iPhone&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Works on all my devices, everyone professional uses it&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;SimpleNote, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;notes&lt;/li&gt;&lt;br /&gt;&lt;li&gt;ideas&lt;/li&gt;&lt;br /&gt;&lt;li&gt;business models&lt;/li&gt;&lt;br /&gt;&lt;li&gt;shopping lists&lt;/li&gt;&lt;br /&gt;&lt;li&gt;note syncing, online backup, revision control, tagging, and access from any device&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Amazing. All other note programs are too constricting, overcomplicated, don't offer syncing, or not available everywhere&lt;br /&gt;Whenever I have a new idea, business model, or whatever I always suss it out in SimpleNote&lt;br /&gt;Because of it's revision control it's also really useful to prove that you came up with this idea before the person trying to sue you&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Listary, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;daily todo&lt;/li&gt;&lt;br /&gt;&lt;li&gt;project todos&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Amazing. All other todo programs require too much discipline to use.&lt;br /&gt;Listary works the way you want, and also syncs with all your devices (as it uses SimpleNote as the backend)&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Sublime Text 2, Cobalt Theme, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;text editing&lt;/li&gt;&lt;br /&gt;&lt;li&gt;code editing&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Eclipse is too complicated, text mate crashes a lot, bbedit is too restricting.&lt;br /&gt;Sublime Text 2 works on all computers (not mobile) and works beautifully, it is seriously a beautiful code editor&lt;br /&gt;Btw, you'll never use a scrollbar again! Hint hint.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Git, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;version control&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Working offline is essential. Version control is essential too.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/balupton&quot;&gt;GitHub&lt;/a&gt;, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;code hosting&lt;/li&gt;&lt;br /&gt;&lt;li&gt;issue tracking&lt;/li&gt;&lt;br /&gt;&lt;li&gt;wikis&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Amazing. Every other competitor is too complicate, or just doesn't get that coding is a social thing.&lt;br /&gt;What sums GitHub the best is this quote:&lt;br /&gt;&lt;em&gt;I pay $50 a month for my GitHub account. I don't need that large of an account. I just like them that much. – Kenneth Reitz May 21 '10 at 6:50&lt;/em&gt; &lt;sup&gt;&lt;a href=&quot;http://stackoverflow.com/questions/109440/&lt;a href='http://github.com/best-git-repository-hosting-for-commercial-project/109451/issues/#issue/109451'&gt;best-git-repository-hosting-for-commercial-project/109451#109451&lt;/a&gt;&quot;&gt;source&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;GetSatisfaction, free account for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;user-to-user support&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Great for user to user support, things like issue trackers aren't use friendly, GetSatisfacton makes users happy.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/balupton/docpad&quot;&gt;DocPad&lt;/a&gt;, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;website enrichment&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The easiest way to build your static website&lt;br /&gt;I write my posts in markdown, and layouts in html, which are generated into a rich HTML website&lt;br /&gt;Posts are typically written in Sublime Text 2, then either shared as a private gist on github if I want others to preview before I publish, or save it normally and push it to my host on the next git commit and push&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://no.de/&quot;&gt;no.de&lt;/a&gt;, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;website hosting&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;It works, and supports cool things.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;GoDaddy, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;domain purchases&lt;/li&gt;&lt;br /&gt;&lt;li&gt;dns management&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Can't stand their marketing, but it does the job and is cheap.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://twitter.com/balupton&quot;&gt;Twitter&lt;/a&gt;, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;work related insights&lt;/li&gt;&lt;br /&gt;&lt;li&gt;hustling products&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The best tool for connecting with strangers&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Facebook, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;connecting (virtually) with  real world friends&lt;/li&gt;&lt;br /&gt;&lt;li&gt;sharing photos&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Great for remiscing, and the privacy controls allows me to finely tune how much of &quot;me&quot; I want to let out to my &quot;friends&quot;&lt;br /&gt;For instance, I have list called &quot;Contact&quot; who can see my contact details and get in contact with me, and a list called &quot;Best Friends&quot; which can see the really personal stuff going on in my life.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Google Reader, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;rss news feeds&lt;/li&gt;&lt;br /&gt;&lt;li&gt;sharing liked news items to twitter and other social networks - &lt;a href=&quot;https://profiles.google.com/u/0/balupton/buzz&quot;&gt;connect&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Great for sharing things that matter&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Gmail, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;hosting all my emails (&lt;a href='mailto:balupton@gmail.com'&gt;balupton@gmail.com&lt;/a&gt;, *@balupton.com, *@lupton.cc) and syncing them into the primary account &lt;a href='mailto:balupton@gmail.com'&gt;balupton@gmail.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Best there is.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Google Calendar, for&lt;br /&gt;&lt;ul&gt;&lt;li&gt;adding events&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Not really any good easy alternatives that sync to everything&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;How I Work&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Wakeup&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;I get up anywhere between 6am and 11am. I don't set an alarm.&lt;/li&gt;
+&lt;li&gt;If I wakeup when I'm not ready, my mind is not fresh and I can't produce good work&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Check Email in Bed&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;I give my body about 10 minutes in bed while it wakes up&lt;/li&gt;
+&lt;li&gt;During this time I check my email on my iPhone&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Out of Bed and into Shower&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;I have a shower in the morning to get all fresh&lt;/li&gt;
+&lt;li&gt;I shampoo/condition my hair only when it gets oiley&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Either&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;&lt;p&gt;Get straight to work&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;I do this if I wake up energised and ready for action, or if I have a brain spark in the shower&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Have breakfast&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;Yoghurt and Museli&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Reply to emails&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;I do this in the morning as I want to get straight to creating things, so it forces me to be quick and concise to emails&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Daily Todo&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;Now I open my iPhone and go to Listary and check my Daily Todo list&lt;/li&gt;
+&lt;li&gt;I work through the items in order, the order is most important first&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Here are some of the recent crossed of items, so you can get a taste:&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;Get codral cold tablets&lt;/li&gt;
+&lt;li&gt;Clean docpad - remove balupton content&lt;/li&gt;
+&lt;li&gt;Clean filepad - CSS&lt;/li&gt;
+&lt;li&gt;Apply for houses&lt;/li&gt;
+&lt;li&gt;Call apple, find out about iMac&lt;/li&gt;
+&lt;li&gt;Work on filepad&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;It is called Daily Todo for a reason&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;It is only for things that can be done within one day&lt;/li&gt;
+&lt;li&gt;If anything needs doing, it is added to that list in the correct order of priority&lt;/li&gt;
+&lt;li&gt;I can add tasks anytime, even when I am in bed trying to sleep&lt;/li&gt;
+&lt;li&gt;If someone interupts me and requires me to do a task, I add it to the list, rather than doing it now (unless that task overtook the current most important task)&lt;/li&gt;
+&lt;li&gt;I frown upon interuptions, I have no email or sms notifications. People who interrupt me will get told to send an email instad, unless it is life or death then don't interrupt me. After much yelling from my girlfriend, I now have my phone vibrate at least when people try and call me.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;What if I have a task that takes longer than a day?&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;Break it up into smaller tasks&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;What if a task is not due today or tomorrow?&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;If it has a date and time when it must be done, add it to your calendar&lt;/li&gt;
+&lt;li&gt;If it doesn't have a date or time to be done, add it to simplenote under it's own note, or under something like &quot;3 Month Plan&quot;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Why this system?&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;People tend to focus and pile-up on tasks which are actually not important. Instead focus on the tasks that will get you the maximum result out of that day.&lt;/li&gt;
+&lt;li&gt;Adding more tasks than those that can be completed in a day, is just causing a never-ending todo list - which means stress and the feeling of staleness and inadequacy. At the end of the day you want to have crossed everything (or at least most) of the things off that list, this means you will feel happy that you accomplished so much, that you are accomplishing things, that you are moving forward! If you didn't cross of everything, review and figure out where you went wrong - why wasn't today effective? Did you plan to high, or did you get interrupted - work to prevent those in the future.&lt;/li&gt;
+&lt;li&gt;Another nice touch about this is that beacuse Listary syncs with Simplenote, you can review your tasks for each day by sliding through the history on Simple Note. It also works well for proof of what you did that day, or what you worked on, or what you thought of - very valuable in the world of business.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;I aim to get 5 hours of &lt;strong&gt;real work&lt;/strong&gt; done a day&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;5 hours of real work means working on projects, not things like the todo task &lt;code&gt;Get codral cold tablets&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;I do not log time, unless required by client - git commit history is enough to show I pulled my weight&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;Logging time is an interruption, it kills flow. I hate interruptions. I want to stay in flow, and always be as effecient as possible.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Knock Off; once 5 hours of real work is up (usually about 5pm, but depending on non-real work tasks can be as late as 10pm sometimes), or if I have post 5pm commitments (such as a date night, concert, dinner, walk, babysitting, socialising, etc):&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;During this time, I try not to work. Unless an email or something is absolutely important, then I wait til tomorrow morning to answer it, or I respond back with - it's family time now, I'll get to it in the morning. Learn to say no to clients (don't be their slave) - your self-esteem, your relationship with them and the work you produce will be better because of it.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;I also don't work weekends, unless I've got nothing else to do.&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;Your brain needs time to recharge&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Go to bed&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;Cuddle with girlfriend&lt;/li&gt;
+&lt;li&gt;If can't sleep (and girlfriend is sleeping), then get phone and read news articles on Google Reader or plan things in SimpleNote&lt;/li&gt;
+&lt;li&gt;When using Google Reader, I skim over the things I don't care about, and read only the good stuff. Once I've got fed up with reading stuff, I clicked the &quot;mark all as read&quot; button - so yes I do miss out on news, I don't read everything, but if it is important enough, I'll hear about it somehow&lt;/li&gt;
+&lt;li&gt;If something can't be done right now, add it to listary&lt;/li&gt;
+&lt;li&gt;If something can be done now, add it to simple note&lt;/li&gt;
+&lt;li&gt;There is to be no programming at this stage, just writing thoughts down to be attended to with a fresh mind&lt;/li&gt;
+&lt;li&gt;If I do try to program/work - the work is crap&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;So there you have it, I hope this post helps you guys too. It's what I've found after 5 years of freelancing, and a lifetime of caring about effeciency to work the best. It's based heavily off my learnings of procrastination/stress, flow, inspiration, interuptions, happiness, and getting stuff done.&lt;/p&gt;
+
+&lt;p&gt;I'll add references to this post another day. This took more time that I had anticipated it taking.&lt;/p&gt;
+
+&lt;h2&gt;Did You Notice?&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;I don't watch TV&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;that is how I have time to accomplish so much with work, and spend great quality time with my girlfriend.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;I don't use Microsoft Office or any other document editor for that matter&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;I hate them, they are counter-intuitive. I write everything in markdown, then use docpad to generate a printable version for me&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+			</entry>
+		
+	
+		
+			<entry>
+				<title>Thoughts on time and life.</title>
+				<link href="http://balupton.com/blog/2011-03-05-thoughts-on-life-and-time.html"/>
+				<updated>2011-03-04T13:00:00Z</updated>
+				<id>http://balupton.com/blog/2011-03-05-thoughts-on-life-and-time.html</id>
+				<content type="html">&lt;p&gt;One trend that I have found to exist in all the best minds that I've countered is not only a &lt;a href=&quot;http://www.youtube.com/watch?v=UF8uR6Z6KLc&quot;&gt;overwhelming hunger&lt;/a&gt; that never ends for &lt;a href=&quot;http://en.wikipedia.org/wiki/Jujutsu&quot;&gt;self-improvement&lt;/a&gt; and &lt;a href=&quot;http://en.wikipedia.org/wiki/Neuro-linguistic_programming&quot;&gt;learning&lt;/a&gt;, but also the &lt;a href=&quot;http://www.ted.com/talks/lang/eng/brene_brown_on_vulnerability.html&quot;&gt;acceptance of themselves&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This concept has been repackaged into so many different cliches that we would expect that it would be common sense and come naturally, but yet so few people have those virtues; which is a pity.&lt;/p&gt;
+
+&lt;p&gt;Imagine if you had the ability to love yourself with your entire heart, to feel loved every moment, how empowering would that make you feel? Surely it would allow to accomplish solutions to bigger and better problems that you couldn't before, wouldn't it?&lt;/p&gt;
+
+&lt;p&gt;Imagine the girl across the dance floor, who dances &lt;em&gt;not&lt;/em&gt; like no one is watching, but as if &lt;strong&gt;all eyes&lt;/strong&gt; are on &lt;strong&gt;her!&lt;/strong&gt;. Now that is power; and what does it create? It creates that reality.&lt;/p&gt;
+
+&lt;p&gt;Ask anyone successful with pickup, and the key thing mentioned is that they &lt;a href=&quot;http://advancedlifeskills.com/blog/how-your-beliefs-create-your-reality-part-1/&quot;&gt;believe&lt;/a&gt; the result they are after &lt;strong&gt;&lt;a href=&quot;http://www.youtube.com/watch?v=3taEuL4EHAg&quot;&gt;will&lt;/a&gt;&lt;/strong&gt; happen. This one force is also what drives amazing programmers; it is the power that we can make anything our reality, we can create anything, we have the ability to be god; given we have enough time.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Time is the only constraint.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Anything is possible with enough time, perhaps not in our lifetime but a &lt;a href=&quot;http://trailers.apple.com/trailers/wb/thefountain/&quot;&gt;lifetime to come&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Though the realisation of time as a constraint is one that generally hits us &lt;a href=&quot;http://www.youtube.com/watch?v=p916yeFa2Xk&quot;&gt;too late&lt;/a&gt;. The worst feeling in the whole world is meant to be regret, in fact there is a NLP induction titled &quot;The Funeral&quot; which I had the fortunate torment of experiencing in the &quot;Warrior Spirit&quot; course by the &lt;a href=&quot;http://www.wealthpropulsion.com.au/?af=CLS1022418&quot;&gt;Wealth Propulsion Team&lt;/a&gt;. In the induction your timeline is placed at your funeral, pre-framed with a life of missed opportunities, and elicited in a state of complete regret. It's such an extreme pain which I've never felt before nor wish to experience ever again; however, it was totally worth it - it was a pain that I'm blessed to have as it has created that urgency to drive &lt;strong&gt;me&lt;/strong&gt; forward.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Am I utilising my time the &lt;a href=&quot;http://www.youtube.com/watch?v=jwG_qR6XmDQ&quot;&gt;best right now?&lt;/a&gt; What am I getting out of this? How will this help me on my quest of life?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;These are questions that I'm always asking myself and have made me realise the limits of being human. I can do a massive programming sprint for 2 weeks, but then I will crash and burn for one week. You're body can only handle so much. As much as I'd like to always be working, it is important for us to &lt;a href=&quot;http://www.pomodorotechnique.com/&quot;&gt;slow down&lt;/a&gt; and give our brain and body time to reorganise and heal.&lt;/p&gt;
+
+&lt;p&gt;For me that outlet is satisfied by my amazing partner, something that I only realised after a intensely fuelled and captivating debate with the &lt;a href=&quot;http://www.gentics.com/Portal.Node/blog-detail/gentics/postings/events/Aloha-Editor-DevCon-11-Day3--aedc.en.html?gentics.ts=1299367422&quot;&gt;Norbert Pomaroli&lt;/a&gt; and the rest of the &lt;a href=&quot;http://aloha-editor.org/about.php&quot;&gt;Aloha Editor Team&lt;/a&gt; after our &lt;a href=&quot;http://aloha-editor.org/wiki/Aloha_Editor_Dev_Con_Vienna_11&quot;&gt;Vienna DevCon 2011&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The conversation started with my view that the future will only have a place for creatives, and the &quot;checkout girl&quot; role will be made redundant by new technologies. Norbert, while agreeing on the latter point disagreed with my first. He enlightened me on how his role is actually an &lt;em&gt;enabler&lt;/em&gt; rather than a &lt;em&gt;creative&lt;/em&gt; (so one who enables creatives to do things; which is his passion, his love). This ignited a spark of curiosity between us and we came to the following conclusion.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;New technologies will replace repetitive roles such as the &quot;checkout girl&quot; causing a loss of jobs. While this can be bad, those with initiative will be set on a path to discover their passion; the one thing that only their &lt;a href=&quot;http://crushitbook.com/&quot;&gt;DNA&lt;/a&gt; allows them to do better than everyone else; and loving doing it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This conclusion has helped settle my fear that my virtuous entrepreneur mindset would have been suppressed if I was around 1000 years ago, and likely it would have &lt;a href=&quot;http://www.youtube.com/watch?v=WLrrBs8JBQo&quot;&gt;been the death of me&lt;/a&gt;. While that may still be true, the future is looking brighter than ever allowing everyone to have the opportunity to shine on their own terms, be it as a enabler, a creator, a house-wife, or a entrepreneur.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The future looks bright. And I'm proud to be a part of it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So what are your thoughts? Do you agree or disagree? You can let me know via the comments.&lt;/p&gt;</content>
+			</entry>
+		
+	
+		
+			<entry>
+				<title>Flights get more Social with Social Seat Selection</title>
+				<link href="http://balupton.com/blog/2011-02-19-flights-get-more-social-with-social-seat-selection.html"/>
+				<updated>2011-02-18T13:00:00Z</updated>
+				<id>http://balupton.com/blog/2011-02-19-flights-get-more-social-with-social-seat-selection.html</id>
+				<content type="html">&lt;p&gt;While flying on Emirates today to the Aloha Editor Hackathon, I was wondering why I always get placed next to very boring people and that surely there are some non-boring people on this airplane. For instance, how awesome would it be if I could have spent those 24 hours in-flight collaborating with two entire rows of other web developers. Or if I'm a single spend it with other single people. Or if I'd like to just chat with people with similar interests that would be awesome too! So this is the solution I came up with:&lt;/p&gt;
+
+&lt;h2&gt;Registration&lt;/h2&gt;
+
+&lt;h3&gt;Details&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Name&lt;/li&gt;
+&lt;li&gt;Photo&lt;/li&gt;
+&lt;li&gt;Short Description&lt;/li&gt;
+&lt;li&gt;Interests (keywords)&lt;/li&gt;
+&lt;li&gt;Job (if you love what you do)&lt;/li&gt;
+&lt;li&gt;Relationship Status&lt;/li&gt;
+&lt;li&gt;Email&lt;/li&gt;
+&lt;li&gt;Links to other social network profiles (Facebook, Twitter, LinkedIn ...)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Privacy&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Show this social information to everyone on the flight:&lt;/strong&gt;&lt;br /&gt; This is great for people to pre-discuss seating options and get to know each other before the flight; even if you don't end up sitting next to each other.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;del&gt;&lt;strong&gt;Show this social information to those looking to sit next to me:&lt;/strong&gt;&lt;br /&gt; When people are selecting their seat they will be able to see the information of the people surrounding the seat they are considering.&lt;/del&gt; - this option doesn't make sense in terms of the purpose and outcome.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;I changed my mind; I'm not social, cancel.&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;Scenarios&lt;/h2&gt;
+
+&lt;h3&gt;Old Scenario&lt;/h3&gt;
+
+&lt;p&gt;I randomly pick a seat based on seat preference and perhaps through my entire life miss out on sitting next to someone cool.&lt;/p&gt;
+
+&lt;h3&gt;New Scenario&lt;/h3&gt;
+
+&lt;p&gt;Cool people are able to socialise beforehand, strategically aligning their seating arrangements and increasing the possibility of actually having 2 rows of cool people, or just two people who are the perfect match to actually meet in the first place.&lt;/p&gt;
+
+&lt;p&gt;Imagine the new ideas, possibilities, relationships that can form. No longer will flights be 14-hour boring, stinking, crowded prisons - instead lively, active, intimate, collaborative awesomeness.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;What do you guys think? For myself I can't wait til airlines implement this - would be willing to undertake this project as a technical director / architect role. Licensed under the &lt;a href=&quot;http://creativecommons.org/licenses/by-sa/3.0/au/deed.en&quot;&gt;Attribution-ShareAlike 3.0 Australia (CC BY-SA 3.0)&lt;/a&gt; and Copyright &lt;a href=&quot;http://balupton.com&quot;&gt;Benjamin Arthur Lupton&lt;/a&gt; 2011.&lt;/p&gt;
+
+&lt;h2&gt;Easter Eggs&lt;/h2&gt;
+
+&lt;p&gt;The single argument here is also based on seeing a dude on my airplane pelvic thrusting the air while boarding (Sydney to Dubai), so I decided to pelvic thrust him back - all while on the phone with my girlfriend watching and his mate filming. How lucky would that guy be if he got to sit next to some of the single euro girls? Lucky I bet.&lt;/p&gt;
+
+&lt;p&gt;The boring argument is me having to sit next between a married coupled on the first flight who just slept the whole time. And the smelly argument is me on the second flight being crammed into my window seat by a obese polish man...&lt;/p&gt;
+
+&lt;p&gt;Yeah... Social Seat Selection FOR THE WIN!!!&lt;/p&gt;</content>
+			</entry>
+		
+	
+		
+			<entry>
+				<title>PhotoSynth meets Festivals</title>
+				<link href="http://balupton.com/blog/2011-02-19-photosynth-meets-festivals.html"/>
+				<updated>2011-02-18T13:00:00Z</updated>
+				<id>http://balupton.com/blog/2011-02-19-photosynth-meets-festivals.html</id>
+				<content type="html">&lt;p&gt;This is an idea that I've had for quiet some time; with me occasionally enjoying the good country, blues n roots, or trance festival.&lt;/p&gt;
+
+&lt;h2&gt;Background&lt;/h2&gt;
+
+&lt;h3&gt;PhotoSynth Introduction&lt;/h3&gt;
+
+&lt;p&gt;A few years ago Microsoft came out with PhotoSynth; the idea behind PhotoSynth isn't anything new, but the fact that they were actually able to pull it off is more than amazing (my brain explodes whenever I try and imagine how it works). For those who don't know (and didn't bother to click the reference to find out - darn lazy people!) you give PhotoSynth a collection of photos of one particular place and it re-creates the entire environment in 3D allowing you to float around the 3D environment as well as view the source images in their actual positions and camera direction.&lt;/p&gt;
+
+&lt;h3&gt;Original Applications of PhotoSynth&lt;/h3&gt;
+
+&lt;p&gt;The original application the PhotoSynth people saw was its use with recreating landscapes for the use in technologies now known as Microsoft Maps and Google Earth. Which is awesome too, as no doubt in 50 years we will be able to open a 3D Earth Viewer and when we browse be able to see all the relevant photos of that location in the actual location/direction they were taken from - or even be able to generate terrain imagery from those images alone - and scan through the timeline of available imagery.&lt;/p&gt;
+
+&lt;h2&gt;The Current Festival Experience&lt;/h2&gt;
+
+&lt;h3&gt;Your Favourite Song&lt;/h3&gt;
+
+&lt;p&gt;You're favourite song just come on by your favourite band, you whip out your HD phone and take a few photos and a video to capture that memory forever. You also notice that everyone else is doing the same thing. The position you have in the crowd is okay, and the best you could do considering how crammed it is - but perhaps part of your view is blocked, or a tall person is in the way, but regardless you are content with where you are.&lt;/p&gt;
+
+&lt;h3&gt;Reliving The Experience&lt;/h3&gt;
+
+&lt;p&gt;You get home and you upload the video from your camera to youtube and watch it - but it never comes close to the shear awesomeness. You quickly realise that while you were filming that one perspective, when you were there you were looking everywhere, taking it all in, able to move around and interact with the environment, you could feel all this awesomeness that this one perspective of your camera couldn't capture.&lt;/p&gt;
+
+&lt;h2&gt;Let's Upgrade Your Experience&lt;/h2&gt;
+
+&lt;h3&gt;Your Favourite Song&lt;/h3&gt;
+
+&lt;p&gt;You're favourite song just come on by your favourite band, you whip out your HD phone and take a few photos and a video to capture that memory forever. You also notice that everyone else is doing the same thing. The position you have in the crowd is okay, and the best you could do considering how crammed it is - but perhaps part of your view is blocked, or a tall person is in the way, but regardless you are &lt;del&gt;content with where you are.&lt;/del&gt; ecstatic because you know that this was your perspective and your experience of the event, and when it comes to reliving it - you'll be able to be wherever you want to be.&lt;/p&gt;
+
+&lt;h3&gt;Reliving The Experience&lt;/h3&gt;
+
+&lt;p&gt;You get home and you upload the video from your camera to youtube and watch it - while uploading you decide to wait that extra little bit so youtube can extract the geo-location and time of the video, then it says it's doing some awesome hard-core 3D stuff. The video is ready to watch, as your watching it you notice that the video is in a canvas which is placed in a 3D world, there is also a sidebar menu showing other videos of the event as well as a interactive timeline down the bottom. You decide to zoom out from your video and the 3D world adjusts - you can now see the back of your head and you holding your camera - you realise that someone must have been filming you a few feet back. You zoom out some more, and yep there is that person with the camera - their line of sight is clickable so you click it - you are now watching their video of your favourite song. AWESOME - their video is better quality! Must have been a iPhone 4 :P - plus you can see yourself in the video - you quickly tag yourself in the video. A dialog appears showing other videos that may contain you, there are about 3 - you decide to click through them. Wow, someone got you dancing to a song about a half an hour earlier - you've noticed the timeline down the bottom has changed to reflect the new time. You also notice that this current uploader has also taken 3 other videos - you can through the timeline and watch the 3D world change and re-construct perfectly with the time change.&lt;/p&gt;
+
+&lt;h2&gt;Monetisation Options&lt;/h2&gt;
+
+&lt;h3&gt;Rich Multiple Perspective 3D HD Discs&lt;/h3&gt;
+
+&lt;p&gt;Captilise on the growing 3D and HD market, as well as the richness of new media and players to create a HD disc that contains a 3D reconstruction of the event - in 3D perspective. Premium features could be to order a disc from youtube directly of all the videos and images that contain you.&lt;/p&gt;
+
+&lt;h3&gt;Google Earth / Microsoft Maps Partnerships&lt;/h3&gt;
+
+&lt;p&gt;Integrating this experience into a 3D Earth application will be amazing - imagine walking through the timeline of a showground over a year. You'll be able to get all the best festivals from any perspective you want.&lt;/p&gt;
+
+&lt;h2&gt;Problems&lt;/h2&gt;
+
+&lt;h3&gt;The Record Industry&lt;/h3&gt;
+
+&lt;p&gt;As this would rely on user submitted videos of concerts - which record labels pretty consider stealing... this idea could be an issue - though hopefully they can stick enough DRM on the 3D HD Discs to feel safe and move this along til it gets pirated and open-source.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;What do you guys think? For myself I can't wait til this happens - would be willing to work on this undertaking too as a UI Designer and Creative Lead. Licensed under the &lt;a href=&quot;http://creativecommons.org/licenses/by-sa/3.0/au/deed.en&quot;&gt;Attribution-ShareAlike 3.0 Australia (CC BY-SA 3.0)&lt;/a&gt; and Copyright &lt;a href=&quot;http://balupton.com&quot;&gt;Benjamin Arthur Lupton&lt;/a&gt; 2011.&lt;/p&gt;</content>
+			</entry>
+		
+	
+		
+			<entry>
+				<title>SeaDragon meets the Operating System UI</title>
+				<link href="http://balupton.com/blog/2011-02-19-seadragon-meets-operating-system-user-interface.html"/>
+				<updated>2011-02-18T13:00:00Z</updated>
+				<id>http://balupton.com/blog/2011-02-19-seadragon-meets-operating-system-user-interface.html</id>
+				<content type="html">&lt;p&gt;This is an idea that I've had for years (going back during the Windows XP days and speculation on the Windows Vista features).&lt;/p&gt;
+
+&lt;h2&gt;Still Current OS UIs&lt;/h2&gt;
+
+&lt;h3&gt;Limited to Desktops&lt;/h3&gt;
+
+&lt;p&gt;The User Interfaces of Operating Systems today are still limited on the amount of desktops you have. This can be extended either by buying a new monitor, or virtual solutions such as created new workspaces (windows) or spaces (osx).&lt;/p&gt;
+
+&lt;h3&gt;Issues with This&lt;/h3&gt;
+
+&lt;p&gt;The issue with this is that it is still hard on my mind to arrange information in a meaningful way. Expose tries and solves this in OSX and is the best solution I've found so far - but it is a workaround and not a fix for cluttered window management. I should be able to know exactly where all my windows are in my mind (not just the forefront one) and not have to bother about grouping similar windows in another space that I will need to remember and switch too and scan for my window. It just doesn't work the way my mind works.&lt;/p&gt;
+
+&lt;h2&gt;Care for an Upgrade?&lt;/h2&gt;
+
+&lt;h3&gt;Background on Sea Dragon&lt;/h3&gt;
+
+&lt;p&gt;This idea I have been dreaming of for years really hit it when Microsoft came out with SeaDragon - my first thought was YAY! My idea will finally happen - but they wanted to use it for things such as 3D Earth applications - awesome, but not this! Pretty much Sea Dragon allows you to draw multiple zoom-levels of interface/imagery at once, and smoothly integrate them together in a smooth-zooming experience with all the caching etc handled for you.&lt;/p&gt;
+
+&lt;h3&gt;How Infinite Zooming Will Help&lt;/h3&gt;
+
+&lt;p&gt;Your screen will be split into X quadrants.&lt;/p&gt;
+
+&lt;p&gt;Alright so let's start with our traditional desktop, everything is exactly the same as it should be - a ton of windows stacked on each other. Now we decide to hold control as we scroll the mouse in, just like OSX it should zoom in making the contents of each window bigger. We shall zoom out so everything is the same size again. This time we will hold control, and resize a window by clicking the lower right corner of the widow and dragging it to about 1/2 the size (all while holding control) - this time rather than the contents of the window adjusting for the resize, it appears as if the window just got smaller - as if it's farther away. We move this window to the bottom right - let's say that window was our code editor. Now let's perform the same procedure on our file browser. We also have iTunes open, lets perform this action again but move it to the bottom left. And let's have our web browser take up the entire top of the screen. Now I can zoom into the&lt;/p&gt;
+
+&lt;p&gt;Okay, so let's say zoom level one is the most zoomed-out zoom level and your default level. At this level everything is exactly the same as your traditional UI. Now when we hold control and scroll-in the screen will zoom in just as how it does&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;What do you guys think? For myself I can't wait til this happens - would be willing to work on this undertaking too as a UI Designer and Creative Lead. Licensed under the &lt;a href=&quot;http://creativecommons.org/licenses/by-sa/3.0/au/deed.en&quot;&gt;Attribution-ShareAlike 3.0 Australia (CC BY-SA 3.0)&lt;/a&gt; and Copyright &lt;a href=&quot;http://balupton.com&quot;&gt;Benjamin Arthur Lupton&lt;/a&gt; 2011.&lt;/p&gt;</content>
+			</entry>
+		
+	
+</feed>
