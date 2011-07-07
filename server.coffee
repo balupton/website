@@ -34,7 +34,7 @@ docpadInstance.serverAction ->
 	# WWW Redirect
 	docpadServer.get '*', (req, res, next) ->
 		console.log {url: req.url, refer: req.header('Referer'), ip: req.connection.remoteAddress}, '\n'
-		if /\/http/.test(req.url)
+		if /\/http/.test(req.url) or /^\/(services|articles|clients|work)/.test(req.url)
 			res.send(404)
 			console.log 'not found'
 		else
