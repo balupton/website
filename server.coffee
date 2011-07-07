@@ -31,10 +31,36 @@ docpadInstance.serverAction ->
 	# -------------------------------------
 	# Redirects
 
+	# DoS Detection
+	requests = {}
+
 	# WWW Redirect
 	docpadServer.get '*', (req, res, next) ->
-		console.log {url: req.url, refer: req.header('Referer'), ip: req.connection.remoteAddress}, '\n'
-		if /\/http/.test(req.url) or /^\/(services|articles|clients|work)/.test(req.url)
+		#console.log {url: req.url, refer: req.header('Referer'), ip: req.connection.remoteAddress}, '\n'
+
+		# DoS Dection
+		requestKey = req.url+'|'+req.connection.remoteAddress
+		if requests[requestKey]?
+			++requests[requestKey].counter
+		else
+			requests[requestKey] = counter: 1
+		((requestKey) ->
+			requests[requestKey].timeout = setTimeout(
+				->
+					console.log 'timeout:', requestKey
+					if requests[requestKey]?
+						if requests[requestKey].counter > 20
+							res.send(400) # Bad Request
+						else
+							delete requests[requestKey]
+					#else
+						#res.send(408) # Request Timeout
+				30*1000
+			)
+		)(requestKey)
+	
+		# Handle
+		if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work)/.test(req.url)
 			res.send(404)
 			console.log 'not found'
 		else
