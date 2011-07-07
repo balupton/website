@@ -92,14 +92,16 @@
 					reinvigorate.session.url = url = reinvigorate.url_override;
 				}
 				return url.replace(/^https?:\/\/(www\.)?/,"http://");
-			}
+			};
 			reinvigorate.ajax_track = function(url) {
 				reinvigorate.url_override = url;
 				reinvigorate.track(reinvigorate.code);
-			}
+			};
 			reinvigorate.url_override = null;
 			reinvigorate.track(reinvigorate.code);
-		} catch(err) {}
+		} catch(err) {
+			if ( window.console ) console.log(err);
+		}
 		/*]]>*/
 	</script>
 
@@ -119,7 +121,9 @@
 				pageTracker._setCustomVar(5, "html5.flexbox", Modernizr.flexbox ? "yes" : "no", 2 );
 			}
 			pageTracker._trackPageview();
-		} catch(err) {}
+		} catch(err) {
+			if ( window.console ) console.log(err);
+		}
 		//]]>
 	</script>
 

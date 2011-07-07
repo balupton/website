@@ -81,18 +81,18 @@
 			
 		
 			
-			<li typeof="sioc:Post" about="/blog/2011-02-19-photosynth-meets-festivals.html">
-				<span property="dc:created">Feb 19 2011</span>
-				&raquo;
-				<a href="/blog/2011-02-19-photosynth-meets-festivals.html" property="dc:title">PhotoSynth meets Festivals</a>
-			</li>
-			
-		
-			
 			<li typeof="sioc:Post" about="/blog/2011-02-19-seadragon-meets-operating-system-user-interface.html">
 				<span property="dc:created">Feb 19 2011</span>
 				&raquo;
 				<a href="/blog/2011-02-19-seadragon-meets-operating-system-user-interface.html" property="dc:title">SeaDragon meets the Operating System UI</a>
+			</li>
+			
+		
+			
+			<li typeof="sioc:Post" about="/blog/2011-02-19-photosynth-meets-festivals.html">
+				<span property="dc:created">Feb 19 2011</span>
+				&raquo;
+				<a href="/blog/2011-02-19-photosynth-meets-festivals.html" property="dc:title">PhotoSynth meets Festivals</a>
 			</li>
 			
 		
@@ -202,14 +202,16 @@ www.google.com/reader/public/atom/user%2F14778993901569235562%2Fstate%2Fcom.goog
 					reinvigorate.session.url = url = reinvigorate.url_override;
 				}
 				return url.replace(/^https?:\/\/(www\.)?/,"http://");
-			}
+			};
 			reinvigorate.ajax_track = function(url) {
 				reinvigorate.url_override = url;
 				reinvigorate.track(reinvigorate.code);
-			}
+			};
 			reinvigorate.url_override = null;
 			reinvigorate.track(reinvigorate.code);
-		} catch(err) {}
+		} catch(err) {
+			if ( window.console ) console.log(err);
+		}
 		/*]]>*/
 	</script>
 
@@ -229,7 +231,9 @@ www.google.com/reader/public/atom/user%2F14778993901569235562%2Fstate%2Fcom.goog
 				pageTracker._setCustomVar(5, "html5.flexbox", Modernizr.flexbox ? "yes" : "no", 2 );
 			}
 			pageTracker._trackPageview();
-		} catch(err) {}
+		} catch(err) {
+			if ( window.console ) console.log(err);
+		}
 		//]]>
 	</script>
 
