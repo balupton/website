@@ -81,6 +81,28 @@
 	<script defer src="http://github.com/balupton/jquery-scrollto/raw/master/scripts/jquery.scrollto.min.js"></script>
 	<script defer src="https://gist.github.com/raw/854622/ajaxify-html5.js"></script>
 
+	<!-- Re-Invigorate -->
+	<script defer src="http://include.reinvigorate.net/re_.js"></script>
+	<script defer>
+		/*<![CDATA[*/
+		try {
+			reinvigorate.code = "702o7-66905bt9t0";
+			reinvigorate.url_filter = function(url) {
+				if ( url == reinvigorate.session.url && reinvigorate.url_override != null ) {
+					reinvigorate.session.url = url = reinvigorate.url_override;
+				}
+				return url.replace(/^https?:\/\/(www\.)?/,"http://");
+			}
+			reinvigorate.ajax_track = function(url) {
+				reinvigorate.url_override = url;
+				reinvigorate.track(reinvigorate.code);
+			}
+			reinvigorate.url_override = null;
+			reinvigorate.track(reinvigorate.code);
+		} catch(err) {}
+		/*]]>*/
+	</script>
+
 	<!-- Google Analytics --> 
 	<script defer src="http://www.google-analytics.com/ga.js"></script>
 	<script defer src="/scripts/modernizr.custom.js"></script> 
