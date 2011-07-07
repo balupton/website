@@ -21,13 +21,14 @@ docpadInstance.generateAction -> docpadInstance.serverAction ->
 	# DNS Servers
 	masterServer.use express.vhost 'balupton.*', docpadServer
 	masterServer.use express.vhost 'balupton.*.*', docpadServer
+	masterServer.use express.vhost 'lupton.*', docpadServer
 
 	# -------------------------------------
 	# Redirects
 
 	# WWW Redirect
 	docpadServer.get '*', (req, res, next) ->
-		if req.headers.host is 'www.balupton.com'
+		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
 			res.redirect 'http://balupton.com'+req.url, 301
 		else
 			next()
