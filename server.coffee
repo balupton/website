@@ -2,6 +2,10 @@
 docpad = require 'docpad'
 express = require 'express'
 
+# Variables
+oneDay = 86400000
+expiresOffset = oneDay
+
 # -------------------------------------
 # Server
 
@@ -9,7 +13,7 @@ express = require 'express'
 masterPort = process.env.PORT || 10113
 
 # Create Instances
-docpadInstance = docpad.createInstance port: masterPort, maxAge: 86400000 # one day
+docpadInstance = docpad.createInstance port: masterPort, maxAge: expiresOffset
 
 # Fetch Servers
 #docpadInstance.generateAction -> \
@@ -32,6 +36,9 @@ docpadInstance.serverAction ->
 		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
 			res.redirect 'http://balupton.com'+req.url, 301
 		else
+			expires = new Date()
+			expires.setTime expires.getTime() + expiresOffset
+			res.header 'Expires', expires.toGMTString()
 			next()
 	
 	# Project Demos
