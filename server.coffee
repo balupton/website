@@ -48,6 +48,14 @@ docpadInstance.generateAction -> docpadInstance.serverAction ->
 	docpadServer.get /^\/(?:t|twitter|tweet)\/?.*/, (req, res) ->
 		res.redirect "https://twitter.com/balupton", 301
 
+	# Sharing Feed
+	docpadServer.get /^\/feeds?\/shar(e|ing)?.*/, (req, res) ->
+		res.redirect "http://feeds.feedburner.com/balupton/shared", 301
+
+	# Feeds
+	docpadServer.get /^\/feeds?\/?.*/, (req, res) ->
+		res.redirect "http://feeds.feedburner.com/balupton", 301
+
 	# -------------------------------------
 	# Todo
 
