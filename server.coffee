@@ -29,7 +29,8 @@ docpadInstance.generateAction -> docpadInstance.serverAction ->
 	docpadServer.get '*', (req, res, next) ->
 		if req.headers.host is 'www.balupton.com'
 			res.redirect 'http://balupton.com'+req.url, 301
-		next()
+		else
+			next()
 	
 	# Project Demos
 	docpadServer.get /^\/(?:sandbox|projects?)\/([^\/]+)\/demo\/?.*/, (req, res) ->
