@@ -23,6 +23,24 @@
 
 	<!-- Less -->
 	<script src="http://lesscss.org/js/less.js"></script>
+
+	<!-- Disqus -->
+	<script src="http://balupton.disqus.com/embed.js"></script>
+
+	<!-- jQuery -->
+	<script defer src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+
+	<!-- History.js -->
+	<script defer src="http://github.com/balupton/history.js/raw/master/scripts/compressed/history.adapter.jquery.js"></script>
+	<script defer src="http://github.com/balupton/history.js/raw/master/scripts/compressed/history.js"></script>
+	<script defer src="http://github.com/balupton/jquery-scrollto/raw/master/scripts/jquery.scrollto.min.js"></script>
+	<script defer src="https://gist.github.com/raw/854622/ajaxify-html5.js"></script>
+
+	<!-- Re-Invigorate -->
+	<script defer src="http://include.reinvigorate.net/re_.js"></script>
+	<script defer src="http://www.google-analytics.com/ga.js"></script>
+	<script defer src="/scripts/modernizr.custom.js"></script> 
+	<script defer src="/scripts/analytics.js"></script>
 </head>
 <body id="page-blog-2011-02-19-flights-get-more-social-with-social-seat-selection">
 	<div id="main">
@@ -154,64 +172,5 @@
 	<a id="box-github" href="http://github.com/balupton" title="hack with me"><img src="/images/forkme.png" alt="Fork me on GitHub" /></a>
 
 	<a id="box-docpad" href="http://github.com/balupton/docpad" title="Powered by DocPad">Powered by DocPad</a>
-
-	<!-- jQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
-
-	<!-- Disqus -->
-	<script async src="http://balupton.disqus.com/embed.js"></script>
-
-	<!-- History.js -->
-	<script defer src="http://github.com/balupton/history.js/raw/master/scripts/compressed/history.adapter.jquery.js"></script>
-	<script defer src="http://github.com/balupton/history.js/raw/master/scripts/compressed/history.js"></script>
-	<script defer src="http://github.com/balupton/jquery-scrollto/raw/master/scripts/jquery.scrollto.min.js"></script>
-	<script defer src="https://gist.github.com/raw/854622/ajaxify-html5.js"></script>
-
-	<!-- Re-Invigorate -->
-	<script src="http://include.reinvigorate.net/re_.js"></script>
-	<script>
-		/*<![CDATA[*/
-		try {
-			reinvigorate.code = "702o7-66905bt9t0";
-			reinvigorate.url_filter = function(url) {
-				if ( url == reinvigorate.session.url && reinvigorate.url_override != null ) {
-					reinvigorate.session.url = url = reinvigorate.url_override;
-				}
-				return url.replace(/^https?:\/\/(www\.)?/,"http://");
-			};
-			reinvigorate.ajax_track = function(url) {
-				reinvigorate.url_override = url;
-				reinvigorate.track(reinvigorate.code);
-			};
-			reinvigorate.url_override = null;
-			reinvigorate.track(reinvigorate.code);
-		} catch(err) {
-			if ( window.console ) console.log(err);
-		}
-		/*]]>*/
-	</script>
-
-	<!-- Google Analytics --> 
-	<script src="http://www.google-analytics.com/ga.js"></script>
-	<script src="/scripts/modernizr.custom.js"></script> 
-	<script> 
-		//<![CDATA[
-		try {
-			var pageTracker = _gat._getTracker("UA-4446117-1");
-			pageTracker._initData();
-			if ( Modernizr ) {
-				pageTracker._setCustomVar(1, "html5.csstransforms", Modernizr.csstransforms ? "yes" : "no" , 2 );
-				pageTracker._setCustomVar(2, "html5.draganddrop", Modernizr.draganddrop ? "yes" : "no", 2 );
-				pageTracker._setCustomVar(3, "html5.history", Modernizr.history ? "yes" : "no", 2 );
-				pageTracker._setCustomVar(4, "html5.localstorage", Modernizr.localstorage ? "yes" : "no", 2 );
-				pageTracker._setCustomVar(5, "html5.flexbox", Modernizr.flexbox ? "yes" : "no", 2 );
-			}
-			pageTracker._trackPageview();
-		} catch(err) {
-			if ( window.console ) console.log(err);
-		}
-		//]]>
-	</script>
-
 </body>
 </html>
