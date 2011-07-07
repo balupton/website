@@ -34,18 +34,22 @@ docpadInstance.serverAction ->
 	# WWW Redirect
 	docpadServer.get '*', (req, res, next) ->
 		console.log {url: req.url, refer: req.header('Referer'), ip: req.connection.remoteAddress}, '\n'
-		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
-			res.redirect 'http://balupton.com'+req.url, 301
+		if /^\/http/.test(req.url)
+			res.send(404)
+			console.log 'not found'
 		else
-			expires = new Date()
-			expires.setTime expires.getTime() + expiresOffset
-			res.header 'Expires', expires.toGMTString()
-			next()
-	
+			if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
+				res.redirect 'http://balupton.com'+req.url, 301
+			else
+				expires = new Date()
+				expires.setTime expires.getTime() + expiresOffset
+				res.header 'Expires', expires.toGMTString()
+				next()
+		
 	# Project Demos
 	docpadServer.get /^\/(?:sandbox|projects?)\/([^\/]+)\/demo\/?.*/, (req, res) ->
 		project = req.params[0]
-		res.redirect "http://balupton.github.com/#{project}/demo/", 301
+		res.redirect "https://balupton.github.com/#{project}/demo/", 301
 
 	# Project Homes
 	docpadServer.get /^\/(?:sandbox|projects?)\/([^\/]+)\/?.*/, (req, res) ->
