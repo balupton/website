@@ -18,20 +18,19 @@ docpadInstance.generateAction -> docpadInstance.serverAction ->
 	# Master Server
 	masterServer = docpadServer
 
-	# Redirect WWW Server
-	wwwServer = express.createServer()
-	wwwServer.get /^(.*)$/, (req, res) ->
-		url = req.params[0]
-		res.redirect "http://balupton.com#{url}", 301
-
 	# DNS Servers
-	masterServer.use express.vhost 'www.balupton.com', wwwServer
 	masterServer.use express.vhost 'balupton.*', docpadServer
 	masterServer.use express.vhost 'balupton.*.*', docpadServer
 
 	# -------------------------------------
 	# Redirects
 
+	# WWW Redirect
+	docpadServer.get '*', (req, res, next) ->
+		if req.headers.host is 'www.balupton.com'
+			res.redirect 'http://balupton.com'+req.url, 301
+		next()
+	
 	# Project Demos
 	docpadServer.get /^\/(?:sandbox|projects?)\/([^\/]+)\/demo\/?.*/, (req, res) ->
 		project = req.params[0]
