@@ -9,7 +9,7 @@ express = require 'express'
 masterPort = process.env.PORT || 10113
 
 # Create Instances
-docpadInstance = docpad.createInstance port: masterPort
+docpadInstance = docpad.createInstance port: masterPort, maxAge: 31557600000 # one year
 
 # Fetch Servers
 docpadInstance.generateAction -> docpadInstance.serverAction ->
