@@ -36,7 +36,9 @@ docpadInstance.serverAction ->
 
 	# WWW Redirect
 	docpadServer.get '*', (req, res, next) ->
-		console.log {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
+		# Prepare
+		requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
+		console.log requestInfo
 
 		###
 		# DoS Dection
@@ -67,12 +69,18 @@ docpadInstance.serverAction ->
 		((req,res) ->
 			setTimeout(
 				->
-					console.log 'timed out:', {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
+					# Prepare
+					requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
+					console.log 'timed out:', requestInfo
+
+					# Attempt Timeout
 					try
 						res.send(408) # Request Timeout
-						console.log 'request timed out'
+						console.log 'request timeout'
 						res.end() # End Response
+						console.log 'end response'
 					catch err
+						# Chances are the request sent fine
 						false
 				30*1000
 			)						
@@ -80,7 +88,7 @@ docpadInstance.serverAction ->
 		
 		# Handle
 		if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work|public)/.test(req.url)
-			console.log 'not found'
+			console.log 'not found:', requestInfo
 			res.send(404) # Not Found
 		else
 			if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
