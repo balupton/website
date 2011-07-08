@@ -36,29 +36,44 @@ docpadInstance.serverAction ->
 
 	# WWW Redirect
 	docpadServer.get '*', (req, res, next) ->
-		console.log {url: req.url, refer: req.header('Referer'), ip: req.connection.remoteAddress}, '\n'
+		console.log {url: req.url, ip: req.connection.remoteAddress, status: res.statusCode}
 
+		###
 		# DoS Dection
 		requestKey = req.url+'|'+req.connection.remoteAddress
 		if requests[requestKey]?
 			++requests[requestKey].counter
+			requests[requestKey].res.push res
 		else
-			requests[requestKey] = counter: 1
-		((requestKey) ->
+			requests[requestKey] = {
+				counter: 1
+				res: [res]
+				timeout: setTimeout(
+					->
+						if requests[requestKey]?
+							# 
+							if requests[requestKey].counter > 20
+								console.log 'bad request'
+								for res in requests[requestKey].res
+									if res.statusCode < 200
+										res.send(400) # Bad Request
+							delete requests[requestKey]
+					10*1000
+				)
+			}
+		###
+		
+		# Timeout Handling
+		((req,res) ->
 			setTimeout(
 				->
-					if requests[requestKey]?
-						if requests[requestKey].counter > 20
-							console.log 'bad rquest'
-							res.send(400) # Bad Request
-						else
-							delete requests[requestKey]
-					#else
-						#res.send(408) # Request Timeout
+					if res.statusCode < 200
+						console.log 'request timed out'
+						res.send(408) # Request Timeout
 				30*1000
-			)
-		)(requestKey)
-	
+			)						
+		)(req,res)
+		
 		# Handle
 		if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work)/.test(req.url)
 			res.send(404)
