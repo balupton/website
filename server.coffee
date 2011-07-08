@@ -44,6 +44,7 @@ docpadInstance.serverAction -> false
 
 # Start Server Listening
 masterServer.listen masterPort
+console.log 'Express server listening on port %d', @server.address().port
 
 
 # -------------------------------------
