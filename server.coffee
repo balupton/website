@@ -66,8 +66,8 @@ docpadServer.get '*', (req, res, next) ->
 				try
 					res.send(408) # Request Timeout
 					console.log 'request timeout:', requestInfo
-					res.end() # End Response
-					console.log 'end response:', requestInfo
+					#res.end() # End Response
+					#console.log 'end response:', requestInfo
 				catch err
 					# Chances are the request sent fine
 					false
