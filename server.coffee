@@ -67,6 +67,7 @@ docpadInstance.serverAction ->
 		((req,res) ->
 			setTimeout(
 				->
+					console.log 'timed out:', {url: req.url, ip: req.connection.remoteAddress, status: res.statusCode}
 					if res.statusCode < 200
 						console.log 'request timed out'
 						res.send(408) # Request Timeout
@@ -75,9 +76,9 @@ docpadInstance.serverAction ->
 		)(req,res)
 		
 		# Handle
-		if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work)/.test(req.url)
-			res.send(404)
+		if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work|public)/.test(req.url)
 			console.log 'not found'
+			res.send(404) # Not Found
 		else
 			if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
 				res.redirect 'http://balupton.com'+req.url, 301
