@@ -44,14 +44,13 @@ docpadInstance.serverAction ->
 				->
 					# Prepare
 					requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
-					console.log 'timed out:', requestInfo  if debug
 
 					# Attempt Timeout
 					try
 						res.send(408) # Request Timeout
-						console.log 'request timeout'  if debug
+						console.log 'request timeout:', requestInfo
 						res.end() # End Response
-						console.log 'end response'  if debug
+						console.log 'end response:', requestInfo
 					catch err
 						# Chances are the request sent fine
 						false
@@ -61,15 +60,12 @@ docpadInstance.serverAction ->
 		
 		# Handle
 		if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work|public)/.test(req.url)
-			console.log 'not found:', requestInfo  if debug
+			console.log 'not found:', requestInfo
 			res.send(404) # Not Found
 		else
 			if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
 				res.redirect 'http://balupton.com'+req.url, 301
 			else
-				#expires = new Date()
-				#expires.setTime expires.getTime() + expiresOffset
-				#res.header 'Expires', expires.toGMTString()
 				next()
 		
 	# Project Demos
