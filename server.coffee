@@ -67,9 +67,9 @@ docpadInstance.serverAction ->
 			if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
 				res.redirect 'http://balupton.com'+req.url, 301
 			else
-				expires = new Date()
-				expires.setTime expires.getTime() + expiresOffset
-				res.header 'Expires', expires.toGMTString()
+				#expires = new Date()
+				#expires.setTime expires.getTime() + expiresOffset
+				#res.header 'Expires', expires.toGMTString()
 				next()
 		
 	# Project Demos
