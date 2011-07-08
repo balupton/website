@@ -5,6 +5,7 @@ express = require 'express'
 # Variables
 oneDay = 86400000
 expiresOffset = oneDay
+debug = false
 
 # -------------------------------------
 # Server
@@ -31,54 +32,26 @@ docpadInstance.serverAction ->
 	# -------------------------------------
 	# Redirects
 
-	# DoS Detection
-	requests = {}
-
 	# WWW Redirect
 	docpadServer.get '*', (req, res, next) ->
 		# Prepare
 		requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
-		console.log requestInfo
+		console.log requestInfo  if debug
 
-		###
-		# DoS Dection
-		requestKey = req.url+'|'+req.connection.remoteAddress
-		if requests[requestKey]?
-			++requests[requestKey].counter
-			requests[requestKey].res.push res
-		else
-			requests[requestKey] = {
-				counter: 1
-				res: [res]
-				timeout: setTimeout(
-					->
-						if requests[requestKey]?
-							# 
-							if requests[requestKey].counter > 20
-								console.log 'bad request'
-								for res in requests[requestKey].res
-									if res.statusCode < 200
-										res.send(400) # Bad Request
-							delete requests[requestKey]
-					10*1000
-				)
-			}
-		###
-		
 		# Timeout Handling
 		((req,res) ->
 			setTimeout(
 				->
 					# Prepare
 					requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
-					console.log 'timed out:', requestInfo
+					console.log 'timed out:', requestInfo  if debug
 
 					# Attempt Timeout
 					try
 						res.send(408) # Request Timeout
-						console.log 'request timeout'
+						console.log 'request timeout'  if debug
 						res.end() # End Response
-						console.log 'end response'
+						console.log 'end response'  if debug
 					catch err
 						# Chances are the request sent fine
 						false
@@ -88,7 +61,7 @@ docpadInstance.serverAction ->
 		
 		# Handle
 		if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work|public)/.test(req.url)
-			console.log 'not found:', requestInfo
+			console.log 'not found:', requestInfo  if debug
 			res.send(404) # Not Found
 		else
 			if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
