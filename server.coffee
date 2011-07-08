@@ -68,9 +68,12 @@ docpadInstance.serverAction ->
 			setTimeout(
 				->
 					console.log 'timed out:', {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
-					if res.statusCode is 200
-						console.log 'request timed out'
+					try
 						res.send(408) # Request Timeout
+						console.log 'request timed out'
+						res.end() # End Response
+					catch err
+						false
 				30*1000
 			)						
 		)(req,res)
