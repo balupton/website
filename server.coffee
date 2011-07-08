@@ -36,7 +36,7 @@ docpadInstance.serverAction ->
 
 	# WWW Redirect
 	docpadServer.get '*', (req, res, next) ->
-		console.log {url: req.url, ip: req.connection.remoteAddress, status: res.statusCode}
+		console.log {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
 
 		###
 		# DoS Dection
@@ -67,7 +67,7 @@ docpadInstance.serverAction ->
 		((req,res) ->
 			setTimeout(
 				->
-					console.log 'timed out:', {url: req.url, ip: req.connection.remoteAddress, status: res.statusCode}
+					console.log 'timed out:', {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
 					if res.statusCode < 200
 						console.log 'request timed out'
 						res.send(408) # Request Timeout
