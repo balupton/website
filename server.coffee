@@ -31,11 +31,6 @@ masterServer.configure =>
 	masterServer.use express.bodyParser()
 	masterServer.use masterServer.router
 
-	# DNS Servers
-	masterServer.use express.vhost 'balupton.*', docpadServer
-	masterServer.use express.vhost 'balupton.*.*', docpadServer
-	masterServer.use express.vhost 'lupton.*', docpadServer
-
 # Generate Website
 # docpadInstance.generateAction -> false
 
@@ -44,8 +39,12 @@ docpadInstance.serverAction -> false
 
 # Start Server Listening
 masterServer.listen masterPort
-console.log 'Express server listening on port %d', @server.address().port
+console.log 'Express server listening on port %d', masterServer.address().port
 
+# DNS Servers
+masterServer.use express.vhost 'balupton.*', docpadServer
+masterServer.use express.vhost 'balupton.*.*', docpadServer
+masterServer.use express.vhost 'lupton.*', docpadServer
 
 # -------------------------------------
 # Redirects
