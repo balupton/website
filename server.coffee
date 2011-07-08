@@ -76,7 +76,7 @@ docpadServer.get '*', (req, res, next) ->
 	)(req,res)
 	
 	# Handle
-	if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work|public)/.test(req.url)
+	if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work|public|front)/.test(req.url)
 		console.log 'not found:', requestInfo
 		res.send(404) # Not Found
 	else
