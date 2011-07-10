@@ -67,14 +67,14 @@ docpadServer.get '*', (req, res, next) ->
 					# Attempt timeout response
 					res.send(408) # Request Timeout
 					console.log 'request timeout:', requestInfo
-					res.end() # End Response
-					console.log 'end response:', requestInfo
+					#res.end() # End Response
+					#console.log 'end response:', requestInfo
 			30*1000
 		)						
 	)(req,res)
 	
 	# Handle
-	if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work|public|front|user)/.test(req.url)
+	if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work|public|front|user|home)/.test(req.url)
 		console.log 'not found:', requestInfo
 		res.send(404) # Not Found
 	else
