@@ -5,7 +5,7 @@ express = require 'express'
 # Variables
 oneDay = 86400000
 expiresOffset = oneDay
-debug = false
+debug = true
 
 # -------------------------------------
 # Server
@@ -24,18 +24,18 @@ docpadInstance = docpad.createInstance {
 	server: docpadServer
 }
 
+# Generate Website
+# docpadInstance.generateAction -> false
+
+# Serve Website
+docpadInstance.serverAction -> false
+
 # Configuration
 masterServer.configure =>
 	# Middleware
 	masterServer.use express.methodOverride()
 	masterServer.use express.bodyParser()
 	masterServer.use masterServer.router
-
-# Generate Website
-# docpadInstance.generateAction -> false
-
-# Serve Website
-docpadInstance.serverAction -> false
 
 # Start Server Listening
 masterServer.listen masterPort
@@ -55,24 +55,6 @@ docpadServer.get '*', (req, res, next) ->
 	requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
 	console.log requestInfo  if debug
 
-	# Timeout Handling
-	((req,res) ->
-		setTimeout(
-			->
-				# Prepare
-				requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
-
-				# Check if we responded
-				unless res._headerSent
-					# Attempt timeout response
-					#res.send(408) # Request Timeout
-					#console.log 'request timeout:', requestInfo
-					res.end() # End Response
-					console.log 'end response:', requestInfo
-			30*1000
-		)						
-	)(req,res)
-	
 	# Handle
 	if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work|public|front|user|home)/.test(req.url)
 		console.log 'not found:', requestInfo
@@ -82,7 +64,7 @@ docpadServer.get '*', (req, res, next) ->
 			res.redirect 'http://balupton.com'+req.url, 301
 		else
 			next()
-	
+
 # Project Demos
 docpadServer.get /^\/sandbox\/([^\/]+)(.*)/, (req, res) ->
 	project = req.params[0]
