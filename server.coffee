@@ -65,10 +65,10 @@ docpadServer.get '*', (req, res, next) ->
 				# Check if we responded
 				unless res._headerSent
 					# Attempt timeout response
-					res.send(408) # Request Timeout
-					console.log 'request timeout:', requestInfo
-					#res.end() # End Response
-					#console.log 'end response:', requestInfo
+					#res.send(408) # Request Timeout
+					#console.log 'request timeout:', requestInfo
+					res.end() # End Response
+					console.log 'end response:', requestInfo
 			30*1000
 		)						
 	)(req,res)
