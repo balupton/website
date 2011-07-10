@@ -49,22 +49,6 @@ masterServer.use express.vhost 'lupton.*', docpadServer
 # -------------------------------------
 # Redirects
 
-# WWW Redirect
-docpadServer.get '*', (req, res, next) ->
-	# Prepare
-	requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
-	console.log requestInfo  if debug
-
-	# Handle
-	if /\/http/.test(req.url) or /^\/(blogs|services|articles|clients|work|public|front|user|home)/.test(req.url)
-		console.log 'not found:', requestInfo
-		res.send(404) # Not Found
-	else
-		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
-			res.redirect 'http://balupton.com'+req.url, 301
-		else
-			next()
-
 # Project Demos
 docpadServer.get /^\/sandbox\/([^\/]+)(.*)/, (req, res) ->
 	project = req.params[0]
@@ -92,6 +76,18 @@ docpadServer.get /^\/feeds?\/shar(e|ing)?.*/, (req, res) ->
 # Feeds
 docpadServer.get /^\/feeds?\/?.*/, (req, res) ->
 	res.redirect "http://feeds.feedburner.com/balupton", 301
+
+# WWW Redirect
+docpadServer.get '*', (req, res, next) ->
+	# Prepare
+	requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
+
+	# Handle
+	if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
+		res.redirect 'http://balupton.com'+req.url, 301
+	else
+		console.log 'not found:', requestInfo
+		res.send(404) # Not Found
 
 # -------------------------------------
 # Todo
