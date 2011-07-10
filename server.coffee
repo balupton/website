@@ -62,15 +62,13 @@ docpadServer.get '*', (req, res, next) ->
 				# Prepare
 				requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
 
-				# Attempt Timeout
-				try
+				# Check if we responded
+				unless res._headerSent
+					# Attempt timeout response
 					res.send(408) # Request Timeout
 					console.log 'request timeout:', requestInfo
-					#res.end() # End Response
-					#console.log 'end response:', requestInfo
-				catch err
-					# Chances are the request sent fine
-					false
+					res.end() # End Response
+					console.log 'end response:', requestInfo
 			30*1000
 		)						
 	)(req,res)
