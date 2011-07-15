@@ -16,6 +16,28 @@
 	right: 0;
 }
 
+img {
+	border:none;
+}
+
+.box-shadow (@x: 0, @y: 0, @blur: 1em, @color) {
+  @val: @x @y @blur @color;
+  box-shadow:         @val;
+  -webkit-box-shadow: @val;
+  -moz-box-shadow:    @val;
+}
+
+#header-home {
+	display:none;
+}
+#header-donate img {
+	margin:0 0 -0.5em 1em;
+	&:hover,&:focus {
+		border-radius:2px;
+		.box-shadow(0,0,3px,#9DACCE);
+	}
+}
+
 @media only screen and (max-device-width: 480px) {
 	#box-docpad, #box-github {
 		display:none !important;
