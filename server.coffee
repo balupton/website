@@ -33,8 +33,10 @@ docpadInstance = docpad.createInstance {
 docpadServer.configure ->
 	# Redirect Middleware
 	docpadServer.use (req,res,next) ->
+		console.log req.headers.host
 		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
 			res.redirect 'http://balupton.com'+req.url, 301
+			res.end()
 		else
 			next()
 
@@ -49,6 +51,7 @@ docpadServer.configure ->
 		requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
 		console.log 'not found:', requestInfo
 		res.send(404) # Not Found
+		res.end()
 
 
 # -------------------------------------
