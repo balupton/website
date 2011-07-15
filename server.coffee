@@ -49,7 +49,7 @@ docpadServer.configure ->
 	docpadServer.use (req,res,next) ->
 		requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
 		console.log 'not found:', requestInfo
-		res.send(404) # Not Found
+		res.send(404)
 		res.end()
 
 
@@ -69,32 +69,28 @@ masterServer.use express.vhost 'lupton.*', docpadServer
 # -------------------------------------
 # Redirects
 
-# Project Demos
-docpadServer.get /^\/sandbox\/([^\/]+)(.*)/, (req, res) ->
+# Demos
+docpadServer.get /^\/sandbox(?:\/([^\/]+).*)?$/, (req, res) ->
 	project = req.params[0]
 	res.redirect "http://balupton.github.com/#{project}/demo/", 301
-	# ^ https breaks it
+	# ^ github pages don't have https
 
-# Project Homes
-docpadServer.get /^\/projects?\/([^\/]+)?.*/, (req, res) ->
-	project = req.params[0]
-	res.redirect "https://github.com/balupton/#{project}", 301
-
-# Github
-docpadServer.get /^\/(?:github|gh|g)\/?(.*)/, (req, res) ->
-	project = req.params[0]
+# Projects
+docpadServer.get /^\/(?:g|gh|github|projects)(?:\/(.*))?$/, (req, res) ->
+	project = req.params[0] or ''
+	console.log req.params
 	res.redirect "https://github.com/balupton/#{project}", 301
 
 # Twitter
-docpadServer.get /^\/(?:t|twitter|tweet)\/?.*/, (req, res) ->
+docpadServer.get /^\/(?:t|twitter|tweet)\/?.*$/, (req, res) ->
 	res.redirect "https://twitter.com/balupton", 301
 
 # Sharing Feed
-docpadServer.get /^\/feeds?\/shar(e|ing)?.*/, (req, res) ->
+docpadServer.get /^\/feeds?\/shar(e|ing)?.*$/, (req, res) ->
 	res.redirect "http://feeds.feedburner.com/balupton/shared", 301
 
 # Feeds
-docpadServer.get /^\/feeds?\/?.*/, (req, res) ->
+docpadServer.get /^\/feeds?\/?.*$/, (req, res) ->
 	res.redirect "http://feeds.feedburner.com/balupton", 301
 
 # Security Report
