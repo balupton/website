@@ -7,6 +7,7 @@ oneDay = 86400000
 expiresOffset = oneDay
 debug = true
 
+
 # -------------------------------------
 # Server
 
@@ -24,28 +25,44 @@ docpadInstance = docpad.createInstance {
 	server: docpadServer
 }
 
-# Generate Website
-# docpadInstance.generateAction -> false
 
-# Serve Website
-docpadInstance.serverAction (err) ->
-	throw err  if err
+# -------------------------------------
+# Middlewares
 
-# Configuration
-masterServer.configure ->
-	# Middleware
-	masterServer.use express.methodOverride()
-	masterServer.use express.bodyParser()
-	masterServer.use masterServer.router
+# Configure
+docpadServer.configure ->
+	# Redirect Middleware
+	docpadServer.use (req,res,next) ->
+		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
+			res.redirect 'http://balupton.com'+req.url, 301
+		else
+			next()
 
-# Start Server Listening
-masterServer.listen masterPort
-console.log 'Express server listening on port %d', masterServer.address().port
+	# Static Middleware
+	docpadInstance.serverAction (err) -> throw err  if err
+
+	# Router Middleware
+	docpadServer.use docpadServer.router
+
+	# 404 Middleware
+	docpadServer.use (req,res,next) ->
+		requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
+		console.log 'not found:', requestInfo
+		res.send(404) # Not Found
+
+
+# -------------------------------------
+# Start Server
+
+# Start Server
+docpadServer.listen masterPort
+console.log 'Express server listening on port %d', docpadServer.address().port
 
 # DNS Servers
 masterServer.use express.vhost 'balupton.*', docpadServer
 masterServer.use express.vhost 'balupton.*.*', docpadServer
 masterServer.use express.vhost 'lupton.*', docpadServer
+
 
 # -------------------------------------
 # Redirects
@@ -82,17 +99,6 @@ docpadServer.get /^\/feeds?\/?.*/, (req, res) ->
 docpadServer.get '/documents/webct_exploits.txt', (req, res) ->
 	res.redirect 'http://seclists.org/fulldisclosure/2008/Mar/51', 301
 
-# WWW Redirect
-docpadServer.get '*', (req, res, next) ->
-	# Prepare
-	requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
-
-	# Handle
-	if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
-		res.redirect 'http://balupton.com'+req.url, 301
-	else
-		console.log 'not found:', requestInfo
-		res.send(404) # Not Found
 
 # -------------------------------------
 # Todo
