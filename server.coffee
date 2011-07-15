@@ -28,10 +28,11 @@ docpadInstance = docpad.createInstance {
 # docpadInstance.generateAction -> false
 
 # Serve Website
-docpadInstance.serverAction -> false
+docpadInstance.serverAction (err) ->
+	throw err  if err
 
 # Configuration
-masterServer.configure =>
+masterServer.configure ->
 	# Middleware
 	masterServer.use express.methodOverride()
 	masterServer.use express.bodyParser()
@@ -76,6 +77,10 @@ docpadServer.get /^\/feeds?\/shar(e|ing)?.*/, (req, res) ->
 # Feeds
 docpadServer.get /^\/feeds?\/?.*/, (req, res) ->
 	res.redirect "http://feeds.feedburner.com/balupton", 301
+
+# Security Report
+docpadServer.get '/documents/webct_exploits.txt', (req, res) ->
+	res.redirect 'http://seclists.org/fulldisclosure/2008/Mar/51', 301
 
 # WWW Redirect
 docpadServer.get '*', (req, res, next) ->
