@@ -50,7 +50,6 @@ docpadServer.configure ->
 		requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
 		console.log 'not found:', requestInfo
 		res.send(404)
-		res.end()
 
 
 # -------------------------------------
