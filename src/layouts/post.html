@@ -28,14 +28,14 @@ layout: default
 			window.disqus_shortname = 'balupton';
 			window.disqus_developer = document.location.href.indexOf('localhost') ? 1 : 0;
 			window.disqus_identifier = "<%=@Document.slug%>";
-			window.disqus_url = "http://balupton.com/<%=@Document.url%>";
+			window.disqus_url = "http://balupton.com<%=@Document.url%>";
 			// Reset
 			if ( typeof window.DISQUS !== 'undefined' ) {
 				window.DISQUS.reset({
 					reload: true,
 					config: function () {
 						this.page.identifier = "<%=@Document.slug%>";
-						this.page.url = "http://balupton.com/<%=@Document.url%>";
+						this.page.url = "http://balupton.com<%=@Document.url%>";
 					}
 				});
 			}
