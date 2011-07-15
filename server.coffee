@@ -33,7 +33,6 @@ docpadInstance = docpad.createInstance {
 docpadServer.configure ->
 	# Redirect Middleware
 	docpadServer.use (req,res,next) ->
-		console.log req.headers.host
 		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
 			res.redirect 'http://balupton.com'+req.url, 301
 			res.end()
@@ -82,7 +81,7 @@ docpadServer.get /^\/projects?\/([^\/]+)?.*/, (req, res) ->
 	res.redirect "https://github.com/balupton/#{project}", 301
 
 # Github
-docpadServer.get /^\/(?:g|gh|github)\/?(.*)/, (req, res) ->
+docpadServer.get /^\/(?:github|gh|g)\/?(.*)/, (req, res) ->
 	project = req.params[0]
 	res.redirect "https://github.com/balupton/#{project}", 301
 
