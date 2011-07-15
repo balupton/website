@@ -92,9 +92,3 @@ docpadServer.get /^\/feeds?\/?.*$/, (req, res) ->
 # Security Report
 docpadServer.get '/documents/webct_exploits.txt', (req, res) ->
 	res.redirect 'http://seclists.org/fulldisclosure/2008/Mar/51', 301
-
-
-# -------------------------------------
-# Todo
-
-# - Make the official balupton website by making it balupton.com instead of balupton.no.de
