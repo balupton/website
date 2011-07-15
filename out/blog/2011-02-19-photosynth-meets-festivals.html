@@ -125,8 +125,9 @@
 	<script>
 		$(function(){
 			// Prepare
+			window.disqus_shortname = 'balupton';
+			window.disqus_developer = document.location.href.indexOf('localhost') ? 1 : 0;
 			window.disqus_identifier = "blog-2011-02-19-photosynth-meets-festivals";
-			window.disqus_developer = document.location.href.indexOf('localhost');
 			window.disqus_url = "http://balupton.com//blog/2011-02-19-photosynth-meets-festivals.html";
 			// Reset
 			if ( typeof window.DISQUS !== 'undefined' ) {

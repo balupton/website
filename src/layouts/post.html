@@ -25,8 +25,9 @@ layout: default
 	<script>
 		$(function(){
 			// Prepare
+			window.disqus_shortname = 'balupton';
+			window.disqus_developer = document.location.href.indexOf('localhost') ? 1 : 0;
 			window.disqus_identifier = "<%=@Document.slug%>";
-			window.disqus_developer = document.location.href.indexOf('localhost');
 			window.disqus_url = "http://balupton.com/<%=@Document.url%>";
 			// Reset
 			if ( typeof window.DISQUS !== 'undefined' ) {
