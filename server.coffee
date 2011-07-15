@@ -47,8 +47,6 @@ docpadServer.configure ->
 
 	# 404 Middleware
 	docpadServer.use (req,res,next) ->
-		requestInfo = {url: req.headers.host+req.url, ip: req.connection.remoteAddress, status: res.statusCode}
-		console.log 'not found:', requestInfo
 		res.send(404)
 
 
@@ -77,7 +75,6 @@ docpadServer.get /^\/sandbox(?:\/([^\/]+).*)?$/, (req, res) ->
 # Projects
 docpadServer.get /^\/(?:g|gh|github|projects)(?:\/(.*))?$/, (req, res) ->
 	project = req.params[0] or ''
-	console.log req.params
 	res.redirect "https://github.com/balupton/#{project}", 301
 
 # Twitter
