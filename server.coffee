@@ -53,7 +53,7 @@ docpadServer.configure ->
 
 # Start Server
 docpadServer.listen docpadPort
-console.log 'Express server listening on port %d', docpadServer.address().port
+console.log 'Balupton server listening on port %d', docpadServer.address().port
 
 
 # -------------------------------------
