@@ -12,15 +12,14 @@ debug = true
 # Server
 
 # Configuration
-masterPort = process.env.PORT || 10113
+docpadPort = process.env.BALUPTONPORT || process.env.PORT || 10113
 
 # Create Servers
 docpadServer = express.createServer()
-masterServer = docpadServer
 
 # Setup DocPad
 docpadInstance = docpad.createInstance {
-	port: masterPort
+	port: docpadPort
 	maxAge: expiresOffset
 	server: docpadServer
 }
@@ -53,13 +52,8 @@ docpadServer.configure ->
 # Start Server
 
 # Start Server
-docpadServer.listen masterPort
+docpadServer.listen docpadPort
 console.log 'Express server listening on port %d', docpadServer.address().port
-
-# DNS Servers
-masterServer.use express.vhost 'balupton.*', docpadServer
-masterServer.use express.vhost 'balupton.*.*', docpadServer
-masterServer.use express.vhost 'lupton.*', docpadServer
 
 
 # -------------------------------------
@@ -91,3 +85,8 @@ docpadServer.get /^\/feeds?\/?.*$/, (req, res) ->
 # Security Report
 docpadServer.get '/documents/webct_exploits.txt', (req, res) ->
 	res.redirect 'http://seclists.org/fulldisclosure/2008/Mar/51', 301
+
+# -------------------------------------
+# Exports
+
+module.export = docpadServer
