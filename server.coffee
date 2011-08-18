@@ -89,4 +89,4 @@ docpadServer.get '/documents/webct_exploits.txt', (req, res) ->
 # -------------------------------------
 # Exports
 
-module.export = docpadServer
+module.exports = docpadServer
