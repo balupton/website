@@ -4,7 +4,7 @@ T[The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad
 
 - on your local machine
 - with live updating
-- editable with your favourite text editor
+- editable inside favourite code editor
 - supports any markup you want
 - any templating engine
 - and actually creates a usable, implementable website for you
