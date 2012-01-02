@@ -17,6 +17,8 @@ T[The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad
 
 1. [Open http://localhost:9778/](http://localhost:9778/)
 
+1. Getting hacking away by editing the files in the `./src` directory :-)
+
 
 ## License
 
