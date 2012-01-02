@@ -7,7 +7,7 @@ T[The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad
 - editable with your favourite text editor
 - supports any markup you want
 - any templating engine
-- and actually creates a usable, implementable website for you.
+- and actually creates a usable, implementable website for you
 
 It's essentially everything you could ever want JSFiddle to be...
 
