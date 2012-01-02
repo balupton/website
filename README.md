@@ -26,7 +26,7 @@ It's essentially everything you could ever want JSFiddle to be...
 
 1. [Open http://localhost:9778/](http://localhost:9778/)
 
-1. Getting hacking away by editing the files your new `src` directory :-)
+1. Getting hacking away by editing the files inside your new `src` directory :-)
 
 
 ## License
