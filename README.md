@@ -1,6 +1,6 @@
 # [The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad](https://github.com/bevry/docpad). Your ultimate web dev playground.
 
-T[The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad](https://github.com/bevry/docpad) is essentially [JSFiddle](http://jsfiddle.net/), but:
+T[The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad](https://github.com/bevry/docpad) is essentially [JSFiddle](http://jsfiddle.net/), but
 
 - on your local machine
 - with live updating
