@@ -1,8 +1,8 @@
 {
 	"name": "canvas.docpad",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "The Blank Canvas Skeleton for DocPad. Your web development playground.",
-	"homepage": "https://github.com/balupton/canvas.docpad",
+	"homepage": "https://github.com/bevry/canvas.docpad",
 	"keywords": [
 		"playground",
 		"website",
@@ -10,9 +10,9 @@
 		"theme"
 	],
 	"author": {
-		"name": "Benjamin Lupton",
-		"email": "b@lupton.cc",
-		"url": "http://balupton.com"
+		"name": "Bevry Pty Ltd",
+		"email": "us@bevry.me",
+		"url": "http://bevry.me"
 	},
 	"maintainers": [
 		{
@@ -33,27 +33,22 @@
 	},
 	"licenses": [
 		{
-			"type": "MIT",
-			"url": "http://creativecommons.org/licenses/MIT/"
+			"type": "CC0",
+			"url": "http://creativecommons.org/publicdomain/zero/1.0/"
 		}
 	],
 	"repository" : {
 		"type" : "git",
-		"url" : "http://github.com/balupton/canvas.docpad.git"
+		"url" : "http://github.com/bevry/canvas.docpad.git"
 	},
 	"dependencies": {
 		"coffee-script": "1.1.x",
 		"express": "2.5.x",
-		"docpad": "2.4.0"
+		"docpad": "2.6.x"
 	},
 	"engines" : {
 		"node": ">=0.4.0"
 	},
 	"docpad": {
-		"enabledPlugins": {
-			"admin": true,
-			"rest": true,
-			"autoupdate": true
-		}
 	}
 }

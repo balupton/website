@@ -1,2 +1,5 @@
+(function() {
 
   $(function() {});
+
+}).call(this);

@@ -1,14 +1,16 @@
-# [The Blank Canvas Skeleton](https://github.com/balupton/canvas.docpad) for [DocPad](https://github.com/balupton/docpad). Your web development playground.
+# [The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad](https://github.com/bevry/docpad). Your web development playground.
+
+The Blank Canvas Skeleton is essentially [JSFiddle](http://jsfiddle.net/) however on your local machine, live updates, supports any markup you want, templating engines, and actually creates a usable, implementable website for you. It's essentially everything you could ever want JSFiddle to be...
 
 
 ## Play
 
-1. [Install DocPad](https://github.com/balupton/docpad) 
+1. [Install DocPad](https://github.com/bevry/docpad) 
 
 1. Run
 
 	``` bash
-	git clone git://github.com/balupton/canvas.docpad.git
+	git clone git://github.com/bevry/canvas.docpad.git
 	cd canvas.docpad
 	docpad run
 	```
@@ -18,4 +20,4 @@
 
 ## License
 
-The Blank Canvas Skeleton for DocPad is developed by [Benjamin Lupton](http://balupton.com) and licensed under the [CC0 License](http://creativecommons.org/publicdomain/zero/1.0/)
+[The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad](https://github.com/bevry/docpad) is created by [Benjamin Lupton](http://balupton.com) and licensed under the [Creative Commons Zero License](http://creativecommons.org/publicdomain/zero/1.0/)

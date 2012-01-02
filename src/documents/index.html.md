@@ -3,7 +3,7 @@ title: 'Your Blank Canvas!'
 layout: 'default'
 ---
 
-# Welcome to your blank canvas for [DocPad](https://github.com/balupton/docpad)
+# Welcome to your blank canvas for [DocPad](https://github.com/bevry/docpad)
 
 To best use this, follow these steps
 
@@ -15,6 +15,6 @@ To best use this, follow these steps
 
 This is insanely awesome as we also have docpad's autoupdate plugin enabled. So whenever you make a change, your web browser will notice and refresh :-) How awesome is that!
 
-Later on there will be a nice video here to show you how to utilise all the awesomeness you now have in your possession, for now just refer to the [DocPad FAQ](https://github.com/balupton/docpad/wiki/FAQ)
+Later on there will be a nice video here to show you how to utilise all the awesomeness you now have in your possession, for now just refer to the [DocPad FAQ](https://github.com/bevry/docpad/wiki/FAQ)
 
 Awesome.
