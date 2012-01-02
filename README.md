@@ -1,4 +1,6 @@
-# [The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad](https://github.com/bevry/docpad)<br/>Your ultimate web development playground
+# [The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad](https://github.com/bevry/docpad)
+
+## Your ultimate web development playground
 
 The Blank Canvas Skeleton is essentially [JSFiddle](http://jsfiddle.net/) however on your local machine, live updates, editable with your favourite text editor, supports any markup you want, any templating engine, and actually creates a usable, implementable website for you. It's essentially everything you could ever want JSFiddle to be...
 
