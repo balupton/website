@@ -50,5 +50,20 @@
 		"node": ">=0.4.0"
 	},
 	"docpad": {
+		"plugins": {
+			"feedr": {
+				"feeds": {
+					"twitter": {
+						"url": "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
+					},
+					"vimeo": {
+						"url": "http://vimeo.com/api/v2/balupton/videos.json"
+					},
+					"flickr": {
+						"url": "http://api.flickr.com/services/feeds/photos_public.gne?id=35776898@N00&lang=en-us&format=json"
+					}
+				}
+			}
+		}
 	}
 }

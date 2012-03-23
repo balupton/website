@@ -11,5 +11,194 @@
 
 
 // ====================================
+// Configuration
+
+// Colors
+colorAccent = #FF8A3B
+colorLink = hsl(191, 100%, 40%);
+colorLinkHover = #00718A
+colorHeader = #445566
+colorSubHeader = #9D9FA5
+colorContent = #797F84
+colorActive = colorAccent
+colorInActive = #CCCCCC
+
+// Weights
+weightBoldest = 700
+weightBold = 600
+weightNormal = 500
+weightLight = 300
+weightLightest = 100
+
+
+// ====================================
 // Styles
 
+// Everything
+*
+	// Make paddings be included within the width
+	box-sizing: border-box
+
+// Content
+body
+	font-family: "Segoe WP"
+	color: colorContent
+	font-size: 16px
+	font-weight: weightNormal
+	position: relative
+	padding: 0 2em
+	min-height: 2000px
+
+// Paragraphs
+p
+	margin: 0 0 1em
+
+// Accent
+em
+	color: colorAccent
+	font-style: normal
+strong
+	color: colorAccent
+	font-style: weightBold
+
+// Links
+a,a:link,a:visited
+	cursor: pointer
+	color: colorLink
+	text-decoration: none
+a:hover
+	cursor: pointer
+	color: colorLinkHover !important
+	text-decoration: underline
+
+// Heading
+header.heading
+	h1,h2
+		font-weight: weightLight
+	h1
+		color: colorHeader
+		font-size: 36px
+	h2
+		color: colorSubHeader
+		font-size: 18px
+
+// Pages
+nav.pages
+	font-size: 56px
+	ul
+		padding: 0
+	li
+		display: inline
+		margin-right: 0.75em
+	li a
+		font-weight: weightLight
+		color: colorInActive
+	li.active a
+		font-weight: weightLight
+		color: colorActive
+
+// Footing
+footer.footing
+	margin-top: 3em
+	opacity: 0.5
+	background: white
+	p
+		margin: 0
+	p.about
+		font-size: 16px
+	p.copyright
+		font-size: 12px
+
+// Mainbar
+header.heading,
+nav.pages,
+footer.footing,
+article.content
+	width: 70%
+
+// Sidebar
+aside.sidebar
+	width: 22%
+	float: right
+	ul, ul li
+		list-style: none
+		margin: 0
+		padding: 0
+
+	section
+		font-size: 14px
+		header
+			position: relative
+			h1
+				font-size: 56px
+				font-weight: weightLightest
+				text-transform: lowercase
+				margin: 0
+				padding: 0
+			.icon
+				position: absolute
+				bottom: 12px
+				right: 0
+		a,a:link,a:visited
+			color: #CCC
+		li
+			margin: 1em 0
+
+	section.twitter
+		h1
+			color: #248DCD
+
+	section.facebook
+		h1
+			color: #4966A1
+
+	section.vimeo
+		h1
+			color: #27A6D1
+		div.scroller
+			line-height: 0
+			height: 180px
+			position: relative
+			overflow: hidden
+			ul.container
+				display: block
+				height: 90px
+				width: 20000px
+				li
+					display: inline
+					img
+						height: 90px
+
+	section.flickr
+		div.scroller
+			line-height: 0
+			height: 180px
+			position: relative
+			overflow: auto
+			li
+				display: inline
+				img
+					width: 50%
+
+// Content
+article.content
+	h2
+		margin: 4em 0 1em
+		color: colorAccent
+		font-size: 18px
+		font-weight: weightBoldest
+
+	h3
+		margin: 2em 0 0
+		color: colorAccent
+		font-size: 16px
+		font-weight: weightBold
+		a
+			font-weight: weightNormal
+
+	article >
+		h2:first-child
+			margin: 2em 0 1em
+	section:first-of-type >
+		h3
+			margin: 1em 0 0
