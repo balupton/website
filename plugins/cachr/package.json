@@ -1,17 +1,13 @@
 {
-	"name": "docpad-feedr",
+	"name": "docpad-cachr",
 	"version": "0.1.0",
-	"description": "Adds support for reading feeds to DocPad",
+	"description": "Caches remote resources locally",
 	"homepage": "https://github.com/bevry/docpad",
 	"keywords": [
 		"docpad",
 		"plugin",
-		"feeds",
-		"rss",
-		"xml",
-		"atom",
-		"rdf",
-		"json"
+		"caching",
+		"cache"
 	],
 	"author": {
 		"name": "Benjamin Lupton",
@@ -47,9 +43,7 @@
 	},
 	"dependencies": {
 		"request": "2.9.x",
-		"bal-util": "1.3.x",
-		"underscore": "1.3.x",
-		"xml2js": "0.1.x"
+		"bal-util": "1.3.x"
 	},
 	"engines" : {
 		"node": ">=0.4.0"
@@ -60,5 +54,5 @@
 	"directories": {
 		"lib": "."
 	},
-	"main": "./feedr.plugin.coffee"
+	"main": "./cachr.plugin.coffee"
 }

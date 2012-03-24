@@ -19,7 +19,20 @@ for img in images
 		else
 			@parentNode.removeChild(@)
 
+# Prevent Scroll Bubbling
+# When the item has finished scrolling, prevent it the scroll from bubbling to parent elements
+$.fn.preventScrollBubbling = ->
+	$(@).bind 'mousewheel', (event, delta, deltaX, deltaY) ->
+		@scrollTop -= (deltaY*20)
+		event.preventDefault()
 
 # jQuery's domReady
 $ ->
-	# Do something once the DOM is ready
+	# Prevent scrolling on our sidebar scrollers
+	$('.scroller').preventScrollBubbling()
+
+# Add black and white hover effect to images
+$(window).load ->
+	$('.sidebar ul img').greyScale({
+		fadeTime: 200
+	})

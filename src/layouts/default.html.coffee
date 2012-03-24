@@ -47,6 +47,18 @@ html lang: 'en', ->
 						h1 -> 'Facebook'
 						img '.icon', src: '/images/facebook.gif'
 
+			# Github
+			section '.github', ->
+				header ->
+					a href: 'https://github.com/balupton', title: 'Visit my Github', ->
+						h1 -> 'Github'
+						img '.icon', src: '/images/github.gif'
+				ul ->
+					for entry in @feeds.github.entry
+						li datetime: entry.published, ->
+							a href: entry.link['@'].href, title: "View on Github", ->
+								entry.title['#']
+
 			# Twitter
 			section '.twitter', ->
 				header ->
@@ -69,13 +81,6 @@ html lang: 'en', ->
 				div '.scroller', ->
 					ul '.container', ->
 						for video,key in @feeds.vimeo
-							continue  if (key % 2) isnt 0
-							li datetime: video.upload_date, ->
-								a href: video.url, title: video.title, ->
-									img src: @cachr(video.thumbnail_medium), alt: video.title
-					ul '.container', ->
-						for video,key in @feeds.vimeo
-							continue  if (key % 2) isnt 1
 							li datetime: video.upload_date, ->
 								a href: video.url, title: video.title, ->
 									img src: @cachr(video.thumbnail_medium), alt: video.title
@@ -136,4 +141,5 @@ html lang: 'en', ->
 		script src: '/vendor/modernizr-2.5.3.js'
 		script src: '/vendor/underscore-1.3.1.js'
 		script src: '/vendor/backbone-0.9.1.js'
+		script src: '/vendor/jquery.greyscale-0.2.js'
 		script src: '/scripts/script.js'

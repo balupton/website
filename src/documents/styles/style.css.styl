@@ -127,6 +127,7 @@ aside.sidebar
 
 	section
 		font-size: 14px
+		margin-bottom: 2em
 		header
 			position: relative
 			h1
@@ -139,10 +140,18 @@ aside.sidebar
 				position: absolute
 				bottom: 12px
 				right: 0
-		a,a:link,a:visited
-			color: #CCC
+		&,a,a:link,a:visited
+			color: colorContent
 		li
 			margin: 1em 0
+		ul
+			transition: opacity 1s
+			background: white
+			opacity: 0.3
+
+	&:hover section
+		ul
+			opacity: 1
 
 	section.twitter
 		h1
@@ -155,20 +164,12 @@ aside.sidebar
 	section.vimeo
 		h1
 			color: #27A6D1
-		div.scroller
-			line-height: 0
-			height: 180px
-			position: relative
-			overflow: hidden
-			ul.container
-				display: block
-				height: 90px
-				width: 20000px
-				li
-					display: inline
-					img
-						height: 90px
 
+	section.github
+		h1
+			color: black
+
+	section.vimeo,
 	section.flickr
 		div.scroller
 			line-height: 0
@@ -176,9 +177,11 @@ aside.sidebar
 			position: relative
 			overflow: auto
 			li
+				margin: 0
 				display: inline
-				img
-					width: 50%
+			img
+				width: 48%
+
 
 // Content
 article.content

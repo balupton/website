@@ -44,6 +44,16 @@ module.exports = (BasePlugin) ->
 			# Prepare
 			feedData.path = "/tmp/docpad-feedr-#{feedName}"
 
+			# Write the feed
+			writeFeed = (body) ->
+				# Store the parsed data in the cache somewhere
+				fs.writeFile feedData.path, JSON.stringify(body), (err) ->
+					# Check
+					return next?(err)  if err
+
+					# Return the parsed data
+					return next?(null,body)
+
 			# Get the file via reading the cached copy
 			viaCache = ->
 				# Check the the file exists
@@ -73,19 +83,22 @@ module.exports = (BasePlugin) ->
 
 					# Parse the requested data
 					if /^[\[\{]/.test(body)
-						body = eval(body)
+						# json
+						result = eval(body)
+						writeFeed(result)
+					else if /^</.test(body)
+						# xml
+						fs = require("fs")
+						xml2js = require("xml2js")
+						parser = new xml2js.Parser()
+						parser.on 'end', (result) ->
+							writeFeed(result)
+						parser.parseString(body)
 					else
 						# jsonp
 						body = body.replace(/^[a-z0-9]+/gi, '')
-						eval('body = '+body)
-
-					# Store the parsed data in the cache somewhere
-					fs.writeFile feedData.path, JSON.stringify(body), (err) ->
-						# Check
-						return next?(err)  if err
-
-						# REturn the parsed data
-						return next?(null,body)
+						eval('result = '+body)
+						writeFeed(result)
 
 			# Check if we should get the data from the cache or do a new request
 			balUtil.isPathOlderThan feedData.path, 1000*60*5, (err,older) ->

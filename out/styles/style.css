@@ -21,22 +21,21 @@ footer.footing p.copyright{font-size:12px}
 header.heading,nav.pages,footer.footing,article.content{width:70%}
 aside.sidebar{width:22%;float:right;}
 aside.sidebar ul,aside.sidebar ul li{list-style:none;margin:0;padding:0}
-aside.sidebar section{font-size:14px;}
+aside.sidebar section{font-size:14px;margin-bottom:2em;}
 aside.sidebar section header{position:relative;}
 aside.sidebar section header h1{font-size:56px;font-weight:100;text-transform:lowercase;margin:0;padding:0}
 aside.sidebar section header .icon{position:absolute;bottom:12px;right:0}
-aside.sidebar section a,aside.sidebar section a:link,aside.sidebar section a:visited{color:#ccc}
+aside.sidebar section,aside.sidebar section a,aside.sidebar section a:link,aside.sidebar section a:visited{color:#797f84}
 aside.sidebar section li{margin:1em 0}
+aside.sidebar section ul{-webkit-transition:opacity 1s;-moz-transition:opacity 1s;transition:opacity 1s;background:#fff;opacity:.3;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=30)}
+aside.sidebar:hover section ul{opacity:1;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100)}
 aside.sidebar section.twitter h1{color:#248dcd}
 aside.sidebar section.facebook h1{color:#4966a1}
 aside.sidebar section.vimeo h1{color:#27a6d1}
-aside.sidebar section.vimeo div.scroller{line-height:0;height:180px;position:relative;overflow:hidden;}
-aside.sidebar section.vimeo div.scroller ul.container{display:block;height:90px;width:20000px;}
-aside.sidebar section.vimeo div.scroller ul.container li{display:inline;}
-aside.sidebar section.vimeo div.scroller ul.container li img{height:90px}
-aside.sidebar section.flickr div.scroller{line-height:0;height:180px;position:relative;overflow:auto;}
-aside.sidebar section.flickr div.scroller li{display:inline;}
-aside.sidebar section.flickr div.scroller li img{width:50%}
+aside.sidebar section.github h1{color:#000}
+aside.sidebar section.vimeo div.scroller,aside.sidebar section.flickr div.scroller{line-height:0;height:180px;position:relative;overflow:auto;}
+aside.sidebar section.vimeo div.scroller li,aside.sidebar section.flickr div.scroller li{margin:0;display:inline}
+aside.sidebar section.vimeo div.scroller img,aside.sidebar section.flickr div.scroller img{width:48%}
 article.content h2{margin:4em 0 1em;color:#ff8a3b;font-size:18px;font-weight:700}
 article.content h3{margin:2em 0 0;color:#ff8a3b;font-size:16px;font-weight:600;}
 article.content h3 a{font-weight:500}

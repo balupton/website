@@ -17,6 +17,21 @@
     };
   }
 
-  $(function() {});
+  $.fn.preventScrollBubbling = function() {
+    return $(this).bind('mousewheel', function(event, delta, deltaX, deltaY) {
+      this.scrollTop -= deltaY * 20;
+      return event.preventDefault();
+    });
+  };
+
+  $(function() {
+    return $('.scroller').preventScrollBubbling();
+  });
+
+  $(window).load(function() {
+    return $('.sidebar ul img').greyScale({
+      fadeTime: 200
+    });
+  });
 
 }).call(this);
