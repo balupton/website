@@ -22,6 +22,7 @@ colorSubHeader = #9D9FA5
 colorContent = #797F84
 colorActive = colorAccent
 colorInActive = #CCCCCC
+colorQuote = colorSubHeader
 
 // Weights
 weightBoldest = 700
@@ -38,6 +39,8 @@ weightLightest = 100
 *
 	// Make paddings be included within the width
 	box-sizing: border-box
+.fancybox-wrap, #fancybox-overlay
+	box-sizing: content-box
 
 // Content
 body
@@ -56,10 +59,15 @@ p
 // Accent
 em
 	color: colorAccent
+	font-weight: weightNormal
 	font-style: normal
 strong
 	color: colorAccent
-	font-style: weightBold
+	font-weight: weightBold
+blockquote
+	color: colorQuote
+	font-weight: weightNormal
+	font-style: italic
 
 // Links
 a,a:link,a:visited
@@ -113,7 +121,7 @@ footer.footing
 header.heading,
 nav.pages,
 footer.footing,
-article.content
+article.page
 	width: 70%
 
 // Sidebar
@@ -142,40 +150,52 @@ aside.sidebar
 				right: 0
 		&,a,a:link,a:visited
 			color: colorContent
+		ul
+			height: 360px //180px
+			position: relative
+			overflow: auto
 		li
 			margin: 1em 0
+
+	// Links Hover Effect
+	section.links
 		ul
 			transition: opacity 1s
 			background: white
 			opacity: 0.3
-
-	&:hover section
+			li
+				width: 96%
+	&:hover section.links
 		ul
 			opacity: 1
 
-	section.twitter
-		h1
-			color: #248DCD
+	// Images Hover Effect
+	section.images
+		ul img
+			transition: opacity 1s
+			opacity: 0.3
+	&:hover section.images
+		ul img
+			opacity: 0.5
+			&:hover
+				opacity: 1 !important
 
-	section.facebook
-		h1
-			color: #4966A1
+	// Section Colors
+	section.twitter h1
+		color: #248DCD
+	section.facebook h1
+		color: #4966A1
+	section.vimeo h1
+		color: #27A6D1
+	section.flickr h1
+		color: #EE3F84
+	section.github h1
+		color: black
 
-	section.vimeo
-		h1
-			color: #27A6D1
-
-	section.github
-		h1
-			color: black
-
-	section.vimeo,
-	section.flickr
-		div.scroller
+	// Images Sizing
+	section.images
+		ul
 			line-height: 0
-			height: 180px
-			position: relative
-			overflow: auto
 			li
 				margin: 0
 				display: inline
@@ -184,24 +204,45 @@ aside.sidebar
 
 
 // Content
-article.content
+article.page
+	h1
+		margin: 4em 0 1em
+		color: colorAccent
+		font-size: 36px
+		font-weight: weightBoldest
+
 	h2
 		margin: 4em 0 1em
 		color: colorAccent
-		font-size: 18px
+		font-size: 24px
 		font-weight: weightBoldest
 
 	h3
 		margin: 2em 0 0
 		color: colorAccent
-		font-size: 16px
+		font-size: 18px
 		font-weight: weightBold
 		a
 			font-weight: weightNormal
 
-	article >
+	.date:before
+		content: ' ⎋' // ✍
+	.watchers:before
+		content: ' ☆'
+
+	.page-header, .page-content >
+		h1:first-child,
 		h2:first-child
 			margin: 2em 0 1em
-	section:first-of-type >
+			small
+				font-weight: weightLightest
+
+	.linklist, section:first-of-type
+		h2
+			margin: 1em 0 1em
 		h3
 			margin: 1em 0 0
+
+	.linklist
+		p.description
+			margin-left: 1em

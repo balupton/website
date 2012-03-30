@@ -25,12 +25,27 @@
   };
 
   $(function() {
-    return $('.scroller').preventScrollBubbling();
-  });
-
-  $(window).load(function() {
-    return $('.sidebar ul img').greyScale({
-      fadeTime: 200
+    return $('section.vimeo a').click(function(event) {
+      var $a, href, video, videoId;
+      if (event.which === 2 || event.metaKey) return true;
+      event.preventDefault();
+      $a = $(this);
+      href = $a.attr('href');
+      videoId = href.replace(/[^0-9]/g, '');
+      video = {
+        id: videoId,
+        title: $a.attr('title'),
+        width: $a.data('width'),
+        height: $a.data('height')
+      };
+      return $.fancybox.open({
+        href: "http://player.vimeo.com/video/" + video.id,
+        title: video.title,
+        width: video.width,
+        height: video.height,
+        padding: 0,
+        type: 'iframe'
+      });
     });
   });
 

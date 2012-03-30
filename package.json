@@ -53,6 +53,12 @@
 		"plugins": {
 			"feedr": {
 				"feeds": {
+					"balupton-projects": {
+						"url": "https://api.github.com/users/balupton/repos"
+					},
+					"bevry-projects": {
+						"url": "https://api.github.com/users/bevry/repos"
+					},
 					"github": {
 						"url": "https://github.com/balupton.atom"
 					},

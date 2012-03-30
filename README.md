@@ -1,34 +1,28 @@
-# [The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad](https://github.com/bevry/docpad). Your ultimate web dev playground.
+# Benjamin Lupton's Website, built with [DocPad](https://github.com/bevry/docpad)
 
-T[The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad](https://github.com/bevry/docpad) is essentially [JSFiddle](http://jsfiddle.net/), but
-
-- on your local machine
-- with live updating
-- editable inside favourite code editor
-- supports any markup you want
-- any templating engine
-- and actually creates a usable, implementable website for you
-
-It's essentially everything you could ever want JSFiddle to be...
+Source code is made public for your benefit, though please continue to respect the appropriate license.
 
 
-## Play
+## Getting Started
 
 1. [Install DocPad](https://github.com/bevry/docpad) 
 
-1. Run
+1. Clone and Run the Server
 
 	``` bash
-	git clone git://github.com/bevry/canvas.docpad.git
-	cd canvas.docpad
-	docpad run
+	git clone git://github.com/balupton/balupton.docpad.git
+	cd balupton.docpad
+	npm install
+	coffee server.coffee
 	```
 
 1. [Open http://localhost:9778/](http://localhost:9778/)
 
-1. Getting hacking away by editing the files inside your new `src` directory :-)
+1. Start hacking away by modifying the `src` directory
 
 
 ## License
 
-[The Blank Canvas Skeleton](https://github.com/bevry/canvas.docpad) for [DocPad](https://github.com/bevry/docpad) is created by [Benjamin Lupton](http://balupton.com) and licensed under the [Creative Commons Zero License](http://creativecommons.org/publicdomain/zero/1.0/)
+This website was created with [Bevry](http://bevry.me "Visit Website")'s [DocPad](https://github.com/bevry/docpad "Visit on GitHub") using the [Metro Theme](https://github.com/bevry/metro.docpad "Visit on GitHub") by [Benjamin Lupton](http://balupton.com "Visit Website")
+
+Unless stated otherwise, all content is licensed under the [Creative Commons Attribution License](http://creativecommons.org/licenses/by/3.0/ "Visit Website") and code licensed under the [MIT License](http://creativecommons.org/licenses/MIT/ "Visit Website"), © [Benjamin Lupton](http://balupton.com "Visit Website")

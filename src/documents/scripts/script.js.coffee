@@ -29,10 +29,26 @@ $.fn.preventScrollBubbling = ->
 # jQuery's domReady
 $ ->
 	# Prevent scrolling on our sidebar scrollers
-	$('.scroller').preventScrollBubbling()
+	#$('.scroller').preventScrollBubbling()
+	$('section.vimeo a').click (event) ->
+		# Continue as normal for cmd clicks etc
+		return true  if event.which is 2 or event.metaKey
 
-# Add black and white hover effect to images
-$(window).load ->
-	$('.sidebar ul img').greyScale({
-		fadeTime: 200
-	})
+		# Show the fancybox
+		event.preventDefault()
+		$a = $(@)
+		href = $a.attr('href')
+		videoId = href.replace(/[^0-9]/g,'')
+		video =
+			id: videoId
+			title: $a.attr('title')
+			width: $a.data('width')
+			height: $a.data('height')
+		$.fancybox.open(
+			href: "http://player.vimeo.com/video/#{video.id}"
+			title: video.title
+			width: video.width
+			height: video.height
+			padding: 0
+			type: 'iframe'
+		)

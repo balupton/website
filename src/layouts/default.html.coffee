@@ -16,6 +16,20 @@ links =
 	author: '<a href="http://balupton.com" title="Visit Website">Benjamin Lupton</a>'
 	cclicense: '<a href="http://creativecommons.org/licenses/by/3.0/" title="Visit Website">Creative Commons Attribution License</a>'
 	mitlicense: '<a href="http://creativecommons.org/licenses/MIT/" title="Visit Website">MIT License</a>'
+pages = [
+	url: '/'
+	match: '/index'
+	label: 'home'
+	title: 'Return home'
+,
+	url: '/projects'
+	label: 'projects'
+	title: 'View projects'
+,
+	url: '/blog'
+	label: 'blog'
+	title: 'View articles'
+]
 
 # HTML
 doctype 5
@@ -28,6 +42,30 @@ html lang: 'en', ->
 		meta name: 'viewport', content: 'width=device-width, initial-scale=1'
 		text @blocks.meta.join('')
 
+		# Feed
+		feeds = [
+			href: 'http://feeds.feedburner.com/balupton.atom'
+			title: 'Blog Posts'
+		,
+			href: 'https://github.com/balupton.atom'
+			title: 'GitHub Activity'
+		,
+			href: 'http://vimeo.com/api/v2/balupton/videos.atom'
+			title: 'Vimeo Videos'
+		,
+			href: 'http://api.flickr.com/services/feeds/photos_public.gne?id=35776898@N00&lang=en-us&format=atom'
+			title: 'Flickr Photos'
+		,
+			href: 'https://api.twitter.com/1/statuses/user_timeline.atom?screen_name=balupton&count=20&include_entities=true&include_rts=true'
+			title: 'Tweets'
+		]
+		for feed in feeds
+			link
+				href: feed.href
+				title: feed.title
+				type: (feed.type or 'application/atom+xml')
+				rel: 'alternate'
+
 		# Document
 		title @document.title
 		meta name: 'description', content: @document.description or ''  if @document.description
@@ -37,18 +75,19 @@ html lang: 'en', ->
 		text @blocks.styles.join('')
 		link rel: 'stylesheet', href: '/styles/style.css', media: 'screen, projection'
 		link rel: 'stylesheet', href: '/styles/print.css', media: 'print'
+		link rel: 'stylesheet', href: '/vendor/fancybox-2.0.5/jquery.fancybox.css', media: 'screen, projection'
 	body ->
 		# Sidebar
 		aside '.sidebar', ->
 			# Twitter
-			section '.facebook', ->
+			section '.facebook.links', ->
 				header ->
 					a href: 'https://www.facebook.com/balupton', title: 'Visit my Facebook', ->
 						h1 -> 'Facebook'
 						img '.icon', src: '/images/facebook.gif'
 
 			# Github
-			section '.github', ->
+			section '.github.links', ->
 				header ->
 					a href: 'https://github.com/balupton', title: 'Visit my Github', ->
 						h1 -> 'Github'
@@ -60,7 +99,7 @@ html lang: 'en', ->
 								entry.title['#']
 
 			# Twitter
-			section '.twitter', ->
+			section '.twitter.links', ->
 				header ->
 					a href: 'https://twitter.com/#!/balupton', title: 'Visit my Twitter', ->
 						h1 -> 'Twitter'
@@ -73,34 +112,33 @@ html lang: 'en', ->
 								tweet.text
 
 			# Vimeo
-			section '.vimeo', ->
+			section '.vimeo.images', ->
 				header ->
 					a href: 'https://vimeo.com/balupton', title: 'Visit my Vimeo', ->
 						h1 -> 'Vimeo'
 						img '.icon', src: '/images/vimeo.gif'
-				div '.scroller', ->
-					ul '.container', ->
-						for video,key in @feeds.vimeo
-							li datetime: video.upload_date, ->
-								a href: video.url, title: video.title, ->
-									img src: @cachr(video.thumbnail_medium), alt: video.title
+				ul ->
+					for video,key in @feeds.vimeo
+						li datetime: video.upload_date, ->
+							a href: video.url, title: video.title, 'data-height': video.height, 'data-width': video.width, ->
+								img src: @cachr(video.thumbnail_medium), alt: video.title
 
 			# Flickr
-			section '.flickr', ->
+			section '.flickr.images', ->
 				header ->
 					a href: 'http://www.flickr.com/people/balupton/', title: 'Visit my Flickr', ->
 						h1 -> 'Flickr'
 						img '.icon', src: '/images/flickr.gif'
-				div '.scroller', ->
-					ul '.container', ->
-						for image in @feeds.flickr.items
-							li datetime: image.date_taken, ->
-								a href: image.link, title: image.title, ->
-									img src: @cachr(image.media.m), alt: image.title
+				ul ->
+					for image in @feeds.flickr.items
+						li datetime: image.date_taken, ->
+							a href: image.link, title: image.title, ->
+								img src: @cachr(image.media.m), alt: image.title
 
 		# Heading
 		header '.heading', ->
-			h1 -> 'Benjamin Lupton'
+			a href:'/', title:'Return home', ->
+				h1 -> 'Benjamin Lupton'
 			h2 ->
 				text """
 					Founder of #{links.bevry}, #{links.historyjs} &amp; #{links.docpad}.<br/>
@@ -111,25 +149,24 @@ html lang: 'en', ->
 		# Pages
 		nav '.pages', ->
 			ul ->
-				li '.active', ->
-					a ->
-						'home'
-				li ->
-					a ->
-						'projects'
-				li ->
-					a ->
-						'blog'
+				for page in pages
+					match = page.match or page.url
+					cssname = if @document.url.indexOf(match) is 0 then 'active' else 'inactive'
+					li 'class':cssname, ->
+						a href:page.url, ->
+							page.label
 
-		# Content
-		article '.content', ->
-			# Document
-			text @content
+		# Document
+		article '.page',
+			'typeof': 'sioc:page'
+			about: @document.url
+			datetime: @document.date.toISODateString()
+			-> @content
 
 		# Footing
 		footer '.footing', ->
 			p '.about', -> """
-				Website created with #{links.bevry}’s #{links.docpad} using the #{links.metrouitheme} by #{links.balupton}
+				This website was created with #{links.bevry}’s #{links.docpad} using the #{links.metrouitheme} by #{links.balupton}
 			"""
 			p '.copyright', -> """
 				Unless stated otherwise, all content is licensed under the #{links.cclicense} and code licensed under the #{links.mitlicense}, &copy; #{links.author}
@@ -141,5 +178,5 @@ html lang: 'en', ->
 		script src: '/vendor/modernizr-2.5.3.js'
 		script src: '/vendor/underscore-1.3.1.js'
 		script src: '/vendor/backbone-0.9.1.js'
-		script src: '/vendor/jquery.greyscale-0.2.js'
+		script src: '/vendor/fancybox-2.0.5/jquery.fancybox.js'
 		script src: '/scripts/script.js'
