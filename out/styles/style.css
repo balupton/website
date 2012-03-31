@@ -1,6 +1,7 @@
 @import '/vendor/normalize.css';
 *{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 .fancybox-wrap,#fancybox-overlay{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}
+.js{display:none}
 body{font-family:"Segoe WP";color:#797f84;font-size:16px;font-weight:500;position:relative;padding:0 2em;min-height:2000px}
 p{margin:0 0 1em}
 em{color:#ff8a3b;font-weight:500;font-style:normal}
@@ -11,12 +12,15 @@ a:hover{cursor:pointer;color:#00718a !important;text-decoration:underline}
 header.heading h1,header.heading h2{font-weight:300}
 header.heading h1{color:#456;font-size:36px}
 header.heading h2{color:#9d9fa5;font-size:18px}
+.heading{position:relative;}
+.heading .heading-avatar{display:block;position:absolute;top:.5em;left:18em;background:url("/images/balupton-small.gif");width:23px;height:36px;-webkit-transition:all .5s ease-in-out;-moz-transition:all .5s ease-in-out;transition:all .5s ease-in-out}
+.heading .heading-avatar:hover{-webkit-transform:rotate(720deg);-moz-transform:rotate(720deg);transform:rotate(720deg);background:url("/images/balupton-large.gif");width:365px;height:526px}
 nav.pages{font-size:56px;}
 nav.pages ul{padding:0}
 nav.pages li{display:inline;margin-right:.75em}
 nav.pages li a{font-weight:300;color:#ccc}
 nav.pages li.active a{font-weight:300;color:#ff8a3b}
-footer.footing{margin-top:3em;opacity:.5;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);background:#fff;}
+footer.footing{margin:4em 0 3em;opacity:.5;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);background:#fff;}
 footer.footing p{margin:0}
 footer.footing p.about{font-size:16px}
 footer.footing p.copyright{font-size:12px}
@@ -48,11 +52,14 @@ article.page h1{margin:4em 0 1em;color:#ff8a3b;font-size:36px;font-weight:700}
 article.page h2{margin:4em 0 1em;color:#ff8a3b;font-size:24px;font-weight:700}
 article.page h3{margin:2em 0 0;color:#ff8a3b;font-size:18px;font-weight:600;}
 article.page h3 a{font-weight:500}
-article.page .document-date:before{content:' ⎋'}
-article.page .project-watchers:before{content:' ☆'}
-article.page a:hover .project-watchers:before{content:' ★'}
-article.page .page-header h1:first-child,article.page .page-content > h1:first-child,article.page .page-header h2:first-child,article.page .page-content > h2:first-child{margin:2em 0 1em;}
-article.page .page-header h1:first-child small,article.page .page-content > h1:first-child small,article.page .page-header h2:first-child small,article.page .page-content > h2:first-child small{font-weight:100}
-article.page .document-list h2,article.page section:first-of-type h2{margin:1em 0 1em}
-article.page .document-list h3,article.page section:first-of-type h3{margin:1em 0 0}
-article.page .document-list p.description{margin-left:1em}
+article.page h4{margin:2em 0 0;color:#ff8a3b;font-size:16px;font-weight:500;}
+article.page h4 a{font-weight:500}
+article.page .document-date:before,article.page .page-date:before{content:' ⎋ '}
+article.page .project-watchers:before{content:' ☆ '}
+article.page a:hover .project-watchers:before{content:' ★ '}
+article.page .page-header h1,article.page .page-content h1,article.page .page-header h2,article.page .page-content h2{margin:2em 0 1em;}
+article.page .page-header h1 small,article.page .page-content h1 small,article.page .page-header h2 small,article.page .page-content h2 small{font-weight:100}
+article.page .document-list h2,article.page .project-list h2,article.page section:first-of-type h2{margin:1em 0 1em}
+article.page .document-list h3,article.page .project-list h3,article.page section:first-of-type h3{margin:1em 0 0}
+article.page .document-list p.document-description,article.page .project-list p.project-description{margin-left:1em}
+article.page .related-documents{margin-top:6em}

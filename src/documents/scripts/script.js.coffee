@@ -1,13 +1,3 @@
-###
-Coded in CoffeeScript: http://coffeescript.org/
-
-We've already included the following for you to get started real quick:
-- jQuery: http://jquery.com/
-- Modernizr: http://www.modernizr.com/
-- Underscore: http://documentcloud.github.com/underscore/
-- Backbone: http://documentcloud.github.com/backbone/
-###
-
 # Hide failed images
 images = document.getElementsByTagName('img')
 for img in images
@@ -52,3 +42,11 @@ $ ->
 			padding: 0
 			type: 'iframe'
 		)
+
+	# Show javascript properties
+	$('.js').removeClass('js')
+
+	# Handle more to read areas
+	$('.more-to-read').hide()
+	$('.read-more').click ->
+		$(this).hide().next('.more-to-read').show()

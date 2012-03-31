@@ -6,10 +6,10 @@ layout: default
 if @document.title
 	header '.page-header', ->
 		h1 ->
-			a href:@document.url, ->
-				strong property:'dcterms:title', ->
+			a '.page-link', href:@document.url, ->
+				strong '.page-title', property:'dcterms:title', ->
 					@document.title
-				small '.date', property:'dc:date', ->
+				small '.page-date', property:'dc:date', ->
 					" #{@document.date.toShortDateString()}"
 
 # Content

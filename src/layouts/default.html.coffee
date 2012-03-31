@@ -139,6 +139,7 @@ html lang: 'en', ->
 		header '.heading', ->
 			a href:'/', title:'Return home', ->
 				h1 -> 'Benjamin Lupton'
+				span '.heading-avatar', ->
 			h2 ->
 				text """
 					Founder of #{links.bevry}, #{links.historyjs} &amp; #{links.docpad}.<br/>
