@@ -225,10 +225,13 @@ article.page
 		a
 			font-weight: weightNormal
 
-	.date:before
+	.document-date:before
 		content: ' ⎋' // ✍
-	.watchers:before
+	.project-watchers:before
 		content: ' ☆'
+	a:hover
+		.project-watchers:before
+			content: ' ★'
 
 	.page-header, .page-content >
 		h1:first-child,
@@ -237,12 +240,12 @@ article.page
 			small
 				font-weight: weightLightest
 
-	.linklist, section:first-of-type
+	.document-list, section:first-of-type
 		h2
 			margin: 1em 0 1em
 		h3
 			margin: 1em 0 0
 
-	.linklist
+	.document-list
 		p.description
 			margin-left: 1em

@@ -67,7 +67,7 @@ html lang: 'en', ->
 				rel: 'alternate'
 
 		# Document
-		title @document.title
+		title "#{@document.title} | Benjamin Lupton"
 		meta name: 'description', content: @document.description or ''  if @document.description
 		meta name: 'author', content: @document.author or ''  if @document.author
 

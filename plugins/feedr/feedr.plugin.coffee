@@ -1,7 +1,3 @@
-###
-This plugin is still in beta, don't use it.
-###
-
 # Export Plugin
 module.exports = (BasePlugin) ->
 	# Requires
