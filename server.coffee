@@ -35,20 +35,8 @@ docpadInstance = docpad.createInstance docpadConfig, (err) ->
 	# ---------------------------------
 	# Server Configuration
 
-	# Virtual Hosts
-	docpadServer.use express.vhost('*balupton.com', docpadServer)
-	docpadServer.use express.vhost('*lupton.cc', docpadServer)
-	docpadServer.use express.vhost('*.herokuapp.com', docpadServer)
-
-	# Redirect Middleware
-	docpadServer.use (req,res,next) ->
-		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
-			res.redirect 'http://balupton.com'+req.url, 301
-		else
-			next()
-
 	# Start Server
-	docpadInstance.action 'server generate'
+	docpadInstance.action 'server'
 
 
 	# ---------------------------------
