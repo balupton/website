@@ -17,6 +17,7 @@ docpadServer = express.createServer()
 
 # Configure DocPad
 docpadConfig =
+	logLevel: 7
 	port: docpadPort
 	maxAge: expiresOffset
 	server: docpadServer
