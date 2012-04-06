@@ -16,7 +16,7 @@ Source code is made public for your benefit, though please continue to respect t
 	coffee server.coffee
 	```
 
-1. [Open http://localhost:9778/](http://localhost:10113/)
+1. [Open http://localhost:10113/](http://localhost:10113/)
 
 1. Start hacking away by modifying the `src` directory
 
