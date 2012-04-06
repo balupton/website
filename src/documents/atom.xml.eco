@@ -13,7 +13,7 @@
 	<% for document in @documents: %>
 		<% if document.url.indexOf('/blog') is 0 and document.url.indexOf('/blog/index') isnt 0: %>
 			<entry>
-				<title><%= if @document.title then "#{@document.title} | #{@site.title}" else @site.title %></title>
+				<title><%= document.title or document.name or @title.title %></title>
 				<link href="<%= @site.url %><%= document.url %>"/>
 				<updated><%= document.date.toISOString() %></updated>
 				<id><%= @site.url %><%= document.url %></id>
