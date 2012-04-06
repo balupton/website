@@ -2,6 +2,7 @@
 title: 'Startup Workaway: The Takeaways'
 layout: 'default'
 ignore: true
+date: '2012-03-30'
 ---
 
 
