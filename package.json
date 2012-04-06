@@ -1,13 +1,13 @@
 {
-	"name": "canvas.docpad",
-	"version": "0.2.0",
-	"description": "The Blank Canvas Skeleton for DocPad. Your web development playground.",
-	"homepage": "https://github.com/bevry/canvas.docpad",
+	"name": "balupton.docpad",
+	"version": "1.0.0",
+	"description": "Website of Benjamin Lupton. Founder of Bevry, DocPad and HistoryJS. Aficionado of HTML5, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.",
+	"homepage": "https://github.com/balupton/balupton.docpad",
 	"keywords": [
-		"playground",
+		"balupton",
+		"benjamin lupton",
 		"website",
-		"docpad",
-		"theme"
+		"docpad"
 	],
 	"author": {
 		"name": "Bevry Pty Ltd",
@@ -42,14 +42,24 @@
 		"url" : "http://github.com/bevry/canvas.docpad.git"
 	},
 	"dependencies": {
-		"coffee-script": "1.1.x",
+		"coffee-script": "1.2.x",
 		"express": "2.5.x",
-		"docpad": "2.6.x"
+		"docpad": "4.1.0"
 	},
 	"engines" : {
 		"node": ">=0.4.0"
 	},
 	"docpad": {
+		"templateData": {
+			"site": {
+				"url": "http://balupton.com",
+				"title": "Benjamin Lupton",
+				"author": "Benjamin Lupton",
+				"email": "b@lupton.cc",
+				"description": "Website of Benjamin Lupton. Founder of Bevry, DocPad and HistoryJS. Aficionado of HTML5, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.",
+				"keywords": "balupton, benjamin lupton, lupton, coffeescript, node.js, javascript, history.js, html5, docpad, nowpad, jquery, css3, ruby, git, nosql, cson, html5 history api, ajax, html, web development, web design, nlp, git, neuro-linguistic programming, programming, hacking, hackathon, aloha editor, contenteditable, hallo, jekyll, entp, inventor, web 2.0"
+			}
+		},
 		"plugins": {
 			"feedr": {
 				"feeds": {

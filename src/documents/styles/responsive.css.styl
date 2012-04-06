@@ -1,0 +1,25 @@
+// Responsive layouts in stylus
+// https://gist.github.com/1549029
+// Created by Benjamin Lupton
+// Licensed under the Creative Commons Zero - http://creativecommons.org/publicdomain/zero/1.0/
+
+// ====================================
+// Responsive Layout Awesomeness
+
+// Include paddings inside our width for everything
+*
+	box-sizing border-box
+
+// Provide our wrapper mixin
+// Contains our resize transition
+wrapper($site-width = 70%)
+	$site-margin = ((100% - $site-width) / 2)
+	margin-left: $site-margin
+	margin-right: $site-margin
+	transition: margin 0.3s ease-out
+
+// Provide our column mixin
+column()
+	display: inline
+	float: left
+	overflow: hidden

@@ -30,6 +30,26 @@ pages = [
 	label: 'blog'
 	title: 'View articles'
 ]
+feeds = [
+	href: 'http://feeds.feedburner.com/balupton.atom'
+	title: 'Blog Posts'
+,
+	href: 'https://github.com/balupton.atom'
+	title: 'GitHub Activity'
+,
+	href: 'http://vimeo.com/api/v2/balupton/videos.atom'
+	title: 'Vimeo Videos'
+,
+	href: 'http://api.flickr.com/services/feeds/photos_public.gne?id=35776898@N00&lang=en-us&format=atom'
+	title: 'Flickr Photos'
+,
+	href: 'https://api.twitter.com/1/statuses/user_timeline.atom?screen_name=balupton&count=20&include_entities=true&include_rts=true'
+	title: 'Tweets'
+]
+
+# Site & Document Data
+site = @site
+documentTitle = if @document.title then "#{@document.title} | #{@site.title}" else @site.title 
 
 # HTML
 doctype 5
@@ -43,22 +63,6 @@ html lang: 'en', ->
 		text @blocks.meta.join('')
 
 		# Feed
-		feeds = [
-			href: 'http://feeds.feedburner.com/balupton.atom'
-			title: 'Blog Posts'
-		,
-			href: 'https://github.com/balupton.atom'
-			title: 'GitHub Activity'
-		,
-			href: 'http://vimeo.com/api/v2/balupton/videos.atom'
-			title: 'Vimeo Videos'
-		,
-			href: 'http://api.flickr.com/services/feeds/photos_public.gne?id=35776898@N00&lang=en-us&format=atom'
-			title: 'Flickr Photos'
-		,
-			href: 'https://api.twitter.com/1/statuses/user_timeline.atom?screen_name=balupton&count=20&include_entities=true&include_rts=true'
-			title: 'Tweets'
-		]
 		for feed in feeds
 			link
 				href: feed.href
@@ -66,75 +70,20 @@ html lang: 'en', ->
 				type: (feed.type or 'application/atom+xml')
 				rel: 'alternate'
 
-		# Document
-		title "#{@document.title} | Benjamin Lupton"
-		meta name: 'description', content: @document.description or ''  if @document.description
-		meta name: 'author', content: @document.author or ''  if @document.author
-
+		# SEO
+		title documentTitle
+		meta name: 'title', content: documentTitle
+		meta name: 'author', content: (@document.author or site.author)
+		meta name: 'email', content: (@document.email or site.email)
+		meta name: 'description', content: (@document.description or site.description)
+		meta name: 'keywords', content: site.keywords.concat(@document.keywords or []).join(', ')
+		
 		# Styles
 		text @blocks.styles.join('')
 		link rel: 'stylesheet', href: '/styles/style.css', media: 'screen, projection'
 		link rel: 'stylesheet', href: '/styles/print.css', media: 'print'
 		link rel: 'stylesheet', href: '/vendor/fancybox-2.0.5/jquery.fancybox.css', media: 'screen, projection'
 	body ->
-		# Sidebar
-		aside '.sidebar', ->
-			# Twitter
-			section '.facebook.links', ->
-				header ->
-					a href: 'https://www.facebook.com/balupton', title: 'Visit my Facebook', ->
-						h1 -> 'Facebook'
-						img '.icon', src: '/images/facebook.gif'
-
-			# Github
-			section '.github.links', ->
-				header ->
-					a href: 'https://github.com/balupton', title: 'Visit my Github', ->
-						h1 -> 'Github'
-						img '.icon', src: '/images/github.gif'
-				ul ->
-					for entry in @feeds.github.entry
-						li datetime: entry.published, ->
-							a href: entry.link['@'].href, title: "View on Github", ->
-								entry.title['#']
-
-			# Twitter
-			section '.twitter.links', ->
-				header ->
-					a href: 'https://twitter.com/#!/balupton', title: 'Visit my Twitter', ->
-						h1 -> 'Twitter'
-						img '.icon', src: '/images/twitter.gif'
-				ul ->
-					for tweet in @feeds.twitter
-						continue  if tweet.in_reply_to_user_id
-						li datetime: tweet.created_at, ->
-							a href: "https://twitter.com/#!/#{tweet.user.screen_name}/status/#{tweet.id_str}", title: "View on Twitter", ->
-								tweet.text
-
-			# Vimeo
-			section '.vimeo.images', ->
-				header ->
-					a href: 'https://vimeo.com/balupton', title: 'Visit my Vimeo', ->
-						h1 -> 'Vimeo'
-						img '.icon', src: '/images/vimeo.gif'
-				ul ->
-					for video,key in @feeds.vimeo
-						li datetime: video.upload_date, ->
-							a href: video.url, title: video.title, 'data-height': video.height, 'data-width': video.width, ->
-								img src: @cachr(video.thumbnail_medium), alt: video.title
-
-			# Flickr
-			section '.flickr.images', ->
-				header ->
-					a href: 'http://www.flickr.com/people/balupton/', title: 'Visit my Flickr', ->
-						h1 -> 'Flickr'
-						img '.icon', src: '/images/flickr.gif'
-				ul ->
-					for image in @feeds.flickr.items
-						li datetime: image.date_taken, ->
-							a href: image.link, title: image.title, ->
-								img src: @cachr(image.media.m), alt: image.title
-
 		# Heading
 		header '.heading', ->
 			a href:'/', title:'Return home', ->
@@ -172,6 +121,64 @@ html lang: 'en', ->
 			p '.copyright', -> """
 				Unless stated otherwise, all content is licensed under the #{links.cclicense} and code licensed under the #{links.mitlicense}, &copy; #{links.author}
 			"""
+
+		# Sidebar
+		aside '.sidebar', ->
+			# Twitter
+			section '.facebook.links', ->
+				header ->
+					a href: 'https://www.facebook.com/balupton', title: 'Visit my Facebook', ->
+						h1 -> 'Facebook'
+						img '.icon', src: '/images/facebook.gif'
+
+			# Github
+			section '.github.links', ->
+				header ->
+					a href: 'https://github.com/balupton', title: 'Visit my Github', ->
+						h1 -> 'Github'
+						img '.icon', src: '/images/github.gif'
+				ul ->
+					for entry in @feedr.feeds.github.entry
+						li datetime: entry.published, ->
+							a href: entry.link['@'].href, title: "View on Github", ->
+								entry.title['#']
+
+			# Twitter
+			section '.twitter.links', ->
+				header ->
+					a href: 'https://twitter.com/#!/balupton', title: 'Visit my Twitter', ->
+						h1 -> 'Twitter'
+						img '.icon', src: '/images/twitter.gif'
+				ul ->
+					for tweet in @feedr.feeds.twitter
+						continue  if tweet.in_reply_to_user_id
+						li datetime: tweet.created_at, ->
+							a href: "https://twitter.com/#!/#{tweet.user.screen_name}/status/#{tweet.id_str}", title: "View on Twitter", ->
+								tweet.text
+
+			# Vimeo
+			section '.vimeo.images', ->
+				header ->
+					a href: 'https://vimeo.com/balupton', title: 'Visit my Vimeo', ->
+						h1 -> 'Vimeo'
+						img '.icon', src: '/images/vimeo.gif'
+				ul ->
+					for video,key in @feedr.feeds.vimeo
+						li datetime: video.upload_date, ->
+							a href: video.url, title: video.title, 'data-height': video.height, 'data-width': video.width, ->
+								img src: @cachr(video.thumbnail_medium), alt: video.title
+
+			# Flickr
+			section '.flickr.images', ->
+				header ->
+					a href: 'http://www.flickr.com/people/balupton/', title: 'Visit my Flickr', ->
+						h1 -> 'Flickr'
+						img '.icon', src: '/images/flickr.gif'
+				ul ->
+					for image in @feedr.feeds.flickr.items
+						li datetime: image.date_taken, ->
+							a href: image.link, title: image.title, ->
+								img src: @cachr(image.media.m), alt: image.title
 
 		# Scripts
 		text @blocks.scripts.join('')

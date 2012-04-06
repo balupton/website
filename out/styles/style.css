@@ -1,8 +1,9 @@
 @import '/vendor/normalize.css';
+@import 'responsive.css';
 *{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 .fancybox-wrap,#fancybox-overlay{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}
 .js{display:none}
-body{font-family:"Segoe WP";color:#797f84;font-size:16px;font-weight:500;position:relative;padding:0 2em;min-height:2000px}
+body{font-family:"Segoe WP";color:#797f84;font-size:16px;font-weight:500;position:relative;min-height:2000px}
 p{margin:0 0 1em}
 em{color:#ff8a3b;font-weight:500;font-style:normal}
 strong{color:#ff8a3b;font-weight:600}
@@ -24,8 +25,6 @@ footer.footing{margin:4em 0 3em;opacity:.5;filter:progid:DXImageTransform.Micros
 footer.footing p{margin:0}
 footer.footing p.about{font-size:16px}
 footer.footing p.copyright{font-size:12px}
-header.heading,nav.pages,footer.footing,article.page{width:70%}
-aside.sidebar{width:22%;float:right;}
 aside.sidebar ul,aside.sidebar ul li{list-style:none;margin:0;padding:0}
 aside.sidebar section{font-size:14px;margin-bottom:2em;}
 aside.sidebar section header{position:relative;}
@@ -57,9 +56,21 @@ article.page h4 a{font-weight:500}
 article.page .document-date:before,article.page .page-date:before{content:' ⎋ '}
 article.page .project-watchers:before{content:' ☆ '}
 article.page a:hover .project-watchers:before{content:' ★ '}
+article.page .document-date,article.page .page-date,article.page .project-watchers{white-space:nowrap}
 article.page .page-header h1,article.page .page-content h1,article.page .page-header h2,article.page .page-content h2{margin:2em 0 1em;}
 article.page .page-header h1 small,article.page .page-content h1 small,article.page .page-header h2 small,article.page .page-content h2 small{font-weight:100}
 article.page .document-list h2,article.page .project-list h2,article.page section:first-of-type h2{margin:1em 0 1em}
 article.page .document-list h3,article.page .project-list h3,article.page section:first-of-type h3{margin:1em 0 0}
 article.page .document-list p.document-description,article.page .project-list p.project-description{margin-left:1em}
 article.page .related-documents{margin-top:6em}
+body{padding:0 2em}
+header.heading,nav.pages,footer.footing,article.page{width:70%}
+aside.sidebar{width:22%;min-width:270px;position:absolute;top:0;right:2em}
+@media screen and (max-width: 960px){body{padding:0 2em}
+header.heading,nav.pages,footer.footing,article.page{width:95%}
+aside.sidebar{position:static;width:95%}
+}@media screen and (max-width: 320px){body{padding:0 .5em}
+header.heading,nav.pages,footer.footing,article.page{width:100%}
+nav.pages{font-size:35px}
+aside.sidebar{position:static;width:100%}
+}

@@ -9,6 +9,8 @@
 // nib: http://visionmedia.github.com/nib/
 @import 'nib'
 
+// Responsive Layouts
+@import 'responsive.css'
 
 // ====================================
 // Configuration
@@ -53,7 +55,6 @@ body
 	font-size: 16px
 	font-weight: weightNormal
 	position: relative
-	padding: 0 2em
 	min-height: 2000px
 
 // Paragraphs
@@ -137,17 +138,8 @@ footer.footing
 	p.copyright
 		font-size: 12px
 
-// Mainbar
-header.heading,
-nav.pages,
-footer.footing,
-article.page
-	width: 70%
-
 // Sidebar
 aside.sidebar
-	width: 22%
-	float: right
 	ul, ul li
 		list-style: none
 		margin: 0
@@ -262,6 +254,11 @@ article.page
 		.project-watchers:before
 			content: ' ★ '
 
+	.document-date,
+	.page-date,
+	.project-watchers
+		white-space:nowrap
+
 	.page-header, .page-content
 		h1, h2
 			margin: 2em 0 1em
@@ -280,3 +277,73 @@ article.page
 
 	.related-documents
 		margin-top: 6em
+
+
+
+// ====================================
+// Layout: Initial
+// Write your initial layout configuration here
+
+// Body
+body
+	padding: 0 2em
+
+// Mainbar
+header.heading,
+nav.pages,
+footer.footing,
+article.page
+	width: 70%
+
+// Sidebar
+aside.sidebar
+	width: 22%
+	min-width: 270px
+	position: absolute
+	top: 0
+	right: 2em
+
+
+// ====================================
+// Layout: Responsive
+// Write your responsive layout styles here
+// Below is merely an example of how this should work
+
+@media screen and (max-width: 960px)	
+	// Body
+	body
+		padding: 0 2em
+
+	// Mainbar
+	header.heading,
+	nav.pages,
+	footer.footing,
+	article.page
+		width: 95%
+
+	// Sidebar
+	aside.sidebar
+		position: static
+		width: 95%
+
+
+@media screen and (max-width: 320px)	
+	// Body
+	body
+		padding: 0 0.5em
+
+	// Mainbar
+	header.heading,
+	nav.pages,
+	footer.footing,
+	article.page
+		width: 100%
+
+	// Navigation
+	nav.pages
+		font-size: 35px
+
+	// Sidebar
+	aside.sidebar
+		position: static
+		width: 100%
