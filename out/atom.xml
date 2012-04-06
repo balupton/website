@@ -3,7 +3,7 @@
     <title>Benjamin Lupton</title>
     <link href="http://balupton.com/atom.xml" rel="self"/>
     <link href="http://balupton.com"/>
-    <updated>2012-04-06T22:52:22.106Z</updated>
+    <updated>2012-04-06T22:57:52.872Z</updated>
     <id>http://balupton.com</id>
     <author>
         <name>Benjamin Lupton</name>
@@ -299,66 +299,6 @@
     
         
             <entry>
-                <title>PhotoSynth meets Festivals</title>
-                <link href="http://balupton.com/blog/2011-02-19-photosynth-meets-festivals.html"/>
-                <updated>2011-02-19T00:00:00.000Z</updated>
-                <id>http://balupton.com/blog/2011-02-19-photosynth-meets-festivals.html</id>
-                <content type="html">&lt;p&gt;This is an idea that I've had for quiet some time; with me occasionally enjoying the good country, blues n roots, or trance festival.&lt;/p&gt;
-
-&lt;h2&gt;Background&lt;/h2&gt;
-
-&lt;h3&gt;PhotoSynth Introduction&lt;/h3&gt;
-
-&lt;p&gt;A few years ago Microsoft came out with PhotoSynth; the idea behind PhotoSynth isn't anything new, but the fact that they were actually able to pull it off is more than amazing (my brain explodes whenever I try and imagine how it works). For those who don't know (and didn't bother to click the reference to find out - darn lazy people!) you give PhotoSynth a collection of photos of one particular place and it re-creates the entire environment in 3D allowing you to float around the 3D environment as well as view the source images in their actual positions and camera direction.&lt;/p&gt;
-
-&lt;h3&gt;Original Applications of PhotoSynth&lt;/h3&gt;
-
-&lt;p&gt;The original application the PhotoSynth people saw was its use with recreating landscapes for the use in technologies now known as Microsoft Maps and Google Earth. Which is awesome too, as no doubt in 50 years we will be able to open a 3D Earth Viewer and when we browse be able to see all the relevant photos of that location in the actual location/direction they were taken from - or even be able to generate terrain imagery from those images alone - and scan through the timeline of available imagery.&lt;/p&gt;
-
-&lt;h2&gt;The Current Festival Experience&lt;/h2&gt;
-
-&lt;h3&gt;Your Favourite Song&lt;/h3&gt;
-
-&lt;p&gt;You're favourite song just come on by your favourite band, you whip out your HD phone and take a few photos and a video to capture that memory forever. You also notice that everyone else is doing the same thing. The position you have in the crowd is okay, and the best you could do considering how crammed it is - but perhaps part of your view is blocked, or a tall person is in the way, but regardless you are content with where you are.&lt;/p&gt;
-
-&lt;h3&gt;Reliving The Experience&lt;/h3&gt;
-
-&lt;p&gt;You get home and you upload the video from your camera to youtube and watch it - but it never comes close to the shear awesomeness. You quickly realise that while you were filming that one perspective, when you were there you were looking everywhere, taking it all in, able to move around and interact with the environment, you could feel all this awesomeness that this one perspective of your camera couldn't capture.&lt;/p&gt;
-
-&lt;h2&gt;Let's Upgrade Your Experience&lt;/h2&gt;
-
-&lt;h3&gt;Your Favourite Song&lt;/h3&gt;
-
-&lt;p&gt;You're favourite song just come on by your favourite band, you whip out your HD phone and take a few photos and a video to capture that memory forever. You also notice that everyone else is doing the same thing. The position you have in the crowd is okay, and the best you could do considering how crammed it is - but perhaps part of your view is blocked, or a tall person is in the way, but regardless you are &lt;del&gt;content with where you are.&lt;/del&gt; ecstatic because you know that this was your perspective and your experience of the event, and when it comes to reliving it - you'll be able to be wherever you want to be.&lt;/p&gt;
-
-&lt;h3&gt;Reliving The Experience&lt;/h3&gt;
-
-&lt;p&gt;You get home and you upload the video from your camera to youtube and watch it - while uploading you decide to wait that extra little bit so youtube can extract the geo-location and time of the video, then it says it's doing some awesome hard-core 3D stuff. The video is ready to watch, as your watching it you notice that the video is in a canvas which is placed in a 3D world, there is also a sidebar menu showing other videos of the event as well as a interactive timeline down the bottom. You decide to zoom out from your video and the 3D world adjusts - you can now see the back of your head and you holding your camera - you realise that someone must have been filming you a few feet back. You zoom out some more, and yep there is that person with the camera - their line of sight is clickable so you click it - you are now watching their video of your favourite song. AWESOME - their video is better quality! Must have been a iPhone 4 :P - plus you can see yourself in the video - you quickly tag yourself in the video. A dialog appears showing other videos that may contain you, there are about 3 - you decide to click through them. Wow, someone got you dancing to a song about a half an hour earlier - you've noticed the timeline down the bottom has changed to reflect the new time. You also notice that this current uploader has also taken 3 other videos - you can through the timeline and watch the 3D world change and re-construct perfectly with the time change.&lt;/p&gt;
-
-&lt;h2&gt;Monetisation Options&lt;/h2&gt;
-
-&lt;h3&gt;Rich Multiple Perspective 3D HD Discs&lt;/h3&gt;
-
-&lt;p&gt;Captilise on the growing 3D and HD market, as well as the richness of new media and players to create a HD disc that contains a 3D reconstruction of the event - in 3D perspective. Premium features could be to order a disc from youtube directly of all the videos and images that contain you.&lt;/p&gt;
-
-&lt;h3&gt;Google Earth / Microsoft Maps Partnerships&lt;/h3&gt;
-
-&lt;p&gt;Integrating this experience into a 3D Earth application will be amazing - imagine walking through the timeline of a showground over a year. You'll be able to get all the best festivals from any perspective you want.&lt;/p&gt;
-
-&lt;h2&gt;Problems&lt;/h2&gt;
-
-&lt;h3&gt;The Record Industry&lt;/h3&gt;
-
-&lt;p&gt;As this would rely on user submitted videos of concerts - which record labels pretty consider stealing... this idea could be an issue - though hopefully they can stick enough DRM on the 3D HD Discs to feel safe and move this along til it gets pirated and open-source.&lt;/p&gt;
-
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;What do you guys think? For myself I can't wait til this happens - would be willing to work on this undertaking too as a UI Designer and Creative Lead. Licensed under the &lt;a href=&quot;http://creativecommons.org/licenses/by-sa/3.0/au/deed.en&quot;&gt;Attribution-ShareAlike 3.0 Australia (CC BY-SA 3.0)&lt;/a&gt; and Copyright &lt;a href=&quot;http://balupton.com&quot;&gt;Benjamin Arthur Lupton&lt;/a&gt; 2011.&lt;/p&gt;</content>
-            </entry>
-        
-    
-        
-            <entry>
                 <title>SeaDragon meets the Operating System UI</title>
                 <link href="http://balupton.com/blog/2011-02-19-seadragon-meets-operating-system-user-interface.html"/>
                 <updated>2011-02-19T00:00:00.000Z</updated>
@@ -449,6 +389,66 @@
 &lt;p&gt;The boring argument is me having to sit next between a married coupled on the first flight who just slept the whole time. And the smelly argument is me on the second flight being crammed into my window seat by a obese polish man...&lt;/p&gt;
 
 &lt;p&gt;Yeah... Social Seat Selection FOR THE WIN!!!&lt;/p&gt;</content>
+            </entry>
+        
+    
+        
+            <entry>
+                <title>PhotoSynth meets Festivals</title>
+                <link href="http://balupton.com/blog/2011-02-19-photosynth-meets-festivals.html"/>
+                <updated>2011-02-19T00:00:00.000Z</updated>
+                <id>http://balupton.com/blog/2011-02-19-photosynth-meets-festivals.html</id>
+                <content type="html">&lt;p&gt;This is an idea that I've had for quiet some time; with me occasionally enjoying the good country, blues n roots, or trance festival.&lt;/p&gt;
+
+&lt;h2&gt;Background&lt;/h2&gt;
+
+&lt;h3&gt;PhotoSynth Introduction&lt;/h3&gt;
+
+&lt;p&gt;A few years ago Microsoft came out with PhotoSynth; the idea behind PhotoSynth isn't anything new, but the fact that they were actually able to pull it off is more than amazing (my brain explodes whenever I try and imagine how it works). For those who don't know (and didn't bother to click the reference to find out - darn lazy people!) you give PhotoSynth a collection of photos of one particular place and it re-creates the entire environment in 3D allowing you to float around the 3D environment as well as view the source images in their actual positions and camera direction.&lt;/p&gt;
+
+&lt;h3&gt;Original Applications of PhotoSynth&lt;/h3&gt;
+
+&lt;p&gt;The original application the PhotoSynth people saw was its use with recreating landscapes for the use in technologies now known as Microsoft Maps and Google Earth. Which is awesome too, as no doubt in 50 years we will be able to open a 3D Earth Viewer and when we browse be able to see all the relevant photos of that location in the actual location/direction they were taken from - or even be able to generate terrain imagery from those images alone - and scan through the timeline of available imagery.&lt;/p&gt;
+
+&lt;h2&gt;The Current Festival Experience&lt;/h2&gt;
+
+&lt;h3&gt;Your Favourite Song&lt;/h3&gt;
+
+&lt;p&gt;You're favourite song just come on by your favourite band, you whip out your HD phone and take a few photos and a video to capture that memory forever. You also notice that everyone else is doing the same thing. The position you have in the crowd is okay, and the best you could do considering how crammed it is - but perhaps part of your view is blocked, or a tall person is in the way, but regardless you are content with where you are.&lt;/p&gt;
+
+&lt;h3&gt;Reliving The Experience&lt;/h3&gt;
+
+&lt;p&gt;You get home and you upload the video from your camera to youtube and watch it - but it never comes close to the shear awesomeness. You quickly realise that while you were filming that one perspective, when you were there you were looking everywhere, taking it all in, able to move around and interact with the environment, you could feel all this awesomeness that this one perspective of your camera couldn't capture.&lt;/p&gt;
+
+&lt;h2&gt;Let's Upgrade Your Experience&lt;/h2&gt;
+
+&lt;h3&gt;Your Favourite Song&lt;/h3&gt;
+
+&lt;p&gt;You're favourite song just come on by your favourite band, you whip out your HD phone and take a few photos and a video to capture that memory forever. You also notice that everyone else is doing the same thing. The position you have in the crowd is okay, and the best you could do considering how crammed it is - but perhaps part of your view is blocked, or a tall person is in the way, but regardless you are &lt;del&gt;content with where you are.&lt;/del&gt; ecstatic because you know that this was your perspective and your experience of the event, and when it comes to reliving it - you'll be able to be wherever you want to be.&lt;/p&gt;
+
+&lt;h3&gt;Reliving The Experience&lt;/h3&gt;
+
+&lt;p&gt;You get home and you upload the video from your camera to youtube and watch it - while uploading you decide to wait that extra little bit so youtube can extract the geo-location and time of the video, then it says it's doing some awesome hard-core 3D stuff. The video is ready to watch, as your watching it you notice that the video is in a canvas which is placed in a 3D world, there is also a sidebar menu showing other videos of the event as well as a interactive timeline down the bottom. You decide to zoom out from your video and the 3D world adjusts - you can now see the back of your head and you holding your camera - you realise that someone must have been filming you a few feet back. You zoom out some more, and yep there is that person with the camera - their line of sight is clickable so you click it - you are now watching their video of your favourite song. AWESOME - their video is better quality! Must have been a iPhone 4 :P - plus you can see yourself in the video - you quickly tag yourself in the video. A dialog appears showing other videos that may contain you, there are about 3 - you decide to click through them. Wow, someone got you dancing to a song about a half an hour earlier - you've noticed the timeline down the bottom has changed to reflect the new time. You also notice that this current uploader has also taken 3 other videos - you can through the timeline and watch the 3D world change and re-construct perfectly with the time change.&lt;/p&gt;
+
+&lt;h2&gt;Monetisation Options&lt;/h2&gt;
+
+&lt;h3&gt;Rich Multiple Perspective 3D HD Discs&lt;/h3&gt;
+
+&lt;p&gt;Captilise on the growing 3D and HD market, as well as the richness of new media and players to create a HD disc that contains a 3D reconstruction of the event - in 3D perspective. Premium features could be to order a disc from youtube directly of all the videos and images that contain you.&lt;/p&gt;
+
+&lt;h3&gt;Google Earth / Microsoft Maps Partnerships&lt;/h3&gt;
+
+&lt;p&gt;Integrating this experience into a 3D Earth application will be amazing - imagine walking through the timeline of a showground over a year. You'll be able to get all the best festivals from any perspective you want.&lt;/p&gt;
+
+&lt;h2&gt;Problems&lt;/h2&gt;
+
+&lt;h3&gt;The Record Industry&lt;/h3&gt;
+
+&lt;p&gt;As this would rely on user submitted videos of concerts - which record labels pretty consider stealing... this idea could be an issue - though hopefully they can stick enough DRM on the 3D HD Discs to feel safe and move this along til it gets pirated and open-source.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;What do you guys think? For myself I can't wait til this happens - would be willing to work on this undertaking too as a UI Designer and Creative Lead. Licensed under the &lt;a href=&quot;http://creativecommons.org/licenses/by-sa/3.0/au/deed.en&quot;&gt;Attribution-ShareAlike 3.0 Australia (CC BY-SA 3.0)&lt;/a&gt; and Copyright &lt;a href=&quot;http://balupton.com&quot;&gt;Benjamin Arthur Lupton&lt;/a&gt; 2011.&lt;/p&gt;</content>
             </entry>
         
     
