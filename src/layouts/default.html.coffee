@@ -183,8 +183,28 @@ html lang: 'en', ->
 		# Scripts
 		text @blocks.scripts.join('')
 		script src: '/vendor/jquery-1.7.1.js'
-		script src: '/vendor/modernizr-2.5.3.js'
-		script src: '/vendor/underscore-1.3.1.js'
-		script src: '/vendor/backbone-0.9.1.js'
+		#script src: '/vendor/modernizr-2.5.3.js'
+		#script src: '/vendor/underscore-1.3.1.js'
+		#script src: '/vendor/backbone-0.9.1.js'
 		script src: '/vendor/fancybox-2.0.5/jquery.fancybox.js'
 		script src: '/scripts/script.js'
+
+		# Analytics
+		analytics = @site.analytics or {}
+		if analytics.reinvigorate?
+			script async:true, src:'http://include.reinvigorate.net/re_.js'
+			script """
+				try { reinvigorate.track('#{analytics.reinvigorate}''); } catch(err) {}
+				"""
+		if analytics.google?
+			script """
+				var _gaq = _gaq || [];
+				_gaq.push(['_setAccount', '#{analytics.google}']);
+				_gaq.push(['_trackPageview']);
+
+				(function() {
+					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				})();
+				"""
