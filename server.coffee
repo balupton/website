@@ -36,6 +36,11 @@ docpadInstance = docpad.createInstance docpadConfig, (err) ->
 	# ---------------------------------
 	# Server Configuration
 
+	# Virtual Hosts
+	docpadServer.use express.vhost('balupton.*', docpadServer)
+	docpadServer.use express.vhost('balupton.*.*', docpadServer)
+	docpadServer.use express.vhost('lupton.*', docpadServer)
+
 	# Redirect Middleware
 	docpadServer.use (req,res,next) ->
 		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
