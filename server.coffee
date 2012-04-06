@@ -76,9 +76,9 @@ docpadInstance = docpad.createInstance docpadConfig, (err) ->
 	# ---------------------------------
 	# DocPad Extensions
 
-	# Regenerate every 5 minutes
+	# Regenerate every hour
 	# this is used so our cachr feeds stay alive
-	fiveMinutes = 1000*60*5
+	fiveMinutes = 1000*60*60
 	setInterval(
 		-> docpadInstance.action 'generate'
 		fiveMinutes
