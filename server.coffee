@@ -43,7 +43,7 @@ docpadInstance = docpad.createInstance docpadConfig, (err) ->
 			next()
 
 	# Start Server
-	docpadInstance.action 'server'
+	docpadInstance.action 'server generate'
 
 
 	# ---------------------------------
