@@ -194,7 +194,7 @@ html lang: 'en', ->
 		if analytics.reinvigorate?
 			script async:true, src:'http://include.reinvigorate.net/re_.js'
 			script """
-				try { reinvigorate.track('#{analytics.reinvigorate}''); } catch(err) {}
+				try { reinvigorate.track("#{analytics.reinvigorate}"); } catch(err) {}
 				"""
 		if analytics.google?
 			script """
