@@ -37,7 +37,7 @@ docpadInstance = docpad.createInstance docpadConfig, (err) ->
 
 	# Redirect Middleware
 	docpadServer.use (req,res,next) ->
-		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de']
+		if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de','balupton.herokuapp.com']
 			res.redirect 'http://balupton.com'+req.url, 301
 		else
 			next()
