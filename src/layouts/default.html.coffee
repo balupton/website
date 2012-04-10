@@ -16,6 +16,7 @@ links =
 	author: '<a href="http://balupton.com" title="Visit Website">Benjamin Lupton</a>'
 	cclicense: '<a href="http://creativecommons.org/licenses/by/3.0/" title="Visit Website">Creative Commons Attribution License</a>'
 	mitlicense: '<a href="http://creativecommons.org/licenses/MIT/" title="Visit Website">MIT License</a>'
+	contact: '<a href="mailto:b@bevry.me" title="Email me">Email</a>'
 pages = [
 	url: '/'
 	match: '/index'
@@ -93,7 +94,7 @@ html lang: 'en', ->
 				text """
 					Founder of #{links.bevry}, #{links.historyjs} &amp; #{links.docpad}.<br/>
 					#{links.opensource} leader, #{links.html5}, #{links.javascript} and #{links.nodejs} expert.<br/>
-					Available for consulting, training and talks. Hire.
+					Available for consulting, training and speaking. #{links.contact}.
 				"""
 
 		# Pages
