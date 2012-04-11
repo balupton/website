@@ -44,12 +44,13 @@
 	"dependencies": {
 		"coffee-script": "1.2.x",
 		"express": "2.5.x",
-		"docpad": "4.1.0"
+		"docpad": "4.1.1"
 	},
 	"engines" : {
 		"node": ">=0.4.0"
 	},
 	"docpad": {
+		"checkVersion": false,
 		"templateData": {
 			"site": {
 				"url": "http://balupton.com",
