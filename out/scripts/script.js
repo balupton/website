@@ -27,7 +27,9 @@
   $(function() {
     $('section.vimeo a').click(function(event) {
       var $a, href, video, videoId;
-      if (event.which === 2 || event.metaKey) return true;
+      if (event.which === 2 || event.metaKey) {
+        return true;
+      }
       event.preventDefault();
       $a = $(this);
       href = $a.attr('href');
