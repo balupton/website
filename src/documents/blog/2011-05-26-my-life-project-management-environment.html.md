@@ -3,7 +3,6 @@ title: 'My Life/Project Management Environment'
 layout: post
 tags: [life,management]
 date: '2011-05-26'
-draft: true
 ---
 
 ## The Tools

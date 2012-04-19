@@ -14,7 +14,7 @@ header.heading h1,header.heading h2{font-weight:300}
 header.heading h1{color:#456;font-size:36px}
 header.heading h2{color:#9d9fa5;font-size:18px}
 .heading{position:relative;}
-.heading .heading-avatar{display:block;position:absolute;top:.5em;left:18em;background:url("/images/balupton-small.gif");width:23px;height:36px;-webkit-transition:all .5s ease-in-out;-moz-transition:all .5s ease-in-out;-o-transition:all .5s ease-in-out;transition:all .5s ease-in-out}
+.heading .heading-avatar{display:block;position:absolute;top:.5em;left:18em;background:url("/images/balupton-small.gif");width:23px;height:36px;-webkit-transition:all .5s ease-in-out;-moz-transition:all .5s ease-in-out;-o-transition:all .5s ease-in-out;-ms-transition:all .5s ease-in-out;transition:all .5s ease-in-out}
 .heading .heading-avatar:hover{-webkit-transform:rotate(720deg);-moz-transform:rotate(720deg);-o-transform:rotate(720deg);-ms-transform:rotate(720deg);transform:rotate(720deg);background:url("/images/balupton-large.gif");width:365px;height:526px}
 nav.pages{font-size:56px;}
 nav.pages ul{padding:0}
@@ -33,10 +33,10 @@ aside.sidebar section header .icon{position:absolute;bottom:12px;right:0}
 aside.sidebar section,aside.sidebar section a,aside.sidebar section a:link,aside.sidebar section a:visited{color:#797f84}
 aside.sidebar section ul{height:360px;position:relative;overflow:auto}
 aside.sidebar section li{margin:1em 0}
-aside.sidebar section.links ul{-webkit-transition:opacity 1s;-moz-transition:opacity 1s;-o-transition:opacity 1s;transition:opacity 1s;background:#fff;opacity:.3;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=30);}
+aside.sidebar section.links ul{-webkit-transition:opacity 1s;-moz-transition:opacity 1s;-o-transition:opacity 1s;-ms-transition:opacity 1s;transition:opacity 1s;background:#fff;opacity:.3;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=30);}
 aside.sidebar section.links ul li{width:96%}
 aside.sidebar:hover section.links ul{opacity:1;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100)}
-aside.sidebar section.images ul img{-webkit-transition:opacity 1s;-moz-transition:opacity 1s;-o-transition:opacity 1s;transition:opacity 1s;opacity:.3;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=30)}
+aside.sidebar section.images ul img{-webkit-transition:opacity 1s;-moz-transition:opacity 1s;-o-transition:opacity 1s;-ms-transition:opacity 1s;transition:opacity 1s;opacity:.3;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=30)}
 aside.sidebar:hover section.images ul img{opacity:.5;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);}
 aside.sidebar:hover section.images ul img:hover{opacity:1;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100)}
 aside.sidebar section.twitter h1{color:#248dcd}
