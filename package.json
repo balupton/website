@@ -9,7 +9,7 @@
 		"website",
 		"docpad"
 	],
-	"author": "Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
+	"author": "Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
 	"maintainers": [
 		"Benjamin Lupton <b@lupton.cc> (http://balupton.com)"
 	],
@@ -39,45 +39,5 @@
 	"engines" : {
 		"node": ">=0.4.0",
 		"docpad": "5.x"
-	},
-	"docpad": {
-		"templateData": {
-			"site": {
-				"url": "http://balupton.com",
-				"title": "Benjamin Lupton",
-				"author": "Benjamin Lupton",
-				"email": "b@lupton.cc",
-				"description": "Website of Benjamin Lupton. Founder of Bevry, DocPad and HistoryJS. Aficionado of HTML5, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.",
-				"keywords": "balupton, benjamin lupton, lupton, coffeescript, node.js, javascript, history.js, html5, docpad, nowpad, jquery, css3, ruby, git, nosql, cson, html5 history api, ajax, html, web development, web design, nlp, git, neuro-linguistic programming, programming, hacking, hackathon, aloha editor, contenteditable, hallo, jekyll, entp, inventor, web 2.0",
-				"analytics": {
-					"reinvigorate": "52uel-236r9p108l",
-					"google": "UA-4446117-1"
-				}
-			}
-		},
-		"plugins": {
-			"feedr": {
-				"feeds": {
-					"balupton-projects": {
-						"url": "https://api.github.com/users/balupton/repos"
-					},
-					"bevry-projects": {
-						"url": "https://api.github.com/users/bevry/repos"
-					},
-					"github": {
-						"url": "https://github.com/balupton.atom"
-					},
-					"twitter": {
-						"url": "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
-					},
-					"vimeo": {
-						"url": "http://vimeo.com/api/v2/balupton/videos.json"
-					},
-					"flickr": {
-						"url": "http://api.flickr.com/services/feeds/photos_public.gne?id=35776898@N00&lang=en-us&format=json"
-					}
-				}
-			}
-		}
 	}
 }

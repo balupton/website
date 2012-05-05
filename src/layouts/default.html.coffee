@@ -50,7 +50,7 @@ feeds = [
 
 # Site & Document Data
 site = @site
-documentTitle = if @document.title then "#{@document.title} | #{@site.title}" else @site.title 
+documentTitle = if @document.title then "#{@document.title} | #{@site.title}" else @site.title
 
 # HTML
 doctype 5
@@ -66,8 +66,8 @@ html lang: 'en', ->
 		# Feed
 		for feed in feeds
 			link
-				href: feed.href
-				title: feed.title
+				href: h feed.href
+				title: h feed.title
 				type: (feed.type or 'application/atom+xml')
 				rel: 'alternate'
 
@@ -78,7 +78,7 @@ html lang: 'en', ->
 		meta name: 'email', content: (@document.email or site.email)
 		meta name: 'description', content: (@document.description or site.description)
 		meta name: 'keywords', content: site.keywords.concat(@document.keywords or []).join(', ')
-		
+
 		# Styles
 		text @blocks.styles.join('')
 		link rel: 'stylesheet', href: '/styles/style.css', media: 'screen, projection'
