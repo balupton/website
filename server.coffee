@@ -20,6 +20,7 @@ docpadConfig =
 	port: docpadPort
 	maxAge: expiresOffset
 	server: docpadServer
+	checkVersion: false
 
 
 # =====================================
