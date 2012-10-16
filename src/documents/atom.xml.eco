@@ -10,15 +10,13 @@
 		<email><%= @site.email %></email>
 	</author>
 
-	<% for document in @documents: %>
-		<% if document.url.indexOf('/blog') is 0 and document.url.indexOf('/blog/index') isnt 0: %>
-			<entry>
-				<title><%= document.title or document.name or @title.title %></title>
-				<link href="<%= @site.url %><%= document.url %>"/>
-				<updated><%= document.date.toISOString() %></updated>
-				<id><%= @site.url %><%= document.url %></id>
-				<content type="html"><%= document.contentRenderedWithoutLayouts %></content>
-			</entry>
-		<% end %>
+	<% for document in @getCollection('posts').toJSON(): %>
+		<entry>
+			<title><%= document.title or document.name or @title.title %></title>
+			<link href="<%= @site.url %><%= document.url %>"/>
+			<updated><%= document.date.toISOString() %></updated>
+			<id><%= @site.url %><%= document.url %></id>
+			<content type="html"><%= document.contentRenderedWithoutLayouts %></content>
+		</entry>
 	<% end %>
 </feed>

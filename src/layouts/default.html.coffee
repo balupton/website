@@ -4,16 +4,17 @@ title: 'Benjamin Lupton'
 
 # Prepare
 links =
-	docpad: '<a href="https://github.com/bevry/docpad" title="Visit on GitHub">DocPad</a>'
-	historyjs: '<a href="https://github.com/balupton/history.js" title="Visit on GitHub">History.js</a>'
+	docpad: '<a href="http://docpad.org" title="Visit on GitHub">DocPad</a>'
+	historyjs: '<a href="http://historyjs.net" title="Visit on GitHub">History.js</a>'
 	bevry: '<a href="http://bevry.me" title="Visit Website">Bevry</a>'
+	services: '<a href="http://bevry.me/services" title="View my company\'s services">Services</a>'
 	opensource: '<a href="http://en.wikipedia.org/wiki/Open-source_software" title="Visit on Wikipedia">Open-Source</a>'
 	html5: '<a href="http://en.wikipedia.org/wiki/HTML5" title="Visit on Wikipedia">HTML5</a>'
 	javascript: '<a href="http://en.wikipedia.org/wiki/JavaScript" title="Visit on Wikipedia">JavaScript</a>'
 	nodejs: '<a href="http://nodejs.org/" title="Visit Website">Node.js</a>'
-	metrouitheme: '<a href="https://github.com/bevry/metro.docpad" title="Visit on GitHub">Metro Theme</a>'
 	balupton: '<a href="http://balupton.com" title="Visit Website">Benjamin Lupton</a>'
 	author: '<a href="http://balupton.com" title="Visit Website">Benjamin Lupton</a>'
+	source: '<a href="https://github.com/balupton/balupton.docpad" title="View Website Source">open-source</a>'
 	cclicense: '<a href="http://creativecommons.org/licenses/by/3.0/" title="Visit Website">Creative Commons Attribution License</a>'
 	mitlicense: '<a href="http://creativecommons.org/licenses/MIT/" title="Visit Website">MIT License</a>'
 	contact: '<a href="mailto:b@bevry.me" title="Email me">Email</a>'
@@ -61,7 +62,7 @@ html lang: 'en', ->
 		meta 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1'
 		meta 'http-equiv': 'content-type', content: 'text/html; charset=utf-8'
 		meta name: 'viewport', content: 'width=device-width, initial-scale=1'
-		text @blocks.meta.join('')
+		text  @getBlock('meta').toHTML()
 
 		# Feed
 		for feed in feeds
@@ -80,7 +81,7 @@ html lang: 'en', ->
 		meta name: 'keywords', content: site.keywords.concat(@document.keywords or []).join(', ')
 
 		# Styles
-		text @blocks.styles.join('')
+		text  @getBlock('styles').toHTML()
 		link rel: 'stylesheet', href: '/styles/style.css', media: 'screen, projection'
 		link rel: 'stylesheet', href: '/styles/print.css', media: 'print'
 		link rel: 'stylesheet', href: '/vendor/fancybox-2.0.5/jquery.fancybox.css', media: 'screen, projection'
@@ -93,7 +94,7 @@ html lang: 'en', ->
 			h2 ->
 				text """
 					Founder of #{links.bevry}, #{links.historyjs} &amp; #{links.docpad}.<br/>
-					#{links.opensource} leader, #{links.html5}, #{links.javascript} and #{links.nodejs} expert.<br/>
+					Aficionado of #{links.javascript}, #{links.nodejs}, #{links.opensource} and #{links.html5}.<br/>
 					Available for consulting, training and speaking. #{links.contact}.
 				"""
 
@@ -117,11 +118,11 @@ html lang: 'en', ->
 		# Footing
 		footer '.footing', ->
 			p '.about', -> """
-				This website was created with #{links.bevry}’s #{links.docpad} using the #{links.metrouitheme} by #{links.balupton}
-			"""
+				This website was created with #{links.bevry}’s #{links.docpad} and is #{links.source}
+				"""
 			p '.copyright', -> """
 				Unless stated otherwise, all content is licensed under the #{links.cclicense} and code licensed under the #{links.mitlicense}, &copy; #{links.author}
-			"""
+				"""
 
 		# Sidebar
 		aside '.sidebar', ->
@@ -182,10 +183,11 @@ html lang: 'en', ->
 								img src: @cachr(image.media.m), alt: image.title
 
 		# Scripts
-		text @blocks.scripts.join('')
-		script defer:true, src:'/vendor/jquery-1.7.1.js'
-		script defer:true, src:'/vendor/fancybox-2.0.5/jquery.fancybox.js'
-		script defer:true, src:'/scripts/script.js'
+		text @getBlock('scripts').add("""
+			/vendor/jquery-1.7.1.js
+			/vendor/fancybox-2.0.5/jquery.fancybox.js
+			/scripts/script.js""".split('\n')
+		).toHTML()
 
 		# Analytics
 		analytics = @site.analytics or {}

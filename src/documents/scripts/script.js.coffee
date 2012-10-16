@@ -16,8 +16,86 @@ $.fn.preventScrollBubbling = ->
 		@scrollTop -= (deltaY*20)
 		event.preventDefault()
 
+# Get Root URL
+# https://github.com/balupton/history.js/blob/master/scripts/uncompressed/history.js#L358
+getRootUrl = ->
+	rootUrl = document.location.protocol + "//" + (document.location.hostname or document.location.host)
+	rootUrl += ":" + document.location.port  if document.location.port or false
+	rootUrl += "/"
+	rootUrl
+
+# ---------------------------------
+# Selectors
+
+# Internal Helper
+$.expr[":"].internal = (obj, index, meta, stack) ->
+	# Prepare
+	$this = $(obj)
+	url = $this.attr("href") or $this.data("href") or ""
+	rootUrl = getRootUrl()
+
+	# Check link
+	isInternalLink = url.substring(0, rootUrl.length) is rootUrl or url.indexOf(":") is -1
+
+	# Ignore or Keep
+	return isInternalLink
+
+
+# External Helper
+$.expr[":"].external = (obj, index, meta, stack) ->
+	return $.expr[":"].internal(obj, index, meta, stack) is false
+
+
+# ---------------------------------
 # jQuery's domReady
+
 $ ->
+	# Prepare
+	$body = $(document.body)
+
+	# ---------------------------------
+	# Links
+
+	# Open Link
+	openLink = ({url,action}) ->
+		if action is 'new'
+			window.open(url,'_blank')
+		else if action is 'same'
+			wait(100, -> document.location.href = url)
+		return
+
+	# Open Outbound Link
+	openOutboundLink = ({url,action}) ->
+		# https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
+		hostname = url.replace(/^.+\/|\/.*/g,'')
+		_gaq.push(['_trackEvent', "Outbound Links", hostname, url, 0, true])
+		openLink({url,action})
+		return
+
+	# Outbound Link Tracking
+	$body.on 'click', 'a[href]:external', (event) ->
+		# Prepare
+		$this = $(this)
+		url = $this.attr('href')
+		return  unless url
+
+		# Discover how we should handle the link
+		if event.which is 2 or event.metaKey
+			action = 'default'
+		else
+			action = 'same'
+			event.preventDefault()
+
+		# Open the link
+		openOutboundLink({url,action})
+
+		# Done
+		return
+
+
+	# ---------------------------------
+	# Misc
+
 	# Prevent scrolling on our sidebar scrollers
 	#$('.scroller').preventScrollBubbling()
 	$('section.vimeo a').click (event) ->
@@ -49,4 +127,5 @@ $ ->
 	# Handle more to read areas
 	$('.more-to-read').hide()
 	$('.read-more').click ->
+		_gaq.push(['_trackEvent', "Read More", document.title, document.location.href, 0, true])
 		$(this).hide().next('.more-to-read').show()

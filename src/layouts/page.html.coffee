@@ -10,5 +10,4 @@ if @document.title
 				@document.title
 
 # Content
-div '.page-content', property: 'sioc:content',
-	-> @content
+div '.page-content', property: 'sioc:content', -> @content
