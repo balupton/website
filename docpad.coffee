@@ -1,3 +1,21 @@
+# =================================
+# Environment Configuration
+envConfigLocalPath = __dirname+'/../env.coffee'
+envConfigLocalData =
+	try
+		require(envConfigLocalPath)
+	catch err
+		null
+envConfig =
+	BALUPTON_GITHUB_CLIENT_ID: null
+	BALUPTON_GITHUB_CLIENT_SECRET: null
+for own key,value of envConfig
+	envConfig[key] = value ? envConfigLocalData?[key] ? process.env[key] ? null
+
+
+# =================================
+# DocPad Configuration
+
 module.exports =
 	regenerateEvery: 1000*60*60  # hour
 
@@ -90,9 +108,9 @@ module.exports =
 		feedr:
 			feeds:
 				'balupton-projects':
-					url: "https://api.github.com/users/balupton/repos"
+					url: "https://api.github.com/users/balupton/repos?client_id=#{envConfig.BALUPTON_GITHUB_CLIENT_ID}&client_secret=#{envConfig.BALUPTON_GITHUB_CLIENT_SECRET}"
 				'bevry-projects':
-					url: "https://api.github.com/users/bevry/repos"
+					url: "https://api.github.com/users/bevry/repos?client_id=#{envConfig.BALUPTON_GITHUB_CLIENT_ID}&client_secret=#{envConfig.BALUPTON_GITHUB_CLIENT_SECRET}"
 				github:
 					url: "https://github.com/balupton.atom"
 				twitter:
