@@ -67,7 +67,7 @@ $ ->
 	# Open Outbound Link
 	openOutboundLink = ({url,action}) ->
 		# https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
-		hostname = url.replace(/^.+\/|\/.*/g,'')
+		hostname = url.replace(/^.+?\/+([^\/]+).*$/,'$1')
 		_gaq.push(['_trackEvent', "Outbound Links", hostname, url, 0, true])
 		openLink({url,action})
 		return
