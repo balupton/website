@@ -1,3 +1,6 @@
+# Wait
+wait = (delay,callback) -> setTimeout(callback,delay)
+
 # Hide failed images
 images = document.getElementsByTagName('img')
 for img in images
