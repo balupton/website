@@ -16,3 +16,4 @@ npm-debug.log
 
 out
 env.coffee
+.env

@@ -1,16 +1,7 @@
 # =================================
-# Environment Configuration
-envConfigLocalPath = __dirname+'/../env.coffee'
-envConfigLocalData =
-	try
-		require(envConfigLocalPath)
-	catch err
-		null
-envConfig =
-	BALUPTON_GITHUB_CLIENT_ID: null
-	BALUPTON_GITHUB_CLIENT_SECRET: null
-for own key,value of envConfig
-	envConfig[key] = value ? envConfigLocalData?[key] ? process.env[key] ? null
+# Misc Configuration
+
+envConfig = process.env
 
 
 # =================================

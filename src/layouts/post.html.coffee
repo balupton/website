@@ -29,6 +29,7 @@ if relatedPosts.length
 		}
 
 # Disqus
-text @partial 'disqus.html.eco', {
-	document: @document
-}
+footer '.page-comments', ->
+	text @partial 'disqus.html.eco', {
+		document: @document
+	}
