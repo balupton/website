@@ -111,8 +111,8 @@ $ ->
 
 		# Show the fancybox
 		$a = $(@)
-		href = $a.attr('href')
-		videoId = href.replace(/[^0-9]/g,'')
+		url = $a.attr('href')
+		videoId = url.replace(/[^0-9]/g,'')
 		video =
 			id: videoId
 			title: $a.attr('title')
@@ -126,6 +126,12 @@ $ ->
 			padding: 0
 			type: 'iframe'
 		)
+
+		# Track the click
+		openOutboundLink({url,action:false})
+
+		# Done
+		return
 
 	# Show javascript properties
 	$('.js').removeClass('js')
