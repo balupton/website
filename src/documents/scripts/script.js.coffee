@@ -105,8 +105,11 @@ $ ->
 		# Continue as normal for cmd clicks etc
 		return true  if event.which is 2 or event.metaKey
 
-		# Show the fancybox
+		# Prevent the link, or special link handlers from occuring
 		event.preventDefault()
+		event.stopImmediatePropagation()
+
+		# Show the fancybox
 		$a = $(@)
 		href = $a.attr('href')
 		videoId = href.replace(/[^0-9]/g,'')

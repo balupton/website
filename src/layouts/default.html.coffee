@@ -4,8 +4,10 @@ title: 'Benjamin Lupton'
 
 # Prepare
 links =
-	docpad: '<a href="http://docpad.org" title="Visit on GitHub">DocPad</a>'
-	historyjs: '<a href="http://historyjs.net" title="Visit on GitHub">History.js</a>'
+	docpad: '<a href="http://docpad.org" title="Visit Website">DocPad</a>'
+	hostel: '<a href="http://startuphostel.org" title="Visit Website">Startup Hostel</a>'
+	backbonejs: '<a href="http://backbonejs.org/" title="Visit Website">Backbone.js</a>'
+	historyjs: '<a href="http://historyjs.net" title="Visit Website">History.js</a>'
 	bevry: '<a href="http://bevry.me" title="Visit Website">Bevry</a>'
 	services: '<a href="http://bevry.me/services" title="View my company\'s services">Services</a>'
 	opensource: '<a href="http://en.wikipedia.org/wiki/Open-source_software" title="Visit on Wikipedia">Open-Source</a>'
@@ -93,7 +95,7 @@ html lang: 'en', ->
 				span '.heading-avatar', ->
 			h2 ->
 				text """
-					Founder of #{links.bevry}, #{links.historyjs} &amp; #{links.docpad}.<br/>
+					Founder of #{links.bevry}, #{links.docpad}, #{links.historyjs}  &amp; #{links.hostel}.<br/>
 					Aficionado of #{links.javascript}, #{links.nodejs}, #{links.opensource} and #{links.html5}.<br/>
 					Available for consulting, training and speaking. #{links.contact}.
 				"""

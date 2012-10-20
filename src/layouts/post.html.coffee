@@ -27,3 +27,8 @@ if relatedPosts.length
 		text @partial 'document-list.html.coffee', {
 			documents: relatedPosts
 		}
+
+# Disqus
+text @partial 'disqus.html.eco', {
+	document: @document
+}
