@@ -110,12 +110,22 @@ html lang: 'en', ->
 						a href:page.url, ->
 							page.label
 
+		# Promo
+		div '.promo.promo-top', ->
+			a href:'http://gaaus.tumblr.com/vote', title:'Vote for Benjamin Lupton', ->
+				img src:'/images/gatech.gif', width:728, height:90
+
 		# Document
 		article '.page',
 			'typeof': 'sioc:page'
 			about: @document.url
 			datetime: @document.date.toISODateString()
 			-> @content
+
+		# Promo
+		#div '.promo.promo-bottom', ->
+		#	a href:'http://gaaus.tumblr.com/vote', title:'Vote for Benjamin Lupton', ->
+		#		img src:'/images/gatech.gif', width:728, height:90
 
 		# Footing
 		footer '.footing', ->

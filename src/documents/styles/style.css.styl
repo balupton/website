@@ -1,3 +1,7 @@
+////////
+standalone: true
+////////
+
 // Coded in Stylus: http://learnboost.github.com/stylus/
 
 // ====================================
@@ -303,13 +307,28 @@ aside.sidebar
 	top: 0
 	right: 2em
 
+.promo
+	&.promo-top
+		margin: 4em 0 4em -0px
+	&.promo-bottom
+		margin: 5em 0 0 -13px
+	a
+		padding: 1.5em 0 1em 0
+		display: block
+		border: 1px solid black
+		width: 70%
+		text-align: center
+		transition: box-shadow 0.5s ease-in-out
+		&:hover
+			box-shadow: hsl(60, 33%, 43%) 0 0 30px
+
 
 // ====================================
 // Layout: Responsive
 // Write your responsive layout styles here
 // Below is merely an example of how this should work
 
-@media screen and (max-width: 960px)	
+@media screen and (max-width: 960px)
 	// Body
 	body
 		padding: 0 2em
@@ -327,7 +346,7 @@ aside.sidebar
 		width: 95%
 
 
-@media screen and (max-width: 320px)	
+@media screen and (max-width: 320px)
 	// Body
 	body
 		padding: 0 0.5em
