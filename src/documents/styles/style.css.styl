@@ -1,6 +1,6 @@
-////////
+###
 standalone: true
-////////
+###
 
 // Coded in Stylus: http://learnboost.github.com/stylus/
 
@@ -45,7 +45,8 @@ weightLightest = 100
 *
 	// Make paddings be included within the width
 	box-sizing: border-box
-.fancybox-wrap, #fancybox-overlay
+.fancybox-wrap
+#fancybox-overlay
 	box-sizing: content-box
 
 // Hide javascript only properties
@@ -249,7 +250,7 @@ article.page
 		a
 			font-weight: weightNormal
 
-	.document-date:before,
+	.document-date:before
 	.page-date:before
 		content: ' ⎋ ' // ✍
 	.project-watchers:before
@@ -258,28 +259,32 @@ article.page
 		.project-watchers:before
 			content: ' ★ '
 
-	.document-date,
-	.page-date,
+	.document-date
+	.page-date
 	.project-watchers
 		white-space:nowrap
 
-	.page-header, .page-content
+	.page-header
+	.page-content
 		h1, h2
 			margin: 2em 0 1em
 			small
 				font-weight: weightLightest
 
-	.document-list, .project-list, section:first-of-type
+	.document-list
+	.project-list
+	section:first-of-type
 		h2
 			margin: 1em 0 1em
 		h3
 			margin: 1em 0 0
 
-	.document-list p.document-description,
+	.document-list p.document-description
 	.project-list p.project-description
 		margin-left: 1em
 
-	.related-documents, .page-comments
+	.related-documents
+	.page-comments
 		margin-top: 5em
 
 
@@ -293,9 +298,9 @@ body
 	padding: 0 2em
 
 // Mainbar
-header.heading,
-nav.pages,
-footer.footing,
+header.heading
+nav.pages
+footer.footing
 article.page
 	width: 70%
 
@@ -319,6 +324,11 @@ aside.sidebar
 		width: 70%
 		text-align: center
 		transition: box-shadow 0.5s ease-in-out
+
+		img
+			max-width: 100%
+			height: auto
+
 		&:hover
 			box-shadow: hsl(60, 33%, 43%) 0 0 30px
 
@@ -334,10 +344,11 @@ aside.sidebar
 		padding: 0 2em
 
 	// Mainbar
-	header.heading,
-	nav.pages,
-	footer.footing,
+	header.heading
+	nav.pages
+	footer.footing
 	article.page
+	.promo a
 		width: 95%
 
 	// Sidebar
@@ -352,10 +363,11 @@ aside.sidebar
 		padding: 0 0.5em
 
 	// Mainbar
-	header.heading,
-	nav.pages,
-	footer.footing,
+	header.heading
+	nav.pages
+	footer.footing
 	article.page
+	.promo a
 		width: 100%
 
 	// Navigation
