@@ -138,18 +138,25 @@ html lang: 'en', ->
 
 		# Sidebar
 		aside '.sidebar', ->
-			# Twitter
+			# Facebook
 			section '.facebook.links', ->
 				header ->
 					a href: 'https://www.facebook.com/balupton', title: 'Visit my Facebook', ->
 						h1 -> 'Facebook'
 						img '.icon', src: '/images/facebook.gif'
 
+			# LinkedIn
+			section '.linkedin.links', ->
+				header ->
+					a href: 'http://www.linkedin.com/in/balupton', title: 'Visit my LinkedIn', ->
+						h1 -> 'LinkedIn'
+						img '.icon', src: '/images/linkedin.png'
+
 			# Github
 			section '.github.links', ->
 				header ->
 					a href: 'https://github.com/balupton', title: 'Visit my Github', ->
-						h1 -> 'Github'
+						h1 -> 'GitHub'
 						img '.icon', src: '/images/github.gif'
 				ul ->
 					for entry in @feedr.feeds.github.entry
