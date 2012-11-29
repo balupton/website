@@ -77,15 +77,15 @@ module.exports =
 				res.redirect 301, "https://github.com/balupton/#{project}"
 
 			# Twitter
-			docpadServer.get /^\/(?:t|twitter|tweet)\/?.*$/, (req, res) ->
+			docpadServer.get /^\/(?:t|twitter|tweet)(?:\/(.*))?$/, (req, res) ->
 				res.redirect 301, "https://twitter.com/balupton"
 
 			# Sharing Feed
-			docpadServer.get /^\/feeds?\/shar(e|ing)?.*$/, (req, res) ->
+			docpadServer.get /^\/feeds?\/shar(e|ing)(?:\/(.*))?$/, (req, res) ->
 				res.redirect 301, "http://feeds.feedburner.com/balupton/shared"
 
 			# Feeds
-			docpadServer.get /^\/feeds?\/?.*$/, (req, res) ->
+			docpadServer.get /^\/feeds?(?:\/(.*))?$/, (req, res) ->
 				res.redirect 301, "http://feeds.feedburner.com/balupton"
 
 
@@ -93,9 +93,6 @@ module.exports =
 	# Plugin Configuration
 
 	plugins:
-		marked:
-			markedOptions:
-				sanitize: false
 		feedr:
 			feeds:
 				'balupton-projects':

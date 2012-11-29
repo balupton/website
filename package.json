@@ -1,6 +1,6 @@
 {
 	"name": "balupton.docpad",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"description": "Website of Benjamin Lupton. Founder of Bevry, DocPad and HistoryJS. Aficionado of HTML5, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.",
 	"homepage": "https://github.com/balupton/balupton.docpad",
 	"keywords": [
@@ -35,7 +35,7 @@
 		"docpad-plugin-coffeescript": "2.x",
 		"docpad-plugin-eco": "2.x",
 		"docpad-plugin-feedr": "2.x",
-		"docpad-plugin-marked": "2.x",
+		"docpad-plugin-robotskirt": "2.x",
 		"docpad-plugin-partials": "2.x",
 		"docpad-plugin-stylus": "2.x"
 	},
