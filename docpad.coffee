@@ -21,7 +21,7 @@ getRankInUsers = (users) ->
 		when '2'
 			rank += 'nd'
 		when '3'
-			rank += '3'
+			rank += 'rd'
 		else
 			rank += 'th'
 
