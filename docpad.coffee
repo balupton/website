@@ -8,17 +8,22 @@ getRankInUsers = (users) ->
 
 	for user,index in users
 		if user.login is 'balupton'
-			rank = String(index)
+			rank = String(index+1)
 			break
 
-	if rank is 1
-		rank += 'st'
-	else if rank is 2
-		rank += 'nd'
-	else if rank is 3
-		rank += 'rd'
-	else
+	return rank  if rank is null
+
+	if rank >= 10 and rank < 20
 		rank += 'th'
+	else switch rank.substr(-1)
+		when 1
+			rank += 'st'
+		when 2
+			rank += 'nd'
+		when 3
+			rank += '3'
+		else
+			rank += 'th'
 
 	return rank
 

@@ -41,7 +41,7 @@ layout: 'page'
 				<em><strong>The <%= @getAustraliaJavaScriptRank() %> most watched JavaScript developer</strong> in Australia</em> via GitHub
 			</a><br/>
 			<a href="https://github.com/search?q=location%3AAustralia&type=Users">
-				<em><strong>The <%= @getAustraliaRank() %> 5th most watched developer</strong> in Australia</em> via GitHub
+				<em><strong>The <%= @getAustraliaRank() %> most watched developer</strong> in Australia</em> via GitHub
 			</a>
 		</h3>
 		<p>By following someone on <a href="https://github.com">GitHub</a>, you are indicating that you love their work enough to be notified of every single piece of code they publish, big or small. Having <a href="https://github.com/balupton">250+ followers</a> is a fantastic testimonial of my professional taste and impact on the web development community.</p>
