@@ -16,11 +16,11 @@ getRankInUsers = (users) ->
 	if rank >= 10 and rank < 20
 		rank += 'th'
 	else switch rank.substr(-1)
-		when 1
+		when '1'
 			rank += 'st'
-		when 2
+		when '2'
 			rank += 'nd'
-		when 3
+		when '3'
 			rank += '3'
 		else
 			rank += 'th'
