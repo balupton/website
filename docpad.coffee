@@ -2,6 +2,25 @@
 # Misc Configuration
 
 envConfig = process.env
+githubAuthString = "client_id=#{envConfig.BALUPTON_GITHUB_CLIENT_ID}&client_secret=#{envConfig.BALUPTON_GITHUB_CLIENT_SECRET}"
+getRankInUsers = (users) ->
+	rank = null
+
+	for user,index in users
+		if user.login is 'balupton'
+			rank = String(index)
+			break
+
+	if rank is 1
+		rank += 'st'
+	else if rank is 2
+		rank += 'nd'
+	else if rank is 3
+		rank += 'rd'
+	else
+		rank += 'th'
+
+	return rank
 
 
 # =================================
@@ -16,6 +35,7 @@ module.exports =
 	# To access one of these within our templates, refer to the FAQ: https://github.com/bevry/docpad/wiki/FAQ
 
 	templateData:
+		# Site Data
 		site:
 			url: "http://balupton.com"
 			title: "Benjamin Lupton"
@@ -31,6 +51,11 @@ module.exports =
 				reinvigorate: "52uel-236r9p108l"
 				google: "UA-4446117-1"
 				gauges: "5077ae93f5a1f5067b000028"
+
+		# Ranking Helpers
+		getAustraliaJavaScriptRank: -> return getRankInUsers(@feedr.feeds['github-australia-javascript'].users)
+		getAustraliaRank: -> return getRankInUsers(@feedr.feeds['github-australia'].users)
+
 
 	# =================================
 	# Collections
@@ -95,10 +120,14 @@ module.exports =
 	plugins:
 		feedr:
 			feeds:
+				'github-australia-javascript':
+					url: "https://api.github.com/legacy/user/search/location:Australia%20language:JavaScript?#{githubAuthString}"
+				'github-australia':
+					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
 				'balupton-projects':
-					url: "https://api.github.com/users/balupton/repos?client_id=#{envConfig.BALUPTON_GITHUB_CLIENT_ID}&client_secret=#{envConfig.BALUPTON_GITHUB_CLIENT_SECRET}"
+					url: "https://api.github.com/users/balupton/repos?#{githubAuthString}"
 				'bevry-projects':
-					url: "https://api.github.com/users/bevry/repos?client_id=#{envConfig.BALUPTON_GITHUB_CLIENT_ID}&client_secret=#{envConfig.BALUPTON_GITHUB_CLIENT_SECRET}"
+					url: "https://api.github.com/users/bevry/repos?#{githubAuthString}"
 				github:
 					url: "https://github.com/balupton.atom"
 				twitter:
