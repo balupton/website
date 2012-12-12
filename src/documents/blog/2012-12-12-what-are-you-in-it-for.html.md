@@ -5,7 +5,7 @@ tags: [life,rant]
 date: '2012-12-12'
 ---
 
-The fame, the glory, the money, the legacy? They're all good things to aim for, but will chasing them bring you them?
+The fame, the glory, the money, the legacy? They're all good things to aim for, but will chasing them bring them to you?
 
 Perhaps what is needed is to be the best you possibly can, in this moment - for this moment will always be now, now will never leave your side, as it is always now.
 
