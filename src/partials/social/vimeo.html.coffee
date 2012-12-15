@@ -1,3 +1,7 @@
+---
+cacheable: true
+---
+
 # Vimeo
 section '.vimeo.images', ->
 	header ->

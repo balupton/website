@@ -1,3 +1,7 @@
+---
+cacheable: true
+---
+
 # Facebook
 section '.facebook.links', ->
 	header ->

@@ -1,3 +1,7 @@
+---
+cacheable: true
+---
+
 # LinkedIn
 section '.linkedin.links', ->
 	header ->

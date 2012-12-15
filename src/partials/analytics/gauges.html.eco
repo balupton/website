@@ -1,3 +1,7 @@
+---
+cacheable: true
+---
+
 <% if 'production' in @getEnvironments(): %>
 	<!-- Gauges -->
 	<script>

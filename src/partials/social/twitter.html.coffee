@@ -1,3 +1,7 @@
+---
+cacheable: true
+---
+
 # Twitter
 section '.twitter.links', ->
 	header ->

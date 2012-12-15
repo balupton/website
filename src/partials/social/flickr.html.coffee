@@ -1,3 +1,7 @@
+---
+cacheable: true
+---
+
 # Flickr
 section '.flickr.images', ->
 	header ->

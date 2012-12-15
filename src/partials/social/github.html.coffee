@@ -1,3 +1,7 @@
+---
+cacheable: true
+---
+
 # Github
 section '.github.links', ->
 	header ->
