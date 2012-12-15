@@ -2,9 +2,9 @@
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     (function() {
-        window.disqus_shortname = 'bevry';
-        window.disqus_developer = document.location.href.indexOf('localhost') !== -1 ? 1 : 0;
-        window.disqus_url = document.location.href
+        window.disqus_shortname = '<%- @site.services.disqus %>';
+        window.disqus_developer = <%- if 'production' in @getEnvironments() then '0' else '1' %>;
+        window.disqus_url = document.location.href;
         window.disqus_identifier = '<%- @document.slug %>';
         window.disqus_title = '<%- @document.title or @document.name %>';
         if ( window.DISQUS ) {

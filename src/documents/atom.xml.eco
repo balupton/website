@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-	<title>Benjamin Lupton</title>
-	<link href="http://balupton.com/atom.xml" rel="self"/>
-	<link href="http://balupton.com"/>
+	<title><%= @site.title %></title>
+	<subtitle><%= @site.description %></subtitle>
+	<link href="http://balupton.com/atom.xml" rel="self" />
+	<link href="http://balupton.com" />
 	<updated><%= @site.date.toISOString() %></updated>
 	<id><%= @site.url %></id>
 	<author>

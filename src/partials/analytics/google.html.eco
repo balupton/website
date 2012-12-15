@@ -2,7 +2,7 @@
 	<!-- Google Analytics -->
 	<script>
 	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-35505181-1']);
+	_gaq.push(['_setAccount', '<%- @site.analytics.google %>']);
 	_gaq.push(['_setDomainName', 'bevry.me']);
 	_gaq.push(['_trackPageview']);
 	(function() {

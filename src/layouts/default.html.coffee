@@ -80,10 +80,10 @@ html lang: 'en', ->
 		# Sidebar
 		aside '.sidebar', ->
 			# Social
-			text @partial("social/#{social}.html", @)  for social in @site.social
+			text @partial("social/#{social}", @)  for social in @site.social
 
 		# Scripts
 		text @getBlock('scripts').add(@site.scripts).toHTML()
 
 		# Services
-		text @partial("services/#{service}.html", @)  for service in @site.services
+		text @partial("analytics/#{service}", @)  for own service of @site.analytics

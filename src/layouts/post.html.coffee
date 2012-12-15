@@ -24,12 +24,10 @@ for document in @document.relatedDocuments or []
 if relatedPosts.length
 	section '.related-documents', ->
 		h2 -> 'Related Posts'
-		text @partial 'content/document-list.html.coffee', {
+		text @partial 'content/document-list', {
 			documents: relatedPosts
 		}
 
 # Disqus
 footer '.page-comments', ->
-	text @partial 'services/disqus.html.eco', {
-		document: @document
-	}
+	text @partial('services/disqus', @)
