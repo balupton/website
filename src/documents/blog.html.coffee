@@ -10,6 +10,6 @@ posts = []
 for document in @getCollection('posts').toJSON()
 	posts.push(document)
 if posts.length
-	text @partial 'document-list.html.coffee', {
+	text @partial 'content/document-list.html.coffee', {
 		documents: posts
 	}

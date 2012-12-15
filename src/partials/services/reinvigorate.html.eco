@@ -1,0 +1,9 @@
+<% if 'production' in @getEnvironments(): %>
+	<!-- ReInvigorate -->
+	<script src="//include.reinvigorate.net/re_.js"></script>
+	<script>
+	try {
+	reinvigorate.track("dy05w-88s5zok1o8");
+	} catch(err) {}
+	</script>
+<% end %>
