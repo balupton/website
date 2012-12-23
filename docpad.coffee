@@ -219,8 +219,18 @@ module.exports =
 		getPreparedKeywords: -> @site.keywords.concat(@document.keywords or []).join(', ')
 
 		# Ranking Helpers
-		getAustraliaJavaScriptRank: -> return getRankInUsers(@feedr.feeds['github-australia-javascript'].users)
-		getAustraliaRank: -> return getRankInUsers(@feedr.feeds['github-australia'].users)
+		getAustraliaJavaScriptRank: ->
+			feed = @feedr.feeds['github-australia-javascript']?.users ? null
+			if feed
+				return getRankInUsers(feed)
+			else
+				return '2'
+		getAustraliaRank: ->
+			feed = @feedr.feeds['github-australia']?.users ? null
+			if feed
+				return getRankInUsers(feed)
+			else
+				return '5'
 
 
 	# =================================
