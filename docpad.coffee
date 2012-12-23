@@ -224,13 +224,13 @@ module.exports =
 			if feed
 				return getRankInUsers(feed)
 			else
-				return '2'
+				return '2nd'
 		getAustraliaRank: ->
 			feed = @feedr.feeds['github-australia']?.users ? null
 			if feed
 				return getRankInUsers(feed)
 			else
-				return '5'
+				return '5th'
 
 
 	# =================================
