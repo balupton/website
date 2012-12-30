@@ -304,9 +304,9 @@ module.exports =
 				'github-australia':
 					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
 				'balupton-projects':
-					url: "https://api.github.com/users/balupton/repos?#{githubAuthString}"
+					url: "https://api.github.com/users/balupton/repos?per_page=100&#{githubAuthString}"
 				'bevry-projects':
-					url: "https://api.github.com/users/bevry/repos?#{githubAuthString}"
+					url: "https://api.github.com/users/bevry/repos?per_page=100&#{githubAuthString}"
 				github:
 					url: "https://github.com/balupton.atom"
 				twitter:
