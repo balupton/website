@@ -62,8 +62,7 @@ footer '.page-footer', ->
 		# Github
 		div '.subscribeButton.github', ->
 			text """
-				<iframe src="//ghbtns.com/github-btn.html?user=balupton&type=follow&count=true"
-  allowtransparency="true" frameborder="0" scrolling="0" width="165" height="20"></iframe>
+				<iframe src="//ghbtns.com/github-btn.html?user=balupton&type=follow&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="165" height="20"></iframe>
 				"""
 
 		# Quora
