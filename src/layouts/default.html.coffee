@@ -38,6 +38,10 @@ html lang: 'en', ->
 		link rel: 'stylesheet', href: '/styles/print.css', media: 'print'
 		link rel: 'stylesheet', href: '/vendor/fancybox-2.0.5/jquery.fancybox.css', media: 'screen, projection'
 	body ->
+		# Modals
+		aside '.modal.contact', -> @partial('content/contact')
+		aside '.modal.backdrop', ->
+
 		# Heading
 		header '.heading', ->
 			a href:'/', title:'Return home', ->

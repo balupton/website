@@ -54,6 +54,7 @@ $.expr[":"].external = (obj, index, meta, stack) ->
 
 $ ->
 	# Prepare
+	$document = $(document)
 	$body = $(document.body)
 
 	# ---------------------------------
@@ -71,7 +72,7 @@ $ ->
 	openOutboundLink = ({url,action}) ->
 		# https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
 		hostname = url.replace(/^.+?\/+([^\/]+).*$/,'$1')
-		_gaq.push(['_trackEvent', "Outbound Links", hostname, url, 0, true])
+		_gaq?.push(['_trackEvent', "Outbound Links", hostname, url, 0, true])
 		openLink({url,action})
 		return
 
@@ -80,7 +81,7 @@ $ ->
 		# Prepare
 		$this = $(this)
 		url = $this.attr('href')
-		return  unless url
+		return  if !url or url.indexOf('mailto:') is 0
 
 		# Discover how we should handle the link
 		if event.which is 2 or event.metaKey
@@ -94,6 +95,42 @@ $ ->
 
 		# Done
 		return
+
+	# Modals
+	hideModals = ->
+		$('.modal').hide()
+	$document.on 'keyup', (event) ->
+		hideModals()  if event.keyCode is 27  # escape
+	$body.on 'click', '.modal.backdrop', (event) ->
+		event.stopImmediatePropagation()
+		event.preventDefault()
+		hideModals()
+	$body.on 'click', '.contact-button', (event) ->
+		event.stopImmediatePropagation()
+		event.preventDefault()
+		_gaq?.push(['_trackEvent', "Contact Modal", document.title, document.location.href, 0, true])
+
+		$contactModal = $('.contact.modal').css({
+			top: '5.5em'
+			height: 'auto'
+			opacity: 0
+		}).show()
+		$backdropModal = $('.modal.backdrop').css({
+			height: window.innerHeight*2
+		})
+
+		contactModalOffset = $contactModal.offset()
+		if $contactModal.height()+contactModalOffset.top*2 > window.innerHeight
+			console.log('asd')
+			$contactModal.css({
+				top: contactModalOffset.left
+				height: window.innerHeight-contactModalOffset.left*2
+			})
+
+		$backdropModal.show()
+		$contactModal.css({
+			opacity: 1
+		})
 
 
 	# ---------------------------------
@@ -139,5 +176,5 @@ $ ->
 	# Handle more to read areas
 	$('.more-to-read').hide()
 	$('.read-more').click ->
-		_gaq.push(['_trackEvent', "Read More", document.title, document.location.href, 0, true])
+		_gaq?.push(['_trackEvent', "Read More", document.title, document.location.href, 0, true])
 		$(this).hide().next('.more-to-read').show()

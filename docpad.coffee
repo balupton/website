@@ -199,15 +199,16 @@ module.exports =
 					url: 'http://creativecommons.org/licenses/MIT/'
 					title: 'Visit Website'
 				contact:
-					text: 'Email'
+					text: 'Contact'
 					url: 'mailto:b@bevry.me'
-					title: 'Email me'
+					title: 'Contact me'
+					cssClass: 'contact-button'
 
 		# Link Helper
 		getPreparedLink: (name) ->
 			link = @site.links[name]
 			renderedLink = """
-				<a href="#{link.url}" title="#{link.title}">#{link.text}</a>
+				<a href="#{link.url}" title="#{link.title}" class="#{link.cssClass or ''}">#{link.text}</a>
 				"""
 			return renderedLink
 
