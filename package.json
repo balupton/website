@@ -11,10 +11,10 @@
 	],
 	"author": "Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
 	"maintainers": [
-		"Benjamin Lupton <b@lupton.cc> (http://balupton.com)"
+		"Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
 	],
 	"contributors": [
-		"Benjamin Lupton <b@lupton.cc> (http://balupton.com)"
+		"Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
 	],
 	"bugs": {
 		"url": "https://github.com/balupton/balupton.docpad/issues"
@@ -39,6 +39,9 @@
 		"docpad-plugin-partials": "2.x",
 		"docpad-plugin-stylus": "2.x",
 		"docpad-plugin-text": "2.x"
+	},
+	"devDependencies": {
+		"docpad-plugin-livereload": "2.x"
 	},
 	"main": "node_modules/docpad/bin/docpad-server"
 }
