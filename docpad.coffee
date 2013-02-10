@@ -80,6 +80,15 @@ module.exports =
 					'''
 
 			services:
+				facebookLikeButton:
+					applicationId: '266367676718271'
+				facebookFollowButton:
+					applicationId: '266367676718271'
+					username: 'balupton'
+				twitterTweetButton: "balupton"
+				twitterFollowButton: "balupton"
+				githubFollowButton: "balupton"
+				quoraFollowButton: "Benjamin-Lupton"
 				disqus: 'balupton'
 				gauges: '5077ae93f5a1f5067b000028'
 				googleAnalytics: 'UA-4446117-1'
