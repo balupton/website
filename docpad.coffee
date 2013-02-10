@@ -74,11 +74,8 @@ module.exports =
 					</t>
 					'''
 				copyright: '''
-					<t render="html.coffee">
-						link = @getPreparedLink.bind(@)
-						text """
-							Unless stated otherwise, all content is licensed under the #{link 'cclicense'} and code licensed under the #{link 'mitlicense'}, &copy; #{link 'author'}
-							"""
+					<t render="html.md">
+						Unless stated otherwise; all works are Copyright © 2011+ [Benjamin Lupton](http://balupton.com) and licensed [permissively](http://en.wikipedia.org/wiki/Permissive_free_software_licence) under the [MIT License](http://creativecommons.org/licenses/MIT/) for code and the [Creative Commons Attribution 3.0 Unported License](http://creativecommons.org/licenses/by/3.0/) for everything else (including content, media and design), enjoy!
 					</t>
 					'''
 
@@ -188,14 +185,6 @@ module.exports =
 					text: 'open-source'
 					url: 'https://github.com/balupton/balupton.docpad'
 					title: 'View Website Source'
-				cclicense:
-					text: 'Creative Commons Attribution License'
-					url: 'http://creativecommons.org/licenses/by/3.0/'
-					title: 'Visit Website'
-				mitlicense:
-					text: 'MIT License'
-					url: 'http://creativecommons.org/licenses/MIT/'
-					title: 'Visit Website'
 				contact:
 					text: 'Contact'
 					url: 'mailto:b@bevry.me'

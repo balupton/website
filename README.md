@@ -1,13 +1,11 @@
-# Benjamin Lupton's Website, built with [DocPad](http://docpad.org)
-
-Source code is made public for your benefit, though please continue to respect the appropriate license.
+# [Benjamin Lupton's Website](http://balupton.com), built with [DocPad](http://docpad.org)
 
 
 ## Getting Started
 
-1. [Install DocPad](https://github.com/bevry/docpad) 
+1. [Install DocPad](http://docpad.org/install) 
 
-1. Clone and Run the Server
+1. Clone and run the server
 
 	``` bash
 	git clone git://github.com/balupton/balupton.docpad.git
@@ -23,6 +21,4 @@ Source code is made public for your benefit, though please continue to respect t
 
 ## License
 
-This website was created with [Bevry](http://bevry.me "Visit Website")'s [DocPad](http://docpad.org "Visit on GitHub").
-
-Unless stated otherwise, all content is licensed under the [Creative Commons Attribution License](http://creativecommons.org/licenses/by/3.0/ "Visit Website") and code licensed under the [MIT License](http://creativecommons.org/licenses/MIT/ "Visit Website"), © [Benjamin Lupton](http://balupton.com "Visit Website")
+Unless stated otherwise; all works are Copyright © 2011+ [Benjamin Lupton](http://balupton.com) <b@lupton.cc> and licensed [permissively](http://en.wikipedia.org/wiki/Permissive_free_software_licence) under the [MIT License](http://creativecommons.org/licenses/MIT/) for code and the [Creative Commons Attribution 3.0 Unported License](http://creativecommons.org/licenses/by/3.0/) for everything else (including content, media and design), enjoy!

@@ -68,8 +68,8 @@ html lang: 'en', ->
 
 		# Footing
 		footer '.footing', ->
-			p '.about', -> @site.text.about
-			p '.copyright', -> @site.text.copyright
+			div '.about', -> @site.text.about
+			div '.copyright', -> @site.text.copyright
 
 		# Sidebar
 		aside '.sidebar', ->
