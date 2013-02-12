@@ -24,8 +24,8 @@
 		"url" : "http://github.com/balupton/balupton.docpad.git"
 	},
 	"engines": {
-		"node": "latest",
-		"npm": "latest"
+		"node": "0.8.x",
+		"npm": "1.1.x"
 	},
 	"dependencies": {
 		"docpad": "6.x",
