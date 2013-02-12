@@ -319,7 +319,7 @@ module.exports =
 				'github-australia':
 					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
 				'github-profile':
-					url: "https://api.github.com/users/balupton"
+					url: "https://api.github.com/users/balupton?#{githubAuthString}"
 				'balupton-projects':
 					url: "https://api.github.com/users/balupton/repos?per_page=100&#{githubAuthString}"
 				'bevry-projects':
