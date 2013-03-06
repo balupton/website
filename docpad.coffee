@@ -222,6 +222,20 @@ module.exports =
 		getAustraliaRank: ->
 			feed = @feedr.feeds['github-australia']?.users ? null
 			return getRankInUsers(feed,'3rd')
+		getGithubFollowers: (floorToNearest=50) ->
+			followers = @feedr.feeds['github-profile']?.followers
+			if followers
+				result = Math.floor(followers/floorToNearest)*floorToNearest
+			else
+				result = 250
+			return result
+		getStackoverflowReputation: (floorToNearest=1000) ->
+			reputation = @feedr.feeds['stackoverflow-profile']?.users?[0]?.reputation ? null
+			if reputation
+				result = Math.floor(reputation/floorToNearest)*floorToNearest
+			else
+				result = 9000
+			return result
 
 
 	# =================================
@@ -291,20 +305,24 @@ module.exports =
 	plugins:
 		feedr:
 			feeds:
+				'stackoverflow-profile':
+					url: 'http://api.stackoverflow.com/1.0/users/130638/'
 				'github-australia-javascript':
 					url: "https://api.github.com/legacy/user/search/location:Australia%20language:JavaScript?#{githubAuthString}"
 				'github-australia':
 					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
+				'github-profile':
+					url: "https://api.github.com/users/balupton?#{githubAuthString}"
 				'balupton-projects':
 					url: "https://api.github.com/users/balupton/repos?per_page=100&#{githubAuthString}"
 				'bevry-projects':
 					url: "https://api.github.com/users/bevry/repos?per_page=100&#{githubAuthString}"
-				github:
+				'github':
 					url: "https://github.com/balupton.atom"
-				twitter:
+				'twitter':
 					url: "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
-				vimeo:
+				'vimeo':
 					url: "http://vimeo.com/api/v2/balupton/videos.json"
-				#flickr:
+				#'flickr':
 				#	url: "http://api.flickr.com/services/feeds/photos_public.gne?id=35776898@N00&lang=en-us&format=json"
 

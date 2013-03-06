@@ -32,7 +32,7 @@ layout: 'page'
 				</strong> via StackOverflow
 			</a>
 		</h3>
-		<p>With <a href="http://stackoverflow.com/users/130638/balupton">8000+ reputation</a> on <a href="http://stackoverflow.com/faq">StackOverflow</a> I’ve been able to empower and teach thousands of other web developers by sharing my knowledge and expertise.</p>
+		<p>With <a href="http://stackoverflow.com/users/130638/balupton"><%- @getStackoverflowReputation() %>+ reputation</a> on <a href="http://stackoverflow.com/faq">StackOverflow</a> I’ve been able to empower and teach thousands of other web developers by sharing my knowledge and expertise.</p>
 	</section>
 
 	<section class="awards-watched">
@@ -44,7 +44,7 @@ layout: 'page'
 				<em><strong>The <%= @getAustraliaRank() %> most watched developer</strong> in Australia</em> via GitHub
 			</a>
 		</h3>
-		<p>By following someone on <a href="https://github.com">GitHub</a>, you are indicating that you love their work enough to be notified of every single piece of code they publish, big or small. Having <a href="https://github.com/balupton">250+ followers</a> is a fantastic testimonial of my professional taste and impact on the web development community.</p>
+		<p>By following someone on <a href="https://github.com">GitHub</a>, you are indicating that you love their work enough to be notified of every single piece of code they publish, big or small. Having <a href="https://github.com/balupton"><%- @getGithubFollowers() %>+ followers</a> is a fantastic testimonial of my professional taste and impact on the web development community.</p>
 	</section>
 
 	<section class="awards-speaker">
