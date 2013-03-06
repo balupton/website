@@ -3,7 +3,7 @@
 
 envConfig = process.env
 githubAuthString = "client_id=#{envConfig.BALUPTON_GITHUB_CLIENT_ID}&client_secret=#{envConfig.BALUPTON_GITHUB_CLIENT_SECRET}"
-getRankInUsers = (users) ->
+getRankInUsers = (users, fallback=null) ->
 	rank = null
 
 	for user,index in users
@@ -11,7 +11,7 @@ getRankInUsers = (users) ->
 			rank = String(index+1)
 			break
 
-	return rank  if rank is null
+	return fallback  if rank is null
 
 	if rank >= 10 and rank < 20
 		rank += 'th'
@@ -25,7 +25,7 @@ getRankInUsers = (users) ->
 		else
 			rank += 'th'
 
-	return rank
+	return rank or fallback
 
 
 # =================================
@@ -218,16 +218,10 @@ module.exports =
 		# Ranking Helpers
 		getAustraliaJavaScriptRank: ->
 			feed = @feedr.feeds['github-australia-javascript']?.users ? null
-			if feed
-				return getRankInUsers(feed)
-			else
-				return '2nd'
+			return getRankInUsers(feed,'2nd')
 		getAustraliaRank: ->
 			feed = @feedr.feeds['github-australia']?.users ? null
-			if feed
-				return getRankInUsers(feed)
-			else
-				return '5th'
+			return getRankInUsers(feed,'3rd')
 
 
 	# =================================
@@ -245,6 +239,7 @@ module.exports =
 	# Events
 
 	events:
+
 		serverExtend: (opts) ->
 			# Prepare
 			docpadServer = opts.server
