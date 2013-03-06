@@ -47,23 +47,22 @@ layout: 'page'
 		<p>By following someone on <a href="https://github.com">GitHub</a>, you are indicating that you love their work enough to be notified of every single piece of code they publish, big or small. Having <a href="https://github.com/balupton">250+ followers</a> is a fantastic testimonial of my professional taste and impact on the web development community.</p>
 	</section>
 
+	<section class="awards-speaker">
+		<h3>
+			<a href="http://speakerrate.com/speakers/11963-benjamin-lupton">
+				<em><strong>International speaker and trainer</strong></em>
+			</a>
+		</h3>
+		<p>The opportunity of <a href="http://speakerrate.com/speakers/11963-benjamin-lupton">speaking and training people around the world</a> is one that I'm so humbled to have. I can think of nothing better than <a href="http://www.youtube.com/user/balupton">inspiring, empowering, and connecting with amazing individuals all across the globe.</a></p>
+	</section>
+
 	<section class="awards-satisfaction">
 		<h3>
 			<a href="http://www.linkedin.com/profile/view?id=15748447#profile-recommendations">
-				<em><strong>100% client satisfaction</strong> in the past year</em> via LinkedIn
+				<em><strong>100% client satisfaction</strong> for the past two years</em> via LinkedIn
 			</a>
 		</h3>
 		<p>Being able to provide a level of excellence which <a href="http://www.linkedin.com/profile/view?id=15748447#profile-recommendations">converts potential leads into raving fans</a>, won’t always be easy, but it is something I’m comitted to ensuring every single time.</p>
-	</section>
-
-	<section class="awards-historyjs">
-		<h3>
-			<a href="http://historyjs.net"><strong>Created History.js</strong></a><br/>
-			<a href="https://github.com/languages/JavaScript/most_watched?page=2">
-				<em>One of the 40 most popular JavaScript projects in the world</em> via GitHub
-			</a>
-		</h3>
-		<p><a href="https://github.com/balupton/history.js">History.js</a> is now one of the most game changing and popular utilities for web developers everywhere. Enabling and empowering <a href="https://github.com/balupton/history.js/wiki/Showcase">freelancers to thought leaders</a> to create the next generation of leading stateful web applications easily and effortlessly.</p>
 	</section>
 
 	<section class="awards-docpad">
@@ -74,6 +73,16 @@ layout: 'page'
 			</a>
 		</h3>
 		<p><a href="https://github.com/bevry/docpad">DocPad</a> rethought web development and created a new kind of content management system. Each day <a href="https://github.com/bevry/docpad/wiki/Showcase">more and more websites</a> built with DocPad are going live, and more and more developers are joining the DocPad community.</p>
+	</section>
+
+	<section class="awards-historyjs">
+		<h3>
+			<a href="http://historyjs.net"><strong>Created History.js</strong></a><br/>
+			<a href="https://github.com/languages/JavaScript/most_watched?page=2">
+				<em>One of the 40 most popular JavaScript projects in the world</em> via GitHub
+			</a>
+		</h3>
+		<p><a href="https://github.com/balupton/history.js">History.js</a> is now one of the most game changing and popular utilities for web developers everywhere. Enabling and empowering <a href="https://github.com/balupton/history.js/wiki/Showcase">freelancers to thought leaders</a> to create the next generation of leading stateful web applications easily and effortlessly.</p>
 	</section>
 
 </section>
