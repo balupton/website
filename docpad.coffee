@@ -317,6 +317,10 @@ module.exports =
 					url: "https://api.github.com/users/balupton/repos?per_page=100&#{githubAuthString}"
 				'bevry-projects':
 					url: "https://api.github.com/users/bevry/repos?per_page=100&#{githubAuthString}"
+				'browserstate-projects':
+					url: "https://api.github.com/users/browserstate/repos?per_page=100&#{githubAuthString}"
+				'docpad-projects':
+					url: "https://api.github.com/users/docpad/repos?per_page=100&#{githubAuthString}"
 				'github':
 					url: "https://github.com/balupton.atom"
 				'twitter':

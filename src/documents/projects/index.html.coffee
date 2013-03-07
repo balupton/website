@@ -4,7 +4,11 @@ layout: 'page'
 ---
 
 # Projects
-projects = (@feedr.feeds['balupton-projects'] or []).concat?(@feedr.feeds['bevry-projects'] or []).sort?((a,b) -> b.watchers - a.watchers) or []
+projects = (@feedr.feeds['balupton-projects'] or [])
+	.concat?(@feedr.feeds['bevry-projects'] or [])
+	.concat?(@feedr.feeds['browserstate-projects'] or [])
+	.concat?(@feedr.feeds['docpad-projects'] or [])
+	.sort?((a,b) -> b.watchers - a.watchers) or []
 if projects.length
 	text @partial 'content/project-list.html.coffee', {
 		projects: projects
