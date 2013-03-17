@@ -9,8 +9,8 @@ nav '.project-list', 'typeof':'dc:collection', ->
 					text ' / '
 					strong '.project-name', property:'dc:name', ->
 						project.name
-					small '.project-watchers', property:'dc:watchers', ->
-						text "#{project.watchers} watchers"
+					small '.project-stars', property:'dc:stars', ->
+						text "#{project.watchers} stars"
 			if project.description
 				p '.project-description', property:'dc:description', ->
 					project.description
