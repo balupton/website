@@ -37,10 +37,10 @@ layout: 'page'
 
 	<section class="awards-watched">
 		<h3>
-			<a href="https://github.com/search?q=location%3AAustralia&type=Users&language=JavaScript">
+			<a href="https://github.com/search?q=location%3AAustralia&type=Users&s=followers&language=JavaScript">
 				<em><strong>The <%= @getAustraliaJavaScriptRank() %> most watched JavaScript developer</strong> in Australia</em> via GitHub
 			</a><br/>
-			<a href="https://github.com/search?q=location%3AAustralia&type=Users">
+			<a href="https://github.com/search?q=location%3AAustralia&type=Users&s=followers">
 				<em><strong>The <%= @getAustraliaRank() %> most watched developer</strong> in Australia</em> via GitHub
 			</a>
 		</h3>

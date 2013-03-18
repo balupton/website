@@ -221,7 +221,7 @@ module.exports =
 			return getRankInUsers(feed,'2nd')
 		getAustraliaRank: ->
 			feed = @feedr.feeds['github-australia']?.users ? null
-			return getRankInUsers(feed,'3rd')
+			return getRankInUsers(feed,'4th')
 		getGithubFollowers: (floorToNearest=50) ->
 			followers = @feedr.feeds['github-profile']?.followers
 			if followers
@@ -311,6 +311,7 @@ module.exports =
 					url: "https://api.github.com/legacy/user/search/location:Australia%20language:JavaScript?#{githubAuthString}"
 				'github-australia':
 					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
+					# https://github.com/search?q=location%3AAustralia&type=Users&s=followers
 				'github-profile':
 					url: "https://api.github.com/users/balupton?#{githubAuthString}"
 				'balupton-projects':
