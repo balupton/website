@@ -10,7 +10,7 @@ if @document.title
 				strong '.page-title', property:'dcterms:title', ->
 					@document.title
 				small '.page-date', property:'dc:date', ->
-					" #{@document.date.toShortDateString()}"
+					" #{@document.date.toDateString()}"
 
 # Content
 div '.page-content', property: 'sioc:content',
