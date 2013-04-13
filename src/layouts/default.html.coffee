@@ -63,7 +63,7 @@ html lang: 'en', ->
 		article '.page',
 			'typeof': 'sioc:page'
 			about: @document.url
-			datetime: @document.date.toISODateString()
+			datetime: @document.date.toISOString()
 			-> @content
 
 		# Footing
