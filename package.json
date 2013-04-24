@@ -28,7 +28,7 @@
 		"npm": "1.2"
 	},
 	"dependencies": {
-		"docpad": "6.x",
+		"docpad": "6.30",
 		"docpad-plugin-cachr": "2.x",
 		"docpad-plugin-cleanurls": "2.x",
 		"docpad-plugin-coffeekup": "2.x",
