@@ -96,10 +96,12 @@ module.exports =
 
 			social:
 				"""
+				flattr
 				facebook
 				linkedin
 				github
 				twitter
+				youtube
 				vimeo
 				""".trim().split('\n')
 
@@ -322,12 +324,17 @@ module.exports =
 					url: "https://api.github.com/users/browserstate/repos?per_page=100&#{githubAuthString}"
 				'docpad-projects':
 					url: "https://api.github.com/users/docpad/repos?per_page=100&#{githubAuthString}"
+				#'flattr':
+				#	url: 'https://api.flattr.com/rest/v2/users/balupton/activities.atom'
 				'github':
 					url: "https://github.com/balupton.atom"
 				'twitter':
 					url: "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
 				'vimeo':
 					url: "http://vimeo.com/api/v2/balupton/videos.json"
+				'youtube':
+					#url: "http://gdata.youtube.com/feeds/base/users/balupton/uploads?alt=json&orderby=published&client=ytapi-youtube-profile"
+					url: "http://gdata.youtube.com/feeds/api/playlists/PLYVl5EnzwqsQs0tBLO6ug6WbqAbrpVbNf?alt=json"
 				#'flickr':
 				#	url: "http://api.flickr.com/services/feeds/photos_public.gne?id=35776898@N00&lang=en-us&format=json"
 

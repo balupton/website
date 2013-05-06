@@ -2,11 +2,17 @@
 - Facebook
 - LinkedIn
 
+## Mighty Social ICons
+- Youtube
+
 ## WPZoom Social Media Icons
 - Flickr (customised by balupton)
 
 ## GitHub Icons
 - Github (customised by balupton)
+
+## Official
+- Flattr
 
 ## Unkown (sorry)
 - Vimeo

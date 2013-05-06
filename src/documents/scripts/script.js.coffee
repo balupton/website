@@ -138,7 +138,7 @@ $ ->
 
 	# Prevent scrolling on our sidebar scrollers
 	#$('.scroller').preventScrollBubbling()
-	$('section.vimeo a').click (event) ->
+	$('section.videos a').click (event) ->
 		# Continue as normal for cmd clicks etc
 		return true  if event.which is 2 or event.metaKey
 
@@ -146,26 +146,30 @@ $ ->
 		event.preventDefault()
 		event.stopImmediatePropagation()
 
-		# Show the fancybox
-		$a = $(@)
-		url = $a.attr('href')
-		videoId = url.replace(/[^0-9]/g,'')
+		# Prepare the fancybox
+		$video = $(@)
 		video =
-			id: videoId
-			title: $a.attr('title')
-			width: $a.data('width')
-			height: $a.data('height')
+			title: $video.attr('title')
+			width: $video.data('width')
+			height: $video.data('height')
+			href: $video.attr('href')
+			embed: $video.data('embed') or $video.attr('href')
+
+		# Show the facebox
 		$.fancybox.open(
-			href: "http://player.vimeo.com/video/#{video.id}"
+			href: video.embed
 			title: video.title
 			width: video.width
 			height: video.height
 			padding: 0
 			type: 'iframe'
+			swf:
+				allowfullscreen: true
+				wmode: 'transparent'
 		)
 
 		# Track the click
-		openOutboundLink({url,action:false})
+		openOutboundLink({url:video.href,action:false})
 
 		# Done
 		return
