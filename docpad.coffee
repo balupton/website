@@ -240,7 +240,7 @@ module.exports =
 				.concat(@feedr.feeds['browserstate-projects'] or [])
 				.concat(@feedr.feeds['docpad-projects'] or [])
 				.filter((a) -> a.fork is false)
-				?.sort?((a,b) -> b.watchers - a.watchers) or []
+				.sort?((a,b) -> b.watchers - a.watchers)
 
 		# Project Counts
 		getProjectCounts: ->
