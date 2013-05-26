@@ -234,13 +234,23 @@ module.exports =
 
 		# Project Helpers
 		getProjects: ->
-			@projects or= []
-				.concat(@feedr.feeds['balupton-projects'] or [])
-				.concat(@feedr.feeds['bevry-projects'] or [])
-				.concat(@feedr.feeds['browserstate-projects'] or [])
-				.concat(@feedr.feeds['docpad-projects'] or [])
-				.filter((a) -> a.fork is false)
-				.sort?((a,b) -> b.watchers - a.watchers)
+			return @projects  if @projects
+
+			@projects = []
+
+			feeds = 'balupton bevry browserstate docpad'.split(' ')
+			for feed in feeds
+				projects = @feedr.feeds[feed+'-projects'] or []
+				if projects.length is 0
+					docpad.warn("The feed #{feed} was empty")
+				else
+					for project in projects
+						continue  if project.fork
+						@projects.push(project)
+
+			@projects.sort?((a,b) -> b.watchers - a.watchers)
+
+			return @projects
 
 		# Project Counts
 		getProjectCounts: ->
