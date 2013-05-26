@@ -337,6 +337,7 @@ module.exports =
 
 	plugins:
 		feedr:
+			timeout: 60*1000
 			feeds:
 				'stackoverflow-profile':
 					url: 'http://api.stackoverflow.com/1.0/users/130638/'
