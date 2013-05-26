@@ -52,12 +52,13 @@ html lang: 'en', ->
 		# Pages
 		nav '.pages', ->
 			ul ->
-				for page in @site.pages
-					match = page.match or page.url
-					cssname = if @document.url.indexOf(match) is 0 then 'active' else 'inactive'
+				for page in @getCollection('pages').toJSON()
+					pageMatch = page.match or page.url
+					documentMatch = @document.match or @document.url
+					cssname = if documentMatch.indexOf(pageMatch) is 0 then 'active' else 'inactive'
 					li 'class':cssname, ->
-						a href:page.url, ->
-							page.label
+						a href:page.url, title:page.menuTitle, ->
+							page.menuText or page.name
 
 		# Document
 		article '.page',

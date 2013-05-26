@@ -3,7 +3,8 @@
 
 envConfig = process.env
 githubAuthString = "client_id=#{envConfig.BALUPTON_GITHUB_CLIENT_ID}&client_secret=#{envConfig.BALUPTON_GITHUB_CLIENT_SECRET}"
-getRankInUsers = (users, fallback=null) ->
+
+getRankInUsers = (users=[]) ->
 	rank = null
 
 	for user,index in users
@@ -11,21 +12,30 @@ getRankInUsers = (users, fallback=null) ->
 			rank = String(index+1)
 			break
 
-	return fallback  if rank is null
+	return rank
 
-	if rank >= 10 and rank < 20
-		rank += 'th'
-	else switch rank.substr(-1)
-		when '1'
-			rank += 'st'
-		when '2'
-			rank += 'nd'
-		when '3'
-			rank += 'rd'
-		else
+suffixNumber = (rank) ->
+	rank = String(rank)
+
+	if rank
+		if rank >= 1000
+			rank = rank.substring(0,rank.length-3)+','+rank.substr(-3)
+		else if rank >= 10 and rank < 20
 			rank += 'th'
+		else switch rank.substr(-1)
+			when '1'
+				rank += 'st'
+			when '2'
+				rank += 'nd'
+			when '3'
+				rank += 'rd'
+			else
+				rank += 'th'
 
-	return rank or fallback
+	return rank
+
+floorToNearest = (value,floorToNearest) ->
+	result = Math.floor(value/floorToNearest)*floorToNearest
 
 
 # =================================
@@ -128,21 +138,6 @@ module.exports =
 					title: 'Tweets'
 			]
 
-			pages: [
-					url: '/'
-					match: '/index'
-					label: 'home'
-					title: 'Return home'
-				,
-					url: '/projects'
-					label: 'projects'
-					title: 'View projects'
-				,
-					url: '/blog'
-					label: 'blog'
-					title: 'View articles'
-			]
-
 			links:
 				docpad:
 					text: 'DocPad'
@@ -218,26 +213,52 @@ module.exports =
 		getPreparedKeywords: -> @site.keywords.concat(@document.keywords or []).join(', ')
 
 		# Ranking Helpers
+		suffixNumber: suffixNumber
+		floorToNearest: floorToNearest
 		getAustraliaJavaScriptRank: ->
 			feed = @feedr.feeds['github-australia-javascript']?.users ? null
-			return getRankInUsers(feed,'2nd')
+			return getRankInUsers(feed) or 2
 		getAustraliaRank: ->
 			feed = @feedr.feeds['github-australia']?.users ? null
-			return getRankInUsers(feed,'4th')
-		getGithubFollowers: (floorToNearest=50) ->
-			followers = @feedr.feeds['github-profile']?.followers
-			if followers
-				result = Math.floor(followers/floorToNearest)*floorToNearest
-			else
-				result = 250
+			return getRankInUsers(feed) or 4
+		getGithubTop: ->
+			top = @feedr.feeds['github-top'] ? null
+			result = /\#([0-9]+).+?balupton/.exec(top)?[1] or 23
 			return result
-		getStackoverflowReputation: (floorToNearest=1000) ->
-			reputation = @feedr.feeds['stackoverflow-profile']?.users?[0]?.reputation ? null
-			if reputation
-				result = Math.floor(reputation/floorToNearest)*floorToNearest
-			else
-				result = 9000
-			return result
+		getGithubFollowers: (z=50) ->
+			followers = @feedr.feeds['github-profile']?.followers or 358
+			return followers
+		getStackoverflowReputation: (z=1000) ->
+			reputation = @feedr.feeds['stackoverflow-profile']?.users?[0]?.reputation ? 10746
+			return reputation
+
+		# Project Helpers
+		getProjects: ->
+			@projects or= []
+				.concat(@feedr.feeds['balupton-projects'] or [])
+				.concat(@feedr.feeds['bevry-projects'] or [])
+				.concat(@feedr.feeds['browserstate-projects'] or [])
+				.concat(@feedr.feeds['docpad-projects'] or [])
+				.filter((a) -> a.fork is false)
+				?.sort?((a,b) -> b.watchers - a.watchers) or []
+
+		# Project Counts
+		getProjectCounts: ->
+			@projectCounts or= (=>
+				projects = @getProjects()
+				forks = stars = 0
+				total = projects.length
+
+				for project in projects
+					forks += project.forks
+					stars += project.watchers
+
+				total or= 136
+				forks or= 1057
+				stars or= 8024
+
+				return {forks, stars, total}
+			)()
 
 
 	# =================================
@@ -245,7 +266,7 @@ module.exports =
 
 	collections:
 		pages: ->
-			@getCollection('documents').findAllLive({pageOrder:$exists:true},[pageOrder:1])
+			@getCollection('documents').findAllLive({menuOrder:$exists:true},[menuOrder:1])
 
 		posts: ->
 			@getCollection('documents').findAllLive({relativeOutDirPath:'blog'},[date:-1])
@@ -314,6 +335,8 @@ module.exports =
 				'github-australia':
 					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
 					# https://github.com/search?q=location%3AAustralia&type=Users&s=followers
+				'github-top':
+					url: 'https://gist.github.com/paulmillr/2657075/raw/active.md'
 				'github-profile':
 					url: "https://api.github.com/users/balupton?#{githubAuthString}"
 				'balupton-projects':

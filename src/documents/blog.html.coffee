@@ -1,6 +1,9 @@
 ---
 title: 'Articles'
 layout: 'page'
+menuText: 'blog'
+menuTitle: 'View articles'
+menuOrder: 3
 url: '/blog'
 urls: ['/blog/','/blog/index.html','/blog.html']
 ---

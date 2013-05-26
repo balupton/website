@@ -1,5 +1,9 @@
 ---
 name: 'Home'
+match: '/index'
+menuText: 'home'
+menuTitle: 'Return home'
+menuOrder: 1
 layout: 'page'
 ---
 
@@ -32,19 +36,31 @@ layout: 'page'
 				</strong> via StackOverflow
 			</a>
 		</h3>
-		<p>With <a href="http://stackoverflow.com/users/130638/balupton"><%- @getStackoverflowReputation() %>+ reputation</a> on <a href="http://stackoverflow.com/faq">StackOverflow</a> I’ve been able to empower and teach thousands of other web developers by sharing my knowledge and expertise.</p>
+		<p>With <a href="http://stackoverflow.com/users/130638/balupton"><%- @suffixNumber @floorToNearest @getStackoverflowReputation(), 1000 %> reputation</a> on <a href="http://stackoverflow.com/faq">StackOverflow</a> I’ve been able to empower and teach thousands of other web developers by sharing my knowledge and expertise.</p>
+	</section>
+
+	<section class="awards-active">
+		<h3>
+			<a href="http://git.io/top">
+				<em><strong>The <%= @suffixNumber @getGithubTop() %> most active open-source developer in the world</strong></em> via GitHub
+			</a><br/>
+			<a href="/projects">
+				<em><strong>Created <%= @getProjectCounts().total %> open-source projects</strong></em> via GitHub
+			</a>
+		</h3>
+		<p>Working with open-source every day, I'm serious about open-collaboration.</p>
 	</section>
 
 	<section class="awards-watched">
 		<h3>
 			<a href="https://github.com/search?q=location%3AAustralia&type=Users&s=followers&language=JavaScript">
-				<em><strong>The <%= @getAustraliaJavaScriptRank() %> most watched JavaScript developer</strong> in Australia</em> via GitHub
+				<em><strong>The <%= @suffixNumber @getAustraliaJavaScriptRank() %> most watched JavaScript developer</strong> in Australia</em> via GitHub
 			</a><br/>
 			<a href="https://github.com/search?q=location%3AAustralia&type=Users&s=followers">
-				<em><strong>The <%= @getAustraliaRank() %> most watched developer</strong> in Australia</em> via GitHub
+				<em><strong>The <%= @suffixNumber @getAustraliaRank() %> most watched developer</strong> in Australia</em> via GitHub
 			</a>
 		</h3>
-		<p>By following someone on <a href="https://github.com">GitHub</a>, you are indicating that you love their work enough to be notified of every single piece of code they publish, big or small. Having <a href="https://github.com/balupton"><%- @getGithubFollowers() %>+ followers</a> is a fantastic testimonial of my professional taste and impact on the web development community.</p>
+		<p>By following someone on <a href="https://github.com">GitHub</a>, you are indicating that you love their work enough to be notified of every single piece of code they publish, big or small. Having <a href="https://github.com/balupton"><%- @getGithubFollowers() %> followers</a> is a fantastic testimonial of my professional taste and impact on the web development community.</p>
 	</section>
 
 	<section class="awards-speaker">
