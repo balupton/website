@@ -221,10 +221,6 @@ module.exports =
 		getAustraliaRank: ->
 			feed = @feedr.feeds['github-australia']?.users ? null
 			return getRankInUsers(feed) or 4
-		getGithubTop: ->
-			top = @feedr.feeds['github-top'] ? null
-			result = /\#([0-9]+).+?balupton/.exec(top)?[1] or 23
-			return result
 		getGithubFollowers: (z=50) ->
 			followers = @feedr.feeds['github-profile']?.followers or 358
 			return followers
@@ -253,11 +249,16 @@ module.exports =
 			return @projects
 
 		# Project Counts
-		getProjectCounts: ->
-			@projectCounts or= (=>
+		getGithubCounts: ->
+			@githubCounts or= (=>
 				projects = @getProjects()
 				forks = stars = 0
 				total = projects.length
+
+				top = @feedr.feeds['github-top'] ? null
+				topData = /\#([0-9]+).+?balupton.+?([0-9]+)/.exec(top)
+				rank = topData?[1] or 23
+				contributions = topData?[2] or 3582
 
 				for project in projects
 					forks += project.forks
@@ -267,7 +268,7 @@ module.exports =
 				forks or= 1057
 				stars or= 8024
 
-				return {forks, stars, total}
+				return {forks, stars, projects:total, rank, contributions}
 			)()
 
 

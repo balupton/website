@@ -10,7 +10,7 @@ urls: ['/projects/','/projects/index.html','/projects.html']
 
 # Prepare
 projects = @getProjects()
-projectCounts = @getProjectCounts()
+githubCounts = @getGithubCounts()
 
 # Check
 if projects.length
@@ -23,5 +23,5 @@ if projects.length
 	h3 'Totals'
 	ul ->
 		li -> "Projects: #{projects.length}"
-		li -> "Stars: #{projectCounts.stars}"
-		li -> "Forks: #{projectCounts.forks}"
+		li -> "Stars: #{githubCounts.stars}"
+		li -> "Forks: #{githubCounts.forks}"

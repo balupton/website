@@ -42,13 +42,14 @@ layout: 'page'
 	<section class="awards-active">
 		<h3>
 			<a href="http://git.io/top">
-				<em><strong>The <%= @suffixNumber @getGithubTop() %> most active open-source developer in the world</strong></em> via GitHub
+				<em><strong>The <%= @suffixNumber @getGithubCounts().rank %> most active open-source developer in the world</strong></em> via GitHub
 			</a><br/>
 			<a href="/projects">
-				<em><strong>Created <%= @getProjectCounts().total %> open-source projects</strong></em> via GitHub
+				<em><strong>Created <%= @getGithubCounts().projects %> open-source projects</strong></em> via GitHub
 			</a>
 		</h3>
-		<p>Working with open-source every day, I'm serious about open-collaboration.</p>
+		<p>Working with open-source every day, I'm serious about open-collaboration. I've made over <a href="https://github.com/balupton/"><%= @suffixNumber @floorToNearest(@getGithubCounts().contributions, 100) %> contributions to the open-source scene in the past year</a> and had my work <a href="/projects">starred by over <%= @suffixNumber @floorToNearest(@getGithubCounts().stars, 50) %> fellow developers.</a>
+		</p>
 	</section>
 
 	<section class="awards-watched">
