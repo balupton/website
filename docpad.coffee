@@ -107,17 +107,19 @@ module.exports =
 			social:
 				"""
 				flattr
+				twitter
 				facebook
 				linkedin
 				github
-				twitter
 				youtube
 				vimeo
 				""".trim().split('\n')
 
+			styles: []  # embedded in layout
+
 			scripts: """
-				/vendor/jquery-1.7.1.js
-				/vendor/fancybox-2.0.5/jquery.fancybox.js
+				/vendor/jquery-2.0.2.js
+				/vendor/fancybox-2.1.5/jquery.fancybox.js
 				/scripts/script.js
 				""".trim().split('\n')
 
@@ -365,8 +367,8 @@ module.exports =
 				#	url: 'https://api.flattr.com/rest/v2/users/balupton/activities.atom'
 				'github':
 					url: "https://github.com/balupton.atom"
-				'twitter':
-					url: "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
+				#'twitter':
+				#	url: "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
 				'vimeo':
 					url: "http://vimeo.com/api/v2/balupton/videos.json"
 				'youtube':

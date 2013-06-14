@@ -89,7 +89,7 @@ layout: 'page'
 				<em>One of the 20 most popular CoffeeScript projects in the world</em> via GitHub
 			</a>
 		</h3>
-		<p><a href="https://github.com/bevry/docpad">DocPad</a> rethought web development and created a new kind of content management system. Each day <a href="https://github.com/bevry/docpad/wiki/Showcase">more and more websites</a> built with DocPad are going live, and more and more developers are joining the DocPad community.</p>
+		<p><a href="http://docpad.org">DocPad</a> rethought web development and created a new kind of content management system. Each day <a href="http://docpad.org/docs/showcase">more and more websites</a> built with DocPad are going live, and more and more developers are joining the DocPad community.</p>
 	</section>
 
 	<section class="awards-historyjs">
