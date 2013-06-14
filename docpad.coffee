@@ -347,6 +347,8 @@ module.exports =
 				'github-australia':
 					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
 					# https://github.com/search?q=location%3AAustralia&type=Users&s=followers
+				'github-gists':
+					url: "https://api.github.com/users/balupton/gists?per_page=100&#{githubAuthString}"
 				'github-top':
 					url: 'https://gist.github.com/paulmillr/2657075/raw/active.md'
 				'github-profile':
