@@ -52,6 +52,7 @@ module.exports =
 	templateData:
 		# Site Data
 		site:
+			version: require('./package.json').version
 			url: "http://balupton.com"
 			title: "Benjamin Lupton"
 			author: "Benjamin Lupton"

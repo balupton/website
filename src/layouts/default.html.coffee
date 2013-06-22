@@ -34,8 +34,8 @@ html lang: 'en', ->
 
 		# Styles
 		text  @getBlock('styles').add(@site.styles).toHTML()
-		link rel: 'stylesheet', href: '/styles/style.css', media: 'screen, projection'
-		link rel: 'stylesheet', href: '/styles/print.css', media: 'print'
+		link rel: 'stylesheet', href: "/styles/style.css?v=#{@site.version}", media: 'screen, projection'
+		link rel: 'stylesheet', href: "/styles/print.css?v=#{@site.version}", media: 'print'
 		link rel: 'stylesheet', href: '/vendor/fancybox-2.1.5/jquery.fancybox.css', media: 'screen, projection'
 	body ->
 		# Modals
