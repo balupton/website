@@ -106,6 +106,8 @@ module.exports =
 
 			social:
 				"""
+				feedly
+				gittip
 				flattr
 				twitter
 				facebook

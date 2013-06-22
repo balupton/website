@@ -16,6 +16,10 @@ standalone: true
 // Responsive Layouts
 @import 'responsive.css'
 
+// Social Styles
+@import 'social.css'
+
+
 // ====================================
 // Configuration
 
@@ -174,6 +178,8 @@ aside.sidebar
 				position: absolute
 				bottom: 12px
 				right: 0
+				max-height: 32px
+				max-width: 32px
 		&,a,a:link,a:visited
 			color: colorContent
 		ul
@@ -205,24 +211,6 @@ aside.sidebar
 			opacity: 0.5
 			&:hover
 				opacity: 1 !important
-
-	// Section Colors
-	section.flattr h1
-		color: rgb(74, 187, 30)
-	section.twitter h1
-		color: #248DCD
-	section.facebook h1
-		color: #4966A1
-	section.linkedin h1
-		color: #0083B3
-	section.vimeo h1
-		color: #27A6D1
-	section.youtube h1
-		color: rgb(223, 51, 51)
-	section.flickr h1
-		color: #EE3F84
-	section.github h1
-		color: black
 
 	// Images Sizing
 	section.images

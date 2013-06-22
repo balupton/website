@@ -13,6 +13,7 @@
 
 ## Official
 - Flattr
+- [Gittip](https://github.com/gittip/www.gittip.com/blob/7c92713ced2914d19114cabf5d939ed28c6f52e0/img-src/gittip-logo-32.png)
 
 ## Unkown (sorry)
 - Vimeo
