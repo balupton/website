@@ -33,10 +33,10 @@ html lang: 'en', ->
 		meta name: 'keywords', content: @getPreparedKeywords()
 
 		# Styles
-		text  @getBlock('styles').toHTML()
-		link rel: 'stylesheet', href: '/styles/style.css', media: 'screen, projection'
-		link rel: 'stylesheet', href: '/styles/print.css', media: 'print'
-		link rel: 'stylesheet', href: '/vendor/fancybox-2.0.5/jquery.fancybox.css', media: 'screen, projection'
+		text  @getBlock('styles').add(@site.styles).toHTML()
+		link rel: 'stylesheet', href: "/styles/style.css?v=#{@site.version}", media: 'screen, projection'
+		link rel: 'stylesheet', href: "/styles/print.css?v=#{@site.version}", media: 'print'
+		link rel: 'stylesheet', href: '/vendor/fancybox-2.1.5/jquery.fancybox.css', media: 'screen, projection'
 	body ->
 		# Modals
 		aside '.modal.contact', -> @partial('content/contact')
@@ -52,12 +52,13 @@ html lang: 'en', ->
 		# Pages
 		nav '.pages', ->
 			ul ->
-				for page in @site.pages
-					match = page.match or page.url
-					cssname = if @document.url.indexOf(match) is 0 then 'active' else 'inactive'
+				for page in @getCollection('pages').toJSON()
+					pageMatch = page.match or page.url
+					documentMatch = @document.match or @document.url
+					cssname = if documentMatch.indexOf(pageMatch) is 0 then 'active' else 'inactive'
 					li 'class':cssname, ->
-						a href:page.url, ->
-							page.label
+						a href:page.url, title:page.menuTitle, ->
+							page.menuText or page.name
 
 		# Document
 		article '.page',

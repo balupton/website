@@ -3,7 +3,8 @@
 
 envConfig = process.env
 githubAuthString = "client_id=#{envConfig.BALUPTON_GITHUB_CLIENT_ID}&client_secret=#{envConfig.BALUPTON_GITHUB_CLIENT_SECRET}"
-getRankInUsers = (users, fallback=null) ->
+
+getRankInUsers = (users=[]) ->
 	rank = null
 
 	for user,index in users
@@ -11,21 +12,30 @@ getRankInUsers = (users, fallback=null) ->
 			rank = String(index+1)
 			break
 
-	return fallback  if rank is null
+	return rank
 
-	if rank >= 10 and rank < 20
-		rank += 'th'
-	else switch rank.substr(-1)
-		when '1'
-			rank += 'st'
-		when '2'
-			rank += 'nd'
-		when '3'
-			rank += 'rd'
-		else
+suffixNumber = (rank) ->
+	rank = String(rank)
+
+	if rank
+		if rank >= 1000
+			rank = rank.substring(0,rank.length-3)+','+rank.substr(-3)
+		else if rank >= 10 and rank < 20
 			rank += 'th'
+		else switch rank.substr(-1)
+			when '1'
+				rank += 'st'
+			when '2'
+				rank += 'nd'
+			when '3'
+				rank += 'rd'
+			else
+				rank += 'th'
 
-	return rank or fallback
+	return rank
+
+floorToNearest = (value,floorToNearest) ->
+	result = Math.floor(value/floorToNearest)*floorToNearest
 
 
 # =================================
@@ -42,6 +52,7 @@ module.exports =
 	templateData:
 		# Site Data
 		site:
+			version: require('./package.json').version
 			url: "http://balupton.com"
 			title: "Benjamin Lupton"
 			author: "Benjamin Lupton"
@@ -96,18 +107,22 @@ module.exports =
 
 			social:
 				"""
+				feedly
+				gittip
 				flattr
+				twitter
 				facebook
 				linkedin
 				github
-				twitter
 				youtube
 				vimeo
 				""".trim().split('\n')
 
+			styles: []  # embedded in layout
+
 			scripts: """
-				/vendor/jquery-1.7.1.js
-				/vendor/fancybox-2.0.5/jquery.fancybox.js
+				/vendor/jquery-2.0.2.js
+				/vendor/fancybox-2.1.5/jquery.fancybox.js
 				/scripts/script.js
 				""".trim().split('\n')
 
@@ -126,21 +141,6 @@ module.exports =
 				,
 					href: 'https://api.twitter.com/1/statuses/user_timeline.atom?screen_name=balupton&count=20&include_entities=true&include_rts=true'
 					title: 'Tweets'
-			]
-
-			pages: [
-					url: '/'
-					match: '/index'
-					label: 'home'
-					title: 'Return home'
-				,
-					url: '/projects'
-					label: 'projects'
-					title: 'View projects'
-				,
-					url: '/blog'
-					label: 'blog'
-					title: 'View articles'
 			]
 
 			links:
@@ -218,26 +218,63 @@ module.exports =
 		getPreparedKeywords: -> @site.keywords.concat(@document.keywords or []).join(', ')
 
 		# Ranking Helpers
+		suffixNumber: suffixNumber
+		floorToNearest: floorToNearest
 		getAustraliaJavaScriptRank: ->
 			feed = @feedr.feeds['github-australia-javascript']?.users ? null
-			return getRankInUsers(feed,'2nd')
+			return getRankInUsers(feed) or 2
 		getAustraliaRank: ->
 			feed = @feedr.feeds['github-australia']?.users ? null
-			return getRankInUsers(feed,'4th')
-		getGithubFollowers: (floorToNearest=50) ->
-			followers = @feedr.feeds['github-profile']?.followers
-			if followers
-				result = Math.floor(followers/floorToNearest)*floorToNearest
-			else
-				result = 250
-			return result
-		getStackoverflowReputation: (floorToNearest=1000) ->
-			reputation = @feedr.feeds['stackoverflow-profile']?.users?[0]?.reputation ? null
-			if reputation
-				result = Math.floor(reputation/floorToNearest)*floorToNearest
-			else
-				result = 9000
-			return result
+			return getRankInUsers(feed) or 4
+		getGithubFollowers: (z=50) ->
+			followers = @feedr.feeds['github-profile']?.followers or 358
+			return followers
+		getStackoverflowReputation: (z=1000) ->
+			reputation = @feedr.feeds['stackoverflow-profile']?.users?[0]?.reputation ? 10746
+			return reputation
+
+		# Project Helpers
+		getProjects: ->
+			return @projects  if @projects
+
+			@projects = []
+
+			feeds = 'balupton bevry browserstate docpad'.split(' ')
+			for feed in feeds
+				projects = @feedr.feeds[feed+'-projects'] or []
+				if projects.length is 0
+					docpad.warn("The feed #{feed} was empty")
+				else
+					for project in projects
+						continue  if project.fork
+						@projects.push(project)
+
+			@projects.sort?((a,b) -> b.watchers - a.watchers)
+
+			return @projects
+
+		# Project Counts
+		getGithubCounts: ->
+			@githubCounts or= (=>
+				projects = @getProjects()
+				forks = stars = 0
+				total = projects.length
+
+				top = @feedr.feeds['github-top'] ? null
+				topData = /\#([0-9]+).+?balupton.+?([0-9]+)/.exec(top)
+				rank = topData?[1] or 23
+				contributions = topData?[2] or 3582
+
+				for project in projects
+					forks += project.forks
+					stars += project.watchers
+
+				total or= 136
+				forks or= 1057
+				stars or= 8024
+
+				return {forks, stars, projects:total, rank, contributions}
+			)()
 
 
 	# =================================
@@ -245,7 +282,7 @@ module.exports =
 
 	collections:
 		pages: ->
-			@getCollection('documents').findAllLive({pageOrder:$exists:true},[pageOrder:1])
+			@getCollection('documents').findAllLive({menuOrder:$exists:true},[menuOrder:1])
 
 		posts: ->
 			@getCollection('documents').findAllLive({relativeOutDirPath:'blog'},[date:-1])
@@ -306,6 +343,7 @@ module.exports =
 
 	plugins:
 		feedr:
+			timeout: 60*1000
 			feeds:
 				'stackoverflow-profile':
 					url: 'http://api.stackoverflow.com/1.0/users/130638/'
@@ -314,6 +352,10 @@ module.exports =
 				'github-australia':
 					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
 					# https://github.com/search?q=location%3AAustralia&type=Users&s=followers
+				'github-gists':
+					url: "https://api.github.com/users/balupton/gists?per_page=100&#{githubAuthString}"
+				'github-top':
+					url: 'https://gist.github.com/paulmillr/2657075/raw/active.md'
 				'github-profile':
 					url: "https://api.github.com/users/balupton?#{githubAuthString}"
 				'balupton-projects':
@@ -328,8 +370,8 @@ module.exports =
 				#	url: 'https://api.flattr.com/rest/v2/users/balupton/activities.atom'
 				'github':
 					url: "https://github.com/balupton.atom"
-				'twitter':
-					url: "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
+				#'twitter':
+				#	url: "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
 				'vimeo':
 					url: "http://vimeo.com/api/v2/balupton/videos.json"
 				'youtube':
