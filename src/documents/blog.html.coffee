@@ -25,6 +25,7 @@ for gist in @feedr.feeds['github-gists'] or []
 		title: gist.description
 		url: gist.html_url
 		date: new Date(gist.created_at)
+		comments: gist.comments
 	)
 if gists.length isnt 0
 	section '.gists', ->

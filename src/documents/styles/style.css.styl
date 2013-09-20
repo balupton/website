@@ -270,6 +270,8 @@ article.page
 		font-size: 24px
 		font-weight: weightBoldest
 
+	.document-header
+	.project-header
 	h3
 		margin: 2em 0 0
 		color: colorAccent
@@ -286,6 +288,8 @@ article.page
 		a
 			font-weight: weightNormal
 
+	.document-comments:before
+		content: ' ✎ '
 	.document-date:before
 	.page-date:before
 		content: ' ⎋ ' // ✍
@@ -295,6 +299,7 @@ article.page
 		.project-stars:before
 			content: ' ★ '
 
+	.document-comments
 	.document-date
 	.page-date
 	.project-watchers
@@ -312,8 +317,19 @@ article.page
 	section:first-of-type
 		h2
 			margin: 1em 0 1em
+		.document-header
+		.project-header
 		h3
 			margin: 1em 0 0
+
+	.document-list
+	.project-list
+		.document-link
+		.project-link
+			.document-date
+				display: none
+			&:hover .document-date
+				display: inline
 
 	.document-list p.document-description
 	.project-list p.project-description

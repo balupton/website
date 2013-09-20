@@ -2,7 +2,7 @@
 nav '.project-list', 'typeof':'dc:collection', ->
 	for project in @projects
 		li '.project', 'typeof':'soic:post', about:project.url, ->
-			h3 ->
+			div '.project-header', ->
 				a '.project-link', href:project.html_url, ->
 					em '.project-owner', property:'dc:owner', ->
 						project.owner.login
