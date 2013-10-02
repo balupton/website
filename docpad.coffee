@@ -323,12 +323,12 @@ module.exports =
 			)
 
 			# Fetch repos
-			reposGetter.fetchReposFromUsers ['balupton','bevry','docpad','webwrite','browserstate'], (err,repos) ->
+			reposGetter.fetchReposFromUsers ['balupton','bevry','docpad','webwrite','browserstate'], (err,repos=[]) ->
 				# Check
 				return next(err)  if err
 
 				# Apply
-				projects = repos
+				projects = repos.sort((a,b) -> b.watchers - a.watchers)
 				docpad.log('info', "Fetched your latest projects for display within the website, all #{repos.length} of them")
 
 				# Complete
