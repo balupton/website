@@ -1,8 +1,13 @@
 # =================================
 # Misc Configuration
 
-envConfig = process.env
-githubAuthString = "client_id=#{envConfig.BALUPTON_GITHUB_CLIENT_ID}&client_secret=#{envConfig.BALUPTON_GITHUB_CLIENT_SECRET}"
+# Prepare
+githubAuthString = "client_id=#{process.env.GITHUB_CLIENT_ID}&client_secret=#{process.env.GITHUB_CLIENT_SECRET}"
+projects = []
+reposGetter = null
+
+# -------------------------------------
+# Helpers
 
 getRankInUsers = (users=[]) ->
 	rank = null
@@ -70,8 +75,9 @@ module.exports =
 					<t render="html.coffee">
 						link = @getPreparedLink.bind(@)
 						text """
-							Founder of #{link 'bevry'}, #{link 'docpad'}, #{link 'historyjs'}  &amp; #{link 'hostel'}.<br/>
-							Aficionado of #{link 'javascript'}, #{link 'nodejs'}, #{link 'opensource'} and #{link 'html5'}.<br/>
+							<!-- #{link 'opencollaboration'} Entrepreneur. Husband. Stepdad. #{link 'vegan'}. #{link 'pantheist'}.<br/> -->
+							Founded #{link 'bevry'}, #{link 'docpad'}, #{link 'historyjs'}, #{link 'webwrite'} &amp; #{link 'hostel'}.<br/>
+							Aficionado of #{link 'javascript'}, #{link 'coffeescript'}, #{link 'nodejs'}, #{link 'html5'} and #{link 'opensource'}.<br/>
 							Available for consulting, training and speaking. #{link 'contact'}.
 							"""
 					</t>
@@ -144,6 +150,22 @@ module.exports =
 			]
 
 			links:
+				opencollaboration:
+					text: 'Open Collaboration'
+					url: 'https://github.com/bevry/goopen'
+					title: 'Learn more'
+				freeculture:
+					text: 'Free Culture'
+					url: 'http://en.wikipedia.org/wiki/Free_culture_movement'
+					title: 'Learn more on Wikipedia'
+				vegan:
+					text: 'Vegan'
+					url: 'https://gist.github.com/balupton/6633207'
+					title: 'Learn why I went vegan'
+				pantheist:
+					text: 'Pantheist'
+					url: 'http://en.wikipedia.org/wiki/Pantheism'
+					title: 'Learn more on Wikipedia'
 				docpad:
 					text: 'DocPad'
 					url: 'http://docpad.org'
@@ -164,6 +186,10 @@ module.exports =
 					text: 'Bevry'
 					url: 'http://bevry.me'
 					title: 'Visit Website'
+				webwrite:
+					text: 'Web Write'
+					url: 'https://github.com/webwrite'
+					title: 'Visit Website'
 				services:
 					text: 'Services'
 					url: 'http://bevry.me/services'
@@ -171,15 +197,19 @@ module.exports =
 				opensource:
 					text: 'Open-Source'
 					url: 'http://en.wikipedia.org/wiki/Open-source_software'
-					title: 'Visit on Wikipedia'
+					title: 'Learn more on Wikipedia'
 				html5:
 					text: 'HTML5'
 					url: 'http://en.wikipedia.org/wiki/HTML5'
-					title: 'Visit on Wikipedia'
+					title: 'Learn more on Wikipedia'
+				coffeescript:
+					text: 'CoffeeScript'
+					url: 'http://coffeescript.org'
+					title: 'Visit Website'
 				javascript:
 					text: 'JavaScript'
 					url: 'http://en.wikipedia.org/wiki/JavaScript'
-					title: 'Visit on Wikipedia'
+					title: 'Learn more on Wikipedia'
 				nodejs:
 					text: 'Node.js'
 					url: 'http://nodejs.org/'
@@ -235,23 +265,7 @@ module.exports =
 
 		# Project Helpers
 		getProjects: ->
-			return @projects  if @projects
-
-			@projects = []
-
-			feeds = 'balupton bevry browserstate docpad'.split(' ')
-			for feed in feeds
-				projects = @feedr.feeds[feed+'-projects'] or []
-				if projects.length is 0
-					docpad.warn("The feed #{feed} was empty")
-				else
-					for project in projects
-						continue  if project.fork
-						@projects.push(project)
-
-			@projects.sort?((a,b) -> b.watchers - a.watchers)
-
-			return @projects
+			return projects
 
 		# Project Counts
 		getGithubCounts: ->
@@ -292,6 +306,36 @@ module.exports =
 	# Events
 
 	events:
+
+		# Fetch Projects
+		generateBefore: (opts,next) ->
+			# Prepare
+			docpad = @docpad
+
+			# Log
+			docpad.log('info', 'Fetching your latest projects for display within the website')
+
+			# Prepare repos getter
+			reposGetter ?= require('getrepos').create(
+				log: docpad.log
+				github_client_id: process.env.GITHUB_CLIENT_ID
+				github_client_secret: process.env.GITHUB_CLIENT_SECRET
+			)
+
+			# Fetch repos
+			reposGetter.fetchReposFromUsers ['balupton','bevry','docpad','webwrite','browserstate'], (err,repos) ->
+				# Check
+				return next(err)  if err
+
+				# Apply
+				projects = repos
+				docpad.log('info', "Fetched your latest projects for display within the website, all #{repos.length} of them")
+
+				# Complete
+				return next()
+
+			# Return
+			return true
 
 		serverExtend: (opts) ->
 			# Prepare
@@ -358,14 +402,6 @@ module.exports =
 					url: 'https://gist.github.com/paulmillr/2657075/raw/active.md'
 				'github-profile':
 					url: "https://api.github.com/users/balupton?#{githubAuthString}"
-				'balupton-projects':
-					url: "https://api.github.com/users/balupton/repos?per_page=100&#{githubAuthString}"
-				'bevry-projects':
-					url: "https://api.github.com/users/bevry/repos?per_page=100&#{githubAuthString}"
-				'browserstate-projects':
-					url: "https://api.github.com/users/browserstate/repos?per_page=100&#{githubAuthString}"
-				'docpad-projects':
-					url: "https://api.github.com/users/docpad/repos?per_page=100&#{githubAuthString}"
 				#'flattr':
 				#	url: 'https://api.flattr.com/rest/v2/users/balupton/activities.atom'
 				'github':

@@ -28,18 +28,19 @@
     "npm": "1.2"
   },
   "dependencies": {
-    "docpad": "~6.53.0",
+    "docpad": "~6.53.1",
     "docpad-plugin-cachr": "~2.2.0",
     "docpad-plugin-cleanurls": "~2.5.1",
     "docpad-plugin-coffeekup": "~2.2.0",
     "docpad-plugin-coffeescript": "~2.2.2",
     "docpad-plugin-eco": "~2.0.2",
-    "docpad-plugin-feedr": "~2.5.0",
+    "docpad-plugin-feedr": "~2.6.0",
     "docpad-plugin-marked": "~2.1.1",
     "docpad-plugin-partials": "~2.8.0",
-    "docpad-plugin-services": "~2.3.0",
+    "docpad-plugin-services": "~2.4.2",
     "docpad-plugin-stylus": "~2.4.0",
-    "docpad-plugin-text": "~2.3.0"
+    "docpad-plugin-text": "~2.3.1",
+    "getrepos": "~1.0.1"
   },
   "devDependencies": {
     "docpad-plugin-livereload": "~2.5.3"
