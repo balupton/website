@@ -40,7 +40,7 @@
     "docpad-plugin-services": "~2.4.2",
     "docpad-plugin-stylus": "~2.4.0",
     "docpad-plugin-text": "~2.3.1",
-    "getrepos": "~1.0.1"
+    "getrepos": "~1.0.2"
   },
   "devDependencies": {
     "docpad-plugin-livereload": "~2.5.3"
