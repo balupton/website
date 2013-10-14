@@ -75,7 +75,7 @@ module.exports =
 					<t render="html.coffee">
 						link = @getPreparedLink.bind(@)
 						text """
-							#{link 'opencollaboration'} Entrepreneur. Husband. Stepdad. #{link 'vegan'}. #{link 'pantheist'}.<br/>
+							#{link 'opencollaboration'} Entrepreneur. Husband. Stepdad. #{link 'vegan'}. #{link 'pantheist'}. #{link 'agnostic'}.<br/>
 							Founded #{link 'bevry'}, #{link 'docpad'}, #{link 'historyjs'}, #{link 'webwrite'} &amp; #{link 'hostel'}.<br/>
 							Aficionado of #{link 'javascript'}, #{link 'coffeescript'}, #{link 'nodejs'}, #{link 'html5'} and #{link 'opensource'}.<br/>
 							Available for consulting, training and speaking. #{link 'contact'}.
@@ -162,6 +162,10 @@ module.exports =
 					text: 'Vegan'
 					url: 'https://gist.github.com/balupton/6633207'
 					title: 'Learn why I went vegan'
+				agnostic:
+					text: 'Agnostic'
+					url: 'http://en.wikipedia.org/wiki/Agnostic'
+					title: 'Learn more on Wikipedia'
 				pantheist:
 					text: 'Pantheist'
 					url: 'http://en.wikipedia.org/wiki/Pantheism'
