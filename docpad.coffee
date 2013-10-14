@@ -151,7 +151,7 @@ module.exports =
 
 			links:
 				opencollaboration:
-					text: 'Open Collaboration'
+					text: 'Open-Collaboration'
 					url: 'https://github.com/bevry/goopen'
 					title: 'Learn more'
 				freeculture:
