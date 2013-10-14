@@ -75,7 +75,7 @@ module.exports =
 					<t render="html.coffee">
 						link = @getPreparedLink.bind(@)
 						text """
-							<!-- #{link 'opencollaboration'} Entrepreneur. Husband. Stepdad. #{link 'vegan'}. #{link 'pantheist'}.<br/> -->
+							#{link 'opencollaboration'} Entrepreneur. Husband. Stepdad. #{link 'vegan'}. #{link 'pantheist'}.<br/>
 							Founded #{link 'bevry'}, #{link 'docpad'}, #{link 'historyjs'}, #{link 'webwrite'} &amp; #{link 'hostel'}.<br/>
 							Aficionado of #{link 'javascript'}, #{link 'coffeescript'}, #{link 'nodejs'}, #{link 'html5'} and #{link 'opensource'}.<br/>
 							Available for consulting, training and speaking. #{link 'contact'}.
