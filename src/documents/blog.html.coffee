@@ -17,19 +17,38 @@ if posts.length
 		documents: posts
 	}
 
+# Medium Listing
+entries = []
+for entry in @feedr.feeds['medium']?.channel?.item or []
+	entries.push(
+		title: entry.title
+		url: entry.link
+		date: new Date(entry.pubDate)
+	)
+if entries.length isnt 0
+	section '.medium', ->
+		a href:'http://medium.com/@balupton', ->
+			h1 ->
+				'Medium'
+		text @partial 'content/document-list.html.coffee', {
+				documents: entries
+			}
+
 # Gist Listing
-gists = []
+entries = []
 for gist in @feedr.feeds['github-gists'] or []
 	continue if gist.public isnt true
-	gists.push(
+	entries.push(
 		title: gist.description
 		url: gist.html_url
 		date: new Date(gist.created_at)
 		comments: gist.comments
 	)
-if gists.length isnt 0
+if entries.length isnt 0
 	section '.gists', ->
-		h1 'Gists'
+		a href:'https://gist.github.com/balupton', ->
+			h1 ->
+				'Gists'
 		text @partial 'content/document-list.html.coffee', {
-				documents: gists
+				documents: entries
 			}

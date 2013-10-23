@@ -127,8 +127,8 @@ module.exports =
 			styles: []  # embedded in layout
 
 			scripts: """
-				/vendor/jquery-2.0.2.js
-				/vendor/fancybox-2.1.5/jquery.fancybox.js
+				/vendor/jquery.js
+				/vendor/fancybox/jquery.fancybox.js
 				/scripts/script.js
 				""".trim().split('\n')
 
@@ -410,6 +410,8 @@ module.exports =
 				#	url: 'https://api.flattr.com/rest/v2/users/balupton/activities.atom'
 				'github':
 					url: "https://github.com/balupton.atom"
+				'medium':
+					url: "https://medium.com/feed/@balupton"
 				#'twitter':
 				#	url: "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
 				'vimeo':
