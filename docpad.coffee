@@ -111,6 +111,10 @@ module.exports =
 				googleAnalytics: 'UA-4446117-1'
 				reinvigorate: '52uel-236r9p108l'
 
+				gittipButton: 'balupton'
+				flattrButton: '344188/balupton-on-Flattr'
+				paypalButton: 'QB8GQPZAH84N6'
+
 			social:
 				"""
 				feedly
