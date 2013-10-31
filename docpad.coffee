@@ -63,7 +63,7 @@ module.exports =
 			author: "Benjamin Lupton"
 			email: "b@lupton.cc"
 			description: """
-				Website of Benjamin Lupton. Founder of Bevry, DocPad and HistoryJS. Aficionado of HTML5, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.
+				Website of Benjamin Lupton. Founder of Bevry, DocPad and History.js. Aficionado of HTML5, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.
 				"""
 			keywords: """
 				balupton, benjamin lupton, lupton, coffeescript, node.js, javascript, history.js, html5, docpad, nowpad, jquery, css3, ruby, git, nosql, cson, html5 history api, ajax, html, web development, web design, nlp, git, neuro-linguistic programming, programming, hacking, hackathon, aloha editor, contenteditable, hallo, jekyll, entp, inventor, web 2.0
@@ -75,7 +75,7 @@ module.exports =
 					<t render="html.coffee">
 						link = @getPreparedLink.bind(@)
 						text """
-							#{link 'opencollaboration'} Entrepreneur. Husband. Stepdad. #{link 'vegan'}. #{link 'pantheist'}. #{link 'agnostic'}.<br/>
+							#{link 'opencollaboration'} Entrepreneur. #{link 'husband'}. Stepdad. #{link 'vegan'}. #{link 'pantheist'}. #{link 'agnostic'}.<br/>
 							Founded #{link 'bevry'}, #{link 'docpad'}, #{link 'historyjs'}, #{link 'webwrite'} &amp; #{link 'hostel'}.<br/>
 							Aficionado of #{link 'javascript'}, #{link 'coffeescript'}, #{link 'nodejs'}, #{link 'html5'} and #{link 'opensource'}.<br/>
 							Available for consulting, training and speaking. #{link 'contact'}.
@@ -154,6 +154,10 @@ module.exports =
 			]
 
 			links:
+				husband:
+					text: 'Husband'
+					url: 'http://h.lupton.cc'
+					title: "Visit Helen Lupton&apos;s website"
 				opencollaboration:
 					text: 'Open-Collaboration'
 					url: 'https://github.com/bevry/goopen'
@@ -177,27 +181,27 @@ module.exports =
 				docpad:
 					text: 'DocPad'
 					url: 'http://docpad.org'
-					title: 'Visit Website'
+					title: 'Visit website'
 				hostel:
 					text: 'Startup Hostel'
 					url: 'http://startuphostel.org'
-					title: 'Visit Website'
+					title: 'Visit website'
 				backbonejs:
 					text: 'Backbone.js'
 					url: 'http://backbonejs.org'
-					title: 'Visit Website'
+					title: 'Visit website'
 				historyjs:
 					text: 'History.js'
 					url: 'http://historyjs.net'
-					title: 'Visit Website'
+					title: 'Visit website'
 				bevry:
 					text: 'Bevry'
 					url: 'http://bevry.me'
-					title: 'Visit Website'
+					title: 'Visit website'
 				webwrite:
 					text: 'Web Write'
 					url: 'https://github.com/webwrite'
-					title: 'Visit Website'
+					title: 'Visit website'
 				services:
 					text: 'Services'
 					url: 'http://bevry.me/services'
@@ -213,7 +217,7 @@ module.exports =
 				coffeescript:
 					text: 'CoffeeScript'
 					url: 'http://coffeescript.org'
-					title: 'Visit Website'
+					title: 'Visit website'
 				javascript:
 					text: 'JavaScript'
 					url: 'http://en.wikipedia.org/wiki/JavaScript'
@@ -221,19 +225,19 @@ module.exports =
 				nodejs:
 					text: 'Node.js'
 					url: 'http://nodejs.org/'
-					title: 'Visit Website'
+					title: 'Visit website'
 				balupton:
 					text: 'Benjamin Lupton'
 					url: 'http://balupton.com'
-					title: 'Visit Website'
+					title: 'Visit website'
 				author:
 					text: 'Benjamin Lupton'
 					url: 'http://balupton.com'
-					title: 'Visit Website'
+					title: 'Visit website'
 				source:
 					text: 'open-source'
 					url: 'https://github.com/balupton/balupton.docpad'
-					title: 'View Website Source'
+					title: 'View website&apos;s source'
 				contact:
 					text: 'Contact'
 					url: 'mailto:b@bevry.me'
