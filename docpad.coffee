@@ -121,8 +121,9 @@ module.exports =
 				gittip
 				flattr
 				twitter
-				facebook
 				linkedin
+				facebook
+				tumblr
 				github
 				youtube
 				vimeo
@@ -139,6 +140,12 @@ module.exports =
 			feeds: [
 					href: 'http://feeds.feedburner.com/balupton.atom'
 					title: 'Blog Posts'
+				,
+					href: 'http://balupton.tumblr.com/rss'
+					title: 'Tumblr Posts'
+				,
+					href: 'https://medium.com/feed/@balupton'
+					title: 'Medium Posts'
 				,
 					href: 'https://github.com/balupton.atom'
 					title: 'GitHub Activity'
@@ -420,6 +427,8 @@ module.exports =
 					url: "https://github.com/balupton.atom"
 				'medium':
 					url: "https://medium.com/feed/@balupton"
+				'tumblr':
+					url: "http://balupton.tumblr.com/rss"
 				#'twitter':
 				#	url: "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
 				'vimeo':
