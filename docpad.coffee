@@ -293,18 +293,23 @@ module.exports =
 				forks = stars = 0
 				total = projects.length
 
-				top = @feedr.feeds['github-top'] ? null
-				topData = /\#([0-9]+).+?balupton.+?([0-9]+)/.exec(top)
-				rank = topData?[1] or 23
-				contributions = topData?[2] or 3582
+				topUsers = @feedr.feeds['github-top'] ? null
+				me = 'balupton'
+				rank = 14
+				contributions = 4554
+
+				for topUser, index in topUsers
+					if topUser.login is me
+						rank = index+1
+						contributions = topUser.contributions
 
 				for project in projects
 					forks += project.forks
 					stars += project.watchers
 
-				total or= 136
-				forks or= 1057
-				stars or= 8024
+				total or= 176
+				forks or= 1474
+				stars or= 9821
 
 				return {forks, stars, projects:total, rank, contributions}
 			)()
@@ -418,7 +423,7 @@ module.exports =
 				'github-gists':
 					url: "https://api.github.com/users/balupton/gists?per_page=100&#{githubAuthString}"
 				'github-top':
-					url: 'https://gist.github.com/paulmillr/2657075/raw/active.md'
+					url: 'https://gist.github.com/paulmillr/4524946/raw/github-users-stats.json'
 				'github-profile':
 					url: "https://api.github.com/users/balupton?#{githubAuthString}"
 				#'flattr':
