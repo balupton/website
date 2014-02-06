@@ -125,6 +125,7 @@ module.exports =
 				linkedin
 				facebook
 				tumblr
+				medium
 				github
 				youtube
 				vimeo
@@ -438,11 +439,11 @@ module.exports =
 				'github':
 					url: "https://github.com/balupton.atom"
 					parse: 'xml'
-				'medium':
-					url: "https://medium.com/feed/@balupton"
-					parse: 'xml'
 				'tumblr':
 					url: "http://balupton.tumblr.com/rss"
+					parse: 'xml'
+				'medium':
+					url: "https://medium.com/feed/@balupton"
 					parse: 'xml'
 
 				#'flattr':
