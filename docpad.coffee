@@ -416,32 +416,50 @@ module.exports =
 			feeds:
 				'stackoverflow-profile':
 					url: 'http://api.stackoverflow.com/1.0/users/130638/'
+					parse: 'json'
+
 				'github-australia-javascript':
 					url: "https://api.github.com/legacy/user/search/location:Australia%20language:JavaScript?#{githubAuthString}"
+					parse: 'json'
 				'github-australia':
-					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
 					# https://github.com/search?q=location%3AAustralia&type=Users&s=followers
+					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
+					parse: 'json'
 				'github-gists':
 					url: "https://api.github.com/users/balupton/gists?per_page=100&#{githubAuthString}"
+					parse: 'json'
 				'github-top':
 					url: 'https://gist.github.com/paulmillr/4524946/raw/github-users-stats.json'
+					parse: 'json'
 				'github-profile':
 					url: "https://api.github.com/users/balupton?#{githubAuthString}"
-				#'flattr':
-				#	url: 'https://api.flattr.com/rest/v2/users/balupton/activities.atom'
+					parse: 'json'
+
 				'github':
 					url: "https://github.com/balupton.atom"
+					parse: 'xml'
 				'medium':
 					url: "https://medium.com/feed/@balupton"
+					parse: 'xml'
 				'tumblr':
 					url: "http://balupton.tumblr.com/rss"
+					parse: 'xml'
+
+				#'flattr':
+				#	url: 'https://api.flattr.com/rest/v2/users/balupton/activities.atom'
+
 				#'twitter':
 				#	url: "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=balupton&count=20&include_entities=true&include_rts=true"
+
 				'vimeo':
 					url: "http://vimeo.com/api/v2/balupton/videos.json"
+					parse: 'json'
+
 				'youtube':
 					#url: "http://gdata.youtube.com/feeds/base/users/balupton/uploads?alt=json&orderby=published&client=ytapi-youtube-profile"
 					url: "http://gdata.youtube.com/feeds/api/playlists/PLYVl5EnzwqsQs0tBLO6ug6WbqAbrpVbNf?alt=json"
+					parse: 'json'
+
 				#'flickr':
 				#	url: "http://api.flickr.com/services/feeds/photos_public.gne?id=35776898@N00&lang=en-us&format=json"
 
