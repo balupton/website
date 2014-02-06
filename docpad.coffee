@@ -120,6 +120,7 @@ module.exports =
 				feedly
 				gittip
 				flattr
+				amazon
 				twitter
 				linkedin
 				facebook
