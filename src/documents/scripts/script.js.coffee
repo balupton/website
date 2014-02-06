@@ -138,7 +138,7 @@ $ ->
 
 	# Prevent scrolling on our sidebar scrollers
 	#$('.scroller').preventScrollBubbling()
-	$('section.videos a').click (event) ->
+	$('section.videos ul a').click (event) ->
 		# Continue as normal for cmd clicks etc
 		return true  if event.which is 2 or event.metaKey
 
