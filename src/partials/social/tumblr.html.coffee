@@ -10,6 +10,7 @@ section '.tumblr.links', ->
 			h1 -> 'Tumblr'
 			img '.icon', src:'/images/tumblr.png'
 
+	###
 	# Fetch
 	entries = []
 	for entry in @feedr.feeds['tumblr']?.channel?.item or []
@@ -26,4 +27,4 @@ section '.tumblr.links', ->
 				li datetime: entry.date.toISOString(), ->
 					a href: entry.url, title:"View on Tumblr", ->
 						entry.title
-
+	###
