@@ -42,7 +42,10 @@ layout: 'page'
 	<section class="awards-active">
 		<h3>
 			<a href="http://git.io/top">
-				<em><strong>The <%= @suffixNumber @getGithubCounts().rank %> most active open-source developer in the world</strong></em> via GitHub
+				<em><strong>The <%= if (a = @suffixNumber @getGithubCounts().rankAustralia) is '1st' then '' else a %> most active open-source developer</strong> in Australia</em> via GitHub
+			</a><br/>
+			<a href="http://git.io/top">
+				<em><strong>The <%= @suffixNumber @getGithubCounts().rank %> most active open-source developer</strong> in the world</em> via GitHub
 			</a><br/>
 			<a href="/projects">
 				<em><strong>Created <%= @getGithubCounts().projects %> open-source projects</strong></em> via GitHub
