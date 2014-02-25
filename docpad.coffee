@@ -298,22 +298,27 @@ module.exports =
 				topUsers = @feedr.feeds['github-top'] ? null
 				me = 'balupton'
 				rank = 14
+				rankAustralia = 0
 				contributions = 4554
 
 				for topUser, index in topUsers
+					if (topUser.location or '').indexOf('Australia') isnt -1
+						++rankAustralia
 					if topUser.login is me
 						rank = index+1
 						contributions = topUser.contributions
+						break
 
 				for project in projects
 					forks += project.forks
 					stars += project.watchers
 
+				rankAustralia or= 1
 				total or= 176
 				forks or= 1474
 				stars or= 9821
 
-				return {forks, stars, projects:total, rank, contributions}
+				return {forks, stars, projects:total, rank, rankAustralia, contributions}
 			)()
 
 
