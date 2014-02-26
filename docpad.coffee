@@ -413,6 +413,10 @@ module.exports =
 			docpadServer.get /^\/feeds?(?:\/(.*))?$/, (req, res) ->
 				res.redirect 301, "http://feeds.feedburner.com/balupton"
 
+			# Vegan
+			docpadServer.get '/vegan', (req, res) ->
+				res.redirect 301, "https://gist.github.com/balupton/6633207"
+
 
 	# =================================
 	# Plugin Configuration
