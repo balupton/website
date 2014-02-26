@@ -392,10 +392,11 @@ module.exports =
 				# ^ github pages don't have https
 
 			# Projects
-			docpadServer.get /^\/projects\/(.*)$/, (req, res) ->
+			# slash necessary
+			docpadServer.get /^\/projects?\/(.*)$/, (req, res) ->
 				project = req.params[0] or ''
 				res.redirect 301, "https://github.com/balupton/#{project}"
-
+			# slash optional
 			docpadServer.get /^\/(?:g|gh|github)(?:\/(.*))?$/, (req, res) ->
 				project = req.params[0] or ''
 				res.redirect 301, "https://github.com/balupton/#{project}"
