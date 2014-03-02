@@ -414,7 +414,7 @@ module.exports =
 				res.redirect 301, "http://feeds.feedburner.com/balupton"
 
 			# Vegan
-			docpadServer.get '/vegan', (req, res) ->
+			docpadServer.get /\/v(?:egan|egetarian)?(?:\/(.*))?$/, (req, res) ->
 				res.redirect 301, "https://gist.github.com/balupton/6633207"
 
 
