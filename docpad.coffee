@@ -415,7 +415,7 @@ module.exports =
 
 			# Vegan
 			docpadServer.get /\/v(?:egan|egetarian)?(?:\/(.*))?$/, (req, res) ->
-				res.redirect 301, "https://gist.github.com/balupton/6633207"
+				res.redirect 301, "https://github.com/balupton/plant-vs-animal-products#readme"
 
 
 	# =================================
@@ -473,4 +473,3 @@ module.exports =
 
 				#'flickr':
 				#	url: "http://api.flickr.com/services/feeds/photos_public.gne?id=35776898@N00&lang=en-us&format=json"
-
