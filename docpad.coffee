@@ -177,7 +177,7 @@ module.exports =
 					title: 'Learn more on Wikipedia'
 				vegan:
 					text: 'Vegan'
-					url: 'https://gist.github.com/balupton/6633207'
+					url: 'http://balutpon.com/v'
 					title: 'Learn why I went vegan'
 				agnostic:
 					text: 'Agnostic'
