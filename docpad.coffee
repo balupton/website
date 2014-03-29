@@ -417,6 +417,10 @@ module.exports =
 			docpadServer.get /\/v(?:egan|egetarian)?(?:\/(.*))?$/, (req, res) ->
 				res.redirect 301, "https://github.com/balupton/plant-vs-animal-products#readme"
 
+			# Sustainability
+			docpadServer.get /\/s(?:ustain?(?:ability))(?:\/(.*))?$/, (req, res) ->
+				res.redirect 301, "http://balupton.tumblr.com/post/79542013417/sustainability"
+
 
 	# =================================
 	# Plugin Configuration
