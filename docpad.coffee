@@ -354,7 +354,7 @@ module.exports =
 			)
 
 			# Fetch repos
-			reposGetter.fetchReposFromUsers ['balupton','bevry','docpad','webwrite','browserstate'], (err,repos=[]) ->
+			reposGetter.fetchReposFromUsers ['balupton','bevry','docpad','webwrite','browserstate','chainyjs','chainy-plugins','chainy-bundles','interconnectapp','js2coffee'], (err,repos=[]) ->
 				# Check
 				return next(err)  if err
 
