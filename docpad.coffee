@@ -252,7 +252,7 @@ module.exports =
 				trich:
 					text: 'Not Alone'
 					url: 'http://www.trich.org/about/hair-faqs.html'
-					title: "Along with up to 10% of the population by some estimates, I happen to have trichotillomania (obsessive compulsive hair pulling) that for me, occurs in times of emotional despair, once every few years. It is the time that the stigma of mental illness goes away. Learn about Trichotillomania on the TLC Learning Centre."
+					title: "Along with up to 10% of the population by some estimates, I happen to have trichotillomania (obsessive compulsive hair pulling) that for me, occurs in times of emotional despair, once every few years. It's time the mental illness stigma goes away. Learn about Trichotillomania on the TLC Learning Centre."
 
 		# Link Helper
 		getPreparedLink: (name) ->
