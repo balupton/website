@@ -75,10 +75,11 @@ module.exports =
 					<t render="html.coffee">
 						link = @getPreparedLink.bind(@)
 						text """
-							#{link 'opencollaboration'} Entrepreneur. #{link 'husband'}. Stepdad. #{link 'vegan'}. #{link 'pantheist'}. #{link 'agnostic'}.<br/>
-							Founded #{link 'bevry'}, #{link 'docpad'}, #{link 'historyjs'}, #{link 'webwrite'} &amp; #{link 'hostel'}.<br/>
-							Aficionado of #{link 'javascript'}, #{link 'coffeescript'}, #{link 'nodejs'}, #{link 'html5'} and #{link 'opensource'}.<br/>
-							Available for consulting, training and speaking. #{link 'contact'}.
+							<span>#{link 'opencollaboration'} Entrepreneur.</span>
+							<span>#{link 'husband'}. Stepdad. #{link 'vegan'}. #{link 'agnostic'}. #{link 'pantheist'}. #{link 'trich'}.</span>
+							<span>Founded #{link 'bevry'}, #{link 'docpad'}, #{link 'historyjs'}, #{link 'webwrite'} &amp; #{link 'hostel'}.</span>
+							<span>Aficionado of #{link 'javascript'}, #{link 'coffeescript'}, #{link 'nodejs'}, #{link 'html5'} and #{link 'opensource'}.</span>
+							<span>Available for consulting, training and speaking. #{link 'contact'}.</span>
 							"""
 					</t>
 					'''
@@ -166,51 +167,47 @@ module.exports =
 				husband:
 					text: 'Husband'
 					url: 'http://h.lupton.cc'
-					title: "Visit Helen Lupton&apos;s website"
+					title: "Helen Lupton is my amazing wife. Learn about Helen on her blog."
 				opencollaboration:
 					text: 'Open-Collaboration'
 					url: 'https://github.com/bevry/goopen'
-					title: 'Learn more'
+					title: "Open-Collaboration is the notion that we can all work together freely and liberally to accomplish amazing things. It's what I dedicate my life too. Learn about Open-Collaboration via the Go Open Campaign."
 				freeculture:
 					text: 'Free Culture'
 					url: 'http://en.wikipedia.org/wiki/Free_culture_movement'
-					title: 'Learn more on Wikipedia'
+					title: 'Free Culture is the notion that everything should be free, in terms of free as in no money needed, and free as in people can re-use it liberally. Learn about Free Culture on Wikipedia.'
 				vegan:
 					text: 'Vegan'
 					url: 'http://balupton.com/v'
-					title: 'Learn why I went vegan'
+					title: "Veganism is the stance that other lives are not ours to own. Vegans commonly associate this with the practice of reducing their harm to all lives, primarily through a strict-vegetarian diet and lifestyle. That's it, nothing special. Learn about what turned me vegan."
 				agnostic:
 					text: 'Agnostic'
 					url: 'http://en.wikipedia.org/wiki/Agnostic'
-					title: 'Learn more on Wikipedia'
+					title: 'Agnosticism is the understanding that one cannot prove the existance or non-existance of something that is not observable, therefore agnostics do not take a theist or athiest stance. Learn about Agnosticism on Wikipedia.'
 				pantheist:
 					text: 'Pantheist'
 					url: 'http://en.wikipedia.org/wiki/Pantheism'
-					title: 'Learn more on Wikipedia'
+					title: 'Pantheism is a stance that believes the notion of God is synonymous with the notion of the Universe. Learn about Pantheism on Wikipedia.'
 				docpad:
 					text: 'DocPad'
 					url: 'http://docpad.org'
-					title: 'Visit website'
+					title: 'DocPad is a static site generator built with Node.js. Learn about DocPad on its website.'
 				hostel:
 					text: 'Startup Hostel'
 					url: 'http://startuphostel.org'
-					title: 'Visit website'
-				backbonejs:
-					text: 'Backbone.js'
-					url: 'http://backbonejs.org'
-					title: 'Visit website'
+					title: 'Startup Hostel is a co-work and co-live initiative. Learn about Startup Hostel on its website.'
 				historyjs:
 					text: 'History.js'
 					url: 'http://historyjs.net'
-					title: 'Visit website'
+					title: 'History.js lets you create cross-browser stateful web applications. Learn about History.js on its website.'
 				bevry:
 					text: 'Bevry'
 					url: 'http://bevry.me'
-					title: 'Visit website'
+					title: 'Bevry is the open-company and community that I founded in 2011, its a great thing. Learn about Bevry on its website.'
 				webwrite:
 					text: 'Web Write'
 					url: 'https://github.com/webwrite'
-					title: 'Visit website'
+					title: 'Web Write is an open-source initiative to create a series of admin interfaces that work with any backend. Learn more about Web Write on its website.'
 				services:
 					text: 'Services'
 					url: 'http://bevry.me/services'
@@ -218,23 +215,23 @@ module.exports =
 				opensource:
 					text: 'Open-Source'
 					url: 'http://en.wikipedia.org/wiki/Open-source_software'
-					title: 'Learn more on Wikipedia'
+					title: 'Open-Source is the releasing of the original format of something so that others can improve on it freely. Learn about Open-Source on Wikipedia.'
 				html5:
 					text: 'HTML5'
 					url: 'http://en.wikipedia.org/wiki/HTML5'
-					title: 'Learn more on Wikipedia'
+					title: 'HTML5 is the langauge that the content of websites are written in. Learn about HTML5 on Wikipedia.'
 				coffeescript:
 					text: 'CoffeeScript'
 					url: 'http://coffeescript.org'
-					title: 'Visit website'
+					title: 'CoffeeScript is a high-level language that compiles to JavaScript. Learn about CoffeeScript on its website.'
 				javascript:
 					text: 'JavaScript'
 					url: 'http://en.wikipedia.org/wiki/JavaScript'
-					title: 'Learn more on Wikipedia'
+					title: 'JavaScript is the language that makes website interactive. It powers the web. Learn about JavaScript on Wikipedia.'
 				nodejs:
 					text: 'Node.js'
 					url: 'http://nodejs.org/'
-					title: 'Visit website'
+					title: 'Node.js is JavaScript on the backend, it lets frontend web developers code web servers and desktop applications. Its really cool. Learn about Node.js on its website.'
 				balupton:
 					text: 'Benjamin Lupton'
 					url: 'http://balupton.com'
@@ -252,6 +249,10 @@ module.exports =
 					url: 'mailto:b@bevry.me'
 					title: 'Contact me'
 					cssClass: 'contact-button'
+				trich:
+					text: 'Not Alone'
+					url: 'http://www.trich.org/about/hair-faqs.html'
+					title: "Along with up to 10% of the population by some estimates, I happen to have trichotillomania (obessive compulsive hair pulling) that for me, occurs in times of emotional despair, once every few years. It is time that the stigma of mental illness goes away. Learn about Trichotillomania on the TLC Learning Centre."
 
 		# Link Helper
 		getPreparedLink: (name) ->
