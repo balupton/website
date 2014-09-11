@@ -416,7 +416,7 @@ module.exports =
 
 			# Vegan
 			docpadServer.get /\/v(?:egan|egetarian)?(?:\/(.*))?$/, (req, res) ->
-				res.redirect 301, "https://github.com/balupton/plant-vs-animal-products#readme"
+				res.redirect 301, "https://github.com/balupton/plant-vs-animal-products/blob/master/README.md#readme"
 
 			# Sustainability
 			docpadServer.get /\/s(?:ustain?(?:ability))(?:\/(.*))?$/, (req, res) ->
