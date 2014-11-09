@@ -12,6 +12,12 @@ section '.youtube.images.videos', ->
 	entries = (@feedr.feeds.youtube?.feed?.entry or [])
 	if entries.length isnt 0 then ul ->
 		for entry,key in entries
-			li datetime:entry.published.$t, ->
-				a href:entry.link[0].href, 'data-embed':entry.link[0].href.replace(/watch\?v=/i, 'v/')+'&autoplay=1', title:entry.title.$t, ->
-					img src:@cachr(entry.media$group.media$thumbnail[0].url), alt:entry.title.$t
+			time = entry.published?.$t
+			link = entry.link?[0]?.href
+			embed = entry.link?[0].href.replace(/watch\?v=/i, 'v/')+'&autoplay=1'  if link
+			title = entry.title?.$t
+			image = entry.media$group?.media$thumbnail?[0]?.url
+			if link and image
+				li datetime:time, ->
+					a href:link, 'data-embed':embed, title:title, ->
+						img src:@cachr(image), alt:title
