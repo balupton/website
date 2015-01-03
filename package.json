@@ -61,5 +61,8 @@
   "main": "node_modules/docpad/bin/docpad-server",
   "license": {
     "type": "MIT"
+  },
+  "scripts": {
+    "deploy": "git push heroku 2012-2014:master"
   }
 }
