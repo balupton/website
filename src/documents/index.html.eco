@@ -7,6 +7,7 @@ menuOrder: 1
 layout: 'page'
 ---
 
+<!--
 <section class="pitch">
 	<h2>Pitch</h2>
 
@@ -23,6 +24,7 @@ layout: 'page'
 		- Benjamin</p>
 	</div>
 </section>
+-->
 
 
 <section class="awards">

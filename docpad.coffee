@@ -75,8 +75,8 @@ module.exports =
 					<t render="html.coffee">
 						link = @getPreparedLink.bind(@)
 						text """
-							<span>#{link 'opencollaboration'} Entrepreneur.</span>
-							<span>#{link 'husband'}. Stepdad. #{link 'vegan'}. #{link 'agnostic'}. #{link 'pantheist'}. #{link 'trich'}.</span>
+							<span>#{link 'opencollaboration'} Entrepreneur. #{link 'vegan'}.</span>
+							<!-- <span>#{link 'husband'}. Stepdad. #{link 'agnostic'}. #{link 'pantheist'}. #{link 'trich'}.</span> -->
 							<span>Founded #{link 'bevry'}, #{link 'docpad'}, #{link 'historyjs'}, #{link 'webwrite'} &amp; #{link 'hostel'}.</span>
 							<span>Aficionado of #{link 'javascript'}, #{link 'coffeescript'}, #{link 'nodejs'}, #{link 'html5'} and #{link 'opensource'}.</span>
 							<span>Available for consulting, training and speaking. #{link 'contact'}.</span>
@@ -119,7 +119,7 @@ module.exports =
 			social:
 				"""
 				feedly
-				gittip
+				gratipay
 				flattr
 				amazon
 				twitter
@@ -279,11 +279,11 @@ module.exports =
 			feed = @feedr.feeds['github-australia']?.users ? null
 			return getRankInUsers(feed) or 4
 		getGithubFollowers: (z=50) ->
-			followers = @feedr.feeds['github-profile']?.followers or 358
-			return followers
+			followers = @feedr.feeds['github-profile']?.followers ? null
+			return followers or 673
 		getStackoverflowReputation: (z=1000) ->
-			reputation = @feedr.feeds['stackoverflow-profile']?.users?[0]?.reputation ? 10746
-			return reputation
+			reputation = @feedr.feeds['stackoverflow-profile']?.items?[0]?.reputation ? null
+			return reputation or 19333
 
 		# Project Helpers
 		getProjects: ->
@@ -315,9 +315,9 @@ module.exports =
 					stars += project.watchers
 
 				rankAustralia or= 1
-				total or= 176
-				forks or= 1474
-				stars or= 9821
+				total or= 239
+				forks or= 2517
+				stars or= 15522
 
 				return {forks, stars, projects:total, rank, rankAustralia, contributions}
 			)()
@@ -431,7 +431,7 @@ module.exports =
 			timeout: 60*1000
 			feeds:
 				'stackoverflow-profile':
-					url: 'http://api.stackoverflow.com/1.0/users/130638/'
+					url: 'https://api.stackexchange.com/2.2/users/130638?order=desc&sort=reputation&site=stackoverflow'
 					parse: 'json'
 
 				'github-australia-javascript':

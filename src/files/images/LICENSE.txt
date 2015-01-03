@@ -2,7 +2,7 @@
 - Facebook
 - LinkedIn
 
-## Mighty Social ICons
+## Mighty Social Icons
 - Youtube
 
 ## WPZoom Social Media Icons
@@ -14,7 +14,7 @@
 
 ## Official
 - Flattr
-- [Gittip](https://github.com/gittip/www.gittip.com/blob/7c92713ced2914d19114cabf5d939ed28c6f52e0/img-src/gittip-logo-32.png)
+- [Gratipay](https://github.com/gratipay/gratipay.com/blob/7c92713ced2914d19114cabf5d939ed28c6f52e0/img-src/gittip-logo-32.png)
 
 ## Unkown (sorry)
 - Vimeo
