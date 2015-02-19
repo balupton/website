@@ -198,7 +198,7 @@ module.exports =
 					title: 'Startup Hostel is a co-work and co-live initiative. Learn about Startup Hostel on its website.'
 				historyjs:
 					text: 'History.js'
-					url: 'http://historyjs.net'
+					url: 'https://github.com/browserstate/history.js'
 					title: 'History.js lets you create cross-browser stateful web applications. Learn about History.js on its website.'
 				bevry:
 					text: 'Bevry'
