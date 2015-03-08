@@ -15,7 +15,7 @@
 
 ## Getting Started
 
-1. [Install DocPad](http://docpad.org/install) 
+1. [Install DocPad](http://docpad.org/install)
 
 1. Clone and run the server
 
@@ -33,4 +33,19 @@
 
 ## License
 
-Unless stated otherwise; all works are Copyright © 2011+ [Benjamin Lupton](http://balupton.com) <b@lupton.cc> and licensed [permissively](http://en.wikipedia.org/wiki/Permissive_free_software_licence) under the [MIT License](http://creativecommons.org/licenses/MIT/) for code and the [Creative Commons Attribution 3.0 Unported License](http://creativecommons.org/licenses/by/3.0/) for everything else (including content, media and design), enjoy!
+<!-- LICENSE/ -->
+
+## License
+
+Unless stated otherwise all works are:
+
+- Copyright &copy; Benjamin Lupton <b@lupton.cc> (http://balupton.com)
+
+and licensed under:
+
+- The incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT License](http://opensource.org/licenses/mit-license.php)
+- The [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/)
+
+<!-- /LICENSE -->
+
+
