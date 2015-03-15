@@ -60,7 +60,7 @@
   },
   "main": "node_modules/docpad/bin/docpad-server",
   "scripts": {
-    "deploy": "git push heroku 2012-2014:master"
+    "deploy": "git push heroku 2012+:master"
   },
   "licenses": [
     {
