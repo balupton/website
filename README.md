@@ -20,18 +20,15 @@
 1. Clone and run the server
 
 	``` bash
-	git clone git://github.com/balupton/balupton.docpad.git
-	cd balupton.docpad
-	npm install
-	docpad run
+	mkdir my-website
+	cd my-website
+	docpad run --skeleton balupton
 	```
 
 1. [Open http://localhost:9778/](http://localhost:9778/)
 
 1. Start hacking away by modifying the `src` directory
 
-
-## License
 
 <!-- LICENSE/ -->
 
