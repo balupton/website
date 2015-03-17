@@ -40,22 +40,22 @@
     "npm": "2"
   },
   "dependencies": {
-    "docpad": "~6.73.5",
-    "docpad-plugin-cachr": "~2.3.0",
+    "docpad": "~6.75.2",
+    "docpad-plugin-cachr": "~2.3.1",
     "docpad-plugin-cleanurls": "~2.7.0",
     "docpad-plugin-coffeekup": "~2.2.0",
-    "docpad-plugin-coffeescript": "~2.4.0",
+    "docpad-plugin-coffeescript": "~2.5.0",
     "docpad-plugin-eco": "~2.1.0",
-    "docpad-plugin-feedr": "~2.10.0",
+    "docpad-plugin-feedr": "~2.11.0",
     "docpad-plugin-marked": "~2.3.0",
-    "docpad-plugin-partials": "~2.9.1",
+    "docpad-plugin-partials": "~2.9.2",
     "docpad-plugin-services": "~2.6.0",
     "docpad-plugin-stylus": "~2.9.0",
-    "docpad-plugin-text": "~2.3.2",
+    "docpad-plugin-text": "~2.3.3",
     "getrepos": "~1.0.7"
   },
   "devDependencies": {
-    "docpad-plugin-livereload": "~2.6.0",
+    "docpad-plugin-livereload": "~2.6.1",
     "projectz": "^0.5.0"
   },
   "main": "node_modules/docpad/bin/docpad-server",
