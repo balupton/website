@@ -1,8 +1,19 @@
 {
   "name": "balupton-website",
   "version": "1.2.15",
+  "private": true,
   "description": "Website of Benjamin Lupton. Founder of Bevry, DocPad and HistoryJS. Aficionado of HTML5, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.",
   "homepage": "https://github.com/balupton/website",
+  "licenses": [
+    {
+      "type": "MIT",
+      "for": "code"
+    },
+    {
+      "type": "CC-BY-4.0",
+      "for": "everything else (including content, media and design)"
+    }
+  ],
   "badges": {
     "travis": false,
     "npm": false,
@@ -25,9 +36,7 @@
   "maintainers": [
     "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
   ],
-  "contributors": [
-    "balupton (https://github.com/balupton)"
-  ],
+  "contributors": [],
   "bugs": {
     "url": "https://github.com/balupton/website/issues"
   },
@@ -58,18 +67,11 @@
     "docpad-plugin-livereload": "~2.6.1",
     "projectz": "^0.5.0"
   },
-  "main": "node_modules/docpad/bin/docpad-server",
+  "main": "node_modules/.bin/docpad-server",
   "scripts": {
-    "deploy": "git push heroku 2012+:master"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "for": "code"
-    },
-    {
-      "type": "CC-BY-4.0",
-      "for": "everything else (including content, media and design)"
-    }
-  ]
+    "deploy": "git push heroku 2012+:master",
+    "start": "node_modules/.bin/docpad-server",
+    "test": "node_modules/.bin/docpad generate --debug --silent",
+    "info": "node_modules/.bin/docpad info --silent"
+  }
 }

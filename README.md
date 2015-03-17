@@ -2,8 +2,7 @@
 
 <!-- BADGES/ -->
 
-[![Dependency Status](https://img.shields.io/david/balupton/website.svg)](https://david-dm.org/balupton/website)
-[![Dev Dependency Status](https://img.shields.io/david/dev/balupton/website.svg)](https://david-dm.org/balupton/website#info=devDependencies)<br/>
+<br/>
 [![Gratipay donate button](https://img.shields.io/gratipay/balupton.svg)](https://www.gratipay.com/balupton/ "Donate weekly to this project using Gratipay")
 [![Flattr donate button](https://img.shields.io/badge/flattr-donate-yellow.svg)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
 [![PayPayl donate button](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
@@ -20,9 +19,10 @@
 1. Clone and run the server
 
 	``` bash
-	mkdir my-website
-	cd my-website
-	docpad run --skeleton balupton
+	git clone https://github.com/balupton/website.git balupton-website
+	cd balupton-website
+	npm install
+	docpad run
 	```
 
 1. [Open http://localhost:9778/](http://localhost:9778/)
