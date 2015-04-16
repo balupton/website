@@ -77,7 +77,7 @@ module.exports =
 							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'vegan'}.</span>
 							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich'}.</span> -->
 							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'}, #{@link 'webwrite'} &amp; #{@link 'hostel'}.</span>
-							<span>Aficionado of #{@link 'javascript'}, #{@link 'coffeescript'}, #{@link 'nodejs'}, #{@link 'html5'} and #{@link 'opensource'}.</span>
+							<span>Aficionado of #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html5'} and #{@link 'opensource'}.</span>
 							<span>Available for consulting, training and speaking. #{@link 'contact'}.</span>
 							"""
 					</t>
