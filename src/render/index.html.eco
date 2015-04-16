@@ -38,7 +38,7 @@ layout: 'page'
 				</strong> via StackOverflow
 			</a>
 		</h3>
-		<p>With <a href="http://stackoverflow.com/users/130638/balupton"><%- @suffixNumber @floorToNearest @getStackoverflowReputation(), 1000 %> reputation</a> on <a href="http://stackoverflow.com/faq">StackOverflow</a> I’ve been able to empower and teach thousands of other web developers by sharing my knowledge and expertise.</p>
+		<p>With <a href="http://stackoverflow.com/users/130638/balupton?tab=profile"><%- @suffixNumber @floorToNearest @getStackoverflowReputation(), 1000 %> reputation</a> on <a href="http://stackoverflow.com/faq">StackOverflow</a> I’ve been able to help approximately 3.1 million web developers with my shared knowledge and expertise.</p>
 	</section>
 
 	<section class="awards-active">
