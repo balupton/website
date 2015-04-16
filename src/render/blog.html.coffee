@@ -8,6 +8,8 @@ url: '/blog'
 urls: ['/blog/','/blog/index.html','/blog.html']
 ---
 
+###
+@TODO FIX THIS, LINKS ARE 404'ing
 # Post Listing
 posts = []
 for document in @getCollection('posts').toJSON()
@@ -16,6 +18,7 @@ if posts.length
 	text @partial 'content/document-list.html.coffee', {
 		documents: posts
 	}
+###
 
 # Medium Listing
 entries = []

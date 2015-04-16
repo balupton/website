@@ -73,21 +73,19 @@ module.exports =
 				heading: "Benjamin Lupton"
 				subheading: '''
 					<t render="html.coffee">
-						link = @getPreparedLink.bind(@)
 						text """
-							<span>#{link 'opencollaboration'} Entrepreneur. #{link 'vegan'}.</span>
-							<!-- <span>#{link 'husband'}. Stepdad. #{link 'agnostic'}. #{link 'pantheist'}. #{link 'trich'}.</span> -->
-							<span>Founded #{link 'bevry'}, #{link 'docpad'}, #{link 'historyjs'}, #{link 'webwrite'} &amp; #{link 'hostel'}.</span>
-							<span>Aficionado of #{link 'javascript'}, #{link 'coffeescript'}, #{link 'nodejs'}, #{link 'html5'} and #{link 'opensource'}.</span>
-							<span>Available for consulting, training and speaking. #{link 'contact'}.</span>
+							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'vegan'}.</span>
+							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich'}.</span> -->
+							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'}, #{@link 'webwrite'} &amp; #{@link 'hostel'}.</span>
+							<span>Aficionado of #{@link 'javascript'}, #{@link 'coffeescript'}, #{@link 'nodejs'}, #{@link 'html5'} and #{@link 'opensource'}.</span>
+							<span>Available for consulting, training and speaking. #{@link 'contact'}.</span>
 							"""
 					</t>
 					'''
 				about: '''
 					<t render="html.coffee">
-						link = @getPreparedLink.bind(@)
 						text """
-							This website was created with #{link 'bevry'}’s #{link 'docpad'} and is #{link 'source'}
+							This website was created with #{@link 'bevry'}’s #{@link 'docpad'} and is #{@link 'source'}
 							"""
 					</t>
 					'''
@@ -200,10 +198,14 @@ module.exports =
 					text: 'History.js'
 					url: 'https://github.com/browserstate/history.js'
 					title: 'History.js lets you create cross-browser stateful web applications. Learn about History.js on its website.'
+				taskgroup:
+					text: 'TaskGroup'
+					url: 'https://github.com/bevry/taskgroup'
+					title: 'The true solution to callback hell. Robust, simple, and consistent. Group together synchronous and asynchronous tasks and execute them with support for concurrency, naming, and nesting.'
 				bevry:
 					text: 'Bevry'
 					url: 'http://bevry.me'
-					title: 'Bevry is the open-company and community that I founded in 2011, its a great thing. Learn about Bevry on its website.'
+					title: 'Bevry is the open-company and community that I founded in 2011, it\'s a great thing. Learn about Bevry on its website.'
 				webwrite:
 					text: 'Web Write'
 					url: 'https://github.com/webwrite'
@@ -253,12 +255,28 @@ module.exports =
 					text: 'Not Alone'
 					url: 'http://www.trich.org/about/hair-faqs.html'
 					title: "Along with up to 10% of the population by some estimates, I happen to have trichotillomania (obsessive compulsive hair pulling) that for me, occurs in times of emotional despair, once every few years. It's time the mental illness stigma goes away. Learn about Trichotillomania on the TLC Learning Centre."
+				poly:
+					text: 'Polyamorous'
+					url: 'https://en.wikipedia.org/wiki/Polyamory'
+					title: 'Polyamory is the practice, desire, or acceptance of intimate relationships that are not exclusive with respect to other sexual or intimate relationships, with knowledge and consent of everyone involved.'
+				moneyless:
+					text: 'Moneyless Living'
+					url: 'http://www.moneylessmanifesto.org'
+					title: 'Moneyless living is a life abstaining from direct use of money, instead using excess and natural methods of meeting life\'s demands.'
+				lentil:
+					text: 'Lentil as Anything'
+					url: 'http://lentilasanything.com'
+					title: 'Lentil as Anything is a not-for-profit volunteer based pay-what you want restaraunt. It\'s Sydney location is completely vegan, containing a restaraunt and mocktail bar. It\'s a great place to hang out.'
+				walk:
+					text: 'Bibbulmum Track'
+					url: 'https://www.bibbulmuntrack.org.au'
+					title: 'The Bibbulmun Track is one of the world’s great long distance walk trails, stretching 1000km from Kalamunda in the Perth Hills, to Albany on the south coast, winding through the heart of the scenic South West of Western Australia.'
 
 		# Link Helper
-		getPreparedLink: (name) ->
-			link = @site.links[name]
+		link: (code, text, title) ->
+			link = @site.links[code]
 			renderedLink = """
-				<a href="#{link.url}" title="#{link.title}" class="#{link.cssClass or ''}">#{link.text}</a>
+				<a href="#{link.url}" title="#{title or link.title}" class="#{link.cssClass or ''}">#{text or link.text}</a>
 				"""
 			return renderedLink
 
@@ -280,10 +298,10 @@ module.exports =
 			return getRankInUsers(feed) or 4
 		getGithubFollowers: (z=50) ->
 			followers = @feedr.feeds['github-profile']?.followers ? null
-			return followers or 673
+			return followers or 709
 		getStackoverflowReputation: (z=1000) ->
 			reputation = @feedr.feeds['stackoverflow-profile']?.items?[0]?.reputation ? null
-			return reputation or 19333
+			return reputation or 20321
 
 		# Project Helpers
 		getProjects: ->

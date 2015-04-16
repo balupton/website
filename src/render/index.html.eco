@@ -5,6 +5,7 @@ menuText: 'home'
 menuTitle: 'Return home'
 menuOrder: 1
 layout: 'page'
+standalone: true
 ---
 
 <!--
@@ -25,6 +26,108 @@ layout: 'page'
 	</div>
 </section>
 -->
+
+<section class="pitch">
+	<h2>I'm Benjamin Lupton. I radically explore the known and unknown.</h2>
+
+	<p>I'm absorbed in the art of <a href="https://en.wikipedia.org/wiki/Simple_living">simple</a> and <a href="https://en.wikipedia.org/wiki/Nomad">nomadic</a> living, with a <a href="https://en.wikipedia.org/wiki/Veganism">vegan</a> life-style and <a href="https://en.wikipedia.org/wiki/Ahimsa">ahimsa</a> values. I spend less than $100 a month. <%-@link('vegan', 'The data cannot recommend this lifestyle more highly.', 'Really, check it out.')%></p>
+
+	<p>I'm a life-long struggler with anxiety, which manifests itself in severity from spiraling thought patterns all the way to skin picking, <%-@link('trich', 'hair pulling')%>, and panic attacks. It's not pleasant, there's nothing wrong with me, it's just the occasional part of life for me, I accept it, and for the most part, I'm a functioning human being that cares a whole lot about everything. The only thing that bothers me about it, is the stigma around it.</p>
+
+	<p>I'm a privileged heterosexual white male born into a middle class society. I leverage this privilege to make the world a fairer place for all those in it.</p>
+
+	<p>I've recently come out as <%-@link('poly', 'polyamorous')%>. It turns out there are other <a href="https://en.wikipedia.org/wiki/Polyamory:_Married_%26_Dating">successful dynamics</a> of relationships besides the 1 on 1 exclusive union to my grateful surprise. I'm contented having now embraced that, despite the temporary signficant pain which it caused myself and others in the process.</p>
+
+	<p>My interest in philosophy has lead me to conclude that I haven't actually done anything useful or special in my life. I'm unsure if this is because I think less of myself and highly of others, or highly of my myself and less of others.</p>
+
+	<p>My jihad is with stepping back far enough from the happenings of the present to be able to see myself from afar enough to finally witness my place inside this crazy world. In short, to stop thinking and to feel connected with everything and to sense my being - aka to feel joy. The moon, walking, running, great food, nice conversation, nature, and romance, help me do that.</p>
+
+	<p>In 2013, I flew to Bali to setup the first full-time <%-@link('hostel')%>. I didn't enjoy the setting up procedure much, however fortunately other people did. There are now more than <a href="http://startuphostel.net/list">30 hostels</a> for startup folk around the world.
+
+	<p>In 2014, I burned out from 10 years of professional programming and of life in general, after a while I embraced <%-@link('moneyless', 'moneyless living')%> and began volunteering at a <%-@link('lentil', 'donation-based vegan soup kitchen in Sydney')%>. It was perhaps the most rewarding work I've ever done in my life. I actually got to smile, laugh, and interact with people, solving a real need - joyous food and great company - without discrimination (even financial).</p>
+
+	<p>In September 2015, I will commence foot on the <%-@link('walk')%>, a 1000KM walk from Perth to Albany in Western Australia. I plan on doing this alone to discover what doors it opens and closes for me.</p>
+
+	<p>I'm a big believer in ephemeral living, whatever that is. I've recently discovered that I'm my own person. Coming up with great questions and answering them - staying true to myself by discovering myself - enabling joy and reducing oppression through education - are all passages deeply rooted in my soul.</p>
+
+	<h3>I write, some of my favourites are:</h3>
+
+	<ul>
+		<li><a href="https://medium.com/ephemeral-living/surviving-free-culture-f99b39ceb059">
+			Surviving Free Culture
+		</a></li>
+		<li><a href="https://medium.com/i-m-h-o/a-different-way-to-see-google-303df2011df0">
+			A different way to see Google
+		</a></li>
+		<li><a href="/v">
+			Plant Products VS. Animal Products
+		</a></li>
+
+		<li><a href="/blog">
+			Though, there's plenty more.
+		</a></li>
+	</ul>
+
+	<h3>I talk, some of my favourites are:</h3>
+
+	<ul>
+		<li><a href="https://www.youtube.com/watch?v=nt4Gt6-T8N0">
+			Why the next big thing sucks / Meta Refresh 2013
+		</a></li>
+		<li><a href="https://www.youtube.com/watch?v=UuoFBgx9gmM">
+			A road to open-source / Hacker Retreat 2014
+		</a></li>
+		<li><a href="https://www.youtube.com/watch?v=I9577a9c1OQ">
+			Open-Source will leave you behind / National Institute of Design: Gyan Adda 2013
+		</a></li>
+
+		<li><a href="https://www.youtube.com/playlist?list=PLYVl5EnzwqsQs0tBLO6ug6WbqAbrpVbNf">
+			Though, there's plenty more.
+		</a></li>
+	</ul>
+
+	<h3>I teach, some of my favourites are:</h3>
+
+	<ul>
+		<li>Organiser and Trainer / <a href="http://nodeschool.io">Node School</a> Berlin 2014</li>
+		<li>JavaScript Expert / <a href="http://datascienceretreat.com">Hacker &amp; Data-Science Retreat</a> 2013 &amp; 2014</li>
+		<li>DocPad &amp; WebRTC Trainer / <a href="http://myplanet.io">Myplanet Digital</a> 2013 &amp; 2014</li>
+
+		<li><a href="https://www.youtube.com/playlist?list=PLYVl5EnzwqsQs0tBLO6ug6WbqAbrpVbNf">
+			Though, there's plenty more.
+		</a></li>
+	</ul>
+
+	<h3>I code, some of my favourites are:</h3>
+
+	<ul>
+		<li><%-@link('docpad', 'DocPad: A static-site generator with dynamic abilities.')%></li>
+		<li><%-@link('historyjs', 'History.js: Cross-browser stateful web applications.')%></li>
+		<li><%-@link('taskgroup', 'TaskGroup: Intuitive JavaScript flow control that actually makes sense.')%></li>
+
+		<li><a href="/projects">
+			Though, there's plenty more.
+		</a></li>
+	</ul>
+
+	<h3>I read, some of my favourites are:</h3>
+
+	<ul>
+		<li><a href="https://www.goodreads.com/book/show/16631.Steppenwolf">Steppenwolf / Hermann Hesse</a></li>
+		<li><a href="https://www.goodreads.com/book/show/16902.Walden">Walden / Henry David Thoreau</a></li>
+		<li><a href="https://www.goodreads.com/author/show/566.Paulo_Coelho">Anything and everything by Paulo Coelho</a></li>
+
+		<li><a href="https://www.goodreads.com/user/show/620884-benjamin-lupton">
+			Though, there's plenty more.
+		</a></li>
+	</ul>
+
+	<!--<h3>I watch, some of my favourites are:</h3>-->
+
+	<p>You can support me by <a href="http://amzn.com/w/2F8TXKSNAFG4V">sending me something on my wishlist</a>, <a href="http://gratipay.com/balupton">donating weekly to me on gratipay</a>, or <%-@link('contact', "having a chat with me")%>.</p>
+
+	<p>I'm not particularly interested in work offers, however if you are a company implementing a cause (<a href="http://www.teslamotors.com">Tesla</a>, <a href="http://www.animalsaustralia.org">Animals Australia</a>, <a href="http://greenschool.org">Green School</a>, <a href="http://lentilasanything.com">Lentil as Anything</a>, etc.) or would just like to touch base, <%-@link('contact', "I'm all ears")%>.</p>
+</section>
 
 
 <section class="awards">
