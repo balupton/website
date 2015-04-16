@@ -28,7 +28,7 @@ standalone: true
 -->
 
 <section class="pitch">
-	<h2>I'm Benjamin Lupton. I radically explore the known and unknown.</h2>
+	<h2>I'm Benjamin Lupton. I radically explore the known and the unknown.</h2>
 
 	<p>I'm absorbed in the art of <a href="https://en.wikipedia.org/wiki/Simple_living">simple</a> and <a href="https://en.wikipedia.org/wiki/Nomad">nomadic</a> living, with a <a href="https://en.wikipedia.org/wiki/Veganism">vegan</a> life-style and <a href="https://en.wikipedia.org/wiki/Ahimsa">ahimsa</a> values. I spend less than $100 a month. <%-@link('vegan', 'The data cannot recommend this lifestyle more highly.', 'Really, check it out.')%></p>
 
