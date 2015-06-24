@@ -52,6 +52,10 @@ standalone: true
 
 	<p>I'm a big believer in ephemeral living, whatever that is. I've recently discovered that I'm my own person. Coming up with great questions and answering them - staying true to myself by discovering myself - enabling joy and reducing oppression through education - are all passages deeply rooted in my soul.</p>
 
+	<p>You can support me by <a href="http://amzn.com/w/2F8TXKSNAFG4V">sending me something on my wishlist</a>, <a href="http://gratipay.com/bevry">donating weekly to me on gratipay</a>, or <%-@link('contact', "having a chat with me")%>.</p>
+
+	<p>I'm not particularly interested in work offers, however if you are a company implementing a cause (<a href="http://www.teslamotors.com">Tesla</a>, <a href="http://www.animalsaustralia.org">Animals Australia</a>, <a href="http://greenschool.org">Green School</a>, <a href="http://lentilasanything.com">Lentil as Anything</a>, etc.) or would just like to touch base, <%-@link('contact', "I'm all ears")%>.</p>
+
 	<h3>I write, some of my favourites are:</h3>
 
 	<ul>
@@ -66,7 +70,7 @@ standalone: true
 		</a></li>
 
 		<li><a href="/blog">
-			Though, there's plenty more.
+			More.
 		</a></li>
 	</ul>
 
@@ -84,7 +88,7 @@ standalone: true
 		</a></li>
 
 		<li><a href="https://www.youtube.com/playlist?list=PLYVl5EnzwqsQs0tBLO6ug6WbqAbrpVbNf">
-			Though, there's plenty more.
+			More.
 		</a></li>
 	</ul>
 
@@ -96,7 +100,7 @@ standalone: true
 		<li>DocPad &amp; WebRTC Trainer @ <a href="http://myplanet.io">Myplanet Digital</a> 2013 &amp; 2014</li>
 
 		<li><a href="https://www.youtube.com/playlist?list=PLYVl5EnzwqsQs0tBLO6ug6WbqAbrpVbNf">
-			Though, there's plenty more.
+			More.
 		</a></li>
 	</ul>
 
@@ -108,7 +112,7 @@ standalone: true
 		<li><%-@link('taskgroup', 'TaskGroup: Intuitive JavaScript flow control that actually makes sense.')%></li>
 
 		<li><a href="/projects">
-			Though, there's plenty more.
+			More.
 		</a></li>
 	</ul>
 
@@ -120,15 +124,11 @@ standalone: true
 		<li><a href="https://www.goodreads.com/author/show/566.Paulo_Coelho">Everything and anything by Paulo Coelho</a></li>
 
 		<li><a href="https://www.goodreads.com/user/show/620884-benjamin-lupton">
-			Though, there's plenty more.
+			More.
 		</a></li>
 	</ul>
 
 	<!--<h3>I watch, some of my favourites are:</h3>-->
-
-	<p>You can support me by <a href="http://amzn.com/w/2F8TXKSNAFG4V">sending me something on my wishlist</a>, <a href="http://gratipay.com/balupton">donating weekly to me on gratipay</a>, or <%-@link('contact', "having a chat with me")%>.</p>
-
-	<p>I'm not particularly interested in work offers, however if you are a company implementing a cause (<a href="http://www.teslamotors.com">Tesla</a>, <a href="http://www.animalsaustralia.org">Animals Australia</a>, <a href="http://greenschool.org">Green School</a>, <a href="http://lentilasanything.com">Lentil as Anything</a>, etc.) or would just like to touch base, <%-@link('contact', "I'm all ears")%>.</p>
 </section>
 
 
