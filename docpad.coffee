@@ -47,7 +47,6 @@ floorToNearest = (value,floorToNearest) ->
 # DocPad Configuration
 
 module.exports =
-	regenerateEvery: 1000*60*60  # hour
 
 	# =================================
 	# Template Data
@@ -387,60 +386,6 @@ module.exports =
 			# Return
 			return true
 
-		serverExtend: (opts) ->
-			# Prepare
-			docpadServer = opts.server
-
-			# ---------------------------------
-			# Server Configuration
-
-			# Redirect Middleware
-			docpadServer.use (req,res,next) ->
-				if req.headers.host in ['www.balupton.com','lupton.cc','www.lupton.cc','balupton.no.de','balupton.herokuapp.com']
-					res.redirect 301, 'http://balupton.com'+req.url
-				else
-					next()
-
-			# ---------------------------------
-			# Server Extensions
-
-			# Demos
-			docpadServer.get /^\/sandbox(?:\/([^\/]+).*)?$/, (req, res) ->
-				project = req.params[0]
-				res.redirect 301, "http://balupton.github.com/#{project}/demo/"
-				# ^ github pages don't have https
-
-			# Projects
-			# slash necessary
-			docpadServer.get /^\/projects?\/(.*)$/, (req, res) ->
-				project = req.params[0] or ''
-				res.redirect 301, "https://github.com/balupton/#{project}"
-			# slash optional
-			docpadServer.get /^\/(?:g|gh|github)(?:\/(.*))?$/, (req, res) ->
-				project = req.params[0] or ''
-				res.redirect 301, "https://github.com/balupton/#{project}"
-
-			# Twitter
-			docpadServer.get /^\/(?:t|twitter|tweet)(?:\/(.*))?$/, (req, res) ->
-				res.redirect 301, "https://twitter.com/balupton"
-
-			# Sharing Feed
-			docpadServer.get /^\/feeds?\/shar(e|ing)(?:\/(.*))?$/, (req, res) ->
-				res.redirect 301, "http://feeds.feedburner.com/balupton/shared"
-
-			# Feeds
-			docpadServer.get /^\/feeds?(?:\/(.*))?$/, (req, res) ->
-				res.redirect 301, "http://feeds.feedburner.com/balupton"
-
-			# Vegan
-			docpadServer.get /\/v(?:egan|egetarian)?(?:\/(.*))?$/, (req, res) ->
-				res.redirect 301, "https://github.com/balupton/plant-vs-animal-products/blob/master/README.md#readme"
-
-			# Sustainability
-			docpadServer.get /\/s(?:ustain?(?:ability))(?:\/(.*))?$/, (req, res) ->
-				res.redirect 301, "http://balupton.tumblr.com/post/79542013417/sustainability"
-
-
 	# =================================
 	# Plugin Configuration
 
@@ -496,3 +441,29 @@ module.exports =
 
 				#'flickr':
 				#	url: "http://api.flickr.com/services/feeds/photos_public.gne?id=35776898@N00&lang=en-us&format=json"
+
+		cleanurls:
+			simpleRedirects:
+				# Twitter
+				't': 'https://twitter.com/balupton'
+				'twitter': '/t'
+
+				# Vegan
+				'/v': 'https://github.com/balupton/plant-vs-animal-products/blob/master/README.md#readme'
+				'/vegan': '/v'
+				'/vegetarian': '/v'
+
+				# Sustainability
+				'/s': 'http://balupton.tumblr.com/post/79542013417/sustainability'
+				'/sustainability': '/s'
+
+			advancedRedirects: [
+				# Old URLs
+				[/^https?:\/\/(?:www\.balupton\.com|(?:www\.)?lupton\.cc|balupton\.herokuapp\.com|balupton\.github\.io\/website)(.*)$/, 'https://balupton.com$1']
+
+				# Demos
+				[/^\/sandbox(?:\/([^\/]+).*)?$/, 'http://balupton.github.io/$1/demo/']
+
+				# Projects
+				[/^\/(?:projects?\/|(?:g|gh|github)\/?)(.*)$/, 'https://github.com/balupton/$1']
+			]
