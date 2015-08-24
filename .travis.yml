@@ -23,7 +23,7 @@ notifications:
     recipients:
       secure: R6iR1oq4QYgIJXV5iDPUbMl6ZC6Pq3TYERBW8xGoGt5YrZKthR4FhjpVBkHQT7AM9oAQxG+3kRLBjesq1Rwfiqw4/GTafDW+PFrjZsqHO5HpfPDeX7DiQgD84yc2+tJyaMG+wgvAPCc3VkAxMLBzCA8FA4/MfKDeuWi/fkd5qug=
   slack:
-    secure: LXzipBN8ZLhKugE3uV2YXjv+L3gY5wRjGkvfzaFQOd9GEZfa0Hq6VGaSccVCtPYaiSD837TNfFdGM4HSbGzzmzK9y7S3JwD/wIYGzZzLC4tzbUiAGVwuNvd3TjbOLp1WULinUwJWov/yXce7L1z0Cl3x3NpZFXt7P+8+BdzAnMM=
+    secure: Zv7IDpflG7K+LBvY+dcJUzq0oVou+eusDI1xK8zIN2z+8c/qX2pGhUPyUuW/2MSP2LOJb7Ddiw9ssMMyDCi469mzFivJzt7q/ln9NdiVsl+5gmvNtCjImQ9Pt0qM7EkYPRk8ZA1Te3TuGLGZG88GbCAVaxN2etrx9UlSGgDhZfY=
 
 # Deployment
 after_success: >
