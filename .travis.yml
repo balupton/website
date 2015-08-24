@@ -4,11 +4,6 @@
 # Use the latest travis infrastructure
 sudo: false
 
-# Run travis only on the master branch
-branches:
-  only:
-    - master
-
 # We use node
 language: node_js
 node_js:
