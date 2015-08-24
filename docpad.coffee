@@ -2,7 +2,9 @@
 # Misc Configuration
 
 # Prepare
-githubAuthString = "client_id=#{process.env.GITHUB_CLIENT_ID}&client_secret=#{process.env.GITHUB_CLIENT_SECRET}"
+githubClientId = process.env.BEVRY_GITHUB_CLIENT_ID
+githubClientSecret = process.env.BEVRY_GITHUB_CLIENT_SECRET
+githubAuthString = "client_id=#{githubClientId}&client_secret=#{githubClientSecret}"
 projects = []
 reposGetter = null
 
@@ -367,8 +369,8 @@ module.exports =
 			# Prepare repos getter
 			reposGetter ?= require('getrepos').create(
 				log: docpad.log
-				github_client_id: process.env.GITHUB_CLIENT_ID
-				github_client_secret: process.env.GITHUB_CLIENT_SECRET
+				github_client_id: githubClientId
+				github_client_secret: githubClientSecret
 			)
 
 			# Fetch repos
