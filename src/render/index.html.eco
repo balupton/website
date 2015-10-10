@@ -54,7 +54,7 @@ standalone: true
 
 	<p>You can support me by <a href="http://amzn.com/w/2F8TXKSNAFG4V">sending me something on my wishlist</a>, <a href="http://gratipay.com/bevry">donating weekly to me on gratipay</a>, or <%-@link('contact', "having a chat with me")%>.</p>
 
-	<p>I'm not particularly interested in work offers, however if you are a company implementing a cause (<a href="http://www.teslamotors.com">Tesla</a>, <a href="http://www.animalsaustralia.org">Animals Australia</a>, <a href="http://greenschool.org">Green School</a>, <a href="http://lentilasanything.com">Lentil as Anything</a>, etc.) or would just like to touch base, <%-@link('contact', "I'm all ears")%>.</p>
+	<p>I'm not particularly interested in work offers, however if you are a company implementing a cause (<a href="http://www.teslamotors.com" title="Solving the worlds transit and energy problems">Tesla</a>, <a href="https://medium.com" title="Giving everyone an equal voice">Medium</a>, <a href="http://www.animalsaustralia.org" title="Succeeding in animal welfare">Animals Australia</a>, <a href="http://greenschool.org" title="Creating educated balanced children">Green School</a>, <a href="http://lentilasanything.com" title="Providing ethical food and joy to all people">Lentil as Anything</a>, etc.) or would just like to touch base, <%-@link('contact', "I'm all ears")%>.</p>
 
 	<h3>I write, some of my favourites are:</h3>
 
