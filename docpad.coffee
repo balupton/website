@@ -178,11 +178,11 @@ module.exports =
 				author:
 					text: 'Author'
 					url: 'https://gumroad.com/l/vKuF'
-					title: 'Author of the mostly likely not the best non-best selling book in cultural literature right now.
+					title: '''Author of the mostly likely not the best non-best selling book in cultural literature right now.'''
 				vegan:
 					text: 'Vegan'
 					url: 'http://balupton.com/v'
-					title: "Veganism is the stance that other lives are not ours to own. Vegans commonly associate this with the practice of reducing their harm to all lives, primarily through a strict-vegetarian diet and lifestyle. That's it, nothing special. Learn about what turned me vegan."
+					title: '''Veganism is the stance that other lives are not ours to own. Vegans commonly associate this with the practice of reducing their harm to all lives, primarily through a strict-vegetarian diet and lifestyle. That's it, nothing special. Learn about what turned me vegan.'''
 				agnostic:
 					text: 'Agnostic'
 					url: 'http://en.wikipedia.org/wiki/Agnostic'
