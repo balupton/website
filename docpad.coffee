@@ -214,11 +214,11 @@ module.exports =
 				webwrite:
 					text: 'Web Write'
 					url: 'https://github.com/webwrite'
-					title: 'Web Write is an open-source initiative to create a series of admin interfaces that work with any backend. Learn more about Web Write on its website.'
+					title: '''Web Write is an open-source initiative to create a series of admin interfaces that work with any backend. Learn more about Web Write on its website.'''
 				services:
 					text: 'Services'
 					url: 'http://bevry.me/services'
-					title: "View my company's services"
+					title: '''View my company's services'''
 				opensource:
 					text: 'Open-Source'
 					url: 'http://en.wikipedia.org/wiki/Open-source_software'
@@ -259,7 +259,7 @@ module.exports =
 				trich:
 					text: 'Not Alone'
 					url: 'http://www.trich.org/about/hair-faqs.html'
-					title: "Along with up to 10% of the population by some estimates, I happen to have trichotillomania (obsessive compulsive hair pulling) that for me, occurs in times of emotional despair, once every few years. It's time the mental illness stigma goes away. Learn about Trichotillomania on the TLC Learning Centre."
+					title: '''Along with up to 10% of the population by some estimates, I happen to have trichotillomania (obsessive compulsive hair pulling) that for me, occurs in times of emotional despair, once every few years. It's time the mental illness stigma goes away. Learn about Trichotillomania on the TLC Learning Centre.'''
 				poly:
 					text: 'Polyamorous'
 					url: 'https://en.wikipedia.org/wiki/Polyamory'
