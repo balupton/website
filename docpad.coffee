@@ -75,7 +75,7 @@ module.exports =
 				subheading: '''
 					<t render="html.coffee">
 						text """
-							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link author}. #{@link 'vegan'}.</span>
+							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'author'}. #{@link 'vegan'}.</span>
 							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich'}.</span> -->
 							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'} &amp; #{@link 'hostel'}.</span>
 							<span>Aficionado of #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html5'} and #{@link 'opensource'}.</span>
