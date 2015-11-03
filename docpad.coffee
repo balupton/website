@@ -75,7 +75,7 @@ module.exports =
 				subheading: '''
 					<t render="html.coffee">
 						text """
-							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'author'}. #{@link 'vegan'}.</span>
+							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'writer'}. #{@link 'vegan'}.</span>
 							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich'}.</span> -->
 							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'} &amp; #{@link 'hostel'}.</span>
 							<span>Aficionado of #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html5'} and #{@link 'opensource'}.</span>
@@ -175,7 +175,7 @@ module.exports =
 					text: 'Free Culture'
 					url: 'http://en.wikipedia.org/wiki/Free_culture_movement'
 					title: 'Free Culture is the notion that everything should be free, in terms of free as in no money needed, and free as in people can re-use it liberally. Learn about Free Culture on Wikipedia.'
-				author:
+				writer:
 					text: 'Author'
 					url: 'https://gumroad.com/l/vKuF'
 					title: '''Author of the mostly likely not the best non-best selling book in cultural literature right now.'''
