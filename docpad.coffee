@@ -462,6 +462,11 @@ module.exports =
 				# Sustainability
 				'/s': 'http://balupton.tumblr.com/post/79542013417/sustainability'
 				'/sustainability': '/s'
+				
+				# Books
+				'/bookupdates': 'https://confirmsubscription.com/h/r/36CE01ACCFE65688'
+				'/books': '/bookupdates'
+				'/book': '/bookupdates'
 
 			advancedRedirects: [
 				# Old URLs
