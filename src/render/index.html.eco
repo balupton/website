@@ -36,7 +36,7 @@ standalone: true
 
 	<p>I'm a <a href="https://gumroad.com/l/vKuF">privileged</a> heterosexual white male born into a middle class society. I leverage this privilege to make the world a fairer place for everything/everyone within it.</p>
 
-	<p>I've recently come out as <%-@link('poly', 'polyamorous')%>. It turns out there are other <a href="https://en.wikipedia.org/wiki/Polyamory:_Married_%26_Dating">successful dynamics</a> of relationships besides the 1 on 1 exclusive union to my grateful surprise. I'm contented having now embraced that, despite the temporary signficant pain which it caused myself and others in the process.</p>
+	<!--<p>I've recently come out as <%-@link('poly', 'polyamorous')%>. It turns out there are other <a href="https://en.wikipedia.org/wiki/Polyamory:_Married_%26_Dating">successful dynamics</a> of relationships besides the 1 on 1 exclusive union to my grateful surprise. I'm contented having now embraced that, despite the temporary signficant pain which it caused myself and others in the process.</p>-->
 
 	<p>My interest in philosophy has lead me to conclude that I haven't actually done anything useful or special in my life. I'm unsure if this is because I think less of myself and highly of others, or highly of my myself and less of others.</p>
 
