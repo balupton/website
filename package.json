@@ -4,27 +4,28 @@
   "private": true,
   "description": "Website of Benjamin Lupton. Founder of Bevry, DocPad and HistoryJS. Aficionado of HTML5, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.",
   "homepage": "https://github.com/balupton/website",
-  "licenses": [
-    {
-      "type": "MIT",
-      "for": "code"
-    },
-    {
-      "type": "CC-BY-4.0",
-      "for": "everything else (including content, media and design)"
-    }
-  ],
+  "license": "(MIT OR CC-BY-4.0)",
   "badges": {
-    "travis": false,
-    "npm": false,
-    "npmdownloads": false,
-    "david": false,
-    "daviddev": false,
-    "gratipay": "balupton",
-    "flattr": "344188/balupton-on-Flattr",
-    "paypal": "QB8GQPZAH84N6",
-    "bitcoin": "https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a",
-    "wishlist": "http://amzn.com/w/2F8TXKSNAFG4V"
+    "list": [
+      "travisci",
+      "---",
+      "slackin",
+      "patreon",
+      "gratipay",
+      "flattr",
+      "paypal",
+      "bitcoin",
+      "wishlist"
+    ],
+    "config": {
+      "patreonUsername": "bevry",
+      "gratipayUsername": "bevry",
+      "flattrUsername": "balupton",
+      "paypalURL": "https://bevry.me/paypal",
+      "bitcoinURL": "https://bevry.me/bitcoin",
+      "wishlistURL": "https://bevry.me/wishlist",
+      "slackinURL": "https://slack.bevry.me"
+    }
   },
   "keywords": [
     "balupton",
@@ -32,11 +33,13 @@
     "website",
     "docpad"
   ],
-  "author": "Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
+  "author": "Benjamin Lupton <b@lupton.cc> (https://balupton.com)",
   "maintainers": [
-    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+    "Benjamin Lupton <b@lupton.cc> (https://balupton.com)"
   ],
-  "contributors": [],
+  "contributors": [
+    "Benjamin Lupton <b@lupton.cc> (https://balupton.com)"
+  ],
   "bugs": {
     "url": "https://github.com/balupton/website/issues"
   },
@@ -45,8 +48,8 @@
     "url": "https://github.com/balupton/website.git"
   },
   "engines": {
-    "iojs": "1",
-    "npm": "2"
+    "node": "4",
+    "npm": "3"
   },
   "dependencies": {
     "docpad": "~6.78.1",
@@ -67,14 +70,15 @@
   "devDependencies": {
     "docpad-plugin-ghpages": "~2.4.4",
     "docpad-plugin-livereload": "~2.6.1",
-    "projectz": "^0.5.0"
+    "projectz": "^1.0.0"
   },
   "main": "node_modules/.bin/docpad-server",
   "scripts": {
-    "start": "node_modules/.bin/docpad-server",
-    "test": "node_modules/.bin/docpad generate --silent --debug",
-    "info": "node_modules/.bin/docpad info --silent",
-    "deploy": "node_modules/.bin/docpad deploy-ghpages --silent --env static",
-    "deploy-heroku": "git push heroku 2012+:master"
+    "start": "docpad-server",
+    "test": "docpad generate --silent --debug",
+    "info": "docpad info --silent",
+    "meta": "projectz compile",
+    "deploy:ghpages": "docpad deploy-ghpages --silent --env static",
+    "deploy:heroku": "git push heroku 2012+:master"
   }
 }
