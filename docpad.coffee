@@ -249,7 +249,7 @@ module.exports =
 					title: 'Visit website'
 				source:
 					text: 'open-source'
-					url: 'https://github.com/balupton/balupton.docpad'
+					url: 'https://github.com/balupton/website'
 					title: 'View website&apos;s source'
 				contact:
 					text: 'Contact'
