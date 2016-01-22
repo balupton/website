@@ -59,7 +59,7 @@ module.exports =
 		# Site Data
 		site:
 			version: require('./package.json').version
-			url: "http://balupton.com"
+			url: "https://balupton.com"
 			title: "Benjamin Lupton"
 			author: "Benjamin Lupton"
 			email: "b@lupton.cc"
@@ -143,7 +143,7 @@ module.exports =
 					href: 'http://feeds.feedburner.com/balupton.atom'
 					title: 'Blog Posts'
 				,
-					href: 'http://balupton.tumblr.com/rss'
+					href: 'https://balupton.tumblr.com/rss'
 					title: 'Tumblr Posts'
 				,
 					href: 'https://medium.com/feed/@balupton'
@@ -181,7 +181,7 @@ module.exports =
 					title: '''Author of the mostly likely not the best non-best selling book in cultural literature right now.'''
 				vegan:
 					text: 'Vegan'
-					url: 'http://balupton.com/v'
+					url: 'https://balupton.com/v'
 					title: '''Veganism is the stance that other lives are not ours to own. Vegans commonly associate this with the practice of reducing their harm to all lives, primarily through a strict-vegetarian diet and lifestyle. That's it, nothing special. Learn about what turned me vegan.'''
 				agnostic:
 					text: 'Agnostic'
@@ -209,7 +209,7 @@ module.exports =
 					title: 'The true solution to callback hell. Robust, simple, and consistent. Group together synchronous and asynchronous tasks and execute them with support for concurrency, naming, and nesting.'
 				bevry:
 					text: 'Bevry'
-					url: 'http://bevry.me'
+					url: 'https://bevry.me'
 					title: 'Bevry is the open-company and community that I founded in 2011, it\'s a great thing. Learn about Bevry on its website.'
 				webwrite:
 					text: 'Web Write'
@@ -217,7 +217,7 @@ module.exports =
 					title: '''Web Write is an open-source initiative to create a series of admin interfaces that work with any backend. Learn more about Web Write on its website.'''
 				services:
 					text: 'Services'
-					url: 'http://bevry.me/services'
+					url: 'https://bevry.me/services'
 					title: '''View my company's services'''
 				opensource:
 					text: 'Open-Source'
@@ -241,11 +241,11 @@ module.exports =
 					title: 'Node.js is JavaScript on the backend, it lets frontend web developers code web servers and desktop applications. Its really cool. Learn about Node.js on its website.'
 				balupton:
 					text: 'Benjamin Lupton'
-					url: 'http://balupton.com'
+					url: 'https://balupton.com'
 					title: 'Visit website'
 				author:
 					text: 'Benjamin Lupton'
-					url: 'http://balupton.com'
+					url: 'https://balupton.com'
 					title: 'Visit website'
 				source:
 					text: 'open-source'
@@ -424,7 +424,7 @@ module.exports =
 					url: "https://github.com/balupton.atom"
 					parse: 'xml'
 				'tumblr':
-					url: "http://balupton.tumblr.com/rss"
+					url: "https://balupton.tumblr.com/rss"
 					parse: 'xml'
 				'medium':
 					url: "https://medium.com/feed/@balupton"
@@ -478,7 +478,7 @@ module.exports =
 				[/^https?:\/\/(?:www\.balupton\.com|(?:www\.)?lupton\.cc|balupton\.herokuapp\.com|balupton\.github\.io\/website)(.*)$/, 'https://balupton.com$1']
 
 				# Demos
-				[/^\/sandbox(?:\/([^\/]+).*)?$/, 'http://balupton.github.io/$1/demo/']
+				[/^\/sandbox(?:\/([^\/]+).*)?$/, 'https://balupton.github.io/$1/demo/']
 
 				# Projects
 				[/^\/(?:projects?\/|(?:g|gh|github)\/?)(.+)$/, 'https://github.com/balupton/$1']
