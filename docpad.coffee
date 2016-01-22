@@ -507,6 +507,10 @@ module.exports =
 					text: 'WebCT'
 					url: 'https://en.wikipedia.org/wiki/WebCT'
 					title: 'WebCT also called Blackboard Learning System, is an online proprietary virtual learning environment system that is licensed to colleges and other institutions and used in many campuses for e-learning.'
+				webctexploit:
+					text: 'WebCT Security Advisory'
+					url: '/webctexploit'
+					title: 'My first security advisory: WebCT 4.x Javascript Session Stealer Exploits'
 				degree:
 					text: 'Bachelor of Computer Science (Information Technology)'
 					url: 'http://archive.handbook.curtin.edu.au/february2006/courses/14/143010.html'
@@ -846,9 +850,9 @@ module.exports =
 				'/book': '/bookupdates'
 
 				# Security Advisories
-				'/webct_exploits': 'https://gist.github.com/balupton/3cb9a0e066ebb899d2be'
-				'/blogs/dev?title=webct_session_stealer_exploit': '/webct_exploits'
-				'/documents/webct_exploits.txt': '/webct_exploits'
+				'/webctexploit': 'https://gist.github.com/balupton/3cb9a0e066ebb899d2be'
+				'/blogs/dev?title=webct_session_stealer_exploit': '/webctexploit'
+				'/documents/webct_exploits.txt': '/webctexploit'
 
 			advancedRedirects: [
 				# Old URLs
