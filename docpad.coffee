@@ -163,6 +163,10 @@ module.exports =
 			]
 
 			links:
+				twitter:
+					text: 'Benjamin Lupton on Twitter'
+					url: 'https://twitter.com/balupton'
+					title: 'I post interesting things... or at least my followers think so!'
 				peac:
 					text: 'PEAC'
 					url: 'http://www.det.wa.edu.au/redirect/?oid=MultiPartArticle-id-11045758'
