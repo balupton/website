@@ -451,9 +451,14 @@ module.exports =
 		cleanurls:
 			simpleRedirects:
 				# Twitter
-				't': 'https://twitter.com/balupton'
-				'twitter': '/t'
+				'twitter': 'https://twitter.com/balupton'
+				't': '/twitter'
 
+				# Github
+				'githug': 'https://github.com/balupton'
+				'gh': '/github'
+				'g': '/github'
+				
 				# Vegan
 				'/v': 'https://github.com/balupton/plant-vs-animal-products/blob/master/README.md#readme'
 				'/vegan': '/v'
@@ -476,5 +481,5 @@ module.exports =
 				[/^\/sandbox(?:\/([^\/]+).*)?$/, 'http://balupton.github.io/$1/demo/']
 
 				# Projects
-				[/^\/(?:projects?\/|(?:g|gh|github)\/?)(.*)$/, 'https://github.com/balupton/$1']
+				[/^\/(?:projects?\/|(?:g|gh|github)\/?)(.+)$/, 'https://github.com/balupton/$1']
 			]
