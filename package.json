@@ -79,6 +79,7 @@
     "info": "docpad info --silent",
     "meta": "projectz compile",
     "deploy:ghpages": "docpad deploy-ghpages --silent --env static",
-    "deploy:heroku": "git push heroku 2012+:master"
+    "deploy:heroku": "git push heroku 2012+:master",
+    "deploy": "npm run deploy:ghpages"
   }
 }
