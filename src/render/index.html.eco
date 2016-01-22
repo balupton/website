@@ -8,53 +8,79 @@ layout: 'page'
 standalone: true
 ---
 
-<!--
-<section class="pitch">
-	<h2>Pitch</h2>
+<section class="work">
+	<h2>I radically explore the known and the unknown.</h2>
 
-	<p>Each day my products are installed in thousands of websites, empower millions of website users, and are constantly praised in social media networks. These outstanding results are achieved through my extreme commitment to quality and excellence in everything I do. My time isn’t spent spreading word through social media, instead my time is spent in creating quality solutions that inspire people to spread praise everywhere they go. I’m fantastic at what I do and I love doing it.</p>
+	<h3>I help make the web awesome.</h3>
 
-	<a class="read-more js">more...</a>
+	<p>Before I die, I wish to see everyone enabled to do what they love, share their love with the entire world, and live well. This is a big calling, and I'm chipping away at it steadily.</p>
 
-	<div class="more-to-read">
-		<p>Personally, liberation and empowerment are everything to me. These two key values drive me forward each and every step on my own epic journey. They've lead me to be able to do the work I'm most passionate about full-time, and in life have driven me to marry the most amazing woman I could ever know. Most importantly, they've lead myself to an unsurmountable curiosity and empathy towards the world and everything within it.</p>
+	<p>This has worked well for me so far; for several years I was the most active <%-@link('opensource')%> developer in Australia and one of the most prolific in the world; my technical projects have been used in some of the world's biggest web-sites/apps (Basecamp, Spotify, Ustream) and by some of the world's biggest companies (Microsoft, Adobe, GitHub, Atlassian), touching their millions of users; my non-technical projects have also seen adoption over the years.</p>
 
-		<p>Even with all the experiences I've had in my life, the sour and the sweet - I'm blessed to have been part of every single one, for they have been the pieces that have built the me of today. The sour will continue to make myself stronger and build that thirst for success and improvement, while the sweet will serve as that warm encouragement that I'm on the right path.</p>
+	<p>The key skill set I've used to accomplish this is my natural ability to quickly understand complex systems and simplify them in disruptive ways, a burning need to do good in the world, and an instinctive tenacity for always finding a way even in the most difficult of situations.</p>
 
-		<p>Thanks for being part of my journey, sincerely,<br/>
-		- Benjamin</p>
-	</div>
-</section>
--->
 
-<section class="pitch">
-	<h2>I'm Benjamin Lupton. I radically explore the known and the unknown.</h2>
+	<h3>I'm human too.</h3>
 
-	<p>I'm absorbed in the art of <a href="https://en.wikipedia.org/wiki/Simple_living">simple</a> and <a href="https://en.wikipedia.org/wiki/Nomad">nomadic</a> living, with a <a href="https://en.wikipedia.org/wiki/Veganism">vegan</a> life-style and <a href="https://en.wikipedia.org/wiki/Ahimsa">ahimsa</a> values. <%-@link('vegan', 'The data cannot recommend this lifestyle more highly.', 'Really, check it out.')%></p>
+	<p>I'm absorbed in the art of <%-@link('simpleliving', 'simple')%> and <%-@link('nomad', 'nomadic')%></a> living, with a <%-@link('vegan', 'vegan')%> life-style and <%-@link('ahimsa', 'ahimsa')%> values. <%-@link('vegan', 'The data cannot recommend this lifestyle more highly.', 'Really, check it out.')%></p>
 
-	<p>I also happen to be a life-long struggler of anxiety, which manifests itself in severity from spiraling thought patterns all the way to skin picking, <%-@link('trich', 'hair pulling')%>, and panic attacks. It's not pleasant, there's nothing wrong with me, it's just the occasional part of life for me, I accept it, and for the most part, I'm a functioning human being that cares a whole lot about everything. The only thing that bothers me about it, is the stigma around it. Hopefully my opening up about this here will reduce some stigma and <a href="http://burnout.io/resources">provide some hope</a> for other strugglers. <a href="https://en.wikipedia.org/wiki/Anomie">Anomie</a> has become a familiar experience. I dislike the term depression for me, too much empathy is never a bad thing.</p>
+	<p>I also happen to be a life-long struggler of anxiety, which manifests itself in severity from spiraling thought patterns all the way to skin picking, <%-@link('trich', 'hair pulling')%>, and panic attacks. It's not pleasant, there's nothing wrong with me, it's just the occasional part of life for me, I accept it, and for the most part, I'm a functioning human being that cares a whole lot about everything. The only thing that bothers me about it, is the stigma around it. Hopefully my opening up about this here will reduce some stigma and <%-@link('burnouttalk', 'provide some hope')%> for other strugglers. <%-@link('anomie')%> has become a familiar experience. I dislike the term depression for me, too much empathy is never a bad thing.</p>
 
-	<p>I'm a <a href="https://gumroad.com/l/vKuF">privileged</a> heterosexual white male born into a middle class society. I leverage this privilege to make the world a fairer place for everything/everyone within it.</p>
+	<p>I'm a <%-@link('privileged')%> heterosexual white male born into a middle class society. I leverage this privilege to make the world a fairer place for everything/everyone within it.</p>
 
 	<!--<p>I've recently come out as <%-@link('poly', 'polyamorous')%>. It turns out there are other <a href="https://en.wikipedia.org/wiki/Polyamory:_Married_%26_Dating">successful dynamics</a> of relationships besides the 1 on 1 exclusive union to my grateful surprise. I'm contented having now embraced that, despite the temporary signficant pain which it caused myself and others in the process.</p>-->
 
-	<p>My interest in philosophy has lead me to conclude that I haven't actually done anything useful or special in my life. I'm unsure if this is because I think less of myself and highly of others, or highly of my myself and less of others.</p>
+	<!--<p>My interest in philosophy has lead me to conclude that I haven't actually done anything useful or special in my life. I'm unsure if this is because I think less of myself and highly of others, or highly of my myself and less of others.</p>-->
 
-	<p>My struggle is with stepping back far enough from the happenings of the present to be able to see myself from afar enough to finally witness my place inside this crazy world. In short, to stop thinking and to feel connected with everything and to sense my being - aka to feel joy. The moon, walking, running, great food, nice conversation, nature, and romance, help me do that.</p>
-
-	<p>In 2013, I flew to Bali to setup the first full-time <%-@link('hostel')%>. I didn't enjoy the setting up procedure much, however fortunately other people did. There are now more than <a href="http://startuphostel.net/list">30 hostels</a> for startup folk around the world.
-
-	<p>In 2014, I burned out from 10 years of professional programming and of life in general, after a while I embraced <%-@link('moneyless', 'moneyless living')%> and became a volunteer at a <%-@link('lentil', 'donation-based vegan soup kitchen in Sydney')%>. It was perhaps the most rewarding work I've ever done in my life. I actually got to smile, laugh, and interact with people, solving a real need - joyous food and great company - without discrimination (even financial).</p>
-
-	<p>In 2015, I hitchhiked 5500KM from Perth Western Australia to Brisbane Queensland via the Outback, an adventure of a life-time that consisted of 10 days and 16 rides.</p>
-
-	<p>In later 2015, I desire to commence foot on the <%-@link('walk')%>, a 1000KM walk from Perth to Albany in Western Australia. I plan on doing this alone to discover what doors it opens and closes for me.</p>
+	<!--<p>My struggle is with stepping back far enough from the happenings of the present to be able to see myself from afar enough to finally witness my place inside this crazy world. In short, to stop thinking and to feel connected with everything and to sense my being - aka to feel joy. The moon, walking, running, great food, nice conversation, nature, and romance, help me do that.</p>-->
 
 	<p>I'm a big believer in ephemeral living, whatever that is. I've recently discovered that I'm my own person. Coming up with great questions and answering them - staying true to myself by discovering myself - enabling joy and reducing oppression through education - are all passages deeply rooted in my soul.</p>
 
-	<p>You can support me by <a href="http://amzn.com/w/2F8TXKSNAFG4V">sending me something on my wishlist</a>, <a href="http://gratipay.com/bevry">donating weekly to me on gratipay</a>, or <%-@link('contact', "having a chat with me")%>.</p>
+
+	<h3>I've done many things.</h3>
+
+	<p>In 1998 (age 8/9), I developed my first website for a <%-@link('perth')%> city council project as part of an accelerated learning <%-@link('peac')%> course, the project went on to win a state award. A few years later I started developing in <%-@link('csharp')%> to interact with the <%-@link('itunes')%> <%-@link('dll', 'DLLs')%> for the purpose of organising my music collection, I also started programming in <%-@link('ecmascript')%> in the form of <%-@link('flash')%> <%-@link('actionscript')%> for the purpose of creating a kickass full-fledged media player for my self, I also worked with <%-@link('html')%> and <%-@link('javascript')%> on the side for fun and pleasure. Around this time, I was diagnosed with <%-@link('trich')%> and until University, I would often be found with large bald spots throughout my scalp. I saw many psychologists through my childhood,
+all of which were useless.</p>
+
+	<!--<p>In 1999 (age 9/10), I encountered pornography for the first time in the form a spam email attachment. On the night of new year 1999/2000 I downloaded my first illegal MP3 of a song I already owned on CD, it was Goo Goo Dolls - Iris. I enjoyed a lot of story-based RPGs like Chrono Trigger, Robotrek, Final Fantasy, and The Sims. I read a lot of Goosebumps and Fear Street.</p>-->
+
+	<p>In 2002 (age 12/13), I started <%-@link('tafe')%> night school earning my Certificates 1 to 4 in different programming concepts and languages, working with <%-@link('c')%>, <%-@link('csharp')%>, <%-@link('pascal')%>, <%-@link('cobol')%>, <%-@link('perl')%>, <%-@link('php')%>, <%-@link('asp')%> and other languages. During the day I was at <%-@link('comosec')%> in the accelerated learning <%-@link('ssst', 'SSST')%> program (a year ahead in Science, Maths, and Technology subjects) as well as in the <%-@link('hockeyacad')%> (doing 25 hours a week of <%-@link('hockey')%>, I was fit). It placed me in an interesting position of being a frat-boy and a nerd, the teachers worked with myself and another boy to use our influence to squash the bullying of our peers, it worked well. For fun, I rollerbladed, played <%-@link('aoe')%> endlessly, did sleep overs, and hacked the school’s Windows network for fun with friends, earning us the position of “intern advisors” for the school’s security and network systems.</p>
+
+	<p>In 2005 (age 15/16), thanks to my night school studies of the previous years, I was able to drop out of <%-@link('highschool')%>, went to <%-@link('tafe')%> and earned my <%-@link('diplomaweb')%>, which allowed me to start University only a year later. At this time, I worked casually in a factory stacking fences from a conveyer belt and developed my first long term relationship<!--  and lived with a girl 5 years my senior (legal to <%-@link('consent')%>)-->, it was a wonderful maturing time, and brought a long-term end to my <%-@link('trich')%>. Around this time I also started experimenting with <%-@link('cannabis')%> and alcohol socially. Interestingly, in this year I also got into a bit of trouble for hacking Microsoft’s <%-@link('livemessenger')%> premium content services (winks and dynamic profile pictures) as I had no money or debit card to buy them… I used my <%-@link('flash')%> and <%-@link('javascript')%> skills to bypass the Flash checkout process of the Blue Mountain premium content service, then scraping their predictable premium content path structures, then developing a <%-@link('csharp')%> installer for the content by reverse engineering portions of the Messenger <%-@link('dll')%> install process. At the same time I gained prestige at <%-@link('tafe')%> by discovering an exploit in their <%-@link('webct')%> system and working with staff to rectify the situation, which I later published as my first white-hat security advisory a few years after. Later, I also discovered that the same exploit worked on my university's system, however with the university’s strict “hacking and your expelled” policy in place, I was too afraid of being expelled for sharing the exploit with them, so I never mentioned it… leaving their systems insecure and open to actually malicious people, good work policy! 🙃</p>
+
+	<p>In 2006 (age 16/17), I commenced my <%-@link('degree')%> at <%-@link('curtin')%>, while freelancing with <%-@link('php')%> and <%-@link('javascript')%> development on the side. Around this time was also my foray into <%-@link('opensource')%> development with my plugins, freelancing, blogging, and core contributions to the <%-@link('b2evo')%> blogging system (a powerful alternative to <%-@link('wordpress')%>). I also visited <%-@link('switzerland')%> for a month to visit my partner, started an <%-@link('openrel', 'open-relationship')%> upon my return to <%-@link('Perth')%>, which resulted in a first heart break 6 months later, and also partied very hard throughout the year.</p>
+
+	<p>In 2007 (age 17/18), I moved out of home with 2 other university friends into a house right next to the university, it was an amazing time, and an amazing <%-@link('bachelorpad')%> of alchohol, <%-@link('pool', 'pool billiards')%> tables, bars, and mattresses and friends everywhere all the time, it was a non-stop study and work infused party, and we loved it. It was also the time I published the <%-@link('lightbox')%>, which went on to become one of the most popular jQuery plugins of the time. Throughout these university/freelancing years I was stepped into the worlds of <%-@link('pua')%>, <%-@link('personaldev')%>, <%-@link('nlp')%>, <%-@link('hypno')%>, <%-@link('openrel')%>, <%-@link('sexpos')%>, <%-@link('halo3')%>, <%-@link('roadtrips')%>, <%-@link('opensource')%>, <%-@link('simpleliving')%>, and other <%-@link('extremelife')%>… it was all packed full of confidence and experimenting, and it was wicked fun.</p>
+
+	<p>In 2008 (age 18/19), after an intense week of exams, daily alcohol, daily marijuana, first-time <%-@link('lsd')%>, and first-time <%-@link('mdma')%>, I ended up in a moment of pure terror believing my lung had collapsed, ended up unconscious, woke up in hospital via ambulance, and diagnosed with a <%-@link('panic', 'panic attack')%>… my <%-@link('bucket')%> had finally overflowed and it was terrifying… I left that night with <%-@link('depersonalisation')%>, and over 6 months began hallucinating, hearing voices, and having <%-@link('night', 'night terrors')%>, afraid to sleep. Having one terrifying night terror that left me questioning my safety, I had my family take my to the <%-@link('gp')%> to get help and eventually see a <%-@link('psych')%> who helped me through it, with a further diagnosis of <%-@link('anxiety')%>. After 6 months of further recovery, I got through it to normality once again, and another 6 months later until I was able to have caffeine again.</p>
+
+	<p>In 2009 (age 19/20), I started feeling a lot of guilt for my fantastic life while others were in poverty. In January 2010, I went to <%-@link('bali')%> for the first time with my father and an <%-@link('exhange')%>, we had a fantastic time, but I was also harrowed by the poverty I encountered… It would go on to increase my investment to do good by the world.</p>
+
+	<p>In 2010 (age 20/21), my foray into kinder food choices began. I had watched <%-@link('ocean', 'this talk')%> and immediately stopped consuming fish. A while later, for some reason or the other, I stopped using dairy for milk. I also developed a new relationship, and my first <%-@link('closedrel', 'closed-relationship')%>, to a wonderful woman <!-- 8 years my senior --> who helped me mature in life and work very much so.</p>
+
+	<p>In 2011 (age 21/22), I was invited to speak in <%-@link('austria')%> by <%-@link('gentics')%> for their <%-@link('aloha')%> <%-@link('alohadevcon')%> of which I was a lead developer, it was a fantastic insight to get to meet other great <%-@link('javascript')%> developers at the time, especially for a small-town syndrome Australian! Upon returning, I moved to <%-@link('sydney')%> from <%-@link('perth')%> for better work opportunities and to be with my partner, who was fighting for custody of her children. I worked with miscellaneous startups earning street cred and an increasing hourly rate, due to my years of <%-@link('opensource')%> experience and commitment to quality. I went from the $10/hour newcomer to the goto JavaScript expert within the year. Eventually, I obtained a full-time $60/hour contract with Sydney company <%-@link('acidgreen')%> developing long-term JavaScript solutions for their medical and government clients. I also got married to my wonderful partner in a small ceremony overlooking the <%-@link('bridge')%>.</p>
+
+	<p>In 2012 (age 22/23), I left the amazing <%-@link('acidgreen')%> who where running out of work for me, to consult for the Melbourne startup <%-@link('bugherd')%>, earning my highest hourly rate so far. I developed their first <%-@link('spa')%> solution along with other innovations like <%-@link('queryengine', 'live collections')%> and a <%-@link('crossbrowser')%> <%-@link('screenshot')%> <%-@link('extension')%>. Once that ended, I burnt through my savings going all in with attempting to transform <%-@link('bevry', 'Bevry\'s')%> <%-@link('lossleader', 'loss-leader')%> <%-@link('docpad')%> into a profitable income stream. At one point I ran out of money, and a person called <%-@link('kasper')%> out of nowhere, a <%-@link('historyjs')%> user, bailed me out with some cash and sound advice for finding new clients, which I did, thanks to him.</p>
+
+	<p>In 2013 (age 23/24), I was invited to <%-@link('metarefresh')%> in <%-@link('bangalore')%> to speak to 400 people about <%-@link('whysucks', 'finding your way despite competition')%>. I then flew to <%-@link('bali')%> with my partner to setup the first full-time <%-@link('hostel')%>. I didn't enjoy the setting up procedure much, however fortunately enough other people did. There are now more than <%-@link('hostellist', '30 hostels')%> for startup folk around the world. In June I also received retribution for my gamble in <%-@link('docpad')%> with a full-time income to work on it from Toronto company MyPlanet. I also visited <%-@link('toronto')%> to train <%-@link('myplanet')%>, and also arrived in <%-@link('berlin')%> to train students in JavaScript. I also began experimenting with <%-@link('mindful')%> via <%-@link('tolle', "Eckhart Tolle's")%> works, and started reading <%-@link('paulo')%>.</p>
+
+	<p>In 2014 (age 24/25), I burned out from 10 years of professional programming and of life in general, after a while I embraced <%-@link('moneyless')%> and became a volunteer at a <%-@link('paycan', 'donation-based')%> <%-@link('lentil', 'donation-based vegan soup kitchen in Sydney')%>. It was perhaps the most rewarding work I've ever done in my life. I actually got to smile, laugh, and interact with people, solving a real need - joyous food and great company - without discrimination (even financial). I also was unable to find enough paying work that allowed me to continue my open-source endeavours and lived homeless in the streets of Sydney for a few months.</p>
+
+	<p>In 2015 (age 25/26), I <%-@link('hitch', 'hitchhiked')%> 10,000KM throughout <%-@link('australia')%>, notably between <%-@link('perth')%>, <%-@link('uluru')%>, Brisbane, <%-@link('sydney')%>, Melbourne, <%-@link('nullabor')%>, and back to Perth. It was an adventure of a life-time. At some point, I desire to commence foot on the <%-@link('walk')%>, a 1,000KM walk from Perth to Albany in Western Australia. I plan on doing this alone to discover what doors it opens and closes for me.</p>
+
+	<p>In 2016 (age 26/27), I look forward to spending the year teaching <%-@link('javascript')%> and exploring new businesses around open-source end-user applications.</p>
+
+	<h3>Reach out.</h3>
 
 	<p>I'm not particularly interested in work offers, however if you are a company implementing a cause (<a href="http://www.teslamotors.com" title="Solving the worlds transit and energy problems">Tesla</a>, <a href="https://medium.com" title="Giving everyone an equal voice">Medium</a>, <a href="http://www.animalsaustralia.org" title="Succeeding in animal welfare">Animals Australia</a>, <a href="http://greenschool.org" title="Creating educated balanced children">Green School</a>, <a href="http://lentilasanything.com" title="Providing ethical food and joy to all people">Lentil as Anything</a>, etc.) or would just like to touch base, <%-@link('contact', "I'm all ears")%>.</p>
+
+	<p>You can support me by <a href="http://amzn.com/w/2F8TXKSNAFG4V">sending me something on my wishlist</a>, <a href="http://gratipay.com/bevry">donating weekly to me on gratipay</a>, or <%-@link('contact', "having a chat with me")%>.</p>
+
+</section>
+
+
+<section class="resources">
+	<h2>Resources</h2>
 
 	<h3>I write, some of my favourites are:</h3>
 
@@ -127,10 +153,7 @@ standalone: true
 			More.
 		</a></li>
 	</ul>
-
-	<!--<h3>I watch, some of my favourites are:</h3>-->
 </section>
-
 
 <section class="awards">
 	<h2>Awards</h2>
