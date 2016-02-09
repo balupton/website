@@ -857,6 +857,11 @@ module.exports =
 				'/webctexploit': 'https://gist.github.com/balupton/3cb9a0e066ebb899d2be'
 				'/blogs/dev?title=webct_session_stealer_exploit': '/webctexploit'
 				'/documents/webct_exploits.txt': '/webctexploit'
+				
+				# Misc
+				'/calendar': 'http://calendly.com/balupton'
+				'/teach': 'https://www.eventbrite.com.au/e/teaching-by-donation-web-development-tickets-20723428332'
+
 
 			advancedRedirects: [
 				# Old URLs
