@@ -107,9 +107,11 @@ module.exports =
 				githubFollowButton: "balupton"
 				quoraFollowButton: "Benjamin-Lupton"
 				disqus: 'balupton'
+				
 				#gauges: '5077ae93f5a1f5067b000028'
-				googleAnalytics: 'UA-4446117-1'
+				#googleAnalytics: 'UA-4446117-1'
 				#reinvigorate: '52uel-236r9p108l'
+				# ^ no more external analytics, cloudflare gives us what we need
 
 				gittipButton: 'balupton'
 				flattrButton: '344188/balupton-on-Flattr'
