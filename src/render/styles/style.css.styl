@@ -435,37 +435,29 @@ aside.sidebar
 	footer.footing
 	article.page
 	.promo a
-		width: 95%
+		width: 100%
 
-	// Sidebar
 	aside.sidebar
+		opacity: 1
 		position: static
-		width: 95%
+		width: 100%
+		text-align: center
 
-
-@media screen and (max-width: 480px)
 	aside.modal.contact
 		width: 90%
 		left: 5%
 
-@media screen and (max-width: 320px)
-	// Body
+@media screen and (max-width: 670px)
+	nav.pages li
+		margin-right: 0.25em
+
+@media screen and (max-width: 600px)
+	nav.pages li
+		font-size: 48px
+
+@media screen and (max-width: 480px)
 	body
 		padding: 0 0.5em
 
-	// Mainbar
-	header.heading
-	nav.pages
-	footer.footing
-	article.page
-	.promo a
-		width: 100%
-
-	// Navigation
-	nav.pages
-		font-size: 35px
-
-	// Sidebar
-	aside.sidebar
-		position: static
-		width: 100%
+	nav.pages li
+		display: block

@@ -563,32 +563,6 @@ links =
 		title: 'Read my posts on Tumblr'
 		color: '#2c4762'
 		social: true
-	instagram:
-		text: 'Instagram'
-		url: 'https://www.instagram.com/balupton/'
-		title: 'View my photos on Instagram'
-		color: 'rgb(148, 125, 98)'
-		social: true
-	github:
-		text: 'Github'
-		url: 'https://github.com/balupton'
-		title: 'View my code on GitHub'
-		color: 'black'
-		social: true
-	gh: 'github'
-	g: 'github'
-	facebook:
-		text: 'Facebook'
-		url: 'https://facebook.com/balupton'
-		title: 'Follow me on Facebook'
-		color: '#4966A1'
-		social: true
-	linkedin:
-		text: 'LinkedIn'
-		url: 'http://www.linkedin.com/in/balupton'
-		title: 'View my resume on LinkedIn'
-		color: '#0083B3'
-		social: true
 	youtube:
 		text: 'YouTube'
 		url: 'http://www.youtube.com/user/balupton'
@@ -600,6 +574,32 @@ links =
 		url: 'https://vimeo.com/balupton'
 		title: 'View my videos on Vimeo'
 		color: '#27a6d1'
+		social: true
+	github:
+		text: 'Github'
+		url: 'https://github.com/balupton'
+		title: 'View my code on GitHub'
+		color: 'black'
+		social: true
+	gh: 'github'
+	g: 'github'
+	instagram:
+		text: 'Instagram'
+		url: 'https://www.instagram.com/balupton/'
+		title: 'View my photos on Instagram'
+		color: 'rgb(148, 125, 98)'
+		social: true
+	facebook:
+		text: 'Facebook'
+		url: 'https://facebook.com/balupton'
+		title: 'Follow me on Facebook'
+		color: '#4966A1'
+		social: true
+	linkedin:
+		text: 'LinkedIn'
+		url: 'http://www.linkedin.com/in/balupton'
+		title: 'View my resume on LinkedIn'
+		color: '#0083B3'
 		social: true
 
 	# Sustainability
