@@ -16,12 +16,6 @@ standalone: true
 // Responsive Layouts
 @import './responsive.css.styl'
 
-// Social Styles
-@import './social.css.styl'
-
-// Fancybox
-@import '../../raw/vendor/fancybox/jquery.fancybox.css'
-
 
 // ====================================
 // Configuration
@@ -57,7 +51,7 @@ weightLightest = 100
 	box-sizing: content-box
 
 // Hide javascript only properties
-.js
+.js, .hide
 	display: none
 
 // Content
@@ -416,31 +410,10 @@ article.page
 
 // Sidebar
 aside.sidebar
-	width: 22%
-	min-width: 270px
 	position: absolute
 	top: 0
-	right: 2em
-
-.promo
-	&.promo-top
-		margin: 4em 0 4em -0px
-	&.promo-bottom
-		margin: 5em 0 0 -13px
-	a
-		padding: 1.5em 0 1em 0
-		display: block
-		border: 1px solid black
-		width: 70%
-		text-align: center
-		transition: box-shadow 0.5s ease-in-out
-
-		img
-			max-width: 100%
-			height: auto
-
-		&:hover
-			box-shadow: hsl(60, 33%, 43%) 0 0 30px
+	right: 1em
+	text-align: right
 
 
 // ====================================

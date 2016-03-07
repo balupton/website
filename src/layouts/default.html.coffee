@@ -38,8 +38,8 @@ html lang: 'en', ->
 		link rel: 'stylesheet', href: "/styles/print.css?v=#{@site.version}", media: 'print'
 	body ->
 		# Modals
-		aside '.modal.contact', -> @partial('content/contact')
-		aside '.modal.backdrop', ->
+		aside '.modal.contact.hidden', -> @partial('content/contact')
+		aside '.modal.backdrop.hidden', ->
 
 		# Heading
 		header '.heading', ->
@@ -74,7 +74,10 @@ html lang: 'en', ->
 		# Sidebar
 		aside '.sidebar', ->
 			# Social
-			text @partial("social/#{social}", @)  for social in @site.social
+			for item in @site.social
+				section ".links", ->
+					header ->
+						@link item.code, "<h1 style='color: #{item.color}'>#{item.text}</h1>"
 
 		# Scripts
 		text @getBlock('scripts').add(@site.scripts).toHTML()
