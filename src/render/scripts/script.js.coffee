@@ -27,6 +27,33 @@ getRootUrl = ->
 	rootUrl += "/"
 	rootUrl
 
+# Contact Form
+contact = ->
+	_gaq?.push(['_trackEvent', "Contact Modal", document.title, document.location.href, 0, true])
+
+	$contactModal = $('.contact.modal').css({
+		top: '5.5em'
+		height: 'auto'
+		opacity: 0
+	}).show()
+	$backdropModal = $('.modal.backdrop').css({
+		height: window.innerHeight*2
+	})
+
+	contactModalOffset = $contactModal.offset()
+	if $contactModal.height()+contactModalOffset.top*2 > window.innerHeight
+		console.log('asd')
+		$contactModal.css({
+			top: contactModalOffset.left
+			height: window.innerHeight-contactModalOffset.left*2
+		})
+
+	$backdropModal.show()
+	$contactModal.css({
+		opacity: 1
+	})
+
+
 # ---------------------------------
 # Selectors
 
@@ -108,34 +135,17 @@ $ ->
 	$body.on 'click', '.contact-button', (event) ->
 		event.stopImmediatePropagation()
 		event.preventDefault()
-		_gaq?.push(['_trackEvent', "Contact Modal", document.title, document.location.href, 0, true])
+		contact()
 
-		$contactModal = $('.contact.modal').css({
-			top: '5.5em'
-			height: 'auto'
-			opacity: 0
-		}).show()
-		$backdropModal = $('.modal.backdrop').css({
-			height: window.innerHeight*2
-		})
-
-		contactModalOffset = $contactModal.offset()
-		if $contactModal.height()+contactModalOffset.top*2 > window.innerHeight
-			console.log('asd')
-			$contactModal.css({
-				top: contactModalOffset.left
-				height: window.innerHeight-contactModalOffset.left*2
-			})
-
-		$backdropModal.show()
-		$contactModal.css({
-			opacity: 1
-		})
+	# Contact
+	if document.location.hash.replace('#', '') is 'contact'
+		contact()
 
 
 	# ---------------------------------
 	# Misc
 
+	###
 	# Prevent scrolling on our sidebar scrollers
 	#$('.scroller').preventScrollBubbling()
 	$('section.videos ul a').click (event) ->
@@ -173,6 +183,7 @@ $ ->
 
 		# Done
 		return
+	###
 
 	# Show javascript properties
 	$('.js').removeClass('js')
