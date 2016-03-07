@@ -535,6 +535,7 @@ links =
 		text: 'Paypal'
 		url: 'https://paypal.me/balupton'
 		title: 'Support me on Paypal'
+		color: '#009cde'
 		social: true
 	amazon:
 		text: 'Amazon'
