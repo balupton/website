@@ -38,8 +38,8 @@ html lang: 'en', ->
 		link rel: 'stylesheet', href: "/styles/print.css?v=#{@site.version}", media: 'print'
 	body ->
 		# Modals
-		aside '.modal.contact.hidden', -> @partial('content/contact')
-		aside '.modal.backdrop.hidden', ->
+		aside '.modal.contact.hide', -> @partial('content/contact')
+		aside '.modal.backdrop.hide', ->
 
 		# Heading
 		header '.heading', ->

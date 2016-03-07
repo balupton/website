@@ -19,7 +19,7 @@
 		var $contactModal = $('.contact.modal')
 
 		// Check
-		if ( $contactModel.is(':visible') ) {
+		if ( !$contactModal.hasClass('hide') ) {
 			return
 		}
 
@@ -117,7 +117,7 @@
 			// Open the link
 			var opts = {url: url, action: action}
 			return openOutboundLink(opts)
-		}
+		})
 
 		// Modals
 		$document.on('keyup', function (event) {
@@ -134,7 +134,7 @@
 			event.stopImmediatePropagation()
 			event.preventDefault()
 			showContactModal()
-		}
+		})
 		$window.on('hashchange', function () {
 			if ( window.location.hash.replace('#', '') === 'contact' ) {
 				showContactModal()
