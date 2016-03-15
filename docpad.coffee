@@ -35,7 +35,8 @@ links =
 	books: 'bookupdates'
 	privileged:
 		text: 'privileged'
-		url: 'https://gumroad.com/l/vKuF'
+		url: 'https://www.youtube.com/watch?v=cRsYwu8uD4I'
+		title: 'Privileged, yes, no?'
 	simpleliving:
 		text: 'Simple Living'
 		url: 'https://en.wikipedia.org/wiki/Simple_living'
@@ -600,6 +601,13 @@ links =
 		url: 'http://www.linkedin.com/in/balupton'
 		title: 'View my resume on LinkedIn'
 		color: '#0083B3'
+		social: true
+	resume: 'linkedin'
+	keybase:
+		text: 'Keybase'
+		url: 'https://keybase.io/balupton'
+		title: 'View my identity on Keybase'
+		color: '#ff6f21'
 		social: true
 
 	# Sustainability
