@@ -14,12 +14,12 @@
 	}
 
 	// Contact Form
-	function showContactModal () {
+	function showModal (which) {
 		// Prepare
-		var $contactModal = $('.contact.modal')
+		var $modal = $('.contact.' + which)
 
 		// Check
-		if ( !$contactModal.hasClass('hide') ) {
+		if ( !$modal.hasClass('hide') ) {
 			return
 		}
 
@@ -27,7 +27,7 @@
 		var $backdropModal = $('.modal.backdrop')
 
 		// Show
-		$contactModal.add($backdropModal).removeClass('hide')
+		$modal.add($backdropModal).removeClass('hide')
 	}
 	function hideModals () {
 		$('.modal').addClass('hide')
@@ -133,11 +133,20 @@
 		$body.on('click', '.contact-button', function (event) {
 			event.stopImmediatePropagation()
 			event.preventDefault()
-			showContactModal()
+			showModal('contact')
+		})
+		$body.on('click', '.referral-button', function (event) {
+			event.stopImmediatePropagation()
+			event.preventDefault()
+			showModal('referrals')
 		})
 		$window.on('hashchange', function () {
-			if ( window.location.hash.replace('#', '') === 'contact' ) {
-				showContactModal()
+			var state = window.location.hash.replace('#', '')
+			switch ( state ) {
+				case 'referrals':
+				case 'contact':
+					showModal(state)
+					break
 			}
 		}).trigger('hashchange')
 
