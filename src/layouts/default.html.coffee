@@ -69,7 +69,7 @@ html lang: 'en', ->
 
 		# Sidebar
 		aside '.sidebar', ->
-			section(".links", -> header -> @link item.code)  for item in @site.socialLinks
+			section(".links", -> header -> h1 -> @link item.code)  for item in @site.socialLinks
 
 		# Scripts
 		text @getBlock('scripts').add(@site.scripts).toHTML()
