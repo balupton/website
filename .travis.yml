@@ -16,8 +16,6 @@ cache:
 script: "npm test"
 
 # Custom Notifications
-# travis encrypt "$TRAVIS_NOTIFICATION_EMAIL" --add notifications.email.recipients
-# travis encrypt "$SLACK_SUBDOMAIN:$SLACK_TRAVIS_TOKEN#updates" --add notifications.slack
 notifications:
   email:
     recipients:
