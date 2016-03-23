@@ -605,10 +605,13 @@ links =
 	linkedin:
 		text: 'LinkedIn'
 		url: 'http://www.linkedin.com/in/balupton'
-		title: 'View my resume on LinkedIn'
+		title: 'View my profile on LinkedIn'
 		color: '#0083B3'
 		social: true
-	resume: 'linkedin'
+	resume:
+		text: 'Resume'
+		url: 'https://www.linkedin.com/profile/pdf?id=AAEAAADwTV8B0oqoFzDk_1ijrb9zx5Dvsaq1-u8&pdfFileName=BenjaminLupton'
+		title: 'Download my resume from LinkedIn'
 	keybase:
 		text: 'Keybase'
 		url: 'https://keybase.io/balupton'
