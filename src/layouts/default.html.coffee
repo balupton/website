@@ -76,7 +76,6 @@ html lang: 'en', ->
 		# Scripts
 		text @getBlock('scripts').add(@site.scripts).toHTML()
 
-
 		# Modals
 		aside '.modal.referrals.hide', ->
 			section ".links", ->
