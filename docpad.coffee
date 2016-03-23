@@ -635,6 +635,15 @@ links =
 		text: 'Teaching by Donation: Web Development'
 		url: 'https://www.eventbrite.com.au/e/teaching-by-donation-web-development-tickets-20723428332'
 		title: 'Attend one of my teaching events'
+	source:
+		text: 'Website Source Code'
+		url: 'https://github.com/balupton/website'
+		title: 'View the source code of this website'
+	donate:
+		text: 'Donate'
+		url: 'https://bevry.me/donate'
+		title: 'Donate to my company and open-community'
+
 
 # Cycle through links
 social = []
