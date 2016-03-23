@@ -48,7 +48,7 @@
     "url": "https://github.com/balupton/website.git"
   },
   "engines": {
-    "node": "4",
+    "node": "5",
     "npm": "3"
   },
   "dependencies": {
@@ -75,7 +75,7 @@
   "main": "node_modules/.bin/docpad-server",
   "scripts": {
     "start": "docpad-server",
-    "test": "docpad generate --silent --debug",
+    "test": "docpad generate --silent",
     "info": "docpad info --silent",
     "meta": "projectz compile",
     "deploy:ghpages": "docpad deploy-ghpages --silent --env static",
