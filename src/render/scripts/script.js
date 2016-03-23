@@ -16,7 +16,7 @@
 	// Contact Form
 	function showModal (which) {
 		// Prepare
-		var $modal = $('.contact.' + which)
+		var $modal = $('.modal.' + which)
 
 		// Check
 		if ( !$modal.hasClass('hide') ) {
