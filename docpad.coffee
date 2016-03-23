@@ -713,7 +713,8 @@ links =
 
 
 # Cycle through links
-social = []
+socialLinks = []
+referralLinks = []
 simpleRedirects = {}
 for own key,value of links
 	# Fix aliases
@@ -724,9 +725,9 @@ for own key,value of links
 	else
 		value.code = key
 
-		# Add social
-		if value.social
-			social.push(value)
+		# Sub Classes
+		socialLinks.push(value)  if value.social
+		referralLinks.push(value)  if value.referral
 
 	# Add simple redirect
 	simpleRedirects['/'+key] = value.url
@@ -822,8 +823,11 @@ module.exports =
 
 			services:
 				disqus: 'balupton'
-
-			social: social
+			
+			# Links
+			social: socialLinks  # b/c
+			socialLinks: socialLinks
+			referralLinks: referralLinks
 
 			styles: []  # embedded in layout
 
@@ -849,8 +853,9 @@ module.exports =
 		link: (code, text, title) ->
 			link = @site.links[code.toLowerCase()]
 			throw new Error("The link #{code} was not found!")  unless link
+			style = link.color ? "color: #{link.color}" : ''
 			renderedLink = """
-				<a href="#{link.url}" title="#{title or link.title}" class="#{link.cssClass or ''}">#{text or link.text}</a>
+				<a href="#{link.url}" title="#{title or link.title}" class="#{link.cssClass or ''}" style="#{style}">#{text or link.text}</a>
 				"""
 			return renderedLink
 
