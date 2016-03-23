@@ -630,6 +630,7 @@ links =
 		text: 'Amazon'
 		url: 'http://www.amazon.com/?tag=bevry-20'
 		title: 'Use Amazon to Buy Books'
+		color: 'rgb(228, 121, 17)'
 		referral: true
 	koding:
 		text: 'Koding'
@@ -853,11 +854,18 @@ module.exports =
 		link: (code, text, title) ->
 			link = @site.links[code.toLowerCase()]
 			throw new Error("The link #{code} was not found!")  unless link
-			style = link.color ? "color: #{link.color}" : ''
-			renderedLink = """
-				<a href="#{link.url}" title="#{title or link.title}" class="#{link.cssClass or ''}" style="#{style}">#{text or link.text}</a>
-				"""
-			return renderedLink
+			
+			title or= link.title
+			text or= link.text
+			
+			attributes = []
+			attributes.push('style="color: ' + link.color + '"')  if link.color
+			attributes.push('class="' + link.cssClass + '"')  if link.cssClass
+			attributes.push('title="' + title + '"')  if title
+			attributes.push('href="' + link.url + '"')  if link.url
+			attrs = attributes.join(' ')
+			
+			return "<a #{attrs}>#{text}</a>"
 
 		# Meta Helpers
 		getPreparedTitle: -> if @document.title then "#{@document.title} | #{@site.title}" else @site.title
