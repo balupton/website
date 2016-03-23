@@ -2,6 +2,7 @@
 # Misc Configuration
 
 # Prepare
+version = require('./package.json').version
 githubClientId = process.env.BEVRY_GITHUB_CLIENT_ID
 githubClientSecret = process.env.BEVRY_GITHUB_CLIENT_SECRET
 githubAuthString = "client_id=#{githubClientId}&client_secret=#{githubClientSecret}"
@@ -799,7 +800,7 @@ module.exports =
 	templateData:
 		# Site Data
 		site:
-			version: require('./package.json').version
+			version: version
 			url: "https://balupton.com"
 			title: "Benjamin Lupton"
 			author: "Benjamin Lupton"
@@ -849,7 +850,7 @@ module.exports =
 
 			scripts: """
 				//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.slim.min.js
-				/scripts/script.js
+				/scripts/script.js?v=#{version}
 				""".trim().split('\n')
 
 			feeds: [
