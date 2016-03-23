@@ -69,7 +69,7 @@ html lang: 'en', ->
 
 		# Sidebar
 		aside '.sidebar', ->
-			section(".links", -> header -> @link item.code)  for item in @site.social
+			section(".links", -> header -> @link item.code)  for item in @site.socialLinks
 
 		# Scripts
 		text @getBlock('scripts').add(@site.scripts).toHTML()
@@ -77,7 +77,7 @@ html lang: 'en', ->
 
 		# Modals
 		aside '.modal.referrals.hide', ->
-			text (@link(item.code)  for item in @site.social).join('. ')
+			text (@link(item.code)  for item in @site.referralLinks).join('. ')
 		
 		aside '.modal.contact.hide', -> @partial('content/contact')
 		
