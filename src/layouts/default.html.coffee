@@ -71,7 +71,7 @@ html lang: 'en', ->
 		aside '.sidebar', ->
 			section ".links", ->
 				for item in @site.socialLinks
-					h1 -> @link item.code)
+					h1 -> @link(item.code)
 
 		# Scripts
 		text @getBlock('scripts').add(@site.scripts).toHTML()
