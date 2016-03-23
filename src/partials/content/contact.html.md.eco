@@ -11,6 +11,6 @@ For all other purposes; I like [twitter](http://twitter.com/balupton) for mentio
 I've become a [vegan](http://en.wikipedia.org/wiki/Veganism) who lives by the [Open Information Pledge](https://gist.github.com/balupton/6937426) and the [Holstee Manifesto](http://shop.holstee.com/pages/manifesto). If this can't work for you, then I can't work for you. If it can, then let us create something amazing together.
 
 ## Donate
-If you've received value from any of my services or products, if you can, I'd greatly appreciate financial donations. Financial donations are how I earn my income these days and support my family. You can use any of these buttons to donate:
+If you've received value from any of my services or products, if you can, I'd greatly appreciate financial donations. Financial donations are how I earn my income these days and support my family. [Donate.](/donate)
 
 <%- @getServiceBadges() %>
