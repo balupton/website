@@ -875,7 +875,7 @@ module.exports =
 			text or= link.text
 			
 			attributes = []
-			attributes.push('style="color: ' + link.color + '"')  if link.color
+			attributes.push('style="color: ' + link.color + ' !important"')  if link.color
 			attributes.push('class="' + link.cssClass + '"')  if link.cssClass
 			attributes.push('title="' + title + '"')  if title
 			attributes.push('href="' + link.url + '"')  if link.url
