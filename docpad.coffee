@@ -590,6 +590,12 @@ links =
 		title: 'View my photos on Instagram'
 		color: 'rgb(148, 125, 98)'
 		social: true
+	runkeeper:
+		text: 'Runkeeper'
+		url: 'https://runkeeper.com/user/balupton'
+		title: 'Encourage me on Runkeeper'
+		color: '#31a4d9'
+		social: true
 	facebook:
 		text: 'Facebook'
 		url: 'https://facebook.com/balupton'
