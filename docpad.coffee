@@ -189,9 +189,12 @@ links =
 		title: 'View website&apos;s source'
 	contact:
 		text: 'Contact'
-		url: 'mailto:b@bevry.me'
+		url: '/#contact'
 		title: 'Contact me'
 		cssClass: 'contact-button'
+	referrals:
+		text: 'Referrals'
+		url: '/#referrals'
 	trich:
 		text: 'Trichotillomania'
 		url: 'http://www.trich.org/about/hair-faqs.html'
