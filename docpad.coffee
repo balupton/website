@@ -538,13 +538,12 @@ links =
 		title: 'Support me on Paypal'
 		color: '#009cde'
 		social: true
-	amazon:
-		text: 'Amazon'
-		url: 'http://amzn.com/w/2F8TXKSNAFG4V'
+	wishlist:
+		text: 'Wishlist'
+		url: 'http://amzn.com/w/2F8TXKSNAFG4V?tag=bevry-20'
 		title: 'Buy me something on my Amazon Wishlist'
 		color: 'rgb(228, 121, 17)'
 		social: true
-	wishlist: 'amazon'
 	twitter:
 		text: 'Twitter'
 		url: 'https://twitter.com/balupton'
@@ -625,7 +624,75 @@ links =
 		url: 'http://balupton.tumblr.com/post/79542013417/sustainability'
 		title: 'Read my thoughts on Sustainability'
 	s: 'sustainability'
-
+	
+	# Referrals
+	amazon:
+		text: 'Amazon'
+		url: 'http://www.amazon.com/?tag=bevry-20'
+		title: 'Use Amazon to Buy Books'
+		referral: true
+	koding:
+		text: 'Koding'
+		url: 'https://koding.com/R/balupton'
+		title: 'Use Koding to code in the Cloud'
+		referral: true
+	digitalocean:
+		text: 'Digital Ocean'
+		url: 'https://m.do.co/c/3b1047be3444'
+		title: 'Use Digital Ocean to host your Apps on Virtual Machines in the Cloud'
+		referral: true
+	rescuetime:
+		text: 'Rescue Time'
+		url: 'http://rescuetime.com/ref/242226'
+		title: 'Use Rescue Time to track your computer activity to figure out where you time goes'
+		referral: true
+	dropbox:
+		text: 'Dropbox'
+		url: 'http://db.tt/pZELOPt'
+		title: 'Use Dropbox to host sync your local files into the cloud'
+		referral: true
+	screenflow:
+		text: 'Screenflow'
+		url: 'https://store.telestream.net/affiliate.php?ACCOUNT=TELESTRE&AFFILIATE=45446&PATH=http://www.telestream.net/screenflow/'
+		title: 'Use Screenflow to do Screencasts'
+		referral: true
+	airtasker:
+		text: 'Airtasker'
+		url: 'http://mail.airtasker.com/wf/click?upn=JalSgYCkT0ZI-2Bw45xk4vmrAhDtJvUSrWoM8aOtgnYf-2FjzVj6Pr4xUEHxebs5pQnF420bjJweZagd9p-2FeHbDWuA-3D-3D_xg4Iuf5a2mwDa1KxKgyCbGVAHupcFAbxI8rKgjLgfgN5LbOhe9IqDQ4AORWS7MaJNK4-2FmWOjfLAvOJ0obbOKpVy7UePSfIBv2WsQJD9fPJ-2FybjZfT0gi6vvQ0cPNheFa-2BKhswj67JD4w46eREx1VZ4mxLcxds-2FTEa6IP8wK0Y4xpDADJzR2vH0aGgJ-2BtKiP-2Fb-2BPS-2B8-2FcR7doTWuo9CAv7ZF-2FHQLbUzR2SZ2ZVSLY95Q-3D'
+		title: 'Use Airtasker to delegate physical tasks to minions'
+		referral: true
+	fancyhands:
+		text: 'Fancy Hands'
+		url: 'http://www.fancyhands.com/r/8c2e46df0aa7'
+		title: 'Use Fancy Hands to delegate information tasks to minions'
+		referral: true
+	zapier:
+		text: 'Zapier'
+		url: 'http://zpr.io/AhX'
+		title: 'Use Zapier to automate your digital workflows'
+		referral: true
+	amaysim:
+		text: 'Amaysim'
+		url: 'https://www.amaysim.com.au/my-account/friends/271533'
+		title: 'Use Amaysim for your Phone Plan in Australia'
+		referral: true
+	audiojungle:
+		text: 'Audio Jungle'
+		url: 'http://audiojungle.net/?ref=balupton'
+		title: 'Use Audio Jungle to purchase audio for Videos'
+		referral: true
+	themeforest:
+		text: 'Theme Forest'
+		url: 'http://themeforest.net/?ref=balupton'
+		title: 'Use Theme Forest to purchase themes for Websites'
+		referral: true
+	airbnb:
+		text: 'AirBnB'
+		url: 'https://www.airbnb.com/tell-a-friend?airef=1q99nz301a0zz5'
+		title: 'Use AirBnB to book accomodation when traveling'
+		referral: true
+	
+	
 	# Misc
 	calendar:
 		text: 'Schedule a Meeting'
