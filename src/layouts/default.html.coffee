@@ -37,10 +37,6 @@ html lang: 'en', ->
 		link rel: 'stylesheet', href: "/styles/style.css?v=#{@site.version}", media: 'screen, projection'
 		link rel: 'stylesheet', href: "/styles/print.css?v=#{@site.version}", media: 'print'
 	body ->
-		# Modals
-		aside '.modal.contact.hide', -> @partial('content/contact')
-		aside '.modal.backdrop.hide', ->
-
 		# Heading
 		header '.heading', ->
 			a href:'/', title:'Return home', ->
@@ -73,11 +69,16 @@ html lang: 'en', ->
 
 		# Sidebar
 		aside '.sidebar', ->
-			# Social
-			for item in @site.social
-				section ".links", ->
-					header ->
-						@link item.code, "<h1 style='color: #{item.color}'>#{item.text}</h1>"
+			section(".links", -> header -> @link item.code)  for item in @site.social
 
 		# Scripts
 		text @getBlock('scripts').add(@site.scripts).toHTML()
+
+
+		# Modals
+		aside '.modal.referrals.hide', ->
+			text (@link(item.code)  for item in @site.social).join('. ')
+		
+		aside '.modal.contact.hide', -> @partial('content/contact')
+		
+		aside '.modal.backdrop.hide', ->
