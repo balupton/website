@@ -708,6 +708,12 @@ links =
 		title: 'Use AirBnB to book accomodation when traveling'
 		color: '#ff5a5f'
 		referral: true
+	circle:
+		text: 'Circle'
+		url: 'http://mbsy.co/dSfLv'
+		title: 'Use Circle to track and limit your internet usage over any device'
+		color: '#00b7d9'
+		referral: true
 	
 	
 	# Misc
