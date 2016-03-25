@@ -72,7 +72,7 @@ all of which were useless.</p>
 
 	<h3>Reach out.</h3>
 
-	<p>I'm not particularly interested in work offers, however if you are a company implementing a cause (<a href="http://www.teslamotors.com" title="Solving the worlds transit and energy problems">Tesla</a>, <a href="https://medium.com" title="Giving everyone an equal voice">Medium</a>, <a href="http://www.animalsaustralia.org" title="Succeeding in animal welfare">Animals Australia</a>, <a href="http://greenschool.org" title="Creating educated balanced children">Green School</a>, <a href="http://lentilasanything.com" title="Providing ethical food and joy to all people">Lentil as Anything</a>, etc.) or would just like to touch base, <%-@link('contact', "I'm all ears")%>.</p>
+	<p>I'm not particularly interested in work offers, however if you are a company implementing a cause (<a href="http://www.teslamotors.com" title="Solving the worlds transit and energy problems">Tesla</a>, <a href="http://www.animalsaustralia.org" title="Succeeding in animal welfare">Animals Australia</a>, <a href="http://greenschool.org" title="Creating educated balanced children">Green School</a>, <a href="http://lentilasanything.com" title="Providing ethical food and joy to all people">Lentil as Anything</a>, etc.) or would just like to touch base, <%-@link('contact', "I'm all ears")%>.</p>
 
 	<p>You can support me by <%-@link('donate', 'donating to me via my open-company and community')%>, or <%-@link('contact', "having a chat with me")%>.</p>
 
