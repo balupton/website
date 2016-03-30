@@ -621,6 +621,12 @@ links =
 		title: 'View my identity on Keybase'
 		color: '#ff6f21'
 		social: true
+	goodreads:
+		text: 'Goodreads'
+		url: 'https://goodreads.com/balupton'
+		title: 'Discover the books I read on Goodreads'
+		color: '#382110'
+		social: true
 
 	# Sustainability
 	sustainability:
