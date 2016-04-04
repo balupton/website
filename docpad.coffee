@@ -26,7 +26,7 @@ links =
 		url: 'http://en.wikipedia.org/wiki/Free_culture_movement'
 		title: 'Free Culture is the notion that everything should be free, in terms of free as in no money needed, and free as in people can re-use it liberally. Learn about Free Culture on Wikipedia.'
 	book:
-		text: 'Author'
+		text: 'Intentionally Left Blank'
 		url: 'https://gumroad.com/l/vKuF'
 		title: '''Author of the mostly likely not the best non-best selling book in cultural literature right now.'''
 	bookupdates:
@@ -833,7 +833,7 @@ module.exports =
 				subheading: '''
 					<t render="html.coffee">
 						text """
-							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'wwgb'}. #{@link 'book'}. #{@link 'vegan'}.</span>
+							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'wwgb', 'Podcaster'}. #{@link 'book', 'Author'}. #{@link 'vegan'}.</span>
 							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich', 'Not Alone'}.</span> -->
 							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'} &amp; #{@link 'hostel'}.</span>
 							<span>Aficionado of #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html'} and #{@link 'opensource'}.</span>
