@@ -510,6 +510,10 @@ links =
 		text: 'Australian Age of Consent Laws'
 		url: 'https://aifs.gov.au/cfca/publications/age-consent-laws'
 		title: '16 is the legal age of consent in Western Australia'
+	wwgb:
+		text: 'Wrong Way, Go Back! Podcast'
+		url: 'https://wrongwaygoback.tv'
+		title: 'A podcast for the mistakes we make and the learnings from them'
 
 	# Social
 	feedly:
@@ -829,7 +833,7 @@ module.exports =
 				subheading: '''
 					<t render="html.coffee">
 						text """
-							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'book'}. #{@link 'vegan'}.</span>
+							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'wwgb'}. #{@link 'book'}. #{@link 'vegan'}.</span>
 							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich', 'Not Alone'}.</span> -->
 							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'} &amp; #{@link 'hostel'}.</span>
 							<span>Aficionado of #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html'} and #{@link 'opensource'}.</span>
