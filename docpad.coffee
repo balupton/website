@@ -696,7 +696,7 @@ links =
 		referral: true
 	amaysim:
 		text: 'Amaysim'
-		url: 'https://www.amaysim.com.au/my-account/friends/271533'
+		url: 'http://amaysi.ms/balupton'
 		title: 'Use Amaysim for your Phone Plan in Australia'
 		color: '#e65014'
 		referral: true
