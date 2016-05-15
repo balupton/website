@@ -646,10 +646,16 @@ links =
 		title: 'Use Amazon to Buy Books'
 		color: 'rgb(228, 121, 17)'
 		referral: true
+	iherb:
+		text: 'iHerb'
+		url: 'http://www.iherb.com/iherb-brands?rcode=DNF509'
+		title: 'Use iHerb to Buy Supplements'
+		color: '#458500'
+		referral: true
 	koding:
 		text: 'Koding'
 		url: 'https://koding.com/R/balupton'
-		title: 'Use Koding to code in the Cloud'
+		title: 'Use Koding to Code in the Cloud'
 		color: '#656565'
 		referral: true
 	digitalocean:
