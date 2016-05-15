@@ -643,25 +643,25 @@ links =
 	amazon:
 		text: 'Amazon'
 		url: 'http://www.amazon.com/?tag=bevry-20'
-		title: 'Use Amazon to Buy Books'
+		title: 'Use Amazon to buy books'
 		color: 'rgb(228, 121, 17)'
 		referral: true
 	iherb:
 		text: 'iHerb'
 		url: 'http://www.iherb.com/iherb-brands?rcode=DNF509'
-		title: 'Use iHerb to Buy Supplements'
+		title: 'Use iHerb to buy supplements'
 		color: '#458500'
 		referral: true
 	koding:
 		text: 'Koding'
 		url: 'https://koding.com/R/balupton'
-		title: 'Use Koding to Code in the Cloud'
+		title: 'Use Koding to code in the cloud'
 		color: '#656565'
 		referral: true
 	digitalocean:
 		text: 'Digital Ocean'
 		url: 'https://m.do.co/c/3b1047be3444'
-		title: 'Use Digital Ocean to host your Apps on Virtual Machines in the Cloud'
+		title: 'Use Digital Ocean to host your apps on virtual machines in the cloud'
 		color: '#288feb'
 		referral: true
 	rescuetime:
@@ -679,7 +679,7 @@ links =
 	screenflow:
 		text: 'Screenflow'
 		url: 'https://store.telestream.net/affiliate.php?ACCOUNT=TELESTRE&AFFILIATE=45446&PATH=http://www.telestream.net/screenflow/'
-		title: 'Use Screenflow to do Screencasts'
+		title: 'Use Screenflow to do screencasts'
 		color: '#009bdf'
 		referral: true
 	airtasker:
@@ -703,19 +703,19 @@ links =
 	amaysim:
 		text: 'Amaysim'
 		url: 'http://amaysi.ms/balupton'
-		title: 'Use Amaysim for your Phone Plan in Australia'
+		title: 'Use Amaysim for your phone plan in australia'
 		color: '#e65014'
 		referral: true
 	audiojungle:
 		text: 'Audio Jungle'
 		url: 'http://audiojungle.net/?ref=balupton'
-		title: 'Use Audio Jungle to purchase audio for Videos'
+		title: 'Use Audio Jungle to purchase audio for videos'
 		color: '#82b440'
 		referral: true
 	themeforest:
 		text: 'Theme Forest'
 		url: 'http://themeforest.net/?ref=balupton'
-		title: 'Use Theme Forest to purchase themes for Websites'
+		title: 'Use Theme Forest to purchase themes for websites'
 		color: '#7bc4c4'
 		referral: true
 	airbnb:
