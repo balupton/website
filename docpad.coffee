@@ -514,6 +514,10 @@ links =
 		text: 'Wrong Way, Go Back! Podcast'
 		url: 'https://wrongwaygoback.tv'
 		title: 'A podcast for the mistakes we make and the learnings from them'
+	vdd:
+		text: 'Veronika Decides to Die, Review'
+		url: 'https://www.goodreads.com/review/show/1069969061'
+		title: 'My review for the book "Veronika Decides to Die", by Paulo Coelho, with my alternative ending proposal."
 
 	# Social
 	feedly:
