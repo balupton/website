@@ -644,6 +644,12 @@ links =
 	s: 'sustainability'
 	
 	# Referrals
+	patreonref:
+		text: 'Patreon'
+		url: 'https://patreon.com/invite/pbqzz'
+		title: 'Use Patreon to earn money from your fanbase'
+		color: '#E6461A'
+		referral: true
 	amazon:
 		text: 'Amazon'
 		url: 'http://www.amazon.com/?tag=bevry-20'
