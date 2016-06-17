@@ -39,7 +39,7 @@
 
 Unless stated otherwise all works are:
 
-<ul><li>Copyright &copy; <a href="https://balupton.com">Benjamin Lupton</a></li></ul>
+<ul><li>Copyright &copy; <a href="http://balupton.com">Benjamin Lupton</a></li></ul>
 
 and licensed under:
 

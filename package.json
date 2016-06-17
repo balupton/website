@@ -33,12 +33,12 @@
     "website",
     "docpad"
   ],
-  "author": "Benjamin Lupton <b@lupton.cc> (https://balupton.com)",
+  "author": "Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
   "maintainers": [
-    "Benjamin Lupton <b@lupton.cc> (https://balupton.com)"
+    "Benjamin Lupton <b@lupton.cc> (http://balupton.com)"
   ],
   "contributors": [
-    "Benjamin Lupton <b@lupton.cc> (https://balupton.com)"
+    "Benjamin Lupton <b@lupton.cc> (http://balupton.com)"
   ],
   "bugs": {
     "url": "https://github.com/balupton/website/issues"
@@ -48,11 +48,11 @@
     "url": "https://github.com/balupton/website.git"
   },
   "engines": {
-    "node": "5",
+    "node": "6",
     "npm": "3"
   },
   "dependencies": {
-    "docpad": "~6.78.1",
+    "docpad": "~6.78.5",
     "docpad-plugin-cachr": "~2.3.1",
     "docpad-plugin-cleanurls": "~2.8.1",
     "docpad-plugin-coffeekup": "~2.2.0",
@@ -70,7 +70,7 @@
   "devDependencies": {
     "docpad-plugin-ghpages": "~2.4.4",
     "docpad-plugin-livereload": "~2.7.1",
-    "projectz": "^1.0.0"
+    "projectz": "^1.1.6"
   },
   "main": "node_modules/.bin/docpad-server",
   "scripts": {
