@@ -517,7 +517,7 @@ links =
 	vdd:
 		text: 'Veronika Decides to Die, Review'
 		url: 'https://www.goodreads.com/review/show/1069969061'
-		title: 'My review for the book "Veronika Decides to Die", by Paulo Coelho, with my alternative ending proposal."
+		title: 'My review for the book "Veronika Decides to Die", by Paulo Coelho, with my alternative ending proposal.'
 
 	# Social
 	feedly:
