@@ -184,10 +184,6 @@ links =
 		text: 'Benjamin Lupton'
 		url: 'https://balupton.com'
 		title: 'Visit website'
-	source:
-		text: 'open-source'
-		url: 'https://github.com/balupton/website'
-		title: 'View website&apos;s source'
 	contact:
 		text: 'Contact'
 		url: '/#contact'
@@ -643,7 +639,7 @@ links =
 		url: 'http://balupton.tumblr.com/post/79542013417/sustainability'
 		title: 'Read my thoughts on Sustainability'
 	s: 'sustainability'
-	
+
 	# Referrals
 	patreonref:
 		text: 'Patreon'
@@ -741,8 +737,8 @@ links =
 		title: 'Use Circle to track and limit your internet usage over any device'
 		color: '#00b7d9'
 		referral: true
-	
-	
+
+
 	# Misc
 	calendar:
 		text: 'Schedule a Meeting'
@@ -861,7 +857,7 @@ module.exports =
 				about: '''
 					<t render="html.coffee">
 						text """
-							This website was created with #{@link 'bevry'}’s #{@link 'docpad'} and is #{@link 'source'}
+							This website was created with #{@link 'bevry'}’s #{@link 'docpad'} and is #{@link 'source', 'open-source'}
 							"""
 					</t>
 					'''
@@ -873,7 +869,7 @@ module.exports =
 
 			services:
 				disqus: 'balupton'
-			
+
 			# Links
 			social: socialLinks  # b/c
 			socialLinks: socialLinks
@@ -903,17 +899,17 @@ module.exports =
 		link: (code, text, title) ->
 			link = @site.links[code.toLowerCase()]
 			throw new Error("The link #{code} was not found!")  unless link
-			
+
 			title or= link.title
 			text or= link.text
-			
+
 			attributes = []
 			attributes.push('style="color: ' + link.color + ' !important"')  if link.color
 			attributes.push('class="' + link.cssClass + '"')  if link.cssClass
 			attributes.push('title="' + title + '"')  if title
 			attributes.push('href="' + link.url + '"')  if link.url
 			attrs = attributes.join(' ')
-			
+
 			return "<a #{attrs}>#{text}</a>"
 
 		# Meta Helpers

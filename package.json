@@ -68,6 +68,7 @@
     "getrepos": "~1.0.7"
   },
   "devDependencies": {
+    "coffeelint": "^1.15.7",
     "docpad-plugin-ghpages": "~2.4.4",
     "docpad-plugin-livereload": "~2.7.1",
     "projectz": "^1.1.6"
@@ -75,7 +76,7 @@
   "main": "node_modules/.bin/docpad-server",
   "scripts": {
     "start": "docpad-server",
-    "test": "docpad generate --silent",
+    "test": "coffeelint **.coffee && docpad generate --silent",
     "info": "docpad info --silent",
     "meta": "projectz compile",
     "deploy:ghpages": "docpad deploy-ghpages --silent --env static",
