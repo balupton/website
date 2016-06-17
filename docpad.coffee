@@ -623,6 +623,7 @@ links =
 		text: 'Resume'
 		url: 'https://www.linkedin.com/profile/pdf?id=AAEAAADwTV8B0oqoFzDk_1ijrb9zx5Dvsaq1-u8&pdfFileName=BenjaminLupton'
 		title: 'Download my resume from LinkedIn'
+	cv: 'resume'
 	keybase:
 		text: 'Keybase'
 		url: 'https://keybase.io/balupton'
