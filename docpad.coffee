@@ -886,9 +886,6 @@ module.exports =
 					href: 'http://feeds.feedburner.com/balupton.atom'
 					title: 'Blog Posts'
 				,
-					href: 'https://balupton.tumblr.com/rss'
-					title: 'Tumblr Posts'
-				,
 					href: 'https://medium.com/feed/@balupton'
 					title: 'Medium Posts'
 			]
@@ -1049,9 +1046,6 @@ module.exports =
 
 				'github':
 					url: "https://github.com/balupton.atom"
-					parse: 'xml'
-				'tumblr':
-					url: "https://balupton.tumblr.com/rss"
 					parse: 'xml'
 				'medium':
 					url: "https://medium.com/feed/@balupton"
