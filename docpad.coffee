@@ -647,6 +647,12 @@ links =
 		title: 'Use Patreon to earn money from your fanbase'
 		color: '#E6461A'
 		referral: true
+	ebay:
+		text: 'Ebay'
+		url: 'http://rover.ebay.com/rover/1/705-53470-19255-0/1?icep_ff3=1&pub=5575197898&toolid=10001&campid=5337916977&customid=&ipn=psmain&icep_vectorid=229515&kwid=902099&mtid=824&kw=lg'
+		title: 'Use Ebay to buy and sell online'
+		color: '#f3ad29'
+		referral: true
 	amazon:
 		text: 'Amazon'
 		url: 'http://www.amazon.com/?tag=bevry-20'
