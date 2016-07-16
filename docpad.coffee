@@ -750,6 +750,7 @@ links =
 		text: 'Schedule a Meeting'
 		url: 'http://calendly.com/balupton'
 		title: 'Schedule a meeting with me'
+	meet: 'calendar'
 	teach:
 		text: 'Teaching by Donation: Web Development'
 		url: 'https://www.eventbrite.com.au/e/teaching-by-donation-web-development-tickets-20723428332'
