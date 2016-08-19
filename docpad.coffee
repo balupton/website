@@ -603,12 +603,6 @@ links =
 		title: 'Encourage me on Runkeeper'
 		color: '#31a4d9'
 		social: true
-	facebook:
-		text: 'Facebook'
-		url: 'https://facebook.com/balupton'
-		title: 'Follow me on Facebook'
-		color: '#4966A1'
-		social: true
 	linkedin:
 		text: 'LinkedIn'
 		url: 'http://www.linkedin.com/in/balupton'
