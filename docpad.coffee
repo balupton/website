@@ -598,9 +598,9 @@ links =
 		color: 'rgb(148, 125, 98)'
 		social: true
 	couchsurfing:
-		text: 'Couch Surfing'
+		text: 'Couchsurfing'
 		url: 'http://couchsurfing.com/people/balupton'
-		title: 'View my profile on Couch Surfing'
+		title: 'View my profile on Couchsurfing'
 		color: '#ed6542'
 		social: true
 	couch: 'couchsurfing'
