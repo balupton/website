@@ -597,6 +597,14 @@ links =
 		title: 'View my photos on Instagram'
 		color: 'rgb(148, 125, 98)'
 		social: true
+	couchsurfing:
+		text: 'Couch Surfing'
+		url: 'http://couchsurfing.com/people/balupton'
+		title: 'View my profile on Couch Surfing'
+		color: '#ed6542'
+		social: true
+	couch: 'couchsurfing'
+	couchsurfer: 'couchsurfing'
 	runkeeper:
 		text: 'Runkeeper'
 		url: 'https://runkeeper.com/user/balupton'
