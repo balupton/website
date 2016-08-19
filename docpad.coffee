@@ -661,6 +661,12 @@ links =
 		title: 'Use Amazon to buy books'
 		color: 'rgb(228, 121, 17)'
 		referral: true
+	googleapps:
+		text: 'Google Apps'
+		url: 'https://goo.gl/vEb9bM'
+		title: 'Use Google Apps for Work to setup Google Accounts for your own website'
+		color: '#5F7D8C'
+		referral: true
 	iherb:
 		text: 'iHerb'
 		url: 'http://www.iherb.com/iherb-brands?rcode=DNF509'
