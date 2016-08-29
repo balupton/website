@@ -494,10 +494,6 @@ links =
 		text: 'Burnout'
 		url: 'http://burnout.io'
 		title: 'Burnout is a state of emotional, mental, and physical exhaustion caused by excessive and prolonged stress.'
-	burnouttalk:
-		text: 'Benjamin Lupton on Burnout'
-		url: 'https://www.youtube.com/watch?v=Lt_oKuaFgrg'
-		title: 'A talk that I gave on burnout in web development'
 	anomie:
 		text: 'Anomie'
 		url: 'https://en.wikipedia.org/wiki/Anomie'
@@ -514,6 +510,16 @@ links =
 		text: 'Veronika Decides to Die, Review'
 		url: 'https://www.goodreads.com/review/show/1069969061'
 		title: 'My review for the book "Veronika Decides to Die", by Paulo Coelho, with my alternative ending proposal.'
+	
+	# Talks
+	burnouttalk:
+		text: 'Benjamin Lupton on Burnout'
+		url: 'https://www.youtube.com/watch?v=Lt_oKuaFgrg'
+		title: 'A talk of mine on burnout in web development'
+	elegant:
+		text: 'Elegantly Produce & Consume Compiled Packages'
+		url: 'https://gist.github.com/balupton/68b4d4b1b4976a4c29baf13b2e6f7855'
+		title: 'A talk of mine about elegantly producing and consuming compiled packages'
 
 	# Social
 	feedly:
