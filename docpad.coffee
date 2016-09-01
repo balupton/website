@@ -747,7 +747,7 @@ links =
 		referral: true
 	airbnb:
 		text: 'AirBnB'
-		url: 'https://www.airbnb.com/tell-a-friend?airef=1q99nz301a0zz5'
+		url: 'www.airbnb.com.au/c/benjaminl3638'
 		title: 'Use AirBnB to book accomodation when traveling'
 		color: '#ff5a5f'
 		referral: true
