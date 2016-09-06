@@ -677,7 +677,7 @@ links =
 		text: 'Coinbase'
 		url: 'https://www.coinbase.com/join/balupton'
 		title: 'Use Coinbase to exchange, send and receive bitcoin'
-		color: '#aacc38'
+		color: '#2B71B1'
 		referral: true
 	circlefinance:
 		text: 'Circle Finance'
