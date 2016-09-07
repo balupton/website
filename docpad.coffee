@@ -518,7 +518,7 @@ links =
 		title: 'A talk of mine on burnout in web development'
 	elegant:
 		text: 'Elegantly Produce & Consume Compiled Packages'
-		url: 'https://gist.github.com/balupton/68b4d4b1b4976a4c29baf13b2e6f7855'
+		url: 'https://github.com/balupton/elegant'
 		title: 'A talk of mine about elegantly producing and consuming compiled packages'
 
 	# Social
