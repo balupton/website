@@ -673,6 +673,12 @@ links =
 		title: 'Use AirBnB to book accomodation when traveling'
 		color: '#ff5a5f'
 		referral: true
+	transferwise:
+		text: 'TransferWise'
+		url: 'https://transferwise.com/u/bff1c1'
+		title: 'Use TransferWise to avoid international transfer fees'
+		color: '#223049'
+		referral: true
 	coinbase:
 		text: 'Coinbase'
 		url: 'https://www.coinbase.com/join/balupton'
