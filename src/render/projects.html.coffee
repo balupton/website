@@ -1,10 +1,9 @@
----
+###
 title: 'Projects'
 layout: 'page'
 menuText: 'projects'
 menuTitle: 'View projects'
-menuOrder: 2
----
+###
 
 # Prepare
 projects = @getProjects()

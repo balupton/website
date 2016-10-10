@@ -1,6 +1,6 @@
----
+###
 title: 'Benjamin Lupton'
----
+###
 
 # Prepare
 documentTitle = @getPreparedTitle()
@@ -81,7 +81,7 @@ html lang: 'en', ->
 			section ".links", ->
 				for item in @site.referralLinks
 					h3 -> @link(item.code, item.title)
-		
+
 		aside '.modal.contact.hide', -> @partial('content/contact')
-		
+
 		aside '.modal.backdrop.hide', ->

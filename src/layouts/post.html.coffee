@@ -1,6 +1,6 @@
----
+###
 layout: default
----
+###
 
 # Title
 if @document.title
@@ -36,4 +36,3 @@ footer '.page-footer', ->
 	# Disqus
 	section '.page-comments', ->
 		text @getDisqus()
-

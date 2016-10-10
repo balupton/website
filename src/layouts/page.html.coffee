@@ -1,6 +1,6 @@
----
+###
 layout: default
----
+###
 
 # Title
 if @document.title

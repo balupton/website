@@ -52,7 +52,7 @@
     "npm": "3"
   },
   "dependencies": {
-    "docpad": "~6.78.5",
+    "docpad": "~6.79.0",
     "docpad-plugin-cachr": "~2.3.1",
     "docpad-plugin-cleanurls": "~2.8.1",
     "docpad-plugin-coffeekup": "~2.2.0",
@@ -68,10 +68,10 @@
     "getrepos": "~1.0.7"
   },
   "devDependencies": {
-    "coffeelint": "^1.15.7",
+    "coffeelint": "^1.16.0",
     "docpad-plugin-ghpages": "~2.4.4",
     "docpad-plugin-livereload": "~2.7.1",
-    "projectz": "^1.1.6"
+    "projectz": "^1.2.0"
   },
   "main": "node_modules/.bin/docpad-server",
   "scripts": {
