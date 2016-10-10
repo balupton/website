@@ -4,8 +4,6 @@ layout: 'page'
 menuText: 'projects'
 menuTitle: 'View projects'
 menuOrder: 2
-url: '/projects'
-urls: ['/projects/','/projects/index.html','/projects.html']
 ---
 
 # Prepare
