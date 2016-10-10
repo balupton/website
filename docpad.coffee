@@ -619,7 +619,7 @@ links =
 		social: true
 	linkedin:
 		text: 'LinkedIn'
-		url: 'http://www.linkedin.com/in/balupton'
+		url: 'https://www.linkedin.com/in/balupton'
 		title: 'View my profile on LinkedIn'
 		color: '#0083B3'
 		social: true
@@ -657,19 +657,19 @@ links =
 		referral: true
 	ebay:
 		text: 'Ebay'
-		url: 'http://rover.ebay.com/rover/1/705-53470-19255-0/1?icep_ff3=1&pub=5575197898&toolid=10001&campid=5337916977&customid=&ipn=psmain&icep_vectorid=229515&kwid=902099&mtid=824&kw=lg'
+		url: 'https://rover.ebay.com/rover/1/705-53470-19255-0/1?icep_ff3=1&pub=5575197898&toolid=10001&campid=5337916977&customid=&ipn=psmain&icep_vectorid=229515&kwid=902099&mtid=824&kw=lg'
 		title: 'Use Ebay to buy and sell online'
 		color: '#f3ad29'
 		referral: true
 	amazon:
 		text: 'Amazon'
-		url: 'http://www.amazon.com/?tag=bevry-20'
+		url: 'https://www.amazon.com/?tag=bevry-20'
 		title: 'Use Amazon to buy books'
 		color: 'rgb(228, 121, 17)'
 		referral: true
 	airbnb:
 		text: 'AirBnB'
-		url: 'www.airbnb.com.au/c/benjaminl3638'
+		url: 'https://www.airbnb.com.au/c/benjaminl3638'
 		title: 'Use AirBnB to book accomodation when traveling'
 		color: '#ff5a5f'
 		referral: true
