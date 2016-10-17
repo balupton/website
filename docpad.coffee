@@ -673,6 +673,12 @@ links =
 		title: 'Use AirBnB to book accomodation when traveling'
 		color: '#ff5a5f'
 		referral: true
+	awaytravel:
+		text: 'Away Travel'
+		url: 'http://fbuy.me/errs2'
+		title: 'Use Away Travel for your luggage'
+		color: '#00344B'
+		referral: true
 	transferwise:
 		text: 'TransferWise'
 		url: 'https://transferwise.com/u/bff1c1'
