@@ -511,6 +511,12 @@ links =
 		url: 'https://www.goodreads.com/review/show/1069969061'
 		title: 'My review for the book "Veronika Decides to Die", by Paulo Coelho, with my alternative ending proposal.'
 	
+	# Posts
+	'2017ssgs':
+		text: "2017's Generation of Static Site Generators"
+		url: 'https://medium.com/@balupton/2017s-generation-of-static-site-generators-164c3b7b9f97'
+		title: 'In 2017 I anticipate we will see a new generation of static site generator (SSG), with importing and rendering decoupled from one another.'
+	
 	# Talks
 	burnouttalk:
 		text: 'Benjamin Lupton on Burnout'
