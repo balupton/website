@@ -733,6 +733,12 @@ links =
 		title: 'Use Digital Ocean to host your apps on virtual machines in the cloud'
 		color: '#288feb'
 		referral: true
+	hypersh:
+		text: 'Hyper.sh'
+		url: 'https://console.hyper.sh/register/invite/Eb9g6Ml6mGtNNdeRKe6ztaAkMR42rdc6'
+		title: 'Use Hyper.sh to host docker apps in the cloud'
+		color: '#172b46'
+		referral: true
 	rescuetime:
 		text: 'Rescue Time'
 		url: 'http://rescuetime.com/ref/242226'
