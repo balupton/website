@@ -831,7 +831,7 @@ links =
 	'porn-generation':
 		text: 'Porn Generation: How Social Liberalism Is Corrupting Our Future: Ben Shapiro'
 		url: '/amazon/0895260166'
-	'wright-relationships'
+	'wright-relationships':
 		text: 'Some Thoughts About Relationships: Colin Wright, Joshua Fields'
 		url: '/amazon/B00XCSPJ5S'
 
