@@ -560,7 +560,7 @@ links =
 		social: true
 	wishlist:
 		text: 'Wishlist'
-		url: 'http://amzn.com/w/2F8TXKSNAFG4V?tag=bevry-20'
+		url: 'http://amzn.com/w/2F8TXKSNAFG4V?tag=balupton07-20'
 		title: 'Buy me something on my Amazon Wishlist'
 		color: 'rgb(228, 121, 17)'
 		social: true
