@@ -6,7 +6,7 @@ version = require('./package.json').version
 githubClientId = process.env.BEVRY_GITHUB_CLIENT_ID
 githubClientSecret = process.env.BEVRY_GITHUB_CLIENT_SECRET
 githubAuthString = "client_id=#{githubClientId}&client_secret=#{githubClientSecret}"
-amazonCode = "balupton07-20"
+amazonCode = 'balupton07-20'
 projects = []
 reposGetter = null
 links =
