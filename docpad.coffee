@@ -6,6 +6,7 @@ version = require('./package.json').version
 githubClientId = process.env.BEVRY_GITHUB_CLIENT_ID
 githubClientSecret = process.env.BEVRY_GITHUB_CLIENT_SECRET
 githubAuthString = "client_id=#{githubClientId}&client_secret=#{githubClientSecret}"
+amazonCode = "balupton07-20"
 projects = []
 reposGetter = null
 links =
@@ -560,7 +561,7 @@ links =
 		social: true
 	wishlist:
 		text: 'Wishlist'
-		url: 'http://amzn.com/w/2F8TXKSNAFG4V?tag=balupton07-20'
+		url: "http://amzn.com/w/2F8TXKSNAFG4V?tag=#{amazonCode}"
 		title: 'Buy me something on my Amazon Wishlist'
 		color: 'rgb(228, 121, 17)'
 		social: true
@@ -669,7 +670,7 @@ links =
 		referral: true
 	amazon:
 		text: 'Amazon'
-		url: 'https://www.amazon.com/?tag=bevry-20'
+		url: "https://www.amazon.com/?tag=#{amazonCode}"
 		title: 'Use Amazon to buy books'
 		color: 'rgb(228, 121, 17)'
 		referral: true
@@ -825,7 +826,14 @@ links =
 		text: 'Donate'
 		url: 'https://bevry.me/donate'
 		title: 'Donate to my company and open-community'
-
+	
+	# Recommendations
+	'porn-generation':
+		text: 'Porn Generation: How Social Liberalism Is Corrupting Our Future: Ben Shapiro'
+		url: '/amazon/0895260166'
+	'wright-relationships'
+		text: 'Some Thoughts About Relationships: Colin Wright, Joshua Fields'
+		url: '/amazon/B00XCSPJ5S'
 
 # Cycle through links
 socialLinks = []
@@ -1132,4 +1140,7 @@ module.exports =
 
 				# Projects
 				[/^\/(?:projects?\/|(?:g|gh|github)\/?)(.+)$/, 'https://github.com/balupton/$1']
+				
+				# Amazon
+				[/^\/amazon\/(.+)/, "https://read.amazon.com/kp/embed?asin=$1&tag=#{amazonCode}"]
 			]
