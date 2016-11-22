@@ -511,6 +511,10 @@ links =
 		text: 'Veronika Decides to Die, Review'
 		url: 'https://www.goodreads.com/review/show/1069969061'
 		title: 'My review for the book "Veronika Decides to Die", by Paulo Coelho, with my alternative ending proposal.'
+	fountainhead:
+		text: 'The Fountainhead by Ayan Rand'
+		url: 'http://www.imdb.com/title/tt0041386/'
+		title: 'This movie is a great stand for individual liberty'
 	
 	# Posts
 	'2017ssgs':
