@@ -830,6 +830,11 @@ links =
 		text: 'Donate'
 		url: 'https://bevry.me/donate'
 		title: 'Donate to my company and open-community'
+	contracts:
+		text: 'Contracts I Provide'
+		url: 'https://drive.google.com/drive/folders/0B6MqiLy7C3PhZ196SHVSQ2MxU00'
+		title: "The contract templates I've used with success for my consulting engagements"
+	contract: 'contracts'
 	
 	# Recommendations
 	'porn-generation':
