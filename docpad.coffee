@@ -666,6 +666,12 @@ links =
 		title: 'Use Patreon to earn money from your fanbase'
 		color: '#E6461A'
 		referral: true
+	hired:
+		text: 'Hired':
+		url: 'https://hired.com/x/1i4hs'
+		title: 'Use Hired to get offers from the best companies around the world'
+		color: '#323241'
+		referral: true
 	ebay:
 		text: 'Ebay'
 		url: 'https://rover.ebay.com/rover/1/705-53470-19255-0/1?icep_ff3=1&pub=5575197898&toolid=10001&campid=5337916977&customid=&ipn=psmain&icep_vectorid=229515&kwid=902099&mtid=824&kw=lg'
