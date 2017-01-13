@@ -18,7 +18,8 @@ standalone: true
 	<p>This has worked well for me so far; for several years I was the most active <%-@link('opensource')%> developer in Australia and one of the most prolific in the world; my technical projects have been used in some of the world's biggest web-sites/apps (Basecamp, Spotify, Ustream) and by some of the world's biggest companies (Microsoft, Adobe, GitHub, Atlassian), touching their millions of users; my non-technical projects have also seen adoption over the years.</p>
 
 	<p>The key skill set I've used to accomplish this is my natural ability to quickly understand complex systems and simplify them in disruptive ways, a burning need to do good in the world, and an instinctive tenacity for always finding a way even in the most difficult of situations.</p>
-
+	
+	<p>Actively looking for remote freelance and employment opportunities. <%-@link('contact', "Get in contact.")%></p>
 
 	<h3>I'm human too.</h3>
 
@@ -72,7 +73,7 @@ all of which were useless.</p>
 
 	<h3>Reach out.</h3>
 
-	<p>I'm not particularly interested in work offers, however if you are a company implementing a cause (<a href="http://www.teslamotors.com" title="Solving the worlds transit and energy problems">Tesla</a>, <a href="http://www.animalsaustralia.org" title="Succeeding in animal welfare">Animals Australia</a>, <a href="http://greenschool.org" title="Creating educated balanced children">Green School</a>, <a href="http://lentilasanything.com" title="Providing ethical food and joy to all people">Lentil as Anything</a>, etc.) or would just like to touch base, <%-@link('contact', "I'm all ears")%>.</p>
+	<p>I'm actively looking for remote freelance and employment opportunities. <%-@link('contact', "Get in contact.")%></p>
 
 	<p>You can support me by <%-@link('donate', 'donating to me via my open-company and community')%>, <%-@link('referrals', "using my referral links")%>, or <%-@link('contact', "having a chat with me")%>.</p>
 
