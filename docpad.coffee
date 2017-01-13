@@ -535,6 +535,10 @@ links =
 		text: 'Elegantly Produce & Consume Compiled Packages'
 		url: 'https://github.com/elegant-talk/elegant'
 		title: 'A talk of mine about elegantly producing and consuming compiled packages'
+	nodeconfeu16:
+		text: 'Node.js Interactive Europe 2016'
+		url: 'http://events.linuxfoundation.org/events/node-interactive-europe'
+		title: 'The official Node.js Foundation Conference for Europe, held in Amsterdam'
 
 	# Social
 	feedly:
