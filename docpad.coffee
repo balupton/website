@@ -675,7 +675,7 @@ links =
 		color: '#E6461A'
 		referral: true
 	hired:
-		text: 'Hired':
+		text: 'Hired'
 		url: 'https://hired.com/x/1i4hs'
 		title: 'Use Hired to get offers from the best companies around the world'
 		color: '#323241'
