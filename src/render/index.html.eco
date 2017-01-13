@@ -75,9 +75,11 @@ all of which were useless.</p>
 
 	<h3>Reach out.</h3>
 
-	<p>I'm actively looking for remote freelance and employment opportunities. <%-@link('contact', "Get in contact.")%></p>
+	<p>I am actively looking for remote freelance and employment opportunities. <%-@link('contact', "Get in contact.")%></p>
 
-	<p>You can support me by <%-@link('donate', 'donating to me via my open-company and community')%>, <%-@link('referrals', "using my referral links")%>, or <%-@link('contact', "having a chat with me")%>. <%-@link('twitter', 'You should follow me on Twitter to keep up to date.')%></p>
+	<p>You can support me by <%-@link('donate', 'donating to me via my open-company and community')%>, <%-@link('referrals', "using my referral links")%>, or <%-@link('contact', "having a chat with me")%>.</p>
+	
+	<p><%-@link('twitter', 'You should follow me on Twitter to keep up to date.')%></p>
 
 </section>
 
