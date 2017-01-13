@@ -137,6 +137,10 @@ links =
 		text: 'ActionScript'
 		url: 'https://en.wikipedia.org/wiki/ActionScript'
 		title: 'ActionScript is used primarily for the development of websites and software targeting the Adobe Flash Player platform.'
+	swift:
+		text: 'Swift'
+		url: 'https://en.wikipedia.org/wiki/Swift_(programming_language)'
+		title: 'Swift is a high-level programming language used to create powerful applications.'
 	c:
 		text: 'C'
 		url: 'https://en.wikipedia.org/wiki/C_%28programming_language%29'
