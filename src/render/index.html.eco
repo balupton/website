@@ -35,7 +35,7 @@ standalone: true
 
 	<!--<p>My struggle is with stepping back far enough from the happenings of the present to be able to see myself from afar enough to finally witness my place inside this crazy world. In short, to stop thinking and to feel connected with everything and to sense my being - aka to feel joy. The moon, walking, running, great food, nice conversation, nature, and romance, help me do that.</p>-->
 
-	<p>I'm a big believer in ephemeral living, whatever that is. I've recently discovered that <%-@link('fountainhead', 'I'm my own person')%>. Coming up with great questions and answering them - staying true to myself by discovering myself - enabling joy and reducing oppression through education - are all passages deeply rooted in my soul.</p>
+	<p>I'm a big believer in ephemeral living, whatever that is. I've recently discovered that <%-@link('fountainhead', "I'm my own person")%>. Coming up with great questions and answering them - staying true to myself by discovering myself - enabling joy and reducing oppression through education - are all passages deeply rooted in my soul.</p>
 
 
 	<h3>I've done many things.</h3>
