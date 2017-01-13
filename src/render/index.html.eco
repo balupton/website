@@ -69,13 +69,15 @@ all of which were useless.</p>
 
 	<p>In 2015 (age 25/26), I <%-@link('hitch', 'hitchhiked')%> 10,000KM throughout <%-@link('australia')%>, notably between <%-@link('perth')%>, <%-@link('uluru')%>, Brisbane, <%-@link('sydney')%>, Melbourne, <%-@link('nullabor')%>, and back to Perth. It was an adventure of a life-time. At some point, I desire to commence foot on the <%-@link('walk')%>, a 1,000KM walk from Perth to Albany in Western Australia. I plan on doing this alone to discover what doors it opens and closes for me.</p>
 
-	<p>In 2016 (age 26/27), I look forward to spending the year teaching <%-@link('javascript')%> and exploring new businesses around <%-@link('opensource')%> end-user applications. <%-@link('twitter', 'You should follow me on Twitter to keep up to date.')%></p>
+	<p>In 2016 (age 26/27), I completed the last unit of my degree after a 6 year hiatus, becoming a <%-@link('degree')%> graduate furthering my global employment opportunities. I also gave the talk <%-@link('elegant')%> at <%-@link('nodeconfeu16')%> and worked through some private matters.</p>
+	
+	<p>In 2016 (age 27/28), I intend to resume a lucrative <%-@link('javascript')%> and <%-@link('nodejs')%> freelancing career, while learning <%-@link('swift')%>.</p>
 
 	<h3>Reach out.</h3>
 
 	<p>I'm actively looking for remote freelance and employment opportunities. <%-@link('contact', "Get in contact.")%></p>
 
-	<p>You can support me by <%-@link('donate', 'donating to me via my open-company and community')%>, <%-@link('referrals', "using my referral links")%>, or <%-@link('contact', "having a chat with me")%>.</p>
+	<p>You can support me by <%-@link('donate', 'donating to me via my open-company and community')%>, <%-@link('referrals', "using my referral links")%>, or <%-@link('contact', "having a chat with me")%>. <%-@link('twitter', 'You should follow me on Twitter to keep up to date.')%></p>
 
 </section>
 
