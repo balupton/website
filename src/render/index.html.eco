@@ -19,9 +19,9 @@ standalone: true
 
 	<p>The key skill set I've used to accomplish this is my natural ability to quickly understand complex systems and simplify them in disruptive ways, a burning need to do good in the world, and an instinctive tenacity for always finding a way even in the most difficult of situations.</p>
 	
-	<p>Actively looking for remote freelance and employment opportunities. <%-@link('contact', "Get in contact.")%></p>
+	<p>Actively looking for remote freelance and employment opportunities. <%-@link('resume', "View my resume.")%> <%-@link('contact', "Get in contact.")%></p>
 
-	<h3>I'm human too.</h3>
+<h3>I'm human too.</h3>
 
 	<p>I'm absorbed in the art of <%-@link('simpleliving', 'simple')%> and <%-@link('nomad', 'nomadic')%></a> living, with a <%-@link('vegan', 'vegan')%> life-style and <%-@link('ahimsa', 'ahimsa')%> values. <%-@link('vegan', 'The data cannot recommend this lifestyle more highly.', 'Really, check it out.')%></p>
 
@@ -38,7 +38,7 @@ standalone: true
 	<p>I'm a big believer in ephemeral living, whatever that is. I've recently discovered that <%-@link('fountainhead', "I'm my own person")%>. Coming up with great questions and answering them - staying true to myself by discovering myself - enabling joy and reducing oppression through education - are all passages deeply rooted in my soul.</p>
 
 
-	<h3>I've done many things.</h3>
+<h3>I've done many things.</h3>
 
 	<p>In 1998 (age 8/9), I developed my first website for a <%-@link('perth')%> city council project as part of an accelerated learning <%-@link('peac')%> course, the project went on to win a state award. A few years later I started developing in <%-@link('csharp')%> to interact with the <%-@link('itunes')%> <%-@link('dll', 'DLLs')%> for the purpose of organising my music collection, I also started programming in <%-@link('ecmascript')%> in the form of <%-@link('flash')%> <%-@link('actionscript')%> for the purpose of creating a kickass full-fledged media player for my self, I also worked with <%-@link('html')%> and <%-@link('javascript')%> on the side for fun and pleasure. Around this time, I was diagnosed with <%-@link('trich')%> and until University, I would often be found with large bald spots throughout my scalp. I saw many psychologists through my childhood,
 all of which were useless.</p>
@@ -73,9 +73,9 @@ all of which were useless.</p>
 	
 	<p>In 2016 (age 27/28), I intend to resume a lucrative <%-@link('javascript')%> and <%-@link('nodejs')%> freelancing career, while learning <%-@link('swift')%>.</p>
 
-	<h3>Reach out.</h3>
+<h3>Reach out.</h3>
 
-	<p>I am actively looking for remote freelance and employment opportunities. <%-@link('contact', "Get in contact.")%></p>
+	<p>I am actively looking for remote freelance and employment opportunities. <%-@link('resume', "View my resume.")%>  <%-@link('contact', "Get in contact.")%></p>
 
 	<p>You can support me by <%-@link('donate', 'donating to me via my open-company and community')%>, <%-@link('referrals', "using my referral links")%>, or <%-@link('contact', "having a chat with me")%>.</p>
 	
