@@ -1148,7 +1148,7 @@ module.exports =
 					url: "https://github.com/balupton.atom"
 					parse: 'xml'
 				'medium':
-					url: "https://medium.com/feed/@balupton"
+					url: "https://medium.com/feed/ephemeral-living"
 					parse: 'xml'
 
 		cleanurls:
