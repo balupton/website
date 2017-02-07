@@ -704,6 +704,12 @@ links =
 		title: 'Use Away Travel for your luggage'
 		color: '#00344B'
 		referral: true
+	n26:
+		text: 'N26 Bank'
+		url: 'mailto:b@lupton.cc?subject=Send%20me%20a%20N26%20invite%20please!'
+		title: 'Use N26 Bank for European and International banking'
+		color: '#26afb8'
+		referral: true
 	transferwise:
 		text: 'TransferWise'
 		url: 'https://transferwise.com/u/bff1c1'
