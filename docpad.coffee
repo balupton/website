@@ -39,6 +39,10 @@ links =
 		text: 'privileged'
 		url: 'https://www.youtube.com/watch?v=cRsYwu8uD4I'
 		title: 'Privileged, yes, no?'
+	male:
+		text: 'male'
+		url: 'https://www.youtube.com/watch?v=vp8tToFv-bA&list=PLYVl5EnzwqsRPSBKIn6qMatpxWopxs1eB'
+		title: 'Interesting analysis of gender roles and issues'
 	simpleliving:
 		text: 'Simple Living'
 		url: 'https://en.wikipedia.org/wiki/Simple_living'
