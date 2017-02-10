@@ -43,6 +43,10 @@ links =
 		text: 'male'
 		url: 'https://www.youtube.com/watch?v=vp8tToFv-bA&list=PLYVl5EnzwqsRPSBKIn6qMatpxWopxs1eB'
 		title: 'Interesting analysis of gender roles and issues'
+	ausvsusa:
+		text: 'Australia vs America'
+		url: 'https://github.com/balupton/website.git'
+		title: 'Comedic sketch comparing the potential for gangsta rappers from Australia and America'
 	simpleliving:
 		text: 'Simple Living'
 		url: 'https://en.wikipedia.org/wiki/Simple_living'
@@ -523,13 +527,13 @@ links =
 		text: 'The Fountainhead by Ayan Rand'
 		url: 'http://www.imdb.com/title/tt0041386/'
 		title: 'This movie is a great stand for individual liberty'
-	
+
 	# Posts
 	'2017ssgs':
 		text: "2017's Generation of Static Site Generators"
 		url: 'https://medium.com/@balupton/2017s-generation-of-static-site-generators-164c3b7b9f97'
 		title: 'In 2017 I anticipate we will see a new generation of static site generator (SSG), with importing and rendering decoupled from one another.'
-	
+
 	# Talks
 	burnouttalk:
 		text: 'Benjamin Lupton on Burnout'
@@ -859,7 +863,7 @@ links =
 		url: 'https://drive.google.com/drive/folders/0B6MqiLy7C3PhZ196SHVSQ2MxU00'
 		title: "The contract templates I've used with success for my consulting engagements"
 	contract: 'contracts'
-	
+
 	# Recommendations
 	'porn-generation':
 		text: 'Porn Generation: How Social Liberalism Is Corrupting Our Future: Ben Shapiro'
@@ -1173,7 +1177,7 @@ module.exports =
 
 				# Projects
 				[/^\/(?:projects?\/|(?:g|gh|github)\/?)(.+)$/, 'https://github.com/balupton/$1']
-				
+
 				# Amazon
 				[/^\/amazon\/(.+)/, "https://read.amazon.com/kp/embed?asin=$1&tag=#{amazonCode}"]
 			]
