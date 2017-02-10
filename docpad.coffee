@@ -45,7 +45,7 @@ links =
 		title: 'Interesting analysis of gender roles and issues'
 	ausvsusa:
 		text: 'Australia vs America'
-		url: 'https://github.com/balupton/website.git'
+		url: 'https://youtu.be/u--1_WrGpZo'
 		title: 'Comedic sketch comparing the potential for gangsta rappers from Australia and America'
 	simpleliving:
 		text: 'Simple Living'
