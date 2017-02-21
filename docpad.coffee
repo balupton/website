@@ -736,6 +736,18 @@ links =
 		title: 'Use Circle Finance to exchange, send and receive bitcoin'
 		color: '#aacc38'
 		referral: true
+	surfeasy:
+		text: 'SurfEasy'
+		url: 'https://srfez.com/NF6AYREKBA'
+		title: 'Use SurfEasy as your secure anonymous VPN (used by Opera)'
+		color: '#46d186'
+		referral: true
+	windscribe:
+		text: 'Windscribe'
+		url: 'https://secure.link/W3JzYNqv'
+		title: 'Use Windscribe as your secure anonymous VPN'
+		color: '#52a5d8'
+		referral: true
 	namedomains:
 		text: 'Name.com'
 		url: 'https://www.name.com/referral/1d41c5'
