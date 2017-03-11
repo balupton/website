@@ -798,7 +798,7 @@ links =
 		referral: true
 	dropbox:
 		text: 'Dropbox'
-		url: 'http://db.tt/pZELOPt'
+		url: 'https://db.tt/XFuEv8vB'
 		title: 'Use Dropbox to host sync your local files into the cloud'
 		color: '#007ee5'
 		referral: true
