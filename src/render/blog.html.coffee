@@ -32,9 +32,9 @@ if entries.length isnt 0
 			h1 ->
 				'Medium'
 		# p 'Expirements with Medium, a new writing platform'
-		text @partial 'content/document-list.html.coffee', {
-				documents: entries
-			}
+		text @partial('content/document-list.html.coffee', {
+			documents: entries
+		})
 
 # Tumblr Listing
 entries = []
@@ -50,9 +50,9 @@ if entries.length isnt 0
 			h1 ->
 				'Tumblr'
 		# p 'My bookmarks around the web'
-		text @partial 'content/document-list.html.coffee', {
-				documents: entries
-			}
+		text @partial('content/document-list.html.coffee', {
+			documents: entries
+		})
 
 # Gist Listing
 entries = []
@@ -70,6 +70,6 @@ if entries.length isnt 0
 			h1 ->
 				'Gists'
 		# p 'My everyday worthwhile technical snippets and guides'
-		text @partial 'content/document-list.html.coffee', {
-				documents: entries
-			}
+		text @partial('content/document-list.html.coffee', {
+			documents: entries
+		})
