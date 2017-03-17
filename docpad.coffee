@@ -712,6 +712,12 @@ links =
 		title: 'Use Away Travel for your luggage'
 		color: '#00344B'
 		referral: true
+	acorns:
+		text: 'Acorns'
+		url: 'https://acornsau.com.au/invite/83UNQY'
+		title: 'Use Acorns to open an Australian investment account'
+		color: '#54bd45'
+		referral: true
 	n26:
 		text: 'N26 Bank'
 		url: 'mailto:b@lupton.cc?subject=Send%20me%20a%20N26%20invite%20please!'
