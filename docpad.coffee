@@ -714,7 +714,7 @@ links =
 		referral: true
 	acorns:
 		text: 'Acorns'
-		url: 'https://acornsau.com.au/invite/83UNQY'
+		url: 'https://app.acornsau.com.au/invite/83UNQY'
 		title: 'Use Acorns to open an Australian investment account'
 		color: '#54bd45'
 		referral: true
