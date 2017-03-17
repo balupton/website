@@ -75,7 +75,7 @@ env:
   # Custom Deploy
   # travis encrypt "SURGE_LOGIN=$SURGE_LOGIN" --add env.global
   # travis encrypt "SURGE_TOKEN=$SURGE_TOKEN" --add env.global
-  - DEPLOY_BRANCH='master'
+  - DEPLOY_BRANCH='2012+'
   - secure: TLEiHIhvGBcUJ8ICNMUW1m9J74x0XCbZ40JYuCF+JBUNuksMhxiYwK9GfSu6kHyHB9eqAD8YIqpNLZqKtHmqbJqvjooPd+gjR+tlv9VPufvcnYv0YNiODCw0mtJDghCrnMgl+XblUqadqpgqo8wn0BDX1h/KySSJ/oo0kv+gVms=
   - secure: PiwHgcg+9ac4umCrQZ1/Mm3DDcFVjMVC8w/hnyAFPFPjURjhfLlwkj64svo5apTOEKEvBJ21gIPv9IqB1RxAp2xsi1B7ouzeQFPEQu3YDFnkJiN0+r7QWYX7ErM3rT4vqPfy4XlbLW2TVhasiz9EZESr3Y/67JY77sDOu+JycW0=
 
