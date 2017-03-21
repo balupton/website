@@ -861,7 +861,7 @@ links =
 	# Misc
 	calendar:
 		text: 'Schedule a Meeting'
-		url: 'http://calendly.com/balupton'
+		url: 'https://calendly.com/balupton/meet/'
 		title: 'Schedule a meeting with me'
 	meet: 'calendar'
 	teach:
