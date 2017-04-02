@@ -83,7 +83,7 @@ links =
 		title: 'Startup Hostel is a co-work and co-live initiative. Learn about Startup Hostel on its website.'
 	hostellist:
 		text: 'Setup Hostels around the world'
-		url: 'http://startuphostel.net/list'
+		url: 'http://startuphostel.org/list'
 		title: 'There are now more than 30 Startup Hostels around the world!'
 	historyjs:
 		text: 'History.js'
