@@ -220,22 +220,22 @@ all of which were useless.</p>
 
 	<section class="awards-docpad">
 		<h3>
-			<a href="http://docpad.org"><strong>Created DocPad</strong></a><br/>
-			<a href="https://github.com/languages/CoffeeScript/most_watched?page=1">
-				<em>One of the 20 most popular CoffeeScript projects in the world</em> via GitHub
+			<a href="https://docpad.org"><strong>Created DocPad</strong></a><br/>
+			<a href="https://libraries.io/npm/docpad">
+				<em>One of the most popular CoffeeScript projects in the world</em> via GitHub
 			</a>
 		</h3>
-		<p><a href="http://docpad.org">DocPad</a> rethought web development and created a new kind of content management system. Each day <a href="http://docpad.org/docs/showcase">more and more websites</a> built with DocPad are going live, and more and more developers are joining the DocPad community.</p>
+		<p><a href="http://docpad.org">DocPad</a> rethought web development and was the first big static site generator for Node.js gaining over 2000 stars, hundreds of daily users, 200 plugins, and 100 contributors.</p>
 	</section>
 
 	<section class="awards-historyjs">
 		<h3>
-			<a href="http://historyjs.net"><strong>Created History.js</strong></a><br/>
-			<a href="https://github.com/languages/JavaScript/most_watched?page=2">
-				<em>One of the 40 most popular JavaScript projects in the world</em> via GitHub
+			<a href="https://github.com/browserstate/history.js"><strong>Created History.js</strong></a><br/>
+			<a href="http://github-rank.com/star?language=JavaScript">
+				<em>One of the most popular JavaScript projects in the world</em> via GitHub
 			</a>
 		</h3>
-		<p><a href="http://historyjs.net">History.js</a> became one of the most game changing and popular utilities for web developers. Enabling and empowering <a href="https://github.com/browserstate/history.js/wiki/Showcase">freelancers to thought leaders</a> to create the leading stateful web applications easily and effortlessly.</p>
+		<p><a href="https://github.com/browserstate/history.js">History.js</a> became one of the most game changing and popular utilities for web developers. Freelancers all the way to enterprise used it to lead the way into stateful web applications. It was huge.</p>
 	</section>
 
 </section>

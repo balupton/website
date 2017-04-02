@@ -83,7 +83,7 @@ links =
 		title: 'Startup Hostel is a co-work and co-live initiative. Learn about Startup Hostel on its website.'
 	hostellist:
 		text: 'Setup Hostels around the world'
-		url: 'https://startuphostel.org/list'
+		url: 'https://startuphostel.org/compare'
 		title: 'There are now more than 30 Startup Hostels around the world!'
 	historyjs:
 		text: 'History.js'
@@ -517,7 +517,7 @@ links =
 		title: '16 is the legal age of consent in Western Australia'
 	wwgb:
 		text: 'Wrong Way, Go Back! Podcast'
-		url: 'https://wrongwaygoback.tv'
+		url: 'https://soundcloud.com/wwgbtv'
 		title: 'A podcast for the mistakes we make and the learnings from them'
 	vdd:
 		text: 'Veronika Decides to Die, Review'
