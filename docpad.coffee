@@ -75,15 +75,15 @@ links =
 		title: 'Pantheism is a stance that believes the notion of God is synonymous with the notion of the Universe. Learn about Pantheism on Wikipedia.'
 	docpad:
 		text: 'DocPad'
-		url: 'http://docpad.org'
+		url: 'https://docpad.org'
 		title: 'DocPad is a static site generator built with Node.js. Learn about DocPad on its website.'
 	hostel:
 		text: 'Startup Hostel'
-		url: 'http://startuphostel.org'
+		url: 'https://startuphostel.org'
 		title: 'Startup Hostel is a co-work and co-live initiative. Learn about Startup Hostel on its website.'
 	hostellist:
 		text: 'Setup Hostels around the world'
-		url: 'http://startuphostel.org/list'
+		url: 'https://startuphostel.org/list'
 		title: 'There are now more than 30 Startup Hostels around the world!'
 	historyjs:
 		text: 'History.js'
