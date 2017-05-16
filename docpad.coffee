@@ -750,7 +750,7 @@ links =
 		referral: true
 	windscribe:
 		text: 'Windscribe'
-		url: 'https://secure.link/W3JzYNqv'
+		url: 'https://windscribe.com/?affid=rztkyips'
 		title: 'Use Windscribe as your secure anonymous VPN'
 		color: '#52a5d8'
 		referral: true
