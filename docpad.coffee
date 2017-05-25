@@ -682,6 +682,12 @@ links =
 		title: 'Use Patreon to earn money from your fanbase'
 		color: '#E6461A'
 		referral: true
+	drivewealth:
+		text: 'DriveWealth'
+		url: 'https://drivewealth.com/refer?r=A74082&name=Benjamin'
+		title: 'Use DriveWealth to invest in USA companies even if you live outside of the USA'
+		color: '#FEC108'
+		referral: true
 	hired:
 		text: 'Hired'
 		url: 'https://hired.com/x/1i4hs'
