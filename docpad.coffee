@@ -738,7 +738,7 @@ links =
 		referral: true
 	coinbase:
 		text: 'Coinbase'
-		url: 'https://www.coinbase.com/join/balupton'
+		url: 'https://www.coinbase.com/join/516032d5fc3baa863b000010'
 		title: 'Use Coinbase to exchange, send and receive bitcoin'
 		color: '#2B71B1'
 		referral: true
