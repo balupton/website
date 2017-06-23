@@ -682,10 +682,16 @@ links =
 		title: 'Use Patreon to earn money from your fanbase'
 		color: '#E6461A'
 		referral: true
+	tradingview:
+		text: 'TradingView'
+		url: 'http://tradingview.go2cloud.org/aff_c?offer_id=2&aff_id=4529'
+		title: 'Use TradingView for all your commodity investment insights'
+		color: '#3BB3E4'
+		referral: true
 	drivewealth:
 		text: 'DriveWealth'
 		url: 'https://drivewealth.com/refer?r=A74082&name=Benjamin'
-		title: 'Use DriveWealth to invest in USA companies even if you live outside of the USA'
+		title: 'Use DriveWealth to invest in USA companies, even if you live outside of the USA'
 		color: '#FEC108'
 		referral: true
 	hired:
