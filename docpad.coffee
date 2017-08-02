@@ -808,6 +808,12 @@ links =
 		title: 'Use Koding to code in the cloud'
 		color: '#656565'
 		referral: true
+	vultr:
+		text: 'Vultr'
+		url: 'http://www.vultr.com/?ref=7196060'
+		title: 'Use Vultr to host yout apps on virtual machiens in the cloud'
+		color: '#1e88e5'
+		referral: true
 	digitalocean:
 		text: 'Digital Ocean'
 		url: 'https://m.do.co/c/3b1047be3444'
