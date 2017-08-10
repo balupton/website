@@ -808,6 +808,12 @@ links =
 		title: 'Use Koding to code in the cloud'
 		color: '#656565'
 		referral: true
+	updown:
+		text: 'Updown'
+		url: 'https://updown.io/r/hl1b0'
+		title: 'Use Updown for website status alerts'
+		color: '#5c4'
+		referral: true
 	vultr:
 		text: 'Vultr'
 		url: 'http://www.vultr.com/?ref=7196060'
