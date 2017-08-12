@@ -700,6 +700,12 @@ links =
 		title: 'Use Bonsai for all your invoicing, time tracking, and freelancing needs'
 		color: '#00B289'
 		referral: true
+	aftership:
+		text: 'Aftership'
+		url: 'https://www.aftership.com/?ref=B-HGKM6H2PW'
+		title: 'Use Aftership to track your deliveries'
+		color: '#e77f11'
+		referral: true
 	downpour:
 		text: 'Downpour'
 		url: 'https://click.linksynergy.com/fs-bin/click?id=RltaJog6pRs&offerid=316894.4&subid=0&type=4'
