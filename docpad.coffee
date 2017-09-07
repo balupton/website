@@ -682,6 +682,12 @@ links =
 		title: 'Use Patreon to earn money from your fanbase'
 		color: '#E6461A'
 		referral: true
+	wirex:
+		text: 'Wirex'
+		url: 'https://app.wirexapp.com/join/gSPGAXe7_EOtVw3hNfaHtA'
+		title: 'Use Wirex for your virtual and physical cryptocurrency cards'
+		color: '#3fb1ab'
+		referral: true
 	tradingview:
 		text: 'TradingView'
 		url: 'http://tradingview.go2cloud.org/aff_c?offer_id=2&aff_id=4529'
