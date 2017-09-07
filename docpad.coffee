@@ -10,6 +10,237 @@ amazonCode = 'balupton07-20'
 projects = []
 reposGetter = null
 links =
+	# Referrals
+	patreonref:
+		text: 'Patreon'
+		url: 'https://patreon.com/invite/pbqzz'
+		title: 'Use Patreon to earn money from your fanbase'
+		color: '#E6461A'
+		referral: true
+	wirex:
+		text: 'Wirex'
+		url: 'https://app.wirexapp.com/join/gSPGAXe7_EOtVw3hNfaHtA'
+		title: 'Use Wirex for your virtual and physical cryptocurrency cards'
+		color: '#3fb1ab'
+		referral: true
+	tradingview:
+		text: 'TradingView'
+		url: 'http://tradingview.go2cloud.org/aff_c?offer_id=2&aff_id=4529'
+		title: 'Use TradingView for all your commodity investment insights'
+		color: '#3BB3E4'
+		referral: true
+	drivewealth:
+		text: 'DriveWealth'
+		url: 'https://drivewealth.com/refer?r=A74082&name=Benjamin'
+		title: 'Use DriveWealth to invest in USA companies, even if you live outside of the USA'
+		color: '#FEC108'
+		referral: true
+	bonsai:
+		text: 'Bonsai'
+		url: 'https://app.hellobonsai.com/invite/fd7b3daf'
+		title: 'Use Bonsai for all your invoicing, time tracking, and freelancing needs'
+		color: '#00B289'
+		referral: true
+	aftership:
+		text: 'Aftership'
+		url: 'https://www.aftership.com/?ref=B-HGKM6H2PW'
+		title: 'Use Aftership to track your deliveries'
+		color: '#e77f11'
+		referral: true
+	downpour:
+		text: 'Downpour'
+		url: 'https://click.linksynergy.com/fs-bin/click?id=RltaJog6pRs&offerid=316894.4&subid=0&type=4'
+		title: 'Use Downpour for your audiobook needs'
+		color: '#2c3033'
+		referral: true
+	hired:
+		text: 'Hired'
+		url: 'https://hired.com/x/1i4hs'
+		title: 'Use Hired to get offers from the best companies around the world'
+		color: '#323241'
+		referral: true
+	ebay:
+		text: 'Ebay'
+		url: 'https://rover.ebay.com/rover/1/705-53470-19255-0/1?icep_ff3=1&pub=5575197898&toolid=10001&campid=5337916977&customid=&ipn=psmain&icep_vectorid=229515&kwid=902099&mtid=824&kw=lg'
+		title: 'Use Ebay to buy and sell online'
+		color: '#f3ad29'
+		referral: true
+	amazon:
+		text: 'Amazon'
+		url: "https://www.amazon.com/?tag=#{amazonCode}"
+		title: 'Use Amazon to buy books'
+		color: 'rgb(228, 121, 17)'
+		referral: true
+	airbnb:
+		text: 'AirBnB'
+		url: 'https://www.airbnb.com.au/c/benjaminl3638'
+		title: 'Use AirBnB to book accomodation when traveling'
+		color: '#ff5a5f'
+		referral: true
+	awaytravel:
+		text: 'Away Travel'
+		url: 'http://fbuy.me/errs2'
+		title: 'Use Away Travel for your luggage'
+		color: '#00344B'
+		referral: true
+	acorns:
+		text: 'Acorns'
+		url: 'https://app.acornsau.com.au/invite/83UNQY'
+		title: 'Use Acorns to open an Australian investment account'
+		color: '#54bd45'
+		referral: true
+	n26:
+		text: 'N26 Bank'
+		url: 'mailto:b@lupton.cc?subject=Send%20me%20a%20N26%20invite%20please!'
+		title: 'Use N26 Bank for European and International banking'
+		color: '#26afb8'
+		referral: true
+	transferwise:
+		text: 'TransferWise'
+		url: 'https://transferwise.com/u/bff1c1'
+		title: 'Use TransferWise to avoid international transfer fees'
+		color: '#223049'
+		referral: true
+	coinbase:
+		text: 'Coinbase'
+		url: 'https://www.coinbase.com/join/516032d5fc3baa863b000010'
+		title: 'Use Coinbase to exchange, send and receive bitcoin'
+		color: '#2B71B1'
+		referral: true
+	circlefinance:
+		text: 'Circle Finance'
+		url: 'https://www.circle.com/invite/DTIKU0'
+		title: 'Use Circle Finance to exchange, send and receive bitcoin'
+		color: '#aacc38'
+		referral: true
+	surfeasy:
+		text: 'SurfEasy'
+		url: 'https://srfez.com/NF6AYREKBA'
+		title: 'Use SurfEasy as your secure anonymous VPN (used by Opera)'
+		color: '#46d186'
+		referral: true
+	windscribe:
+		text: 'Windscribe'
+		url: 'https://windscribe.com/?affid=rztkyips'
+		title: 'Use Windscribe as your secure anonymous VPN'
+		color: '#52a5d8'
+		referral: true
+	namedomains:
+		text: 'Name.com'
+		url: 'https://www.name.com/referral/1d41c5'
+		title: 'Use Name.com to purchase domain names'
+		color: '#90c547'
+		referral: true
+	googleapps:
+		text: 'Google Apps'
+		url: 'https://goo.gl/vEb9bM'
+		title: 'Use Google Apps for Work to setup Google Accounts for your own website'
+		color: '#5F7D8C'
+		referral: true
+	trello:
+		text: 'Trello'
+		url: 'https://trello.com/balupton/recommend'
+		title: 'Use Trello to organise your projects via collaborating via virtual todo notes'
+		color: '#026AA7'
+		referral: true
+	iherb:
+		text: 'iHerb'
+		url: 'http://www.iherb.com/iherb-brands?rcode=DNF509'
+		title: 'Use iHerb to buy supplements'
+		color: '#458500'
+		referral: true
+	koding:
+		text: 'Koding'
+		url: 'https://koding.com/R/balupton'
+		title: 'Use Koding to code in the cloud'
+		color: '#656565'
+		referral: true
+	updown:
+		text: 'Updown'
+		url: 'https://updown.io/r/hl1b0'
+		title: 'Use Updown for website status alerts'
+		color: '#5c4'
+		referral: true
+	vultr:
+		text: 'Vultr'
+		url: 'http://www.vultr.com/?ref=7196060'
+		title: 'Use Vultr to host yout apps on virtual machiens in the cloud'
+		color: '#1e88e5'
+		referral: true
+	digitalocean:
+		text: 'Digital Ocean'
+		url: 'https://m.do.co/c/3b1047be3444'
+		title: 'Use Digital Ocean to host your apps on virtual machines in the cloud'
+		color: '#288feb'
+		referral: true
+	hypersh:
+		text: 'Hyper.sh'
+		url: 'https://console.hyper.sh/register/invite/Eb9g6Ml6mGtNNdeRKe6ztaAkMR42rdc6'
+		title: 'Use Hyper.sh to host docker apps in the cloud'
+		color: '#172b46'
+		referral: true
+	rescuetime:
+		text: 'Rescue Time'
+		url: 'http://rescuetime.com/ref/242226'
+		title: 'Use Rescue Time to track your computer activity to figure out where you time goes'
+		color: '#65a86f'
+		referral: true
+	dropbox:
+		text: 'Dropbox'
+		url: 'https://db.tt/XFuEv8vB'
+		title: 'Use Dropbox to host sync your local files into the cloud'
+		color: '#007ee5'
+		referral: true
+	screenflow:
+		text: 'Screenflow'
+		url: 'https://store.telestream.net/affiliate.php?ACCOUNT=TELESTRE&AFFILIATE=45446&PATH=http://www.telestream.net/screenflow/'
+		title: 'Use Screenflow to do screencasts'
+		color: '#009bdf'
+		referral: true
+	airtasker:
+		text: 'Airtasker'
+		url: 'http://mail.airtasker.com/wf/click?upn=JalSgYCkT0ZI-2Bw45xk4vmrAhDtJvUSrWoM8aOtgnYf-2FjzVj6Pr4xUEHxebs5pQnF420bjJweZagd9p-2FeHbDWuA-3D-3D_xg4Iuf5a2mwDa1KxKgyCbGVAHupcFAbxI8rKgjLgfgN5LbOhe9IqDQ4AORWS7MaJNK4-2FmWOjfLAvOJ0obbOKpVy7UePSfIBv2WsQJD9fPJ-2FybjZfT0gi6vvQ0cPNheFa-2BKhswj67JD4w46eREx1VZ4mxLcxds-2FTEa6IP8wK0Y4xpDADJzR2vH0aGgJ-2BtKiP-2Fb-2BPS-2B8-2FcR7doTWuo9CAv7ZF-2FHQLbUzR2SZ2ZVSLY95Q-3D'
+		title: 'Use Airtasker to delegate physical tasks to minions'
+		color: '#007fad'
+		referral: true
+	fancyhands:
+		text: 'Fancy Hands'
+		url: 'http://www.fancyhands.com/r/8c2e46df0aa7'
+		title: 'Use Fancy Hands to delegate information tasks to minions'
+		color: '#db5344'
+		referral: true
+	zapier:
+		text: 'Zapier'
+		url: 'http://zpr.io/AhX'
+		title: 'Use Zapier to automate your digital workflows'
+		color: '#ff4a00'
+		referral: true
+	amaysim:
+		text: 'Amaysim'
+		url: 'http://amaysi.ms/balupton'
+		title: 'Use Amaysim for your phone plan in australia'
+		color: '#e65014'
+		referral: true
+	audiojungle:
+		text: 'Audio Jungle'
+		url: 'http://audiojungle.net/?ref=balupton'
+		title: 'Use Audio Jungle to purchase audio for videos'
+		color: '#82b440'
+		referral: true
+	themeforest:
+		text: 'Theme Forest'
+		url: 'http://themeforest.net/?ref=balupton'
+		title: 'Use Theme Forest to purchase themes for websites'
+		color: '#7bc4c4'
+		referral: true
+	circle:
+		text: 'Circle'
+		url: 'http://mbsy.co/dSfLv'
+		title: 'Use Circle to track and limit your internet usage over any device'
+		color: '#00b7d9'
+		referral: true
+	
+	# Links
 	peac:
 		text: 'PEAC'
 		url: 'http://www.det.wa.edu.au/redirect/?oid=MultiPartArticle-id-11045758'
@@ -674,237 +905,6 @@ links =
 		url: 'http://balupton.tumblr.com/post/79542013417/sustainability'
 		title: 'Read my thoughts on Sustainability'
 	s: 'sustainability'
-
-	# Referrals
-	patreonref:
-		text: 'Patreon'
-		url: 'https://patreon.com/invite/pbqzz'
-		title: 'Use Patreon to earn money from your fanbase'
-		color: '#E6461A'
-		referral: true
-	wirex:
-		text: 'Wirex'
-		url: 'https://app.wirexapp.com/join/gSPGAXe7_EOtVw3hNfaHtA'
-		title: 'Use Wirex for your virtual and physical cryptocurrency cards'
-		color: '#3fb1ab'
-		referral: true
-	tradingview:
-		text: 'TradingView'
-		url: 'http://tradingview.go2cloud.org/aff_c?offer_id=2&aff_id=4529'
-		title: 'Use TradingView for all your commodity investment insights'
-		color: '#3BB3E4'
-		referral: true
-	drivewealth:
-		text: 'DriveWealth'
-		url: 'https://drivewealth.com/refer?r=A74082&name=Benjamin'
-		title: 'Use DriveWealth to invest in USA companies, even if you live outside of the USA'
-		color: '#FEC108'
-		referral: true
-	bonsai:
-		text: 'Bonsai'
-		url: 'https://app.hellobonsai.com/invite/fd7b3daf'
-		title: 'Use Bonsai for all your invoicing, time tracking, and freelancing needs'
-		color: '#00B289'
-		referral: true
-	aftership:
-		text: 'Aftership'
-		url: 'https://www.aftership.com/?ref=B-HGKM6H2PW'
-		title: 'Use Aftership to track your deliveries'
-		color: '#e77f11'
-		referral: true
-	downpour:
-		text: 'Downpour'
-		url: 'https://click.linksynergy.com/fs-bin/click?id=RltaJog6pRs&offerid=316894.4&subid=0&type=4'
-		title: 'Use Downpour for your audiobook needs'
-		color: '#2c3033'
-		referral: true
-	hired:
-		text: 'Hired'
-		url: 'https://hired.com/x/1i4hs'
-		title: 'Use Hired to get offers from the best companies around the world'
-		color: '#323241'
-		referral: true
-	ebay:
-		text: 'Ebay'
-		url: 'https://rover.ebay.com/rover/1/705-53470-19255-0/1?icep_ff3=1&pub=5575197898&toolid=10001&campid=5337916977&customid=&ipn=psmain&icep_vectorid=229515&kwid=902099&mtid=824&kw=lg'
-		title: 'Use Ebay to buy and sell online'
-		color: '#f3ad29'
-		referral: true
-	amazon:
-		text: 'Amazon'
-		url: "https://www.amazon.com/?tag=#{amazonCode}"
-		title: 'Use Amazon to buy books'
-		color: 'rgb(228, 121, 17)'
-		referral: true
-	airbnb:
-		text: 'AirBnB'
-		url: 'https://www.airbnb.com.au/c/benjaminl3638'
-		title: 'Use AirBnB to book accomodation when traveling'
-		color: '#ff5a5f'
-		referral: true
-	awaytravel:
-		text: 'Away Travel'
-		url: 'http://fbuy.me/errs2'
-		title: 'Use Away Travel for your luggage'
-		color: '#00344B'
-		referral: true
-	acorns:
-		text: 'Acorns'
-		url: 'https://app.acornsau.com.au/invite/83UNQY'
-		title: 'Use Acorns to open an Australian investment account'
-		color: '#54bd45'
-		referral: true
-	n26:
-		text: 'N26 Bank'
-		url: 'mailto:b@lupton.cc?subject=Send%20me%20a%20N26%20invite%20please!'
-		title: 'Use N26 Bank for European and International banking'
-		color: '#26afb8'
-		referral: true
-	transferwise:
-		text: 'TransferWise'
-		url: 'https://transferwise.com/u/bff1c1'
-		title: 'Use TransferWise to avoid international transfer fees'
-		color: '#223049'
-		referral: true
-	coinbase:
-		text: 'Coinbase'
-		url: 'https://www.coinbase.com/join/516032d5fc3baa863b000010'
-		title: 'Use Coinbase to exchange, send and receive bitcoin'
-		color: '#2B71B1'
-		referral: true
-	circlefinance:
-		text: 'Circle Finance'
-		url: 'https://www.circle.com/invite/DTIKU0'
-		title: 'Use Circle Finance to exchange, send and receive bitcoin'
-		color: '#aacc38'
-		referral: true
-	surfeasy:
-		text: 'SurfEasy'
-		url: 'https://srfez.com/NF6AYREKBA'
-		title: 'Use SurfEasy as your secure anonymous VPN (used by Opera)'
-		color: '#46d186'
-		referral: true
-	windscribe:
-		text: 'Windscribe'
-		url: 'https://windscribe.com/?affid=rztkyips'
-		title: 'Use Windscribe as your secure anonymous VPN'
-		color: '#52a5d8'
-		referral: true
-	namedomains:
-		text: 'Name.com'
-		url: 'https://www.name.com/referral/1d41c5'
-		title: 'Use Name.com to purchase domain names'
-		color: '#90c547'
-		referral: true
-	googleapps:
-		text: 'Google Apps'
-		url: 'https://goo.gl/vEb9bM'
-		title: 'Use Google Apps for Work to setup Google Accounts for your own website'
-		color: '#5F7D8C'
-		referral: true
-	trello:
-		text: 'Trello'
-		url: 'https://trello.com/balupton/recommend'
-		title: 'Use Trello to organise your projects via collaborating via virtual todo notes'
-		color: '#026AA7'
-		referral: true
-	iherb:
-		text: 'iHerb'
-		url: 'http://www.iherb.com/iherb-brands?rcode=DNF509'
-		title: 'Use iHerb to buy supplements'
-		color: '#458500'
-		referral: true
-	koding:
-		text: 'Koding'
-		url: 'https://koding.com/R/balupton'
-		title: 'Use Koding to code in the cloud'
-		color: '#656565'
-		referral: true
-	updown:
-		text: 'Updown'
-		url: 'https://updown.io/r/hl1b0'
-		title: 'Use Updown for website status alerts'
-		color: '#5c4'
-		referral: true
-	vultr:
-		text: 'Vultr'
-		url: 'http://www.vultr.com/?ref=7196060'
-		title: 'Use Vultr to host yout apps on virtual machiens in the cloud'
-		color: '#1e88e5'
-		referral: true
-	digitalocean:
-		text: 'Digital Ocean'
-		url: 'https://m.do.co/c/3b1047be3444'
-		title: 'Use Digital Ocean to host your apps on virtual machines in the cloud'
-		color: '#288feb'
-		referral: true
-	hypersh:
-		text: 'Hyper.sh'
-		url: 'https://console.hyper.sh/register/invite/Eb9g6Ml6mGtNNdeRKe6ztaAkMR42rdc6'
-		title: 'Use Hyper.sh to host docker apps in the cloud'
-		color: '#172b46'
-		referral: true
-	rescuetime:
-		text: 'Rescue Time'
-		url: 'http://rescuetime.com/ref/242226'
-		title: 'Use Rescue Time to track your computer activity to figure out where you time goes'
-		color: '#65a86f'
-		referral: true
-	dropbox:
-		text: 'Dropbox'
-		url: 'https://db.tt/XFuEv8vB'
-		title: 'Use Dropbox to host sync your local files into the cloud'
-		color: '#007ee5'
-		referral: true
-	screenflow:
-		text: 'Screenflow'
-		url: 'https://store.telestream.net/affiliate.php?ACCOUNT=TELESTRE&AFFILIATE=45446&PATH=http://www.telestream.net/screenflow/'
-		title: 'Use Screenflow to do screencasts'
-		color: '#009bdf'
-		referral: true
-	airtasker:
-		text: 'Airtasker'
-		url: 'http://mail.airtasker.com/wf/click?upn=JalSgYCkT0ZI-2Bw45xk4vmrAhDtJvUSrWoM8aOtgnYf-2FjzVj6Pr4xUEHxebs5pQnF420bjJweZagd9p-2FeHbDWuA-3D-3D_xg4Iuf5a2mwDa1KxKgyCbGVAHupcFAbxI8rKgjLgfgN5LbOhe9IqDQ4AORWS7MaJNK4-2FmWOjfLAvOJ0obbOKpVy7UePSfIBv2WsQJD9fPJ-2FybjZfT0gi6vvQ0cPNheFa-2BKhswj67JD4w46eREx1VZ4mxLcxds-2FTEa6IP8wK0Y4xpDADJzR2vH0aGgJ-2BtKiP-2Fb-2BPS-2B8-2FcR7doTWuo9CAv7ZF-2FHQLbUzR2SZ2ZVSLY95Q-3D'
-		title: 'Use Airtasker to delegate physical tasks to minions'
-		color: '#007fad'
-		referral: true
-	fancyhands:
-		text: 'Fancy Hands'
-		url: 'http://www.fancyhands.com/r/8c2e46df0aa7'
-		title: 'Use Fancy Hands to delegate information tasks to minions'
-		color: '#db5344'
-		referral: true
-	zapier:
-		text: 'Zapier'
-		url: 'http://zpr.io/AhX'
-		title: 'Use Zapier to automate your digital workflows'
-		color: '#ff4a00'
-		referral: true
-	amaysim:
-		text: 'Amaysim'
-		url: 'http://amaysi.ms/balupton'
-		title: 'Use Amaysim for your phone plan in australia'
-		color: '#e65014'
-		referral: true
-	audiojungle:
-		text: 'Audio Jungle'
-		url: 'http://audiojungle.net/?ref=balupton'
-		title: 'Use Audio Jungle to purchase audio for videos'
-		color: '#82b440'
-		referral: true
-	themeforest:
-		text: 'Theme Forest'
-		url: 'http://themeforest.net/?ref=balupton'
-		title: 'Use Theme Forest to purchase themes for websites'
-		color: '#7bc4c4'
-		referral: true
-	circle:
-		text: 'Circle'
-		url: 'http://mbsy.co/dSfLv'
-		title: 'Use Circle to track and limit your internet usage over any device'
-		color: '#00b7d9'
-		referral: true
-
 
 	# Misc
 	calendar:
