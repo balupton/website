@@ -32,7 +32,7 @@ links =
 	tradingview:
 		text: 'TradingView'
 		url: 'http://tradingview.go2cloud.org/aff_c?offer_id=2&aff_id=4529'
-		title: 'Use TradingView for all your commodity investment insights'
+		title: 'Use TradingView for all your trading insights'
 		color: '#3BB3E4'
 		referral: true
 	drivewealth:
