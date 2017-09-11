@@ -1036,7 +1036,7 @@ module.exports =
 							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich', 'Not Alone'}.</span> -->
 							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'} &amp; #{@link 'hostel'}.</span>
 							<span>Aficionado of #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html'} and #{@link 'opensource'}.</span>
-							<span>Available for consulting, training and speaking. #{@link 'contact'}.</span>
+							<span>Available for consulting, training and speaking. #{@link 'contact'}. #{@link 'referrals'}.</span>
 							"""
 					</t>
 					'''
