@@ -17,6 +17,12 @@ links =
 		title: 'Use Patreon to earn money from your fanbase'
 		color: '#E6461A'
 		referral: true
+	earthrunners:
+		text: 'Earth Runners'
+		url: 'http://earthrunners.com?rfsn=763305.e8694'
+		title: 'Use Earth Runners as sandals that you can run, hike, and swim in'
+		color: '#6dc21d'
+		referral: true
 	wirex:
 		text: 'Wirex'
 		url: 'https://app.wirexapp.com/join/gSPGAXe7_EOtVw3hNfaHtA'
