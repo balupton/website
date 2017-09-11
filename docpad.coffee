@@ -224,7 +224,7 @@ links =
 	amaysim:
 		text: 'Amaysim'
 		url: 'http://amaysi.ms/balupton'
-		title: 'Use Amaysim for your phone plan in australia'
+		title: 'Use Amaysim for your phone plan in Australia'
 		color: '#e65014'
 		referral: true
 	audiojungle:
