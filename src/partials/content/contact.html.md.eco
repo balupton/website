@@ -11,6 +11,6 @@ For all other purposes; mention me on [twitter](http://twitter.com/balupton), as
 I cannot legally sign contracts that may risk contaminating the intellectual rights of my open-source projects. If you are unsure if your contract may, then most likely it does, as most likely your company will or already does use something I've touched. However if we can collaborate on this point to ensure it is not a problem, then great.
 
 ## Donate
-If you've received value from any of my services or products, you can help ensure the time was not a complete financial waste by [donating] and / or using my [referral links](/referrals).
+If you've received value from any of my services or products, you can help ensure the time was not a complete financial waste by [donating](/donate) and by using my [referral links](/referrals).
 
 <%- @getServiceBadges() %>
