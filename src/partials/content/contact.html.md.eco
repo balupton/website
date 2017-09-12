@@ -5,12 +5,12 @@ Free support is provided through [StackOverflow](http://stackoverflow.com/). Pai
 Consulting services are available through [my company](http://bevry.me/services).
 
 ## Contact
-For all other purposes; I like [twitter](http://twitter.com/balupton) for mentions, [quora](http://www.quora.com/Benjamin-Lupton) for questions, [google hangouts on air](http://www.google.com/+/learnmore/hangouts/onair.html) for meetings, [skype](skype:balupton?add) for calls, and my [personal email](mailto:b@lupton.cc) and [work email](mailto:b@bevry.me) that I check once a week every Monday.
+For all other purposes; mention me on [twitter](http://twitter.com/balupton), ask me questions on [quora](http://www.quora.com/Benjamin-Lupton), converse with me over a [meeting](/meet), or email me via my [personal email](mailto:b@lupton.cc) and [work email](mailto:b@bevry.me) that I check once a week every Monday.
 
 ## Expectation
-I've become a [vegan](http://en.wikipedia.org/wiki/Veganism) who lives by the [Open Information Pledge](https://gist.github.com/balupton/6937426) and the [Holstee Manifesto](http://shop.holstee.com/pages/manifesto). If this can't work for you, then I can't work for you. If it can, then let us create something amazing together.
+I cannot legally sign contracts that may risk contaminating the intellectual rights of my open-source projects. If you are unsure if your contract may, then most likely it does, as most likely your company will or already does use something I've touched. However if we can collaborate on this point to ensure it is not a problem, then great.
 
 ## Donate
-If you've received value from any of my services or products, if you can, I'd greatly appreciate financial donations. Financial donations are how I earn my income these days and support my family. [Donate.](/donate)
+If you've received value from any of my services or products, you can help ensure the time was not a complete financial waste by [donating] and / or using my [referral links](/referrals).
 
 <%- @getServiceBadges() %>
