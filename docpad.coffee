@@ -904,6 +904,12 @@ links =
 		title: 'Discover the books I read on Goodreads'
 		color: '#382110'
 		social: true
+	soundcloud:
+		text: 'SoundCloud'
+		url: 'https://soundcloud.com/balupton'
+		title: 'Listen to the music I like and make on SoundCloud;'
+		color: '#f50'
+		social: true
 
 	# Sustainability
 	sustainability:
