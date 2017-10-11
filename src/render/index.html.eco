@@ -19,7 +19,7 @@ standalone: true
 
 	<p>The key skill set I've used to accomplish this is my natural ability to quickly understand complex systems and simplify them in disruptive ways, a burning need to do good in the world, and an instinctive tenacity for always finding a way even in the most difficult of situations.</p>
 
-	<p>Actively looking for friendship and networking opportunities. <%-@link('resume', "View my resume.")%> <%-@link('contact', "Get in contact.")%></p>
+	<p>Always cultivating a stronger friendship and business opportunity network. <%-@link('resume', "View my resume.")%> <%-@link('contact', "Get in contact.")%></p>
 
 
 <h3>I'm human too.</h3>
@@ -75,7 +75,7 @@ all of which were useless.</p>
 
 <h3>Reach out.</h3>
 
-	<p>I am actively looking for friendship and networking opportunities. <%-@link('resume', "View my resume.")%>  <%-@link('contact', "Get in contact.")%></p>
+	<p>I am always cultivating a stronger friendship and business opportunity network.  <%-@link('resume', "View my resume.")%>  <%-@link('contact', "Get in contact.")%></p>
 
 	<p>You can support me by <%-@link('donate', 'donating to me via my open-company and community')%>, <%-@link('referrals', "using my referral links")%>, or <%-@link('contact', "having a chat with me")%>.</p>
 
