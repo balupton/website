@@ -779,6 +779,10 @@ links =
 		text: 'Philosophy'
 		url: 'https://en.wikipedia.org/wiki/Philosophy'
 		title: 'Philosophy interests me, as it not just important to be a ship that stays afloat in the ocean, but also to be a ship that has a dependable compass, as otherwise, one can easily become a pirate with misguided intentions'
+	trading:
+		text: 'Trading'
+		url: 'https://github.com/balupton/automated-trading'
+		title: 'Trading interests me, as it is an unlimited supply of money, that with some wit and grace, can be tapped into, consenually and anytime, freeing one up for other things, without waiting for clients'
 
 	# Posts
 	'2017ssgs':
