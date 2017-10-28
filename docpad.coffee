@@ -295,9 +295,12 @@ links =
 	v:
 		text: 'Vegan'
 		url: 'https://github.com/balupton/plant-vs-animal-products/blob/master/README.md#readme'
-		title: '''Veganism is the stance that other lives are not ours to own. Vegans commonly associate this with the practice of reducing their harm to all lives, primarily through a strict-vegetarian diet and lifestyle. That's it, nothing special. Learn about what turned me vegan.'''
-	vegan: 'v'
-	vegetarian: 'v'
+		title: '''Veganism is the stance that other lives are not ours to own. Vegans commonly associate this with the practice of reducing their harm to all lives, primarily through a strict-vegetarian diet and lifestyle. Learn about what turned me vegan.'''
+	vegan:
+		text: 'Vegan'
+		url: 'http://medium.com/p/c60913a8ca5b'
+		title: '''Veganism is the stance that other lives are not ours to own. Vegans commonly associate this with the practice of reducing their harm to all lives, primarily through a strict-vegetarian diet and lifestyle. Learn about what turned me vegan.'''
+	vegetarian: 'vegan'
 	ahimsa:
 		text: 'Ahimsa'
 		url: 'https://en.wikipedia.org/wiki/Ahimsa'
@@ -1027,7 +1030,7 @@ module.exports =
 			author: "Benjamin Lupton"
 			email: "b@lupton.cc"
 			description: """
-				Website of Benjamin Lupton. Founder of Bevry, DocPad and History.js. Aficionado of HTML, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.
+				Website of Benjamin Lupton. Australian that founded Bevry, DocPad and History.js. T
 				"""
 			keywords: """
 				balupton, benjamin lupton, lupton, coffeescript, node.js, javascript, history.js, html, docpad, nowpad, jquery, css3, ruby, git, nosql, cson, html5 history api, ajax, html, web development, web design, nlp, git, neuro-linguistic programming, programming, hacking, hackathon, aloha editor, contenteditable, hallo, jekyll, entp, inventor, web 2.0
