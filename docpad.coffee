@@ -770,11 +770,11 @@ links =
 	jbpstudygroup:
 		text: 'Jordan B Peterson Study Group'
 		url: 'https://docs.google.com/document/d/1H0-rGnidI1sGf3aYYVMvqlAejkb8EpmX2rGwjRcIBnw'
-		title: 'I co-host the Jordan B Peterson Study Group that has been running for over a year now. It serves as a respectful battlefield on philosophy and pyschology (needless to say, for people all over the world)'
+		title: 'I co-host the Jordan B Peterson Study Group that has been running for over a year now. It serves as a respectful battlefield on philosophy and psychology (needless to say, for people all over the world)'
 	quantitativepsychology:
-		text: 'Quantitative Pyschology'
+		text: 'Quantitative Psychology'
 		url: 'https://en.wikipedia.org/wiki/Quantitative_psychology'
-		title: 'Quantitative psychology interests me as a frontier that if combined carefully with ethics and technology, will have global business and humanitarian potential - one could improve societal and individual outcomes, using technology to gracefully measure wellbeing, promoting success and inhibiting neurosis, or even to screen for early biological and social markers of pyschopathy in children for early treatment, promoting socialisation and inhibiting tragedies'
+		title: 'Quantitative psychology interests me as a frontier that if combined carefully with ethics and technology, will have global business and humanitarian potential - one could improve societal and individual outcomes, using technology to gracefully measure wellbeing, promoting success and inhibiting neurosis, or even to screen for early biological and social markers of psychopathy in children for early treatment, promoting socialisation and inhibiting tragedies'
 	philosophy:
 		text: 'Philosophy'
 		url: 'https://en.wikipedia.org/wiki/Philosophy'
