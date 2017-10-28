@@ -767,6 +767,18 @@ links =
 		text: 'The Fountainhead by Ayan Rand'
 		url: 'http://www.imdb.com/title/tt0041386/'
 		title: 'This movie is a great stand for individual liberty'
+	jbpstudygroup:
+		text: 'Jordan B Peterson Study Group'
+		url: 'https://docs.google.com/document/d/1H0-rGnidI1sGf3aYYVMvqlAejkb8EpmX2rGwjRcIBnw'
+		title: 'I co-host the Jordan B Peterson Study Group that has been running for over a year now. It serves as a respectful battlefield on philosophy and pyschology (needless to say, for people all over the world)'
+	quantitativepsychology:
+		text: 'Quantitative Pyschology'
+		url: 'https://en.wikipedia.org/wiki/Quantitative_psychology'
+		title: 'Quantitative psychology interests me as a frontier that if combined carefully with ethics and technology, will have global business and humanitarian potential - one could improve societal and individual outcomes, using technology to gracefully measure wellbeing, promoting success and inhibiting neurosis, or even to screen for early biological and social markers of pyschopathy in children for early treatment, promoting socialisation and inhibiting tragedies'
+	philosophy:
+		text: 'Philosophy'
+		url: 'https://en.wikipedia.org/wiki/Philosophy'
+		title: 'Philosophy interests me, as it not just important to be a ship that stays afloat in the ocean, but also to be a ship that has a dependable compass, as otherwise, one can easily become a pirate with misguided intentions'
 
 	# Posts
 	'2017ssgs':
@@ -1030,7 +1042,7 @@ module.exports =
 			author: "Benjamin Lupton"
 			email: "b@lupton.cc"
 			description: """
-				Website of Benjamin Lupton. Australian that founded Bevry, DocPad and History.js. T
+				Website of Benjamin Lupton. Founder of Bevry, DocPad and History.js. Web developer for 10 years. Now a trader. Studies psychology and philosophy.
 				"""
 			keywords: """
 				balupton, benjamin lupton, lupton, coffeescript, node.js, javascript, history.js, html, docpad, nowpad, jquery, css3, ruby, git, nosql, cson, html5 history api, ajax, html, web development, web design, nlp, git, neuro-linguistic programming, programming, hacking, hackathon, aloha editor, contenteditable, hallo, jekyll, entp, inventor, web 2.0
@@ -1044,7 +1056,9 @@ module.exports =
 							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'wwgb', 'Podcaster'}. #{@link 'book', 'Author'}. #{@link 'vegan'}.</span>
 							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich', 'Not Alone'}.</span> -->
 							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'} &amp; #{@link 'hostel'}.</span>
-							<span>Aficionado of #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html'} and #{@link 'opensource'}.</span>
+							<span>Co-host of the #{@link 'jbpstudygroup'}.</span>
+							<span>Accomplished in #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html'} and #{@link 'opensource'}.</span>
+							<span>Enthusiast of #{@link 'quantitativepsychology'}, #{@link 'philosophy'} and #{@link 'trading'}.</span>
 							<span>Available for consulting, training and speaking. #{@link 'contact'}. #{@link 'referrals'}.</span>
 							"""
 					</t>
