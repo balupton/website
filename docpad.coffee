@@ -1060,7 +1060,6 @@ module.exports =
 							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'wwgb', 'Podcaster'}. #{@link 'book', 'Author'}. #{@link 'vegan'}.</span>
 							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich', 'Not Alone'}.</span> -->
 							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'} &amp; #{@link 'hostel'}.</span>
-							<span>Co-host of the #{@link 'jbpstudygroup'}.</span>
 							<span>Accomplished in #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html'} and #{@link 'opensource'}.</span>
 							<span>Enthusiast of #{@link 'quantitativepsychology'}, #{@link 'philosophy'} and #{@link 'trading'}.</span>
 							<span>Available for consulting, training and speaking. #{@link 'contact'}. #{@link 'referrals'}.</span>
