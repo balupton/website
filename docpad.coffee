@@ -783,6 +783,7 @@ links =
 		text: 'Trading'
 		url: 'https://github.com/balupton/automated-trading'
 		title: 'Trading interests me, as it is an unlimited supply of money, that with some wit and grace, can be tapped into, consenually and anytime, freeing one up for other things, without waiting for clients'
+	trader: 'trading'
 	ipvmen:
 		text: 'Intimate Partner Violence against Men'
 		url: 'https://www.researchgate.net/publication/51571741_Symptoms_of_Posttraumatic_Stress_Disorder_in_Men_Who_Sustain_Intimate_Partner_Violence_A_Study_of_Helpseeking_and_Community_Samples'
