@@ -771,6 +771,7 @@ links =
 		text: 'Jordan B Peterson Study Group'
 		url: 'https://docs.google.com/document/d/1H0-rGnidI1sGf3aYYVMvqlAejkb8EpmX2rGwjRcIBnw'
 		title: 'I co-host the Jordan B Peterson Study Group that has been running for over a year now. It serves as a respectful battlefield on philosophy and psychology (needless to say, for people all over the world)'
+	jbpsg: 'jbpstudygroup'
 	quantitativepsychology:
 		text: 'Quantitative Psychology'
 		url: 'https://en.wikipedia.org/wiki/Quantitative_psychology'
