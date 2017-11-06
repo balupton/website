@@ -23,6 +23,12 @@ links =
 		title: 'Use Earth Runners as sandals that you can run, hike, and swim in'
 		color: '#6dc21d'
 		referral: true
+	backblaze:
+		text: 'Backblaze'
+		url: 'https://secure.backblaze.com/r/01vlym'
+		title: 'Use Backblaze for unlimited and automated cloud backups of your computer and drives'
+		color: '#990000'
+		referral: true
 	wirex:
 		text: 'Wirex'
 		url: 'https://app.wirexapp.com/join/gSPGAXe7_EOtVw3hNfaHtA'
