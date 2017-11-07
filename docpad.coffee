@@ -941,6 +941,12 @@ links =
 		title: 'Listen to the music I like and make on SoundCloud;'
 		color: '#f50'
 		social: true
+	alternativeto:
+		text: 'AlternativeTo'
+		url: 'http://alternativeto.net/user/balupton/'
+		title: 'Discover the Apps and Services I use on AlternativeTo.net'
+		color: '#5581A6'
+		social: true
 
 	# Sustainability
 	sustainability:
