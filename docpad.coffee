@@ -65,6 +65,12 @@ links =
 		title: 'Use Downpour for your audiobook needs'
 		color: '#2c3033'
 		referral: true
+	freedom:
+		text: 'Freedom'
+		url: 'https://freedom.refersion.com/c/a7ed49'
+		title: 'Use Freedom to block distractions on your computer and phone'
+		color: '#6ec05d'
+		referral: true
 	hired:
 		text: 'Hired'
 		url: 'https://hired.com/x/1i4hs'
