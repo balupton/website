@@ -187,7 +187,7 @@ links =
 		referral: true
 	digitalocean:
 		text: 'Digital Ocean'
-		url: 'https://m.do.co/c/3b1047be3444'
+		url: 'https://m.do.co/c/7f9116eb0757'
 		title: 'Use Digital Ocean to host your apps on virtual machines in the cloud'
 		color: '#288feb'
 		referral: true
