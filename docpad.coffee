@@ -185,12 +185,6 @@ links =
 		title: 'Use Vultr to host yout apps on virtual machiens in the cloud'
 		color: '#1e88e5'
 		referral: true
-	digitalocean:
-		text: 'Digital Ocean'
-		url: 'https://m.do.co/c/7f9116eb0757'
-		title: 'Use Digital Ocean to host your apps on virtual machines in the cloud'
-		color: '#288feb'
-		referral: true
 	hypersh:
 		text: 'Hyper.sh'
 		url: 'https://console.hyper.sh/register/invite/Eb9g6Ml6mGtNNdeRKe6ztaAkMR42rdc6'
