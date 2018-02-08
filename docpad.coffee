@@ -775,9 +775,13 @@ links =
 		title: 'This movie is a great stand for individual liberty'
 	jbpstudygroup:
 		text: 'Jordan B Peterson Study Group'
-		url: 'https://docs.google.com/document/d/1H0-rGnidI1sGf3aYYVMvqlAejkb8EpmX2rGwjRcIBnw'
+		url: 'https://jordanbpeterson.community'
 		title: 'I co-host the Jordan B Peterson Study Group that has been running for over a year now. It serves as a respectful battlefield on philosophy and psychology (needless to say, for people all over the world)'
 	jbpsg: 'jbpstudygroup'
+	jbpvids:
+		text: 'Jordan B Peterson Community on YouTube'
+		url: 'https://www.youtube.com/channel/UCPkobzBsAIjpItonUT7AU9Q'
+		title: 'I co-host the Jordan B Peterson Community channel on YouTube, we do weekly summary sessions of the discussions that happened earlier in the week'
 	quantitativepsychology:
 		text: 'Quantitative Psychology'
 		url: 'https://en.wikipedia.org/wiki/Quantitative_psychology'
@@ -1075,7 +1079,7 @@ module.exports =
 				subheading: '''
 					<t render="html.coffee">
 						text """
-							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'wwgb', 'Podcaster'}. #{@link 'book', 'Author'}. #{@link 'vegan'}.</span>
+							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'jbpvids', 'Podcaster'}. #{@link 'book', 'Author'}. #{@link 'vegan'}.</span>
 							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich', 'Not Alone'}.</span> -->
 							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'} &amp; #{@link 'hostel'}.</span>
 							<span>Accomplished in #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html'} and #{@link 'opensource'}.</span>
