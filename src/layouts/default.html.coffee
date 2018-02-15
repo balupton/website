@@ -52,7 +52,7 @@ html lang: 'en', ->
 					documentMatch = @document.match or @document.url
 					cssname = if documentMatch.indexOf(pageMatch) is 0 then 'active' else 'inactive'
 					li 'class':cssname, ->
-						a href:page.url, title:page.menuTitle, ->
+						a href:page.url.replace(/[/]+$/, '') + '/', title:page.menuTitle, ->
 							page.menuText or page.name
 
 		# Document
