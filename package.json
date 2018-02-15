@@ -5,13 +5,18 @@
   "description": "Website of Benjamin Lupton. Founder of Bevry, DocPad and HistoryJS. Aficionado of HTML5, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.",
   "homepage": "https://github.com/balupton/website",
   "license": "(MIT OR CC-BY-4.0)",
+  "keywords": [
+    "balupton",
+    "benjamin lupton",
+    "website",
+    "docpad"
+  ],
   "badges": {
     "list": [
       "travisci",
       "---",
       "patreon",
       "opencollective",
-      "gratipay",
       "flattr",
       "paypal",
       "bitcoin",
@@ -22,7 +27,6 @@
     "config": {
       "patreonUsername": "bevry",
       "opencollectiveUsername": "bevry",
-      "gratipayUsername": "bevry",
       "flattrUsername": "balupton",
       "paypalURL": "https://bevry.me/paypal",
       "bitcoinURL": "https://bevry.me/bitcoin",
@@ -30,12 +34,6 @@
       "slackinURL": "https://slack.bevry.me"
     }
   },
-  "keywords": [
-    "balupton",
-    "benjamin lupton",
-    "website",
-    "docpad"
-  ],
   "author": "Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
   "maintainers": [
     "Benjamin Lupton <b@lupton.cc> (http://balupton.com)"
@@ -57,39 +55,40 @@
   "dependencies": {
     "docpad": "~6.79.4",
     "docpad-plugin-cachr": "~2.5.0",
-    "docpad-plugin-cleanurls": "~2.8.1",
-    "docpad-plugin-coffeekup": "~2.2.0",
-    "docpad-plugin-coffeescript": "~2.5.0",
-    "docpad-plugin-eco": "~2.1.0",
+    "docpad-plugin-cleanurls": "~2.10.0",
+    "docpad-plugin-coffeekup": "~2.4.0",
+    "docpad-plugin-coffeescript": "~2.6.0",
+    "docpad-plugin-eco": "~2.2.1",
     "docpad-plugin-feedr": "~2.12.0",
-    "docpad-plugin-marked": "~2.3.0",
-    "docpad-plugin-partials": "~2.9.2",
-    "docpad-plugin-raw": "~2.4.1",
-    "docpad-plugin-services": "~2.6.0",
+    "docpad-plugin-marked": "~2.4.0",
+    "docpad-plugin-partials": "~2.12.0",
+    "docpad-plugin-raw": "~2.5.1",
+    "docpad-plugin-services": "~2.7.0",
     "docpad-plugin-stylus": "~2.13.0",
-    "docpad-plugin-text": "~2.3.3",
+    "docpad-plugin-text": "~2.5.0",
     "getrepos": "~1.1.2"
   },
   "devDependencies": {
-    "coffeelint": "^1.16.0",
+    "coffeelint": "^2.0.7",
     "docpad-plugin-livereload": "~2.9.0",
-    "projectz": "^1.3.2",
+    "projectz": "^1.4.0",
     "surge": "^0.19.0"
   },
-  "main": "node_modules/.bin/docpad-server",
   "scripts": {
-    "our:setup": "npm install",
-    "our:clean": "rm -Rf ./docs ./es2015 ./out",
-    "our:compile": "echo 'no need for a compile'",
+    "our:setup": "npm run our:setup:npm",
+    "our:setup:npm": "npm install",
+    "our:clean": "rm -Rf ./docs ./es2015 ./es5 ./out",
+    "our:compile": "echo no need for this project",
     "our:meta": "npm run our:meta:projectz",
     "our:meta:projectz": "projectz compile",
-    "our:verify": "npm run our:verify:coffeelint",
-    "our:verify:coffeelint": "coffeelint ./src",
+    "our:verify": "echo no need for this project",
+    "our:deploy": "npm run my:deploy",
     "our:test": "npm run our:verify && npm test",
-    "our:release": "npm run deploy",
+    "our:release": "npm run our:release:prepare && npm run our:release:push",
+    "our:release:prepare": "npm run our:clean && npm run our:compile && npm run our:test && npm run our:meta",
+    "our:release:push": "git push origin master && git push origin --tags",
+    "my:deploy": "surge --project ./out --domain https://balupton.com",
     "start": "docpad-server",
-    "test": "docpad generate --silent --env static",
-    "info": "docpad info --silent",
-    "deploy": "surge --project ./out --domain https://balupton.com"
+    "test": "docpad generate --silent --env static"
   }
 }
