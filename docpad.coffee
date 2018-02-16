@@ -1087,9 +1087,10 @@ module.exports =
 				subheading: '''
 					<t render="html.coffee">
 						text """
-							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'hostel'} &amp; the #{@link 'jbpcommunity', 'Jordan B Peterson Community'}.</span>
+							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, and #{@link 'hostel'}.</span>
 							<span>Accomplished in #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'webeng', 'Web Development'} and #{@link 'opensource'}.</span>
 							<span>Enthusiast of #{@link 'quantitativepsychology'}, #{@link 'philosophy'} and #{@link 'trading'}.</span>
+							<span>Co-Host of the #{@link 'jbpcommunity', 'Jordan B Peterson Community'}. #{@link 'jbpvids', 'Podcaster'}. #{@link 'author'}.
 							<span>Available for consulting, training and speaking. #{@link 'contact'}. #{@link 'referrals'}.</span>
 							"""
 					</t>
