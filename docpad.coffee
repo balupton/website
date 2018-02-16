@@ -773,14 +773,22 @@ links =
 		text: 'The Fountainhead by Ayan Rand'
 		url: 'http://www.imdb.com/title/tt0041386/'
 		title: 'This movie is a great stand for individual liberty'
+	webeng:
+		text: 'Web Engineering'
+		url: 'https://en.wikipedia.org/wiki/Web_engineering'
+		title: 'Web engineering focuses on the methodologies, techniques, and tools that are the foundation of Web application development and which support their design, development, evolution, and evaluation.'
+	jbpcommunity:
+		text: 'Jordan B Peterson Community'
+		url: "https://jordanbpeterson.community"
+		title: "I manage the Jordan B Peterson community hub and several of its initiatives; Study Group, Lecture Notes, Podcast, etc"
 	jbpstudygroup:
 		text: 'Jordan B Peterson Study Group'
-		url: 'https://jordanbpeterson.community'
+		url: 'https://jordanbpeterson.community/study-group/'
 		title: 'I co-host the Jordan B Peterson Study Group that has been running for over a year now. It serves as a respectful battlefield on philosophy and psychology (needless to say, for people all over the world)'
 	jbpsg: 'jbpstudygroup'
 	jbpvids:
 		text: 'Jordan B Peterson Community on YouTube'
-		url: 'https://www.youtube.com/channel/UCPkobzBsAIjpItonUT7AU9Q'
+		url: 'https://jordanbpeterson.community/youtube/'
 		title: 'I co-host the Jordan B Peterson Community channel on YouTube, we do weekly summary sessions of the discussions that happened earlier in the week'
 	quantitativepsychology:
 		text: 'Quantitative Psychology'
@@ -1079,10 +1087,8 @@ module.exports =
 				subheading: '''
 					<t render="html.coffee">
 						text """
-							<span>#{@link 'opencollaboration'} Entrepreneur. #{@link 'jbpvids', 'Podcaster'}. #{@link 'book', 'Author'}. #{@link 'vegan'}.</span>
-							<!-- <span>#{@link 'husband'}. Stepdad. #{@link 'agnostic'}. #{@link 'pantheist'}. #{@link 'trich', 'Not Alone'}.</span> -->
-							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'historyjs'} &amp; #{@link 'hostel'}.</span>
-							<span>Accomplished in #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'html'} and #{@link 'opensource'}.</span>
+							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, #{@link 'hostel'} &amp; the #{@link 'jbpcommunity', 'Jordan B Peterson Community'}.</span>
+							<span>Accomplished in #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'webeng', 'Web Development'} and #{@link 'opensource'}.</span>
 							<span>Enthusiast of #{@link 'quantitativepsychology'}, #{@link 'philosophy'} and #{@link 'trading'}.</span>
 							<span>Available for consulting, training and speaking. #{@link 'contact'}. #{@link 'referrals'}.</span>
 							"""
