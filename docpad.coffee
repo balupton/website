@@ -787,10 +787,11 @@ links =
 		url: 'https://jordanbpeterson.community/study-group/'
 		title: 'I co-host the Jordan B Peterson Study Group that has been running for over a year now. It serves as a respectful battlefield on philosophy and psychology (needless to say, for people all over the world)'
 	jbpsg: 'jbpstudygroup'
-	jbpvids:
+	jbpyoutube:
 		text: 'Jordan B Peterson Community on YouTube'
 		url: 'https://jordanbpeterson.community/youtube/'
 		title: 'I co-host the Jordan B Peterson Community channel on YouTube, we do weekly summary sessions of the discussions that happened earlier in the week'
+	jbpvids: 'jbpyoutube'
 	quantitativepsychology:
 		text: 'Quantitative Psychology'
 		url: 'https://en.wikipedia.org/wiki/Quantitative_psychology'
