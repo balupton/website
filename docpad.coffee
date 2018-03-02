@@ -273,6 +273,7 @@ links =
 		text: 'Intentionally Left Blank'
 		url: 'https://gumroad.com/l/vKuF'
 		title: '''Author of the mostly likely not the best non-best selling book in cultural literature right now.'''
+	author: 'book'
 	bookupdates:
 		text: 'Book Newsletter'
 		url: 'https://confirmsubscription.com/h/r/36CE01ACCFE65688'
@@ -1090,7 +1091,6 @@ module.exports =
 							<span>Founded #{@link 'bevry'}, #{@link 'docpad'}, and #{@link 'hostel'}.</span>
 							<span>Accomplished in #{@link 'javascript'}, #{@link 'nodejs'}, #{@link 'webeng', 'Web Development'} and #{@link 'opensource'}.</span>
 							<span>Enthusiast of #{@link 'quantitativepsychology'}, #{@link 'philosophy'} and #{@link 'trading'}.</span>
-							<span>Co-Host of the #{@link 'jbpcommunity', 'Jordan B Peterson Community'}. #{@link 'jbpvids', 'Podcaster'}. #{@link 'author'}.
 							<span>Available for consulting, training and speaking. #{@link 'contact'}. #{@link 'referrals'}.</span>
 							"""
 					</t>
