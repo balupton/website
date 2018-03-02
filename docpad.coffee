@@ -839,11 +839,83 @@ links =
 		title: 'Follow me on Feedly'
 		color: '#6cc655'
 		social: true
-	gratipay:
-		text: 'Gratipay'
-		url: 'https://www.gratipay.com/balupton'
-		title: 'Support me on Gratipay'
-		color: '#614c3e'
+	twitter:
+		text: 'Twitter'
+		url: 'https://twitter.com/balupton'
+		title: 'Follow me on Twitter'
+		color: '#248DCD'
+		social: true
+	medium:
+		text: 'Medium'
+		url: 'https://medium.com/@balupton'
+		title: 'Read my posts on Medium'
+		color: '#333332'
+		social: true
+	youtube:
+		text: 'YouTube'
+		url: 'http://www.youtube.com/user/balupton'
+		title: 'View my videos on YouTube'
+		color: '#df3333'
+		social: true
+	github:
+		text: 'Github'
+		url: 'https://github.com/balupton'
+		title: 'View my code on GitHub'
+		color: 'black'
+		social: true
+	instagram:
+		text: 'Instagram'
+		url: 'https://www.instagram.com/balupton/'
+		title: 'View my photos on Instagram'
+		color: 'rgb(148, 125, 98)'
+		social: true
+	linkedin:
+		text: 'LinkedIn'
+		url: 'https://www.linkedin.com/in/balupton'
+		title: 'View my profile on LinkedIn'
+		color: '#0083B3'
+		social: true
+	goodreads:
+		text: 'Goodreads'
+		url: 'https://goodreads.com/balupton'
+		title: 'Discover the books I read on Goodreads'
+		color: '#382110'
+		social: true
+	keybase:
+		text: 'Keybase'
+		url: 'https://keybase.io/balupton'
+		title: 'View my identity on Keybase'
+		color: '#ff6f21'
+		social: true
+	alternativeto:
+		text: 'AlternativeTo'
+		url: 'http://alternativeto.net/user/balupton/'
+		title: 'Discover the Apps and Services I use on AlternativeTo.net'
+		color: '#5581A6'
+		social: true
+	soundcloud:
+		text: 'SoundCloud'
+		url: 'https://soundcloud.com/balupton'
+		title: 'Listen to the music I like and make on SoundCloud;'
+		color: '#f50'
+		social: true
+	couchsurfing:
+		text: 'Couchsurfing'
+		url: 'http://couchsurfing.com/people/balupton'
+		title: 'View my profile on Couchsurfing'
+		color: '#ed6542'
+		social: true
+	tumblr:
+		text: 'Tumblr'
+		url: 'http://tumblr.balupton.com'
+		title: 'Read my posts on Tumblr'
+		color: '#2c4762'
+		social: true
+	runkeeper:
+		text: 'Runkeeper'
+		url: 'https://runkeeper.com/user/balupton'
+		title: 'Encourage me on Runkeeper'
+		color: '#31a4d9'
 		social: true
 	patreon:
 		text: 'Patreon'
@@ -863,105 +935,17 @@ links =
 		title: 'Support me on Paypal'
 		color: '#009cde'
 		social: true
-	wishlist:
-		text: 'Wishlist'
-		url: "http://amzn.com/w/2F8TXKSNAFG4V?tag=#{amazonCode}"
-		title: 'Buy me something on my Amazon Wishlist'
-		color: 'rgb(228, 121, 17)'
-		social: true
-	twitter:
-		text: 'Twitter'
-		url: 'https://twitter.com/balupton'
-		title: 'Follow me on Twitter'
-		color: '#248DCD'
-		social: true
-	t: 'twitter'
-	medium:
-		text: 'Medium'
-		url: 'https://medium.com/@balupton'
-		title: 'Read my posts on Medium'
-		color: '#333332'
-		social: true
-	tumblr:
-		text: 'Tumblr'
-		url: 'http://tumblr.balupton.com'
-		title: 'Read my posts on Tumblr'
-		color: '#2c4762'
-		social: true
-	youtube:
-		text: 'YouTube'
-		url: 'http://www.youtube.com/user/balupton'
-		title: 'View my videos on YouTube'
-		color: '#df3333'
-		social: true
 	vimeo:
 		text: 'Vimeo'
 		url: 'https://vimeo.com/balupton'
 		title: 'View my videos on Vimeo'
 		color: '#27a6d1'
 		social: true
-	github:
-		text: 'Github'
-		url: 'https://github.com/balupton'
-		title: 'View my code on GitHub'
-		color: 'black'
-		social: true
-	gh: 'github'
-	g: 'github'
-	instagram:
-		text: 'Instagram'
-		url: 'https://www.instagram.com/balupton/'
-		title: 'View my photos on Instagram'
-		color: 'rgb(148, 125, 98)'
-		social: true
-	couchsurfing:
-		text: 'Couchsurfing'
-		url: 'http://couchsurfing.com/people/balupton'
-		title: 'View my profile on Couchsurfing'
-		color: '#ed6542'
-		social: true
-	couch: 'couchsurfing'
-	couchsurfer: 'couchsurfing'
-	runkeeper:
-		text: 'Runkeeper'
-		url: 'https://runkeeper.com/user/balupton'
-		title: 'Encourage me on Runkeeper'
-		color: '#31a4d9'
-		social: true
-	linkedin:
-		text: 'LinkedIn'
-		url: 'https://www.linkedin.com/in/balupton'
-		title: 'View my profile on LinkedIn'
-		color: '#0083B3'
-		social: true
-	resume: 'linkedin'
-	cv:
-		text: 'Curriculum Vitae.'
-		url: 'https://www.linkedin.com/profile/pdf?id=AAEAAADwTV8B0oqoFzDk_1ijrb9zx5Dvsaq1-u8&pdfFileName=BenjaminLupton'
-		title: 'Download my CV from LinkedIn'
-	keybase:
-		text: 'Keybase'
-		url: 'https://keybase.io/balupton'
-		title: 'View my identity on Keybase'
-		color: '#ff6f21'
-		social: true
-	goodreads:
-		text: 'Goodreads'
-		url: 'https://goodreads.com/balupton'
-		title: 'Discover the books I read on Goodreads'
-		color: '#382110'
-		social: true
-	soundcloud:
-		text: 'SoundCloud'
-		url: 'https://soundcloud.com/balupton'
-		title: 'Listen to the music I like and make on SoundCloud;'
-		color: '#f50'
-		social: true
-	alternativeto:
-		text: 'AlternativeTo'
-		url: 'http://alternativeto.net/user/balupton/'
-		title: 'Discover the Apps and Services I use on AlternativeTo.net'
-		color: '#5581A6'
+	wishlist:
+		text: 'Wishlist'
+		url: "http://amzn.com/w/2F8TXKSNAFG4V?tag=#{amazonCode}"
+		title: 'Buy me something on my Amazon Wishlist'
+		color: 'rgb(228, 121, 17)'
 		social: true
 
 	# Sustainability
@@ -994,6 +978,18 @@ links =
 		url: 'https://drive.google.com/drive/folders/0B6MqiLy7C3PhZ196SHVSQ2MxU00'
 		title: "The contract templates I've used with success for my consulting engagements"
 	contract: 'contracts'
+	
+	# Shotcuts
+	gh: 'github'
+	g: 'github'
+	t: 'twitter'
+	couch: 'couchsurfing'
+	couchsurfer: 'couchsurfing'
+	resume: 'linkedin'
+	cv:
+		text: 'Curriculum Vitae.'
+		url: 'https://www.linkedin.com/profile/pdf?id=AAEAAADwTV8B0oqoFzDk_1ijrb9zx5Dvsaq1-u8&pdfFileName=BenjaminLupton'
+		title: 'Download my CV from LinkedIn'
 
 	# Recommendations
 	'porn-generation':
