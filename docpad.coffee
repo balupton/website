@@ -792,6 +792,8 @@ links =
 		url: 'https://jordanbpeterson.community/youtube/'
 		title: 'I co-host the Jordan B Peterson Community channel on YouTube, we do weekly summary sessions of the discussions that happened earlier in the week'
 	jbpvids: 'jbpyoutube'
+	podcast: 'jbpyoutube'
+	podcaster: 'jbpyoutube'
 	quantitativepsychology:
 		text: 'Quantitative Psychology'
 		url: 'https://en.wikipedia.org/wiki/Quantitative_psychology'
