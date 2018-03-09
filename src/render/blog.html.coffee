@@ -6,8 +6,6 @@ menuTitle: 'View articles'
 menuOrder: 3
 ###
 
-###
-@TODO FIX THIS, LINKS ARE 404'ing
 # Post Listing
 posts = []
 for document in @getCollection('posts').toJSON()
@@ -16,7 +14,6 @@ if posts.length
 	text @partial 'content/document-list.html.coffee', {
 		documents: posts
 	}
-###
 
 # Medium Listing
 entries = []
