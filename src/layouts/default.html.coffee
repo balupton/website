@@ -34,8 +34,6 @@ html lang: 'en', ->
 
 		# Styles
 		text  @getBlock('styles').add(@site.styles).toHTML()
-		link rel: 'stylesheet', href: "/styles/style.css?v=#{@site.version}", media: 'screen, projection'
-		link rel: 'stylesheet', href: "/styles/print.css?v=#{@site.version}", media: 'print'
 	body ->
 		# Heading
 		header '.heading', ->

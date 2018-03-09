@@ -2,7 +2,6 @@
 # Misc Configuration
 
 # Prepare
-version = require('./package.json').version
 githubClientId = process.env.BEVRY_GITHUB_CLIENT_ID
 githubClientSecret = process.env.BEVRY_GITHUB_CLIENT_SECRET
 githubAuthString = "client_id=#{githubClientId}&client_secret=#{githubClientSecret}"
@@ -251,7 +250,7 @@ links =
 		title: 'Use Circle to track and limit your internet usage over any device'
 		color: '#00b7d9'
 		referral: true
-	
+
 	# Links
 	peac:
 		text: 'PEAC'
@@ -811,7 +810,7 @@ links =
 		text: 'Intimate Partner Violence against Men'
 		url: 'https://www.researchgate.net/publication/51571741_Symptoms_of_Posttraumatic_Stress_Disorder_in_Men_Who_Sustain_Intimate_Partner_Violence_A_Study_of_Helpseeking_and_Community_Samples'
 		title: '25-50% of intimate partner violence victims are men, and men are more likely to develop PTSD from such encounters'
-		
+
 	# Posts
 	'2017ssgs':
 		text: "2017's Generation of Static Site Generators"
@@ -978,7 +977,7 @@ links =
 		url: 'https://drive.google.com/drive/folders/0B6MqiLy7C3PhZ196SHVSQ2MxU00'
 		title: "The contract templates I've used with success for my consulting engagements"
 	contract: 'contracts'
-	
+
 	# Shotcuts
 	gh: 'github'
 	g: 'github'
@@ -1070,7 +1069,6 @@ module.exports =
 	templateData:
 		# Site Data
 		site:
-			version: version
 			url: "https://balupton.com"
 			title: "Benjamin Lupton"
 			author: "Benjamin Lupton"
@@ -1115,12 +1113,15 @@ module.exports =
 			socialLinks: socialLinks
 			referralLinks: referralLinks
 
-			styles: []  # embedded in layout
+			styles: [
+				"//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css"
+				"/styles/style.css"
+			]
 
-			scripts: """
-				//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.slim.min.js
-				/scripts/script.js?v=#{version}
-				""".trim().split('\n')
+			scripts: [
+				"//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"
+				"/scripts/script.js"
+			]
 
 			feeds: [
 					href: 'http://feeds.feedburner.com/balupton.atom'
