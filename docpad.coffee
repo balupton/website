@@ -10,6 +10,12 @@ projects = []
 reposGetter = null
 links =
 	# Referrals
+	brave:
+		text: 'Brave'
+		url: 'https://brave.com/bal467'
+		title: 'Use Brave Browser as a secure and privacy focused replacement for Google Chrome'
+		color: '#ff401e'
+		referral: true
 	patreonref:
 		text: 'Patreon'
 		url: 'https://patreon.com/invite/pbqzz'
