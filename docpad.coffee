@@ -10,6 +10,12 @@ projects = []
 reposGetter = null
 links =
 	# Referrals
+	earn:
+		text: 'Earn.com'
+		url: 'https://earn.com/balupton/referral/?a=jj1ifwhour6qsw1d'
+		title: 'Use Earn.com to setup a paid email inbox, where people pay to email you'
+		color: '#d6a156'
+		referral: true
 	brave:
 		text: 'Brave'
 		url: 'https://brave.com/bal467'
