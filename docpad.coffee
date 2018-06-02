@@ -40,24 +40,6 @@ links =
 		title: 'Use Backblaze for unlimited and automated cloud backups of your computer and drives'
 		color: '#990000'
 		referral: true
-	wirex:
-		text: 'Wirex'
-		url: 'https://app.wirexapp.com/join/gSPGAXe7_EOtVw3hNfaHtA'
-		title: 'Use Wirex for your virtual and physical cryptocurrency cards'
-		color: '#3fb1ab'
-		referral: true
-	tradingview:
-		text: 'TradingView'
-		url: 'http://tradingview.go2cloud.org/aff_c?offer_id=2&aff_id=4529'
-		title: 'Use TradingView for all your trading insights'
-		color: '#3BB3E4'
-		referral: true
-	drivewealth:
-		text: 'DriveWealth'
-		url: 'https://drivewealth.com/refer?r=A74082&name=Benjamin'
-		title: 'Use DriveWealth to invest in USA companies, even if you live outside of the USA'
-		color: '#FEC108'
-		referral: true
 	bonsai:
 		text: 'Bonsai'
 		url: 'https://app.hellobonsai.com/invite/fd7b3daf'
@@ -130,17 +112,53 @@ links =
 		title: 'Use TransferWise to avoid international transfer fees'
 		color: '#223049'
 		referral: true
+	tradingview:
+		text: 'TradingView'
+		url: 'http://tradingview.go2cloud.org/aff_c?offer_id=2&aff_id=4529'
+		title: 'Use TradingView for all your trading insights'
+		color: '#3BB3E4'
+		referral: true
+	drivewealth:
+		text: 'DriveWealth'
+		url: 'https://drivewealth.com/refer?r=A74082&name=Benjamin'
+		title: 'Use DriveWealth to invest in USA companies, even if you live outside of the USA'
+		color: '#FEC108'
+		referral: true
+	wirex:
+		text: 'Wirex'
+		url: 'https://app.wirexapp.com/join/gSPGAXe7_EOtVw3hNfaHtA'
+		title: 'Use Wirex for your virtual and physical cryptocurrency cards'
+		color: '#3fb1ab'
+		referral: true
 	coinbase:
 		text: 'Coinbase'
 		url: 'https://www.coinbase.com/join/516032d5fc3baa863b000010'
-		title: 'Use Coinbase to exchange, send and receive bitcoin'
+		title: 'Use Coinbase to exchange, send and receive cryptocurrency'
 		color: '#2B71B1'
 		referral: true
-	circlefinance:
+	circle:
 		text: 'Circle Finance'
 		url: 'https://www.circle.com/invite/DTIKU0'
-		title: 'Use Circle Finance to exchange, send and receive bitcoin'
+		title: 'Use Circle Finance to exchange, send and receive cryptocurrency'
 		color: '#aacc38'
+		referral: true
+	luno:
+		text: 'Luno'
+		url: 'https://www.luno.com/invite/CM6NT'
+		title: 'Use Luno to exchange, send and receive cryptocurrency'
+		color: '#0091ff'
+		referral: true
+	cex:
+		text: 'Luno'
+		url: 'https://cex.io/r/0/up107824702/0/'
+		title: 'Use CEX to trade cryptocurrency'
+		color: '#00bdca'
+		referral: true
+	quoinex:
+		text: 'Quoinex'
+		url: 'https://accounts.quoinex.com/sign-up?affiliate=v6Qki8rH43648'
+		title: 'Use Quoinex to trade cryptocurrency'
+		color: '#2a9ff8'
 		referral: true
 	surfeasy:
 		text: 'SurfEasy'
@@ -244,6 +262,18 @@ links =
 		title: 'Use Amaysim for your phone plan in Australia'
 		color: '#e65014'
 		referral: true
+	yoodo:
+		text: 'Yoodo'
+		url: 'https://app.yoodo.com.my/assets/index.html#friendInvitation?code=xiifp3656 '
+		title: 'Use Yoodo for your phone plan in Malaysia'
+		color: '#e73c50'
+		referral: true
+	flexiroam:
+		text: 'Flexiroam'
+		url: 'http://roam.my/VKMG4TS8'
+		title: 'Use Flexiroam for your global roaming needs'
+		color: '#EB1D25'
+		referral: true
 	audiojungle:
 		text: 'Audio Jungle'
 		url: 'http://audiojungle.net/?ref=balupton'
@@ -256,7 +286,7 @@ links =
 		title: 'Use Theme Forest to purchase themes for websites'
 		color: '#7bc4c4'
 		referral: true
-	circle:
+	circleinternet:
 		text: 'Circle'
 		url: 'http://mbsy.co/dSfLv'
 		title: 'Use Circle to track and limit your internet usage over any device'
