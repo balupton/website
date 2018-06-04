@@ -581,6 +581,10 @@ links =
 		text: 'Bibbulmum Track'
 		url: 'https://www.bibbulmuntrack.org.au'
 		title: 'The Bibbulmun Track is one of the world’s great long distance walk trails, stretching 1000km from Kalamunda in the Perth Hills, to Albany on the south coast, winding through the heart of the scenic South West of Western Australia.'
+	bladelyf:
+		text: 'Bladelyf by Frenchy and the Talent'
+		url: 'https://www.youtube.com/watch?v=GduphPDJvJQ'
+		title: 'Music video about Rollerblading in Australia'
 	tafe:
 		text: 'Central TAFE'
 		url: 'https://central.wa.edu.au/aboutus/'
