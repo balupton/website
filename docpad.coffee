@@ -142,6 +142,12 @@ links =
 		title: 'Use Circle Finance to exchange, send and receive cryptocurrency'
 		color: '#aacc38'
 		referral: true
+	coinseed:
+		text: 'Coinseed'
+		url: 'https://coinseed.app.link/lnFvVQzVzN'
+		title: 'Use Coinseed to diversify your cryptocurrency investments'
+		color: '#2a9d31'
+		referral: true
 	luno:
 		text: 'Luno'
 		url: 'https://www.luno.com/invite/CM6NT'
