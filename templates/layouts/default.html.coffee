@@ -1,85 +1,101 @@
-###
-title: 'Benjamin Lupton'
-###
+'use strict'
 
-# Prepare
-documentTitle = @getPreparedTitle()
+const h = require('hyperscript')
 
-# HTML
-doctype 5
-html lang: 'en', ->
-	head ->
-		# Standard
-		meta charset: 'utf-8'
-		meta 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1'
-		meta 'http-equiv': 'content-type', content: 'text/html; charset=utf-8'
-		meta name: 'viewport', content: 'width=device-width, initial-scale=1'
-		text  @getBlock('meta').toHTML()
+const renderLink = require('../partials/link')
+const renderContact = require('../partials/contact')
 
-		# Feed
-		for feed in @site.feeds
-			link
-				href: h feed.href
-				title: h feed.title
-				type: (feed.type or 'application/atom+xml')
-				rel: 'alternate'
+module.exports = function defaultLayout (data) {
 
-		# SEO
-		title documentTitle
-		meta name: 'title', content: documentTitle
-		meta name: 'author', content: @getPreparedAuthor()
-		meta name: 'email', content: @getPreparedEmail()
-		meta name: 'description', content: @getPreparedDescription()
-		meta name: 'keywords', content: @getPreparedKeywords()
+	const { site, document, feeds, links, menu, currentURL } = data
+	const { url, datePublished, title, author, description, keywords, content } = document
 
-		# Styles
-		text  @getBlock('styles').add(@site.styles).toHTML()
-	body ->
-		# Heading
-		header '.heading', ->
-			a href:'/', title:'Return home', ->
-				h1 -> @site.text.heading
-				span '.heading-avatar', ->
-			h2 -> @site.text.subheading
+	return (
+		'<!DOCTYPE html>' +
+		h('html', { lang: 'en' }, [
+			h('head', [
+				h('meta', { charset: 'utf-8' }),
+				h('meta', { 'http-equiv': 'X-UA-Compatible', 'content': 'IE=edge,chrome=1' }),
+				h('meta', { 'http-equiv': 'content-type', 'content': 'text/html; charset=utf-8' }),
+				h('meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }),
 
-		# Pages
-		nav '.pages', ->
-			ul ->
-				for page in @getCollection('pages').toJSON()
-					pageMatch = page.match or page.url
-					documentMatch = @document.match or @document.url
-					cssname = if documentMatch.indexOf(pageMatch) is 0 then 'active' else 'inactive'
-					li 'class':cssname, ->
-						a href:page.url.replace(/[/]+$/, '') + '/', title:page.menuTitle, ->
-							page.menuText or page.name
+				h('title', title),
 
-		# Document
-		article '.page',
-			'typeof': 'sioc:page'
-			about: @document.url
-			datetime: @document.date.toISOString()
-			-> @content
+				/* @todo prepared template helpers */
+				h('meta', { name: 'title', content: title }),
+				h('meta', { name: 'author', content: author }),
+				h('meta', { name: 'description', content: description }),
+				h('meta', { name: 'keywords', content: keywords }),
 
-		# Footing
-		footer '.footing', ->
-			div '.about', -> @site.text.about
-			div '.copyright', -> @site.text.copyright
+				h('link', { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' }),
+				h('link', { rel: 'stylesheet', href: '/styles/style.css' }),
 
-		# Sidebar
-		aside '.sidebar', ->
-			section ".links", ->
-				for item in @site.socialLinks
-					h1 -> @link(item.code)
+				feeds.map(
+					({ href, title }) =>
+						h('link', {
+							href,
+							title,
+							type: 'application/atom+xml',
+							rel: 'alternate'
+						})
+				)
+			]),
 
-		# Scripts
-		text @getBlock('scripts').add(@site.scripts).toHTML()
+			h('body', [
+				h('header.heading', [
+					h('a', { href: '/', title: 'Return home' }, [
+						h('h1', site.text.heading),
+						h('span.heading-avatar')
+					]),
+					h('h2', site.text.subheading)
+				]),
+				h('nav.pages', [
+					h('ul',
+						menu.map(({ url, title, text }) =>
+							h('li', { class: url === currentURL ? 'active' : 'inactive' }, [
+								h('a', { href: url, title }, text)
+							])
+						)
+					)
+				]),
 
-		# Modals
-		aside '.modal.referrals.hide', ->
-			section ".links", ->
-				for item in @site.referralLinks
-					h3 -> @link(item.code, item.title)
+				h('article.page', {
+					typeof: 'soic:page',
+					about: url,
+					datetime: datePublished.toISOString()
+				}, content),
 
-		aside '.modal.contact.hide', -> @partial('content/contact')
+				h('footer.footing', [
+					h('div.about', site.text.about),
+					h('div.copyright', site.text.copyright)
+				]),
 
-		aside '.modal.backdrop.hide', ->
+				h('aside.sidebar', [
+					h('section.links', links
+						.filter((link) => link.social)
+						.map((link) =>
+							h('h1', renderLink(link))
+						)
+					)
+				]),
+
+				h('script', { defer: true, src: '//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js' }),
+				h('script', { defer: true, src: '/scripts/script.js' }),
+
+				h('aside.modal.referrals.hide', [
+					h('section.links', links
+						.filter((link) => link.referral)
+						.map((link) =>
+							h('h3', renderLink(link, link.title))
+						)
+					)
+				]),
+
+				h('aside.modal.contact.hide', renderContact()),
+
+				h('aside.modal.backdrop.hide')
+
+			])
+		]).outerHTML
+	)
+}

@@ -1,13 +1,19 @@
-###
-layout: default
-###
+'use strict'
 
-# Title
-if @document.title
-	header '.page-header', ->
-		a href: @document.url, ->
-			h1 property: 'dcterms:title', ->
-				@document.title
+const h = require('hyperscript')
 
-# Content
-div '.page-content', property: 'sioc:content', -> @content
+module.exports = function pageLayout (data) {
+	const { document } = data
+	const { title, url, content } = document
+
+	return [
+		document.title
+			? h('header.page-header', [
+				h('a', { href: url }, [
+					h('h1', { property: 'dcterms:title' }, title)
+				])
+			])
+			: '',
+		h('div.page-content', { property: 'soic:content' }, content)
+	]
+}
