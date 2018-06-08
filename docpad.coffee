@@ -136,6 +136,12 @@ links =
 		title: 'Use Coinbase to exchange, send and receive cryptocurrency'
 		color: '#2B71B1'
 		referral: true
+	benco:
+		text: 'Ben.co'
+		url: 'https://ben.onelink.me/kTE6/9181c018'
+		title: 'Use Ben.co to exchange, send and receive cryptocurrency'
+		color: '#1f6473'
+		referral: true
 	circle:
 		text: 'Circle Finance'
 		url: 'https://www.circle.com/invite/DTIKU0'
