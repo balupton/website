@@ -1,8 +1,7 @@
 ---
 title: Lets create a receipe for sustainable open-source projects!
-layout: post
-tags: [life,rant]
-date: '2012-12-14'
+tags: life, rant
+date: 2012-12-14
 ---
 
 The [uproar](https://twitter.com/dhh/status/278615042679783424) between @dhh and @ryanbigg on twitter the other day go me thinking.
@@ -27,7 +26,7 @@ To the uninitiated, intrinsic value is when you draw enjoyment from the task its
 
 Open-Source projects seem to maintained in three ways:
 
-1. For intrinsic value 
+1. For intrinsic value
 2. For extrinsic value
 3. As a side effect of another project that meets either 1 or 2
 

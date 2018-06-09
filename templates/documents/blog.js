@@ -1,48 +1,23 @@
-###
-title: 'Articles'
-layout: 'page'
-menuText: 'blog'
-menuTitle: 'View articles'
-menuOrder: 3
-###
+'use strict'
 
-# Posts
-posts = []
+const h = require('hyperscript')
 
-## Local
-for document in @getCollection('posts').toJSON()
-	posts.push(document)
+const renderDocumentListing = require('../partials/document-list.js')
 
-## Medium
-for entry in @feedr.feeds['medium']?.channel?.item or []
-	posts.push(
-		title: entry.title
-		url: entry.link
-		date: new Date(entry.pubDate)
-	)
+module.exports = function renderBlog (data) {
 
-## Render
-if posts.length isnt 0
-	text @partial('content/document-list.html.coffee', {
-		documents: posts.sort((a,b) -> b.date.getTime() - a.date.getTime())
-	})
+	const { site, articles, gists } = data
 
-# Gist Listing
-gists = []
-for gist in @feedr.feeds['github-gists'] or []
-	continue if gist.public isnt true
-	gists.push(
-		title: gist.description
-		url: gist.html_url
-		date: new Date(gist.created_at)
-		comments: gist.comments
-	)
-if gists.length isnt 0
-	section '.gists', ->
-		a href:'https://gist.github.com/balupton', ->
-			h1 ->
-				'Gists'
-		# p 'My everyday worthwhile technical snippets and guides'
-		text @partial('content/document-list.html.coffee', {
-			documents: gists
-		})
+	return [
+		renderDocumentListing({
+			documents: articles
+		}),
+		h('section.gists', [
+			h('a', { href: 'https://gist.github.com/balupton' }, [
+				h('h1', 'Gists')
+			]),
+			renderDocumentListing({
+				documents: gists
+			})
+		])
+	]

@@ -1,8 +1,7 @@
 ---
-title: 'My Life/Project Management Environment'
-layout: post
-tags: [life,management]
-date: '2011-05-26'
+title: My Life/Project Management Environment
+tags: life, management
+date: 2011-05-26
 ---
 
 ## The Tools
@@ -196,7 +195,7 @@ date: '2011-05-26'
 	- Get straight to work
 
 		- I do this if I wake up energised and ready for action, or if I have a brain spark in the shower
-	
+
 	- Have breakfast
 
 		- Yoghurt and Museli
@@ -217,27 +216,27 @@ date: '2011-05-26'
 		- Apply for houses
 		- Call apple, find out about iMac
 		- Work on filepad
-	
+
 	- It is called Daily Todo for a reason
-		
+
 		- It is only for things that can be done within one day
 		- If anything needs doing, it is added to that list in the correct order of priority
 		- I can add tasks anytime, even when I am in bed trying to sleep
 		- If someone interupts me and requires me to do a task, I add it to the list, rather than doing it now (unless that task overtook the current most important task)
 		- I frown upon interuptions, I have no email or sms notifications. People who interrupt me will get told to send an email instad, unless it is life or death then don't interrupt me. After much yelling from my girlfriend, I now have my phone vibrate at least when people try and call me.
-	
+
 	- What if I have a task that takes longer than a day?
 		- Break it up into smaller tasks
-	
+
 	- What if a task is not due today or tomorrow?
 		- If it has a date and time when it must be done, add it to your calendar
 		- If it doesn't have a date or time to be done, add it to simplenote under it's own note, or under something like "3 Month Plan"
-	
+
 	- Why this system?
 		- People tend to focus and pile-up on tasks which are actually not important. Instead focus on the tasks that will get you the maximum result out of that day.
 		- Adding more tasks than those that can be completed in a day, is just causing a never-ending todo list - which means stress and the feeling of staleness and inadequacy. At the end of the day you want to have crossed everything (or at least most) of the things off that list, this means you will feel happy that you accomplished so much, that you are accomplishing things, that you are moving forward! If you didn't cross of everything, review and figure out where you went wrong - why wasn't today effective? Did you plan to high, or did you get interrupted - work to prevent those in the future.
 		- Another nice touch about this is that beacuse Listary syncs with Simplenote, you can review your tasks for each day by sliding through the history on Simple Note. It also works well for proof of what you did that day, or what you worked on, or what you thought of - very valuable in the world of business.
-	
+
 
 - I aim to get 5 hours of __real work__ done a day
 

@@ -2,7 +2,7 @@
 
 const h = require('hyperscript')
 
-module.exports = function postLayout (data) {
+module.exports = function renderPostLayout (data) {
 	const { document } = data
 	const { title, url, content, datePublished } = document
 
@@ -19,25 +19,5 @@ module.exports = function postLayout (data) {
 			: '',
 
 		h('div.page-content', { property: 'soic:content' }, content)
-
-		/*
-		h('footer.page-footer', [
-			h('section.page-subscribe.social-buttons', renderSocialButtons),
-
-			# Related Posts
-			relatedPosts = []
-			for document in @document.relatedDocuments or []
-			if document.url.indexOf('/blog') is 0 and document.url.indexOf('/blog/index') isnt 0
-			relatedPosts.push(document)
-			if relatedPosts.length
-			section '.related-documents', ->
-			h2 -> 'Related Posts'
-			text @partial 'content/document-list', {
-			documents: relatedPosts
-			}
-
-			h('section.page-comments', renderDisqus())
-		])
-		*/
 	]
 }

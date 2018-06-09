@@ -5,7 +5,7 @@ const h = require('hyperscript')
 const renderLink = require('../partials/link')
 const renderContact = require('../partials/contact')
 
-module.exports = function defaultLayout (data) {
+module.exports = function renderDefaultLayout (data) {
 
 	const { site, document, feeds, links, menu, currentURL } = data
 	const { url, datePublished, title, author, description, keywords, content } = document
@@ -21,11 +21,10 @@ module.exports = function defaultLayout (data) {
 
 				h('title', title),
 
-				/* @todo prepared template helpers */
-				h('meta', { name: 'title', content: title }),
-				h('meta', { name: 'author', content: author }),
-				h('meta', { name: 'description', content: description }),
-				h('meta', { name: 'keywords', content: keywords }),
+				h('meta', { name: 'title', content: title ? `${title} | ${site.title}` : site.title }),
+				h('meta', { name: 'author', content: author || site.author }),
+				h('meta', { name: 'description', content: description || site.description }),
+				h('meta', { name: 'keywords', content: site.keywords.concat(keywords || []).join(', ') }),
 
 				h('link', { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' }),
 				h('link', { rel: 'stylesheet', href: '/styles/style.css' }),
@@ -86,7 +85,7 @@ module.exports = function defaultLayout (data) {
 					h('section.links', links
 						.filter((link) => link.referral)
 						.map((link) =>
-							h('h3', renderLink(link, link.title))
+							h('h3', renderLink(Object.assign({}, link, { text: link.title })))
 						)
 					)
 				]),

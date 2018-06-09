@@ -2,7 +2,7 @@
 
 const h = require('hyperscript')
 
-module.exports = function pageLayout (data) {
+module.exports = function renderPageLayout (data) {
 	const { document } = data
 	const { title, url, content } = document
 

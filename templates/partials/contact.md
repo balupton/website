@@ -12,5 +12,3 @@ I cannot legally sign contracts that may risk contaminating the intellectual rig
 
 ## Donate
 Consider [donating](/donate) and using my [referral links](/referrals).
-
-<%- @getServiceBadges() %>

@@ -1,8 +1,7 @@
 ---
-title: 'What are you in it for?'
-layout: post
-tags: [life,rant]
-date: '2012-12-12'
+title: What are you in it for?
+tags: life, rant
+date: 2012-12-12
 ---
 
 The fame, the glory, the money, the legacy? They're all good things to aim for, but will chasing them bring them to you?

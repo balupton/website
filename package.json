@@ -49,12 +49,37 @@
     "url": "https://github.com/balupton/website.git"
   },
   "engines": {
-    "node": "8",
-    "npm": "5"
+    "node": "10"
   },
+  "editions": [
+    {
+      "description": "Source + ESNext + Require",
+      "directory": ".",
+      "entry": "render.js",
+      "syntaxes": [
+        "javascript",
+        "esnext",
+        "require",
+        "const",
+        "let",
+        "async",
+        "await",
+        "promise",
+        "destructuring",
+        "rest",
+        "spread"
+      ]
+    }
+  ],
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "getrepos": "~1.1.2",
-    "hyperscript": "^2.0.2"
+    "hyperscript": "^2.0.2",
+    "marked": "^0.4.0",
+    "mkdirp": "^0.5.1",
+    "node-fetch": "^2.1.2",
+    "xml2js": "^0.4.19",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "eslint": "^4.19.1",

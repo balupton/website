@@ -1,8 +1,7 @@
 ---
-layout: post
 title: SeaDragon meets the Operating System UI
-tags: [seadragon,photosynth,idea,os]
-date: '2011-02-19'
+tags: seadragon, photosynth, idea, os
+date: 2011-02-19
 ---
 
 This is an idea that I've had for years (going back during the Windows XP days and speculation on the Windows Vista features).

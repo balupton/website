@@ -1,7 +1,6 @@
 ---
-layout: 'post'
-title: '2011 in Recap'
-date: '2012-01-09'
+title: 2011 in Recap
+date: 2012-01-09
 ---
 
 ## 2010 in Quick Recap

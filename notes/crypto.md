@@ -330,14 +330,14 @@ These wallets are more or less identical:
 * [B Umbrella](https://bumbrella.org) - Private security Uber-style decentralized app
 * [Baanx](https://baanx.com) - Allows anyone to create their own bank
 * [Bancor](https://bancor.network) - ETH based. Bancor is an open-sourced technology who's purpose is to make creation of cryptocurrencies (tied to bigger chains like ETH) extremely easy.
-* [BEXT360](https://bext360.com) - ETH based. Machine that analyses (photographs) and bids on coffee berries in field. If farmer agrees on price, transaction is done instantly 
+* [BEXT360](https://bext360.com) - ETH based. Machine that analyses (photographs) and bids on coffee berries in field. If farmer agrees on price, transaction is done instantly
 * [BitClave](https://www.bitclave.com/en/) - Decentralized search engine where you choose what you share with advertisers and get paid for doing so
 * [Bitconnect](https://bitconnect.co) - [Ponzi](https://en.wikipedia.org/wiki/Bitconnect)
 * [Bitland](http://bitland.world) - Land registration on the blockchain
 * [Bitnation](https://bitnation.co) - A decentralized governance platform
 * [Bloq](https://www.bloq.com) - BTC based. Redhat to Bitcoin, ex-BTC-coredev is on it
 * [Blue Frontiers](https://www.blue-frontiers.com/en/) - Seasteading Institute internal currency for seastead nations
-* [Braveno](https://braveno.com)			
+* [Braveno](https://braveno.com)
 * [Changelly](https://changelly.com) - Exchange
 * [DCorp](https://www.dcorp.it) - ETH based. Decentralized derivatives, futures, and options (run as a DAO I believe)
 * [Dfinity](https://dfinity.network) - ETH based. Sister to ETH network (uses EVM code), B2B, decentralized?
@@ -358,7 +358,7 @@ These wallets are more or less identical:
 * [NameCoin](https://namecoin.org) - BTC based. Distributed DNS & other stuff
 * [Neo](https://neo.org) - NEO is a non-profit community-based blockchain project that utilizes blockchain technology and digital identity to digitize assets, to automate the management of digital assets using smart contracts, and to realize a "smart economy" with a distributed network.
 * [Nxt](https://nxt.org) - Has a NXT coin, which is a cryptocurrency used as a platform for building apps & personal crypto-currencies. Is a semi-closed-source project with backdoors.
-* [Opiria](https://opiria.io) - Creates a GDPR-compliant B2C marketplace for personal data, allowing you to sell it in exchange for PDATA tokens 
+* [Opiria](https://opiria.io) - Creates a GDPR-compliant B2C marketplace for personal data, allowing you to sell it in exchange for PDATA tokens
 * [PolkaDot](https://polkadot.network) - A multi-chain framework to support many different public & private blockchains & make them interoperable (and more scalable).
 * [Project Safe](https://project.safe) - Essentially an encrypted harddrive to store all your data
 * [Rouleth](https://rouleth.com) - ETH based. Lets you play Roulette with your ETH
@@ -369,7 +369,7 @@ These wallets are more or less identical:
 * [SingularDTV](https://singulardtv.com) - ETC based. Netflix on the Blockchain
 * [Storj](https://storj.io) - Distributed storage
 * [Stox](https://stox.com) - ETH based. Stox is an open source, Bancor based prediction market platform
-* [Synereo](https://www.synereo.com) - Synereo offers blockchain-enabled Attention Economy solutions, allowing direct and platform agnostic monetization of original content posted anywhere on the net.	
+* [Synereo](https://www.synereo.com) - Synereo offers blockchain-enabled Attention Economy solutions, allowing direct and platform agnostic monetization of original content posted anywhere on the net.
 * [Teambrella](https://teambrella.com) - P2P Insurance
 * [Tezos](https://www.tezos.com) - New form of blockchain scheme that aims to decentralize away from both miners and core devs, and instead make it kind of a bid-on-forks model?
 * [Ujo Music](https://ujomusic.com) - ETH based. A ConsenSys Project - Removes all the middlemen of the music industry, allowing artists to have complete ownership of their own music. Possible basis for using blockchain to secure rights to digital products?

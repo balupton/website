@@ -1,25 +1,22 @@
-###
-title: 'Projects'
-layout: 'page'
-menuText: 'projects'
-menuTitle: 'View projects'
-menuOrder: 2
-###
+'use strict'
 
-# Prepare
-projects = @getProjects()
-githubCounts = @getGithubCounts()
+const h = require('hyperscript')
 
-# Check
-if projects.length
-	# List
-	text @partial 'content/project-list.html.coffee', {
-		projects: projects
-	}
+const renderProjectListing = require('../partials/project-list.js')
 
-	# Facts
-	h3 'Totals'
-	ul ->
-		li -> "Projects: #{projects.length}"
-		li -> "Stars: #{githubCounts.stars}"
-		li -> "Forks: #{githubCounts.forks}"
+module.exports = function renderBlog (data) {
+
+	const { projects, stats } = data
+
+	return [
+		renderProjectListing({
+			projects
+		}),
+		h('h3', 'Totals'),
+		h('ul', [
+			h('li', `Projects: ${projects.length}`),
+			h('li', `Stars: ${stats.githubStars}`),
+			h('li', `Forks: ${stats.githubForks}`)
+		])
+	]
+}

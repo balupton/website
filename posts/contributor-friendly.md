@@ -1,13 +1,8 @@
-### coffee
-title: "Contributor Friendly"
-date: '2011-06-26'
-layout: 'post'
-tags: '''
-	coding programming standards guidelines community opensource licensing
-	'''
-###
-
-<%-@document.description%>
+---
+title: Contributor Friendly
+date: 2011-06-26
+tags: coding programming standards guidelines community opensource licensing
+---
 
 ## At the very least
 
