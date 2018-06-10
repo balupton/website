@@ -1286,9 +1286,12 @@ Object.keys(linksMap).forEach(function prepareLink (code) {
 		linksMap[code] = linksMap[link]
 	}
 	else {
+		const prepared = Boolean(link.code)
 		link.code = code
+		if (!prepared) {
+			linksArray.push(linksMap[code])
+		}
 	}
-	linksArray.push(linksMap[code])
 })
 
 module.exports = {

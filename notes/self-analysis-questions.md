@@ -1,5 +1,6 @@
 ---
 title: Self Analysis Questions
+date: 1937-01-01
 ---
 
 > These are the questions from [Napoleon Hill's Think and Grow Rich: Chapter 15: How to Outwit the Six Ghosts of Fear](http://www.sacred-texts.com/nth/tgr/tgr20.htm)

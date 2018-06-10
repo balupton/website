@@ -1,7 +1,6 @@
 ---
 title: Electric Bikes
 date: 2018-06-02
-published: true
 ---
 
 Note that international shipping will likely be an additional $600 to $1000 for small bikes, and more for bigger bikes.

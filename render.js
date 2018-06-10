@@ -1,4 +1,4 @@
-/* eslint no-confusing-arrow:0 */
+/* eslint no-confusing-arrow:0 no-use-before-define:1 */
 'use strict'
 
 const pathUtil = require('path')
@@ -6,42 +6,97 @@ const fsUtil = require('fs')
 const fs = require('fs').promises
 
 const yamljs = require('yamljs')
+const docmatter = require('docmatter')
 const xml2js = require('xml2js')
 const marked = require('marked')
 const cheerio = require('cheerio')
 const fetch = require('node-fetch')
 const mkdirp = require('mkdirp')
+const cpr = require('cpr')
+
+const renderDefaultLayout = require('./templates/layouts/default.js')
+const renderPageLayout = require('./templates/layouts/page.js')
+const renderPostLayout = require('./templates/layouts/post.js')
+
+const links = require('./data/links.js')
+const site = require('./data/site.js')
+const menu = require('./data/menu.js')
+const feeds = require('./data/feeds.js')
 
 const cachedir = pathUtil.join(__dirname, 'cache')
+const outdir = pathUtil.join(__dirname, 'out')
+const rawdir = pathUtil.join(__dirname, 'raw')
+
 
 const githubClientId = process.env.BEVRY_GITHUB_CLIENT_ID
 const githubClientSecret = process.env.BEVRY_GITHUB_CLIENT_SECRET
 const githubAuthString = `client_id=${githubClientId}&client_secret=${githubClientSecret}`
 
-mkdirp.sync(cachedir)
+function renderElements (html) {
+	const $ = cheerio.load(html)
+	$('x-text').each(function (index, element) {
+		const $el = $(element)
+		const code = $el.attr('code')
+		$el.replaceWith(database[code])
+	})
+	$('x-link').each(function (index, element) {
+		const $el = $(element)
+		const code = $el.attr('code')
+		const title = $el.attr('title')
+		const text = $el.text()
+		const link = links.map[code]
+		const $a = $('<a>')
+			.attr('title', title || link.title || '')
+			.attr('href', link.url || '')
+			.attr('class', link.class || '')
+			.attr('color', link.color || '')
+			.text(text || link.text || '')
+		$el.replaceWith($a)
+	})
+	return $.html()
+}
 
-function parseDocument (content) {
-	// https://github.com/docpad/docpad/blob/b1a11c7ef9829693bcfc2e485b7ca5ed9fc1e81d/src/lib/models/document.coffee#L203-L292
-	const regex = /^\s*[^\n]*?(([^\s\d\w])\2{2,})(?:\x20*([a-z]+))?([\s\S]*?)[^\n]*?\1[^\n]*/
-	const match = regex.exec(content.replace(/\r\n?/gm, '\n'))
-	if (match) {
-		// const seperator = match[1]
-		const parser = match[3] || 'yaml'
-		const header = match[4].trim()
-		const body = content.substring(match[0].length).trim()
-		if (parser === 'yaml') {
-			const data = yamljs.parse(header)
-			data.content = body
-			return data
-		}
-		else {
-			throw new Error('unknown parser')
-		}
-	}
-	else {
-		throw new Error('unknown document format')
-	}
+function makeDirectory (path) {
+	return new Promise(function (resolve, reject) {
+		mkdirp(path, function (err, made) {
+			if (err) return reject(err)
+			resolve(made)
+		})
+	})
+}
 
+function copyDirectory (source, target) {
+	return new Promise(function (resolve, reject) {
+		cpr(source, target, { deleteFirst: true, overwrite: true, confirm: true }, function (err, files) {
+			if (err) return reject(err)
+			resolve(files)
+		})
+	})
+}
+
+function writeFile (path, content) {
+	return makeDirectory(pathUtil.dirname(path)).then(() => fs.writeFile(path, content))
+}
+
+function parseDocument (input) {
+	const matter = docmatter(input)
+
+	// if no front matter: {content}
+	if (!matter.header) return { content: matter.content.trim() }
+
+	// if front matter: {delimiter, parser, header, body, content}
+	let data = null
+	switch (matter.parser || 'yaml') {
+		case 'yaml':
+			data = yamljs.parse(
+				matter.header.replace(/\t/g, '    ')  // YAML doesn't support tabs that well
+			)
+			break
+
+		default:
+			throw new Error('unsupport front matter')
+	}
+	return { data, content: matter.body.trim() }
 }
 
 function parseXML (xml) {
@@ -150,7 +205,24 @@ function getRank (list) {
 	return index === -1 ? Promise.reject('could not find me in the listing') : Promise.resolve(index + 1)
 }
 
-function renderDirectory (directory, developerMetadata) {
+async function renderFragments (directory) {
+	const dir = pathUtil.join(__dirname, directory)
+	const results = {}
+	await fs.readdir(dir)
+		.then((files) => Promise.all(
+			files
+				.filter((file) => file.endsWith('.md'))
+				.map((file) =>
+					fs.readFile(pathUtil.join(dir, file), 'utf8')
+						.then((text) => {
+							results[file.substr(0, file.length - 3)] = marked(text)
+						})
+				)
+		))
+	return results
+}
+
+function renderDocuments (directory, developerMetadata) {
 	const dir = pathUtil.join(__dirname, directory)
 	return fs.readdir(dir)
 		.then((files) => Promise.all(
@@ -164,7 +236,8 @@ function renderDirectory (directory, developerMetadata) {
 							const data = {
 								title: metadata.title,
 								url: '/' + directory + '/' + file.substr(0, file.length - 3),
-								path: '/' + directory + '/' + file.substr(0, file.length - 3) + '.html',
+								path: pathUtil.join(outdir, '/' + directory + '/' + file.substr(0, file.length - 3) + '/index.html'),
+								keywords: (metadata.keywords || '').split(/[, ]+/),
 								datePublished: new Date(metadata.date),
 								content: marked(metadata.content)
 							}
@@ -210,6 +283,10 @@ const database = {
 		.then((data) => getRank(data.users))
 		.then((reputation) => suffixNumber(reputation)),
 
+	'github-stars': Promise.resolve(0),
+	'github-contributions': Promise.resolve(0),
+	'github-projects': Promise.resolve(0),
+
 	'gists': cache(`https://api.github.com/users/balupton/gists?per_page=100&${githubAuthString}`, 'json'),
 
 	'medium': cache('https://medium.com/feed/ephemeral-living', 'xml')
@@ -222,8 +299,9 @@ const database = {
 			}
 		})),
 
-	'notes': renderDirectory('notes', { layout: 'post' }),
-	'posts': renderDirectory('posts', { layout: 'post' })
+	'notes': renderDocuments('notes', { layout: 'post' }),
+	'posts': renderDocuments('posts', { layout: 'post' }),
+	'fragments': renderFragments('fragments')
 
 }
 
@@ -232,12 +310,34 @@ const database = {
 // github-projects: @getGithubCounts().projects
 
 async function main () {
+	await Promise.all([
+		makeDirectory(cachedir),
+		copyDirectory(rawdir, outdir)
+	])
+
 	const values = await Promise.all(Object.values(database))
 	const data = {}
 	Object.keys(database).forEach(function (key, index) {
 		data[key] = values[index]
 	})
-	console.log(data.notes)
+
+	// console.log(data.fragments)
+	Promise.all(
+		data.notes.concat(data.posts).map((document) =>
+			writeFile(document.path,
+				// renderElements(
+				renderPostLayout({
+					site,
+					feeds,
+					links,
+					menu,
+					fragments: data.fragments,
+					document
+				})
+				// ).outerHTML
+			)
+		)
+	)
 }
 
 main()

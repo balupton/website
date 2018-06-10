@@ -1,7 +1,6 @@
 ---
 title: Crypto
 date: 2018-06-01
-published: true
 ---
 
 ## Resources

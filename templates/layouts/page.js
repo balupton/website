@@ -2,11 +2,14 @@
 
 const h = require('hyperscript')
 
-module.exports = function renderPageLayout (data) {
-	const { document } = data
-	const { title, url, content } = document
+const renderDefaultLayout = require('./default.js')
 
-	return [
+module.exports = function renderPageLayout (data, content) {
+	const { document } = data
+	const { title, url } = document
+	content = content || document.content
+
+	const result = h('div', [
 		document.title
 			? h('header.page-header', [
 				h('a', { href: url }, [
@@ -14,6 +17,8 @@ module.exports = function renderPageLayout (data) {
 				])
 			])
 			: '',
-		h('div.page-content', { property: 'soic:content' }, content)
-	]
+		h('div.page-content', { property: 'soic:content', innerHTML: content })
+	])
+
+	return renderDefaultLayout(data, result)
 }

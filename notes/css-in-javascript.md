@@ -1,7 +1,6 @@
 ---
 title: CSS in Javascript
-date: 2017-03-17T00:00:00.000Z
-published: true
+date: 2017-03-17
 ---
 
 - [Fela](http://fela.js.org) - winner, best docs, community, and ecosystem

@@ -73,6 +73,8 @@
   ],
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "cpr": "^3.0.1",
+    "docmatter": "^1.0.0",
     "getrepos": "~1.1.2",
     "hyperscript": "^2.0.2",
     "marked": "^0.4.0",

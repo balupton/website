@@ -1,7 +1,6 @@
 ---
 title: Databases
-date: 2018-01-16T00:00:00.000Z
-published: true
+date: 2018-01-16
 ---
 
 

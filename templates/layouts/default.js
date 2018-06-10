@@ -3,12 +3,11 @@
 const h = require('hyperscript')
 
 const renderLink = require('../partials/link')
-const renderContact = require('../partials/contact')
 
-module.exports = function renderDefaultLayout (data) {
-
-	const { site, document, feeds, links, menu, currentURL } = data
-	const { url, datePublished, title, author, description, keywords, content } = document
+module.exports = function renderDefaultLayout (data, content) {
+	const { site, document, feeds, links, menu, fragments } = data
+	const { url, datePublished, title, author, description, keywords } = document
+	content = content || document.content
 
 	return (
 		'<!DOCTYPE html>' +
@@ -43,15 +42,15 @@ module.exports = function renderDefaultLayout (data) {
 			h('body', [
 				h('header.heading', [
 					h('a', { href: '/', title: 'Return home' }, [
-						h('h1', site.text.heading),
+						h('h1', { innerHTML: site.text.heading }),
 						h('span.heading-avatar')
 					]),
-					h('h2', site.text.subheading)
+					h('h2', { innerHTML: site.text.subheading })
 				]),
 				h('nav.pages', [
 					h('ul',
 						menu.map(({ url, title, text }) =>
-							h('li', { class: url === currentURL ? 'active' : 'inactive' }, [
+							h('li', { class: url === document.url ? 'active' : 'inactive' }, [
 								h('a', { href: url, title }, text)
 							])
 						)
@@ -65,12 +64,12 @@ module.exports = function renderDefaultLayout (data) {
 				}, content),
 
 				h('footer.footing', [
-					h('div.about', site.text.about),
-					h('div.copyright', site.text.copyright)
+					h('div.about', { innerHTML: site.text.about }),
+					h('div.copyright', { innerHTML: site.text.copyright })
 				]),
 
 				h('aside.sidebar', [
-					h('section.links', links
+					h('section.links', links.array
 						.filter((link) => link.social)
 						.map((link) =>
 							h('h1', renderLink(link))
@@ -82,7 +81,7 @@ module.exports = function renderDefaultLayout (data) {
 				h('script', { defer: true, src: '/scripts/script.js' }),
 
 				h('aside.modal.referrals.hide', [
-					h('section.links', links
+					h('section.links', links.array
 						.filter((link) => link.referral)
 						.map((link) =>
 							h('h3', renderLink(Object.assign({}, link, { text: link.title })))
@@ -90,7 +89,7 @@ module.exports = function renderDefaultLayout (data) {
 					)
 				]),
 
-				h('aside.modal.contact.hide', renderContact()),
+				h('aside.modal.contact.hide', { innerHTML: fragments.contact }),
 
 				h('aside.modal.backdrop.hide')
 
