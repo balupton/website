@@ -18,21 +18,17 @@
 
 ## Getting Started
 
-1. [Install DocPad](http://docpad.org/install)
+This branch is currently under development, as an experiment to see if DocPad can be written as a single node.js script.
 
-1. Clone and run the server
+Things still to do:
 
-	``` bash
-	git clone https://github.com/balupton/website.git balupton-website
-	cd balupton-website
-	npm install
-	docpad run
-	```
-
-1. [Open http://localhost:9778/](http://localhost:9778/)
-
-1. Start hacking away by modifying the `src` directory
-
+1. Decide if layouts should have front matter
+2. Update code for the `source/render` directory
+3. Update code for `filename.toExtension.fromExtension` for rendering
+4. Build in support for rendering javascript to html - pass through docmatter to get the header, then require the file as header is a comment
+5. Rip out the redirect code from [docpad-plugin-cleanurls](https://github.com/docpad/docpad-plugin-cleanurls)
+    1. Implement the redirects in `source/data/docpad.coffee`
+6. Consider moving partials into `source/data`
 
 <!-- LICENSE/ -->
 

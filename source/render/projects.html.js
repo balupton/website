@@ -1,3 +1,6 @@
+/* ***
+layout: page
+*** */
 'use strict'
 
 const h = require('hyperscript')

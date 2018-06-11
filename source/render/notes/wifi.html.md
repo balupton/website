@@ -1,6 +1,6 @@
 ---
 title: 'Wifi, Routers, Modems'
-date: 2018-05-05T00:00:00.000Z
+date: 2018-05-05
 published: true
 ---
 

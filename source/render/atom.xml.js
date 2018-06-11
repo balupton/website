@@ -27,6 +27,6 @@ module.exports = function renderAtomFeed (data) {
 					h('content', { type: 'html' }, content)
 				])
 			)
-		])
+		]).outerHTML
 	)
 }

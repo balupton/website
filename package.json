@@ -72,7 +72,6 @@
     }
   ],
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
     "cpr": "^3.0.1",
     "docmatter": "^1.0.0",
     "getrepos": "~1.1.2",
@@ -80,14 +79,15 @@
     "marked": "^0.4.0",
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.1.2",
+    "ropo": "^1.0.0",
     "xml2js": "^0.4.19",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
     "cloudflare-stout": "^1.3.1-8",
-    "coffeelint": "^2.1.0",
-    "projectz": "^1.4.0"
+    "eslint": "^4.19.1",
+    "projectz": "^1.4.0",
+    "serve": "^8.1.3"
   },
   "scripts": {
     "our:setup": "npm run our:setup:npm",
@@ -103,7 +103,7 @@
     "our:release:prepare": "npm run our:clean && npm run our:compile && npm run our:test && npm run our:meta",
     "our:release:push": "git push origin master && git push origin --tags",
     "my:deploy": "stout deploy --bucket balupton.com --root out",
-    "start": "docpad-server",
-    "test": "docpad generate --silent --env static"
+    "start": "node render.js && serve out",
+    "test": "node render.js"
   }
 }

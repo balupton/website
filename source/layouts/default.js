@@ -2,8 +2,6 @@
 
 const h = require('hyperscript')
 
-const renderLink = require('../partials/link')
-
 module.exports = function renderDefaultLayout (data, content) {
 	const { site, document, feeds, links, menu, fragments } = data
 	const { url, datePublished, title, author, description, keywords } = document
@@ -72,7 +70,9 @@ module.exports = function renderDefaultLayout (data, content) {
 					h('section.links', links.array
 						.filter((link) => link.social)
 						.map((link) =>
-							h('h1', renderLink(link))
+							h('h1',
+								h('x-link', { 'data-code': link.code })
+							)
 						)
 					)
 				]),
@@ -84,7 +84,9 @@ module.exports = function renderDefaultLayout (data, content) {
 					h('section.links', links.array
 						.filter((link) => link.referral)
 						.map((link) =>
-							h('h3', renderLink(Object.assign({}, link, { text: link.title })))
+							h('h3',
+								h('x-link', { 'data-code': link.code }, link.title)
+							)
 						)
 					)
 				]),

@@ -5,7 +5,9 @@ const pathUtil = require('path')
 const fsUtil = require('fs')
 const fs = require('fs').promises
 
+const h = require('hyperscript')
 const yamljs = require('yamljs')
+const { replaceElementSync, extractAttribute } = require('ropo')
 const docmatter = require('docmatter')
 const xml2js = require('xml2js')
 const marked = require('marked')
@@ -18,42 +20,58 @@ const renderDefaultLayout = require('./templates/layouts/default.js')
 const renderPageLayout = require('./templates/layouts/page.js')
 const renderPostLayout = require('./templates/layouts/post.js')
 
-const links = require('./data/links.js')
-const site = require('./data/site.js')
-const menu = require('./data/menu.js')
-const feeds = require('./data/feeds.js')
+const directories = {
+	cache: pathUtil.join(__dirname, 'cache'),
+	out: pathUtil.join(__dirname, 'out'),
+	source: pathUtil.join(__dirname, 'source'),
+	data: pathUtil.join(__dirname, 'source', 'data'),
+	fragments: pathUtil.join(__dirname, 'source', 'fragments'),
+	layouts: pathUtil.join(__dirname, 'source', 'layouts'),
+	partials: pathUtil.join(__dirname, 'source', 'partials'),
+	render: pathUtil.join(__dirname, 'source', 'render'),
+	raw: pathUtil.join(__dirname, 'source', 'raw')
+}
 
-const cachedir = pathUtil.join(__dirname, 'cache')
-const outdir = pathUtil.join(__dirname, 'out')
-const rawdir = pathUtil.join(__dirname, 'raw')
-
+const data = require(directories.data)
 
 const githubClientId = process.env.BEVRY_GITHUB_CLIENT_ID
 const githubClientSecret = process.env.BEVRY_GITHUB_CLIENT_SECRET
 const githubAuthString = `client_id=${githubClientId}&client_secret=${githubClientSecret}`
 
 function renderElements (html) {
-	const $ = cheerio.load(html)
-	$('x-text').each(function (index, element) {
-		const $el = $(element)
-		const code = $el.attr('code')
-		$el.replaceWith(database[code])
+	const result1 = replaceElementSync(html, /x-text/, function (content, { attributes }) {
+		const code = extractAttribute(attributes, 'code')
+		return database[code]
 	})
-	$('x-link').each(function (index, element) {
-		const $el = $(element)
-		const code = $el.attr('code')
-		const title = $el.attr('title')
-		const text = $el.text()
+
+	const result2 = replaceElementSync(result1, /x-link/, function (content, { attributes, inner }) {
+		const code = extractAttribute(attributes, 'code') || extractAttribute(attributes, 'data-code')
 		const link = links.map[code]
-		const $a = $('<a>')
-			.attr('title', title || link.title || '')
-			.attr('href', link.url || '')
-			.attr('class', link.class || '')
-			.attr('color', link.color || '')
-			.text(text || link.text || '')
-		$el.replaceWith($a)
+
+		if (inner && inner.indexOf('x-link') !== -1) {
+			// console.error({ content, inner })
+			throw new Error('unclosed x-link')
+		}
+
+		if (!link) {
+			// console.error({ code, attributes, inner, content })
+			throw new Error('missing link')
+		}
+
+		const title = extractAttribute(attributes, 'title') || link.title || ''
+		const href = link.url
+		const color = link.color || null
+		const className = link.class || null
+		const style = color == null ? null : { color: `${color} !important` }
+
+		const text = inner || link.text || ''
+
+		const element = h('a', { title, href, style, class: className }, text).outerHTML
+
+		return element
 	})
-	return $.html()
+
+	return result2
 }
 
 function makeDirectory (path) {
@@ -96,6 +114,7 @@ function parseDocument (input) {
 		default:
 			throw new Error('unsupport front matter')
 	}
+
 	return { data, content: matter.body.trim() }
 }
 
@@ -231,15 +250,15 @@ function renderDocuments (directory, developerMetadata) {
 				.map((file) =>
 					fs.readFile(pathUtil.join(dir, file), 'utf8')
 						.then((text) => {
-							const userMetadata = parseDocument(text)
-							const metadata = Object.assign({}, developerMetadata, userMetadata)
+							const matter = parseDocument(text)
+							const metadata = Object.assign({}, developerMetadata, matter.data)
 							const data = {
 								title: metadata.title,
 								url: '/' + directory + '/' + file.substr(0, file.length - 3),
 								path: pathUtil.join(outdir, '/' + directory + '/' + file.substr(0, file.length - 3) + '/index.html'),
 								keywords: (metadata.keywords || '').split(/[, ]+/),
-								datePublished: new Date(metadata.date),
-								content: marked(metadata.content)
+								datePublished: new Date(metadata.datePublished || metadata.date),
+								content: marked(matter.content)
 							}
 							return data
 						})
@@ -321,23 +340,61 @@ async function main () {
 		data[key] = values[index]
 	})
 
-	// console.log(data.fragments)
-	Promise.all(
-		data.notes.concat(data.posts).map((document) =>
-			writeFile(document.path,
-				// renderElements(
-				renderPostLayout({
-					site,
-					feeds,
-					links,
-					menu,
-					fragments: data.fragments,
-					document
-				})
-				// ).outerHTML
-			)
+	const documents = data.notes.concat(data.posts)
+	await Promise.all(
+		documents.map(function (document) {
+			try {
+				return writeFile(document.path,
+					renderElements(
+						renderPostLayout({
+							site,
+							feeds,
+							links,
+							menu,
+							fragments: data.fragments,
+							document
+						})
+					)
+				)
+			}
+			catch (e) {
+				console.error(e)
+				throw new Error('failed to render: ' + document.url)
+			}
+		})
+	)
+
+	const gists = data.gists
+		.filter((gist) => gist.public)
+		.map((gist) => ({
+			title: gist.description,
+			url: gist.html_url,
+			datePublished: new Date(gist.created_at),
+			comments: gist.comments /* @todo re-add comment count into listings */
+		}))
+
+	const pages = [
+		{
+			path: pathUtil.join(outdir, 'atom.xml'),
+			content: require('./templates/pages/atom.js')({ site, documents })
+		},
+		{
+			path: pathUtil.join(outdir, 'blog', 'index.html'),
+			content: renderPageLayout({
+				site,
+				feeds,
+				links,
+				menu,
+				require ('./templates/pages/blog.js')({ site, documents, gists })
+		}
+	]
+
+	await Promise.all(
+		pages.map(
+			({ path, content }) => writeFile(path, content)
 		)
 	)
+
 }
 
 main()
