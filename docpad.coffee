@@ -160,6 +160,10 @@ links =
 		title: 'Use Luno to exchange, send and receive cryptocurrency'
 		color: '#0091ff'
 		referral: true
+	coinfalcon:
+		text: 'Coinfalcon'
+		url: 'https://coinfalcon.com/?ref=CFJSAHMWFPYV'
+		title: 'Use Coinbase to trade cryptocurrency'
 	cex:
 		text: 'Luno'
 		url: 'https://cex.io/r/0/up107824702/0/'
