@@ -164,6 +164,11 @@ links =
 		text: 'Coinfalcon'
 		url: 'https://coinfalcon.com/?ref=CFJSAHMWFPYV'
 		title: 'Use Coinbase to trade cryptocurrency'
+	cobinhood:
+		text: 'Cobinhood'
+		url: 'https://cobinhood.com?referrerId=b7c14dfb-20cb-4bb0-9398-8e5a89d01755'
+		title: 'Use Cobinhood to trade cryptocurrency'
+		color: '#13be99'
 	cex:
 		text: 'Luno'
 		url: 'https://cex.io/r/0/up107824702/0/'
