@@ -181,6 +181,12 @@ links =
 		title: 'Use Quoinex to trade cryptocurrency'
 		color: '#2a9ff8'
 		referral: true
+	qryptos:
+		text: 'Qryptos'
+		url: 'https://accounts.qryptos.com/sign-up?affiliate=v6Qki8rH43648'
+		title: 'Use Qryptos to trade cryptocurrency'
+		color: '#2a9ff8'
+		referral: true
 	surfeasy:
 		text: 'SurfEasy'
 		url: 'https://srfez.com/NF6AYREKBA'
