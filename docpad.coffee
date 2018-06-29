@@ -1050,8 +1050,12 @@ links =
 		url: 'https://drive.google.com/drive/folders/0B6MqiLy7C3PhZ196SHVSQ2MxU00'
 		title: "The contract templates I've used with success for my consulting engagements"
 	contract: 'contracts'
+	email:
+		text: 'Email me'
+		url: 'mailto:b@lupton.cc'
+		title: 'Send me an email'
 
-	# Shotcuts
+	# Shortcuts
 	gh: 'github'
 	g: 'github'
 	t: 'twitter'
