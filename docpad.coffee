@@ -10,6 +10,12 @@ projects = []
 reposGetter = null
 links =
 	# Referrals
+	allplants:
+		text: 'allplants'
+		url: 'http://i.refs.cc/QeyDyNyx?u=1530661477060'
+		title: 'Use allplants to get vegan meals delivered to your door'
+		color: '#000'
+		referral: true
 	earn:
 		text: 'Earn.com'
 		url: 'https://earn.com/balupton/referral/?a=jj1ifwhour6qsw1d'
