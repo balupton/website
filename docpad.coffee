@@ -181,6 +181,12 @@ links =
 		title: 'Use CEX to trade cryptocurrency'
 		color: '#00bdca'
 		referral: true
+	xs2:
+		text: 'XS2'
+		url: 'https://xs2.exchange/r/208'
+		title: 'Use XS2 to trade cryptocurrency'
+		color: '#3097d1'
+		referral: true
 	quoinex:
 		text: 'Quoinex'
 		url: 'https://accounts.quoinex.com/sign-up?affiliate=v6Qki8rH43648'
