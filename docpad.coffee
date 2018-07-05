@@ -127,8 +127,14 @@ links =
 	drivewealth:
 		text: 'DriveWealth'
 		url: 'https://drivewealth.com/refer?r=A74082&name=Benjamin'
-		title: 'Use DriveWealth to invest in USA companies, even if you live outside of the USA'
+		title: 'Use DriveWealth to invest in USA companies (USA only)'
 		color: '#FEC108'
+		referral: true
+	stake:
+		text: 'Stake'
+		url: 'https://stake.com.au?refer=benjaminl259'
+		title: 'Use Stake to invest in USA companies (Australia only)'
+		color: '#181818'
 		referral: true
 	coinstats:
 		text: 'Coinstats'
