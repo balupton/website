@@ -86,13 +86,31 @@ links =
 		text: 'Amazon'
 		url: "https://www.amazon.com/?tag=#{amazonCode}"
 		title: 'Use Amazon to buy books'
-		color: 'rgb(228, 121, 17)'
+		color: '#e47911'
+		referral: true
+	purse:
+		text: 'Purse'
+		url: 'https://purse.io/?_r=nPY6sE'
+		title: 'Use Purse to purchase from Amazon with cryptocurrency at a 15% discount'
+		color: '#3b4a54'
+		referral: true
+	honey:
+		text: 'Honey'
+		url: 'https://joinhoney.com/ref/c1ra4wf'
+		title: 'Use Honey to automatically apply discount coupons when you shop online'
+		color: '#ff7e27'
 		referral: true
 	airbnb:
 		text: 'AirBnB'
 		url: 'https://www.airbnb.com.au/c/benjaminl3638'
 		title: 'Use AirBnB to book accomodation when traveling'
 		color: '#ff5a5f'
+		referral: true
+	bookingdotcom:
+		text: 'Booking.com'
+		url: 'https://www.booking.com/s/27_8/b0lupt17'
+		title: 'Use Booking.com to book accomodation when traveling'
+		color: '#07c'
 		referral: true
 	awaytravel:
 		text: 'Away Travel'
@@ -114,7 +132,7 @@ links =
 		referral: true
 	transferwise:
 		text: 'TransferWise'
-		url: 'https://transferwise.com/u/bff1c1'
+		url: 'https://transferwise.com/u/benjaminl52'
 		title: 'Use TransferWise to avoid international transfer fees'
 		color: '#223049'
 		referral: true
@@ -123,6 +141,12 @@ links =
 		url: 'http://tradingview.go2cloud.org/aff_c?offer_id=2&aff_id=4529'
 		title: 'Use TradingView for all your trading insights'
 		color: '#3BB3E4'
+		referral: true
+	signals:
+		text: 'Signals'
+		url: 'https://signals.network/join/122653'
+		title: 'Use Signals to share trading strategies'
+		color: 'rgb(184, 117, 225)'
 		referral: true
 	drivewealth:
 		text: 'DriveWealth'
@@ -177,6 +201,12 @@ links =
 		url: 'https://www.luno.com/invite/CM6NT'
 		title: 'Use Luno to exchange, send and receive cryptocurrency'
 		color: '#0091ff'
+		referral: true
+	bitmex:
+		text: 'BitMEX'
+		url: 'https://www.bitmex.com/register/1Gn7Rt'
+		title: 'Use BitMEX to trade cryptocurrency'
+		color: '#575b5c'
 		referral: true
 	coinfalcon:
 		text: 'Coinfalcon'
