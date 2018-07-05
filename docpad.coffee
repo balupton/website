@@ -935,6 +935,18 @@ links =
 		title: 'Read my posts on Medium'
 		color: '#333332'
 		social: true
+	snapchat:
+		text: 'Snapchat'
+		url: 'https://www.snapchat.com/add/balupton'
+		title: "See what I'm up to via SnapChat"
+		color: 'gold'
+		social: true
+	instagram:
+		text: 'Instagram'
+		url: 'https://www.instagram.com/balupton/'
+		title: 'View my photos on Instagram'
+		color: 'rgb(148, 125, 98)'
+		social: true
 	youtube:
 		text: 'YouTube'
 		url: 'http://www.youtube.com/user/balupton'
@@ -946,12 +958,6 @@ links =
 		url: 'https://github.com/balupton'
 		title: 'View my code on GitHub'
 		color: 'black'
-		social: true
-	instagram:
-		text: 'Instagram'
-		url: 'https://www.instagram.com/balupton/'
-		title: 'View my photos on Instagram'
-		color: 'rgb(148, 125, 98)'
 		social: true
 	linkedin:
 		text: 'LinkedIn'
