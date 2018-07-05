@@ -223,6 +223,12 @@ links =
 		title: 'Use Windscribe as your secure anonymous VPN'
 		color: '#52a5d8'
 		referral: true
+	workfrom:
+		text: 'Workfrom'
+		url: 'http://wkfr.co/r/awesome-34501'
+		title: 'Use Workfrom to find places you can work from with your laptop'
+		color: '#484848'
+		referral: true
 	namedomains:
 		text: 'Name.com'
 		url: 'https://www.name.com/referral/1d41c5'
