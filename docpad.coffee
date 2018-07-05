@@ -130,6 +130,12 @@ links =
 		title: 'Use DriveWealth to invest in USA companies, even if you live outside of the USA'
 		color: '#FEC108'
 		referral: true
+	coinstats:
+		text: 'Coinstats'
+		url: 'https://coinstats.app.link/M4yHl2vwjO'
+		title: 'Use coinstats to track your cryptocurrency portfolio'
+		color: '#F56945'
+		referral: true
 	wirex:
 		text: 'Wirex'
 		url: 'https://app.wirexapp.com/join/gSPGAXe7_EOtVw3hNfaHtA'
