@@ -20,9 +20,7 @@
       "flattr",
       "paypal",
       "bitcoin",
-      "wishlist",
-      "---",
-      "slackin"
+      "wishlist"
     ],
     "config": {
       "patreonUsername": "bevry",
@@ -30,8 +28,7 @@
       "flattrUsername": "balupton",
       "paypalURL": "https://bevry.me/paypal",
       "bitcoinURL": "https://bevry.me/bitcoin",
-      "wishlistURL": "https://bevry.me/wishlist",
-      "slackinURL": "https://slack.bevry.me"
+      "wishlistURL": "https://bevry.me/wishlist"
     }
   },
   "author": "Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
@@ -49,8 +46,7 @@
     "url": "https://github.com/balupton/website.git"
   },
   "engines": {
-    "node": "8",
-    "npm": "5"
+    "node": "8"
   },
   "dependencies": {
     "docpad": "~6.80.6",
@@ -69,9 +65,9 @@
     "getrepos": "~1.1.2"
   },
   "devDependencies": {
-    "cloudflare-stout": "^1.3.1-8",
     "coffeelint": "^2.1.0",
     "docpad-plugin-livereload": "~2.10.0",
+    "now": "^11.3.1",
     "projectz": "^1.4.0"
   },
   "scripts": {
@@ -82,13 +78,29 @@
     "our:meta": "npm run our:meta:projectz",
     "our:meta:projectz": "projectz compile",
     "our:verify": "echo no need for this project",
-    "our:deploy": "npm run my:deploy",
+    "our:deploy": "echo no need for this project",
     "our:test": "npm run our:verify && npm test",
     "our:release": "npm run our:release:prepare && npm run our:release:push",
     "our:release:prepare": "npm run our:clean && npm run our:compile && npm run our:test && npm run our:meta",
     "our:release:push": "git push origin master && git push origin --tags",
-    "my:deploy": "stout deploy --bucket balupton.com --root out",
-    "start": "docpad-server",
     "test": "docpad generate --silent --env static"
+  },
+  "now": {
+    "name": "website",
+    "type": "static",
+    "public": true,
+    "alias": [
+      "balupton",
+      "balupton.com"
+    ],
+    "files": [
+      "out"
+    ],
+    "static": {
+      "directoryListing": false,
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "public": "out"
+    }
   }
 }
