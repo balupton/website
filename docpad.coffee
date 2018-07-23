@@ -1130,7 +1130,7 @@ links =
 	resume: 'linkedin'
 	cv:
 		text: 'Curriculum Vitae.'
-		url: 'https://www.linkedin.com/profile/pdf?id=AAEAAADwTV8B0oqoFzDk_1ijrb9zx5Dvsaq1-u8&pdfFileName=BenjaminLupton'
+		url: 'https://www.linkedin.com/dms/C5604AQGsURw218VRYw/profile-profilePdf/'
 		title: 'Download my CV from LinkedIn'
 
 	# Recommendations
