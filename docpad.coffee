@@ -983,12 +983,6 @@ links =
 		title: 'Read my posts on Medium'
 		color: '#333332'
 		social: true
-	snapchat:
-		text: 'Snapchat'
-		url: 'https://www.snapchat.com/add/balupton'
-		title: "See what I'm up to via SnapChat"
-		color: 'gold'
-		social: true
 	instagram:
 		text: 'Instagram'
 		url: 'https://www.instagram.com/balupton/'
@@ -1012,6 +1006,12 @@ links =
 		url: 'https://www.linkedin.com/in/balupton'
 		title: 'View my profile on LinkedIn'
 		color: '#0083B3'
+		social: true
+	angellist:
+		text: 'Angel List'
+		url: 'http://angel.co/balupton'
+		title: 'View my profile on Angel List'
+		color: '#333'
 		social: true
 	goodreads:
 		text: 'Goodreads'
@@ -1048,6 +1048,12 @@ links =
 		url: 'http://tumblr.balupton.com'
 		title: 'Read my posts on Tumblr'
 		color: '#2c4762'
+		social: true
+	snapchat:
+		text: 'Snapchat'
+		url: 'https://www.snapchat.com/add/balupton'
+		title: "See what I'm up to via SnapChat"
+		color: 'gold'
 		social: true
 	runkeeper:
 		text: 'Runkeeper'
