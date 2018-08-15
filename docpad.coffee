@@ -22,6 +22,12 @@ links =
 		title: 'Use Earn.com to setup a paid email inbox, where people pay to email you'
 		color: '#d6a156'
 		referral: true
+	quadlock:
+		text: 'Quad Lock'
+		url: 'http://quadlock.refr.cc/23DDGN7'
+		title: 'Use Quad Lock phone cases for a phone case that can mount to anything'
+		color: '#0070bc'
+		referral: true
 	brave:
 		text: 'Brave'
 		url: 'https://brave.com/bal467'
