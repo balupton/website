@@ -25,7 +25,7 @@ links =
 	quadlock:
 		text: 'Quad Lock'
 		url: 'http://quadlock.refr.cc/23DDGN7'
-		title: 'Use Quad Lock phone cases for a phone case that can mount to anything'
+		title: 'Use Quad Lock cases to protect your phone and mount it to anything'
 		color: '#0070bc'
 		referral: true
 	brave:
