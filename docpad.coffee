@@ -235,16 +235,10 @@ links =
 		title: 'Use XS2 to trade cryptocurrency'
 		color: '#3097d1'
 		referral: true
-	quoinex:
-		text: 'Quoinex'
-		url: 'https://accounts.quoinex.com/sign-up?affiliate=v6Qki8rH43648'
-		title: 'Use Quoinex to trade cryptocurrency'
-		color: '#2a9ff8'
-		referral: true
-	qryptos:
-		text: 'Qryptos'
-		url: 'https://accounts.qryptos.com/sign-up?affiliate=v6Qki8rH43648'
-		title: 'Use Qryptos to trade cryptocurrency'
+	liquid:
+		text: 'Liquid'
+		url: 'https://accounts.liquid.com/sign-up?affiliate=v6Qki8rH43648'
+		title: 'Use Liquid to trade cryptocurrency'
 		color: '#2a9ff8'
 		referral: true
 	surfeasy:
@@ -304,7 +298,7 @@ links =
 	vultr:
 		text: 'Vultr'
 		url: 'http://www.vultr.com/?ref=7196060'
-		title: 'Use Vultr to host yout apps on virtual machiens in the cloud'
+		title: 'Use Vultr to host your apps on virtual machiens in the cloud'
 		color: '#1e88e5'
 		referral: true
 	hypersh:
