@@ -298,7 +298,7 @@ links =
 	vultr:
 		text: 'Vultr'
 		url: 'http://www.vultr.com/?ref=7196060'
-		title: 'Use Vultr to host your apps on virtual machiens in the cloud'
+		title: 'Use Vultr to host your apps on virtual machines in the cloud'
 		color: '#1e88e5'
 		referral: true
 	hypersh:
