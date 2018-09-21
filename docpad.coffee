@@ -124,11 +124,12 @@ links =
 		title: 'Use Away Travel for your luggage'
 		color: '#00344B'
 		referral: true
-	acorns:
-		text: 'Acorns'
-		url: 'https://app.acornsau.com.au/invite/83UNQY'
-		title: 'Use Acorns to open an Australian investment account'
-		color: '#54bd45'
+	acorns: 'raiz'
+	raiz:
+		text: 'Raiz'
+		url: 'https://app.raizinvest.com.au/invite/83UNQY'
+		title: 'Use Raiz to open an Australian investment account'
+		color: '#221b34'
 		referral: true
 	n26:
 		text: 'N26 Bank'
