@@ -10,6 +10,12 @@ projects = []
 reposGetter = null
 links =
 	# Referrals
+	minds:
+		text: 'Minds'
+		url: 'https://www.minds.com/balupton?referrer=balupton'
+		title: 'Use Minds as an uncensored Facebook'
+		color: '#607d8b'
+		referral: true
 	allplants:
 		text: 'allplants'
 		url: 'http://i.refs.cc/QeyDyNyx?u=1530661477060'
