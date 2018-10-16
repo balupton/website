@@ -286,7 +286,7 @@ links =
 		referral: true
 	iherb:
 		text: 'iHerb'
-		url: 'http://www.iherb.com/iherb-brands?rcode=DNF509'
+		url: 'http://www.iherb.com/iherb-brands?rcode=DNF509&pcode=10NEWAU'
 		title: 'Use iHerb to buy supplements'
 		color: '#458500'
 		referral: true
