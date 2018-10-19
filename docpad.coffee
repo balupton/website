@@ -10,6 +10,12 @@ projects = []
 reposGetter = null
 links =
 	# Referrals
+	airtable:
+		text: 'Airtable'
+		url: 'https://airtable.com/invite/r/pBIrCHfX'
+		title: 'Use Airtable to create powerful data rich spreadsheets'
+		color: '#2d7ff9'
+		referral: true
 	minds:
 		text: 'Minds'
 		url: 'https://www.minds.com/balupton?referrer=balupton'
