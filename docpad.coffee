@@ -356,10 +356,16 @@ links =
 		title: 'Use Zapier to automate your digital workflows'
 		color: '#ff4a00'
 		referral: true
+	ovo:
+		text: 'OVO'
+		url: 'http://fanclub.ovo.com.au/mQe3Ahx'
+		title: 'Use OVO for your phone plan in Australia (Telstra Network)'
+		color: '#6b37ff'
+		referral: true
 	amaysim:
 		text: 'Amaysim'
 		url: 'http://amaysi.ms/balupton'
-		title: 'Use Amaysim for your phone plan in Australia'
+		title: 'Use Amaysim for your phone plan in Australia (Optus Network)'
 		color: '#e65014'
 		referral: true
 	yoodo:
