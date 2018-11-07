@@ -221,6 +221,12 @@ links =
 		title: 'Use Coinseed to diversify your cryptocurrency investments'
 		color: '#2a9d31'
 		referral: true
+	heleum:
+		text: 'Heleum'
+		url: 'https://app.heleum.com/r/cbdc906a6e'
+		title: 'Use Heleum to autoinvest in cryptocurrencies'
+		color: '#333333'
+		referral: true
 	luno:
 		text: 'Luno'
 		url: 'https://www.luno.com/invite/CM6NT'
@@ -236,12 +242,14 @@ links =
 	coinfalcon:
 		text: 'Coinfalcon'
 		url: 'https://coinfalcon.com/?ref=CFJSAHMWFPYV'
-		title: 'Use Coinbase to trade cryptocurrency'
+		title: 'Use Coinfalcon to trade cryptocurrency'
+		referral: true
 	cobinhood:
 		text: 'Cobinhood'
 		url: 'https://cobinhood.com?referrerId=b7c14dfb-20cb-4bb0-9398-8e5a89d01755'
 		title: 'Use Cobinhood to trade cryptocurrency'
 		color: '#13be99'
+		referral: true
 	cex:
 		text: 'Luno'
 		url: 'https://cex.io/r/0/up107824702/0/'
