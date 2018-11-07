@@ -197,6 +197,12 @@ links =
 		title: 'Use Coinbase to exchange, send and receive cryptocurrency'
 		color: '#2B71B1'
 		referral: true
+	coinjar:
+		text: 'CoinJar'
+		url: 'https://www.coinjar.com/_ref/@balupton'
+		title: 'Use CoinJar to exchange, send and receive cryptocurrency in Australia'
+		color: '#1F4F7F'
+		referral: true
 	benco:
 		text: 'Ben.co'
 		url: 'https://ben.onelink.me/kTE6/9181c018'
