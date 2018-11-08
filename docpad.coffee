@@ -322,6 +322,12 @@ links =
 		title: 'Use Updown for website status alerts'
 		color: '#5c4'
 		referral: true
+	digitalocean:
+		text: 'DigitalOcean'
+		url: 'https://m.do.co/c/713bd82265f6'
+		title: 'Use DigitalOcean to host your apps in the cloud'
+		color: '#0069ff'
+		referral: true
 	vultr:
 		text: 'Vultr'
 		url: 'http://www.vultr.com/?ref=7196060'
