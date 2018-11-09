@@ -206,8 +206,14 @@ links =
 	benco:
 		text: 'Ben.co'
 		url: 'https://ben.onelink.me/kTE6/9181c018'
-		title: 'Use Ben.co to exchange, send and receive cryptocurrency'
+		title: 'Use Ben as your cryptocurrency wallet'
 		color: '#1f6473'
+		referral: true
+	strongcoin:
+		text 'StrongCoin'
+		url: 'https://strongcoin.com/?ref=1BtRZY7kfJchkzKxs19MyYiQ3ampuQpHEQ'
+		title: 'Use StrongCoin as your cryptocurrency wallet'
+		color: '#313840'
 		referral: true
 	changelly:
 		text: 'Changelly'
