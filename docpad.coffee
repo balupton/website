@@ -227,6 +227,12 @@ links =
 		title: 'Use CoinEx to convert your cryptocurrencies'
 		color: '#52cbca'
 		referral: true
+	bestrate:
+		text: 'BestRate'
+		url: 'https://bestrate.org/ico-payment-tools?ref=e112faab88bb14fe4e8e92edcdab3ffa'
+		title: 'USe BestRate to convert your cryptocurrencies'
+		color: '#f9cc33'
+		referral: true
 	circle:
 		text: 'Circle Finance'
 		url: 'https://www.circle.com/invite/DTIKU0'
