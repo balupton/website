@@ -215,6 +215,12 @@ links =
 		title: 'Use Changelly to convert your cryptocurrencies'
 		color: '#10d078'
 		referral: true
+	changenow:
+		text: 'ChangeNOW'
+		url: 'https://changenow.io?link_id=4861c40d846b4f'
+		title: 'Use ChangeNOW to convert your cryptocurrencies'
+		color: '#3bee81'
+		referral: true
 	circle:
 		text: 'Circle Finance'
 		url: 'https://www.circle.com/invite/DTIKU0'
