@@ -151,7 +151,7 @@ links =
 		referral: true
 	transferwise:
 		text: 'TransferWise'
-		url: 'https://transferwise.com/u/benjaminl52'
+		url: 'https://transferwise.evyy.net/c/1328573/26105/985'
 		title: 'Use TransferWise to avoid international transfer fees'
 		color: '#223049'
 		referral: true
