@@ -230,7 +230,7 @@ links =
 	bestrate:
 		text: 'BestRate'
 		url: 'https://bestrate.org/ico-payment-tools?ref=e112faab88bb14fe4e8e92edcdab3ffa'
-		title: 'USe BestRate to convert your cryptocurrencies'
+		title: 'Use BestRate to convert your cryptocurrencies'
 		color: '#f9cc33'
 		referral: true
 	circle:
@@ -263,10 +263,17 @@ links =
 		title: 'Use BitMEX to trade cryptocurrency'
 		color: '#575b5c'
 		referral: true
+	exmo:
+		text: 'Exmo'
+		url: 'https://exmo.com/?ref=561025'
+		title: 'Use Exmo to trade cryptocurrency'
+		color: '#347ffb'
+		referral: true
 	coinfalcon:
 		text: 'Coinfalcon'
 		url: 'https://coinfalcon.com/?ref=CFJSAHMWFPYV'
 		title: 'Use Coinfalcon to trade cryptocurrency'
+		color: '#1ab6ff'
 		referral: true
 	cobinhood:
 		text: 'Cobinhood'
