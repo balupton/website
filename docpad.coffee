@@ -221,6 +221,12 @@ links =
 		title: 'Use ChangeNOW to convert your cryptocurrencies'
 		color: '#3bee81'
 		referral: true
+	coinex:
+		text: 'CoinEx'
+		url: 'https://www.coinex.com/account/signup?refer_code=eb7ra'
+		title: 'Use CoinEx to convert your cryptocurrencies'
+		color: '#52cbca'
+		referral: true
 	circle:
 		text: 'Circle Finance'
 		url: 'https://www.circle.com/invite/DTIKU0'
