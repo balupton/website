@@ -210,7 +210,7 @@ links =
 		color: '#1f6473'
 		referral: true
 	strongcoin:
-		text 'StrongCoin'
+		text: 'StrongCoin'
 		url: 'https://strongcoin.com/?ref=1BtRZY7kfJchkzKxs19MyYiQ3ampuQpHEQ'
 		title: 'Use StrongCoin as your cryptocurrency wallet'
 		color: '#313840'
