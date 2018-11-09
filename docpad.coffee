@@ -152,7 +152,13 @@ links =
 	transferwise:
 		text: 'TransferWise'
 		url: 'https://transferwise.evyy.net/c/1328573/26105/985'
-		title: 'Use TransferWise to avoid international transfer fees'
+		title: 'Use TransferWise to send money around the world as quickly and cheaply as possible'
+		color: '#223049'
+		referral: true
+	transferwiseborderless:
+		text: 'TransferWise Borderless'
+		url: 'https://transferwise.evyy.net/c/1328573/26105/985?u=https%3A%2F%2Ftransferwise.com%2Fborderless%2F'
+		title: 'Use TransferWise Borderless to have multicurrency bank accounts all around the world'
 		color: '#223049'
 		referral: true
 	tradingview:
