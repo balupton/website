@@ -209,6 +209,12 @@ links =
 		title: 'Use Ben.co to exchange, send and receive cryptocurrency'
 		color: '#1f6473'
 		referral: true
+	changelly:
+		text: 'Changelly'
+		url: 'https://changelly.com/?ref_id=51f081f500f5'
+		title: 'Use Changelly to convert your cryptocurrencies'
+		color: '#10d078'
+		referral: true
 	circle:
 		text: 'Circle Finance'
 		url: 'https://www.circle.com/invite/DTIKU0'
