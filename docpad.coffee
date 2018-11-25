@@ -248,9 +248,11 @@ links =
 	circle:
 		text: 'Circle Finance'
 		url: 'https://www.circle.com/invite/DTIKU0'
-		title: 'Use Circle Finance to exchange, send and receive cryptocurrency'
+		title: 'Use Circle to exchange, send and receive cryptocurrency'
 		color: '#aacc38'
 		referral: true
+	circlepay: '/circle'
+	circlefinance: '/circle'
 	coinseed:
 		text: 'Coinseed'
 		url: 'https://coinseed.app.link/lnFvVQzVzN'
@@ -455,12 +457,13 @@ links =
 		title: 'Use Theme Forest to purchase themes for websites'
 		color: '#7bc4c4'
 		referral: true
-	circleinternet:
-		text: 'Circle'
+	circlemedia:
+		text: 'Circle Media'
 		url: 'http://mbsy.co/dSfLv'
 		title: 'Use Circle to track and limit your internet usage over any device'
 		color: '#00b7d9'
 		referral: true
+	circleinternet: '/circlemedia'
 
 	# Links
 	peac:
