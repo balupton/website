@@ -145,7 +145,7 @@ links =
 		referral: true
 	n26:
 		text: 'N26 Bank'
-		url: 'mailto:b@lupton.cc?subject=Send%20me%20a%20N26%20invite%20please!'
+		url: 'https://n26.com/r/benjamil6310'
 		title: 'Use N26 Bank for European and International banking'
 		color: '#26afb8'
 		referral: true
