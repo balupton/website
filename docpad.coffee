@@ -142,13 +142,13 @@ links =
 		title: 'Use Away Travel for your luggage'
 		color: '#00344B'
 		referral: true
-	acorns: 'raiz'
 	raiz:
 		text: 'Raiz'
 		url: 'https://app.raizinvest.com.au/invite/83UNQY'
 		title: 'Use Raiz to open an Australian investment account'
 		color: '#221b34'
 		referral: true
+	acorns: 'raiz'
 	n26:
 		text: 'N26 Bank'
 		url: 'https://n26.com/r/benjamil6310'
@@ -257,8 +257,8 @@ links =
 		title: 'Use Circle to exchange, send and receive cryptocurrency'
 		color: '#aacc38'
 		referral: true
-	circlepay: '/circle'
-	circlefinance: '/circle'
+	circlepay: 'circle'
+	circlefinance: 'circle'
 	coinseed:
 		text: 'Coinseed'
 		url: 'https://coinseed.app.link/lnFvVQzVzN'
@@ -469,7 +469,7 @@ links =
 		title: 'Use Circle to track and limit your internet usage over any device'
 		color: '#00b7d9'
 		referral: true
-	circleinternet: '/circlemedia'
+	circleinternet: 'circlemedia'
 
 	# Links
 	peac:
