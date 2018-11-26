@@ -10,6 +10,12 @@ projects = []
 reposGetter = null
 links =
 	# Referrals
+	setapp:
+		text: 'Setapp'
+		url: 'https://go.setapp.com/invite/uolmpyip'
+		title: 'Use Setapp to gain access to dozens of high quality mac apps for a low monthly price'
+		color: '#00024f'
+		referral: true
 	airtable:
 		text: 'Airtable'
 		url: 'https://airtable.com/invite/r/pBIrCHfX'
