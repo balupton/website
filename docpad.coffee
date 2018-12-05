@@ -22,6 +22,12 @@ links =
 		title: 'Use Airtable to create powerful data rich spreadsheets'
 		color: '#2d7ff9'
 		referral: true
+	safetywing:
+		text: 'SafetyWing'
+		url: ' https://www.safetywing.com/?referenceID=24733581'
+		title: 'Use SafetyWing for worldwide travel insurance'
+		color: '#58c5c7'
+		referral: true
 	minds:
 		text: 'Minds'
 		url: 'https://www.minds.com/balupton?referrer=balupton'
