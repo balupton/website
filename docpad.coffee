@@ -1,10 +1,10 @@
 # =================================
 # Misc Configuration
 
+# Import
+githubAuthQueryString = require('githubauthquerystring').fetch()
+
 # Prepare
-githubClientId = process.env.BEVRY_GITHUB_CLIENT_ID
-githubClientSecret = process.env.BEVRY_GITHUB_CLIENT_SECRET
-githubAuthString = "client_id=#{githubClientId}&client_secret=#{githubClientSecret}"
 amazonCode = 'balupton07-20'
 projects = []
 reposGetter = null
@@ -1482,11 +1482,7 @@ module.exports =
 			docpad.log('info', 'Fetching your latest projects for display within the website')
 
 			# Prepare repos getter
-			reposGetter ?= require('getrepos').create(
-				log: docpad.log
-				github_client_id: githubClientId
-				github_client_secret: githubClientSecret
-			)
+			reposGetter ?= require('getrepos').create(log: docpad.log)
 
 			# Fetch repos
 			reposGetter.fetchReposFromUsers ['balupton','bevry','docpad','webwrite','browserstate','chainyjs','chainy-plugins','chainy-bundles','interconnectapp','js2coffee'], (err,repos=[]) ->
@@ -1515,20 +1511,20 @@ module.exports =
 					parse: 'json'
 
 				'github-australia-javascript':
-					url: "https://api.github.com/legacy/user/search/location:Australia%20language:JavaScript?#{githubAuthString}"
+					url: "https://api.github.com/legacy/user/search/location:Australia%20language:JavaScript?#{githubAuthQueryString}"
 					parse: 'json'
 				'github-australia':
 					# https://github.com/search?q=location%3AAustralia&type=Users&s=followers
-					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthString}"
+					url: "https://api.github.com/legacy/user/search/location:Australia?#{githubAuthQueryString}"
 					parse: 'json'
 				'github-gists':
-					url: "https://api.github.com/users/balupton/gists?per_page=100&#{githubAuthString}"
+					url: "https://api.github.com/users/balupton/gists?per_page=100&#{githubAuthQueryString}"
 					parse: 'json'
 				'github-top':
 					url: 'https://gist.github.com/paulmillr/4524946/raw/github-users-stats.json'
 					parse: 'json'
 				'github-profile':
-					url: "https://api.github.com/users/balupton?#{githubAuthString}"
+					url: "https://api.github.com/users/balupton?#{githubAuthQueryString}"
 					parse: 'json'
 
 				'github':

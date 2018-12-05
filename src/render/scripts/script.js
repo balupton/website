@@ -1,11 +1,11 @@
 (function () {
 	// Prepare
-	var $ = window.jQuery
+	const $ = window.jQuery
 
 	// Get Root URL
 	// https://github.com/balupton/history.js/blob/master/scripts/uncompressed/history.js#L358
 	function getRootUrl () {
-		var rootUrl = document.location.protocol + '//' + (document.location.hostname || document.location.host)
+		let rootUrl = document.location.protocol + '//' + (document.location.hostname || document.location.host)
 		if ( document.location.port ) {
 			rootUrl += ':' + document.location.port
 		}
@@ -16,7 +16,7 @@
 	// Contact Form
 	function showModal (which) {
 		// Prepare
-		var $modal = $('.modal.' + which)
+		const $modal = $('.modal.' + which)
 
 		// Check
 		if ( !$modal.hasClass('hide') ) {
@@ -24,7 +24,7 @@
 		}
 
 		// Prepare
-		var $backdropModal = $('.modal.backdrop')
+		const $backdropModal = $('.modal.backdrop')
 
 		// Show
 		$modal.add($backdropModal).removeClass('hide')
@@ -35,8 +35,8 @@
 
 	// Open Link
 	function openLink (opts) {
-		var url = opts.url
-		var action = opts.action
+		const url = opts.url
+		const action = opts.action
 		if ( action === 'new' ) {
 			window.open(url, '_blank')
 		}
@@ -49,11 +49,11 @@
 
 	// Open Outbound Link
 	function openOutboundLink (opts) {
-		var url = opts.url
-		var action = opts.action
+		const url = opts.url
+		const action = opts.action
 
 		// https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
-		var hostname = url.replace(/^.+?\/+([^\/]+).*$/,'$1')
+		const hostname = url.replace(/^.+?\/+([^\/]+).*$/, '$1')
 		return openLink(opts)
 	}
 
@@ -65,9 +65,9 @@
 	// Internal Link Helper
 	$.expr[':'].internal = function (obj, index, meta, stack) {
 		// Prepare
-		var $this = $(obj)
-		var url = $this.attr('href') || $this.data('href') || ''
-		var rootUrl = getRootUrl()
+		const $this = $(obj)
+		const url = $this.attr('href') || $this.data('href') || ''
+		const rootUrl = getRootUrl()
 
 		// Check link
 		isInternalLink = url.substring(0, rootUrl.length) === rootUrl || url.indexOf(':') === -1
@@ -87,9 +87,9 @@
 
 	$(function () {
 		// Prepare
-		var $document = $(document)
-		var $body = $(document.body)
-		var $window = $(window)
+		const $document = $(document)
+		const $body = $(document.body)
+		const $window = $(window)
 
 
 		// ---------------------------------
@@ -98,7 +98,7 @@
 		// Outbound Link Tracking
 		$body.on('click', 'a[href]:external', function (event) {
 			// Prepare
-			var $this, url, action
+			let $this, url, action
 			$this = $(this)
 			url = $this.attr('href')
 			if ( !url || url.indexOf('mailto:') === 0 ) {
@@ -115,7 +115,7 @@
 			}
 
 			// Open the link
-			var opts = {url: url, action: action}
+			const opts = {url, action}
 			return openOutboundLink(opts)
 		})
 
@@ -141,7 +141,7 @@
 			showModal('referrals')
 		})
 		$window.on('hashchange', function () {
-			var state = window.location.hash.replace('#', '')
+			const state = window.location.hash.replace('#', '')
 			switch ( state ) {
 				case 'referrals':
 				case 'contact':
@@ -164,4 +164,4 @@
 		})
 	})
 
-})()
+}())

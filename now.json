@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "name": "website",
+  "type": "static",
+  "public": true,
+  "alias": ["balupton", "balupton.com"],
+  "files": ["out"],
+  "static": {
+    "directoryListing": false,
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "public": "out"
+  }
+}

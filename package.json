@@ -1,7 +1,6 @@
 {
   "name": "balupton-website",
   "version": "1.3.6",
-  "private": true,
   "description": "Website of Benjamin Lupton. Founder of Bevry, DocPad and HistoryJS. Aficionado of HTML5, CoffeeScript and NodeJS. Available for consulting, training and talks. ENTP.",
   "homepage": "https://github.com/balupton/website",
   "license": "(MIT OR CC-BY-4.0)",
@@ -16,18 +15,24 @@
       "travisci",
       "---",
       "patreon",
-      "opencollective",
       "flattr",
+      "liberapay",
+      "thanksapp",
+      "boostlab",
+      "buymeacoffee",
+      "opencollective",
+      "crypto",
       "paypal",
-      "bitcoin",
       "wishlist"
     ],
     "config": {
-      "patreonUsername": "bevry",
-      "opencollectiveUsername": "bevry",
+      "buymeacoffeeUsername": "balupton",
+      "cryptoURL": "https://bevry.me/crypto",
       "flattrUsername": "balupton",
+      "liberapayUsername": "bevry",
+      "opencollectiveUsername": "bevry",
+      "patreonUsername": "bevry",
       "paypalURL": "https://bevry.me/paypal",
-      "bitcoinURL": "https://bevry.me/bitcoin",
       "wishlistURL": "https://bevry.me/wishlist"
     }
   },
@@ -46,10 +51,10 @@
     "url": "https://github.com/balupton/website.git"
   },
   "engines": {
-    "node": "8"
+    "node": "10"
   },
   "dependencies": {
-    "docpad": "~6.80.6",
+    "docpad": "~6.82.5",
     "docpad-plugin-cachr": "~2.6.1",
     "docpad-plugin-cleanurls": "~2.11.0",
     "docpad-plugin-coffeekup": "~2.5.0",
@@ -62,45 +67,35 @@
     "docpad-plugin-services": "~2.8.0",
     "docpad-plugin-stylus": "~2.14.0",
     "docpad-plugin-text": "~2.6.0",
-    "getrepos": "~1.1.2"
+    "getrepos": "~1.3.0",
+    "githubauthquerystring": "^1.0.2",
+    "stylelint": "^9.9.0",
+    "stylelint-config-standard": "^18.2.0"
   },
   "devDependencies": {
-    "coffeelint": "^2.1.0",
     "docpad-plugin-livereload": "~2.10.0",
-    "now": "^11.3.1",
-    "projectz": "^1.4.0"
+    "docpad-plugin-serve": "^2.0.1",
+    "now": "^12.1.8",
+    "projectz": "^1.5.3"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   },
   "scripts": {
-    "our:setup": "npm run our:setup:npm",
-    "our:setup:npm": "npm install",
-    "our:clean": "rm -Rf ./docs ./es2015 ./es5 ./out",
+    "our:clean": "rm -Rf ./docs ./edition* ./es2015 ./es5 ./out",
     "our:compile": "echo no need for this project",
+    "our:deploy": "echo no need for this project",
     "our:meta": "npm run our:meta:projectz",
     "our:meta:projectz": "projectz compile",
-    "our:verify": "echo no need for this project",
-    "our:deploy": "echo no need for this project",
-    "our:test": "npm run our:verify && npm test",
-    "our:release": "npm run our:release:prepare && npm run our:release:push",
+    "our:release": "npm run our:release:push",
     "our:release:prepare": "npm run our:clean && npm run our:compile && npm run our:test && npm run our:meta",
     "our:release:push": "git push origin master && git push origin --tags",
-    "test": "docpad generate --silent --env static"
-  },
-  "now": {
-    "name": "website",
-    "type": "static",
-    "public": true,
-    "alias": [
-      "balupton",
-      "balupton.com"
-    ],
-    "files": [
-      "out"
-    ],
-    "static": {
-      "directoryListing": false,
-      "cleanUrls": true,
-      "trailingSlash": false,
-      "public": "out"
-    }
+    "our:setup": "npm run our:setup:npm",
+    "our:setup:npm": "npm install",
+    "our:test": "npm run our:verify && npm test",
+    "our:verify": "npm run our:verify:stylelint",
+    "our:verify:stylelint": "stylelint --fix './src/**/*.css'",
+    "test": "docpad generate --env static"
   }
 }
