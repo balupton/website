@@ -406,8 +406,14 @@ links =
 	dropbox:
 		text: 'Dropbox'
 		url: 'https://db.tt/XFuEv8vB'
-		title: 'Use Dropbox to host sync your local files into the cloud'
+		title: 'Use Dropbox to sync your local files with the cloud'
 		color: '#007ee5'
+		referral: true
+	onedrive:
+		text: 'OneDrive'
+		url: 'https://onedrive.live.com?invref=40826b4caaef6e4e&invscr=90'
+		title: 'Use OneDrive tosync your local files with the cloud'
+		color: '#0078d7'
 		referral: true
 	screenflow:
 		text: 'Screenflow'
