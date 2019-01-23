@@ -10,6 +10,12 @@ projects = []
 reposGetter = null
 links =
 	# Referrals
+	gunnar:
+		text: 'Gunnar Glasses'
+		url: 'http://www.gopjn.com/t/RkFMSURHR0FFTEhLS0ZBTURNTUs'
+		title: 'Use Gunnar Glasses to work on the computer all day without eyestrain'
+		color: '#d03238'
+		referral: true
 	setapp:
 		text: 'Setapp'
 		url: 'https://go.setapp.com/invite/uolmpyip'
@@ -282,6 +288,12 @@ links =
 		url: 'https://www.luno.com/invite/CM6NT'
 		title: 'Use Luno to exchange, send and receive cryptocurrency'
 		color: '#0091ff'
+		referral: true
+	voyager:
+		text: 'Voyager'
+		url: 'https://www.investvoyager.com/?campaignId=nAHw2Rl4_mpooRv_Hs8wNxMBxAU&referralCode=DAKh4E5&code=GETBTC25'
+		title: 'Use Voyager to trade cryptocurrency'
+		color: '##3831ab'
 		referral: true
 	bitmex:
 		text: 'BitMEX'
