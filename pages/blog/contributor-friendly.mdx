@@ -1,0 +1,111 @@
+import Layout from '../../layouts/post'
+export const meta = {
+	title: 'Contributor Friendly',
+	date: '2011-06-26',
+	keywords:
+		'coding, programming, standards, guidelines, community, open-source, licensing'
+}
+
+## At the very least
+
+### Use tabs instead of spaces for indentation
+
+One of the first things a contributor will do is open up your source code, because of this it's incredibly important you provide a positive experience around this - say they prefer their code with an indentation of 4 spaces, but your code has the indentation of 2 spaces - then bang, you've just created a negative experience and one that could have been avoided at that.
+
+Unlike spaces, tabs allows your editor to customise the size of the indentation virtually - for instance a tab could be displayed as 4 spaces, or as 2 spaces based on your editors configuration. So rather than dictating your own indentation preferences on everyone else, tabs allows for everyone to edit the same document with their preferences in a non-conflicting or evasive way.
+
+### Structure your code so they can contribute
+
+Contributors hands should never be tied, they should always be able to work on everything they want, and not work on anything they don't want. So don't include or do anything which can restrict or impede them.
+
+### Comment liberally and concisely
+
+People should be able to skim your project and undertand what is going on, the less stop-pause-think that they need, the better - they can do less time interpreting and more time understanding, that means less time wasted and more time helping. Comment liberally, but also concisely.
+
+### Have great end-user documentation
+
+Documentation is arguably the most important aspect of your project, if people can't even understand how to get their foot in the door, how do you expect them to want to start contributing and talking about the positive experience your project has brought them. Have great documentation.
+
+### Get a wiki
+
+Allow people to contribute to your great documentation, and make it even greater - a wiki allows for this. If a set of installation instructions isn't working for someone, you can guarantee it's not going to work for a lot of other people too, the sooner those docs get fixed the more positive experiences there wll be surrounding your project.
+
+### Get an issue tracker
+
+Allow people to contribute their ideas, feedback, bugs, praise, discussions, brainstorms, whatever. Just have a place where people can talk to each other openely and easily.
+
+### Encourage feedback
+
+People won't give you feedback if you don't ask. Be extremely liberal about asking for feedback, do it on every single wiki page, ask for improvements.
+
+For an installation page, attach this:
+
+> If these didn't work, let me know! Or better yet, update them with the correct instructions!
+
+For a roadmap page:
+
+> Now these are just my ideas!!! If you have any ideas at all, then do add them to the wiki! Every piece of feedback/thought/idea really does help!
+
+You get the idea. But this isn't just for wiki pages, it's also on your main page:
+
+> Great! So you've downloaded my project, now if you experience any problems at all, or have any feedback you can reach me on: ...
+
+It's important people know that they can get help when they need it. This may sound like it is just you giving, but by giving you will also get invaluable feedback and improvements which make your project better - and start providing those positive experiences that attract more people.
+
+### Social proof
+
+Actions speak louder than words. Don't talk about how your project is used by lots of different people, don't talk about how your project can be extended - prove it, show them a wiki page where people are adding their own projects which use yours, show them a wiki page where are adding the extensions they've made. Make it easy for people to showcase what they've done, and encourage it.
+
+### Be thankful and receptive
+
+Whenever a contributor does something, anything - be thankful - they have given you the greatest gift in the world, their attention - so use that gift with the utmost care and grattitude, and magnfiy that back to them. Even if their pull request is not the best, let them know on what can be improved to make it better, or why it was not the right choice, help them become the best.
+
+### Make your pie in the sky vision known
+
+Do you dream great things for your project! Lock that vision in place, show people you are serious about your vision - perhaps they'll even be able to contribute theirs and you form something even better that you never could have comprehened - besides that is how great ideas are formed.
+
+Having a known vision is also beneficial for young projects which do not have the community around it yet, as it provide early adopters with the roadmap of where it is going, it is your pitch to them - help me achieve this.
+
+### Be responsive, even if you are busy
+
+If you are too busy to reply to something, THEN SAY THAT! Otherwise the message you are sending out is "I don't care about this project" or even worse: "I don't care about you". All it takes is a:
+
+> I'm totally swamped right now, but I swear I'll attend to your question as soon as I can - to ensure that I remember it when I do have time, can you post it on the issue tracker here and perhaps someone else can help you in the meatime :) Again sorry, and I'm doing my best :)
+
+The message that sends out is amazingly better than just not replying, plus it only takes a fractio more time.
+
+### Be genuine
+
+[it's true](http://www.oprah.com/own-master-class-the-lessons/master-class-stay-true-to-yourself.html).
+
+## Other extra things to consider
+
+### IRC Channel
+
+This, while it will be slow at the start will offer immensive value to everyone involved providing you are there to hear it. Imagine it as a constant room of people interested in your project, discussing your project - a place for newcomers to get instant help when they need, and a place for veterans to see problem areas, discuss new ideas, and grow the project - as well as get to know potential hires.
+
+### Skype availability
+
+Post your skype details EVERYWHERE! Be available for skype, and be honest when you are too busy. Be there to give, to help.
+
+### Twitter Hashtags
+
+Have an official hashtag for your project which people can use on twitter when talking about your project, display syndicated tweets with that hashtag on your website - it will provide a realtime stream of social proof that people love your project and it's active, which is invaluable.
+
+You can also stake this a step further and create a hashtag for the development of your project, so whenever you do any work your project you use the project's dev hashtag and let people know - that way people can instantly see what the project's developers are up to! Who's working on what! And how ofter and when!
+
+### Use GitHub
+
+Please don't be the person who is still not on facebook - inconviencing everyone else. [GitHub](https://github.com/) is free for public projects, and cheap for private projects. They are the best at what they do, and their platform comes hand in hand with all the advice in this post. They get it.
+
+## Conclusion
+
+I hope this post will help you guys with your open-source projects as the advice within has with mine.
+
+One thing I do need to do here is enrich the post with all the references, some quick ones that come to mind are:
+
+- Gary Vaynerchuck - Crush It
+- Oprah - Master Class
+- Napolean Hill - Think & Grow Rich
+
+export default ({ children }) => <Layout meta={meta}>{children}</Layout>

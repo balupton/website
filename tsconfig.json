@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "lib": ["dom", "esnext"],
+    "maxNodeModuleJsDepth": 5,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext"
+  },
+  "typeRoots": ["./node_modules/@types", "./types"],
+  "include": [
+    "client",
+    "components",
+    "data",
+    "layouts",
+    "types",
+    "lib",
+    "pages",
+    "scripts",
+    "server",
+    "shared"
+  ],
+  "exclude": [".*"]
+}

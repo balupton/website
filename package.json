@@ -1,0 +1,122 @@
+{
+  "name": "balupton-website",
+  "version": "1.0.0",
+  "description": "Benjamin Lupton's Website",
+  "homepage": "https://github.com/balupton/website",
+  "license": "MIT",
+  "keywords": [
+    "balupton",
+    "website"
+  ],
+  "badges": {
+    "list": [
+      "travisci",
+      "---",
+      "patreon",
+      "flattr",
+      "liberapay",
+      "thanksapp",
+      "boostlab",
+      "buymeacoffee",
+      "opencollective",
+      "crypto",
+      "paypal",
+      "wishlist"
+    ],
+    "config": {
+      "buymeacoffeeUsername": "balupton",
+      "cryptoURL": "https://bevry.me/crypto",
+      "flattrUsername": "balupton",
+      "liberapayUsername": "bevry",
+      "opencollectiveUsername": "bevry",
+      "patreonUsername": "bevry",
+      "paypalURL": "https://bevry.me/paypal",
+      "wishlistURL": "https://bevry.me/wishlist"
+    }
+  },
+  "author": "2019+ Benjamin Lupton <b@lupton.cc>",
+  "maintainers": [
+    "Benjamin Lupton <b@lupton.cc>"
+  ],
+  "bugs": {
+    "url": "https://github.com/balupton/website/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/balupton/website.git"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "editions": [
+    {
+      "description": "source",
+      "directory": ".",
+      "tags": [
+        "typescript",
+        "react",
+        "jsx",
+        "html",
+        "css",
+        "import"
+      ]
+    }
+  ],
+  "eslintConfig": {
+    "extends": [
+      "bevry"
+    ]
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "scripts": {
+    "my:compile:files": "ts-node ./scripts/files.ts",
+    "our:clean": "rm -Rf ./docs ./edition* ./es2015 ./es5 ./out ./.next",
+    "our:compile": "yarn run my:compile:files && yarn run our:compile:next",
+    "our:compile:next": "next build",
+    "our:deploy": "echo no need for this project",
+    "our:meta": "yarn run our:meta:projectz",
+    "our:meta:projectz": "projectz compile",
+    "our:release": "yarn run our:release:push",
+    "our:release:prepare": "yarn run our:clean && yarn run our:compile && yarn run our:test && yarn run our:meta",
+    "our:release:push": "git push origin master && git push origin --tags",
+    "our:setup": "yarn run our:setup:install",
+    "our:setup:install": "yarn install",
+    "our:test": "yarn run our:verify && yarn test",
+    "our:verify": "yarn run our:verify:eslint && yarn run our:verify:stylelint && yarn run our:verify:typescript",
+    "our:verify:eslint": "eslint --fix --ignore-pattern '**/*.d.ts' --ignore-pattern '**/vendor/' --ignore-pattern '**/node_modules/' --ext .mjs,.js,.jsx,.ts,.tsx .",
+    "our:verify:stylelint": "echo 'disabled due to https://spectrum.chat/?t=d1b9f61a-65e8-42a3-9042-f9c6a6fae6fd'",
+    "our:verify:typescript": "tsc --noEmit --project .",
+    "now-build": "yarn run our:compile:next",
+    "start": "yarn run our:verify && next dev"
+  },
+  "dependencies": {
+    "@types/react": "^16.7.21",
+    "@types/react-dom": "^16.0.11",
+    "@zeit/next-mdx": "^1.2.0",
+    "react": "16.8.0-alpha.1",
+    "react-dom": "16.8.0-alpha.1",
+    "simplytyped": "^1.7.0"
+  },
+  "devDependencies": {
+    "@types/next": "^7.0.6",
+    "@typescript-eslint/eslint-plugin": "^1.1.0",
+    "@typescript-eslint/parser": "^1.1.0",
+    "@zeit/next-typescript": "1.1.2-canary.0",
+    "eslint": "^5.12.1",
+    "eslint-config-bevry": "^1.2.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^0.0.0",
+    "mdx": "^0.3.1",
+    "next": "8.0.0-canary.15",
+    "now": "13.1.2",
+    "prettier": "prettier/prettier",
+    "projectz": "^1.7.4",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.2.4"
+  }
+}
