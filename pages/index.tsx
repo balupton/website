@@ -450,14 +450,13 @@ export default function IndexPage() {
 
 				<ul>
 					<li>
-						Organiser and Trainer @ <Link code="nodeschool" /> Berlin 2014
+						Organiser and Trainer at <Link code="nodeschool" /> Berlin 2014
 					</li>
 					<li>
-						JavaScript Expert @ <Link code="dsr" />
-						Germany 2013 &amp; 2014
+						JavaScript Expert at <Link code="dsr" /> Germany 2013 &amp; 2014
 					</li>
 					<li>
-						DocPad &amp; WebRTC Trainer @ <Link code="myplanet" /> Canada 2013
+						DocPad &amp; WebRTC Trainer at <Link code="myplanet" /> Canada 2013
 						&amp; 2014
 					</li>
 

@@ -2,6 +2,16 @@ import { DirectoryTags, Site, LinkAliasMap, RawLinkMap } from '../types/app'
 
 const amazonCode = 'balupton07-20'
 
+export const text: { [key: string]: () => any } = {
+	'stackoverflow-reputation': () => 0,
+	'github-projects': () => 0,
+	'github-contributions': () => 0,
+	'github-stars': () => 0,
+	'github-watch-rank-australia-javascript': () => 0,
+	'github-watch-rank-australia': () => 0,
+	'github-followers': () => 0
+}
+
 export const directoryTags: DirectoryTags = {
 	notes: ['note'],
 	blog: ['post']
@@ -578,6 +588,16 @@ export const links: RawLinkMap = {
 		url: 'http://en.wikipedia.org/wiki/Open-source_software',
 		title:
 			'Open-Source is the releasing of the original format of something so that others can improve on it freely. Learn about Open-Source on Wikipedia.'
+	},
+	stackoverflow: {
+		text: 'Stackoverflow',
+		url: 'https://stackoverflow.com/users/130638/balupton?tab=profile',
+		title: 'View my profile on Stackoverflow'
+	},
+	'stackoverflow-resume': {
+		text: 'Stackoverflow Careers',
+		url: 'https://careers.stackoverflow.com/balupton',
+		title: 'View my profile on Stackoverflow Careers'
 	},
 	html: {
 		text: 'HTML',
@@ -1478,22 +1498,52 @@ export const links: RawLinkMap = {
 			'https://www.linkedin.com/profile/pdf?id=AAEAAADwTV8B0oqoFzDk_1ijrb9zx5Dvsaq1-u8&pdfFileName=BenjaminLupton',
 		title: 'Download my CV from LinkedIn'
 	},
+	'atlas-shrugged': {
+		text: 'Atlas Shrugged',
+		title: 'Ayn Rand — Atlas Shrugged',
+		url: '/amazon/0451191145',
+		tags: ['recommendation', 'book']
+	},
+	steppenwolf: {
+		text: 'Steppenwolf',
+		title: 'Hermann Hesse — Steppenwolf',
+		url: '/amazon/0875867839',
+		tags: ['recommendation', 'book']
+	},
+	walden: {
+		text: 'Walden',
+		title: 'Henry David Thoreau — Walden',
+		url: '/amazon/1494812509',
+		tags: ['recommendation', 'book']
+	},
+	speakerrate: {
+		text: 'SpeakerRate',
+		title: "View the trainings I've given on SpeakerRate",
+		url: 'http://speakerrate.com/speakers/11963-benjamin-lupton'
+	},
+	talks: {
+		text: 'Talks',
+		title: "View the talks I've given via YouTube",
+		url:
+			'https://www.youtube.com/playlist?list=PLYVl5EnzwqsQs0tBLO6ug6WbqAbrpVbNf'
+	},
 	'porn-generation': {
 		text: 'Porn Generation',
 		title:
-			'Porn Generation: How Social Liberalism Is Corrupting Our Future: Ben Shapiro',
+			'Ben Shapiro — Porn Generation: How Social Liberalism Is Corrupting Our Future',
 		url: '/amazon/0895260166',
-		tags: ['recommendation']
+		tags: ['recommendation', 'book']
 	},
 	'wright-relationships': {
 		text: 'Some Thoughts About Relationships',
-		title: 'Some Thoughts About Relationships: Colin Wright, Joshua Fields',
+		title: 'Colin Wright, Joshua Fields — Some Thoughts About Relationships',
 		url: '/amazon/B00XCSPJ5S',
-		tags: ['recommendation']
+		tags: ['recommendation', 'book']
 	}
 }
 
 export const linkAliases: LinkAliasMap = {
+	trainings: 'speakerrate',
 	vegetarian: 'vegan',
 	jbpsg: 'jbpstudygroup',
 	jbpvids: 'jbpyoutube',
