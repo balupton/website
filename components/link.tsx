@@ -1,53 +1,28 @@
 import React from 'react'
-import { Children } from '../lib/types'
+import { LinkProps } from '../types/app'
 import Error from './error'
 import NextLink from 'next/link'
-import links, { BaseLink, LinkCode } from '../lib/links'
-import { StrictUnion } from 'simplytyped'
-
-export type BaseProps = {
-	children?: Children
-	code?: LinkCode
-	href?: string
-	title?: string
-	className?: string
-	color?: boolean
-}
-export type LinkProps = StrictUnion<
-	(BaseProps & { code: LinkCode }) | (BaseProps & { href: string })
->
+import { getLink } from '../lib/links'
 
 export default function JSXLink(props: LinkProps) {
-	let link: BaseLink
-
+	let data: LinkProps
 	if (props.code) {
-		if (!links[props.code])
-			return (
-				<Error>
-					No link for <code>{props.code}</code>
-				</Error>
-			)
-		link = Object.assign({}, links[props.code])
-		if (props.href) link.url = props.href
-		if (props.title) link.title = props.title
-		if (props.children) link.text = props.children
+		const link = getLink(props.code)
+		if (!link) return <Error>No link for: {props.code}</Error>
+		data = Object.assign({}, link, props)
 	} else {
-		link = {
-			url: props.href || '',
-			title: props.title,
-			text: props.children || ''
-		}
+		data = Object.assign({}, props)
 	}
 
-	if (!link.url) return <Error>Link is missing URL</Error>
+	if (!data.url) return <Error>No link URL</Error>
 
 	const style: { color?: string } = {}
-	if (link.color && props.color) style.color = link.color
+	if (props.useColor && data.color) style.color = data.color
 
 	return (
-		<NextLink href={link.url}>
-			<a title={link.title} style={style} className={props.className}>
-				{link.text}
+		<NextLink href={data.url}>
+			<a title={data.title} style={style} className={props.className}>
+				{data.children || data.text}
 			</a>
 		</NextLink>
 	)

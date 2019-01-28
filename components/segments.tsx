@@ -28,7 +28,7 @@ export function SubHeading() {
 export function About() {
 	return (
 		<>
-			This website is created with <Link code="zeit">Zeit&apos;s</Link>{' '}
+			This website is created with <Link code="zeit">ZEIT&apos;s</Link>{' '}
 			<Link code="nextjs" /> and is <Link code="source">open-source</Link>.
 		</>
 	)

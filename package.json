@@ -72,9 +72,9 @@
     "singleQuote": true
   },
   "scripts": {
-    "my:compile:files": "ts-node ./scripts/files.ts",
+    "my:compile:app": "ts-node ./scripts/compile.ts",
     "our:clean": "rm -Rf ./docs ./edition* ./es2015 ./es5 ./out ./.next",
-    "our:compile": "yarn run my:compile:files && yarn run our:compile:next",
+    "our:compile": "yarn run my:compile:app && yarn run our:compile:next",
     "our:compile:next": "next build",
     "our:deploy": "echo no need for this project",
     "our:meta": "yarn run our:meta:projectz",
@@ -90,7 +90,7 @@
     "our:verify:stylelint": "echo 'disabled due to https://spectrum.chat/?t=d1b9f61a-65e8-42a3-9042-f9c6a6fae6fd'",
     "our:verify:typescript": "tsc --noEmit --project .",
     "now-build": "yarn run our:compile:next",
-    "start": "yarn run our:verify && next dev"
+    "start": "yarn run my:compile:app && yarn run our:verify && next dev"
   },
   "dependencies": {
     "@types/react": "^16.7.21",
@@ -105,12 +105,15 @@
     "@typescript-eslint/eslint-plugin": "^1.1.0",
     "@typescript-eslint/parser": "^1.1.0",
     "@zeit/next-typescript": "1.1.2-canary.0",
+    "docmatter": "^1.1.0",
     "eslint": "^5.12.1",
     "eslint-config-bevry": "^1.2.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-hooks": "^0.0.0",
+    "fast-glob": "^2.2.6",
+    "make-dir": "^1.3.0",
     "mdx": "^0.3.1",
     "next": "8.0.0-canary.15",
     "now": "13.1.2",

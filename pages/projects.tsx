@@ -1,10 +1,10 @@
 import React from 'react'
-import Layout from '../layouts/page'
+import Layout from '../layouts/default'
 import ProjectList from '../components/project-list'
-import { Projects, Stats } from '../lib/types'
+import { Project, Stats } from '../types/app'
 
 interface Props {
-	projects: Projects
+	projects: Project[]
 	stats: Stats
 }
 
@@ -13,8 +13,8 @@ export default function ProjectsPage({
 	stats = { githubStars: 0, githubForks: 0 }
 }: Props) {
 	return (
-		<Layout code="projects">
-			<ProjectList projects={projects} />
+		<Layout code="projects" useTitle={false}>
+			<ProjectList items={projects} />
 			<h3>Totals</h3>
 			<ul>
 				<li>Projects: {projects.length}</li>

@@ -1,48 +1,40 @@
 import React from 'react'
-import site from '../lib/site'
-import feeds from '../lib/feeds'
-import menu from '../lib/menu'
-import { MetaPage, Children } from '../lib/types'
+import { site } from '../config'
+import { SiteProps } from '../types/app'
+import { uniq } from '../lib/util'
 
 import Head from 'next/head'
 import Link from '../components/link'
 import { About, SubHeading, Copyright } from '../components/segments'
-// import Contact from '../components/contact.mdx'
+import Contact from '../components/contact.mdx'
 import { getLinksByTag, getLink } from '../lib/links'
 
-interface Props {
-	url?: string
-	meta: MetaPage
-	children: Children
-}
-
-export default function DefaultLayout({ url, meta, children }: Props) {
-	const title = meta.title ? `${meta.title} | ${site.title}` : site.title
-	const author = meta.author || site.author
-	const description = meta.description || site.description
-	const keywords = site.keywords.concat(meta.keywords || []).join(', ')
+export default function DefaultLayout(props: SiteProps) {
+	const link = props.code ? getLink(props.code) : null
+	const data = Object.assign({}, site, link, props)
+	data.tags = uniq(site.tags, link && link.tags, props && props.tags)
 	return (
 		<>
 			<Head>
 				<meta charSet="utf-8" />
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 				<meta httpEquiv="content-type" content="text/html; charset=utf-8" />
-				<title>{title}</title>
-				<meta name="title" content={title} />
-				<meta name="author" content={author} />
-				<meta name="description" content={description} />
-				<meta name="keywords" content={keywords} />
+				<title>{data.title}</title>
+				<meta name="title" content={data.title} />
+				<meta name="author" content={data.author} />
+				<meta name="description" content={data.description} />
+				<meta name="keywords" content={data.tags.join(', ')} />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link
 					rel="stylesheet"
 					href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css"
 				/>
 				<link rel="stylesheet" href="/static/styles/style.css" />
-				{feeds.map(({ href, title }) => (
+				{getLinksByTag('feed').map(({ code, url, text }) => (
 					<link
-						key={href}
-						href={href}
-						title={title}
+						key={code}
+						href={url}
+						title={text as string}
 						type="application/atom+xml"
 						rel="alternate"
 					/>
@@ -61,10 +53,10 @@ export default function DefaultLayout({ url, meta, children }: Props) {
 
 			<nav className="pages">
 				<ul>
-					{menu.map(code => (
+					{site.menu.map(code => (
 						<li
 							key={code}
-							className={url === getLink(code).url ? 'active' : 'inactive'}
+							className={data.url === getLink(code).url ? 'active' : 'inactive'}
 						>
 							<Link code={code} />
 						</li>
@@ -72,8 +64,30 @@ export default function DefaultLayout({ url, meta, children }: Props) {
 				</ul>
 			</nav>
 
-			<article className="page" typeof="soic:page" about={url}>
-				{children}
+			<article className="page" typeof="soic:page" about={data.url}>
+				{data.useTitle === false || !data.title ? (
+					''
+				) : (
+					<header className="page-header">
+						<Link url="." className="page-link">
+							<h1>
+								<strong className="page-title" property="dcterms:title">
+									{data.title}
+								</strong>
+								{data.useDate === false || !data.date ? (
+									''
+								) : (
+									<small className="page-date" property="dc:date">
+										{new Date(data.date).toDateString()}
+									</small>
+								)}
+							</h1>
+						</Link>
+					</header>
+				)}
+				<div className="page-content" property="soic:content">
+					{data.children}
+				</div>
 			</article>
 
 			<footer className="footing">
@@ -89,7 +103,7 @@ export default function DefaultLayout({ url, meta, children }: Props) {
 				<section className="links">
 					{getLinksByTag('social').map(link => (
 						<h1 key={link.code}>
-							<Link color={true} code={link.code} />
+							<Link useColor={true} code={link.code} />
 						</h1>
 					))}
 				</section>
@@ -99,13 +113,15 @@ export default function DefaultLayout({ url, meta, children }: Props) {
 				<section className="links">
 					{getLinksByTag('social').map(link => (
 						<h3 key={link.code}>
-							<Link color={true} code={link.code} />
+							<Link useColor={true} code={link.code} />
 						</h3>
 					))}
 				</section>
 			</aside>
 
-			<aside className="modal contact hide" />
+			<aside className="modal contact hide">
+				<Contact />
+			</aside>
 
 			<aside className="modal backdrop hide" />
 		</>

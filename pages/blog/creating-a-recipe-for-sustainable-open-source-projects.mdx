@@ -1,11 +1,12 @@
-import Layout from '../../layouts/post'
-import Link from '../../components/link'
-
-export const meta = {
-	title: 'Lets create a receipe for sustainable open-source projects!',
-	date: '2012-12-14',
-	keywords: 'life, rant'
+```json
+{
+	"title": "Lets create a receipe for sustainable open-source projects!",
+	"date": "2012-12-14",
+	"tags": "life, rant"
 }
+```
+
+import Link from '../../components/link'
 
 The [uproar](https://twitter.com/dhh/status/278615042679783424) between @dhh and @ryanbigg on twitter the other day go me thinking.
 
@@ -74,5 +75,3 @@ So I'm turning to the community to get a discussion going. What needs to happen 
 - Merging both intrinsic and extrinsic motivation provides some interesting results. The solution is that you should be paid enough to cover your ideal lifestyle. [For more info, check out this amazing video by RSAnimate.](http://chill.com/balupton/post/9cf527dd489b4e4e8364ddbb3644bcae/rsa-animate-drive-the-surprising-truth-about-what-motivates-us)
 - If the topic of motivation interests you, check out the [Bevry Essentials Chill Collection](http://chill.com/balupton/collection/bevry-essentials) which has more videos on the subject.
 - As a type of workaround to this issue, checkout [Startup Hostel](http://startuphostel.org) which aims to provide amazing places where people can work together on what they love without money ever being an issue.
-
-export default ({ children }) => <Layout meta={meta}>{children}</Layout>

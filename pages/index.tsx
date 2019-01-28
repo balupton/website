@@ -1,12 +1,12 @@
 import React from 'react'
-import Layout from '../layouts/page'
+import Layout from '../layouts/default'
 import Link from '../components/link'
 import Text from '../components/text'
 import Hidden from '../components/hidden'
 
 export default function IndexPage() {
 	return (
-		<Layout code="home" title={false}>
+		<Layout code="home" useTitle={false}>
 			<section className="work">
 				<h2>I radically explore the known and the unknown.</h2>
 
@@ -192,7 +192,7 @@ export default function IndexPage() {
 					<Link code="wordpress" />
 					). I also visited <Link code="switzerland" /> for a month to visit my
 					partner, started an <Link code="openrel">open-relationship</Link> upon
-					my return to <Link code="Perth" />, which resulted in a first heart
+					my return to <Link code="perth" />, which resulted in a first heart
 					break 6 months later, and also partied very hard throughout the year.
 				</p>
 
@@ -399,17 +399,17 @@ export default function IndexPage() {
 
 				<ul>
 					<li>
-						<Link href="https://medium.com/ephemeral-living/surviving-free-culture-f99b39ceb059">
+						<Link url="https://medium.com/ephemeral-living/surviving-free-culture-f99b39ceb059">
 							Surviving Free Culture
 						</Link>
 					</li>
 					<li>
-						<Link href="https://medium.com/i-m-h-o/a-different-way-to-see-google-303df2011df0">
+						<Link url="https://medium.com/i-m-h-o/a-different-way-to-see-google-303df2011df0">
 							A different way to see Google
 						</Link>
 					</li>
 					<li>
-						<Link href="http://medium.com/p/c60913a8ca5b">
+						<Link url="http://medium.com/p/c60913a8ca5b">
 							What vegans and non-vegans alike don’t get about veganism, and why
 							dialogue between two sides often results in unnecessary
 							confrontation
@@ -425,19 +425,19 @@ export default function IndexPage() {
 
 				<ul>
 					<li>
-						<Link href="https://www.youtube.com/watch?v=hdXUc46gx8s">
+						<Link url="https://www.youtube.com/watch?v=hdXUc46gx8s">
 							Crime &amp; Punishment - Fyodor Dostoyevsky @ Jordan B Peterson
 							Community 2018
 						</Link>
 					</li>
 					<li>
-						<Link href="https://www.youtube.com/watch?v=IAB8_UlcNWI">
+						<Link url="https://www.youtube.com/watch?v=IAB8_UlcNWI">
 							Elegantly Produce and Consume Compiled Packages @ Node Interactive
 							Europe 2016
 						</Link>
 					</li>
 					<li>
-						<Link href="https://www.youtube.com/watch?v=nt4Gt6-T8N0">
+						<Link url="https://www.youtube.com/watch?v=nt4Gt6-T8N0">
 							Why the next big thing sucks @ Meta Refresh India 2013
 						</Link>
 					</li>
@@ -487,7 +487,7 @@ export default function IndexPage() {
 					</li>
 
 					<li>
-						<Link href="/projects">More.</Link>
+						<Link url="/projects">More.</Link>
 					</li>
 				</ul>
 
@@ -527,7 +527,7 @@ export default function IndexPage() {
 						<Link code="stackoverflow">
 							<Text code="stackoverflow-reputation" /> reputation
 						</Link>{' '}
-						on <Link href="http://stackoverflow.com/faq">StackOverflow</Link>{' '}
+						on <Link url="http://stackoverflow.com/faq">StackOverflow</Link>{' '}
 						I’ve been able to help approximately 3 million web developers with
 						my shared knowledge and expertise.
 					</p>
@@ -536,7 +536,7 @@ export default function IndexPage() {
 				<section className="awards-active">
 					<h3>
 						<br />
-						<Link href="/projects">
+						<Link url="/projects">
 							<em>
 								<strong>
 									Created <Text code="github-projects" /> open-source projects
@@ -553,7 +553,7 @@ export default function IndexPage() {
 							open-source scene in the past year
 						</Link>{' '}
 						and had my work{' '}
-						<Link href="/projects">
+						<Link url="/projects">
 							starred by over <Text code="github-stars" /> fellow developers.
 						</Link>
 					</p>
@@ -561,7 +561,7 @@ export default function IndexPage() {
 
 				<section className="awards-watched">
 					<h3>
-						<Link href="https://github.com/search?l=JavaScript&amp;q=location%3AAustralia&amp;s=followers&amp;type=Users">
+						<Link url="https://github.com/search?l=JavaScript&amp;q=location%3AAustralia&amp;s=followers&amp;type=Users">
 							<em>
 								<strong>
 									The <Text code="github-watch-rank-australia-javascript" />{' '}
@@ -572,7 +572,7 @@ export default function IndexPage() {
 							via GitHub
 						</Link>
 						<br />
-						<Link href="https://github.com/search?q=location%3AAustralia&amp;s=followers&amp;type=Users">
+						<Link url="https://github.com/search?q=location%3AAustralia&amp;s=followers&amp;type=Users">
 							<em>
 								<strong>
 									The <Text code="github-watch-rank-australia" /> most watched
@@ -620,7 +620,7 @@ export default function IndexPage() {
 				<Hidden>
 					<section className="awards-satisfaction">
 						<h3>
-							<Link href="http://www.x-linkedin.com/profile/view?id=15748447#profile-recommendations">
+							<Link url="http://www.x-linkedin.com/profile/view?id=15748447#profile-recommendations">
 								<em>
 									<strong>100% client satisfaction</strong> for the past two
 									years
@@ -630,7 +630,7 @@ export default function IndexPage() {
 						</h3>
 						<p>
 							Being able to provide a level of excellence which{' '}
-							<Link href="http://www.x-linkedin.com/profile/view?id=15748447#profile-recommendations">
+							<Link url="http://www.x-linkedin.com/profile/view?id=15748447#profile-recommendations">
 								converts potential leads into raving fans
 							</Link>
 							, won’t always be easy, but it is something I’m comitted to
@@ -645,7 +645,7 @@ export default function IndexPage() {
 							<strong>Created DocPad</strong>
 						</Link>
 						<br />
-						<Link href="https://libraries.io/npm/docpad">
+						<Link url="https://libraries.io/npm/docpad">
 							<em>
 								One of the most popular CoffeeScript projects in the world
 							</em>{' '}
@@ -665,7 +665,7 @@ export default function IndexPage() {
 							<strong>Created History.js</strong>
 						</Link>
 						<br />
-						<Link href="http://github-rank.com/star?language=JavaScript">
+						<Link url="http://github-rank.com/star?language=JavaScript">
 							<em>One of the most popular JavaScript projects in the world</em>{' '}
 							via GitHub
 						</Link>

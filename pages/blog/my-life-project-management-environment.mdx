@@ -1,11 +1,12 @@
-import Layout from '../../layouts/post'
-import Link from '../../components/link'
-
-export const meta = {
-	title: 'My Life/Project Management Environment',
-	date: '2011-05-26',
-	keywords: 'life, management'
+```json
+{
+	"title": "My Life/Project Management Environment",
+	"date": "2011-05-26",
+	"tags": "life, management"
 }
+```
+
+import Link from '../../components/link'
 
 ## The Tools
 
@@ -320,5 +321,3 @@ I'll add references to this post another day. This took more time that I had ant
 
 - I don't watch TV - that is how I have time to accomplish so much with work, and spend great quality time with my girlfriend.
 - I don't use Microsoft Office or any other document editor for that matter - I hate them, they are counter-intuitive. I write everything in markdown, then use docpad to generate a printable version for me
-
-export default ({ children }) => <Layout meta={meta}>{children}</Layout>

@@ -307,7 +307,7 @@ article.page h2 {
 	font-weight: var(--weightBoldest);
 }
 
-article.page .document-header,
+article.page .link-header,
 article.page .project-header,
 article.page h3 {
 	margin: 2em 0 0;
@@ -316,7 +316,7 @@ article.page h3 {
 	font-weight: var(--weightBold);
 }
 
-article.page .document-header a,
+article.page .link-header a,
 article.page .project-header a,
 article.page h3 a {
 	font-weight: var(--weightNormal);
@@ -332,10 +332,10 @@ article.page h4 a {
 	font-weight: var(--weightNormal);
 }
 
-article.page .document-comments:before {
+article.page .link-comments:before {
 	content: ' ✎ ';
 }
-article.page .document-date:before,
+article.page .link-date:before,
 article.page .page-date:before {
 	content: ' ⎋ ' /* ✍ */;
 }
@@ -346,8 +346,8 @@ article.page a:hover .project-stars:before {
 	content: ' ★ ';
 }
 
-article.page .document-comments,
-article.page .document-date,
+article.page .link-comments,
+article.page .link-date,
 article.page .page-date,
 article.page .project-watchers {
 	white-space: nowrap;
@@ -367,38 +367,43 @@ article.page .page-content h2 small {
 	font-weight: var(--weightLightest);
 }
 
-article.page .document-list h2,
+article.page .link-list,
+article.page .project-list {
+	list-style: none;
+}
+
+article.page .link-list h2,
 article.page .project-list h2,
 article.page section:first-of-type h2 {
 	margin: 1em 0 1em;
 }
 
-article.page .document-list .document-header,
-article.page .document-list .project-header,
-article.page .document-list h3,
-article.page .project-list .document-header,
+article.page .link-list .link-header,
+article.page .link-list .project-header,
+article.page .link-list h3,
+article.page .project-list .link-header,
 article.page .project-list .project-header,
 article.page .project-list h3,
-article.page section:first-of-type .document-header,
+article.page section:first-of-type .link-header,
 article.page section:first-of-type .project-header,
 article.page section:first-of-type h3 {
 	margin: 1em 0 0;
 }
 
-article.page .document-list .document-link .document-date,
-article.page .document-list .project-link .document-date,
-article.page .project-list .document-link .document-date,
-article.page .project-list .project-link .document-date {
+article.page .link-list .link-link .link-date,
+article.page .link-list .project-link .link-date,
+article.page .project-list .link-link .link-date,
+article.page .project-list .project-link .link-date {
 	display: none;
 }
-article.page .document-list .document-link:hover .document-date,
-article.page .document-list .project-link:hover .document-date,
-article.page .project-list .document-link:hover .document-date,
-article.page .project-list .project-link:hover .document-date {
+article.page .link-list .link-link:hover .link-date,
+article.page .link-list .project-link:hover .link-date,
+article.page .project-list .link-link:hover .link-date,
+article.page .project-list .project-link:hover .link-date {
 	display: inline;
 }
 
-article.page .document-list p.document-description,
+article.page .link-list p.link-description,
 article.page .project-list p.project-description {
 	margin-left: 1em;
 }
