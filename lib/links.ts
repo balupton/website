@@ -1,8 +1,28 @@
-import { Link, LinkMap, Tag, LinkCode, LinkCache } from '../types/app'
+import {
+	Link,
+	LinkMap,
+	Tag,
+	LinkCode,
+	LinkCache,
+	RawLink,
+	RawLinkMap
+} from '../types/app'
 
-import _linkMap from '../.app/links.json'
+import rawLinkMap from '../.app/links.json'
 
-const linkMap: LinkMap = _linkMap
+function hydrateRawLink(link: RawLink) {
+	if (link.date) link.date = new Date(link.date)
+	return link as Link
+}
+function hydrateRawLinkMap(links: RawLinkMap) {
+	Object.keys(links).forEach(function(code) {
+		const link = links[code]
+		hydrateRawLink(link)
+	})
+	return links as LinkMap
+}
+
+const linkMap: LinkMap = hydrateRawLinkMap(rawLinkMap)
 const cache: LinkCache = {}
 
 export function getLinksByTag(tag: Tag) {

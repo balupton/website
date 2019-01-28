@@ -56,6 +56,7 @@ export interface Site {
 
 export interface SiteProps extends Partial<Site> {
 	children: Children
+	date?: string // this is because mdx serialises the date
 	url?: string
 	code?: string
 	useTitle?: boolean
@@ -63,7 +64,7 @@ export interface SiteProps extends Partial<Site> {
 }
 
 export interface RawMeta {
-	date: string
+	date: string | Date
 	title: string
 	tags?: string | Tags
 	description?: string
@@ -74,13 +75,14 @@ export interface RawMeta {
 }
 
 export interface Meta extends RawMeta {
+	date: Date
 	tags: Tags
 }
 
 // ====================================
 // Links
 
-export interface RawLink extends Partial<Meta> {
+export interface RawLink extends Partial<RawMeta> {
 	url: string
 	text: string
 	as?: string
@@ -89,6 +91,7 @@ export interface RawLink extends Partial<Meta> {
 export interface Link extends RawLink {
 	tags: Tags
 	code: LinkCode
+	date?: Date
 	alias: boolean
 }
 export interface LinkProps extends Partial<Link> {

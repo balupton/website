@@ -16,7 +16,7 @@ export default function JSXDocuments({ items }: { items: Links }) {
 								''
 							) : (
 								<small className="link-date" property="dc:date">
-									{new Date(date).toDateString()}
+									{date.toDateString()}
 								</small>
 							)}
 						</Link>

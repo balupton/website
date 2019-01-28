@@ -7,5 +7,6 @@ module.exports = function parseMDX(src) {
 		: meta.tags
 		? meta.tags.split(/\s*,\s*/)
 		: []
+	if (meta.date) meta.date = new Date(meta.date)
 	return { meta, body: body || content, header }
 }
