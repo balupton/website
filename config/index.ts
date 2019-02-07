@@ -62,6 +62,233 @@ export const links: RawLinkMap = {
 	},
 
 	// Referrals
+	milanote: {
+		text: 'Milanote',
+		url: 'https://www.milanote.com/refer/rczFuD0XCFHIws2Wir',
+		title: 'Use Milanote to organise your thoughts',
+		color: '#f4511c',
+		tags: ['referral']
+	},
+	gunnar: {
+		text: 'Gunnar Glasses',
+		url: 'http://www.gopjn.com/t/RkFMSURHR0FFTEhLS0ZBTURNTUs',
+		title:
+			'Use Gunnar Glasses to work on the computer all day without eyestrain',
+		color: '#d03238',
+		tags: ['referral']
+	},
+	setapp: {
+		text: 'Setapp',
+		url: 'https://go.setapp.com/invite/uolmpyip',
+		title:
+			'Use Setapp to gain access to dozens of high quality mac apps for a low monthly price',
+		color: '#00024f',
+		tags: ['referral']
+	},
+	airtable: {
+		text: 'Airtable',
+		url: 'https://airtable.com/invite/r/pBIrCHfX',
+		title: 'Use Airtable to create powerful data rich spreadsheets',
+		color: '#2d7ff9',
+		tags: ['referral']
+	},
+	safetywing: {
+		text: 'SafetyWing',
+		url: ' https://www.safetywing.com/?referenceID=24733581',
+		title: 'Use SafetyWing for worldwide travel insurance',
+		color: '#58c5c7',
+		tags: ['referral']
+	},
+	minds: {
+		text: 'Minds',
+		url: 'https://www.minds.com/balupton?referrer=balupton',
+		title: 'Use Minds as an uncensored Facebook',
+		color: '#607d8b',
+		tags: ['referral']
+	},
+	allplants: {
+		text: 'allplants',
+		url: 'http://i.refs.cc/QeyDyNyx?u=1530661477060',
+		title: 'Use allplants to get vegan meals delivered to your door',
+		color: '#000',
+		tags: ['referral']
+	},
+	quadlock: {
+		text: 'Quad Lock',
+		url: 'http://quadlock.refr.cc/23DDGN7',
+		title: 'Use Quad Lock cases to protect your phone and mount it to anything',
+		color: '#0070bc',
+		tags: ['referral']
+	},
+	purse: {
+		text: 'Purse',
+		url: 'https://purse.io/?_r=nPY6sE',
+		title:
+			'Use Purse to purchase from Amazon with cryptocurrency at a 15% discount',
+		color: '#3b4a54',
+		tags: ['referral']
+	},
+	honey: {
+		text: 'Honey',
+		url: 'https://joinhoney.com/ref/c1ra4wf',
+		title:
+			'Use Honey to automatically apply discount coupons when you shop online',
+		color: '#ff7e27',
+		tags: ['referral']
+	},
+	bookingdotcom: {
+		text: 'Booking.com',
+		url: 'https://www.booking.com/s/27_8/b0lupt17',
+		title: 'Use Booking.com to book accomodation when traveling',
+		color: '#07c',
+		tags: ['referral']
+	},
+	transferwiseborderless: {
+		text: 'TransferWise Borderless',
+		url:
+			'https://transferwise.evyy.net/c/1328573/26105/985?u=https%3A%2F%2Ftransferwise.com%2Fborderless%2F',
+		title:
+			'Use TransferWise Borderless to have multicurrency bank accounts all around the world',
+		color: '#223049',
+		tags: ['referral']
+	},
+	signals: {
+		text: 'Signals',
+		url: 'https://signals.network/join/122653',
+		title: 'Use Signals to share trading strategies',
+		color: 'rgb(184, 117, 225)',
+		tags: ['referral']
+	},
+	gatsby: {
+		text: 'Gatsby',
+		url: 'https://www.trygatsby.com/?refcode=20cee659527b',
+		title: 'Use Gatsby to trade options',
+		color: '#F76366',
+		tags: ['referral']
+	},
+	stake: {
+		text: 'Stake',
+		url: 'https://stake.com.au?refer=benjaminl259',
+		title: 'Use Stake to invest in USA companies (Australia only)',
+		color: '#181818',
+		tags: ['referral']
+	},
+	coinstats: {
+		text: 'Coinstats',
+		url: 'https://coinstats.app.link/M4yHl2vwjO',
+		title: 'Use coinstats to track your cryptocurrency portfolio',
+		color: '#F56945',
+		tags: ['referral']
+	},
+	coinjar: {
+		text: 'CoinJar',
+		url: 'https://www.coinjar.com/_ref/@balupton',
+		title:
+			'Use CoinJar to exchange, send and receive cryptocurrency in Australia',
+		color: '#1F4F7F',
+		tags: ['referral']
+	},
+	strongcoin: {
+		text: 'StrongCoin',
+		url: 'https://strongcoin.com/?ref=1BtRZY7kfJchkzKxs19MyYiQ3ampuQpHEQ',
+		title: 'Use StrongCoin as your cryptocurrency wallet',
+		color: '#313840',
+		tags: ['referral']
+	},
+	changelly: {
+		text: 'Changelly',
+		url: 'https://changelly.com/?ref_id=51f081f500f5',
+		title: 'Use Changelly to convert your cryptocurrencies',
+		color: '#10d078',
+		tags: ['referral']
+	},
+	changenow: {
+		text: 'ChangeNOW',
+		url: 'https://changenow.io?link_id=4861c40d846b4f',
+		title: 'Use ChangeNOW to convert your cryptocurrencies',
+		color: '#3bee81',
+		tags: ['referral']
+	},
+	coinex: {
+		text: 'CoinEx',
+		url: 'https://www.coinex.com/account/signup?refer_code=eb7ra',
+		title: 'Use CoinEx to convert your cryptocurrencies',
+		color: '#52cbca',
+		tags: ['referral']
+	},
+	bestrate: {
+		text: 'BestRate',
+		url:
+			'https://bestrate.org/ico-payment-tools?ref=e112faab88bb14fe4e8e92edcdab3ffa',
+		title: 'Use BestRate to convert your cryptocurrencies',
+		color: '#f9cc33',
+		tags: ['referral']
+	},
+	heleum: {
+		text: 'Heleum',
+		url: 'https://app.heleum.com/r/cbdc906a6e',
+		title: 'Use Heleum to autoinvest in cryptocurrencies',
+		color: '#333333',
+		tags: ['referral']
+	},
+	voyager: {
+		text: 'Voyager',
+		url:
+			'https://www.investvoyager.com/?campaignId=nAHw2Rl4_mpooRv_Hs8wNxMBxAU&referralCode=DAKh4E5&code=GETBTC25',
+		title: 'Use Voyager to trade cryptocurrency',
+		color: '##3831ab',
+		tags: ['referral']
+	},
+	bitmex: {
+		text: 'BitMEX',
+		url: 'https://www.bitmex.com/register/1Gn7Rt',
+		title: 'Use BitMEX to trade cryptocurrency',
+		color: '#575b5c',
+		tags: ['referral']
+	},
+	exmo: {
+		text: 'Exmo',
+		url: 'https://exmo.com/?ref=561025',
+		title: 'Use Exmo to trade cryptocurrency',
+		color: '#347ffb',
+		tags: ['referral']
+	},
+	coinfalcon: {
+		text: 'Coinfalcon',
+		url: 'https://coinfalcon.com/?ref=CFJSAHMWFPYV',
+		title: 'Use Coinfalcon to trade cryptocurrency',
+		color: '#1ab6ff',
+		tags: ['referral']
+	},
+	cobinhood: {
+		text: 'Cobinhood',
+		url:
+			'https://cobinhood.com?referrerId=b7c14dfb-20cb-4bb0-9398-8e5a89d01755',
+		title: 'Use Cobinhood to trade cryptocurrency',
+		color: '#13be99',
+		tags: ['referral']
+	},
+	workfrom: {
+		text: 'Workfrom',
+		url: 'http://wkfr.co/r/awesome-34501',
+		title: 'Use Workfrom to find places you can work from with your laptop',
+		color: '#484848',
+		tags: ['referral']
+	},
+	digitalocean: {
+		text: 'DigitalOcean',
+		url: 'https://m.do.co/c/713bd82265f6',
+		title: 'Use DigitalOcean to host your apps in the cloud',
+		color: '#0069ff',
+		tags: ['referral']
+	},
+	onedrive: {
+		text: 'OneDrive',
+		url: 'https://onedrive.live.com?invref=40826b4caaef6e4e&invscr=90',
+		title: 'Use OneDrive tosync your local files with the cloud',
+		color: '#0078d7',
+		tags: ['referral']
+	},
 	earn: {
 		text: 'Earn.com',
 		url: 'https://earn.com/balupton/referral/?a=jj1ifwhour6qsw1d',
@@ -78,11 +305,25 @@ export const links: RawLinkMap = {
 		color: '#ff401e',
 		tags: ['referral']
 	},
+	collideref: {
+		text: 'Collide',
+		url: 'https://www.collide.com/creator/onboard/signup?os=referral-r4276',
+		title: 'Use Collide to earn money from your fanbase',
+		color: '#292929',
+		tags: ['referral']
+	},
 	patreonref: {
 		text: 'Patreon',
 		url: 'https://patreon.com/invite/pbqzz',
 		title: 'Use Patreon to earn money from your fanbase',
 		color: '#E6461A',
+		tags: ['referral']
+	},
+	bitchute: {
+		text: 'BitChute',
+		url: 'https://www.bitchute.com/accounts/referral/balupton/',
+		title: 'Use BitChute as a decentralised YouTube alternative',
+		color: '#ef4136',
 		tags: ['referral']
 	},
 	earthrunners: {
@@ -149,7 +390,7 @@ export const links: RawLinkMap = {
 		text: 'Amazon',
 		url: `https://www.amazon.com/?tag=${amazonCode}`,
 		title: 'Use Amazon to buy books',
-		color: 'rgb(228, 121, 17)',
+		color: '#e47911',
 		tags: ['referral']
 	},
 	airbnb: {
@@ -166,24 +407,25 @@ export const links: RawLinkMap = {
 		color: '#00344B',
 		tags: ['referral']
 	},
-	acorns: {
-		text: 'Acorns',
-		url: 'https://app.acornsau.com.au/invite/83UNQY',
-		title: 'Use Acorns to open an Australian investment account',
-		color: '#54bd45',
+	raiz: {
+		text: 'Raiz',
+		url: 'https://app.raizinvest.com.au/invite/83UNQY',
+		title: 'Use Raiz to open an Australian investment account',
+		color: '#221b34',
 		tags: ['referral']
 	},
 	n26: {
 		text: 'N26 Bank',
-		url: 'mailto:b@lupton.cc?subject=Send%20me%20a%20N26%20invite%20please!',
+		url: 'https://n26.com/r/benjamil6310',
 		title: 'Use N26 Bank for European and International banking',
 		color: '#26afb8',
 		tags: ['referral']
 	},
 	transferwise: {
 		text: 'TransferWise',
-		url: 'https://transferwise.com/u/bff1c1',
-		title: 'Use TransferWise to avoid international transfer fees',
+		url: 'https://transferwise.evyy.net/c/1328573/26105/985',
+		title:
+			'Use TransferWise to send money around the world as quickly and cheaply as possible',
 		color: '#223049',
 		tags: ['referral']
 	},
@@ -197,8 +439,7 @@ export const links: RawLinkMap = {
 	drivewealth: {
 		text: 'DriveWealth',
 		url: 'https://drivewealth.com/refer?r=A74082&name=Benjamin',
-		title:
-			'Use DriveWealth to invest in USA companies, even if you live outside of the USA',
+		title: 'Use DriveWealth to invest in USA companies (USA only)',
 		color: '#FEC108',
 		tags: ['referral']
 	},
@@ -219,14 +460,14 @@ export const links: RawLinkMap = {
 	benco: {
 		text: 'Ben.co',
 		url: 'https://ben.onelink.me/kTE6/9181c018',
-		title: 'Use Ben.co to exchange, send and receive cryptocurrency',
+		title: 'Use Ben as your cryptocurrency wallet',
 		color: '#1f6473',
 		tags: ['referral']
 	},
 	circle: {
 		text: 'Circle Finance',
 		url: 'https://www.circle.com/invite/DTIKU0',
-		title: 'Use Circle Finance to exchange, send and receive cryptocurrency',
+		title: 'Use Circle to exchange, send and receive cryptocurrency',
 		color: '#aacc38',
 		tags: ['referral']
 	},
@@ -244,6 +485,13 @@ export const links: RawLinkMap = {
 		color: '#0091ff',
 		tags: ['referral']
 	},
+	bitwala: {
+		text: 'Bitwala',
+		url: 'https://preregister.bitwala.com/r/H1ZIwz2x3G',
+		title: 'Use Bitwala to trade cryptocurrency',
+		color: '#5a85d7',
+		tags: ['referral']
+	},
 	cex: {
 		text: 'Luno',
 		url: 'https://cex.io/r/0/up107824702/0/',
@@ -251,10 +499,17 @@ export const links: RawLinkMap = {
 		color: '#00bdca',
 		tags: ['referral']
 	},
-	quoinex: {
-		text: 'Quoinex',
-		url: 'https://accounts.quoinex.com/sign-up?affiliate=v6Qki8rH43648',
-		title: 'Use Quoinex to trade cryptocurrency',
+	xs2: {
+		text: 'XS2',
+		url: 'https://xs2.exchange/r/208',
+		title: 'Use XS2 to trade cryptocurrency',
+		color: '#3097d1',
+		tags: ['referral']
+	},
+	liquid: {
+		text: 'Liquid',
+		url: 'https://accounts.liquid.com/sign-up?affiliate=v6Qki8rH43648',
+		title: 'Use Liquid to trade cryptocurrency',
 		color: '#2a9ff8',
 		tags: ['referral']
 	},
@@ -297,7 +552,7 @@ export const links: RawLinkMap = {
 	},
 	iherb: {
 		text: 'iHerb',
-		url: 'http://www.iherb.com/iherb-brands?rcode=DNF509',
+		url: 'http://www.iherb.com/iherb-brands?rcode=DNF509&pcode=10NEWAU',
 		title: 'Use iHerb to buy supplements',
 		color: '#458500',
 		tags: ['referral']
@@ -319,7 +574,7 @@ export const links: RawLinkMap = {
 	vultr: {
 		text: 'Vultr',
 		url: 'http://www.vultr.com/?ref=7196060',
-		title: 'Use Vultr to host yout apps on virtual machiens in the cloud',
+		title: 'Use Vultr to host your apps on virtual machines in the cloud',
 		color: '#1e88e5',
 		tags: ['referral']
 	},
@@ -342,7 +597,7 @@ export const links: RawLinkMap = {
 	dropbox: {
 		text: 'Dropbox',
 		url: 'https://db.tt/XFuEv8vB',
-		title: 'Use Dropbox to host sync your local files into the cloud',
+		title: 'Use Dropbox to sync your local files with the cloud',
 		color: '#007ee5',
 		tags: ['referral']
 	},
@@ -376,10 +631,25 @@ export const links: RawLinkMap = {
 		color: '#ff4a00',
 		tags: ['referral']
 	},
+	ovo: {
+		text: 'OVO',
+		url: 'http://fanclub.ovo.com.au/mQe3Ahx',
+		title: 'Use OVO for your phone plan in Australia (Telstra Network)',
+		color: '#6b37ff',
+		tags: ['referral']
+	},
+	belong: {
+		text: 'Belong',
+		url: 'https://www.belong.com.au/iaf?promo=IAF6Y56XY',
+		title:
+			'Use Belong for your phone and broadband plans in Australia (Telstra Network)',
+		color: '#41b6e6',
+		tags: ['referral']
+	},
 	amaysim: {
 		text: 'Amaysim',
 		url: 'http://amaysi.ms/balupton',
-		title: 'Use Amaysim for your phone plan in Australia',
+		title: 'Use Amaysim for your phone plan in Australia (Optus Network)',
 		color: '#e65014',
 		tags: ['referral']
 	},
@@ -412,8 +682,8 @@ export const links: RawLinkMap = {
 		color: '#7bc4c4',
 		tags: ['referral']
 	},
-	circleinternet: {
-		text: 'Circle',
+	circlemedia: {
+		text: 'Circle Media',
 		url: 'http://mbsy.co/dSfLv',
 		title: 'Use Circle to track and limit your internet usage over any device',
 		color: '#00b7d9',
@@ -1209,6 +1479,11 @@ export const links: RawLinkMap = {
 		title:
 			'In this bracing talk, coral reef ecologist Jeremy Jackson lays out the shocking state of the ocean today: overfished, overheated, polluted, with indicators that things will get much worse. Astonishing photos and stats make the case.'
 	},
+	email: {
+		text: 'Email me',
+		url: 'mailto:b@lupton.cc',
+		title: 'Send me an email'
+	},
 	burnout: {
 		text: 'Burnout',
 		url: 'http://burnout.io',
@@ -1423,27 +1698,6 @@ export const links: RawLinkMap = {
 		color: '#31a4d9',
 		tags: ['social']
 	},
-	patreon: {
-		text: 'Patreon',
-		url: 'https://patreon.com/bevry',
-		title: 'Support me on Patreon',
-		color: '#E6461A',
-		tags: ['social']
-	},
-	flattr: {
-		text: 'Flattr',
-		url: 'https://flattr.com/profile/balupton',
-		title: 'Support me on Flattr',
-		color: '#66b115',
-		tags: ['social']
-	},
-	paypal: {
-		text: 'Paypal',
-		url: 'https://paypal.me/balupton',
-		title: 'Support me on Paypal',
-		color: '#009cde',
-		tags: ['social']
-	},
 	vimeo: {
 		text: 'Vimeo',
 		url: 'https://vimeo.com/balupton',
@@ -1451,12 +1705,97 @@ export const links: RawLinkMap = {
 		color: '#27a6d1',
 		tags: ['social']
 	},
+	angellist: {
+		text: 'Angel List',
+		url: 'http://angel.co/balupton',
+		title: 'View my profile on Angel List',
+		color: '#333',
+		tags: ['social']
+	},
+	opencollective: {
+		text: 'Open Collective',
+		url: 'https://opencollective.com/balupton',
+		title: 'View my profile on Open Collective',
+		color: 'rgb(51, 133, 255)',
+		tags: ['social']
+	},
+	snapchat: {
+		text: 'Snapchat',
+		url: 'https://www.snapchat.com/add/balupton',
+		title: "See what I'm up to via SnapChat",
+		color: 'gold',
+		tags: ['social']
+	},
+	// Donate
+	collide: {
+		text: 'Collide',
+		url: 'https://www.collide.com/creator/balupton',
+		title: 'Support me on Collide',
+		color: '#292929',
+		tags: ['social', 'donate']
+	},
+	bitpatron: {
+		text: 'BitPatron',
+		url: 'https://vrlps.co/py79b8w/cp',
+		title: 'Support me on BitPatron',
+		color: '#ff4828',
+		tags: ['social', 'donate']
+	},
+	bitbacker: {
+		text: 'BitBacker',
+		url: 'https://bitbacker.io/user/balupton/',
+		title: 'Support me on BitBacker',
+		color: '#258ac1',
+		tags: ['social', 'donate']
+	},
+	flattr: {
+		text: 'Flattr',
+		url: 'https://flattr.com/profile/balupton',
+		title: 'Support me on Flattr',
+		color: '#66b115',
+		tags: ['social', 'donate']
+	},
+	liberapay: {
+		text: 'Liberapay',
+		url: 'https://liberapay.com/balupton',
+		title: 'Support me on Liberapay',
+		color: '#f6c915',
+		tags: ['social', 'donate']
+	},
+	patreon: {
+		text: 'Patreon',
+		url: 'https://patreon.com/balupton',
+		title: 'Support me on Patreon',
+		color: '#E6461A',
+		tags: ['social', 'donate']
+	},
+	buymeacoffee: {
+		text: 'Buy Me A Coffee',
+		url: 'https://www.buymeacoffee.com/balupton',
+		title: 'Support me on Buy Me A Coffee',
+		color: '#FF813F',
+		tags: ['social', 'donate']
+	},
+	thanksapp: {
+		text: 'GiveThanks',
+		url: 'https://givethanks.app/u/balupton',
+		title: 'Support me on GiveThanks',
+		color: '#3c3c3c',
+		tags: ['social', 'donate']
+	},
+	paypal: {
+		text: 'Paypal',
+		url: 'https://paypal.me/balupton',
+		title: 'Support me on Paypal',
+		color: '#009cde',
+		tags: ['social', 'donate']
+	},
 	wishlist: {
 		text: 'Wishlist',
 		url: `http://amzn.com/w/2F8TXKSNAFG4V?tag=${amazonCode}`,
 		title: 'Buy me something on my Amazon Wishlist',
 		color: 'rgb(228, 121, 17)',
-		tags: ['social']
+		tags: ['social', 'donate']
 	},
 	// Sustainability
 	sustainability: {
@@ -1494,8 +1833,7 @@ export const links: RawLinkMap = {
 	},
 	cv: {
 		text: 'Curriculum Vitae.',
-		url:
-			'https://www.linkedin.com/profile/pdf?id=AAEAAADwTV8B0oqoFzDk_1ijrb9zx5Dvsaq1-u8&pdfFileName=BenjaminLupton',
+		url: 'https://www.linkedin.com/dms/C5604AQGsURw218VRYw/profile-profilePdf/',
 		title: 'Download my CV from LinkedIn'
 	},
 	'atlas-shrugged': {
@@ -1543,6 +1881,13 @@ export const links: RawLinkMap = {
 }
 
 export const linkAliases: LinkAliasMap = {
+	gratipay: '/liberapay',
+	gittip: '/liberapay',
+	circleinternet: 'circlemedia',
+	quoinex: 'liquid',
+	circlepay: 'circle',
+	circlefinance: 'circle',
+	acorns: 'raiz',
 	trainings: 'speakerrate',
 	vegetarian: 'vegan',
 	jbpsg: 'jbpstudygroup',

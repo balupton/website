@@ -38,6 +38,7 @@ export type Tag =
 	| 'social'
 	| 'alias'
 	| 'feed'
+	| 'donate'
 	| string
 export type Tags = Tag[]
 

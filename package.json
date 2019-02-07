@@ -96,9 +96,11 @@
     "@types/react": "^16.7.21",
     "@types/react-dom": "^16.0.11",
     "@zeit/next-mdx": "^1.2.0",
+    "githubauthquerystring": "^1.0.2",
     "react": "16.8.0-alpha.1",
     "react-dom": "16.8.0-alpha.1",
-    "simplytyped": "^1.7.0"
+    "simplytyped": "^1.7.0",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "@types/next": "^7.0.6",

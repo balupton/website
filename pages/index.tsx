@@ -79,7 +79,7 @@ export default function IndexPage() {
 					correlations between identity and character exist, however the degree
 					that someone&apos;s identity has influenced their character fluctuates
 					from person to person (so while identity influences character,
-					remember to access your judgements properly), and (3) due to the
+					remember to assess your judgements properly), and (3) due to the
 					endeavours of my ancestors and society I&apos;ve been afforded more
 					free time (but no less agency) to spend continuing the tradition of
 					increasing people&apos;s potential for self-actualisation (the
@@ -346,26 +346,37 @@ export default function IndexPage() {
 
 				<p>
 					In 2017 (age 27/28), I resumed then paused my lucrative freelancing,
-					and completed the switch to{' '}
+					to experiment with{' '}
 					<Link code="trading">
 						automated/algorithmic stock and cryptocurrency trading
 					</Link>
-					. Now I can grow and make money outside of the tech world&apos;s
-					autocratic political delusions, and use the profits to create several
-					businesses of varying scale. I also moved from Australia to Asia and
-					will be motorbiking around for my own sanity.
+					, a field where I hypothesize that eventually data science, machine
+					learning, and artificial intelligence will intersect with trading
+					markets to the extent of economic terrorism. My intent was merely to
+					gain understanding to fill in my major blind spots, and to see how
+					much profits my aptitudes will get me before it became too late. This
+					proved somewhat successful, it allowed me to grow personally and make
+					some money outside of the tech world&apos;s autocratic political
+					delusions, and was the catalyst for my move from Australia to Asia.{' '}
 				</p>
 
 				<p>
-					In 2018 (age 28/29), I anticipate developments in data science,
-					machine learning, and artificial intelligence will intersect with
-					trading markets, to the extent of economic terrorism. I intend to see
-					how much profits my aptitudes will get me before it is too late.
+					In 2018 (age 28/29), to facilitate my trading efforts, I studied
+					devops, economics, and decision making. This made me realise: (1)
+					there would be a major downturn in the crypto market, (2) one man
+					alone cannot build everything by himself, and (3) that the tech
+					industry is marching towards suicide from its severe gaps of knowledge
+					in philosophy, psychology, and economics. This caused me to rethink my
+					direction, and to spend the last half of the year wrapping up all my
+					various projects, so that I could focus only on my most meaningful
+					initiatives: (1) a platform to revivify speakable knowledge, and (2)
+					to enrol into University of Melbourne to refine my understandings of
+					philosophy, psychology, and economics.
 				</p>
 
 				<p>
-					In 2019 (age 30/31), I wish to start focusing on having a family for
-					the years ahead.
+					In 2019 (age 30/31), I will be studying a Graduate Diploma in Arts
+					(Philosophy) at the University of Melbourne.
 				</p>
 
 				<h3>Reach out.</h3>
