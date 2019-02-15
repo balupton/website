@@ -1,16 +1,21 @@
 sudo: false
 language: node_js
 node_js:
-- '8'
+  - '8'
 matrix:
   fast_finish: true
   allow_failures: []
 cache: yarn
 install:
-- eval "$(curl -fsSL https://raw.githubusercontent.com/bevry/awesome-travis/2d86ca6ebe8730048750eeeb3845e8857dc89aa0/scripts/node-install.bash)"
+  - >-
+    eval "$(curl -fsSL
+    https://raw.githubusercontent.com/bevry/awesome-travis/2d86ca6ebe8730048750eeeb3845e8857dc89aa0/scripts/node-install.bash)"
 before_script:
-- eval "$(curl -fsSL https://raw.githubusercontent.com/bevry/awesome-travis/2d86ca6ebe8730048750eeeb3845e8857dc89aa0/scripts/node-verify.bash)"
+  - >-
+    eval "$(curl -fsSL
+    https://raw.githubusercontent.com/bevry/awesome-travis/2d86ca6ebe8730048750eeeb3845e8857dc89aa0/scripts/node-verify.bash)"
 notifications:
   email:
     recipients:
-      secure: RzE9quFx6LzluwI9yySjFVxCLtmgY2rlh+m9XQZEc+xh1fy8+4dy5/nd0TfsJ2Hx3LYeeVVYs3GDh8gpQshNxEECiXBXK8iP3u6/9XrLe/NW/rJW44PlC0Y4BAwp9z4kJaJcxAu698KS6QF6Tyead4m5qNe1UMgZl1eD1IO9+Vw=
+      secure: >-
+        RzE9quFx6LzluwI9yySjFVxCLtmgY2rlh+m9XQZEc+xh1fy8+4dy5/nd0TfsJ2Hx3LYeeVVYs3GDh8gpQshNxEECiXBXK8iP3u6/9XrLe/NW/rJW44PlC0Y4BAwp9z4kJaJcxAu698KS6QF6Tyead4m5qNe1UMgZl1eD1IO9+Vw=

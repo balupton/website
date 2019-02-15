@@ -1,21 +1,23 @@
-import { Meta, Link, LinkMap } from '../types/app'
-
 import * as pathUtil from 'path'
 import { promises as fs } from 'fs'
-import * as parseMDX from '../tooling/parse-mdx'
 import globber from 'fast-glob'
 import * as mkdirp from 'make-dir'
 
-import { links, linkAliases, directoryTags } from '../config'
-
-const cachePath = pathUtil.join(__dirname, '..', '.app')
-const linksPath = pathUtil.join(__dirname, '..', '.app', 'links.json')
-const pagesPath = pathUtil.join(__dirname, '..', 'pages')
-const pagesGlob = '**/*.mdx'
+import { Meta, Link, LinkMap } from '../types/app'
+import * as parseMDX from '../tooling/parse-mdx'
+import {
+	cachePath,
+	pagesGlob,
+	pagesPath,
+	linksPath,
+	links,
+	linkAliases,
+	directoryTags
+} from '../config'
 
 const linkMap: LinkMap = {}
 
-async function addUserLinks() {
+async function addAliasLinks() {
 	Object.keys(links).forEach(function(code) {
 		const link = links[code] as Link
 		link.code = code
@@ -57,8 +59,16 @@ async function addDocumentLinks() {
 async function main() {
 	await mkdirp(cachePath)
 	await addDocumentLinks()
-	await addUserLinks()
+	await addAliasLinks()
+	console.log('links', Object.keys(linkMap).join(' '))
+	console.log('writing', linksPath)
 	await fs.writeFile(linksPath, JSON.stringify(linkMap, null, '  '))
+	console.log('wrote', linksPath)
 }
 
-main()
+try {
+	main()
+} catch (err) {
+	console.error('FAILED!!!')
+	throw new Error(err)
+}

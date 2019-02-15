@@ -13,7 +13,7 @@ export default function ProjectsPage({
 	stats = { githubStars: 0, githubForks: 0 }
 }: Props) {
 	return (
-		<Layout code="projects" useTitle={false}>
+		<Layout code="projects" showTitle={false}>
 			<ProjectList items={projects} />
 			<h3>Totals</h3>
 			<ul>

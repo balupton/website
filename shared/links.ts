@@ -1,3 +1,4 @@
+import rawLinkMap from '../.app/links.json'
 import {
 	Link,
 	LinkMap,
@@ -7,8 +8,6 @@ import {
 	RawLink,
 	RawLinkMap
 } from '../types/app'
-
-import rawLinkMap from '../.app/links.json'
 
 function hydrateRawLink(link: RawLink) {
 	if (link.date) link.date = new Date(link.date)

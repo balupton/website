@@ -1,26 +1,27 @@
 import React from 'react'
 import { site } from '../config'
 import { SiteProps } from '../types/app'
-import { uniq } from '../lib/util'
+import { uniq } from '../shared/util'
 
 import Head from 'next/head'
 import Link from '../components/link'
 import { About, SubHeading, Copyright } from '../components/segments'
 import Contact from '../components/contact.mdx'
-import { getLinksByTag, getLink } from '../lib/links'
+import { getLinksByTag, getLink } from '../shared/links'
 
 export default function DefaultLayout(props: SiteProps) {
 	const link = props.code ? getLink(props.code) : null
 	const data = Object.assign({}, site, link, props)
 	data.tags = uniq(site.tags, link && link.tags, props && props.tags)
+	const title = data.pageTitle || data.title
 	return (
 		<>
 			<Head>
 				<meta charSet="utf-8" />
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 				<meta httpEquiv="content-type" content="text/html; charset=utf-8" />
-				<title>{data.title}</title>
-				<meta name="title" content={data.title} />
+				<title>{title}</title>
+				<meta name="title" content={title} />
 				<meta name="author" content={data.author} />
 				<meta name="description" content={data.description} />
 				<meta name="keywords" content={data.tags.join(', ')} />
@@ -65,16 +66,16 @@ export default function DefaultLayout(props: SiteProps) {
 			</nav>
 
 			<article className="page" typeof="soic:page" about={data.url}>
-				{data.useTitle === false || !data.title ? (
+				{data.showTitle === false || !title ? (
 					''
 				) : (
 					<header className="page-header">
 						<Link url="." className="page-link">
 							<h1>
 								<strong className="page-title" property="dcterms:title">
-									{data.title}
+									{title}
 								</strong>
-								{data.useDate === false || !data.date ? (
+								{data.showDate === false || !data.date ? (
 									''
 								) : (
 									<small className="page-date" property="dc:date">

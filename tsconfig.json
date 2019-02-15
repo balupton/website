@@ -25,5 +25,5 @@
     "server",
     "shared"
   ],
-  "exclude": [".*"]
+  "exclude": [".*", "node_modules"]
 }

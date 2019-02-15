@@ -2,7 +2,7 @@ import React from 'react'
 import { LinkProps } from '../types/app'
 import Error from './error'
 import NextLink from 'next/link'
-import { getLink } from '../lib/links'
+import { getLink } from '../shared/links'
 
 export default function JSXLink(props: LinkProps) {
 	let data: LinkProps

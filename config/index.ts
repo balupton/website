@@ -1,4 +1,10 @@
+import * as pathUtil from 'path'
 import { DirectoryTags, Site, LinkAliasMap, RawLinkMap } from '../types/app'
+
+export const cachePath = pathUtil.join(__dirname, '..', '.app')
+export const linksPath = pathUtil.join(__dirname, '..', '.app', 'links.json')
+export const pagesPath = pathUtil.join(__dirname, '..', 'pages')
+export const pagesGlob = '**/*.mdx'
 
 const amazonCode = 'balupton07-20'
 
@@ -47,17 +53,20 @@ export const links: RawLinkMap = {
 	// Menu
 	home: {
 		url: '/',
-		title: 'Home',
+		title: 'View Homepage',
+		pageTitle: "Benjamin Lupton's Website",
 		text: 'home'
 	},
 	projects: {
 		url: '/projects',
 		title: 'View Projects',
+		pageTitle: "Benjamin Lupton's Projects",
 		text: 'projects'
 	},
 	blog: {
 		url: '/blog',
 		title: 'View Articles',
+		pageTitle: "Benjamin Lupton's Blog",
 		text: 'blog'
 	},
 
@@ -790,6 +799,12 @@ export const links: RawLinkMap = {
 		title:
 			'DocPad is a static site generator built with Node.js. Learn about DocPad on its website.'
 	},
+	'docpad-ranking': {
+		text: 'Most Popular CoffeeScript Projects',
+		url:
+			'https://github.com/search?l=CoffeeScript&o=desc&q=coffeescript&s=stars&type=Repositories',
+		title: 'Browse  the most popular CoffeeScript projects on GitHub'
+	},
 	quora: {
 		text: 'Quora',
 		url: 'https://www.quora.com/profile/Benjamin-Lupton',
@@ -1291,7 +1306,7 @@ export const links: RawLinkMap = {
 		title:
 			'NodeSchool is a decentralised training initiative for teaching Node.js.'
 	},
-	degree: {
+	bcsit: {
 		text: 'Bachelor of Computer Science (Information Technology)',
 		url:
 			'http://archive.handbook.curtin.edu.au/february2006/courses/14/143010.html',
@@ -1303,6 +1318,16 @@ export const links: RawLinkMap = {
 		url: 'https://en.wikipedia.org/wiki/Curtin_University',
 		title:
 			'Curtin University is an Australian public university based in Bentley, Perth, Western Australia.'
+	},
+	unimelb: {
+		text: 'University of Melbourne',
+		url: 'https://en.wikipedia.org/wiki/University_of_Melbourne',
+		title:
+			'The University of Melbourne is a public research university located in Melbourne, Australia.'
+	},
+	gdaph: {
+		text: 'Graduate Diploma in Arts (Philosophy)',
+		url: 'https://handbook.unimelb.edu.au/components/gd-arts-spec-24'
 	},
 	gentics: {
 		text: 'Gentics',
@@ -1712,13 +1737,6 @@ export const links: RawLinkMap = {
 		color: '#333',
 		tags: ['social']
 	},
-	opencollective: {
-		text: 'Open Collective',
-		url: 'https://opencollective.com/balupton',
-		title: 'View my profile on Open Collective',
-		color: 'rgb(51, 133, 255)',
-		tags: ['social']
-	},
 	snapchat: {
 		text: 'Snapchat',
 		url: 'https://www.snapchat.com/add/balupton',
@@ -1760,6 +1778,13 @@ export const links: RawLinkMap = {
 		url: 'https://liberapay.com/balupton',
 		title: 'Support me on Liberapay',
 		color: '#f6c915',
+		tags: ['social', 'donate']
+	},
+	opencollective: {
+		text: 'Open Collective',
+		url: 'https://opencollective.com/balupton',
+		title: 'View my profile on Open Collective',
+		color: 'rgb(51, 133, 255)',
 		tags: ['social', 'donate']
 	},
 	patreon: {
@@ -1881,8 +1906,9 @@ export const links: RawLinkMap = {
 }
 
 export const linkAliases: LinkAliasMap = {
-	gratipay: '/liberapay',
-	gittip: '/liberapay',
+	degree: 'bcsit',
+	gratipay: 'liberapay',
+	gittip: 'liberapay',
 	circleinternet: 'circlemedia',
 	quoinex: 'liquid',
 	circlepay: 'circle',

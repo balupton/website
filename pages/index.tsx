@@ -6,7 +6,7 @@ import Hidden from '../components/hidden'
 
 export default function IndexPage() {
 	return (
-		<Layout code="home" useTitle={false}>
+		<Layout code="home" showTitle={false}>
 			<section className="work">
 				<h2>I radically explore the known and the unknown.</h2>
 
@@ -90,7 +90,7 @@ export default function IndexPage() {
 				<p>
 					I&apos;m a big believer in ephemeral living. I&apos;ve recently
 					discovered that{' '}
-					<Link code="fountainhead">I&apos; m my own person</Link>. Coming up
+					<Link code="fountainhead">I&apos;m my own person</Link>. Coming up
 					with great questions and answering them - staying true to myself by
 					discovering myself - enabling joy and reducing oppression through
 					education - are all passages deeply rooted in my soul.
@@ -173,17 +173,17 @@ export default function IndexPage() {
 					discovering an exploit in their <Link code="webct" /> system and
 					working with staff to rectify the situation, which I later published
 					as{' '}
-					<Link code="webctexploit">my first white-hat security advisory</Link>a
-					few years after. Later, I also discovered that the same exploit worked
-					on my university&apos;s system, however with the university’s strict
-					“hacking and your expelled” policy in place, I was too afraid of being
-					expelled for sharing the exploit with them, so I never mentioned it…
-					leaving their systems insecure and open to actually malicious people,
-					good work policy! 🙃
+					<Link code="webctexploit">my first white-hat security advisory</Link>{' '}
+					a few years after. Later, I also discovered that the same exploit
+					worked on my university&apos;s system, however with the university’s
+					strict “hacking and your expelled” policy in place, I was too afraid
+					of being expelled for sharing the exploit with them, so I never
+					mentioned it… leaving their systems insecure and open to actually
+					malicious people, good work policy! 🙃
 				</p>
 
 				<p>
-					In 2006 (age 16/17), I commenced my <Link code="degree" /> at{' '}
+					In 2006 (age 16/17), I commenced my <Link code="bcsit" /> at{' '}
 					<Link code="curtin" />, while freelancing with <Link code="php" /> and{' '}
 					<Link code="javascript" /> development on the side. Around this time
 					was also my foray into <Link code="opensource" /> development with my
@@ -297,30 +297,32 @@ export default function IndexPage() {
 					<Link code="whysucks">finding your way despite competition</Link>. I
 					then flew to <Link code="bali" /> with my partner to setup the first
 					full-time <Link code="hostel" />. I didn&apos;t enjoy the setting up
-					procedure much, however fortunately enough other people did. There are
-					now more than <Link code="hostellist">30 hostels</Link> for startup
-					folk around the world. In June I also received salvation for my gamble
-					in <Link code="docpad" /> with a full-time income to work on it from{' '}
-					<Link code="toronto" /> company <Link code="myplanet" /> (and got to
-					visit them twice!). I also visited <Link code="berlin" /> to train
-					students in <Link code="javascript" />. This year also marked my
-					introduction to <Link code="mindful" /> via{' '}
+					procedure much, however fortunately other people did. There are now
+					more than <Link code="hostellist">30 hostels</Link> for startup folk
+					around the world. In June I also received salvation for my gamble in{' '}
+					<Link code="docpad" /> with a full-time income to work on it from{' '}
+					<Link code="myplanet" /> (and got to visit them in{' '}
+					<Link code="toronto" /> twice!). And thanks to <Link code="dsr" />, I
+					was able to visit <Link code="berlin" /> twice to train students in{' '}
+					<Link code="javascript" />. This year also marked my introduction to{' '}
+					<Link code="mindful" /> via{' '}
 					<Link code="tolle">Eckhart Tolle&apos;s</Link> works, and started
 					reading <Link code="paulo" />.
 				</p>
 
 				<p>
 					In 2014 (age 24/25), the funding ended and I burned out from 10 years
-					of professional programming and of life in general, after a while I
+					of professional programming and of life in general. After a while I
 					embraced <Link code="moneyless" /> and became a volunteer at a{' '}
 					<Link code="paycan">donation-based</Link>{' '}
-					<Link code="lentil">vegan soup kitchen in Sydney</Link>. It was
-					perhaps the most rewarding work I&apos;ve ever done in my life. I
-					actually got to smile, laugh, and interact with people, solving a real
-					need - joyous food and great company - without discrimination (even
-					financial). I also was unable to find enough paying work that allowed
-					me to continue my <Link code="opensource" /> endeavours and lived
-					homeless in the streets of <Link code="sydney" /> for a few months.
+					<Link code="lentil">vegan soup kitchen</Link> in{' '}
+					<Link code="sydney" />. It was perhaps the most rewarding work
+					I&apos;ve ever done in my life. I actually got to smile, laugh, and
+					interact with people, solving a real need - joyous food and great
+					company - without discrimination (even financial). I also was unable
+					to find enough paying work that allowed me to continue my{' '}
+					<Link code="opensource" /> endeavours and lived homeless in the
+					streets of <Link code="sydney" /> for a few months.
 				</p>
 
 				<p>
@@ -361,22 +363,22 @@ export default function IndexPage() {
 				</p>
 
 				<p>
-					In 2018 (age 28/29), to facilitate my trading efforts, I studied
+					In 2018 (age 28/29), to facilitate my trading efforts I studied
 					devops, economics, and decision making. This made me realise: (1)
 					there would be a major downturn in the crypto market, (2) one man
-					alone cannot build everything by himself, and (3) that the tech
-					industry is marching towards suicide from its severe gaps of knowledge
-					in philosophy, psychology, and economics. This caused me to rethink my
+					alone cannot build everything by himself, and (3) the tech industry is
+					marching towards suicide from its severe gaps of knowledge in
+					philosophy, psychology, and economics. This caused me to rethink my
 					direction, and to spend the last half of the year wrapping up all my
 					various projects, so that I could focus only on my most meaningful
-					initiatives: (1) a platform to revivify speakable knowledge, and (2)
-					to enrol into University of Melbourne to refine my understandings of
+					initiatives: (1) a platform to revivify knowledge, and (2) to enrol
+					into <Link code="unimelb" /> to refine my understandings of
 					philosophy, psychology, and economics.
 				</p>
 
 				<p>
-					In 2019 (age 30/31), I will be studying a Graduate Diploma in Arts
-					(Philosophy) at the University of Melbourne.
+					In 2019 (age 30/31), I will be studying a <Link code="gdaph" /> at the{' '}
+					<Link code="unimelb" />.
 				</p>
 
 				<h3>Reach out.</h3>
@@ -392,7 +394,7 @@ export default function IndexPage() {
 					<Link code="donate">
 						donating to me via my open-company and community
 					</Link>
-					,<Link code="referrals">using my referral links</Link>, or{' '}
+					, <Link code="referrals">using my referral links</Link>, or{' '}
 					<Link code="contact">having a chat with me</Link>.
 				</p>
 
@@ -461,14 +463,16 @@ export default function IndexPage() {
 
 				<ul>
 					<li>
-						Organiser and Trainer at <Link code="nodeschool" /> Berlin 2014
+						Organiser and Trainer at <Link code="nodeschool" /> in{' '}
+						<Link code="berlin" /> during 2014
 					</li>
 					<li>
-						JavaScript Expert at <Link code="dsr" /> Germany 2013 &amp; 2014
+						JavaScript Expert at <Link code="dsr" /> in <Link code="berlin" />{' '}
+						during 2013 &amp; 2014
 					</li>
 					<li>
-						DocPad &amp; WebRTC Trainer at <Link code="myplanet" /> Canada 2013
-						&amp; 2014
+						DocPad &amp; WebRTC Trainer at <Link code="myplanet" /> in{' '}
+						<Link code="toronto" /> during 2013 &amp; 2014
 					</li>
 
 					<li>
@@ -599,7 +603,7 @@ export default function IndexPage() {
 						of code they publish, big or small. Having{' '}
 						<Link code="github">
 							<Text code="github-followers" /> followers
-						</Link>
+						</Link>{' '}
 						is a fantastic testimonial of my professional taste and impact on
 						the web development community.
 					</p>
@@ -617,7 +621,7 @@ export default function IndexPage() {
 						The opportunity of{' '}
 						<Link code="speakerrate">
 							speaking and training people around the world
-						</Link>
+						</Link>{' '}
 						is one that I&apos;m so humbled to have. I can think of nothing
 						better than{' '}
 						<Link code="youtube">
@@ -627,35 +631,13 @@ export default function IndexPage() {
 					</p>
 				</section>
 
-				<Hidden>
-					<section className="awards-satisfaction">
-						<h3>
-							<Link url="http://www.x-linkedin.com/profile/view?id=15748447#profile-recommendations">
-								<em>
-									<strong>100% client satisfaction</strong> for the past two
-									years
-								</em>{' '}
-								via <Link code="linkedin" />
-							</Link>
-						</h3>
-						<p>
-							Being able to provide a level of excellence which{' '}
-							<Link url="http://www.x-linkedin.com/profile/view?id=15748447#profile-recommendations">
-								converts potential leads into raving fans
-							</Link>
-							, won’t always be easy, but it is something I’m comitted to
-							ensuring every single time.
-						</p>
-					</section>
-				</Hidden>
-
 				<section className="awards-docpad">
 					<h3>
 						<Link code="docpad">
 							<strong>Created DocPad</strong>
 						</Link>
 						<br />
-						<Link url="https://libraries.io/npm/docpad">
+						<Link code="docpad-ranking">
 							<em>
 								One of the most popular CoffeeScript projects in the world
 							</em>{' '}

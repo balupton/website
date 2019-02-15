@@ -60,13 +60,14 @@ export interface SiteProps extends Partial<Site> {
 	date?: string // this is because mdx serialises the date
 	url?: string
 	code?: string
-	useTitle?: boolean
-	useDate?: boolean
+	showTitle?: boolean
+	showDate?: boolean
 }
 
 export interface RawMeta {
 	date: string | Date
 	title: string
+	pageTitle?: string
 	tags?: string | Tags
 	description?: string
 	author?: string

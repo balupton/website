@@ -1,6 +1,8 @@
 import * as xml2js from 'xml2js'
 import fsUtil, { promises as fs } from 'fs'
 
+import { cachePath } from '../config'
+
 function parseXML(xml: string): Promise<object> {
 	return new Promise(function(resolve, reject) {
 		xml2js.parseString(xml, function(err: undefined | Error, result: object) {
@@ -28,7 +30,7 @@ async function cache(
 			.createHash('md5')
 			.update(url)
 			.digest('hex')
-		const cachefile = `${cachedir}/${hash}`
+		const cachefile = `${cachePath}/${hash}`
 		const exists = await doesExist(cachefile)
 		if (exists) {
 			let data
@@ -106,8 +108,8 @@ function floorToNearest(value: number, floorToNearest: number): number {
 	return Math.floor(value / floorToNearest) * floorToNearest
 }
 
-function getRank(list) {
-	const index = list.findIndex(user => user.username === 'balupton')
+function getRank(list: any) {
+	const index = list.findIndex((user: any) => user.username === 'balupton')
 	return index === -1
 		? Promise.reject('could not find me in the listing')
 		: Promise.resolve(index + 1)
