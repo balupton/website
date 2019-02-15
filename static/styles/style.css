@@ -1,21 +1,42 @@
 :root {
 	/* Colors */
-	--colorAccent: #ff8a3b;
-	--colorLink: hsl(191, 100%, 40%);
-	--colorLinkHover: #00718a;
-	--colorHeader: #445566;
-	--colorSubHeader: #9d9fa5;
-	--colorContent: #797f84;
-	--colorActive: var(--colorAccent);
-	--colorInActive: #cccccc;
-	--colorQuote: var(--colorSubHeader);
+	--colorOrange: #ff8a3b;
+	--colorBlue: hsl(191, 100%, 40%);
+	--colorBlueDark: #00718a;
+	--colorDarker: #191919;
+	--colorDark: #555;
+	--colorMedium: #445566;
+	--colorLight: #797f84;
+	--colorLighter: #9d9fa5;
+	--colorLightest: #ccc;
 
-	/* Weights */
-	--weightBoldest: 700;
-	--weightBold: 600;
-	--weightNormal: 500;
-	--weightLight: 300;
+	/* Fonts */
+	--fontFamily: Inter, 'Segoe WP', 'Segoe UI', Segoe, Calibri, Helvetica, Arial;
+	--weightBoldest: bolder;
+	--weightBold: bold;
+	--weightNormal: normal;
+	--weightLight: lighter;
 	--weightLightest: 100;
+
+	/* Sections */
+	--colorAccent: var(--colorOrange);
+	--colorLinkHover: var(--colorBlueDark);
+	--colorLink: var(--colorBlue);
+	--weightLink: inherit;
+	--decorationLink: none;
+	--styleLink: none; /* italic */
+	--colorActive: var(--colorAccent);
+	--colorInactive: var(--colorLightest);
+	--colorContent: var(--colorDarker);
+	--weightContent: var(--weightNormal);
+	--colorHeader: var(--colorMedium);
+	--weightHeader: var(--weightLight);
+	--colorSubheader: var(--colorDark);
+	--weightSubheader: var(--weightLight);
+	--colorQuote: var(--colorDark);
+	--weightQuote: var(--weightNormal);
+	--fontQuote: Spectral, Oxygen, Serif;
+	--weightNav: var(--weightLight);
 }
 
 /* ==================================== */
@@ -35,12 +56,18 @@
 
 /* Content */
 body {
-	font-family: 'Segoe WP', 'Segoe UI', Segoe, Calibri, Helvetica, Arial;
+	font-family: var(--fontFamily);
 	color: var(--colorContent);
+	font-weight: var(--weightContent);
 	font-size: 16px;
-	font-weight: var(--weightNormal);
 	position: relative;
 	min-height: 2000px;
+	/*
+	text-rendering: optimizeLegibility;
+	font-synthesis: none;
+	-webkit-font-smoothing: subpixel-antialiased;
+	-webkit-font-smoothing: antialiased;
+	*/
 }
 
 /* Paragraphs */
@@ -51,7 +78,7 @@ p {
 /* Accent */
 em {
 	color: var(--colorAccent);
-	font-weight: var(--weightNormal);
+	font-weight: inherit;
 	font-style: normal;
 }
 strong {
@@ -60,8 +87,15 @@ strong {
 }
 blockquote {
 	color: var(--colorQuote);
-	font-weight: var(--weightNormal);
+	font-weight: var(--weightQuote);
+	font-family: var(--fontQuote);
 	font-style: italic;
+}
+
+/* Error  */
+.error {
+	color: red;
+	border: 1px solid red;
 }
 
 /* Links Hover Effect */
@@ -80,7 +114,9 @@ a:link,
 a:visited {
 	cursor: pointer;
 	color: var(--colorLink);
-	text-decoration: none;
+	text-decoration: var(--decorationLink);
+	font-style: var(--styleLink);
+	font-weight: var(--weightLink);
 }
 a:hover {
 	cursor: pointer;
@@ -89,16 +125,14 @@ a:hover {
 }
 
 /* Heading */
-header.heading h1,
-header.heading h2 {
-	font-weight: var(--weightLight);
-}
 header.heading h1 {
 	color: var(--colorHeader);
+	font-weight: var(--weightHeader);
 	font-size: 36px;
 }
 header.heading h2 {
-	color: var(--colorSubHeader);
+	color: var(--colorSubheader);
+	font-weight: var(--weightSubheader);
 	font-size: 18px;
 }
 header.heading h2 span {
@@ -137,11 +171,11 @@ nav.pages li {
 	margin-right: 0.75em;
 }
 nav.pages li a {
-	font-weight: var(--weightLight);
-	color: var(--colorInActive);
+	font-weight: var(--weightNav);
+	color: var(--colorInactive);
 }
 nav.pages li.active a {
-	font-weight: var(--weightLight);
+	font-weight: var(--weightNav);
 	color: var(--colorActive);
 }
 
@@ -202,10 +236,7 @@ aside.sidebar section header li {
 }
 
 aside.sidebar section h1 {
-	/* font-size: 56px */
-	/* text-transform: lowercase */
-	font-size: 42px;
-	font-weight: var(--weightLightest);
+	font-weight: var(--weightNav);
 }
 
 aside.sidebar section,
@@ -216,31 +247,28 @@ aside.sidebar section a:visited {
 }
 
 /* Links Hover Effect */
-aside.sidebar section.links ul {
+aside.sidebar .links ul {
 	transition: opacity 1s;
 	background: white;
 	opacity: 0.3;
 }
-aside.sidebar section.links ul li {
+aside.sidebar .links ul li {
 	width: 96%;
 }
-aside.sidebar:hover section.links ul {
+aside.sidebar:hover .links ul {
 	opacity: 1;
 }
 
 /* Images Hover Effect */
-aside.sidebar section.images ul img {
-	transition: opacity 1s;
+aside.sidebar {
+	transition: opacity 0.5s;
 	opacity: 0.3;
 }
-aside.sidebar:hover section.images ul img {
-	opacity: 0.5;
-}
-aside.sidebar:hover section.images ul img:hover {
-	opacity: 1 !important;
+aside.sidebar:hover {
+	opacity: 1;
 }
 
-/* Images Sizing */
+/* Images Sizing
 aside.sidebar section.images ul {
 	line-height: 0;
 }
@@ -250,7 +278,7 @@ aside.sidebar section.images ul li {
 }
 aside.sidebar section.images ul img {
 	width: 48%;
-}
+} */
 
 /* Modals */
 aside.modal:not(.backdrop) {
