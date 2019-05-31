@@ -7,6 +7,6 @@ export function uniq<T>(...args: Array<null | undefined | T[]>): T[] {
 
 export function postComparator(a: Link, b: Link) {
 	if (a.date && b.date) {
-		return b.date.getTime() - a.date.getTime()
+		return new Date(b.date).getTime() - new Date(a.date).getTime()
 	} else return 0
 }

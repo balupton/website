@@ -1,12 +1,18 @@
 import * as pathUtil from 'path'
-import { DirectoryTags, Site, LinkAliasMap, RawLinkMap } from '../types/app'
+import {
+	DirectoryTags,
+	Page,
+	Site,
+	LinkAliasMap,
+	RawLinkMap
+} from '../types/app'
 
 export const cachePath = pathUtil.join(__dirname, '..', '.app')
 export const linksPath = pathUtil.join(__dirname, '..', '.app', 'links.json')
 export const pagesPath = pathUtil.join(__dirname, '..', 'pages')
 export const pagesGlob = '**/*.mdx'
 
-const amazonCode = 'balupton07-20'
+export const amazonCode = 'balupton07-20'
 
 export const text: { [key: string]: () => any } = {
 	'stackoverflow-reputation': () => 0,
@@ -23,18 +29,19 @@ export const directoryTags: DirectoryTags = {
 	blog: ['post']
 }
 
-export const site: Site = {
-	url: 'https://balupton.com',
+export const page: Page = {
 	title: 'Benjamin Lupton',
 	author: 'Benjamin Lupton',
-	heading: 'Benjamin Lupton',
-	email: 'b@lupton.cc',
 	description:
-		'Website of Benjamin Lupton. Founder of Bevry, DocPad and History.js. Web developer for 10 years. Now a trader. Studies psychology and philosophy.',
-	tags: 'balupton, benjamin lupton, lupton, coffeescript, node.js, javascript, history.js, html, docpad, nowpad, jquery, css3, ruby, git, nosql, cson, html5 history api, ajax, html, web development, web design, nlp, git, neuro-linguistic programming, programming, hacking, hackathon, aloha editor, contenteditable, hallo, jekyll, entp, inventor, web 2.0'.split(
-		/\s*,\s*/
-	),
-	menu: ['home', 'projects', 'blog']
+		'Website of Benjamin Lupton. Founder of Bevry, DocPad and History.js. Web developer for 10 years. Now a trader. Studies psychology and philosophy.'
+}
+
+export const site: Site = {
+	url: 'https://balupton.com',
+	heading: 'Benjamin Lupton',
+	menu: ['about', 'projects', 'blog'],
+	email: 'b@lupton.cc',
+	tags: []
 }
 
 export const links: RawLinkMap = {
@@ -51,26 +58,67 @@ export const links: RawLinkMap = {
 	},
 
 	// Menu
-	home: {
+	about: {
 		url: '/',
-		title: 'View Homepage',
 		pageTitle: "Benjamin Lupton's Website",
-		text: 'home'
+		title: "View Benjamin Lupton's Profile",
+		text: 'About'
 	},
 	projects: {
 		url: '/projects',
-		title: 'View Projects',
 		pageTitle: "Benjamin Lupton's Projects",
-		text: 'projects'
+		title: "View Benjamin Lupton's Projects",
+		text: 'Projects'
 	},
 	blog: {
 		url: '/blog',
-		title: 'View Articles',
 		pageTitle: "Benjamin Lupton's Blog",
-		text: 'blog'
+		title: "View Benjamin Lupton's Blog",
+		text: 'Blog'
 	},
 
 	// Referrals
+	anarchapulco: {
+		text: 'Anarchapulco',
+		url:
+			'https://anarchapulco.com/buy-your-tickets/?coupon-code=tenpercent&ref=benjaminlupton',
+		title:
+			'Attend Anarchapuclo each year, it is the biggest libertarian/anarachist event in the world',
+		color: '#f0543c',
+		tags: ['referral']
+	},
+	ora: {
+		text: 'Ora',
+		url: 'https://ora.pm/?r=c67fdec477d3b489',
+		title: 'Use Ora for all your project management needs',
+		color: '#7b72e9',
+		tags: ['referral']
+	},
+	keysmart: {
+		text: 'KeySmart',
+		url:
+			'https://www.GetKeySmart.com/products/keysmart-pro-with-tile-smart-location-tracking?rfsn=2321661.0382aa',
+		title:
+			'Use KeySmart to organise your keys, with builtin flashlight, bluetooth tracker, and bottle opener',
+		color: '#d22630',
+		tags: ['referral']
+	},
+	urban21: {
+		text: 'Urban 21 Backpack',
+		url:
+			'https://www.GetKeySmart.com/pages/urban21-backpack?rfsn=2321661.0382aa',
+		title:
+			'Use the Urban 21 Backpack for your organised travel and commuter backpack',
+		color: '#d22630',
+		tags: ['referral']
+	},
+	bogui: {
+		text: 'Bogui Slip',
+		url: 'https://www.GetKeySmart.com/products/bogui-slip?rfsn=2321661.0382aa',
+		title: 'Use the Bogui Slip as your minimal wallet',
+		color: '#0091ea',
+		tags: ['referral']
+	},
 	milanote: {
 		text: 'Milanote',
 		url: 'https://www.milanote.com/refer/rczFuD0XCFHIws2Wir',
@@ -88,7 +136,7 @@ export const links: RawLinkMap = {
 	},
 	setapp: {
 		text: 'Setapp',
-		url: 'https://go.setapp.com/invite/uolmpyip',
+		url: 'https://go.setapp.com/invite/npexhyjs',
 		title:
 			'Use Setapp to gain access to dozens of high quality mac apps for a low monthly price',
 		color: '#00024f',
@@ -137,6 +185,13 @@ export const links: RawLinkMap = {
 		color: '#3b4a54',
 		tags: ['referral']
 	},
+	kogan: {
+		text: 'Kogan',
+		url: 'https://www.kogan.com/au/r/9ZK9QV/',
+		title: 'Use Kogan as your Amazon for Australia, especially for electronics',
+		color: '#ed193a',
+		tags: ['referral']
+	},
 	honey: {
 		text: 'Honey',
 		url: 'https://joinhoney.com/ref/c1ra4wf',
@@ -150,15 +205,6 @@ export const links: RawLinkMap = {
 		url: 'https://www.booking.com/s/27_8/b0lupt17',
 		title: 'Use Booking.com to book accomodation when traveling',
 		color: '#07c',
-		tags: ['referral']
-	},
-	transferwiseborderless: {
-		text: 'TransferWise Borderless',
-		url:
-			'https://transferwise.evyy.net/c/1328573/26105/985?u=https%3A%2F%2Ftransferwise.com%2Fborderless%2F',
-		title:
-			'Use TransferWise Borderless to have multicurrency bank accounts all around the world',
-		color: '#223049',
 		tags: ['referral']
 	},
 	signals: {
@@ -180,6 +226,14 @@ export const links: RawLinkMap = {
 		url: 'https://stake.com.au?refer=benjaminl259',
 		title: 'Use Stake to invest in USA companies (Australia only)',
 		color: '#181818',
+		tags: ['referral']
+	},
+	cryptoml: {
+		text: 'Crypto-ML',
+		url: 'https://crypto-ml.com?aff=balupton',
+		title:
+			'Use Crypto-ML to receive AI-driven trading signals for cryptocurrency',
+		color: '#2b709c',
 		tags: ['referral']
 	},
 	coinstats: {
@@ -238,6 +292,13 @@ export const links: RawLinkMap = {
 		url: 'https://app.heleum.com/r/cbdc906a6e',
 		title: 'Use Heleum to autoinvest in cryptocurrencies',
 		color: '#333333',
+		tags: ['referral']
+	},
+	abra: {
+		text: 'Abra',
+		url: 'https://invite.abra.com/Oh1ujGZYWV',
+		title: 'Use Abra to autoinvest in cryptocurrencies',
+		color: '#9136b9',
 		tags: ['referral']
 	},
 	voyager: {
@@ -335,10 +396,17 @@ export const links: RawLinkMap = {
 		color: '#ef4136',
 		tags: ['referral']
 	},
+	xeroshoes: {
+		text: 'Xero Shoes',
+		url: 'https://xeroshoes.com/go/balupton',
+		title: 'Use Xero Shoes as your minimalist running shoes and sandals',
+		color: '#2aace3',
+		tags: ['referral']
+	},
 	earthrunners: {
 		text: 'Earth Runners',
 		url: 'http://earthrunners.com?rfsn=763305.e8694',
-		title: 'Use Earth Runners as sandals that you can run, hike, and swim in',
+		title: 'Use Earth Runners as your minimalist running sandals',
 		color: '#6dc21d',
 		tags: ['referral']
 	},
@@ -395,13 +463,6 @@ export const links: RawLinkMap = {
 		color: '#f3ad29',
 		tags: ['referral']
 	},
-	amazon: {
-		text: 'Amazon',
-		url: `https://www.amazon.com/?tag=${amazonCode}`,
-		title: 'Use Amazon to buy books',
-		color: '#e47911',
-		tags: ['referral']
-	},
 	airbnb: {
 		text: 'AirBnB',
 		url: 'https://www.airbnb.com.au/c/benjaminl3638',
@@ -414,6 +475,13 @@ export const links: RawLinkMap = {
 		url: 'http://fbuy.me/errs2',
 		title: 'Use Away Travel for your luggage',
 		color: '#00344B',
+		tags: ['referral']
+	},
+	flic: {
+		text: 'Flic',
+		url: 'https://2.flic.io/invite/msdcxhweir/',
+		title: 'Use Flic as your bluetooth button for anything',
+		color: '#1ed499',
 		tags: ['referral']
 	},
 	raiz: {
@@ -432,9 +500,18 @@ export const links: RawLinkMap = {
 	},
 	transferwise: {
 		text: 'TransferWise',
-		url: 'https://transferwise.evyy.net/c/1328573/26105/985',
+		url: 'http://prf.hn/click/camref:1100l7ssv',
 		title:
 			'Use TransferWise to send money around the world as quickly and cheaply as possible',
+		color: '#223049',
+		tags: ['referral']
+	},
+	transferwiseborderless: {
+		text: 'TransferWise Borderless',
+		url:
+			'http://prf.hn/click/camref:1100l7ssv/destination:https%3A%2F%2Ftransferwise.com%2Fborderless',
+		title:
+			'Use TransferWise Borderless to have multicurrency bank accounts all around the world',
 		color: '#223049',
 		tags: ['referral']
 	},
@@ -797,7 +874,7 @@ export const links: RawLinkMap = {
 		text: 'DocPad',
 		url: 'https://docpad.org',
 		title:
-			'DocPad is a static site generator built with Node.js. Learn about DocPad on its website.'
+			'DocPad rethought web development and was the first big static site generator for Node.js gaining over 2000 stars, hundreds of daily users, 200 plugins, and 100 contributors.'
 	},
 	'docpad-ranking': {
 		text: 'Most Popular CoffeeScript Projects',
@@ -825,13 +902,13 @@ export const links: RawLinkMap = {
 		text: 'History.js',
 		url: 'https://github.com/browserstate/history.js',
 		title:
-			'History.js lets you create cross-browser stateful web applications. Learn about History.js on its website.'
+			'History.js became one of the most game changing and popular utilities for web developers. Freelancers all the way to enterprise used it to lead the way into stateful web applications. It was huge.'
 	},
 	taskgroup: {
 		text: 'TaskGroup',
 		url: 'https://github.com/bevry/taskgroup',
 		title:
-			'The true solution to callback hell. Robust, simple, and consistent. Group together synchronous and asynchronous tasks and execute them with support for concurrency, naming, and nesting.'
+			'Group together synchronous and asynchronous tasks and execute them with support for concurrency, naming, and nesting.'
 	},
 	bevry: {
 		text: 'Bevry',
@@ -1010,13 +1087,13 @@ export const links: RawLinkMap = {
 	},
 	contact: {
 		text: 'Contact',
-		url: '/#contact',
-		title: 'Contact me',
-		className: 'contact-button'
+		url: '#📨',
+		title: 'Contact me'
 	},
 	referrals: {
 		text: 'Referrals',
-		url: '/#referrals'
+		url: '#💸',
+		title: 'View my referral offerings'
 	},
 	'permissive-license': {
 		text: 'Permissive Software License',
@@ -1674,6 +1751,13 @@ export const links: RawLinkMap = {
 		color: '#0083B3',
 		tags: ['social']
 	},
+	skype: {
+		text: 'Skype',
+		url: 'https://join.skype.com/invite/aAGjXSSne9OO',
+		title: 'View my profile on Skype',
+		color: 'rgb(0, 120, 212)',
+		tags: ['social']
+	},
 	goodreads: {
 		text: 'Goodreads',
 		url: 'https://goodreads.com/balupton',
@@ -1693,6 +1777,13 @@ export const links: RawLinkMap = {
 		url: 'http://alternativeto.net/user/balupton/',
 		title: 'Discover the Apps and Services I use on AlternativeTo.net',
 		color: '#5581A6',
+		tags: ['social']
+	},
+	spotify: {
+		text: 'Spotify',
+		url: 'https://open.spotify.com/user/balupton',
+		title: 'Listen to the music I like on Spotify',
+		color: '#1DB954',
 		tags: ['social']
 	},
 	soundcloud: {
@@ -1906,6 +1997,7 @@ export const links: RawLinkMap = {
 }
 
 export const linkAliases: LinkAliasMap = {
+	home: 'about',
 	degree: 'bcsit',
 	gratipay: 'liberapay',
 	gittip: 'liberapay',

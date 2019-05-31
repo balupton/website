@@ -6,7 +6,7 @@ import Hidden from '../components/hidden'
 
 export default function IndexPage() {
 	return (
-		<Layout code="home" showTitle={false}>
+		<Layout code="home" useTitle={false}>
 			<section className="work">
 				<h2>I radically explore the known and the unknown.</h2>
 
@@ -386,7 +386,8 @@ export default function IndexPage() {
 				<p>
 					Happy to cultivate friendships and business opportunities.{' '}
 					<Link code="resume">View my resume.</Link>{' '}
-					<Link code="contact">Get in contact.</Link>
+					<Link code="contact">Get in contact.</Link>{' '}
+					<Link code="twitter">Tweet me.</Link>
 				</p>
 
 				<p>
@@ -396,12 +397,6 @@ export default function IndexPage() {
 					</Link>
 					, <Link code="referrals">using my referral links</Link>, or{' '}
 					<Link code="contact">having a chat with me</Link>.
-				</p>
-
-				<p>
-					<Link code="twitter">
-						You should follow me on Twitter to keep up to date.
-					</Link>
 				</p>
 			</section>
 
@@ -522,153 +517,6 @@ export default function IndexPage() {
 						<Link code="goodreads">More.</Link>
 					</li>
 				</ul>
-			</section>
-
-			<section className="awards">
-				<h2>Awards</h2>
-
-				<section className="awards-top">
-					<h3>
-						<Link code="stackoverflow-resume">
-							<strong>
-								Top 10% for JavaScript, Node.js, jQuery, HTML5 and Ajax
-							</strong>{' '}
-							via StackOverflow
-						</Link>
-					</h3>
-					<p>
-						With{' '}
-						<Link code="stackoverflow">
-							<Text code="stackoverflow-reputation" /> reputation
-						</Link>{' '}
-						on <Link url="http://stackoverflow.com/faq">StackOverflow</Link>{' '}
-						I’ve been able to help approximately 3 million web developers with
-						my shared knowledge and expertise.
-					</p>
-				</section>
-
-				<section className="awards-active">
-					<h3>
-						<br />
-						<Link url="/projects">
-							<em>
-								<strong>
-									Created <Text code="github-projects" /> open-source projects
-								</strong>
-							</em>{' '}
-							via GitHub
-						</Link>
-					</h3>
-					<p>
-						Working with open-source every day, I&apos;m serious about
-						open-collaboration. I&apos;ve made over{' '}
-						<Link code="github">
-							<Text code="github-contributions" /> contributions to the
-							open-source scene in the past year
-						</Link>{' '}
-						and had my work{' '}
-						<Link url="/projects">
-							starred by over <Text code="github-stars" /> fellow developers.
-						</Link>
-					</p>
-				</section>
-
-				<section className="awards-watched">
-					<h3>
-						<Link url="https://github.com/search?l=JavaScript&amp;q=location%3AAustralia&amp;s=followers&amp;type=Users">
-							<em>
-								<strong>
-									The <Text code="github-watch-rank-australia-javascript" />{' '}
-									most watched JavaScript developer
-								</strong>{' '}
-								in Australia
-							</em>{' '}
-							via GitHub
-						</Link>
-						<br />
-						<Link url="https://github.com/search?q=location%3AAustralia&amp;s=followers&amp;type=Users">
-							<em>
-								<strong>
-									The <Text code="github-watch-rank-australia" /> most watched
-									developer
-								</strong>{' '}
-								in Australia
-							</em>{' '}
-							via GitHub
-						</Link>
-					</h3>
-					<p>
-						By following someone on <Link code="github" />, you are indicating
-						that you love their work enough to be notified of every single piece
-						of code they publish, big or small. Having{' '}
-						<Link code="github">
-							<Text code="github-followers" /> followers
-						</Link>{' '}
-						is a fantastic testimonial of my professional taste and impact on
-						the web development community.
-					</p>
-				</section>
-
-				<section className="awards-speaker">
-					<h3>
-						<Link code="speakerrate">
-							<em>
-								<strong>International speaker and trainer</strong>
-							</em>
-						</Link>
-					</h3>
-					<p>
-						The opportunity of{' '}
-						<Link code="speakerrate">
-							speaking and training people around the world
-						</Link>{' '}
-						is one that I&apos;m so humbled to have. I can think of nothing
-						better than{' '}
-						<Link code="youtube">
-							inspiring, empowering, and connecting with amazing individuals all
-							across the globe.
-						</Link>
-					</p>
-				</section>
-
-				<section className="awards-docpad">
-					<h3>
-						<Link code="docpad">
-							<strong>Created DocPad</strong>
-						</Link>
-						<br />
-						<Link code="docpad-ranking">
-							<em>
-								One of the most popular CoffeeScript projects in the world
-							</em>{' '}
-							via GitHub
-						</Link>
-					</h3>
-					<p>
-						<Link code="docpad">DocPad</Link> rethought web development and was
-						the first big static site generator for Node.js gaining over 2000
-						stars, hundreds of daily users, 200 plugins, and 100 contributors.
-					</p>
-				</section>
-
-				<section className="awards-historyjs">
-					<h3>
-						<Link code="historyjs">
-							<strong>Created History.js</strong>
-						</Link>
-						<br />
-						<Link url="http://github-rank.com/star?language=JavaScript">
-							<em>One of the most popular JavaScript projects in the world</em>{' '}
-							via GitHub
-						</Link>
-					</h3>
-					<p>
-						<Link code="historyjs">History.js</Link> became one of the most game
-						changing and popular utilities for web developers. Freelancers all
-						the way to enterprise used it to lead the way into stateful web
-						applications. It was huge.
-					</p>
-				</section>
 			</section>
 		</Layout>
 	)

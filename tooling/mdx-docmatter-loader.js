@@ -5,7 +5,11 @@ module.exports = async function(src) {
 	let result = ''
 	try {
 		const callback = this.async()
-		const { meta, content, body, header } = parseMDX(src)
+		const { meta, body, header } = parseMDX(src)
+		// not a document, probably a component
+		if (!header) return callback(null, body)
+		if (!meta.title) throw new Error('mdx document missing meta title')
+		// is a document
 		const useLayout = header && meta.layout !== false
 		const layout = pathUtil.join(
 			__dirname,
@@ -16,7 +20,7 @@ module.exports = async function(src) {
 		result = [
 			useLayout && `import Layout from '${layout}'`,
 			`export const meta = ${JSON.stringify(meta, null, '  ')}`,
-			body || content,
+			body,
 			useLayout &&
 				'export default ({ children }) => <Layout {...meta}>{children}</Layout>'
 		]

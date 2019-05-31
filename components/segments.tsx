@@ -5,8 +5,8 @@ export function SubHeading() {
 	return (
 		<>
 			<span>
-				Founded <Link code="bevry" />, <Link code="docpad" />, and{' '}
-				<Link code="hostel" />.
+				Founded <Link code="bevry" />, <Link code="docpad" />,{' '}
+				<Link code="historyjs" />, and <Link code="hostel" />.
 			</span>
 			<span>
 				Accomplished in <Link code="javascript" />, <Link code="nodejs" />,{' '}

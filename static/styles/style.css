@@ -25,6 +25,7 @@
 	--weightLink: inherit;
 	--decorationLink: none;
 	--styleLink: none; /* italic */
+	--colorModalBorder: var(--colorLight);
 	--colorActive: var(--colorAccent);
 	--colorInactive: var(--colorLightest);
 	--colorContent: var(--colorDarker);
@@ -291,7 +292,7 @@ aside.modal:not(.backdrop) {
 	margin: 0;
 	padding: 2em;
 	background: white;
-	border: 1px solid colorContent;
+	border: 1px solid var(--colorModalBorder);
 	overflow: auto;
 }
 aside.modal:not(.backdrop) h1,

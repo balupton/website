@@ -1,7 +1,7 @@
 import * as pathUtil from 'path'
 import { promises as fs } from 'fs'
 import globber from 'fast-glob'
-import * as mkdirp from 'make-dir'
+// import mkdirp = require('make-dir')
 
 import { Meta, Link, LinkMap } from '../types/app'
 import * as parseMDX from '../tooling/parse-mdx'
@@ -44,23 +44,23 @@ async function addDocumentLinks() {
 			const src = await fs.readFile(absolutePath, 'utf8')
 			const meta: Meta = parseMDX(src).meta
 			const tags = directoryTags[directory] || []
-			meta.tags.push(...tags)
 			const link: Link = {
+				...meta,
 				alias: false,
 				url,
 				code: url,
 				text: meta.title,
-				...meta
+				tags: tags.concat(meta.tags)
 			}
 			linkMap[link.code] = link
 		})
 	)
 }
 async function main() {
-	await mkdirp(cachePath)
+	// await mkdirp(cachePath)
 	await addDocumentLinks()
 	await addAliasLinks()
-	console.log('links', Object.keys(linkMap).join(' '))
+	// console.log('links', Object.keys(linkMap).join(' '))
 	console.log('writing', linksPath)
 	await fs.writeFile(linksPath, JSON.stringify(linkMap, null, '  '))
 	console.log('wrote', linksPath)

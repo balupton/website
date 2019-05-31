@@ -3,7 +3,7 @@ import {
 	Link,
 	LinkMap,
 	Tag,
-	LinkCode,
+	Code,
 	LinkCache,
 	RawLink,
 	RawLinkMap
@@ -35,6 +35,19 @@ export function getLinksByTag(tag: Tag) {
 	return results
 }
 
-export function getLink(code: LinkCode) {
+export function getLink(code: Code) {
 	return linkMap[code]
+}
+
+export function hydrateLink(input: { code?: string }): Link {
+	let result: Link
+	if (input.code) {
+		const link = getLink(input.code)
+		if (!link) throw new Error(`No link for: ${input.code}`)
+		result = Object.assign({}, link, input)
+	} else {
+		result = Object.assign({}, input) as Link
+	}
+	if (!result.url) throw new Error(`No link URL`)
+	return result
 }

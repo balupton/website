@@ -30,79 +30,73 @@ export type Projects = Project[]
 // ====================================
 // Meta
 
-export type LinkCode = string
+export type Tag = string
+export type Tags = Tag[]
+export type Code = string
 
-export type Tag =
+export type LinkTag =
 	| 'referral'
 	| 'recommendation'
 	| 'social'
 	| 'alias'
 	| 'feed'
 	| 'donate'
-	| string
-export type Tags = Tag[]
+	| Tag
+export type LinkTags = LinkTag[]
 
-export type DirectoryTags = { [key: string]: Tags }
-
-export interface Site {
-	url: string
-	title: string
-	author: string
-	heading: string
-	email: string
-	description: string
-	tags: Tags
-	menu: LinkCode[]
-}
-
-export interface SiteProps extends Partial<Site> {
-	children: Children
-	date?: string // this is because mdx serialises the date
-	url?: string
-	code?: string
-	showTitle?: boolean
-	showDate?: boolean
-}
+export type DirectoryTags = { [key: string]: string[] }
 
 export interface RawMeta {
-	date: string | Date
-	title: string
-	pageTitle?: string
-	tags?: string | Tags
-	description?: string
 	author?: string
+	date?: string | Date
+	description?: string
+	linkTitle?: string
+	pageTitle?: string
 	published?: boolean
-	className?: string
-	color?: string
+	tags?: Tag | Tags
+	title?: string
+	url?: string
+	code?: Code
 }
 
 export interface Meta extends RawMeta {
-	date: Date
+	title: string
 	tags: Tags
 }
 
-// ====================================
-// Links
+export type Page = Partial<Meta>
+export interface PageProps extends Page {
+	children?: Children
+	useDate?: boolean
+	useTitle?: boolean
+}
 
-export interface RawLink extends Partial<RawMeta> {
+export interface Site extends Partial<Meta> {
+	url: string
+	heading: string
+	menu: Code[]
+	email: string
+	tags: Tags
+}
+
+export interface RawLink extends Partial<Meta> {
 	url: string
 	text: string
-	as?: string
-	alias?: boolean
+	color?: string
+	tags?: LinkTags
 }
 export interface Link extends RawLink {
-	tags: Tags
-	code: LinkCode
-	date?: Date
+	tags: LinkTags
+	code: Code
 	alias: boolean
 }
+
 export interface LinkProps extends Partial<Link> {
 	children?: Children
-	useColor?: boolean
 }
 
 export type Links = Link[]
 export type RawLinkMap = { [key: string]: RawLink }
 export type LinkMap = { [key: string]: Link }
 export type LinkCache = { [key: string]: Links }
-export type LinkAliasMap = { [key: string]: LinkCode }
+export type LinkAliasMap = { [key: string]: Code }

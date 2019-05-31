@@ -56,7 +56,6 @@
         "typescript",
         "react",
         "jsx",
-        "mdx",
         "html",
         "css",
         "import"
@@ -64,36 +63,37 @@
     }
   ],
   "dependencies": {
-    "@types/react": "^16.8.3",
-    "@types/react-dom": "^16.8.1",
+    "@bevry/hooks": "^2.0.0",
+    "@types/react": "^16.8.18",
+    "@types/react-dom": "^16.8.4",
     "@zeit/next-mdx": "^1.2.0",
     "githubauthquerystring": "^1.0.2",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
-    "simplytyped": "^1.7.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "simplytyped": "^3.1.0",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "@types/next": "^8.0.1",
-    "@typescript-eslint/eslint-plugin": "^1.3.0",
-    "@typescript-eslint/parser": "^1.3.0",
+    "@types/next": "^8.0.5",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
     "@zeit/next-typescript": "1.1.2-canary.0",
     "docmatter": "^1.1.0",
-    "eslint": "^5.13.0",
+    "eslint": "^5.16.0",
     "eslint-config-bevry": "^1.2.0",
-    "eslint-config-prettier": "^4.0.0",
-    "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-react-hooks": "^1.0.2",
-    "fast-glob": "^2.2.6",
-    "make-dir": "^2.0.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "fast-glob": "^2.2.7",
+    "make-dir": "^3.0.0",
     "mdx": "^0.3.1",
-    "next": "8.0.1",
-    "now": "13.2.0-canary.5",
-    "prettier": "^1.16.4",
+    "next": "8.1.0",
+    "now": "15.3.0",
+    "prettier": "^1.17.1",
     "projectz": "^1.7.4",
-    "ts-node": "^8.0.2",
-    "typescript": "^3.3.3"
+    "ts-node": "^8.2.0",
+    "typescript": "^3.4.5"
   },
   "eslintConfig": {
     "extends": [
@@ -121,9 +121,10 @@
     "our:test": "yarn run our:verify && yarn test",
     "our:verify": "yarn run our:verify:eslint && yarn run our:verify:stylelint && yarn run our:verify:typescript",
     "our:verify:eslint": "eslint --fix --ignore-pattern '**/*.d.ts' --ignore-pattern '**/vendor/' --ignore-pattern '**/node_modules/' --ext .mjs,.js,.jsx,.ts,.tsx .",
-    "our:verify:stylelint": "echo 'disabled due to https://spectrum.chat/?t=d1b9f61a-65e8-42a3-9042-f9c6a6fae6fd'",
+    "our:verify:stylelint": "echo 'disabled due to https://spectrum.chat/zeit/general/resolved-deployments-fail-with-enospc-no-space-left-on-device-write~d1b9f61a-65e8-42a3-9042-f9c6a6fae6fd'",
     "our:verify:typescript": "tsc --noEmit --project .",
-    "start": "yarn run my:compile:app && yarn run our:verify && next dev",
-    "now-build": "yarn run our:compile:next"
+    "start": "yarn run our:verify && next dev",
+    "now-build": "yarn run our:compile:next",
+    "test": "echo no need for this project"
   }
 }
