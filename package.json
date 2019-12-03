@@ -15,8 +15,6 @@
       "patreon",
       "flattr",
       "liberapay",
-      "thanksapp",
-      "boostlab",
       "buymeacoffee",
       "opencollective",
       "crypto",
@@ -31,9 +29,11 @@
       "opencollectiveUsername": "bevry",
       "patreonUsername": "bevry",
       "paypalURL": "https://bevry.me/paypal",
-      "wishlistURL": "https://bevry.me/wishlist"
+      "wishlistURL": "https://bevry.me/wishlist",
+      "travisTLD": "com"
     }
   },
+  "funding": "https://bevry.me/fund",
   "author": "2019+ Benjamin Lupton <b@lupton.cc>",
   "maintainers": [
     "Benjamin Lupton <b@lupton.cc>"
@@ -46,7 +46,7 @@
     "url": "https://github.com/balupton/website.git"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=12"
   },
   "editions": [
     {
@@ -63,37 +63,46 @@
     }
   ],
   "dependencies": {
-    "@bevry/hooks": "^2.0.0",
-    "@types/react": "^16.8.18",
-    "@types/react-dom": "^16.8.4",
-    "@zeit/next-mdx": "^1.2.0",
-    "githubauthquerystring": "^1.0.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "simplytyped": "^3.1.0",
-    "xml2js": "^0.4.19"
-  },
-  "devDependencies": {
-    "@types/next": "^8.0.5",
-    "@typescript-eslint/eslint-plugin": "^1.9.0",
-    "@typescript-eslint/parser": "^1.9.0",
-    "@zeit/next-typescript": "1.1.2-canary.0",
-    "docmatter": "^1.1.0",
-    "eslint": "^5.16.0",
-    "eslint-config-bevry": "^1.2.0",
-    "eslint-config-prettier": "^4.3.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.13.0",
-    "eslint-plugin-react-hooks": "^1.6.0",
-    "fast-glob": "^2.2.7",
+    "@bevry/hooks": "^2.4.0",
+    "@bevry/mdx": "^1.0.0",
+    "@mdx-js/loader": "^1.5.1",
+    "@next/mdx": "^9.1.4",
+    "@types/react": "^16.9.14",
+    "@types/react-dom": "^16.9.4",
+    "@zeit/next-mdx": "1.1.1-canary.4",
+    "@zeit/next-typescript": "^1.1.1",
+    "docmatter": "^2.4.0",
+    "fast-glob": "^3.1.1",
+    "fetch-h2": "^2.2.1",
+    "githubauthquerystring": "^2.2.0",
+    "htm": "^2.2.1",
+    "hyperscript": "^2.0.2",
+    "isomorphic-unfetch": "^3.0.0",
     "make-dir": "^3.0.0",
     "mdx": "^0.3.1",
-    "next": "8.1.0",
-    "now": "15.3.0",
-    "prettier": "^1.17.1",
-    "projectz": "^1.7.4",
-    "ts-node": "^8.2.0",
-    "typescript": "^3.4.5"
+    "next": "^9.1.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "simplytyped": "^3.2.3",
+    "swr": "^0.1.12",
+    "ts-node": "^8.5.4",
+    "vhtml": "^2.1.0",
+    "xml2js": "^0.4.22"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
+    "eslint": "^6.7.2",
+    "eslint-config-bevry": "^2.2.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "prettier": "^1.19.1",
+    "projectz": "^1.14.0",
+    "stylelint": "^12.0.0",
+    "stylelint-config-standard": "^19.0.0",
+    "typescript": "^3.7.2"
   },
   "eslintConfig": {
     "extends": [
@@ -104,27 +113,58 @@
     "semi": false,
     "singleQuote": true
   },
+  "installConfig": {
+    "pnp": true
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "at-rule-empty-line-before": null,
+      "custom-property-empty-line-before": null,
+      "declaration-empty-line-before": null,
+      "indentation": "tab",
+      "max-empty-lines": 2,
+      "no-descending-specificity": null,
+      "no-duplicate-selectors": null,
+      "rule-empty-line-before": null,
+      "selector-list-comma-newline-after": null,
+      "block-closing-brace-empty-line-before": null,
+      "block-closing-brace-newline-after": null,
+      "block-closing-brace-newline-before": null,
+      "block-closing-brace-space-before": null,
+      "block-opening-brace-newline-after": null,
+      "block-opening-brace-space-after": null,
+      "block-opening-brace-space-before": null,
+      "declaration-block-semicolon-newline-after": null,
+      "declaration-block-semicolon-space-after": null,
+      "declaration-block-semicolon-space-before": null,
+      "declaration-block-trailing-semicolon": null
+    },
+    "ignoreFiles": [
+      "**/vendor/*.css",
+      "node_modules"
+    ]
+  },
   "scripts": {
-    "my:compile:app": "ts-node ./scripts/compile.ts",
+    "my:compile:app": "ts-node --compiler-options '{\"module\": \"commonjs\"}' ./lib/compile.ts",
     "our:clean": "rm -Rf ./docs ./edition* ./es2015 ./es5 ./out ./.next",
-    "our:compile": "yarn run our:compile:app && yarn run our:compile:next",
-    "our:compile:app": "yarn run my:compile:app",
-    "our:compile:next": "next build",
+    "our:compile": "npm run our:compile:app",
+    "our:compile:app": "npm run my:compile:app",
     "our:deploy": "echo no need for this project",
-    "our:meta": "yarn run our:meta:projectz",
+    "our:meta": "npm run our:meta:projectz",
     "our:meta:projectz": "projectz compile",
-    "our:release": "yarn run our:release:push",
-    "our:release:prepare": "yarn run our:clean && yarn run our:compile && yarn run our:test && yarn run our:meta",
+    "our:release": "npm run our:release:push",
+    "our:release:prepare": "npm run our:clean && npm run our:compile && npm run our:test && npm run our:meta",
     "our:release:push": "git push origin master && git push origin --tags",
-    "our:setup": "yarn run our:setup:install",
-    "our:setup:install": "yarn install",
-    "our:test": "yarn run our:verify && yarn test",
-    "our:verify": "yarn run our:verify:eslint && yarn run our:verify:stylelint && yarn run our:verify:typescript",
+    "our:setup": "npm run our:setup:install",
+    "our:setup:install": "npm install",
+    "our:test": "npm run our:verify && npm test",
+    "our:verify": "npm run our:verify:eslint && npm run our:verify:prettier && npm run our:verify:stylelint && npm run our:verify:typescript",
     "our:verify:eslint": "eslint --fix --ignore-pattern '**/*.d.ts' --ignore-pattern '**/vendor/' --ignore-pattern '**/node_modules/' --ext .mjs,.js,.jsx,.ts,.tsx .",
-    "our:verify:stylelint": "echo 'disabled due to https://spectrum.chat/zeit/general/resolved-deployments-fail-with-enospc-no-space-left-on-device-write~d1b9f61a-65e8-42a3-9042-f9c6a6fae6fd'",
+    "our:verify:prettier": "prettier --write ./**",
+    "our:verify:stylelint": "stylelint --fix './**/*.css'",
     "our:verify:typescript": "tsc --noEmit --project .",
-    "start": "yarn run our:verify && next dev",
-    "now-build": "yarn run our:compile:next",
+    "start": "npm run our:verify && npm run our:compile && next dev",
     "test": "echo no need for this project"
   }
 }

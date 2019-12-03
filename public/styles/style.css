@@ -5,7 +5,7 @@
 	--colorBlueDark: #00718a;
 	--colorDarker: #191919;
 	--colorDark: #555;
-	--colorMedium: #445566;
+	--colorMedium: #456;
 	--colorLight: #797f84;
 	--colorLighter: #9d9fa5;
 	--colorLightest: #ccc;
@@ -41,6 +41,7 @@
 }
 
 /* ==================================== */
+
 /* Styles */
 
 /* Everything */
@@ -63,6 +64,7 @@ body {
 	font-size: 16px;
 	position: relative;
 	min-height: 2000px;
+
 	/*
 	text-rendering: optimizeLegibility;
 	font-synthesis: none;
@@ -148,14 +150,14 @@ header.heading h2 span {
 	position: absolute;
 	top: 0.5em;
 	left: 18em;
-	background: url('../images/balupton-small.gif') top left no-repeat;
+	background: url('/images/balupton-small.gif') top left no-repeat;
 	width: 23px;
 	height: 36px;
 	transition: all 0.5s ease-in-out;
 }
 .heading .heading-avatar:hover {
 	transform: rotate(360deg);
-	background: url('../images/balupton-large.gif') top left no-repeat;
+	background: url('/images/balupton-large.gif') top left no-repeat;
 	width: 365px;
 	height: 526px;
 }
@@ -163,20 +165,23 @@ header.heading h2 span {
 /* Pages */
 nav.pages {
 	font-size: 56px;
-}
-nav.pages ul {
-	padding: 0;
+	text-transform: lowercase;
+	margin: 1em 0;
 }
 nav.pages li {
 	display: inline;
 	margin-right: 0.75em;
 }
-nav.pages li a {
-	font-weight: var(--weightNav);
+nav.pages li.inactive a,
+nav.pages li.inactive a:link,
+nav.pages li.inactive a:visited {
+	font-weight: var(--weightNormal);
 	color: var(--colorInactive);
 }
-nav.pages li.active a {
-	font-weight: var(--weightNav);
+nav.pages li.active a,
+nav.pages li.active a:link,
+nav.pages li.active a:visited {
+	font-weight: var(--weightNormal);
 	color: var(--colorActive);
 }
 
@@ -198,88 +203,38 @@ footer.footing .copyright {
 }
 
 /* Sidebar */
-aside.sidebar ul,
-aside.sidebar ul li {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-aside.sidebar section {
-	font-size: 14px;
-	margin-bottom: 2em;
-}
-
-aside.sidebar section header {
-	position: relative;
-}
-aside.sidebar section header h1 {
-	margin: 0;
-	padding: 0;
-}
-
-aside.sidebar section header .icon {
-	position: absolute;
-	bottom: 12px;
-	right: 0;
-	max-height: 32px;
-	max-width: 32px;
-}
-
-aside.sidebar section header ul {
-	height: 30em; /*180px */
-	position: relative;
-	overflow: auto;
-}
-
-aside.sidebar section header li {
-	margin: 1em 0;
-}
-
-aside.sidebar section h1 {
-	font-weight: var(--weightNav);
-}
-
-aside.sidebar section,
-aside.sidebar section a,
-aside.sidebar section a:link,
-aside.sidebar section a:visited {
-	color: var(--colorContent);
-}
-
-/* Links Hover Effect */
-aside.sidebar .links ul {
-	transition: opacity 1s;
-	background: white;
-	opacity: 0.3;
-}
-aside.sidebar .links ul li {
-	width: 96%;
-}
-aside.sidebar:hover .links ul {
-	opacity: 1;
-}
-
-/* Images Hover Effect */
 aside.sidebar {
-	transition: opacity 0.5s;
+	position: absolute;
+	top: 0;
+	right: 1em;
+	text-align: right;
+	background: white;
+	transition: opacity 1s;
 	opacity: 0.3;
+	margin-bottom: 2em;
 }
 aside.sidebar:hover {
 	opacity: 1;
 }
-
-/* Images Sizing
-aside.sidebar section.images ul {
-	line-height: 0;
-}
-aside.sidebar section.images ul li {
+aside.sidebar nav,
+aside.sidebar li {
+	list-style: none;
 	margin: 0;
-	display: inline;
+	padding: 0;
 }
-aside.sidebar section.images ul img {
-	width: 48%;
-} */
+aside.sidebar li {
+	margin: 1.5em 0;
+	padding: 0;
+	width: 96%;
+}
+aside.sidebar a,
+aside.sidebar a:link,
+aside.sidebar a:visited {
+	/* font-family: segoe wp, segoe ui, Segoe, Calibri, Helvetica, Arial; */
+	font-size: 42px;
+	font-weight: var(--weightNormal);
+	color: var(--colorContent);
+}
 
 /* Modals */
 aside.modal:not(.backdrop) {
@@ -361,17 +316,17 @@ article.page h4 a {
 	font-weight: var(--weightNormal);
 }
 
-article.page .link-comments:before {
+article.page .link-comments::before {
 	content: ' ✎ ';
 }
-article.page .link-date:before,
-article.page .page-date:before {
+article.page .link-date::before,
+article.page .page-date::before {
 	content: ' ⎋ ' /* ✍ */;
 }
-article.page .project-stars:before {
+article.page .project-stars::before {
 	content: ' ☆ ';
 }
-article.page a:hover .project-stars:before {
+article.page a:hover .project-stars::before {
 	content: ' ★ ';
 }
 
@@ -454,47 +409,10 @@ article.page .page-comments {
 	padding-bottom: 0;
 }
 
-article.page .social-buttons .social-button {
-	height: 20px;
-	width: 450px;
-	overflow: hidden;
-	margin: 0.5em 0;
-}
-
-/* Services */
-.service-buttons {
-	margin-top: 1.5em;
-}
-
-.social-buttons,
-.service-badges {
-	display: block;
-	margin-top: 0.5em;
-}
-
-.service-button {
-	display: inline-block;
-	width: 100px;
-	text-align: left;
-	overflow: hidden;
-}
-.service-button .google-plus-one-button,
-.service-button .hacker-news-submit-button {
-	width: 80px;
-}
-.service-button .twitter-follow-button,
-.service-button .fury-button {
-	width: 130px;
-}
-.service-button .reddit-submit-button {
-	width: 140px;
-}
-.service-button .reddit-submit-button iframe {
-	padding-top: 3px;
-}
-
 /* ==================================== */
+
 /* Layout: Initial */
+
 /* Write your initial layout configuration here */
 
 /* Body */
@@ -510,17 +428,12 @@ article.page {
 	width: 70%;
 }
 
-/* Sidebar */
-aside.sidebar {
-	position: absolute;
-	top: 0;
-	right: 1em;
-	text-align: right;
-}
-
 /* ==================================== */
+
 /* Layout: Responsive */
+
 /* Write your responsive layout styles here */
+
 /* Below is merely an example of how this should work */
 
 /* Hide the sidebar */

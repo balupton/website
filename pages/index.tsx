@@ -1,12 +1,12 @@
 import React from 'react'
 import Layout from '../layouts/default'
 import Link from '../components/link'
-import Text from '../components/text'
 import Hidden from '../components/hidden'
+import { site } from '../lib/config'
 
 export default function IndexPage() {
 	return (
-		<Layout code="home" useTitle={false}>
+		<Layout code="home" useTitle={false} title={site.title}>
 			<section className="work">
 				<h2>I radically explore the known and the unknown.</h2>
 
@@ -50,7 +50,7 @@ export default function IndexPage() {
 					<Link code="nomad">nomadic</Link> living, with a{' '}
 					<Link code="vegan">vegan</Link> life-style and{' '}
 					<Link code="ahimsa">ahimsa</Link> values.{' '}
-					<Link code="vegan" title="Really, check it out.">
+					<Link code="vegan">
 						The data cannot recommend this lifestyle more highly.
 					</Link>
 				</p>

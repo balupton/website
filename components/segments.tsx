@@ -38,7 +38,7 @@ export function Copyright() {
 	return (
 		<>
 			Unless stated otherwise; all works are Copyright © 2011+{' '}
-			<Link code="me" /> and licensed{' '}
+			<Link code="home">Benjamin Lupton</Link> and licensed{' '}
 			<Link code="permissive-license">permissively</Link> under the{' '}
 			<Link code="mit-license" /> for code and the <Link code="cca-license" />{' '}
 			for everything else (including content, media and design), enjoy!
